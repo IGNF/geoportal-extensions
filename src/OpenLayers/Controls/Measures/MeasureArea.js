@@ -259,12 +259,9 @@ var MeasureArea = (function (Control) {
     MeasureArea.prototype.format = function (polygon) {
         logger.trace("call MeasureArea::format()");
 
-        var map = this.getMap();
-
         var measure;
         if (this.options.geodesic) {
-            var sourceProj = map.getView().getProjection();
-            var geom = (polygon.clone().transform(sourceProj, "EPSG:4326"));
+            var geom = polygon.clone();
             var coordinates = geom.getLinearRing(0).getCoordinates();
             measure = Math.abs(olGetAreaSphere(new Polygon([coordinates])));
         } else {

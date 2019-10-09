@@ -60,6 +60,7 @@ function LayerWMTS (options) {
         if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
         } else {
+            wmtsParams.projection = "EPSG:4326";
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
 

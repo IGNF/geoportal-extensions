@@ -1,0 +1,52 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers MousePosition</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du Widget d'affichage des coordonnées de la Souris</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+              window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+
+                // Création de la map
+                var map = new ol.Map({
+                  target : "map",
+                  layers : [
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    })
+                  ],
+                  view : new ol.View({
+                    center : [288074.8449901076, 6247982.515792289],
+                    zoom : 8
+                  })
+                });
+
+                var mouse = new ol.control.GeoportalMousePosition({
+                    draggable : true
+                });
+                map.addControl(mouse);
+              };
+
+            </script>
+{{/content}}
+{{/extend}}

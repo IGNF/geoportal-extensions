@@ -296,26 +296,33 @@ module.exports = (env, argv) => {
             /** REPLACEMENT DE VALEURS */
             new ReplaceWebpackPlugin(
                 [
-                    {
-                        partten : /__GPOLEXTVERSION__/g,
-                        /** replacement de la clef __VERSION__ par la version du package */
-                        replacement : function () {
-                            return pkg.olExtVersion;
-                        }
-                    },
+                    // {
+                    //     partten : /__GPOLEXTVERSION__/g,
+                    //     /** replacement de la clef __VERSION__ par la version du package */
+                    //     replacement : function () {
+                    //         return pkg.olExtVersion;
+                    //     }
+                    // },
                     {
                         partten : /__DATE__/g,
                         /** replacement de la clef __DATE__ par la date du build */
                         replacement : function () {
                             return pkg.date;
                         }
+                    },
+                    {
+                        partten : /__PRODUCTION__/g,
+                        replacement : function () {
+                            /** replacement de la clef __PRODUCTION__ pour le LOGGER */
+                            return !logMode;
+                        }
                     }
                 ]
             ),
             /** GESTION DU LOGGER */
-            new DefineWebpackPlugin({
-                __PRODUCTION__ : JSON.stringify(!logMode)
-            }),
+            // new DefineWebpackPlugin({
+            //     __PRODUCTION__ : JSON.stringify(!logMode)
+            // }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
                 conf : path.join(ROOT, "build/jsdoc/jsdoc-openlayers.json")

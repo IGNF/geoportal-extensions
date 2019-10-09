@@ -8,6 +8,8 @@ import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import LayerUtils from "../../Common/Utils/LayerUtils";
 import Logger from "../../Common/Utils/LoggerByDefault";
+// package.json (extract version)
+import Pkg from "../../../package.json";
 
 var logger = Logger.getLogger("sourcewmts");
 
@@ -72,7 +74,7 @@ var SourceWMTS = (function (WMTSExtended) {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
                 url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext" : "__GPOLEXTVERSION__"
+                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
                 }, false),
                 version : wmtsParams.version,
                 style : wmtsParams.styles,

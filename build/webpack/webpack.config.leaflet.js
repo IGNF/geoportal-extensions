@@ -216,10 +216,14 @@ module.exports = (env, argv) => {
             new ReplaceWebpackPlugin(
                 [
                     {
-                        partten : /__GPLEAFLETEXTVERSION__/g,
-                        /** replacement de la clef __VERSION__ par la version du package */
+                        /**
+                        * ce flag est utilisé pour masquer l'import des CSS des plugin
+                        * cf. src/Leaflet/Styles.js
+                        * (hack pour Angular)
+                        */
+                        partten : /__FLAG_PLUGIN_CSS__/g,
                         replacement : function () {
-                            return pkg.leafletExtVersion;
+                            return true;
                         }
                     },
                     {
@@ -228,13 +232,20 @@ module.exports = (env, argv) => {
                         replacement : function () {
                             return pkg.date;
                         }
+                    },
+                    {
+                        partten : /__PRODUCTION__/g,
+                        replacement : function () {
+                            /** replacement de la clef __PRODUCTION__ pour le LOGGER */
+                            return !logMode;
+                        }
                     }
                 ]
             ),
             /** GESTION DU LOGGER */
-            new DefineWebpackPlugin({
-                __PRODUCTION__ : JSON.stringify(!logMode)
-            }),
+            // new DefineWebpackPlugin({
+            //     __PRODUCTION__ : JSON.stringify(!logMode)
+            // }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
                 conf : path.join(ROOT, "build/jsdoc/jsdoc-leaflet.json")

@@ -1,6 +1,6 @@
 # Extension Géoportail pour Leaflet
 
-[![release](https://img.shields.io/badge/release%20-leaflet%202.1.0-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.1.0)
+[![release](https://img.shields.io/badge/release%20-leaflet%202.1.5-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.1.5)
 
 <!-- toc -->
 
@@ -319,6 +319,8 @@ L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leafle
 * [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
 * [version 1.2.X](http://leafletjs.com/reference-1.2.0.html)
 * [version 1.3.X](http://leafletjs.com/reference-1.3.0.html)
+* [version 1.4.X](http://leafletjs.com/reference-1.4.0.html)
+* [version 1.5.X](http://leafletjs.com/reference-1.5.0.html)
 
 La release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw).
 

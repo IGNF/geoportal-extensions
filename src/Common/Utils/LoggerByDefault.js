@@ -1,4 +1,3 @@
-/* global __PRODUCTION__ */
 import * as Log from "loglevel";
 
 var LoggerByDefault = {
@@ -11,7 +10,8 @@ var LoggerByDefault = {
     getLogger : function (name) {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
-        (__PRODUCTION__)
+        // on masque cette constante afin d'eviter "referenceerror not defined"
+        ("__PRODUCTION__".match(/true/))
             ? Log.disableAll() : Log.enableAll();
         var logname = name || "default";
         return Log.getLogger(logname);

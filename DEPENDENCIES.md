@@ -28,7 +28,7 @@ last
 * geoportal-access-lib
 
 last
-└── geoportal-access-lib@2.1.2
+└── geoportal-access-lib@2.1.5
 
 * leaflet
 
@@ -43,7 +43,7 @@ last
 
 * "itowns"
 
-└── "itowns@2.3.0"
+└── "itowns@2.13.1"
 
 > upgrade to 2.5.0
 

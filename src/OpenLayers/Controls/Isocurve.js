@@ -39,6 +39,7 @@ var logger = Logger.getLogger("isocurve");
  * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
  * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
@@ -54,20 +55,21 @@ var logger = Logger.getLogger("isocurve");
  * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.Isocurve({
- *      collapsed : false
- *      methods : ["time", "distance"],
- *      exclusions : {
- *         toll : true,
- *         bridge : false,
- *         tunnel : true
+ *      "collapsed" : false,
+ *      "draggable" : true,
+ *      "methods" : ["time", "distance"],
+ *      "exclusions" : {
+ *         "toll" : true,
+ *         "bridge" : false,
+ *         "tunnel" : true
  *      },
- *      graphs : ["Pieton", "Voiture"],
- *      markerOpts : {
- *          url : "...",
- *          offset : [0,0]
+ *      "graphs" : ["Pieton", "Voiture"],
+ *      "markerOpts" : {
+ *          "url" : "...",
+ *          "offset" : [0,0]
  *      }
- *      isocurveOptions : {},
- *      autocompleteOptions : {}
+ *      "isocurveOptions" : {},
+ *      "autocompleteOptions" : {}
  *  });
  */
 var Isocurve = (function (Control) {
@@ -171,10 +173,86 @@ var Isocurve = (function (Control) {
         if (map) {
             // enrichissement du DOM du container lors de l'ajout à la carte
             this._container = this._initContainer(map);
+
+            // mode "draggable"
+            if (this.draggable) {
+                Draggable.dragElement(
+                    this._IsoPanelContainer,
+                    this._IsoPanelHeaderContainer,
+                    map.getTargetElement()
+                );
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
         Control.prototype.setMap.call(this, map);
+    };
+
+    /**
+     * This method is public.
+     * It allows to control the execution of a traitment.
+     *
+     * @param {Array} position - position in the projection map [ x, y ]
+     * @param {Object} value - distance in km or hours-minutes
+     * @param {Object} options - options = {...}
+     */
+    Isocurve.prototype.compute = function (position, value, options) {
+        this._clear();
+
+        if (!this._showIsoContainer.checked) {
+            this._pictoIsoContainer.click();
+        }
+
+        var map = this.getMap();
+        if (!map) {
+            return;
+        }
+
+        // Les options par defauts
+        var settings = {
+            direction : "departure",
+            method : "time",
+            transport : "Voiture",
+            exclusions : []
+        };
+
+        // On recupere les options
+        Utils.assign(settings, options);
+
+        this._originPoint.setCoordinate(position);
+        var coordinate = this._originPoint.getCoordinate();
+
+        var input = document.getElementById("GPlocationOrigin_" + 1 + "-" + this._uid);
+        input.value = coordinate[0].toFixed(4) + " / " + coordinate[1].toFixed(4);
+
+        this._currentTransport = settings.transport;
+        if (settings.transport === "Voiture") {
+            document.getElementById("GPisochronTransportCar-" + this._uid).checked = true;
+        } else {
+            document.getElementById("GPisochronTransportPedestrian-" + this._uid).checked = true;
+        }
+
+        this._currentExclusions = settings.exclusions;
+
+        this._currentComputation = settings.method;
+        if (settings.method === "time") {
+            var time = value.split(".");
+            this._currentTimeHour = time[0] || 0;
+            document.getElementById("GPisochronValueChronInput1-" + this._uid).value = this._currentTimeHour;
+            this._currentTimeMinute = time[1] || 0;
+            document.getElementById("GPisochronValueChronInput2-" + this._uid).value = this._currentTimeMinute;
+            document.getElementById("GPisochronChoiceAltChron-" + this._uid).click();
+        } else {
+            this._currentDistance = value;
+            document.getElementById("GPisochronValueDistInput-" + this._uid).value = this._currentDistance;
+            document.getElementById("GPisochronChoiceAltDist-" + this._uid).click();
+        }
+
+        this._currentDirection = settings.direction;
+        (settings.direction === "departure")
+            ? document.getElementById("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 : document.getElementById("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
+
+        this.onIsoComputationSubmit();
     };
 
     // ################################################################### //
@@ -193,6 +271,7 @@ var Isocurve = (function (Control) {
         // set default options
         this.options = {
             collapsed : true,
+            draggable : false,
             methods : ["time", "distance"],
             graphs : ["Voiture", "Pieton"],
             exclusions : {
@@ -219,6 +298,9 @@ var Isocurve = (function (Control) {
         /** {Boolean} specify if isocurve control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
 
+        /** {Boolean} specify if isocurve control is draggable (true) or not (false) */
+        this.draggable = this.options.draggable;
+
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
 
@@ -241,8 +323,11 @@ var Isocurve = (function (Control) {
 
         // // containers principaux
         this._showIsoContainer = null;
+        this._pictoIsoContainer = null;
         this._waitingContainer = null;
         this._formContainer = null;
+        this._IsoPanelContainer = null;
+        this._IsoPanelHeaderContainer = null;
 
         // les résultats du calcul
         this._currentIsoResults = null;
@@ -594,17 +679,15 @@ var Isocurve = (function (Control) {
             inputShow.checked = true;
         }
 
-        var picto = this._createShowIsoPictoElement();
+        var picto = this._pictoIsoContainer = this._createShowIsoPictoElement();
         container.appendChild(picto);
 
         // panneau
-        var panel = this._createIsoPanelElement();
+        var panel = this._IsoPanelContainer = this._createIsoPanelElement();
 
         // header
-        var header = this._createIsoPanelHeaderElement();
+        var header = this._IsoPanelHeaderContainer = this._createIsoPanelHeaderElement();
         panel.appendChild(header);
-
-        Draggable.dragElement(panel, header);
 
         // form
         var form = this._formContainer = this._createIsoPanelFormElement();

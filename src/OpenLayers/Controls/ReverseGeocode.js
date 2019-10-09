@@ -52,6 +52,7 @@ var logger = Logger.getLogger("reversegeocoding");
  * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
  * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
  * @param {Object}  [options.reverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
@@ -60,10 +61,11 @@ var logger = Logger.getLogger("reversegeocoding");
  * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
  * @example
  *  var iso = ol.control.ReverseGeocode({
- *      collapsed : false,
- *      resources : ["StreetAddress", "PositionOfInterest"],
- *      delimitations : ["Point", "Circle"],
- *      reverseGeocodeOptions : {}
+ *      "collapsed" : false,
+ *      "draggable" : true,
+ *      "resources" : ["StreetAddress", "PositionOfInterest"],
+ *      "delimitations" : ["Point", "Circle"],
+ *      "reverseGeocodeOptions" : {}
  *  });
  */
 var ReverseGeocode = (function (Control) {
@@ -158,6 +160,15 @@ var ReverseGeocode = (function (Control) {
             // lors de l'ajout à la map, on active la saisie du point ou de la zone de recherche sur la carte,
             // mais seulement si le widget est ouvert
             this._activateMapInteraction(map);
+
+            // mode "draggable"
+            if (this.draggable) {
+                Draggable.dragElement(
+                    this._panelContainer,
+                    this._panelHeaderContainer,
+                    map.getTargetElement()
+                );
+            }
         } else {
             var _map = this.getMap();
             // on remet à zéro = on efface les géométries + interactions + valeurs stockées
@@ -200,6 +211,7 @@ var ReverseGeocode = (function (Control) {
         // set default options
         this.options = {
             collapsed : true,
+            draggable : false,
             resources : ["StreetAddress", "PositionOfInterest", "CadastralParcel"],
             delimitations : ["Point", "Circle", "Extent"],
             reverseGeocodeOptions : {},
@@ -214,6 +226,9 @@ var ReverseGeocode = (function (Control) {
 
         /** {Boolean} specify if reverseGeocoding control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
+
+        /** {Boolean} specify if reverseGeocoding control is draggable (true) or not (false) */
+        this.draggable = this.options.draggable;
 
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
@@ -246,7 +261,8 @@ var ReverseGeocode = (function (Control) {
 
         // containers principaux
         this._showReverseGeocodingInput = null;
-        // header panel
+        // panel
+        this._panelContainer = null;
         this._panelHeaderContainer = null;
         this._panelTitleContainer = null;
         this._returnPictoContainer = null;
@@ -555,12 +571,10 @@ var ReverseGeocode = (function (Control) {
         container.appendChild(picto);
 
         // panel
-        var reverseGeocodingPanel = this._createReverseGeocodingPanelElement();
+        var reverseGeocodingPanel = this._panelContainer = this._createReverseGeocodingPanelElement();
 
         // header
         var panelHeader = this._panelHeaderContainer = this._createReverseGeocodingPanelHeaderElement();
-
-        Draggable.dragElement(reverseGeocodingPanel, panelHeader);
 
         // return picto (hidden at start)
         var returnPicto = this._returnPictoContainer = this._createReverseGeocodingPanelReturnPictoElement();

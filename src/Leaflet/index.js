@@ -32,7 +32,7 @@
 *   - L
 */
 
-import Pkg from "../../package";
+import Pkg from "../../package.json";
 
 import L from "leaflet";
 
@@ -43,6 +43,8 @@ import "./Styles";
 import Controls from "./Controls/Controls";
 import ElevationPath from "./Controls/ElevationPath";
 import Layers from "./Layers/Layers";
+// import WMTS from "./Layers/WMTS";
+// import WMS from "./Layers/WMS";
 
 import CRS from "./CRS/CRS";
 
@@ -101,6 +103,9 @@ export { default as MathUtils } from "../Common/Utils/MathUtils";
 
 // creation du namespace pour les extensions leaflet
 L.geoportalLayer = Layers; // WMS et WMTS
+// L.geoportalLayers = {};
+// L.geoportalLayers.WMTS = WMTS;
+// L.geoportalLayers.WMS = WMS;
 L.geoportalControl = Controls; // IsoChrone, SearchEngine, ...
 
 L.geoportalControl.ElevationPath.DISPLAY_PROFILE_LIB_D3 = ElevationPath.DISPLAY_PROFILE_LIB_D3;

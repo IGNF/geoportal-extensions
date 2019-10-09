@@ -75,6 +75,9 @@ build () {
     doCmd "cp -r ../../../src/Common/ ./${main_directory}/src/."
     doCmd "cp -r ../../../src/${src_directory}/ ./${main_directory}/src/."
 
+    # flag de compilation
+    doCmd 'find ./${main_directory}/src/ -type f -name "*.js" -exec sed -i "s/__FLAG_PLUGIN_CSS__/false/g" {} +'
+
     # lecture du package.json du projet
     # - version :
     export _PACKAGE_VERSION=$(cat ../../../package.json |

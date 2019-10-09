@@ -8,12 +8,14 @@ import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import LayerEvent from "./LayerEvent";
+// package.json (extract version)
+import Pkg from "../../../package.json";
 
 var logger = Logger.getLogger("wms");
 
 /**
  * @namespace
- * @alias L.geoportalLayer.WMS
+ * @alias L.geoportalLayers.WMS
  * @classdesc
  *
  * Leaflet Layer Class for Geoportal or INSPIRE WMS Layers.
@@ -76,7 +78,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
             Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext" : "__GPLEAFLETEXTVERSION__"
+                "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
             }, false),
             settings
         );

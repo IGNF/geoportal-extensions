@@ -15,7 +15,9 @@ span[id^=GPshowMousePositionOpen] {
 
 div[id^=GPmousePositionPanel-] {
     /* on desactive le mode draggable de la fenêtre : */
-    /* position: absolute;  */
+    position: absolute;
+    left: 10px;
+    top: calc(-8px + -118px); /* FIXME !?*/
 }
 
 div[id^=GPmousePositionPanelClose]  {

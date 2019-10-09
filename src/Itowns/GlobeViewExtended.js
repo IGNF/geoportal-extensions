@@ -480,7 +480,7 @@ GlobeViewExtended.prototype.getColorLayers = function () {
  */
 GlobeViewExtended.prototype.getVectorLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
-        if (layer.protocol === "rasterizer") {
+        if (layer.source && layer.source.isFileSource) {
             return layer;
         }
     });
@@ -655,7 +655,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
             if (!layer.visible) {
                 continue;
             }
-            var result = ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.feature, precision);
+            var result = ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.source.parsedData, precision);
             // we add the features to the visible features array
             for (idx = 0; idx < result.length; idx++) {
                 visibleFeatures.push(result[idx]);

@@ -1,0 +1,79 @@
+{{#extend "layout-leaflet-sample-bundle"}}
+
+{{#content "vendor"}}
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+{{/content}}
+
+{{#content "head"}}
+        <title>Sample leaflet LayerSwitcher</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout d'une couche WFS</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+            <button id="download">load</button>
+            <button id="visibility">visibility:true</button>
+            <button id="opacity">opacity:1</button>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map, geojson, layerSwitcher;
+                window.onload = function () {
+
+                    var wmts1 = L.geoportalLayer.WMTS({
+                      layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+                    });
+
+                    map  = L.map('map', {
+                      zoom : 6,
+                      center : L.latLng(48, 2),
+                      layers : [wmts1]
+                    });
+
+                    // options par defaut
+                    layerSwitcher = L.geoportalControl.LayerSwitcher();
+                    map.addControl(layerSwitcher);
+
+                    document.getElementById('visibility').onclick = function (e) {
+                        layerSwitcher.setVisibility(geojson, true);
+                    }
+                    document.getElementById('opacity').onclick = function (e) {
+                        layerSwitcher.setOpacity(geojson, 1);
+                    }
+                    document.getElementById('download').onclick = function (e) {
+                        // load GeoJSON from an external file
+                        // https://mygeodata.cloud/converter/geojson-to-latlong
+                        // 'https://wxs.ign.fr/kgco926a9mj4fcng4whjf5ac/geoportail/wfs?service=WFS&request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&outputFormat=application/json&srsname=EPSG:3857&bbox=244751.36456913437,6234242.245453117,276472.7313074825,6264817.056767188,EPSG:3857&count=200'
+                        // RGF93 : http://localhost/data/geojson/test.geojson
+                        // ou ../../resources/data/mapbox/geojson/test.geojson
+                        $.getJSON("https://wxs.ign.fr/kgco926a9mj4fcng4whjf5ac/geoportail/wfs?service=WFS&request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&outputFormat=application/json&srsname=EPSG:4326&bbox=2,48,2.1,48.1,EPSG:4326&count=200",function(data){
+                            // add GeoJSON layer to the map once the file is loaded
+                            geojson = L.geoJson(data);
+                            layerSwitcher.addLayer(geojson, {
+                                config : {
+                                    title : "test layer name 1",
+                                    description : "test layer desc 1",
+                                    visibility : false,
+                                    opacity : 0.8
+                                }
+                            });
+                        });
+                    };
+
+              }
+           </script>
+{{/content}}
+
+{{/extend}}

@@ -89,7 +89,62 @@ var DrawingDOM = {
         div.id = this._addUID("GPdrawingPanel");
         div.className = "GPpanel";
 
-        div.appendChild(this._createDrawingPanelHeaderElement());
+        return div;
+    },
+
+    // ################################################################### //
+    // ####################### Panel container ########################### //
+    // ################################################################### //
+
+    /**
+    * Creates drawing Panel header DOM structure
+    * @returns {DOMElement} DOM element
+    */
+    _createDrawingPanelHeaderElement : function () {
+        /*
+         * <div class="GPpanelHeader">
+         *     <div class="GPpanelTitle">Annoter la carte</div>
+         *     <div id="GPdrawingPanelClose" class="GPpanelClose" title="Fermer le panneau"></div>
+         * </div>
+         */
+
+        var container = document.createElement("div");
+        container.className = "GPpanelHeader";
+
+        var divTitle = document.createElement("div");
+        divTitle.className = "GPpanelTitle";
+        divTitle.innerHTML = this.options.controlLabel || "Annoter la carte";
+        container.appendChild(divTitle);
+
+        var divClose = document.createElement("div");
+        divClose.id = this._addUID("GPdrawingPanelClose");
+        divClose.className = "GPpanelClose";
+        divClose.title = "Fermer le panneau";
+
+        // Link panel close / visibility checkbox
+        var dtObj = this;
+        if (divClose.addEventListener) {
+            divClose.addEventListener("click", function () {
+                document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
+            }, false);
+        } else if (divClose.attachEvent) {
+            divClose.attachEvent("onclick", function () {
+                document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
+            });
+        }
+
+        container.appendChild(divClose);
+
+        return container;
+    },
+
+    /**
+     * Creates drawing tools section.
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createDrawingToolsSections : function () {
+        var tools = [];
 
         this.dtOptions = {};
         if (this.options.tools.points) {
@@ -161,70 +216,24 @@ var DrawingDOM = {
             this.dtOptions.lines ||
             this.dtOptions.polygons ||
             this.dtOptions.text) {
-            div.appendChild(this._createDrawingToolSection(this.options.labels.creatingTools, "draw"));
+            tools.push(this._createDrawingToolSection(this.options.labels.creatingTools, "draw"));
         }
         // ajout editing tools
         if (this.dtOptions.edit ||
             this.dtOptions.display ||
             this.dtOptions.tooltip ||
             this.dtOptions.remove) {
-            div.appendChild(this._createDrawingToolSection(this.options.labels.editingTools, "edit"));
+            tools.push(this._createDrawingToolSection(this.options.labels.editingTools, "edit"));
         }
         // ajout export tools
         if (this.options.tools.export) {
-            div.appendChild(this._createSavingSection(
+            tools.push(this._createSavingSection(
                 this.options.labels.export,
                 this.options.labels.exportTitle
             ));
         }
 
-        return div;
-    },
-
-    // ################################################################### //
-    // ####################### Panel container ########################### //
-    // ################################################################### //
-
-    /**
-    * Creates drawing Panel header DOM structure
-    * @returns {DOMElement} DOM element
-    */
-    _createDrawingPanelHeaderElement : function () {
-        /*
-         * <div class="GPpanelHeader">
-         *     <div class="GPpanelTitle">Annoter la carte</div>
-         *     <div id="GPdrawingPanelClose" class="GPpanelClose" title="Fermer le panneau"></div>
-         * </div>
-         */
-
-        var container = document.createElement("div");
-        container.className = "GPpanelHeader";
-
-        var divTitle = document.createElement("div");
-        divTitle.className = "GPpanelTitle";
-        divTitle.innerHTML = this.options.controlLabel || "Annoter la carte";
-        container.appendChild(divTitle);
-
-        var divClose = document.createElement("div");
-        divClose.id = this._addUID("GPdrawingPanelClose");
-        divClose.className = "GPpanelClose";
-        divClose.title = "Fermer le panneau";
-
-        // Link panel close / visibility checkbox
-        var dtObj = this;
-        if (divClose.addEventListener) {
-            divClose.addEventListener("click", function () {
-                document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
-            }, false);
-        } else if (divClose.attachEvent) {
-            divClose.attachEvent("onclick", function () {
-                document.getElementById(dtObj._addUID("GPshowDrawingPicto")).click();
-            });
-        }
-
-        container.appendChild(divClose);
-
-        return container;
+        return tools;
     },
 
     /**

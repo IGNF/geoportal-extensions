@@ -202,6 +202,10 @@ Se **logguer**
     mdp   : xxxxxxxxxx
     email : xxxxxxxxxx
 
+**IMPORTANT** : Se placer dans build/scripts/release et verifier le contenu des fichiers (bonnes versions geoportal-accesslib et extension à publier) :
+- package-openlayers.json
+- package-leaflet.json
+- package-itowns.json
 
 Executer le script de construction du package NPM en fonction du type de librairie :
 
@@ -221,7 +225,6 @@ Executer le script de construction du package NPM en fonction du type de librair
       > npm login
       > npm publish
     ```
-
 
 **IMPORTANT** : Se placer dans le dossier geoportal-extensions-openlayers
 

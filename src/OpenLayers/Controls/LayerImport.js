@@ -63,6 +63,7 @@ var logger = Logger.getLogger("layerimport");
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = false] - Specify if LayerImport control should be collapsed at startup. Default is true.
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MAPBOX"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS", "WMTS" and "MAPBOX". Values will be displayed in the same order in widget list.
  * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
  * @param {String} [options.webServicesOptions.proxyUrl] - Proxy URL to avoid cross-domain problems. Mandatory to import WMS and WMTS layer.
@@ -83,14 +84,15 @@ var logger = Logger.getLogger("layerimport");
  * @param {Boolean} [options.vectorStyleOptions.MapBox.tools.filter] - display edit filter menu for every layers By default, no display.
  * @example
  *  var LayerImport = new ol.control.LayerImport({
- *      collapsed : false,
- *      layerTypes : ["KML", "GPX"],
- *      webServicesOptions : {
- *          proxyUrl : "http://localhost/proxy/php/proxy.php?url=",
- *          noProxyDomains : []
+ *      "collapsed" : false,
+ *      "draggable" : true,
+ *      "layerTypes" : ["KML", "GPX"],
+ *      "webServicesOptions" : {
+ *          "proxyUrl" : "http://localhost/proxy/php/proxy.php?url=",
+ *          "noProxyDomains" : []
  *      },
- *      vectorStyleOptions : {
- *          KML : {
+ *      "vectorStyleOptions" : {
+ *          "KML" : {
  *              extractStyles : true,
  *              defaultStyle : new ol.style.Style({
  *                  image : new ol.style.Icon({
@@ -117,7 +119,7 @@ var logger = Logger.getLogger("layerimport");
  *                  })
  *              })
  *          },
- *          GPX : {
+ *          "GPX" : {
  *              defaultStyle : new ol.style.Style({
  *                  image : new ol.style.Icon({
  *                       src : "path/to/my/icon.png",
@@ -238,6 +240,28 @@ var LayerImport = (function (Control) {
                 },
                 this
             );
+
+            // mode "draggable"
+            if (this.draggable) {
+                Draggable.dragElement(
+                    this._importPanel,
+                    this._importPanelHeader,
+                    map.getTargetElement()
+                );
+
+                // panneau draggable pour les resultats ?
+                Draggable.dragElement(
+                    this._getCapPanel,
+                    null,
+                    map.getTargetElement()
+
+                );
+                Draggable.dragElement(
+                    this._mapBoxPanel,
+                    null,
+                    map.getTargetElement()
+                );
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -312,6 +336,7 @@ var LayerImport = (function (Control) {
         // set default options
         this.options = {
             collapsed : true,
+            draggable : false,
             layerTypes : ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MAPBOX"],
             webServicesOptions : {},
             vectorStyleOptions : {
@@ -407,8 +432,11 @@ var LayerImport = (function (Control) {
         // merge with user options
         Utils.mergeParams(this.options, options);
 
-        /** {Boolean} specify if reverseGeocoding control is collapsed (true) or not (false) */
+        /** {Boolean} specify if LayerImport control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
+
+        /** {Boolean} specify if LayerImport control is draggable (true) or not (false) */
+        this.draggable = this.options.draggable;
 
         // identifiant du contrôle : utile pour suffixer les identifiants CSS (pour gérer le cas où il y en a plusieurs dans la même page)
         this._uid = SelectorID.generate();
@@ -429,6 +457,7 @@ var LayerImport = (function (Control) {
         // containers principaux (FIXME : tous utiles ?)
         this._showImportInput = null;
         this._importPanel = null;
+        this._importPanelHeader = null;
         this._formContainer = null;
         this._staticLocalImportInput = null;
         this._staticUrlImportInput = null;
@@ -606,10 +635,8 @@ var LayerImport = (function (Control) {
         var importPanel = this._importPanel = this._createImportPanelElement();
 
         // header
-        var panelHeader = this._createImportPanelHeaderElement();
+        var panelHeader = this._importPanelHeader = this._createImportPanelHeaderElement();
         importPanel.appendChild(panelHeader);
-
-        Draggable.dragElement(importPanel, panelHeader);
 
         // form : initialisation du formulaire d'import des couches (types d'import et saisie de l'url / du fichier)
         var importForm = this._formContainer = this._initInputFormElement();
@@ -625,7 +652,6 @@ var LayerImport = (function (Control) {
         getCapPanel.appendChild(importGetCapResultsList);
 
         container.appendChild(getCapPanel);
-        Draggable.dragElement(getCapPanel, getCapPanelHeader);
 
         // mapbox panel results
         var mapBoxPanel = this._mapBoxPanel = this._createImportMapBoxPanelElement();
@@ -639,7 +665,6 @@ var LayerImport = (function (Control) {
         mapBoxPanel.appendChild(loading);
 
         container.appendChild(mapBoxPanel);
-        Draggable.dragElement(mapBoxPanel, mapBoxPanelHeader);
 
         // waiting
         var waiting = this._waitingContainer = this._createImportWaitingElement();

@@ -1,1679 +1,228 @@
 {
     "type": "color",
-    "id": "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS",
+    "id": "Ortho",
     "source": {
-      "protocol": "wmts",
-      "url": "http://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
-      "networkOptions": {
-        "crossOrigin": "omit"
-      },
-      "updateStrategy": {
-        "type": 0,
-        "options": {}
-      },
-      "projection": "EPSG:3857",
-      "attribution": [
-        {
-          "name": "SAINT-MARTIN",
-          "attribution": "Saint-Martin",
-          "logo": "http://wxs.ign.fr/static/logos/SAINT-MARTIN/SAINT-MARTIN.gif",
-          "url": "http://www.saint-barth-saint-martin.pref.gouv.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -63.160706,
-                "right": -62.962185,
-                "top": 18.133902,
-                "bottom": 18.03441
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
+        "protocol": "wmts",
+        "url": "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
+        "projection" : "EPSG:3857",
+        "updateStrategy": {
+            "type": "0",
+            "options": {}
         },
-        {
-          "name": "IGN",
-          "attribution": "Institut national de l'information géographique et forestière",
-          "logo": "http://wxs.ign.fr/static/logos/IGN/IGN.gif",
-          "url": "http://www.ign.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -62.95658,
-                "right": 55.84643,
-                "top": 51.094486,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.85611,
-                "top": 51.094486,
-                "bottom": -21.401329
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.85611,
-                "top": 51.094486,
-                "bottom": -21.401329
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.85611,
-                "top": 51.094486,
-                "bottom": -21.401329
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.85611,
-                "top": 51.094486,
-                "bottom": -21.401329
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.85611,
-                "top": 51.094486,
-                "bottom": -21.401329
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -178.18713,
-                "right": 55.85611,
-                "top": 51.094486,
-                "bottom": -21.401329
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 0.035491213,
-                "right": 2.496247,
-                "top": 49.696926,
-                "bottom": 48.801468
-              },
-              "minScaleDenominator": 267,
-              "maxScaleDenominator": 267,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 0.035491213,
-                "right": 2.7314367,
-                "top": 49.696926,
-                "bottom": 44.76621
-              },
-              "minScaleDenominator": 534,
-              "maxScaleDenominator": 534,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
+        "networkOptions": {
+            "crossOrigin": "omit"
         },
-        {
-          "name": "FEDER",
-          "attribution": "Fonds européen de développement économique et régional",
-          "logo": "http://wxs.ign.fr/static/logos/FEDER/FEDER.gif",
-          "url": "http://www.europe-en-france.gouv.fr/",
-          "constraints": [
+        "attribution": [
             {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+                "name": "IGN GE",
+                "attribution": "IGN Grandes Echelles",
+                "url": "http://www.ign.fr",
+                "constraints": [
+                    {
+                        "crs": "EPSG:4326"
+                    }
+                ]
             },
             {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+                "name": "IGN PE",
+                "url": "http://www.ign.fr",
+                "constraints": [
+                    {
+                        "crs": "EPSG:4326",
+                        "bbox": {
+                            "left": -173.154,
+                            "right": 173.837,
+                            "top": 90,
+                            "bottom": -90
+                        },
+                        "maxScaleDenominator": 559082264,
+                        "minScaleDenominator": 272990
+                    }
+                ]
             },
             {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+                "name": "OSM NE",
+                "url": "http://www.openstreetmap.org/",
+                "constraints": [
+                    {
+                        "crs": "EPSG:4326",
+                        "bbox": {
+                            "left": 2.3,
+                            "right": 10,
+                            "top": 51.093,
+                            "bottom": 48.8
+                        }
+                    }
+                ]
             },
             {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+                "name": "OSM NW",
+                "url": "http://www.openstreetmap.org/",
+                "constraints": [
+                    {
+                        "crs": "EPSG:4326",
+                        "bbox": {
+                            "left": -10,
+                            "right": 2.3,
+                            "top": 51.093,
+                            "bottom": 48.8
+                        }
+                    }
+                ]
             },
             {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+                "name": "OSM SW",
+                "url": "http://www.openstreetmap.org/",
+                "constraints": [
+                    {
+                        "crs": "EPSG:4326",
+                        "bbox": {
+                            "left": -10,
+                            "right": 2.3,
+                            "top": 48.8,
+                            "bottom": -21.39
+                        }
+                    }
+                ]
             },
             {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -1.9662633,
-                "right": 8.25674,
-                "top": 50.18387,
-                "bottom": 42.316307
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+                "name": "OSM SE",
+                "url": "http://www.openstreetmap.org/",
+                "constraints": [
+                    {
+                        "crs": "EPSG:4326",
+                        "bbox": {
+                            "left": 2.3,
+                            "right": 55.837,
+                            "top": 48.8,
+                            "bottom": -21.39
+                        }
+                    }
+                ]
             }
-          ]
+        ],
+        "attribution": {
+            "name": "IGN",
+            "url": "http://www.ign.fr/"
         },
-        {
-          "name": "FEDER_PAYSDELALOIRE",
-          "attribution": "Pays-de-la-Loire",
-          "logo": "http://wxs.ign.fr/static/logos/FEDER_PAYSDELALOIRE/FEDER_PAYSDELALOIRE.gif",
-          "url": "http://www.europe-en-paysdelaloire.eu/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+        "name": "ORTHOIMAGERY.ORTHOPHOTOS",
+        "format": "image/jpeg",
+        "tileMatrixSet": "PM",
+        "tileMatrixSetLimits": {
+            "2": {
+                "minTileRow": 0,
+                "maxTileRow": 4,
+                "minTileCol": 0,
+                "maxTileCol": 4
             },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+            "3": {
+                "minTileRow": 0,
+                "maxTileRow": 8,
+                "minTileCol": 0,
+                "maxTileCol": 8
             },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+            "4": {
+                "minTileRow": 0,
+                "maxTileRow": 16,
+                "minTileCol": 0,
+                "maxTileCol": 16
             },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+            "5": {
+                "minTileRow": 0,
+                "maxTileRow": 32,
+                "minTileCol": 0,
+                "maxTileCol": 32
             },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+            "6": {
+                "minTileRow": 1,
+                "maxTileRow": 64,
+                "minTileCol": 0,
+                "maxTileCol": 64
             },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+            "7": {
+                "minTileRow": 3,
+                "maxTileRow": 128,
+                "minTileCol": 0,
+                "maxTileCol": 128
             },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -2.457367,
-                "right": 0.951426,
-                "top": 48.57609,
-                "bottom": 46.19304
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
+            "8": {
+                "minTileRow": 7,
+                "maxTileRow": 256,
+                "minTileCol": 0,
+                "maxTileCol": 256
+            },
+            "9": {
+                "minTileRow": 15,
+                "maxTileRow": 512,
+                "minTileCol": 0,
+                "maxTileCol": 512
+            },
+            "10": {
+                "minTileRow": 31,
+                "maxTileRow": 1024,
+                "minTileCol": 0,
+                "maxTileCol": 1024
+            },
+            "11": {
+                "minTileRow": 62,
+                "maxTileRow": 2048,
+                "minTileCol": 0,
+                "maxTileCol": 2048
+            },
+            "12": {
+                "minTileRow": 125,
+                "maxTileRow": 4096,
+                "minTileCol": 0,
+                "maxTileCol": 4096
+            },
+            "13": {
+                "minTileRow": 2739,
+                "maxTileRow": 4628,
+                "minTileCol": 41,
+                "maxTileCol": 7917
+            },
+            "14": {
+                "minTileRow": 5478,
+                "maxTileRow": 9256,
+                "minTileCol": 82,
+                "maxTileCol": 15835
+            },
+            "15": {
+                "minTileRow": 10956,
+                "maxTileRow": 18513,
+                "minTileCol": 165,
+                "maxTileCol": 31670
+            },
+            "16": {
+                "minTileRow": 21912,
+                "maxTileRow": 37026,
+                "minTileCol": 330,
+                "maxTileCol": 63341
+            },
+            "17": {
+                "minTileRow": 43825,
+                "maxTileRow": 74052,
+                "minTileCol": 660,
+                "maxTileCol": 126683
+            },
+            "18": {
+                "minTileRow": 87651,
+                "maxTileRow": 148105,
+                "minTileCol": 1320,
+                "maxTileCol": 253366
+            },
+            "19": {
+                "minTileRow": 175302,
+                "maxTileRow": 294060,
+                "minTileCol": 170159,
+                "maxTileCol": 343473
+            },
+            "20": {
+                "minTileRow": 376733,
+                "maxTileRow": 384679,
+                "minTileCol": 530773,
+                "maxTileCol": 540914
             }
-          ]
-        },
-        {
-          "name": "FEDER2",
-          "attribution": "Fonds européen de développement économique et régional",
-          "logo": "http://wxs.ign.fr/static/logos/FEDER2/FEDER2.gif",
-          "url": "http://www.europe-en-france.gouv.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.9441726,
-                "right": 4.269964,
-                "top": 50.080326,
-                "bottom": 48.824635
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CG06",
-          "attribution": "Département Alpes Maritimes (06) en partenariat avec : Groupement Orthophoto 06 (NCA, Ville de Cannes, CARF, CASA,CG06, CA de Grasse) ",
-          "logo": "http://wxs.ign.fr/static/logos/CG06/CG06.gif",
-          "url": "http://www.cg06.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 6.6093955,
-                "right": 7.7436337,
-                "top": 44.377018,
-                "bottom": 43.44647
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CRCORSE",
-          "attribution": "CRCORSE",
-          "logo": "http://wxs.ign.fr/static/logos/CRCORSE/CRCORSE.gif",
-          "url": "http://www.corse.fr//",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 8.509344,
-                "right": 9.688606,
-                "top": 43.08541,
-                "bottom": 41.815296
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "SIGLR",
-          "attribution": "SIGLR",
-          "logo": "http://wxs.ign.fr/static/logos/SIGLR/SIGLR.gif",
-          "url": "http://www.siglr.org//",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 3.2470036,
-                "right": 4.8729386,
-                "top": 44.47377,
-                "bottom": 43.441483
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CRAIG",
-          "attribution": "Centre Régional Auvergnat de l'Information Géographique (CRAIG)",
-          "logo": "http://wxs.ign.fr/static/logos/CRAIG/CRAIG.gif",
-          "url": "http://www.craig.fr",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.2243388,
-                "right": 2.7314367,
-                "top": 45.11295,
-                "bottom": 44.76621
-              },
-              "minScaleDenominator": 534,
-              "maxScaleDenominator": 534,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "FEDER_AUVERGNE",
-          "attribution": "Auvergne",
-          "logo": "http://wxs.ign.fr/static/logos/FEDER_AUVERGNE/FEDER_AUVERGNE.gif",
-          "url": "http://www.europe-en-auvergne.eu/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 1067,
-              "maxScaleDenominator": 1067,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0398402,
-                "right": 3.38408,
-                "top": 45.49146,
-                "bottom": 44.60505
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "PLANETOBSERVER",
-          "attribution": "PlanetObserver (images satellites)",
-          "logo": "http://wxs.ign.fr/static/logos/PLANETOBSERVER/PLANETOBSERVER.gif",
-          "url": "http://www.planetobserver.com/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -180,
-                "right": 180,
-                "top": 84,
-                "bottom": -86
-              },
-              "minScaleDenominator": 136495,
-              "maxScaleDenominator": 559082265,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "MPM",
-          "attribution": "Marseille Provence Métropole",
-          "logo": "http://wxs.ign.fr/static/logos/MPM/MPM.gif",
-          "url": "http://www.marseille-provence.com/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 5.076959,
-                "right": 5.7168245,
-                "top": 43.454994,
-                "bottom": 43.153347
-              },
-              "minScaleDenominator": 534,
-              "maxScaleDenominator": 534,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "PPIGE",
-          "attribution": "PPIGE",
-          "logo": "http://wxs.ign.fr/static/logos/PPIGE/PPIGE.gif",
-          "url": "http://www.ppige-npdc.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0601187,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.966286
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0601187,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.966286
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0601187,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.966286
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0601187,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.966286
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0601187,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.966286
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 2.0601187,
-                "right": 4.2673664,
-                "top": 51.090965,
-                "bottom": 49.966286
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "DITTT",
-          "attribution": "Direction des Infrastructures, de la Topographie et des Transports Terrestres",
-          "logo": "http://wxs.ign.fr/static/logos/DITTT/DITTT.gif",
-          "url": "http://www.dittt.gouv.nc/portal/page/portal/dittt/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 163.47784,
-                "right": 167.94624,
-                "top": -19.434975,
-                "bottom": -22.767689
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 163.47784,
-                "right": 167.94624,
-                "top": -19.434975,
-                "bottom": -22.767689
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 163.47784,
-                "right": 167.94624,
-                "top": -19.434975,
-                "bottom": -22.767689
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 163.47784,
-                "right": 167.94624,
-                "top": -19.434975,
-                "bottom": -22.767689
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 163.47784,
-                "right": 167.94624,
-                "top": -19.434975,
-                "bottom": -22.767689
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 163.47784,
-                "right": 167.94624,
-                "top": -19.434975,
-                "bottom": -22.767689
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CNES_974",
-          "attribution": "Centre national d'études spatiales (CNES)",
-          "logo": "http://wxs.ign.fr/static/logos/CNES_974/CNES_974.gif",
-          "url": "http://www.cnes.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 55.205757,
-                "right": 55.84643,
-                "top": -20.862825,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 2133,
-              "maxScaleDenominator": 2133,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 55.205757,
-                "right": 55.84643,
-                "top": -20.862825,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 4266,
-              "maxScaleDenominator": 4266,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 55.205757,
-                "right": 55.84643,
-                "top": -20.862825,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 55.205757,
-                "right": 55.84643,
-                "top": -20.862825,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 55.205757,
-                "right": 55.84643,
-                "top": -20.862825,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": 55.205757,
-                "right": 55.84643,
-                "top": -20.862825,
-                "bottom": -21.401262
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "CNES",
-          "attribution": "Centre national d'études spatiales (CNES)",
-          "logo": "http://wxs.ign.fr/static/logos/CNES/CNES.gif",
-          "url": "http://www.cnes.fr/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "ASTRIUM",
-          "attribution": "Airbus Defence and Space",
-          "logo": "http://wxs.ign.fr/static/logos/ASTRIUM/ASTRIUM.gif",
-          "url": "http://www.geo-airbusds.com/",
-          "constraints": [
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 68248,
-              "maxScaleDenominator": 68248,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 34124,
-              "maxScaleDenominator": 34124,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 17062,
-              "maxScaleDenominator": 17062,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            },
-            {
-              "crs": "EPSG:4326",
-              "bbox": {
-                "left": -55.01953,
-                "right": -50.88867,
-                "top": 6.053161,
-                "bottom": 1.845384
-              },
-              "minScaleDenominator": 8531,
-              "maxScaleDenominator": 8531,
-              "temporalExtent": [
-                "2008-06-18",
-                "2018-09-18"
-              ]
-            }
-          ]
         }
-      ],
-      "name": "ORTHOIMAGERY.ORTHOPHOTOS",
-      "format": "image/jpeg",
-      "tileMatrixSet": "PM",
-      "tileMatrixSetLimits": {
-        "0": {
-          "minTileRow": "0",
-          "maxTileRow": "1",
-          "minTileCol": "0",
-          "maxTileCol": "1"
-        },
-        "1": {
-          "minTileRow": "0",
-          "maxTileRow": "2",
-          "minTileCol": "0",
-          "maxTileCol": "2"
-        },
-        "2": {
-          "minTileRow": "0",
-          "maxTileRow": "4",
-          "minTileCol": "0",
-          "maxTileCol": "4"
-        },
-        "3": {
-          "minTileRow": "0",
-          "maxTileRow": "8",
-          "minTileCol": "0",
-          "maxTileCol": "8"
-        },
-        "4": {
-          "minTileRow": "0",
-          "maxTileRow": "16",
-          "minTileCol": "0",
-          "maxTileCol": "16"
-        },
-        "5": {
-          "minTileRow": "0",
-          "maxTileRow": "33",
-          "minTileCol": "0",
-          "maxTileCol": "32"
-        },
-        "6": {
-          "minTileRow": "1",
-          "maxTileRow": "66",
-          "minTileCol": "-1",
-          "maxTileCol": "65"
-        },
-        "7": {
-          "minTileRow": "3",
-          "maxTileRow": "132",
-          "minTileCol": "-2",
-          "maxTileCol": "130"
-        },
-        "8": {
-          "minTileRow": "7",
-          "maxTileRow": "264",
-          "minTileCol": "-5",
-          "maxTileCol": "261"
-        },
-        "9": {
-          "minTileRow": "15",
-          "maxTileRow": "529",
-          "minTileCol": "-10",
-          "maxTileCol": "522"
-        },
-        "10": {
-          "minTileRow": "31",
-          "maxTileRow": "1058",
-          "minTileCol": "-20",
-          "maxTileCol": "1044"
-        },
-        "11": {
-          "minTileRow": "62",
-          "maxTileRow": "2117",
-          "minTileCol": "-40",
-          "maxTileCol": "2088"
-        },
-        "12": {
-          "minTileRow": "125",
-          "maxTileRow": "4234",
-          "minTileCol": "-81",
-          "maxTileCol": "4177"
-        },
-        "13": {
-          "minTileRow": "2739",
-          "maxTileRow": "4628",
-          "minTileCol": "41",
-          "maxTileCol": "7917"
-        },
-        "14": {
-          "minTileRow": "5478",
-          "maxTileRow": "9256",
-          "minTileCol": "82",
-          "maxTileCol": "15835"
-        },
-        "15": {
-          "minTileRow": "10956",
-          "maxTileRow": "18513",
-          "minTileCol": "165",
-          "maxTileCol": "31670"
-        },
-        "16": {
-          "minTileRow": "21912",
-          "maxTileRow": "37026",
-          "minTileCol": "330",
-          "maxTileCol": "63341"
-        },
-        "17": {
-          "minTileRow": "43825",
-          "maxTileRow": "74052",
-          "minTileCol": "660",
-          "maxTileCol": "126683"
-        },
-        "18": {
-          "minTileRow": "87651",
-          "maxTileRow": "148105",
-          "minTileCol": "1320",
-          "maxTileCol": "253366"
-        },
-        "19": {
-          "minTileRow": "175302",
-          "maxTileRow": "294060",
-          "minTileCol": "170159",
-          "maxTileCol": "343473"
-        },
-        "20": {
-          "minTileRow": "357018",
-          "maxTileRow": "384679",
-          "minTileCol": "524410",
-          "maxTileCol": "540914"
-        },
-        "21": {
-          "minTileRow": "714036",
-          "maxTileRow": "721962",
-          "minTileCol": "1048820",
-          "maxTileCol": "1063118"
-        }
-      },
-      "extent": {
-        "west": -20037508.342789244,
-        "east": 20037508.342789244,
-        "south": -21396567.252405394,
-        "north": 18807214.096747715
-      }
-    },
-    "legends": [
-      {
-        "format": "format",
-        "url": "http://wxs.ign.fr/static/legends/ign_bdortho_legende.jpg",
-        "minScaleDenominator": 1067
-      },
-      {
-        "format": "format",
-        "url": "http://wxs.ign.fr/static/legends/NOLEGEND.JPG",
-        "minScaleDenominator": 136495
-      },
-      {
-        "format": "format",
-        "url": "http://wxs.ign.fr/static/legends/NOLEGEND.JPG",
-        "minScaleDenominator": 267
-      },
-      {
-        "format": "format",
-        "url": "http://wxs.ign.fr/static/legends/NOLEGEND.JPG",
-        "minScaleDenominator": 2133
-      }
-    ],
-    "metadata": [
-      {
-        "format": "xml",
-        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=IGNF_BDORTHOr_2-0.xml"
-      },
-      {
-        "format": "xml",
-        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=IGNF_ORTHOHR_1-0.xml"
-      },
-      {
-        "format": "xml",
-        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=IGNF_BDORTHOr_2-0.xml"
-      },
-      {
-        "format": "xml",
-        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=NCL-DITTT-ORTHO.xml"
-      },
-      {
-        "format": "xml",
-        "url": "http://wxs.ign.fr/geoportail/csw?service=CSW&version=2.0.2&request=GetRecordById&Id=SPOT5.xml"
-      }
-    ],
-    "description": "Photographies aériennes",
-    "title": "Photographies aériennes",
-    "quicklookUrl": "http://wxs.ign.fr/static/pictures/ign_ortho.jpg"
-  }
+    }
+}

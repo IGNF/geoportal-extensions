@@ -32,7 +32,7 @@
 *   - itowns
 */
 
-import Pkg from "../../package";
+import Pkg from "../../package.json";
 
 // CSS communes aux extensions !
 import "../Common/Styles";

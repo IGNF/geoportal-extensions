@@ -18,6 +18,7 @@ import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
+import Draggable from "../../Common/Utils/Draggable";
 // import defs proj4 manually (cf. line 110)
 //  import Proj4 from "proj4";
 //  import { register } from "ol/proj/proj4";
@@ -41,6 +42,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Object} options - options for function call.
  * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
@@ -75,40 +77,41 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *                  Default is 90000 (no data values = [-9999 ; -189999])
  *  @example
  *  var MousePosition = new ol.control.GeoportalMousePosition({
- *      collapsed : false,
- *      displayCoordinates : true,
- *      displayAltitude : true,
- *      altitude : {
- *           triggerDelay : 100,
- *           responseDelay : 500,
- *           noDataValue : -99999,
- *           noDataValueTolerance : 99000,
- *           serviceOptions : {}
+ *      "collapsed" : false,
+ *      "graggable" : true,
+ *      "displayCoordinates" : true,
+ *      "displayAltitude" : true,
+ *      "altitude" : {
+ *           "triggerDelay" : 100,
+ *           "responseDelay" : 500,
+ *           "noDataValue" : -99999,
+ *           "noDataValueTolerance" : 99000,
+ *           "serviceOptions" : {}
  *      },
- *      systems : [
+ *      "systems" : [
  *       {
- *          crs : "EPSG:3857",
- *          label : "Web Mercator",
- *          type : "Metric"
+ *          "crs" : "EPSG:3857",
+ *          "label" : "Web Mercator",
+ *          "type" : "Metric"
  *       },
  *       {
- *          crs : "EPSG:4326",
- *          label : "Géographiques",
- *          type : "Geographical"
+ *          "crs" : "EPSG:4326",
+ *          "label" : "Géographiques",
+ *          "type" : "Geographical"
  *       },
  *       {
- *           label : "Lambert 93",
- *           crs : "EPSG:2154",
- *           type : "Metric",
- *           geoBBox : {
- *               left : -9.86,
- *               bottom : 41.15,
- *               right : 10.38,
- *               top : 51.56
+ *           "label" : "Lambert 93",
+ *           "crs" : "EPSG:2154",
+ *           "type" : "Metric",
+ *           "geoBBox" : {
+ *               "left" : -9.86,
+ *               "bottom" : 41.15,
+ *               "right" : 10.38,
+ *               "top" : 51.56
  *           }
  *        }
  *      ],
- *      units : ["DEC", "DMS"]
+ *      "units" : ["DEC", "DMS"]
  * });
  */
 var MousePosition = (function (Control) {
@@ -173,6 +176,15 @@ var MousePosition = (function (Control) {
             map.getViewport().appendChild(center);
             if (!this.collapsed && !this._isDesktop) {
                 center.className = "GPmapCenterVisible";
+            }
+
+            // mode "draggable"
+            if (this.draggable) {
+                Draggable.dragElement(
+                    this._panelMousePositionContainer,
+                    this._panelHeaderMousePositionContainer,
+                    map.getTargetElement()
+                );
             }
 
             // on met en place l'evenement sur la carte pour recuperer les coordonnées,
@@ -482,6 +494,10 @@ var MousePosition = (function (Control) {
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
 
+        this.options.draggable = (options.draggable !== undefined) ? options.draggable : false;
+        /** {Boolean} specify if MousePosition control is draggable (true) or not (false) */
+        this.draggable = this.options.draggable;
+
         // position marker
         this._markerOverlay = null;
         this._markerUrl = null;
@@ -554,6 +570,8 @@ var MousePosition = (function (Control) {
 
         // {Object} control panel container (DOM Element)
         this._showMousePositionContainer = null;
+        this._panelMousePositionContainer = null;
+        this._panelHeaderMousePositionContainer = null;
 
         // gestion de l'affichage du panneau de l'altitude
         if (!this.options.displayAltitude && !this.options.displayCoordinates) {
@@ -823,19 +841,31 @@ var MousePosition = (function (Control) {
         var picto = this._createShowMousePositionPictoElement(this._isDesktop);
         container.appendChild(picto);
 
-        var panel = this._createMousePositionPanelElement(
+        var panel = this._panelMousePositionContainer = this._createMousePositionPanelElement();
+
+        var header = this._panelHeaderMousePositionContainer = this._createMousePositionPanelHeaderElement();
+        panel.appendChild(header);
+
+        var basic = this._createMousePositionPanelBasicElement(
             this.options.displayAltitude,
             this.options.displayCoordinates,
             this.options.editCoordinates,
             this._currentProjectionUnits
         );
+        panel.appendChild(basic);
+
+        var arraySettings = this._createShowMousePositionSettingsElement(this.options.displayCoordinates);
+        for (var j = 0; j < arraySettings.length; j++) {
+            panel.appendChild(arraySettings[j]);
+        }
+
         var settings = this._createMousePositionSettingsElement();
         var systems = this._projectionSystemsContainer = this._createMousePositionSettingsSystemsElement(this._projectionSystems);
         var units = this._projectionUnitsContainer = this._createMousePositionSettingsUnitsElement(this._projectionUnits[this._currentProjectionType]);
-
         settings.appendChild(systems);
         settings.appendChild(units);
         panel.appendChild(settings);
+
         container.appendChild(panel);
 
         return container;

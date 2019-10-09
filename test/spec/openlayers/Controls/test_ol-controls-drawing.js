@@ -45,7 +45,7 @@ describe("-- Test Plugin OpenLayers Drawing --", function () {
         div = null;
     });
 
-    it('I should add a control Isochron into map (with default parameters)', function () {
+    it('I should add a control Drawing into map (with default parameters)', function () {
 
         var drawing = new Drawing();
 
@@ -65,7 +65,7 @@ describe("-- Test Plugin OpenLayers Drawing --", function () {
         expect(map.getTargetElement().querySelector("div[id^=\"GPdrawing\"]")).to.be.ok;
 
     });
-    it('I should remove a control Isochron into map (with default parameters)', function () {
+    it('I should remove a control Drawing into map (with default parameters)', function () {
 
         var drawing = new Drawing();
 

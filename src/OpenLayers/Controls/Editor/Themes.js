@@ -27,7 +27,8 @@ var logger = Logger.getLogger("editor-themes");
  *             "thumbnail": "data/images/layer0.png",
  *             "name": "standard0",
  *             "url": "data/styles/layer0.json",
- *             "description": ""
+ *             "description": "",
+ *             "selected" : true
  *          },{
  *             "thumbnail": "data/images/layer1.png",
  *             "name": "standard1",
@@ -157,6 +158,8 @@ Themes.prototype._initContainer = function () {
 
             // url du style est obligatoire !
             var _url = _theme.url;
+            // style selectionné par defaut (uniquement en mode radio-button !?)
+            var _selected = _theme.selected || false;
             if (_url && _url !== "") {
                 // bouton
                 if (this.options.tools.radiobutton) {
@@ -165,7 +168,7 @@ Themes.prototype._initContainer = function () {
                     _checkbox.id = this.name.input + "-" + id + "_" + i;
                     _checkbox.className = this.name.input;
                     _checkbox.name = id;
-                    _checkbox.checked = false;
+                    _checkbox.checked = _selected;
                     _checkbox.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
                     if (_checkbox.addEventListener) {
                         _checkbox.addEventListener("click", function (e) {

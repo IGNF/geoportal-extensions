@@ -5,6 +5,8 @@ import TileWMSSource from "ol/source/TileWMS";
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+// package.json (extract version)
+import Pkg from "../../../package.json";
 
 var logger = Logger.getLogger("sourcewms");
 
@@ -62,7 +64,7 @@ var SourceWMS = (function (TileWMSSource) {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
                 url : Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext" : "__GPOLEXTVERSION__"
+                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
                 }, false),
                 params : {
                     SERVICE : "WMS",
