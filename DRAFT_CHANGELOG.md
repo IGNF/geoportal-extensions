@@ -23,6 +23,7 @@
 
     - correctifs sur l'editeur de styles (mapbox)
     - [#230](https://github.com/IGNF/geoportal-extensions/issues/230) - largeur des popup d'information sur la recherche inversée.
+    - correction du calcul de surface de l'outil de dessin.
 
 * [Security]
 

@@ -1276,7 +1276,8 @@ var Drawing = (function (Control) {
                 break;
             case "Polygon":
                 var measureArea = 0;
-                var coordinatesAera = ((feature.getGeometry()).clone().transform(projection, "EPSG:4326")).getLinearRing(0).getCoordinates();
+                var geom = (feature.getGeometry()).clone();
+                var coordinatesAera = geom.getLinearRing(0).getCoordinates();
                 measureArea = Math.abs(olGetAreaSphere(new Polygon([coordinatesAera])));
 
                 measure = (measureArea > 1000000)
