@@ -42300,7 +42300,8 @@ var Drawing = function (Control) {
 
       case "Polygon":
         var measureArea = 0;
-        var coordinatesAera = feature.getGeometry().clone().transform(projection, "EPSG:4326").getLinearRing(0).getCoordinates();
+        var geom = feature.getGeometry().clone();
+        var coordinatesAera = geom.getLinearRing(0).getCoordinates();
         measureArea = Math.abs(Object(ol_sphere__WEBPACK_IMPORTED_MODULE_12__["getArea"])(new ol_geom__WEBPACK_IMPORTED_MODULE_9__["Polygon"]([coordinatesAera])));
         measure = measureArea > 1000000 ? __roundDecimal(measureArea / 1000000, 3) + " km^2" : __roundDecimal(measureArea, 2) + " m^2";
         break;
