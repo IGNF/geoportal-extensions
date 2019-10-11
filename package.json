@@ -73,7 +73,7 @@
   "dependencies": {
     "eventbusjs": "^0.2.0",
     "geoportal-access-lib": "^2.1.6",
-    "itowns": "2.13.1",
+    "itowns": "2.15.2",
     "leaflet": "1.5.1",
     "leaflet-draw": "1.0.4",
     "loglevel": "~1.6.1",
