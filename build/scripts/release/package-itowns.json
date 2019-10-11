@@ -1,16 +1,4 @@
 {
-   "name" : "geoportal-extensions-itowns",
-   "dependencies" : {
-      "request" : "^2.83.0",
-      "geoportal-access-lib" : "^2.1.6",
-      "three" : "~0.107.0",
-      "xmldom" : "^0.1.27",
-      "loglevel" : "~1.6.1",
-      "sortablejs" : "1.8.4",
-      "itowns" : "2.13.1",
-      "three.meshline" : "~1.2.0",
-      "proj4" : "2.5.0"
-   },
    "files" : [
       "dist/",
       "src/",
@@ -18,28 +6,40 @@
       "README.md",
       "package.json"
    ],
-   "module" : "src/Itowns/index.js",
    "author" : "IGNF",
-   "peerDependencies" : {},
-   "bugs" : {},
-   "bundleDependencies" : [],
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "date" : "03/10/2019",
+   "name" : "geoportal-extensions-itowns",
+   "module" : "src/Itowns/index.js",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "directories" : {},
    "devDependencies" : {},
    "scripts" : {},
-   "date" : "03/10/2019",
+   "bundleDependencies" : [],
+   "license" : "CECILL-B",
+   "dependencies" : {
+      "request" : "^2.83.0",
+      "three.meshline" : "~1.2.0",
+      "sortablejs" : "1.8.4",
+      "geoportal-access-lib" : "^2.1.6",
+      "loglevel" : "~1.6.1",
+      "proj4" : "2.5.0",
+      "itowns" : "2.15.2",
+      "xmldom" : "^0.1.27",
+      "three" : "~0.107.0"
+   },
+   "bugs" : {},
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "main" : "dist/GpPluginItowns-src.js",
    "version" : "2.2.4",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "description" : "French Geoportal Extensions for iTowns",
-   "license" : "CECILL-B",
-   "directories" : {}
+   "main" : "dist/GpPluginItowns-src.js"
 }
