@@ -73,7 +73,7 @@
   "dependencies": {
     "eventbusjs": "^0.2.0",
     "geoportal-access-lib": "^2.1.6",
-    "itowns": "2.15.2",
+    "itowns": "2.15.3",
     "leaflet": "1.5.1",
     "leaflet-draw": "1.0.4",
     "loglevel": "~1.6.1",
@@ -82,7 +82,7 @@
     "proj4": "^2.5.0",
     "proj4leaflet": "~1.0.2",
     "sortablejs": "1.8.4",
-    "three": "^0.107.0",
+    "three": "^0.109.0",
     "three.meshline": "~1.2.0"
   },
   "devDependencies": {
