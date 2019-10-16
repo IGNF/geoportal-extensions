@@ -559,7 +559,7 @@ GlobeViewExtended.prototype.getTargetElement = function () {
  * @return {Number} Scale
  */
 GlobeViewExtended.prototype.getScale = function () {
-    return this.getGlobeView().controls.getScale();
+    return this.getGlobeView().getScale();
 };
 
 /**
