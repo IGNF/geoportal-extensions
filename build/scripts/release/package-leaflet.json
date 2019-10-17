@@ -13,7 +13,7 @@
    "bugs" : {},
    "license" : "CECILL-B",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "date" : "03/10/2019",
+   "date" : "17/10/2019",
    "main" : "dist/GpPluginLeaflet-src.js",
    "dependencies" : {
       "loglevel" : "~1.6.1",

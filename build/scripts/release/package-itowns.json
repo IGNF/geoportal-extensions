@@ -3,11 +3,11 @@
    "dependencies" : {
       "request" : "^2.83.0",
       "geoportal-access-lib" : "^2.1.6",
-      "three" : "~0.107.0",
+      "three" : "~0.109.0",
       "xmldom" : "^0.1.27",
       "loglevel" : "~1.6.1",
       "sortablejs" : "1.8.4",
-      "itowns" : "2.13.1",
+      "itowns" : "2.15.3",
       "three.meshline" : "~1.2.0",
       "proj4" : "2.5.0"
    },
@@ -25,7 +25,7 @@
    "bundleDependencies" : [],
    "devDependencies" : {},
    "scripts" : {},
-   "date" : "03/10/2019",
+   "date" : "17/10/2019",
    "keywords" : [
       "geoportail",
       "plugin",
