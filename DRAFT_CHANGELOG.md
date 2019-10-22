@@ -13,6 +13,8 @@
 
 * [Added]
 
+    - [#246] nouvelle méthode publique sur le widget Isocurve qui permet de prépositionner un point sur la carte et de faire un traitement isochrone ou isodistance.
+
 * [Changed]
 
 * [Deprecated]
@@ -23,6 +25,7 @@
 
     - correctifs sur l'editeur de styles (mapbox)
     - [#230](https://github.com/IGNF/geoportal-extensions/issues/230) - largeur des popup d'information sur la recherche inversée.
+    - correction du calcul de surface de l'outil de dessin.
 
 * [Security]
 
@@ -42,6 +45,8 @@
 * [Added]
 
 * [Changed]
+
+    - mise à jour de la dépendance iTowns en version 2.15.3 et de threejs en 0.109.0
 
 * [Deprecated]
 

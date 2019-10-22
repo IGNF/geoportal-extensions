@@ -1,27 +1,35 @@
 {
-   "bundleDependencies" : [],
-   "dependencies" : {
-      "loglevel" : "~1.6.1",
-      "ol" : "^5.3.0",
-      "ol-mapbox-style" : "^4.2.1",
-      "sortablejs" : "1.8.4",
-      "request" : "^2.83.0",
-      "eventbusjs" : "^0.2.0",
-      "proj4" : "2.5.0",
-      "geoportal-access-lib" : "^2.1.6",
-      "xmldom" : "^0.1.27"
-   },
-   "license" : "CECILL-B",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "date" : "16/10/2019",
+   "dependencies" : {
+      "ol" : "^5.3.0",
+      "ol-mapbox-style" : "^4.2.1",
+      "request" : "^2.83.0",
+      "geoportal-access-lib" : "^2.1.6",
+      "proj4" : "2.5.0",
+      "loglevel" : "~1.6.1",
+      "eventbusjs" : "^0.2.0",
+      "xmldom" : "^0.1.27",
+      "sortablejs" : "1.8.4"
+   },
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-openlayers",
    "version" : "3.0.4",
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "bugs" : {},
    "author" : "IGNF",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "scripts" : {},
+   "devDependencies" : {},
+   "module" : "src/OpenLayers/index.js",
    "files" : [
       "dist/",
       "src/",
@@ -29,17 +37,9 @@
       "README.md",
       "package.json"
    ],
-   "bugs" : {},
-   "main" : "dist/GpPluginOpenLayers-src.js",
    "description" : "French Geoportal Extensions for OpenLayers",
-   "scripts" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "date" : "03/10/2019",
-   "module" : "src/OpenLayers/index.js",
-   "peerDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
    "directories" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   }
+   "license" : "CECILL-B",
+   "peerDependencies" : {}
 }
