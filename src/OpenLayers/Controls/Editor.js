@@ -57,24 +57,29 @@ var logger = Logger.getLogger("editor");
  *          "editor:themes:onclicktitle" : function(e) {...}
  *      },
  *      tools : {
- *          // afficher/cacher les themes (par defaut) ou utiliser les options (TODO)
+ *          // afficher/cacher les themes (par defaut) ou utiliser les options
  *          themes : true | false | {
  *              target : "...",
  *              tools : {
  *                  "thumbnails": true,
- *                  "radiobutton": true
+ *                  "button": { visible : true, type : "checkbox" }
  *              },
  *          },
- *          layers : true, // afficher les couches (layers)
- *          style : true,  // afficher les styles (sous menu layers)
- *          filter : true, // afficher les filtres (sous menu layers)
- *          legend : true, // afficher les legendes (layers)
- *          group : true,  // grouper les couches (layers)
- *          title : true   // afficher les titres des rubriques,
- *          type : true,   // afficher du type de geometrie (layers)
- *          pin : true,     // afficher la puce pour chaque couche (layers)
+ *          layers : true,     // afficher les couches (layers)
+ *          style : true,      // afficher les styles (sous menu layers)
+ *          filter : true,     // afficher les filtres (sous menu layers)
+ *          legend : true,     // afficher les legendes (layers)
+ *          group : true,      // grouper les couches (layers)
+ *          sort : true,       // trier les couches (layers)
+ *          title : true       // afficher les titres des rubriques,
+ *          type : true,       // afficher le type de geometrie (layers)
+ *          pin : true,        // afficher la puce pour chaque couche (layers)
  *          visibility : true, // afficher l'icone de visibilité (layers),
- *          editable : true // active l'edition de la legende (legendes)
+ *          icon : {           // afficher l'icone "oeil" ou "checkbox" (layers),
+ *              "image" : true,
+ *              "anchor" : "start" // afficher l'icone au debut ou à la fin de la ligne
+ *          },
+ *          editable : true    // active l'edition de la legende (legendes)
  *      }
  *   });
  */
@@ -89,9 +94,6 @@ function Editor (options) {
     if (!(this instanceof Editor)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
-
-    // id unique
-    this.id = ID.generate();
 
     this._initialize();
 };
@@ -141,10 +143,15 @@ Editor.prototype._initialize = function () {
         filter : false,
         legend : false,
         group : false,
+        sort : true,
         title : true,
         type : true,
         pin : true,
         visibility : true,
+        icon : {
+            image : true,
+            anchor : "end"
+        },
         editable : true
     };
 
@@ -154,6 +161,9 @@ Editor.prototype._initialize = function () {
     }
 
     Utils.mergeParams(this.options.tools, _toolsDefault, false);
+
+    // id unique
+    this.id = this.options.id || ID.generate();
 
     this.layers = [];
 
@@ -165,7 +175,9 @@ Editor.prototype._initialize = function () {
         containerID : "GPEditorMapBoxContainer_ID_",
         containerLayers : "GPEditorMapBoxLayersContainer",
         titleLayers : "GPEditorMapBoxLayersTitle",
+        titleLayersID : "GPEditorMapBoxLayersTitle_ID_",
         titleThemes : "GPEditorMapBoxThemesTitle",
+        titleThemesID : "GPEditorMapBoxThemesTitle_ID_",
         sep : "GPEditorMapBoxSep"
     };
 
@@ -264,22 +276,22 @@ Editor.prototype._initContainer = function () {
     logger.trace(this.mapbox);
 
     // existance d'un autre container (editeur) ?
-    var _idx = 0;
-    var elements = document.querySelectorAll("div[id^=" + this.name.containerID + "]");
-    for (var j = 0; j < elements.length; j++) {
-        var element = elements[j];
-        var num = parseInt(element.id.substring(element.id.lastIndexOf("_") + 1), 10);
-        if (num > _idx) {
-            _idx = num;
-        }
-    }
-    if (elements.length) {
-        _idx += 1;
-    }
+    // var _idx = 0;
+    // var elements = document.querySelectorAll("div[id^=" + this.name.containerID + "]");
+    // for (var j = 0; j < elements.length; j++) {
+    //     var element = elements[j];
+    //     var num = parseInt(element.id.substring(element.id.lastIndexOf("_") + 1), 10);
+    //     if (num > _idx) {
+    //         _idx = num;
+    //     }
+    // }
+    // if (elements.length) {
+    //     _idx += 1;
+    // }
 
     // container principal de l'editeur
     var div = document.createElement("div");
-    div.id = this.name.containerID + _idx;
+    div.id = this.name.containerID + this.id;
     div.className = this.name.container;
 
     // Themes
@@ -288,7 +300,7 @@ Editor.prototype._initContainer = function () {
         // title
         if (this.options.tools.title) {
             var titleThemes = document.createElement("div");
-            titleThemes.id = this.name.titleThemes;
+            titleThemes.id = this.name.titleThemesID + this.id;
             titleThemes.className = this.name.titleThemes;
             titleThemes.innerHTML = "Liste des 'thèmes'";
             div.appendChild(titleThemes);
@@ -317,24 +329,39 @@ Editor.prototype._initContainer = function () {
                 // title
                 if (this.options.tools.title) {
                     var titleLayers = document.createElement("div");
-                    titleLayers.id = this.name.titleLayers;
+                    titleLayers.id = this.name.titleLayersID + this.id;
                     titleLayers.className = this.name.titleLayers;
                     titleLayers.innerHTML = (multisources) ? "Liste des 'couches' (" + source + ")" : "Liste des 'couches'";
                     div.appendChild(titleLayers);
                 }
             }
 
-            // tri des layers
+            // clone
             var _layers = this.mapbox.layers.slice();
-            _layers.sort(function (a, b) {
-                if (a.id < b.id) {
-                    return -1;
+            // gestion de l'ordre avant tri avec la metadata 'order'
+            _layers.forEach(function (layer, i) {
+                // ajout de la metadata d'ordre
+                var _metadata = layer["metadata"];
+                if (_metadata) {
+                    _metadata["geoportail:order"] = i;
+                } else {
+                    layer["metadata"] = {
+                        "geoportail:order" : i
+                    };
                 }
-                if (a.id > b.id) {
-                    return 1;
-                }
-                return 0;
             });
+            // tri des layers
+            if (this.options.tools.sort) {
+                _layers.sort(function (a, b) {
+                    if (a.id < b.id) {
+                        return -1;
+                    }
+                    if (a.id > b.id) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            }
 
             logger.trace("Layers : ", _layers);
 
@@ -433,15 +460,15 @@ Editor.prototype._initContainer = function () {
                             target = divLayers;
                         }
                     }
-
                     // Layers
                     if (this.options.tools.layers) {
                         var oLayer = new Layer({
                             id : this.id,
                             target : target,
-                            position : _idx + "_" + ii, // unique !
+                            position : ii + "_" + this.id, // unique !
                             tools : {
                                 visibility : this.options.tools.visibility,
+                                icon : this.options.tools.icon,
                                 type : this.options.tools.type,
                                 pin : this.options.tools.pin
                             },
@@ -492,7 +519,7 @@ Editor.prototype._initContainer = function () {
                         var oStyle = new Style({
                             id : this.id,
                             target : target,
-                            position : _idx + "_" + ii, // unique !,
+                            position : ii + "_" + this.id, // unique !,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,
@@ -515,7 +542,7 @@ Editor.prototype._initContainer = function () {
                         var oFilter = new Filter({
                             id : this.id,
                             target : target,
-                            position : _idx + "_" + ii, // unique !,
+                            position : ii + "_" + this.id, // unique !,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,

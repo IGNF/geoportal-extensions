@@ -21,11 +21,15 @@ var logger = Logger.getLogger("editor-layer");
  *      target : ...,
  *      position : 1, // identifiant de position (unique !)
  *      tools : {
- *          visibility : true, // afficher l'icone de visibilité
- *          type : true,       // afficher l'icone du type de geometrie
- *          pin : true,        // afficher l'icone de puce
- *          remove : false,    // TODO afficher l'icone de suppression
- *          clone : false      // TODO afficher l'icone de duplication
+ *          "visibility" : true, // afficher l'icone de visibilité
+ *          "icon" : {
+ *              "image" : true, // afficher l'icone "oeil" (defaut) ou une checkbox
+ *              "anchor" : "start" | "end"  // afficher l'icone au debut ou à la fin (defaut)
+ *          },
+ *          "type" : true,       // afficher l'icone du type de geometrie
+ *          "pin" : true,        // afficher l'icone de puce
+ *          "remove" : false,    // TODO afficher l'icone de suppression
+ *          "clone" : false      // TODO afficher l'icone de duplication
  *      },
  *      obj : {
  *          "id": "ocs - vegetation", // MANDATORY
@@ -94,6 +98,10 @@ Layer.prototype._initialize = function () {
 
     var _toolsDefault = {
         visibility : true,
+        icon : {
+            image : true,
+            anchor : "end"
+        },
         type : true,
         pin : true,
         remove : false, // TODO
@@ -145,7 +153,9 @@ Layer.prototype._initialize = function () {
         titlelabel : "GPEditorMapBoxLayerTitleLabel",
         containertools : "GPEditorMapBoxToolsContainer",
         visibilityinput : "GPEditorMapBoxToolsVisibilityInput",
-        visibilitylabel : "GPEditorMapBoxToolsVisibilityLabel"
+        visibilitylabel : "GPEditorMapBoxToolsVisibilityLabel",
+        visibilityinputdisable : "GPEditorMapBoxToolsVisibilityInputDisable",
+        visibilitylabeldisable : "GPEditorMapBoxToolsVisibilityLabelDisable"
     };
 };
 
@@ -187,15 +197,15 @@ Layer.prototype._initContainer = function () {
     divTitle.id = this.name.containertitle + "-" + this.options.position;
     divTitle.className = this.name.containertitle;
 
-    // input
-    var inputImage = document.createElement("input");
-    inputImage.id = this.name.imagelabelinput + "-" + this.options.position;
-    inputImage.className = this.name.imagelabelinput;
-    inputImage.type = "checkbox";
-    divTitle.appendChild(inputImage);
-
     // puce
-    if (this.options.tools.pin) {
+    if (this.options.tools.pin) { // Optionnel !
+        // input
+        var inputImage = document.createElement("input");
+        inputImage.id = this.name.imagelabelinput + "-" + this.options.position;
+        inputImage.className = this.name.imagelabelinput;
+        inputImage.type = "checkbox";
+        divTitle.appendChild(inputImage);
+        // puce
         var labelImage = document.createElement("label");
         labelImage.className = this.name.imagelabel;
         labelImage.htmlFor = inputImage.id;
@@ -209,6 +219,63 @@ Layer.prototype._initContainer = function () {
             });
         }
         divTitle.appendChild(labelImage);
+    }
+
+    // tools :
+    // visibility, (remove, clone)
+    var _addTools = function () {
+        var divTools = document.createElement("div");
+        divTools.id = this.name.containertools + "-" + this.options.position;
+        divTools.className = this.name.containertools;
+
+        // visibility
+        if (this.options.tools.visibility) {
+            var inputTools = document.createElement("input");
+            inputTools.id = this.name.visibilityinput + "-" + this.options.position;
+            inputTools.className = (this.options.tools.icon.image) ? this.name.visibilityinput : this.name.visibilityinputdisable;
+            inputTools.type = "checkbox";
+            inputTools.checked = "checked"; // par défaut, à modifier via visibility(true|false) !
+            // event for visibility change
+            if (inputTools.addEventListener) {
+                inputTools.addEventListener("click", function (e) {
+                    self.onVisibilityLayerMapBox(e);
+                });
+            } else if (inputTools.attachEvent) {
+                // internet explorer
+                inputTools.attachEvent("onclick", function (e) {
+                    self.onVisibilityLayerMapBox(e);
+                });
+            }
+            divTools.appendChild(inputTools);
+            // enregistrement utile pour la méthode : visibility()
+            this.DomVisibility = inputTools;
+
+            var labelTools = document.createElement("label");
+            labelTools.htmlFor = this.name.visibilityinput + "-" + this.options.position;
+            labelTools.id = this.name.visibilitylabel + "-" + this.options.position;
+            labelTools.className = (this.options.tools.icon.image) ? this.name.visibilitylabel : this.name.visibilitylabeldisable;
+            labelTools.title = "Afficher/masquer la couche";
+            divTools.appendChild(labelTools);
+
+            div.appendChild(divTools);
+        }
+
+        // clone
+        if (this.options.tools.clone) {
+            // TODO...
+            logger.warn("Dom for tools clone, it's not yet implemented !");
+        }
+
+        // remove
+        if (this.options.tools.remove) {
+            // TODO...
+            logger.warn("Dom for tools remove, it's not yet implemented !");
+        }
+    };
+
+    // ajout des outils au debut du composant
+    if (this.options.tools.icon.anchor === "start") {
+        _addTools.apply(this);
     }
 
     // type
@@ -284,54 +351,9 @@ Layer.prototype._initContainer = function () {
 
     div.appendChild(divTitle);
 
-    // tools :
-    // visibility, remove, clone
-    var divTools = document.createElement("div");
-    divTools.id = this.name.containertools + "-" + this.options.position;
-    divTools.className = this.name.containertools;
-
-    // visibility
-    if (this.options.tools.visibility) {
-        var inputTools = document.createElement("input");
-        inputTools.id = this.name.visibilityinput + "-" + this.options.position;
-        inputTools.className = this.name.visibilityinput;
-        inputTools.type = "checkbox";
-        inputTools.checked = "checked"; // par défaut, à modifier via visibility(true|false) !
-        // event for visibility change
-        if (inputTools.addEventListener) {
-            inputTools.addEventListener("click", function (e) {
-                self.onVisibilityLayerMapBox(e);
-            });
-        } else if (inputTools.attachEvent) {
-            // internet explorer
-            inputTools.attachEvent("onclick", function (e) {
-                self.onVisibilityLayerMapBox(e);
-            });
-        }
-        divTools.appendChild(inputTools);
-        // enregistrement utile pour la méthode : visibility()
-        this.DomVisibility = inputTools;
-
-        var labelTools = document.createElement("label");
-        labelTools.htmlFor = this.name.visibilityinput + "-" + this.options.position;
-        labelTools.id = this.name.visibilitylabel + "-" + this.options.position;
-        labelTools.className = this.name.visibilitylabel;
-        labelTools.title = "Afficher/masquer la couche";
-        divTools.appendChild(labelTools);
-
-        div.appendChild(divTools);
-    }
-
-    // clone
-    if (this.options.tools.clone) {
-        // TODO...
-        logger.warn("Dom for tools clone, it's not yet implemented !");
-    }
-
-    // remove
-    if (this.options.tools.remove) {
-        // TODO...
-        logger.warn("Dom for tools remove, it's not yet implemented !");
+    // ajout des outils au fin du composant
+    if (this.options.tools.icon.anchor === "end") {
+        _addTools.apply(this);
     }
 
     // main container
@@ -416,7 +438,9 @@ Layer.prototype.slotLegend = function () {
         var node = null;
         var nodesLvl1 = this.container.childNodes;
         if (nodesLvl1.length) {
-            var nodesLvl2 = nodesLvl1[0].childNodes;
+            // selon où se situe l'icone de visibilité : au debut ou à la fin...
+            var idx = (this.options.tools.icon.anchor === "start") ? 1 : 0;
+            var nodesLvl2 = nodesLvl1[idx].childNodes;
             // on recherche le container de la legende
             for (var i = 0; i < nodesLvl2.length; i++) {
                 var curnode = nodesLvl2[i];
@@ -546,7 +570,10 @@ Layer.prototype.onClickLayerMapBox = function (e) {
         document.getElementById(this.name.titleinput + id).checked = !checked;
     }
     if (e.target.htmlFor === this.name.titleinput + id) {
-        document.getElementById(this.name.imagelabelinput + id).checked = !checked;
+        // si options.pin:false, ce DOM n'existe pas !
+        if (document.getElementById(this.name.imagelabelinput + id)) {
+            document.getElementById(this.name.imagelabelinput + id).checked = !checked;
+        }
     }
 
     // ouverture du panneau des styles / filtres

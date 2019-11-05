@@ -30,6 +30,7 @@
             // themes en échec car chemin vide !
             var themes2 = new ol.style.editor.Themes({
                 obj: {
+                    "themesSummary" : "themes2",
                     "themes" : [{
                         "thumbnail" : "", // path ?
                         "name" : "", // name ?
@@ -40,25 +41,26 @@
             });
             themes2.add();
 
-            // themes sans imagette et avec radiobouton !
+            // themes sans imagette et avec radiobutton !
             var themes3 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
+                    "themesSummary" : "themes3",
                     "themes" : [
                     {
-                        "name" : "style standard 1",
+                        "name" : "style standard 31",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "description"  : "description 1"
+                        "description"  : "description 31"
                     },
                     {
-                        "name" : "style standard 2",
+                        "name" : "style standard 32",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "description"  : "description 2"
+                        "description"  : "description 32"
                     },
                     {
-                        "name" : "style standard 3",
+                        "name" : "style standard 33",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "description"  : "description 3"
+                        "description"  : "description 33"
                     },
                 ]
                 },
@@ -69,27 +71,28 @@
             var themes4 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 obj: {
+                    "themesSummary" : "themes4",
                     "themes" : [
                     {
                         "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
-                        "name" : "standard0",
+                        "name" : "standard40",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/style0.json",
-                        "description"  : "description du 1er theme !",
+                        "description"  : "selection du 1er theme !",
                         "selected" : true
                     },
                     {
                         "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
-                        "name" : "standard1",
+                        "name" : "standard41",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
                     },
                     {
                         "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
-                        "name" : "standard2",
+                        "name" : "standard42",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
                     },
                     {
                         "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
-                        "name" : "standard3",
+                        "name" : "standard43",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
                     }
                 ]
@@ -97,26 +100,29 @@
             });
             themes4.add();
 
-            // themes reussi avec option !
+            // themes reussi avec option : sans boutons !
             var themes5 = new ol.style.editor.Themes({
                 target: document.getElementById("themes"),
                 tools : {
                     thumbnails: false,
-                    radiobutton: false
+                    button : {
+                        visible : false
+                    }
                 },
                 obj: {
+                    "themesSummary" : "themes5",
                     "themes" : [
                     {
                         "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
-                        "name" : "style standard 1",
+                        "name" : "style standard 51",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "description"  : "description 1"
+                        "description"  : "description 51"
                     },
                     {
                         "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
-                        "name" : "style standard 2",
+                        "name" : "style standard 52",
                         "url" : "{{ resources }}/data/mapbox/themes/styles/null",
-                        "description"  : "description 2",
+                        "description"  : "description 52",
                         "selected" : true
                     }
                 ]
@@ -124,12 +130,51 @@
             });
             themes5.add();
 
+            // themes reussi avec option : avec boutons checkbox !
+            var themes6 = new ol.style.editor.Themes({
+                target: document.getElementById("themes"),
+                tools : {
+                    thumbnails: true,
+                    button : {
+                        visible : true,
+                        type : "checkbox"
+                    }
+                },
+                obj: {
+                    "themesSummary" : "themes6",
+                    "themes" : [
+                    {
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                        "name" : "style standard 61",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 61"
+                    },
+                    {
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                        "name" : "style standard 62",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 62",
+                        "selected" : true
+                    },
+                    {
+                        "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
+                        "name" : "style standard 33",
+                        "url" : "{{ resources }}/data/mapbox/themes/styles/null",
+                        "description"  : "description 13",
+                        "selected" : false
+                    }
+                ]
+                },
+            });
+            themes6.add();
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 themes1.display(true);
                 themes2.display(true);
                 themes3.display(true);
                 themes4.display(true);
                 themes5.display(true);
+                themes6.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
@@ -137,7 +182,8 @@
                 themes2.display(false);
                 themes3.display(false);
                 themes4.display(false);
-                themes5.display(true);
+                themes5.display(false);
+                themes6.display(false);
             });
 
             </script>

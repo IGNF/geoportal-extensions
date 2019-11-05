@@ -130,7 +130,7 @@
             });
             legend.add();
             layers4.addLegend(legend);
-            // layers4.slotLegend(); // integration de la legende dans le container du layers !
+            layers4.slotLegend(); // integration de la legende dans le container du layers !
 
             var layers5 = new ol.style.editor.Layer({
                 target: document.getElementById("layers"),
@@ -203,6 +203,43 @@
                 }
             });
 
+            // layers
+            var layers8 = new ol.style.editor.Layer({
+                target: document.getElementById("layers"),
+                tools : {
+                    visibility : true,
+                    icon : {
+                        image : false,
+                        anchor : "start"
+                    },
+                    type : false,
+                    pin : false,
+                    remove : false,
+                    clone : false
+                },
+                position : 8,
+                obj: {
+                    id : "Titre8 (Geometrie/Type/Pin false + Image false + Anchor start)",
+                    "source-layer" : "Description8",
+                    type: "symbol"
+                },
+            });
+            layers8.add();
+            console.log("visibility 8 : ", layers8.visibility());
+            layers8.addLegend(new ol.style.editor.Legend({
+                id : 778, // id unique !
+                target: document.getElementById("layers"),
+                obj : {
+                    "title" : "Legende...",
+                    "editable" : false,
+                    "paint" : {
+                      "fill-color": "#FF00FF",
+                      "fill-opacity": 0.5
+                    }
+                }
+            }).add());
+            layers8.slotLegend();
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 layers0.display(true);
                 layers1.display(true);
@@ -211,6 +248,8 @@
                 layers4.display(true);
                 layers5.display(true);
                 layers6.display(true);
+                layers7.display(true);
+                layers8.display(true);
             });
 
             document.getElementById("displayFalse").addEventListener("click", function () {
@@ -221,6 +260,8 @@
                 layers4.display(false);
                 layers5.display(false);
                 layers6.display(false);
+                layers7.display(false);
+                layers8.display(false);
             });
 
             </script>

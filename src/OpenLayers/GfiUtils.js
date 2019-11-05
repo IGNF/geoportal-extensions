@@ -1,10 +1,10 @@
 // import OpenLayers
 import Overlay from "ol/Overlay";
-// import VectorTileSource from "ol/source/VectorTile";
-// import VectorSource from "ol/source/Vector";
-// import TileWMSSource from "ol/source/TileWMS";
-// import WMTSSource from "ol/source/WMTS";
-// import ImageWMSSource from "ol/source/ImageWMS";
+import VectorTileSource from "ol/source/VectorTile";
+import VectorSource from "ol/source/Vector";
+import TileWMSSource from "ol/source/TileWMS";
+import WMTSSource from "ol/source/WMTS";
+import ImageWMSSource from "ol/source/ImageWMS";
 import {
     Select as SelectInteraction,
     Modify as ModifyInteraction,
@@ -30,25 +30,30 @@ var GfiUtils = {
      *
      */
     getLayerFormat : function (l) {
-        var type = l.getType();
+        // la fonction 'getType' existe uniquement en mode source es6.
+        // le bundle ol ne fournit pas cette fonction !?
+        var type = (typeof l.getType === "function") ? l.getType() : null;
         var source = l.getSource();
-        // if (source instanceof TileWMSSource || source instanceof ImageWMSSource) {
-        //     return "wms";
-        // }
-        // if (source instanceof WMTSSource) {
-        //     return "wmts";
-        // }
-        // if (source instanceof VectorSource || source instanceof VectorTileSource) {
-        //     return "vector";
-        // }
-        if (type === "VECTOR" || type === "VECTOR_TILE") {
-            return "vector";
-        }
-        if (type === "TILE") {
-            if (source.tileGrid) {
-                return "wmts";
-            } else {
+        if (type) {
+            if (type === "VECTOR" || type === "VECTOR_TILE") {
+                return "vector";
+            }
+            if (type === "TILE") {
+                if (source.tileGrid) {
+                    return "wmts";
+                } else {
+                    return "wms";
+                }
+            }
+        } else {
+            if (source instanceof TileWMSSource || source instanceof ImageWMSSource) {
                 return "wms";
+            }
+            if (source instanceof WMTSSource) {
+                return "wmts";
+            }
+            if (source instanceof VectorSource || source instanceof VectorTileSource) {
+                return "vector";
             }
         }
         return "unknown";
@@ -384,8 +389,18 @@ var GfiUtils = {
 
                     var _res = map.getView().getResolution();
                     var _url = null;
+                    // FIXME
+                    // en fonction de la version d'openlayers, la méthode est differente :
+                    // - getGetFeatureInfoUrl en v5
+                    // - getFeatureInfoUrl en v6
+                    // mais, il y'a une surcharge de cette méthode qui pose quelques soucis...
+                    // (cf. src/OpenLayers/Source/WMTS.js), il faudra investiguer dès que nous
+                    // passerons en v6.0.0...
+                    var _getFeatureInfoUrl = (typeof l.getSource().getFeatureInfoUrl === "function")
+                        ? l.getSource().getFeatureInfoUrl : l.getSource().getGetFeatureInfoUrl;
+
                     if (format === "wmts") {
-                        _url = l.getSource().getGetFeatureInfoUrl(
+                        _url = _getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
                             map.getView().getProjection(), {
@@ -393,7 +408,7 @@ var GfiUtils = {
                             }
                         );
                     } else {
-                        _url = l.getSource().getGetFeatureInfoUrl(
+                        _url = _getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
                             map.getView().getProjection(), {

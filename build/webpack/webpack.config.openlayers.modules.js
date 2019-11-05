@@ -355,6 +355,7 @@ module.exports = (env, argv) => {
                         path.join(ROOT, "samples-src", "config.json"),
                         {
                             mode : suffix,
+                            version : pkg.dependencies["ol"] === 'latest' ? pkg.dependencies["ol"] : 'v' + pkg.dependencies["ol"].match(/(\d+\.\d+\.\d+)/)[0]
                         }
                     ]
                 }
