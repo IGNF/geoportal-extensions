@@ -93,6 +93,30 @@ var CRS = {
     },
 
     /**
+    * Load a custom definition projection
+    * @param {String} name - ie. EPSG:2154 (Lambert)
+    */
+    loadByName : function (name) {
+        logger.trace("Loading a custom definition projection : {}", name);
+        // loading except if it's already loaded...
+        if (!Register.isLoaded) {
+            // load defs by default into proj4
+            Register.loadByName(Proj4, name);
+            try {
+                // register all defs
+                register(Proj4);
+                // Expose proj4 with custom defs into OpenLayers global variable
+                if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                    window.ol.proj.proj4.register(Proj4);
+                }
+            } catch (e) {
+                // FIXME ?
+                // console.error(e);
+            }
+        }
+    },
+
+    /**
      * Overload OpenLayers ol.proj parameters,
      * to manage EPSG:2154 extent restriction
      */

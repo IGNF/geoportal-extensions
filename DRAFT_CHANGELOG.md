@@ -13,6 +13,8 @@
 
 * [Added]
 
+    - enregistrement auto des projections dans le contrôle MousePosition
+
 * [Changed]
 
     - Adaptation des exemples pour pointer sur la version courante d'openlayers
@@ -25,6 +27,7 @@
 
     - correctifs sur l'editeur de styles (mapbox)
     - correctifs sur le contrôle GetFeatureInfo
+    - correctifs CSS sur le contrôle MousePosition
 
 * [Security]
 
