@@ -348,7 +348,9 @@ Gp.Services.getConfig(...)
 ### Versions de OpenLayers supportées
 
 Les dernières **versions 3.0.z de l'extension Géoportail pour OpenLayers** peut s'utiliser avec les **versions 5.0.3 et supérieures** d'OpenLayers.
-La compatibilité avec les **versions 4.0.z** n'est assurée que par les **versions antérieures à l'extension Géoportail pour OpenLayers 2.1.2**.
+
+La compatibilité avec les **versions 4.0.z** n'est assurée que par les **versions 2.1.2 et antérieures de l'extension Géoportail pour OpenLayers**.
+
 Le support des versions d'OpenLayers antérieures à la version 3.14 n'a pas été complètement testé.
 
 
