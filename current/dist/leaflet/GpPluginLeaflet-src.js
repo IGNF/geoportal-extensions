@@ -37381,6 +37381,9 @@ var Register = {
   },
   // definitions
   EPSG: {
+    // 4978 : "+proj=geocent +datum=WGS84 +units=m +no_defs ",
+    3857: "+title=WGS 84 / Pseudo-Mercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs",
+    3785: "+title=WGS 84 / Pseudo-Mercator (deprecated) +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs",
     4149: "+title=CH1903 +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
     4150: "+title=CH1903plus +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
     4151: "+title=CHTRF95 +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs ",
