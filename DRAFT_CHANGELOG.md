@@ -14,6 +14,7 @@
 * [Added]
 
     - enregistrement auto des projections dans le contrôle MousePosition
+    - surcharge de la fonction *ol.proj.proj4.register* afin de corriger les projections geocentriques (creation de la classe *CRS/Proj4.js*).
 
 * [Changed]
 

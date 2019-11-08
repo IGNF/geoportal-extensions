@@ -114,7 +114,8 @@ module.exports = (env, argv) => {
                         "ol/structs/LRUCache",
                         "ol/events/Target",
                         "ol/Disposable",
-                        "ol/functions"
+                        "ol/functions",
+                        "ol/proj/transforms"
                     ].includes(request)) {
                         // console.log("#### IN : ", request);
                         return callback();

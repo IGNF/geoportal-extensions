@@ -645,9 +645,10 @@ var MousePosition = (function (Control) {
         // la liste des systèmes à afficher
         // Ex. this.options.systems
 
+        // FIXME doit on charger des projections par defaut dans ce composant ?
         // chargement des projections par defaut
-        CRS.loadByDefault();
-        CRS.overload();
+        // CRS.loadByDefault();
+        // CRS.overload();
 
         // systemes de projection disponible par defaut
         var projectionSystemsByDefault = [{
