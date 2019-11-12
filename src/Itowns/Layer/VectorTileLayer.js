@@ -1,6 +1,8 @@
 import Logger from "../../Common/Utils/LoggerByDefault";
+import Config from "../../Common/Utils/Config";
+
 import {
-    TMSSource as ItTMSSource,
+    VectorTilesSource as ItVectorTilesSource,
     ColorLayer as ItColorLayer
 } from "itowns";
 /* import Extent from "itowns/Core/Geographic/Extent";
@@ -17,15 +19,15 @@ var logger = Logger.getLogger("vectorTileLayer");
  * @alias itowns.layer.VectorTileLayer
  * @param {Object} options - options for function call.
  * @param {String} options.id - id to give to the layer
- * @param {String} options.style - Url to the vector Tile json style
- * @param {String} options.url - Url to the pbf file
- * @param {Object} [options.filter] - Filter applied to the vector layer style
- * @param {Object} [options.attributions] - Atrtributions of the layer
+ * @param {String} options.layer - Layer name (e.g. "PLAN.IGN")
+ * @param {String} [options.url] - Url to the vector Tile json style
+ * @param {String} [options.urlService] - Url to the pbf file. Retrieved in the style file by default.
+ * @param {Function} [options.filter] - Filter applied to the vector layer style. Fill/Line layer type by default.
+ * @param {Object} [options.attributions] - Attributions of the layer.
  * @param {Object} [options.zoom] - Between which zoom levels the layer is displayed (zoom.min and zoom.max)
  * @example
  * var vectorTileLayer = new itowns.layer.VectorTileLayer({
- *      style : parsedStyleObject,
- *      url : "./myPBFLayer/${z}/${x}/${y}.pbf"
+ *      layer : "PLAN.IGN"
  * });
  */
 function VectorTileLayer (options) {
@@ -34,76 +36,48 @@ function VectorTileLayer (options) {
     }
 
     // check layer params
-    if (!options.url) {
-        throw new Error("ERROR PARAM_MISSING : url");
+    if (!options.layer) {
+        throw new Error("ERROR PARAM_MISSING : layer");
     }
-    if (typeof options.url !== "string") {
-        throw new Error("ERROR WRONG TYPE : url");
-    }
-
-    if (typeof options.style !== "object") {
-        throw new Error("ERROR WRONG_TYPE : options.style should be an object");
+    if (typeof options.layer !== "string") {
+        throw new Error("ERROR WRONG TYPE : layer");
     }
 
-    // filter the layers to display
-    var supportedLayers = filterLayers(options.style.layers, options.filter);
-    var backgroundLayer;
-
-    function filterLayers(layers, filter) {
-        // filter the layers to display
-        var supportedLayers = [];
-        if (!filter) {
-            layers.forEach(function(layer) {
-                supportedLayers.push(layer);
-            });
-        } else {
-            layers.forEach(function(layer) {
-                if (layer.type == "fill" || layer.type == "line") {
-                    supportedLayers.push(layer);
-                }
-                // if (layer.type === 'background') {
-                //     backgroundLayer = layer;
-                // } else if (['fill', 'line'].indexOf(layer.type) >= 0 &&
-                //     ['landcover', 'water', 'boundary', 'transportation', 'park'].indexOf(layer['source-layer']) >= 0 &&
-                //     layer.id.indexOf('bridge') < 0 &&
-                //     layer.id.indexOf('tunnel') < 0 &&
-                //     layer.id.indexOf('admin_sub') < 0) {
-                //     supportedLayers.push(layer);
-                // }
-            });
-        }
-        return supportedLayers;
+    // Check if configuration is loaded
+    if (!Config.isConfigLoaded()) {
+        throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
     }
 
-    function inter(z) {
-        return z - (z % 5);
-    };
-    
-    function isValidData(data, extentDestination) {
-        const isValid = inter(extentDestination.zoom) == inter(data.extent.zoom);
-        return isValid;
-    };
-    
-    // create the vector Tile Layer Source
-    var mvtSource = new ItTMSSource({
-        // eslint-disable-next-line no-template-curly-in-string
-        url: options.url,
-        format: 'application/x-protobuf;type=mapbox-vector',
-        attribution: options.attributions,
-        zoom: options.zoom,
-        tileMatrixSet: 'PM',
-        projection: 'EPSG:3857',
-        isInverted: true,
-    })
+    var layerId = Config.getLayerId(options.layer, "TMS");
 
-    // Return a styled vector tile layer
-    return new ItColorLayer(options.id, {
-        isValidData: isValidData,
-        source: mvtSource,
-        filter: supportedLayers,
-        backgroundLayer,
-        // fx: 2.5,
-    });
+    if (layerId && Config.configuration.getLayerConf(layerId)) {
+            var config = {};
+            var tmsParams = Config.getLayerParams(options.layer, "TMS", options.apiKey);
+
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        var protocol = options.ssl === false ? "http://" : "https://";
+        
+        config.id = layerId;
+
+        config.source = new ItVectorTilesSource({
+            style: tmsParams.url.replace(/(http|https):\/\//, protocol),
+            url: options.urlService,
+            attribution: options.attributions,
+            filter: options.filter || function (layer) { return ['fill', 'line'].includes(layer.type) },
+            zoom: options.zoom
+        });
+
+        // FIXME wait for next itowns release to remove this
+        config.isValidData = function() { 
+            return false;
+        };
+
+        return new ItColorLayer(config.id, config);
+    } else {
+        // If layer is not in Gp.Config
+        logger.error("ERROR layer id (layer name: " + options.layer + " / service: TMS ) was not found !?");
+    }   
 };
 
 /*
