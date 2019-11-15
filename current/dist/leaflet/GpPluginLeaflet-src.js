@@ -1903,6 +1903,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     // Slightly dubious tricks to cut down minimized file size
     var noop = function() {};
     var undefinedType = "undefined";
+    var isIE = (typeof window !== undefinedType) && (
+        /Trident\/|MSIE /.test(window.navigator.userAgent)
+    );
 
     var logMethods = [
         "trace",
@@ -1929,6 +1932,19 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
         }
     }
 
+    // Trace() doesn't print the message in IE, so for that case we need to wrap it
+    function traceForIE() {
+        if (console.log) {
+            if (console.log.apply) {
+                console.log.apply(console, arguments);
+            } else {
+                // In old IE, native console methods themselves don't have apply().
+                Function.prototype.apply.apply(console.log, [console, arguments]);
+            }
+        }
+        if (console.trace) console.trace();
+    }
+
     // Build the best logging method possible for this env
     // Wherever possible we want to bind, not wrap, to preserve stack traces
     function realMethod(methodName) {
@@ -1938,6 +1954,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
         if (typeof console === undefinedType) {
             return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
+        } else if (methodName === 'trace' && isIE) {
+            return traceForIE;
         } else if (console[methodName] !== undefined) {
             return bindMethod(console, methodName);
         } else if (console.log !== undefined) {
@@ -47881,20 +47899,20 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
         title: "Numéro",
         filter: false,
         sep: false,
-        value: "____" // {
-        //     name : "insee",
-        //     title : "Code commune (INSEE)",
-        //     filter : false,
-        //     sep : false
-        // },
-        // {
-        //     name : "municipality",
-        //     title : "Ville",
-        //     filter : false,
-        //     sep : false
-        // }
-
-      }],
+        value: "____"
+      } // {
+      //     name : "insee",
+      //     title : "Code commune (INSEE)",
+      //     filter : false,
+      //     sep : false
+      // },
+      // {
+      //     name : "municipality",
+      //     title : "Ville",
+      //     filter : false,
+      //     sep : false
+      // }
+      ],
       Administratif: [{
         name: "prefecture",
         title: "Préfecture",
