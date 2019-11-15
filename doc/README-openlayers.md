@@ -10,7 +10,7 @@
     + [Récupération avec NPM](#récupération-avec-npm)
     + [Accès direct](#accès-direct)
   * [Intégration dans une page web](#intégration-dans-une-page-web)
-  * [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-geoportail)
+  * [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
     + [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
   * [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
 - [Compatibilités](#compatibilités)

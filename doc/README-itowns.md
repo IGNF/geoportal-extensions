@@ -30,7 +30,7 @@
     + [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
     + [Exemple d'utilisation](#exemple-dutilisation-3)
   * [Affichage des couches MNT WMTS Géoportail pour affichage du relief](#affichage-des-couches-mnt-wmts-géoportail-pour-affichage-du-relief)
-    + [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-geoportail-pour-afficher-un-mnt)
+    + [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail-pour-afficher-un-mnt)
     + [Exemple d'utilisation](#exemple-dutilisation-4)
     + [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-2)
     + [Exemple d'utilisation](#exemple-dutilisation-5)
