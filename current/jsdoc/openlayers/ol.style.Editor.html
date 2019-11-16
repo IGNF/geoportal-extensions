@@ -1873,9 +1873,15 @@
             
                 <div class="l3 itemMembers" data-name="ol.style.Editor#getID"> <a href="ol.style.Editor.html#getID">getID</a> </div>
             
+                <div class="l3 itemMembers" data-name="ol.style.Editor#getLayer"> <a href="ol.style.Editor.html#getLayer">getLayer</a> </div>
+            
+                <div class="l3 itemMembers" data-name="ol.style.Editor#getLayerFromStyle"> <a href="ol.style.Editor.html#getLayerFromStyle">getLayerFromStyle</a> </div>
+            
                 <div class="l3 itemMembers" data-name="ol.style.Editor#getLayers"> <a href="ol.style.Editor.html#getLayers">getLayers</a> </div>
             
                 <div class="l3 itemMembers" data-name="ol.style.Editor#getStyle"> <a href="ol.style.Editor.html#getStyle">getStyle</a> </div>
+            
+                <div class="l3 itemMembers" data-name="ol.style.Editor#getStyleLayer"> <a href="ol.style.Editor.html#getStyleLayer">getStyleLayer</a> </div>
             
 
 <!--
@@ -1889,9 +1895,15 @@
             
                 <li data-name="getID"><a href="ol.style.Editor.html#getID">getID</a></li>
             
+                <li data-name="getLayer"><a href="ol.style.Editor.html#getLayer">getLayer</a></li>
+            
+                <li data-name="getLayerFromStyle"><a href="ol.style.Editor.html#getLayerFromStyle">getLayerFromStyle</a></li>
+            
                 <li data-name="getLayers"><a href="ol.style.Editor.html#getLayers">getLayers</a></li>
             
                 <li data-name="getStyle"><a href="ol.style.Editor.html#getStyle">getStyle</a></li>
+            
+                <li data-name="getStyleLayer"><a href="ol.style.Editor.html#getStyleLayer">getStyleLayer</a></li>
             
             </ul>
 -->
@@ -2389,7 +2401,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Editor.js, line 86
+            OpenLayers/Controls/Editor.js, line 87
         </div>
         
     </div>
@@ -2532,21 +2544,21 @@
                  "button": { visible : true, type : "checkbox" }
              },
          },
-         layers : true,     // afficher les couches (layers)
-         style : true,      // afficher les styles (sous menu layers)
-         filter : true,     // afficher les filtres (sous menu layers)
-         legend : true,     // afficher les legendes (layers)
-         group : true,      // grouper les couches (layers)
-         sort : true,       // trier les couches (layers)
-         title : true       // afficher les titres des rubriques,
-         type : true,       // afficher le type de geometrie (layers)
-         pin : true,        // afficher la puce pour chaque couche (layers)
-         visibility : true, // afficher l'icone de visibilité (layers),
-         icon : {           // afficher l'icone "oeil" ou "checkbox" (layers),
+         layers : true | false,     // afficher les couches (layers)
+         style : true | false,      // afficher les styles (sous menu layers)
+         filter : true | false,     // afficher les filtres (sous menu layers)
+         legend : true | false,     // afficher les legendes (layers)
+         group : true | false,      // grouper les couches (layers)
+         sort : true | false,       // trier les couches (layers)
+         title : true | false       // afficher les titres des rubriques,
+         type : true | false,       // afficher le type de geometrie (layers)
+         pin : true | false,        // afficher la puce pour chaque couche (layers)
+         visibility : true | false, // afficher l'icone de visibilité (layers),
+         icon : {                   // afficher l'icone "oeil" ou "checkbox" (layers),
              "image" : true,
              "anchor" : "start" // afficher l'icone au debut ou à la fin de la ligne
          },
-         editable : true    // active l'edition de la legende (legendes)
+         editable : true | false    // active l'edition de la legende (legendes)
      }
   });</code></pre>
     
@@ -2583,7 +2595,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Editor.js, line 592
+            OpenLayers/Controls/Editor.js, line 623
         </div>
         
     </div>
@@ -2700,7 +2712,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Editor.js, line 608
+            OpenLayers/Controls/Editor.js, line 639
         </div>
         
     </div>
@@ -2781,7 +2793,7 @@ element
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Editor.js, line 600
+            OpenLayers/Controls/Editor.js, line 631
         </div>
         
     </div>
@@ -2851,14 +2863,14 @@ element
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="getLayers">
+        <h4 class="name" id="getLayer">
             
-            getLayers<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array}</span>
+            getLayer<span class="signature">(i)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
         </h4>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Editor.js, line 625
+            OpenLayers/Controls/Editor.js, line 703
         </div>
         
     </div>
@@ -2869,7 +2881,269 @@ element
     
     
     <div class="description">
-        <p>Get Layers</p>
+        <p>Get the layer object from a list sorted or not (see options.tools.sort)</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">i</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>index</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>{<a href="ol.style.editor.Layer.html">ol.style.editor.Layer</a>}</li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+object</li>
+</ul>
+<br />
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getLayerFromStyle">
+            
+            getLayerFromStyle<span class="signature">(i)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            OpenLayers/Controls/Editor.js, line 675
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get layer object from json style</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">i</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>index into style json</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+MapBox of a layers
+<br />
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getLayers">
+            
+            getLayers<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            OpenLayers/Controls/Editor.js, line 693
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get a list of layer object sorted or not (see options.tools.sort)</p>
     </div>
     
 
@@ -2947,7 +3221,7 @@ of layer object</li>
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Editor.js, line 616
+            OpenLayers/Controls/Editor.js, line 647
         </div>
         
     </div>
@@ -2958,7 +3232,7 @@ of layer object</li>
     
     
     <div class="description">
-        <p>Get Style</p>
+        <p>Get Style (json)</p>
     </div>
     
 
@@ -3017,6 +3291,133 @@ MapBox
     
 </dd>
 
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getStyleLayer">
+            
+            getStyleLayer<span class="signature">(i)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            OpenLayers/Controls/Editor.js, line 656
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Get layer style (json)</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">i</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>index</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+MapBox of a layers
+<br />
+
+
+    
+    
+    
+</dd>
+
         </dl>
     
     
@@ -3039,7 +3440,7 @@ MapBox
     <footer>
         Geoportail - Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Nov 15 2019 16:49:25 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Nov 16 2019 11:40:16 GMT+0000 (UTC)
     </footer>
 
 

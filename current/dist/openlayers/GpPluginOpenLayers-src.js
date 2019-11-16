@@ -39471,6 +39471,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ol_proj_Projection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(186);
 /* harmony import */ var ol_proj_Projection__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ol_proj_Projection__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(147);
+// En attente d'une release sur les projections geocentriques...
+// https://github.com/proj4js/proj4js/issues/195
+// https://github.com/proj4js/proj4js/pull/327
 
 
 
@@ -77578,13 +77581,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Editor_Legend__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(262);
 /* harmony import */ var _Editor_Layer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(263);
 /* harmony import */ var _Editor_Group__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(264);
-/* harmony import */ var _Common_Controls_Editor_EditorDOM__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(265);
+/* harmony import */ var _Editor_Event__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(259);
+/* harmony import */ var _Common_Controls_Editor_EditorDOM__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(265);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 // import CSS
  // import library
 
  // import local
+
 
 
 
@@ -77646,21 +77651,21 @@ var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_4__["default
  *                  "button": { visible : true, type : "checkbox" }
  *              },
  *          },
- *          layers : true,     // afficher les couches (layers)
- *          style : true,      // afficher les styles (sous menu layers)
- *          filter : true,     // afficher les filtres (sous menu layers)
- *          legend : true,     // afficher les legendes (layers)
- *          group : true,      // grouper les couches (layers)
- *          sort : true,       // trier les couches (layers)
- *          title : true       // afficher les titres des rubriques,
- *          type : true,       // afficher le type de geometrie (layers)
- *          pin : true,        // afficher la puce pour chaque couche (layers)
- *          visibility : true, // afficher l'icone de visibilité (layers),
- *          icon : {           // afficher l'icone "oeil" ou "checkbox" (layers),
+ *          layers : true | false,     // afficher les couches (layers)
+ *          style : true | false,      // afficher les styles (sous menu layers)
+ *          filter : true | false,     // afficher les filtres (sous menu layers)
+ *          legend : true | false,     // afficher les legendes (layers)
+ *          group : true | false,      // grouper les couches (layers)
+ *          sort : true | false,       // trier les couches (layers)
+ *          title : true | false       // afficher les titres des rubriques,
+ *          type : true | false,       // afficher le type de geometrie (layers)
+ *          pin : true | false,        // afficher la puce pour chaque couche (layers)
+ *          visibility : true | false, // afficher l'icone de visibilité (layers),
+ *          icon : {                   // afficher l'icone "oeil" ou "checkbox" (layers),
  *              "image" : true,
  *              "anchor" : "start" // afficher l'icone au debut ou à la fin de la ligne
  *          },
- *          editable : true    // active l'edition de la legende (legendes)
+ *          editable : true | false    // active l'edition de la legende (legendes)
  *      }
  *   });
  */
@@ -77680,7 +77685,7 @@ function Editor(options) {
 
 ; // on récupère les méthodes de la classe DOM
 
-_Common_Utils__WEBPACK_IMPORTED_MODULE_2__["default"].assign(Editor.prototype, _Common_Controls_Editor_EditorDOM__WEBPACK_IMPORTED_MODULE_11__["default"]);
+_Common_Utils__WEBPACK_IMPORTED_MODULE_2__["default"].assign(Editor.prototype, _Common_Controls_Editor_EditorDOM__WEBPACK_IMPORTED_MODULE_12__["default"]);
 /**
  * Constructor (alias)
  *
@@ -77912,17 +77917,23 @@ Editor.prototype._initContainer = function () {
 
 
       var _layers = this.mapbox.layers.slice(); // gestion de l'ordre avant tri avec la metadata 'order'
+      // une fois les layers triés, la metadata:geoportail:order permet
+      // de savoir l'emplacement du layers dans le fichier de style.
 
 
-      _layers.forEach(function (layer, i) {
+      _layers.forEach(function (layer, order) {
+        // on écarte les layers sans source: ex. "background"
+        // if (!layer.source) {
+        //     return;
+        // }
         // ajout de la metadata d'ordre
         var _metadata = layer["metadata"];
 
         if (_metadata) {
-          _metadata["geoportail:order"] = i;
+          _metadata["geoportail:order"] = order;
         } else {
           layer["metadata"] = {
-            "geoportail:order": i
+            "geoportail:order": order
           };
         }
       }); // tri des layers
@@ -77947,27 +77958,38 @@ Editor.prototype._initContainer = function () {
       var _groups = {}; // liste et comptage des layers dans les groupes
 
       _layers.forEach(function (layer) {
-        var _title = layer.id; // separateur
+        // on écarte les layers sans source: ex. "background"
+        // if (!layer.source) {
+        //     return;
+        // }
+        // balise metadata
+        var _metadata = layer["metadata"]; // s'il existe déjà une meta de groupe, on l'utilise...
+        // sinon, on la met en place.
 
-        var _regex = /_|-|:|=/; // TODO à definir via une option !
-        // index
-        // y'a t il un separateur ?
-
-        var _idx = _title.search(_regex);
-
-        var _groupName = _idx !== -1 ? _title.substring(0, _idx).trim() : _title; // on compte le nombre d'entrée dans un groupe
-
-
-        _groups[_groupName] = _groups[_groupName] ? _groups[_groupName] + 1 : 1; // ajout de la metadata de groupe
-
-        var _metadata = layer["metadata"];
-
-        if (_metadata) {
-          _metadata["geoportail:group"] = _groupName;
+        if (_metadata && _metadata["geoportail:group"]) {
+          var _groupName = _metadata["geoportail:group"];
+          _groups[_groupName] = _groups[_groupName] ? _groups[_groupName] + 1 : 1;
         } else {
-          layer["metadata"] = {
-            "geoportail:group": _groupName
-          };
+          var _title = layer.id; // separateur
+
+          var _regex = /_|-|:|=/; // TODO à definir via une option !
+          // index
+          // y'a t il un separateur ?
+
+          var _idx = _title.search(_regex);
+
+          var _newGroupName = _idx !== -1 ? _title.substring(0, _idx).trim() : _title; // on compte le nombre d'entrée dans un groupe
+
+
+          _groups[_newGroupName] = _groups[_newGroupName] ? _groups[_newGroupName] + 1 : 1; // ajout de la metadata de groupe
+
+          if (_metadata) {
+            _metadata["geoportail:group"] = _newGroupName;
+          } else {
+            layer["metadata"] = {
+              "geoportail:group": _newGroupName
+            };
+          }
         }
       });
 
@@ -77997,10 +78019,14 @@ Editor.prototype._initContainer = function () {
       //    "fill-color": "#2BB3E1"
       //  }
 
+      var index = -1;
+
       for (var ii = 0; ii < _layers.length; ii++) {
-        var data = _layers[ii]; // traitement dans l'ordre des sources
+        var data = _layers[ii];
+        index++; // traitement dans l'ordre des sources
 
         if (data.source === source) {
+          // FIXME la gestion des groupes est à revoir...
           // Groups
           if (this.options.tools.group) {
             var mtd = data.metadata; // creation du container de groupe
@@ -78043,7 +78069,7 @@ Editor.prototype._initContainer = function () {
             var oLayer = new _Editor_Layer__WEBPACK_IMPORTED_MODULE_9__["default"]({
               id: this.id,
               target: target,
-              position: ii + "_" + this.id,
+              position: index + "_" + this.id,
               // unique !
               tools: {
                 visibility: this.options.tools.visibility,
@@ -78104,7 +78130,7 @@ Editor.prototype._initContainer = function () {
             var oStyle = new _Editor_Style__WEBPACK_IMPORTED_MODULE_5__["default"]({
               id: this.id,
               target: target,
-              position: ii + "_" + this.id,
+              position: index + "_" + this.id,
               // unique !,
               obj: {
                 "id": data.id,
@@ -78131,7 +78157,7 @@ Editor.prototype._initContainer = function () {
             var oFilter = new _Editor_Filter__WEBPACK_IMPORTED_MODULE_7__["default"]({
               id: this.id,
               target: target,
-              position: ii + "_" + this.id,
+              position: index + "_" + this.id,
               // unique !,
               obj: {
                 "id": data.id,
@@ -78145,6 +78171,12 @@ Editor.prototype._initContainer = function () {
             if (oLayer) {
               oLayer.addFilter(oFilter);
             }
+          }
+        } else {
+          // on ecarte un layer car il n'est pas reconnu dans la source
+          // on decremente la position du layer
+          if (index >= 0) {
+            index--;
           }
         }
       }
@@ -78168,7 +78200,10 @@ Editor.prototype._initContainer = function () {
 
   if (this.container) {
     this.options.target.appendChild(this.container);
-  }
+  } // dispatch event
+
+
+  eventbusjs__WEBPACK_IMPORTED_MODULE_1___default.a.dispatch(_Editor_Event__WEBPACK_IMPORTED_MODULE_11__["default"].onloaded, this);
 }; // ################################################################### //
 // ##################### public methods ############################## //
 // ################################################################### //
@@ -78202,7 +78237,7 @@ Editor.prototype.getContainer = function () {
   return this.container;
 };
 /**
- * Get Style
+ * Get Style (json)
  * @returns {Object} Style MapBox
  */
 
@@ -78211,7 +78246,52 @@ Editor.prototype.getStyle = function () {
   return this.mapbox;
 };
 /**
- * Get Layers
+ * Get layer style (json)
+ * @param {Number} i - index
+ * @returns {Object} Style MapBox of a layers
+ */
+
+
+Editor.prototype.getStyleLayer = function (i) {
+  var layer = null;
+  var o = this.getLayer(i);
+  var id = o.options.obj.id;
+
+  for (var k = 0; k < this.mapbox.layers.length; k++) {
+    var l = this.mapbox.layers[k];
+
+    if (l.id === id) {
+      layer = l;
+      break;
+    }
+  }
+
+  return layer;
+};
+/**
+ * Get layer object from json style
+ * @param {Number} i - index into style json
+ * @returns {Object} Style MapBox of a layers
+ */
+
+
+Editor.prototype.getLayerFromStyle = function (i) {
+  var layer = null;
+  var l = this.mapbox.layers[i];
+
+  for (var k = 0; k < this.getLayers().length; k++) {
+    var o = this.getLayer(k);
+
+    if (l.id === o.options.obj.id) {
+      layer = o;
+      break;
+    }
+  }
+
+  return layer;
+};
+/**
+ * Get a list of layer object sorted or not (see options.tools.sort)
  * @returns {Array} - List of layer object
  * @see {ol.style.editor.Layer}
  */
@@ -78219,6 +78299,17 @@ Editor.prototype.getStyle = function () {
 
 Editor.prototype.getLayers = function () {
   return this.layers;
+};
+/**
+ * Get the layer object from a list sorted or not (see options.tools.sort)
+ * @param {Number} i - index
+ * @returns {Object} - layer object
+ * @see {ol.style.editor.Layer}
+ */
+
+
+Editor.prototype.getLayer = function (i) {
+  return this.layers[i];
 }; // ################################################################### //
 // ####################### handlers events to dom #################### //
 // ################################################################### //
@@ -78745,6 +78836,7 @@ __webpack_require__.r(__webpack_exports__);
 * @property {Event} "editor:themes:onclickimage" - event ...
 * @property {Event} "editor:themes:onclicktitle" - event ...
 * @property {Event} "editor:group:oncollapse" - event ...
+* @property {Event} "editor:onloaded" - event ...
 *
 * @example
 * // dispatch event
@@ -78753,6 +78845,8 @@ __webpack_require__.r(__webpack_exports__);
 * EventBus.addEventListener(EventEditor.layer.visibility, function (e) {...}, this);
 */
 var EventEditor = {
+  /** evenement sur la fin de chargement de l'editeur */
+  onloaded: "editor:onloaded",
   layer: {
     /** evenement sur la visibilité : clic sur le bouton 'oeil' */
     onclickvisibility: "editor:layer:onclickvisibility",
@@ -79621,11 +79715,11 @@ Legend.prototype._initialize = function () {
   this.editable = typeof _editable !== "undefined" ? _editable : false; // liste des caractéristiques de la legende
 
   this.legendRender = {
-    type: "line",
+    type: "fill",
     values: {
       width: 1,
       stroke: "#FFFFFF",
-      color: "#000000",
+      color: "#FFFFFF",
       opacity: 1
     }
   }; // DOM : pointer
@@ -79740,7 +79834,7 @@ Legend.prototype._initContainer = function () {
 
 
   if (!bFound) {
-    if (this._getValues("line", _style)) {
+    if (this._getValues("fill", _style)) {
       params = {
         edit: this.editable,
         title: _obj.title || "",
