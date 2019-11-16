@@ -1,34 +1,34 @@
 # Extension Géoportail pour OpenLayers
 
-[![release](https://img.shields.io/badge/release%20-ol%203.0.4-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.0.4)
+[![release](https://img.shields.io/badge/release%20-ol%203.0.5-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.0.5)
 
 <!-- toc -->
 
 - [Mise en oeuvre](#mise-en-oeuvre)
-  * [Téléchargement](#telechargement)
-    + [Téléchargement direct](#telechargement-direct)
-    + [Récupération avec NPM](#recuperation-avec-npm)
-    + [Accès direct](#acces-direct)
-  * [Intégration dans une page web](#integration-dans-une-page-web)
-  * [Configuration de l'accès à la plateforme Géoportail](#configuration-de-lacces-a-la-plateforme-geoportail)
+  * [Téléchargement](#téléchargement)
+    + [Téléchargement direct](#téléchargement-direct)
+    + [Récupération avec NPM](#récupération-avec-npm)
+    + [Accès direct](#accès-direct)
+  * [Intégration dans une page web](#intégration-dans-une-page-web)
+  * [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
     + [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
   * [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
-- [Compatibilités](#compatibilites)
-  * [Versions de OpenLayers supportées](#versions-de-openlayers-supportees)
-  * [Navigateurs supportés](#navigateurs-supportes)
-- [Fonctionnalités](#fonctionnalites)
-  * [Systèmes de coordonnées](#systemes-de-coordonnees)
-  * [Affichage des couche WMTS Géoportail](#affichage-des-couche-wmts-geoportail)
-    + [Utilisation d'un layer WMTS Géoportail](#utilisation-dun-layer-wmts-geoportail)
+- [Compatibilités](#compatibilités)
+  * [Versions de OpenLayers supportées](#versions-de-openlayers-supportées)
+  * [Navigateurs supportés](#navigateurs-supportés)
+- [Fonctionnalités](#fonctionnalités)
+  * [Systèmes de coordonnées](#systèmes-de-coordonnées)
+  * [Affichage des couches WMTS Géoportail](#affichage-des-couche-wmts-géoportail)
+    + [Utilisation d'un layer WMTS Géoportail](#utilisation-dun-layer-wmts-géoportail)
       - [Exemple d'utilisation](#exemple-dutilisation)
       - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154)
-    + [Utilisation d'une source WMTS Géoportail](#utilisation-dune-source-wmts-geoportail)
+    + [Utilisation d'une source WMTS Géoportail](#utilisation-dune-source-wmts-géoportail)
       - [Exemple d'utilisation](#exemple-dutilisation-1)
       - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154-1)
-  * [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-geoportail)
-    + [Utilisation d'un layer WMS Géoportail](#utilisation-dun-layer-wms-geoportail)
+  * [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
+    + [Utilisation d'un layer WMS Géoportail](#utilisation-dun-layer-wms-géoportail)
       - [Exemple d'utilisation](#exemple-dutilisation-2)
-    + [Utilisation d'une source WMS Géoportail](#utilisation-dune-source-wms-geoportail)
+    + [Utilisation d'une source WMS Géoportail](#utilisation-dune-source-wms-géoportail)
       - [Exemple d'utilisation](#exemple-dutilisation-3)
   * [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
     + [Exemples d'utilisation](#exemples-dutilisation)
@@ -36,13 +36,13 @@
   * [Barre de recherche](#barre-de-recherche)
     + [Exemples d'utilisation](#exemples-dutilisation-1)
       - [Utilisation simple](#utilisation-simple-1)
-  * [Calculs d'itinéraires](#calculs-ditineraires)
+  * [Calculs d'itinéraires](#calculs-ditinéraires)
     + [Exemples d'utilisation](#exemples-dutilisation-2)
       - [Utilisation simple](#utilisation-simple-2)
   * [Calculs d'isochrones / isodistances](#calculs-disochrones--isodistances)
     + [Exemples d'utilisation](#exemples-dutilisation-3)
       - [Utilisation simple](#utilisation-simple-3)
-  * [Coordonnées et altitude en un point de la carte](#coordonnees-et-altitude-en-un-point-de-la-carte)
+  * [Coordonnées et altitude en un point de la carte](#coordonnées-et-altitude-en-un-point-de-la-carte)
     + [Exemples d'utilisation](#exemples-dutilisation-4)
       - [Utilisation simple](#utilisation-simple-4)
   * [Affichage dynamique des attributions](#affichage-dynamique-des-attributions)
@@ -57,13 +57,13 @@
   * [Widget d'import de couches](#widget-dimport-de-couches)
     + [Exemples d'utilisation](#exemples-dutilisation-8)
       - [Utilisation simple](#utilisation-simple-8)
-  * [Profil altimétrique le long d'un traçé](#profil-altimetrique-le-long-dun-trace)
+  * [Profil altimétrique le long d'un traçé](#profil-altimétrique-le-long-dun-traçé)
     + [Exemples d'utilisation](#exemples-dutilisation-9)
       - [Utilisation simple](#utilisation-simple-9)
   * [Outils de mesures](#outils-de-mesures)
     + [Exemples d'utilisation](#exemples-dutilisation-10)
       - [Utilisation simple](#utilisation-simple-10)
-  * [Accès aux informations attributaires des couches](#acces-aux-informations-attributaires-des-couches)
+  * [Accès aux informations attributaires des couches](#accès-aux-informations-attributaires-des-couches)
     + [Exemples d'utilisation](#exemples-dutilisation-11)
       - [Utilisation simple pour une seule couche](#utilisation-simple-pour-une-seule-couche)
 
@@ -417,7 +417,7 @@ NB :
 
 <a id="WMTS"/>
 
-### Affichage des couche WMTS Géoportail
+### Affichage des couches WMTS Géoportail
 
 Le modèle de données OpenLayers fait la distinction entre la notion de couche (ol.layer) et la notion de source de données (ol.source). Ainsi, une carte OpenLayers est constituée d'un empilement de "ol.layer", avec des propriétés relatives à leurs visibilité sur la carte, dont le contenu est alimenté par des "ol.source", avec des propriétés relatives à la manière d'obtenir ces données.
 
