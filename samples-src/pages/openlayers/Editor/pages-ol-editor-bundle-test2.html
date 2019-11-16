@@ -1,0 +1,67 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Themes Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des themes MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="editor">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            var editor = new ol.style.Editor({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/qwant.json",
+                events : {
+                    "editor:onloaded" : function (editor) {
+                        if (editor.target.id === this.getID()) {
+                            console.log("editor:onloaded", editor);
+                            this.getLayer(0).visible();
+                            this.getLayer(1).visible();
+                            this.getLayer(2).visible();
+                            this.getLayer(3).visible();
+                            console.log(this.getLayer(2));
+                            console.log(this.getStyleLayer(2));
+                            console.log(this.getLayerFromStyle(41));
+                            this.getLayer(2).display(false);
+                        }
+                    }
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    icon : {
+                        image : false,
+                        anchor : "start"
+                    },
+                    pin : false,
+                    type : false,
+                    filter : false,
+                    style : false,
+                    legend : true,
+                    group : true,
+                    editable : false
+                }
+            });
+
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                editor.display(true);
+            });
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                editor.display(false);
+            });
+            </script>
+{{/content}}
+{{/extend}}

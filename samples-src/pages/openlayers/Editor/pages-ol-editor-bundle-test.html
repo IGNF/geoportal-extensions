@@ -113,7 +113,12 @@
                 style: "{{ resources }}/data/mapbox/styles/mapbox.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
-                        console.log(this.getID(), e);
+                        console.log("editor:themes:onclicktitle", this.getID(), e);
+                    },
+                    "editor:onloaded" : function (editor) {
+                        if (editor.target.id === this.getID()) {
+                            console.log("editor:onloaded", editor);
+                        }
                     }
                 },
                 tools : {
@@ -133,7 +138,12 @@
                 style: "{{ resources }}/data/mapbox/styles/qwant.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
-                        console.log(this.getID(), e);
+                        console.log("editor:themes:onclicktitle", this.getID(), e);
+                    },
+                    "editor:onloaded" : function (editor) {
+                        if (editor.target.id === this.getID()) {
+                            console.log("editor:onloaded", editor);
+                        }
                     }
                 },
                 tools : {

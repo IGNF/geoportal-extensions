@@ -1,3 +1,6 @@
+// En attente d'une release sur les projections geocentriques...
+// https://github.com/proj4js/proj4js/issues/195
+// https://github.com/proj4js/proj4js/pull/327
 import {
     addCoordinateTransforms,
     addProjection,

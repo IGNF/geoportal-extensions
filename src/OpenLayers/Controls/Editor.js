@@ -12,6 +12,7 @@ import Filter from "./Editor/Filter";
 import Legend from "./Editor/Legend";
 import Layer from "./Editor/Layer";
 import Group from "./Editor/Group";
+import Event from "./Editor/Event";
 // DOM
 import EditorDOM from "../../Common/Controls/Editor/EditorDOM";
 
@@ -65,21 +66,21 @@ var logger = Logger.getLogger("editor");
  *                  "button": { visible : true, type : "checkbox" }
  *              },
  *          },
- *          layers : true,     // afficher les couches (layers)
- *          style : true,      // afficher les styles (sous menu layers)
- *          filter : true,     // afficher les filtres (sous menu layers)
- *          legend : true,     // afficher les legendes (layers)
- *          group : true,      // grouper les couches (layers)
- *          sort : true,       // trier les couches (layers)
- *          title : true       // afficher les titres des rubriques,
- *          type : true,       // afficher le type de geometrie (layers)
- *          pin : true,        // afficher la puce pour chaque couche (layers)
- *          visibility : true, // afficher l'icone de visibilité (layers),
- *          icon : {           // afficher l'icone "oeil" ou "checkbox" (layers),
+ *          layers : true | false,     // afficher les couches (layers)
+ *          style : true | false,      // afficher les styles (sous menu layers)
+ *          filter : true | false,     // afficher les filtres (sous menu layers)
+ *          legend : true | false,     // afficher les legendes (layers)
+ *          group : true | false,      // grouper les couches (layers)
+ *          sort : true | false,       // trier les couches (layers)
+ *          title : true | false       // afficher les titres des rubriques,
+ *          type : true | false,       // afficher le type de geometrie (layers)
+ *          pin : true | false,        // afficher la puce pour chaque couche (layers)
+ *          visibility : true | false, // afficher l'icone de visibilité (layers),
+ *          icon : {                   // afficher l'icone "oeil" ou "checkbox" (layers),
  *              "image" : true,
  *              "anchor" : "start" // afficher l'icone au debut ou à la fin de la ligne
  *          },
- *          editable : true    // active l'edition de la legende (legendes)
+ *          editable : true | false    // active l'edition de la legende (legendes)
  *      }
  *   });
  */
@@ -339,14 +340,20 @@ Editor.prototype._initContainer = function () {
             // clone
             var _layers = this.mapbox.layers.slice();
             // gestion de l'ordre avant tri avec la metadata 'order'
-            _layers.forEach(function (layer, i) {
+            // une fois les layers triés, la metadata:geoportail:order permet
+            // de savoir l'emplacement du layers dans le fichier de style.
+            _layers.forEach(function (layer, order) {
+                // on écarte les layers sans source: ex. "background"
+                // if (!layer.source) {
+                //     return;
+                // }
                 // ajout de la metadata d'ordre
                 var _metadata = layer["metadata"];
                 if (_metadata) {
-                    _metadata["geoportail:order"] = i;
+                    _metadata["geoportail:order"] = order;
                 } else {
                     layer["metadata"] = {
-                        "geoportail:order" : i
+                        "geoportail:order" : order
                     };
                 }
             });
@@ -368,24 +375,38 @@ Editor.prototype._initContainer = function () {
             // gestion des groupes avec la metadata de groupe
             var _groups = {}; // liste et comptage des layers dans les groupes
             _layers.forEach(function (layer) {
-                var _title = layer.id;
-                // separateur
-                var _regex = /_|-|:|=/; // TODO à definir via une option !
-                // index
-                // y'a t il un separateur ?
-                var _idx = _title.search(_regex);
-                var _groupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
-                // on compte le nombre d'entrée dans un groupe
-                _groups[_groupName] = (_groups[_groupName])
-                    ? _groups[_groupName] + 1 : 1;
-                // ajout de la metadata de groupe
+                // on écarte les layers sans source: ex. "background"
+                // if (!layer.source) {
+                //     return;
+                // }
+                // balise metadata
                 var _metadata = layer["metadata"];
-                if (_metadata) {
-                    _metadata["geoportail:group"] = _groupName;
+                // s'il existe déjà une meta de groupe, on l'utilise...
+                // sinon, on la met en place.
+                if (_metadata && _metadata["geoportail:group"]) {
+                    var _groupName = _metadata["geoportail:group"];
+                    _groups[_groupName] = (_groups[_groupName])
+                        ? _groups[_groupName] + 1 : 1;
                 } else {
-                    layer["metadata"] = {
-                        "geoportail:group" : _groupName
-                    };
+                    var _title = layer.id;
+                    // separateur
+                    var _regex = /_|-|:|=/; // TODO à definir via une option !
+                    // index
+                    // y'a t il un separateur ?
+                    var _idx = _title.search(_regex);
+                    var _newGroupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
+                    // on compte le nombre d'entrée dans un groupe
+                    _groups[_newGroupName] = (_groups[_newGroupName])
+                        ? _groups[_newGroupName] + 1 : 1;
+
+                    // ajout de la metadata de groupe
+                    if (_metadata) {
+                        _metadata["geoportail:group"] = _newGroupName;
+                    } else {
+                        layer["metadata"] = {
+                            "geoportail:group" : _newGroupName
+                        };
+                    }
                 }
             });
 
@@ -418,12 +439,14 @@ Editor.prototype._initContainer = function () {
             //  "paint": {
             //    "fill-color": "#2BB3E1"
             //  }
-
+            var index = -1;
             for (var ii = 0; ii < _layers.length; ii++) {
                 var data = _layers[ii];
+                index++;
 
                 // traitement dans l'ordre des sources
                 if (data.source === source) {
+                    // FIXME la gestion des groupes est à revoir...
                     // Groups
                     if (this.options.tools.group) {
                         var mtd = data.metadata;
@@ -465,7 +488,7 @@ Editor.prototype._initContainer = function () {
                         var oLayer = new Layer({
                             id : this.id,
                             target : target,
-                            position : ii + "_" + this.id, // unique !
+                            position : index + "_" + this.id, // unique !
                             tools : {
                                 visibility : this.options.tools.visibility,
                                 icon : this.options.tools.icon,
@@ -519,7 +542,7 @@ Editor.prototype._initContainer = function () {
                         var oStyle = new Style({
                             id : this.id,
                             target : target,
-                            position : ii + "_" + this.id, // unique !,
+                            position : index + "_" + this.id, // unique !,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,
@@ -542,7 +565,7 @@ Editor.prototype._initContainer = function () {
                         var oFilter = new Filter({
                             id : this.id,
                             target : target,
-                            position : ii + "_" + this.id, // unique !,
+                            position : index + "_" + this.id, // unique !,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,
@@ -554,6 +577,12 @@ Editor.prototype._initContainer = function () {
                         if (oLayer) {
                             oLayer.addFilter(oFilter);
                         }
+                    }
+                } else {
+                    // on ecarte un layer car il n'est pas reconnu dans la source
+                    // on decremente la position du layer
+                    if (index >= 0) {
+                        index--;
                     }
                 }
             }
@@ -578,6 +607,8 @@ Editor.prototype._initContainer = function () {
     if (this.container) {
         this.options.target.appendChild(this.container);
     }
+    // dispatch event
+    EventBus.dispatch(Event.onloaded, this);
 };
 
 // ################################################################### //
@@ -610,7 +641,7 @@ Editor.prototype.getContainer = function () {
 };
 
 /**
- * Get Style
+ * Get Style (json)
  * @returns {Object} Style MapBox
  */
 Editor.prototype.getStyle = function () {
@@ -618,12 +649,59 @@ Editor.prototype.getStyle = function () {
 };
 
 /**
- * Get Layers
+ * Get layer style (json)
+ * @param {Number} i - index
+ * @returns {Object} Style MapBox of a layers
+ */
+Editor.prototype.getStyleLayer = function (i) {
+    var layer = null;
+    var o = this.getLayer(i);
+    var id = o.options.obj.id;
+    for (var k = 0; k < this.mapbox.layers.length; k++) {
+        var l = this.mapbox.layers[k];
+        if (l.id === id) {
+            layer = l;
+            break;
+        }
+    }
+    return layer;
+};
+
+/**
+ * Get layer object from json style
+ * @param {Number} i - index into style json
+ * @returns {Object} Style MapBox of a layers
+ */
+Editor.prototype.getLayerFromStyle = function (i) {
+    var layer = null;
+    var l = this.mapbox.layers[i];
+    for (var k = 0; k < this.getLayers().length; k++) {
+        var o = this.getLayer(k);
+        if (l.id === o.options.obj.id) {
+            layer = o;
+            break;
+        }
+    }
+    return layer;
+};
+
+/**
+ * Get a list of layer object sorted or not (see options.tools.sort)
  * @returns {Array} - List of layer object
  * @see {ol.style.editor.Layer}
  */
 Editor.prototype.getLayers = function () {
     return this.layers;
+};
+
+/**
+ * Get the layer object from a list sorted or not (see options.tools.sort)
+ * @param {Number} i - index
+ * @returns {Object} - layer object
+ * @see {ol.style.editor.Layer}
+ */
+Editor.prototype.getLayer = function (i) {
+    return this.layers[i];
 };
 // ################################################################### //
 // ####################### handlers events to dom #################### //
