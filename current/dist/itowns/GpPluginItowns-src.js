@@ -27447,7 +27447,7 @@ GlobeViewExtended.prototype.getTargetElement = function () {
 
 
 GlobeViewExtended.prototype.getScale = function () {
-  return this.getGlobeView().controls.getScale();
+  return this.getGlobeView().getScale();
 };
 /**
  * Sets tilt
