@@ -1,12 +1,37 @@
 {
-   "peerDependencies" : {},
-   "directories" : {},
-   "author" : "IGNF",
+   "main" : "dist/GpPluginItowns-src.js",
    "description" : "French Geoportal Extensions for iTowns",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+   "bundleDependencies" : [],
+   "directories" : {},
+   "dependencies" : {
+      "sortablejs" : "1.8.4",
+      "proj4" : "2.5.0",
+      "loglevel" : "~1.6.1",
+      "three" : "~0.109.0",
+      "request" : "^2.83.0",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "^2.1.6",
+      "itowns" : "2.16.0",
+      "three.meshline" : "~1.2.0"
    },
+   "peerDependencies" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "module" : "src/Itowns/index.js",
+   "devDependencies" : {},
+   "version" : "2.2.4",
+   "date" : "29/11/2019",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "license" : "CECILL-B",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -14,32 +39,7 @@
       "README.md",
       "package.json"
    ],
-   "main" : "dist/GpPluginItowns-src.js",
-   "bundleDependencies" : [],
-   "date" : "16/10/2019",
-   "version" : "2.2.4",
-   "scripts" : {},
-   "dependencies" : {
-      "three" : "~0.109.0",
-      "three.meshline" : "~1.2.0",
-      "sortablejs" : "1.8.4",
-      "itowns" : "2.15.3",
-      "geoportal-access-lib" : "^2.1.6",
-      "loglevel" : "~1.6.1",
-      "proj4" : "2.5.0",
-      "xmldom" : "^0.1.27",
-      "request" : "^2.83.0"
-   },
-   "license" : "CECILL-B",
-   "module" : "src/Itowns/index.js",
-   "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "bugs" : {},
-   "name" : "geoportal-extensions-itowns",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ]
+   "author" : "IGNF",
+   "name" : "geoportal-extensions-itowns"
 }
