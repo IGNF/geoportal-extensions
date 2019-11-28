@@ -56,8 +56,7 @@
                         ssl: true
                     }));
 
-                    // Ajout couche Vecteur tuilé par itowns
-
+                    // Ajout couche Vecteur tuilé par itowns (fx: 2.5 => transparent)
                     var mvtSource = new itowns.VectorTilesSource({
                         style: '../../resources/itowns/planign.json',
                         filter: function (layer) { return ['fill', 'line'].includes(layer.type) },
@@ -67,12 +66,13 @@
                         },
                     });
 
-                    var mvtLayer = new itowns.ColorLayer('MVT', {
+                    var mvtLayer = new itowns.ColorLayer('PlanIGN', {
+                        //FIXME wait for next itowns release to remove this
                         isValidData: function() {
                             return false;
                         },
-                        source: mvtSource,
-                        fx: 2.5,
+                        source: mvtSource
+                        //fx: 2.5,
                     });
                 
                     globeView.addLayer(mvtLayer);
@@ -111,9 +111,9 @@
             }
 
             Gp.Services.getConfig({
-                serverUrl : "./../../resources/AutoConf_VT.js",
+                // serverUrl : "./../../resources/AutoConf.js",
                 callbackSuffix : '',
-                // apiKey: "{{ apikey }}",
+                apiKey: "{{ apikey }}",
                 timeOut: 20000,
                 onSuccess: createMap
             });
