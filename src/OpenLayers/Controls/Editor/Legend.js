@@ -99,7 +99,7 @@ Legend.prototype._initialize = function () {
         values : {
             width : 1,
             stroke : "#FFFFFF",
-            color : "#FFFFFF",
+            color : "#000000",
             opacity : 1
         }
     };

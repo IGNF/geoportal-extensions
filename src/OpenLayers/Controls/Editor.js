@@ -360,10 +360,24 @@ Editor.prototype._initContainer = function () {
             // tri des layers
             if (this.options.tools.sort) {
                 _layers.sort(function (a, b) {
-                    if (a.id < b.id) {
+                    // FIXME si on utilise les groupements utilisateurs, ils doivent
+                    // tous renseignés sinon...
+                    var cmpA = null;
+                    var cmpB = null;
+                    if (a["metadata"] &&
+                        a["metadata"]["geoportail:group"] &&
+                        b["metadata"] &&
+                        b["metadata"]["geoportail:group"]) {
+                        cmpA = a["metadata"]["geoportail:group"];
+                        cmpB = b["metadata"]["geoportail:group"];
+                    } else {
+                        cmpA = a.id;
+                        cmpB = b.id;
+                    }
+                    if (cmpA < cmpB) {
                         return -1;
                     }
-                    if (a.id > b.id) {
+                    if (cmpA > cmpB) {
                         return 1;
                     }
                     return 0;
