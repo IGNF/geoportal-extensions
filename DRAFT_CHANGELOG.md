@@ -1,8 +1,8 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.5
+# Extension Geoportail OpenLayers, version 3.0.6
 
-**28/14/2019**
+**22/11/2019**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
@@ -30,9 +30,9 @@
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.4
+# Extension Geoportail Itowns, version 2.2.5
 
-**16/10/2019**
+**22/11/2019**
 > Release Extension Geoportail Itowns
 
 ## Summary
@@ -49,13 +49,15 @@
 
 * [Fixed]
 
+    - retrait de l'utilisation de la fonction dépréciée par iTowns "controls.getScale()"
+
 * [Security]
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.5
+# Extension Geoportail Leaflet, version 2.1.6
 
-**16/10/2019**
+**22/11/2019**
 > Release Extension Geoportail Leaflet
 
 ## Summary
