@@ -647,7 +647,7 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
     var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
     if (geoCoord) {
         // buffer around the click inside we retrieve the features
-        var precision = this.getGlobeView().controls.pixelsToDegrees(5);
+        var precision = this.getGlobeView().pixelsToDegrees(5);
         for (var i = 0; i < vectorLayers.length; i++) {
             var idx;
             var layer = vectorLayers[i];
