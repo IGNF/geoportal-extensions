@@ -1,27 +1,5 @@
 {
-   "main" : "dist/GpPluginItowns-src.js",
-   "description" : "French Geoportal Extensions for iTowns",
-   "bundleDependencies" : [],
-   "directories" : {},
-   "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "proj4" : "2.5.0",
-      "loglevel" : "~1.6.1",
-      "three" : "~0.109.0",
-      "request" : "^2.83.0",
-      "xmldom" : "^0.1.27",
-      "geoportal-access-lib" : "^2.1.6",
-      "itowns" : "2.16.0",
-      "three.meshline" : "~1.2.0"
-   },
-   "peerDependencies" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
    "module" : "src/Itowns/index.js",
-   "devDependencies" : {},
-   "version" : "2.2.4",
    "date" : "29/11/2019",
    "keywords" : [
       "geoportail",
@@ -29,17 +7,39 @@
       "javascript",
       "Itowns"
    ],
+   "version" : "2.2.4",
    "license" : "CECILL-B",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "directories" : {},
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
    "scripts" : {},
+   "devDependencies" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "bugs" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "name" : "geoportal-extensions-itowns",
+   "bundleDependencies" : [],
+   "dependencies" : {
+      "loglevel" : "~1.6.1",
+      "xmldom" : "^0.1.27",
+      "itowns" : "2.16.0",
+      "three.meshline" : "~1.2.0",
+      "geoportal-access-lib" : "^2.1.6",
+      "sortablejs" : "1.8.4",
+      "request" : "^2.83.0",
+      "three" : "~0.109.0",
+      "proj4" : "2.5.0"
+   },
+   "main" : "dist/GpPluginItowns-src.js",
+   "author" : "IGNF",
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ],
-   "bugs" : {},
-   "author" : "IGNF",
-   "name" : "geoportal-extensions-itowns"
+   ]
 }
