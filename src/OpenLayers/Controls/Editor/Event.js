@@ -16,6 +16,7 @@
 * @property {Event} "editor:themes:onclickimage" - event ...
 * @property {Event} "editor:themes:onclicktitle" - event ...
 * @property {Event} "editor:group:oncollapse" - event ...
+* @property {Event} "editor:onloaded" - event ...
 *
 * @example
 * // dispatch event
@@ -24,6 +25,8 @@
 * EventBus.addEventListener(EventEditor.layer.visibility, function (e) {...}, this);
 */
 var EventEditor = {
+    /** evenement sur la fin de chargement de l'editeur */
+    onloaded : "editor:onloaded",
     layer : {
         /** evenement sur la visibilité : clic sur le bouton 'oeil' */
         onclickvisibility : "editor:layer:onclickvisibility",

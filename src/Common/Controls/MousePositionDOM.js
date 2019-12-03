@@ -489,6 +489,8 @@ var MousePositionDOM = {
     _createShowMousePositionSettingsElement : function (display) {
         var list = [];
 
+        var context = this;
+
         var input = document.createElement("input");
         input.type = "checkbox";
         input.id = this._addUID("GPshowMousePositionSettings");
@@ -499,6 +501,19 @@ var MousePositionDOM = {
         label.title = "Réglages";
         label.className = "GPshowMoreOptionsImage GPshowMoreOptions GPshowMousePositionSettingsPicto"; // FIXME classname and id ?
         label.style.display = display ? "block" : "none";
+        if (label.addEventListener) {
+            label.addEventListener("click", function (e) {
+                if (typeof context.onShowMousePositionSettingsClick === "function") {
+                    context.onShowMousePositionSettingsClick(e);
+                }
+            }, false);
+        } else if (label.attachEvent) {
+            label.attachEvent("onclick", function (e) {
+                if (typeof context.onShowMousePositionSettingsClick === "function") {
+                    context.onShowMousePositionSettingsClick(e);
+                }
+            });
+        }
 
         list.push(input);
         list.push(label);

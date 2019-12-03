@@ -1,0 +1,51 @@
+{
+    "college":{
+        "width": 35,
+        "height": 44,
+        "x": 0,
+        "y": 0,
+        "pixelRatio": 1
+    },
+    "elementaire":{
+        "width": 35,
+        "height": 44,
+        "x": 35,
+        "y": 0,
+        "pixelRatio": 1
+    },
+    "enseignement_specialise":{
+        "width": 35,
+        "height": 44,
+        "x": 70,
+        "y": 0,
+        "pixelRatio": 1
+    },
+    "lycee":{
+        "width": 35,
+        "height": 44,
+        "x": 105,
+        "y": 0,
+        "pixelRatio": 1
+    },
+    "recherche":{
+        "width": 35,
+        "height": 44,
+        "x": 175,
+        "y": 0,
+        "pixelRatio": 1
+    },
+    "maternelle":{
+        "width": 35,
+        "height": 44,
+        "x": 140,
+        "y": 0,
+        "pixelRatio": 1
+    },
+    "universite":{
+        "width": 35,
+        "height": 44,
+        "x": 210,
+        "y": 0,
+        "pixelRatio": 1
+    }
+}

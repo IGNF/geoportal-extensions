@@ -32,7 +32,7 @@ last
 
 * leaflet
 
-└── leaflet@1.3.1
+└── leaflet@1.5.1
 
 > upgrade to 1.4.0
 
@@ -43,9 +43,7 @@ last
 
 * "itowns"
 
-└── "itowns@2.13.1"
-
-> upgrade to 2.5.0
+└── "itowns@2.15.3"
 
 * loglevel
 

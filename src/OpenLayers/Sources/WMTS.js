@@ -67,7 +67,7 @@ var WMTS = (function (WMTSSource) {
             var tmpTileCoord = [0, 0, 0]; /* Note : [z(zoomLevel),x,y] */
             var tmpExtent = olCreateEmpty();
             var x = tileCoord[1];
-            var y = -tileCoord[2] - 1;
+            var y = -tileCoord[2] - 1; // FIXME : v6.0.0, on utilise "var y = tileCoord[2];"
             var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
             var projectionExtent = projection.getExtent();
             var extent = projectionExtent;

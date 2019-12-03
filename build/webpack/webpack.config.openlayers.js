@@ -102,7 +102,8 @@ module.exports = (env, argv) => {
                         "ol/structs/LRUCache",
                         "ol/events/Target",
                         "ol/Disposable",
-                        "ol/functions"
+                        "ol/functions",
+                        "ol/proj/transforms"
                     ].includes(request)) {
                         // console.log("#### IN : ", request);
                         return callback();
@@ -384,7 +385,8 @@ module.exports = (env, argv) => {
                     context : [
                         path.join(ROOT, "samples-src", "config.json"),
                         {
-                            mode : suffix
+                            mode : suffix,
+                            version : pkg.dependencies["ol"] === 'latest' ? pkg.dependencies["ol"] : 'v' + pkg.dependencies["ol"].match(/(\d+\.\d+\.\d+)/)[0]
                         }
                     ]
                 }

@@ -176,6 +176,10 @@ input[type="checkbox"]:checked + .GPEditorMapBoxLayerTitleLabel {
 .GPEditorMapBoxToolsVisibilityInput {
     display: none;
 }
+.GPEditorMapBoxToolsVisibilityInputDisable {
+    display: "block";
+}
+
 .GPEditorMapBoxToolsVisibilityLabel {
     width: 28px;
     height: 28px;
@@ -185,6 +189,10 @@ input[type="checkbox"]:checked + .GPEditorMapBoxLayerTitleLabel {
     background-position: -28px 0;
     /* background-color: white; */
 }
+.GPEditorMapBoxToolsVisibilityLabelDisable {
+    cursor: pointer;
+}
+
 input[type="checkbox"]:checked + .GPEditorMapBoxToolsVisibilityLabel {
   background-position: 0 0;
 }

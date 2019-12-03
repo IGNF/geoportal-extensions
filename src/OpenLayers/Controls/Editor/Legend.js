@@ -95,7 +95,7 @@ Legend.prototype._initialize = function () {
 
     // liste des caractéristiques de la legende
     this.legendRender = {
-        type : "line",
+        type : "fill",
         values : {
             width : 1,
             stroke : "#FFFFFF",
@@ -217,7 +217,7 @@ Legend.prototype._initContainer = function () {
 
     // legende avec un style indeterminé ou non géré !?
     if (!bFound) {
-        if (this._getValues("line", _style)) {
+        if (this._getValues("fill", _style)) {
             params = {
                 edit : this.editable,
                 title : _obj.title || "",

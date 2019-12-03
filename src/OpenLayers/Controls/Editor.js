@@ -12,6 +12,7 @@ import Filter from "./Editor/Filter";
 import Legend from "./Editor/Legend";
 import Layer from "./Editor/Layer";
 import Group from "./Editor/Group";
+import Event from "./Editor/Event";
 // DOM
 import EditorDOM from "../../Common/Controls/Editor/EditorDOM";
 
@@ -57,24 +58,29 @@ var logger = Logger.getLogger("editor");
  *          "editor:themes:onclicktitle" : function(e) {...}
  *      },
  *      tools : {
- *          // afficher/cacher les themes (par defaut) ou utiliser les options (TODO)
+ *          // afficher/cacher les themes (par defaut) ou utiliser les options
  *          themes : true | false | {
  *              target : "...",
  *              tools : {
  *                  "thumbnails": true,
- *                  "radiobutton": true
+ *                  "button": { visible : true, type : "checkbox" }
  *              },
  *          },
- *          layers : true, // afficher les couches (layers)
- *          style : true,  // afficher les styles (sous menu layers)
- *          filter : true, // afficher les filtres (sous menu layers)
- *          legend : true, // afficher les legendes (layers)
- *          group : true,  // grouper les couches (layers)
- *          title : true   // afficher les titres des rubriques,
- *          type : true,   // afficher du type de geometrie (layers)
- *          pin : true,     // afficher la puce pour chaque couche (layers)
- *          visibility : true, // afficher l'icone de visibilité (layers),
- *          editable : true // active l'edition de la legende (legendes)
+ *          layers : true | false,     // afficher les couches (layers)
+ *          style : true | false,      // afficher les styles (sous menu layers)
+ *          filter : true | false,     // afficher les filtres (sous menu layers)
+ *          legend : true | false,     // afficher les legendes (layers)
+ *          group : true | false,      // grouper les couches (layers)
+ *          sort : true | false,       // trier les couches (layers)
+ *          title : true | false       // afficher les titres des rubriques,
+ *          type : true | false,       // afficher le type de geometrie (layers)
+ *          pin : true | false,        // afficher la puce pour chaque couche (layers)
+ *          visibility : true | false, // afficher l'icone de visibilité (layers),
+ *          icon : {                   // afficher l'icone "oeil" ou "checkbox" (layers),
+ *              "image" : true,
+ *              "anchor" : "start" // afficher l'icone au debut ou à la fin de la ligne
+ *          },
+ *          editable : true | false    // active l'edition de la legende (legendes)
  *      }
  *   });
  */
@@ -89,9 +95,6 @@ function Editor (options) {
     if (!(this instanceof Editor)) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
-
-    // id unique
-    this.id = ID.generate();
 
     this._initialize();
 };
@@ -141,10 +144,15 @@ Editor.prototype._initialize = function () {
         filter : false,
         legend : false,
         group : false,
+        sort : true,
         title : true,
         type : true,
         pin : true,
         visibility : true,
+        icon : {
+            image : true,
+            anchor : "end"
+        },
         editable : true
     };
 
@@ -154,6 +162,9 @@ Editor.prototype._initialize = function () {
     }
 
     Utils.mergeParams(this.options.tools, _toolsDefault, false);
+
+    // id unique
+    this.id = this.options.id || ID.generate();
 
     this.layers = [];
 
@@ -165,7 +176,9 @@ Editor.prototype._initialize = function () {
         containerID : "GPEditorMapBoxContainer_ID_",
         containerLayers : "GPEditorMapBoxLayersContainer",
         titleLayers : "GPEditorMapBoxLayersTitle",
+        titleLayersID : "GPEditorMapBoxLayersTitle_ID_",
         titleThemes : "GPEditorMapBoxThemesTitle",
+        titleThemesID : "GPEditorMapBoxThemesTitle_ID_",
         sep : "GPEditorMapBoxSep"
     };
 
@@ -264,22 +277,22 @@ Editor.prototype._initContainer = function () {
     logger.trace(this.mapbox);
 
     // existance d'un autre container (editeur) ?
-    var _idx = 0;
-    var elements = document.querySelectorAll("div[id^=" + this.name.containerID + "]");
-    for (var j = 0; j < elements.length; j++) {
-        var element = elements[j];
-        var num = parseInt(element.id.substring(element.id.lastIndexOf("_") + 1), 10);
-        if (num > _idx) {
-            _idx = num;
-        }
-    }
-    if (elements.length) {
-        _idx += 1;
-    }
+    // var _idx = 0;
+    // var elements = document.querySelectorAll("div[id^=" + this.name.containerID + "]");
+    // for (var j = 0; j < elements.length; j++) {
+    //     var element = elements[j];
+    //     var num = parseInt(element.id.substring(element.id.lastIndexOf("_") + 1), 10);
+    //     if (num > _idx) {
+    //         _idx = num;
+    //     }
+    // }
+    // if (elements.length) {
+    //     _idx += 1;
+    // }
 
     // container principal de l'editeur
     var div = document.createElement("div");
-    div.id = this.name.containerID + _idx;
+    div.id = this.name.containerID + this.id;
     div.className = this.name.container;
 
     // Themes
@@ -288,7 +301,7 @@ Editor.prototype._initContainer = function () {
         // title
         if (this.options.tools.title) {
             var titleThemes = document.createElement("div");
-            titleThemes.id = this.name.titleThemes;
+            titleThemes.id = this.name.titleThemesID + this.id;
             titleThemes.className = this.name.titleThemes;
             titleThemes.innerHTML = "Liste des 'thèmes'";
             div.appendChild(titleThemes);
@@ -317,48 +330,97 @@ Editor.prototype._initContainer = function () {
                 // title
                 if (this.options.tools.title) {
                     var titleLayers = document.createElement("div");
-                    titleLayers.id = this.name.titleLayers;
+                    titleLayers.id = this.name.titleLayersID + this.id;
                     titleLayers.className = this.name.titleLayers;
                     titleLayers.innerHTML = (multisources) ? "Liste des 'couches' (" + source + ")" : "Liste des 'couches'";
                     div.appendChild(titleLayers);
                 }
             }
 
-            // tri des layers
+            // clone
             var _layers = this.mapbox.layers.slice();
-            _layers.sort(function (a, b) {
-                if (a.id < b.id) {
-                    return -1;
+            // gestion de l'ordre avant tri avec la metadata 'order'
+            // une fois les layers triés, la metadata:geoportail:order permet
+            // de savoir l'emplacement du layers dans le fichier de style.
+            _layers.forEach(function (layer, order) {
+                // on écarte les layers sans source: ex. "background"
+                // if (!layer.source) {
+                //     return;
+                // }
+                // ajout de la metadata d'ordre
+                var _metadata = layer["metadata"];
+                if (_metadata) {
+                    _metadata["geoportail:order"] = order;
+                } else {
+                    layer["metadata"] = {
+                        "geoportail:order" : order
+                    };
                 }
-                if (a.id > b.id) {
-                    return 1;
-                }
-                return 0;
             });
+            // tri des layers
+            if (this.options.tools.sort) {
+                _layers.sort(function (a, b) {
+                    // FIXME si on utilise les groupements utilisateurs, ils doivent
+                    // tous renseignés sinon...
+                    var cmpA = null;
+                    var cmpB = null;
+                    if (a["metadata"] &&
+                        a["metadata"]["geoportail:group"] &&
+                        b["metadata"] &&
+                        b["metadata"]["geoportail:group"]) {
+                        cmpA = a["metadata"]["geoportail:group"];
+                        cmpB = b["metadata"]["geoportail:group"];
+                    } else {
+                        cmpA = a.id;
+                        cmpB = b.id;
+                    }
+                    if (cmpA < cmpB) {
+                        return -1;
+                    }
+                    if (cmpA > cmpB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            }
 
             logger.trace("Layers : ", _layers);
 
             // gestion des groupes avec la metadata de groupe
             var _groups = {}; // liste et comptage des layers dans les groupes
             _layers.forEach(function (layer) {
-                var _title = layer.id;
-                // separateur
-                var _regex = /_|-|:|=/; // TODO à definir via une option !
-                // index
-                // y'a t il un separateur ?
-                var _idx = _title.search(_regex);
-                var _groupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
-                // on compte le nombre d'entrée dans un groupe
-                _groups[_groupName] = (_groups[_groupName])
-                    ? _groups[_groupName] + 1 : 1;
-                // ajout de la metadata de groupe
+                // on écarte les layers sans source: ex. "background"
+                // if (!layer.source) {
+                //     return;
+                // }
+                // balise metadata
                 var _metadata = layer["metadata"];
-                if (_metadata) {
-                    _metadata["geoportail:group"] = _groupName;
+                // s'il existe déjà une meta de groupe, on l'utilise...
+                // sinon, on la met en place.
+                if (_metadata && _metadata["geoportail:group"]) {
+                    var _groupName = _metadata["geoportail:group"];
+                    _groups[_groupName] = (_groups[_groupName])
+                        ? _groups[_groupName] + 1 : 1;
                 } else {
-                    layer["metadata"] = {
-                        "geoportail:group" : _groupName
-                    };
+                    var _title = layer.id;
+                    // separateur
+                    var _regex = /_|-|:|=/; // TODO à definir via une option !
+                    // index
+                    // y'a t il un separateur ?
+                    var _idx = _title.search(_regex);
+                    var _newGroupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
+                    // on compte le nombre d'entrée dans un groupe
+                    _groups[_newGroupName] = (_groups[_newGroupName])
+                        ? _groups[_newGroupName] + 1 : 1;
+
+                    // ajout de la metadata de groupe
+                    if (_metadata) {
+                        _metadata["geoportail:group"] = _newGroupName;
+                    } else {
+                        layer["metadata"] = {
+                            "geoportail:group" : _newGroupName
+                        };
+                    }
                 }
             });
 
@@ -391,12 +453,14 @@ Editor.prototype._initContainer = function () {
             //  "paint": {
             //    "fill-color": "#2BB3E1"
             //  }
-
+            var index = -1;
             for (var ii = 0; ii < _layers.length; ii++) {
                 var data = _layers[ii];
+                index++;
 
                 // traitement dans l'ordre des sources
                 if (data.source === source) {
+                    // FIXME la gestion des groupes est à revoir...
                     // Groups
                     if (this.options.tools.group) {
                         var mtd = data.metadata;
@@ -433,15 +497,15 @@ Editor.prototype._initContainer = function () {
                             target = divLayers;
                         }
                     }
-
                     // Layers
                     if (this.options.tools.layers) {
                         var oLayer = new Layer({
                             id : this.id,
                             target : target,
-                            position : _idx + "_" + ii, // unique !
+                            position : index + "_" + this.id, // unique !
                             tools : {
                                 visibility : this.options.tools.visibility,
+                                icon : this.options.tools.icon,
                                 type : this.options.tools.type,
                                 pin : this.options.tools.pin
                             },
@@ -492,7 +556,7 @@ Editor.prototype._initContainer = function () {
                         var oStyle = new Style({
                             id : this.id,
                             target : target,
-                            position : _idx + "_" + ii, // unique !,
+                            position : index + "_" + this.id, // unique !,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,
@@ -515,7 +579,7 @@ Editor.prototype._initContainer = function () {
                         var oFilter = new Filter({
                             id : this.id,
                             target : target,
-                            position : _idx + "_" + ii, // unique !,
+                            position : index + "_" + this.id, // unique !,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,
@@ -527,6 +591,12 @@ Editor.prototype._initContainer = function () {
                         if (oLayer) {
                             oLayer.addFilter(oFilter);
                         }
+                    }
+                } else {
+                    // on ecarte un layer car il n'est pas reconnu dans la source
+                    // on decremente la position du layer
+                    if (index >= 0) {
+                        index--;
                     }
                 }
             }
@@ -551,6 +621,8 @@ Editor.prototype._initContainer = function () {
     if (this.container) {
         this.options.target.appendChild(this.container);
     }
+    // dispatch event
+    EventBus.dispatch(Event.onloaded, this);
 };
 
 // ################################################################### //
@@ -583,7 +655,7 @@ Editor.prototype.getContainer = function () {
 };
 
 /**
- * Get Style
+ * Get Style (json)
  * @returns {Object} Style MapBox
  */
 Editor.prototype.getStyle = function () {
@@ -591,12 +663,59 @@ Editor.prototype.getStyle = function () {
 };
 
 /**
- * Get Layers
+ * Get layer style (json)
+ * @param {Number} i - index
+ * @returns {Object} Style MapBox of a layers
+ */
+Editor.prototype.getStyleLayer = function (i) {
+    var layer = null;
+    var o = this.getLayer(i);
+    var id = o.options.obj.id;
+    for (var k = 0; k < this.mapbox.layers.length; k++) {
+        var l = this.mapbox.layers[k];
+        if (l.id === id) {
+            layer = l;
+            break;
+        }
+    }
+    return layer;
+};
+
+/**
+ * Get layer object from json style
+ * @param {Number} i - index into style json
+ * @returns {Object} Style MapBox of a layers
+ */
+Editor.prototype.getLayerFromStyle = function (i) {
+    var layer = null;
+    var l = this.mapbox.layers[i];
+    for (var k = 0; k < this.getLayers().length; k++) {
+        var o = this.getLayer(k);
+        if (l.id === o.options.obj.id) {
+            layer = o;
+            break;
+        }
+    }
+    return layer;
+};
+
+/**
+ * Get a list of layer object sorted or not (see options.tools.sort)
  * @returns {Array} - List of layer object
  * @see {ol.style.editor.Layer}
  */
 Editor.prototype.getLayers = function () {
     return this.layers;
+};
+
+/**
+ * Get the layer object from a list sorted or not (see options.tools.sort)
+ * @param {Number} i - index
+ * @returns {Object} - layer object
+ * @see {ol.style.editor.Layer}
+ */
+Editor.prototype.getLayer = function (i) {
+    return this.layers[i];
 };
 // ################################################################### //
 // ####################### handlers events to dom #################### //

@@ -19,13 +19,13 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
 import Draggable from "../../Common/Utils/Draggable";
-// import defs proj4 manually (cf. line 110)
+// import defs proj4 manually (cf. line 125)
 //  import Proj4 from "proj4";
 //  import { register } from "ol/proj/proj4";
 //  import Register from "../../Common/Utils/Register";
 // import local with ol dependencies
-// import CRS from "../CRS/CRS";
-import "../CRS/AutoLoadCRS";
+import CRS from "../CRS/CRS";
+// import "../CRS/AutoLoadCRS";
 
 // DOM
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
@@ -127,9 +127,6 @@ var MousePosition = (function (Control) {
         // try {
         //     register(Proj4);
         // } catch (e) {}
-
-        // CRS.load();
-        // CRS.overload();
 
         this._initialize(options);
 
@@ -274,6 +271,10 @@ var MousePosition = (function (Control) {
             logger.warn("type srs not defined, use 'Metric' by default.");
             system.type = "Metric";
         }
+
+        // chargement de la definition de la projection
+        // même si déjà chargé...
+        CRS.loadByName(system.crs);
 
         if (!olGetProj(system.crs)) {
             logger.error("crs '{}' not available into proj4 definitions !", system.crs);
@@ -643,6 +644,11 @@ var MousePosition = (function (Control) {
         // on donne la possibilité à l'utilisateur de modifier
         // la liste des systèmes à afficher
         // Ex. this.options.systems
+
+        // FIXME doit on charger des projections par defaut dans ce composant ?
+        // chargement des projections par defaut
+        // CRS.loadByDefault();
+        // CRS.overload();
 
         // systemes de projection disponible par defaut
         var projectionSystemsByDefault = [{
@@ -1378,6 +1384,32 @@ var MousePosition = (function (Control) {
         this._setCoordinatesPanel(this.options.displayCoordinates);
         if (!this.options.displayCoordinates) {
             this._setSettingsPanel(false);
+        }
+    };
+
+    /**
+     * this method is called by event 'click' on 'GPshowMousePositionPicto' tag label
+     * (cf. this._createShowMousePositionPictoElement),
+     * and toggles event 'mousemove' on map.
+     *
+     * @method onShowMousePositionSettingsClick
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    MousePosition.prototype.onShowMousePositionSettingsClick = function (e) {
+        if (!this.draggable) {
+            this._panelMousePositionContainer.style.transition = "top 0.5s ease-out 0s";
+            this._panelMousePositionContainer.style.transitionProperty = "top";
+            this._panelMousePositionContainer.style.transitionDuration = "0.5s";
+            this._panelMousePositionContainer.style.transitionTimingFunction = "ease-out";
+            this._panelMousePositionContainer.style.transitionDelay = "0s";
+            var height = -95;
+            var top = this._panelMousePositionContainer.offsetTop;
+            if (!document.getElementById(e.target.htmlFor).checked) {
+                this._panelMousePositionContainer.style.top = top + height + "px";
+            } else {
+                this._panelMousePositionContainer.style.top = top - height + "px";
+            }
         }
     };
 

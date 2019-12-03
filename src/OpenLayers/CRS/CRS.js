@@ -1,12 +1,21 @@
+/*
+ * FIXME
+ * en mode bundle, l'action register des methodes de chargement est executée 2 fois.
+ * mais aucun impact sur performance, car le register teste si la projection a été déjà
+ * chargé...
+ */
+
 // import external
 import Proj4 from "proj4";
 // import OpenLayers
-import { register } from "ol/proj/proj4";
+// import { register } from "ol/proj/proj4";
+import { register } from "./Proj4";
 import {
     getTransform,
     addProjection,
     get as getProjection
 } from "ol/proj";
+// import { clear as clearProj } from "ol/proj/transforms";
 import { applyTransform } from "ol/extent";
 // import local
 import Register from "../../Common/Utils/Register";
@@ -48,11 +57,13 @@ var CRS = {
                 register(Proj4);
                 // Expose proj4 with custom defs into OpenLayers global variable
                 if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                    window.ol.proj.proj4.register = register;
                     window.ol.proj.proj4.register(Proj4);
                 }
             } catch (e) {
                 // FIXME ?
-                // console.error(e);
+                logger.error(e);
+                // clearProj();
             }
         }
     },
@@ -83,11 +94,40 @@ var CRS = {
                 register(Proj4);
                 // Expose proj4 with custom defs into OpenLayers global variable
                 if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                    window.ol.proj.proj4.register = register;
+                    window.ol.proj.proj4.register(Proj4);
+                }
+            } catch (e) {
+                // FIXME une projection ne passe pas avec ol.proj/proj4.register()...
+                // on fait quoi ?
+                logger.error(e);
+                // clearProj();
+            }
+        }
+    },
+
+    /**
+    * Load a custom definition projection
+    * @param {String} name - ie. EPSG:2154 (Lambert)
+    */
+    loadByName : function (name) {
+        logger.trace("Loading a custom definition projection : ", name);
+        // loading except if it's already loaded...
+        if (!Register.isLoaded) {
+            // load defs by default into proj4
+            Register.loadByName(Proj4, name);
+            try {
+                // register all defs
+                register(Proj4);
+                // Expose proj4 with custom defs into OpenLayers global variable
+                if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+                    window.ol.proj.proj4.register = register;
                     window.ol.proj.proj4.register(Proj4);
                 }
             } catch (e) {
                 // FIXME ?
-                // console.error(e);
+                logger.error(e);
+                // clearProj();
             }
         }
     },
@@ -121,10 +161,6 @@ var CRS = {
 export default CRS;
 
 // Expose proj4 with custom defs into OpenLayers global variable
-// if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-//     try {
-//         window.ol.proj.proj4.register(Proj4);
-//     } catch (e) {
-//         // console.error(e);
-//     }
-// }
+if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+    window.ol.proj.proj4.register = register;
+}

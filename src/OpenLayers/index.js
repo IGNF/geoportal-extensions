@@ -90,7 +90,7 @@ import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
 
-import Proj4 from "proj4";
+// import Proj4 from "proj4";
 
 import Style from "./Controls/Editor/Style";
 import Filter from "./Controls/Editor/Filter";
@@ -234,11 +234,11 @@ export {
 //      console > proj4("EPSG:2154")
 // And, it's useful to expose it too into OpenLayers :
 //      console > ol.proj.get("EPSG:2154")
-if (window.ol && window.ol.proj && window.ol.proj.proj4) {
-    try {
-        window.ol.proj.proj4.register(Proj4);
-    } catch (e) {}
-}
+// if (window.ol && window.ol.proj && window.ol.proj.proj4) {
+//     try {
+//         window.ol.proj.proj4.register(Proj4);
+//     } catch (e) {}
+// }
 
 // Expose extensions openlayers extended into ol
 if (window.ol) {

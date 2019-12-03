@@ -22,14 +22,16 @@
 
             var editor0 = new ol.style.Editor({
                 target: document.getElementById("editor"),
-                style: "{{ resources }}/data/mapbox/styles/ign-theo.json",
+                style: "{{ resources }}/data/mapbox/styles/enseignements.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
-                        console.log(this.getID(), e);
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor0:themes:onclicktitle", this.getID(), e);
+                        }
                     }
                 },
                 themes : {
-                    themesSummary : "...",
+                    themesSummary : "editor0",
                     themes : [
                         {
                             "name" : "standard0",
@@ -49,6 +51,7 @@
 
             var editor1 = new ol.style.Editor({
                 target: document.getElementById("editor"),
+                id : "999-000000000000",
                 style: "{{ resources }}/data/mapbox/styles/osm.json",
                 events : { // TODO...
                     "editor:layer:onclickvisibility" : function (e) {console.log(e);},
@@ -61,11 +64,13 @@
                     "editor:filter:oneditjson" : function (e) {console.log(e);},
                     "editor:themes:onclickimage" : function (e) {console.log(e);},
                     "editor:themes:onclicktitle" : function (e) {
-                        console.log(this.getID(), e);
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor1:themes:onclicktitle", this.getID(), e);
+                        }
                     }
                 },
                 themes : {
-                    themesSummary : "...",
+                    themesSummary : "editor1",
                     themes : [
                         {
                             "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
@@ -80,7 +85,8 @@
                         {
                             "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
                             "name" : "standard2",
-                            "url" : "{{ resources }}/data/mapbox/themes/styles/style2.json"
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style2.json",
+                            "selected" : true
                         },
                         {
                             "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
@@ -92,7 +98,10 @@
                 tools : {
                     themes : {
                         thumbnails : true,
-                        radiobutton : false
+                        button : {
+                            visible : true,
+                            type : "checkbox"
+                        }
                     },
                     layers : true,
                     filter : true,
@@ -108,7 +117,14 @@
                 style: "{{ resources }}/data/mapbox/styles/mapbox.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
-                        console.log(this.getID(), e);
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor2:themes:onclicktitle", this.getID(), e);
+                        }
+                    },
+                    "editor:onloaded" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor2:onloaded", e);
+                        }
                     }
                 },
                 tools : {
@@ -117,18 +133,54 @@
                     filter : false,
                     style : false,
                     legend : true,
+                    sort : false,
                     group : true,
                     editable : false
                 }
             });
 
+            var editor3 = new ol.style.Editor({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/qwant.json",
+                events : {
+                    "editor:themes:onclicktitle" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor3:themes:onclicktitle", this.getID(), e);
+                        }
+                    },
+                    "editor:onloaded" : function (e) {
+                        if (e.target.editorID === this.getID()) {
+                            console.log("editor3:onloaded", e);
+                        }
+                    }
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    icon : {
+                        image : false,
+                        anchor : "start"
+                    },
+                    pin : false,
+                    type : false,
+                    filter : false,
+                    style : false,
+                    legend : true,
+                    group : true,
+                    editable : false
+                }
+            });
+
+
             document.getElementById("displayTrue").addEventListener("click", function () {
                 editor1.display(true);
                 editor2.display(true);
+                editor3.display(true);
             });
             document.getElementById("displayFalse").addEventListener("click", function () {
                 editor1.display(false);
                 editor2.display(false);
+                editor3.display(false);
             });
             </script>
 {{/content}}

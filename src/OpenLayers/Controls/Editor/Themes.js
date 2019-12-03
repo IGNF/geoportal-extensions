@@ -19,7 +19,10 @@ var logger = Logger.getLogger("editor-themes");
  *        "target": "",
  *        "tools": {
  *          "thumbnails": true,
- *          "radiobutton": true
+ *          "button" : {
+ *              "visible" : true,
+ *              "type" : "radio" (par defaut) | "checkbox"
+ *          }
  *        },
  *        "obj": {
  *          "themesSummary": "", // Titre du composant (non graphique !)
@@ -81,7 +84,10 @@ Themes.prototype._initialize = function () {
 
     var _toolsDefault = {
         thumbnails : true,
-        radiobutton : true
+        button : {
+            visible : true,
+            type : "radio"
+        }
     };
 
     if (!this.options.tools || Object.keys(this.options.tools) === 0) {
@@ -107,9 +113,13 @@ Themes.prototype._initialize = function () {
         target : "GPEditorMapBoxThemeTarget",
         container : "GPEditorMapBoxThemesContainer",
         containertheme : "GPEditorMapBoxThemeContainer",
+        containerthemeID : "GPEditorMapBoxThemeContainer_ID_",
         input : "GPEditorMapBoxThemeInput",
+        inputID : "GPEditorMapBoxThemeInput_ID_",
         label : "GPEditorMapBoxThemeTitle",
+        labelID : "GPEditorMapBoxThemeTitle_ID_",
         image : "GPEditorMapBoxThemeImage",
+        imageID : "GPEditorMapBoxThemeImage_ID_",
         message : "GPEditorMapBoxThemeMessage"
     };
 };
@@ -144,6 +154,7 @@ Themes.prototype._initContainer = function () {
     // div principale
     var div = document.createElement("div");
     div.className = this.name.container;
+    div.title = obj.themesSummary || "";
 
     var _lstThemes = obj.themes;
     if (_lstThemes) {
@@ -152,7 +163,7 @@ Themes.prototype._initContainer = function () {
 
             // div pour chaque theme
             var divTheme = document.createElement("div");
-            divTheme.id = this.name.containertheme + "-" + i;
+            divTheme.id = this.name.containerthemeID + i + "_" + id;
             divTheme.className = this.name.containertheme;
             divTheme.tabIndex = i;
 
@@ -162,29 +173,32 @@ Themes.prototype._initContainer = function () {
             var _selected = _theme.selected || false;
             if (_url && _url !== "") {
                 // bouton
-                if (this.options.tools.radiobutton) {
-                    var _checkbox = document.createElement("input");
-                    _checkbox.type = "radio";
-                    _checkbox.id = this.name.input + "-" + id + "_" + i;
-                    _checkbox.className = this.name.input;
-                    _checkbox.name = id;
-                    _checkbox.checked = _selected;
-                    _checkbox.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
-                    if (_checkbox.addEventListener) {
-                        _checkbox.addEventListener("click", function (e) {
+                var button = this.options.tools.button;
+                if (button.visible) {
+                    var _type = (button.type === "checkbox") ? "checkbox" : "radio";
+                    var _button = document.createElement("input");
+                    _button.type = _type;
+                    _button.id = this.name.inputID + i + "_" + id;
+                    _button.className = this.name.input;
+                    _button.name = id;
+                    _button.checked = _selected;
+                    _button.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
+                    if (_button.addEventListener) {
+                        _button.addEventListener("click", function (e) {
                             self.onClickThemeTitleMapBox(e);
                         });
-                    } else if (_checkbox.attachEvent) {
-                        _checkbox.attachEvent("onclick", function (e) {
+                    } else if (_button.attachEvent) {
+                        _button.attachEvent("onclick", function (e) {
                             self.onClickThemeTitleMapBox(e);
                         });
                     }
-                    divTheme.appendChild(_checkbox);
+                    divTheme.appendChild(_button);
                 }
                 // vignette
                 if (this.options.tools.thumbnails) {
                     if (_theme.thumbnail) {
                         var _img = document.createElement("img");
+                        _img.id = this.name.imageID + i + "_" + id;
                         _img.className = this.name.image;
                         _img.src = _theme.thumbnail;
                         _img.alt = _theme.thumbnail;
@@ -220,14 +234,15 @@ Themes.prototype._initContainer = function () {
                 // label
                 if (_theme.name) {
                     var _label = document.createElement("label");
-                    if (this.options.tools.radiobutton) {
-                        _label.htmlFor = _checkbox.id;
+                    _label.id = this.name.labelID + i + "_" + id;
+                    if (this.options.tools.button.visible) {
+                        _label.htmlFor = _button.id;
                     }
                     _label.className = this.name.label;
                     _label.innerHTML = _theme.name;
                     _label.title = _theme.description || ""; // une description au survol de l'image ou titre...
                     _label.data = _url; // on lie le DOM et la couche, utile lors d'evenement !
-                    if (!this.options.tools.radiobutton) {
+                    if (!this.options.tools.button.visible) {
                         if (_label.addEventListener) {
                             _label.addEventListener("click", function (e) {
                                 self.onClickThemeTitleMapBox(e);
@@ -318,6 +333,24 @@ Themes.prototype.onClickThemeImageMapBox = function (e) {
     logger.trace("onClickThemeImageMapBox", e);
     e.editorID = this.id;
     e.data = this.options;
+    if (this.options.tools.button.type === "checkbox") {
+        // GPEditorMapBoxThemeInput_ID_0_1571317605868
+        var targetIDX = e.target.previousSibling.id.substring(
+            e.target.previousSibling.id.lastIndexOf("_") + 1
+        );
+        var _inputs = document.getElementsByClassName(this.name.input);
+        for (var i = 0; i < _inputs.length; i++) {
+            var el = _inputs[i];
+            if (el.id === e.target.previousSibling.id) {
+                continue;
+            }
+            var elIDX = el.id.substring(el.id.lastIndexOf("_") + 1);
+            if (elIDX !== targetIDX) {
+                continue;
+            }
+            el.checked = false;
+        }
+    }
     EventBus.dispatch(EventEditor.themes.onclickimage, e);
 };
 
@@ -332,6 +365,22 @@ Themes.prototype.onClickThemeTitleMapBox = function (e) {
     logger.trace("onClickThemeTitleMapBox", e);
     e.editorID = this.id;
     e.data = this.options;
+    if (this.options.tools.button.type === "checkbox") {
+        // GPEditorMapBoxThemeInput_ID_0_1571317605868
+        var targetIDX = e.target.id.substring(e.target.id.lastIndexOf("_") + 1);
+        var _inputs = document.getElementsByClassName(this.name.input);
+        for (var i = 0; i < _inputs.length; i++) {
+            var el = _inputs[i];
+            if (el.id === e.target.id) {
+                continue;
+            }
+            var elIDX = el.id.substring(el.id.lastIndexOf("_") + 1);
+            if (elIDX !== targetIDX) {
+                continue;
+            }
+            el.checked = false;
+        }
+    }
     EventBus.dispatch(EventEditor.themes.onclicktitle, e);
 };
 

@@ -1,0 +1,120 @@
+{
+	"version": 8,
+	"name": "Style Enseignements",
+    "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+	"sprite": "../../resources/data/mapbox/styles/pictos-enseignements/sprites-etablissements",
+	"zoom": 14,
+    "center": [2.35,48.84],
+	"sources": {
+		"Enseignement": {
+			"type": "vector",
+			"url": "https://vectortiles.ign.fr/rok4server/1.0.0/Enseignement/metadata.json"
+		}
+	},
+	"layers": [
+		{
+			"id": "Etablissement - Autre",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "elementaire",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Autre"]
+		},
+		{
+			"id": "Etablissement - Collège",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "college",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Collège"]
+		},
+		{
+			"id": "Etablissement - Enseignement primaire",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "maternelle",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Enseignement primaire"]
+		},
+		{
+			"id": "Etablissement - Enseignement secondaire",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "enseignement_specialise",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Enseignement secondaire"]
+		},
+		{
+			"id": "Etablissement - Enseignement supérieur",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "enseignement_specialise",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Enseignement supérieur"]
+		},
+		{
+			"id": "Etablissement - Lycée",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "lycee",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Lycée"]
+		},
+		{
+			"id": "Etablissement - Science",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "recherche",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Science"]
+		},
+		{
+			"id": "Etablissement - Université",
+			"type": "symbol",
+			"source": "Enseignement",
+			"source-layer": "Enseignement",
+			"minzoom": 0,
+			"layout": {
+				"visibility": "visible",
+				"icon-image": "universite",
+				"icon-size": 0.5
+			},
+			"filter": ["in", "nature", "Université"]
+		}
+	]
+}
