@@ -16,6 +16,7 @@ var logger = Logger.getLogger("vectorTileLayer");
  * Geoportal WMTS source creation
  *
  * @constructor
+ * @private
  * @alias itowns.layer.VectorTileLayer
  * @param {Object} options - options for function call.
  * @param {String} options.id - id to give to the layer
