@@ -194,21 +194,22 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _Layer_LayerWMTS__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(151);
 /* harmony import */ var _Layer_LayerWMS__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(152);
 /* harmony import */ var _Layer_LayerElevation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(153);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(131);
-/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(140);
-/* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(154);
-/* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(32);
-/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(145);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LayerUtils", function() { return _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony import */ var _Layer_VectorTileLayer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(154);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(131);
+/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(155);
+/* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(32);
+/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(145);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LayerUtils", function() { return _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
-/* harmony import */ var _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(155);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ProxyUtils", function() { return _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony import */ var _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(156);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ProxyUtils", function() { return _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_17__["default"]; });
 
-/* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(156);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ColorUtils", function() { return _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+/* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(157);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ColorUtils", function() { return _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
-/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(157);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MathUtils", function() { return _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_18__["default"]; });
+/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(158);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MathUtils", function() { return _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_19__["default"]; });
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -258,18 +259,19 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 
 
+
  // Autoload...
 
  // export des services
 
  // reconstruction des ns
 
-var Services = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__["default"].Services;
-var Error = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__["default"].Error;
-var Helper = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__["default"].Helper;
-var Protocols = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__["default"].Protocols;
-var servicesDate = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__["default"].servicesDate;
-var servicesVersion = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_14__["default"].servicesVersion;
+var Services = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__["default"].Services;
+var Error = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__["default"].Error;
+var Helper = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__["default"].Helper;
+var Protocols = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__["default"].Protocols;
+var servicesDate = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__["default"].servicesDate;
+var servicesVersion = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_15__["default"].servicesVersion;
  // Adds the extensions properties in the namespace
 
 
@@ -313,8 +315,9 @@ Itowns.layer = {};
 Itowns.layer.GeoportalWMTS = _Layer_LayerWMTS__WEBPACK_IMPORTED_MODULE_8__["default"];
 Itowns.layer.GeoportalWMS = _Layer_LayerWMS__WEBPACK_IMPORTED_MODULE_9__["default"];
 Itowns.layer.GeoportalElevation = _Layer_LayerElevation__WEBPACK_IMPORTED_MODULE_10__["default"];
-Itowns.CRS = _CRS_CRS__WEBPACK_IMPORTED_MODULE_12__["default"];
-Itowns.GlobeViewExtended = _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_11__["default"];
+Itowns.layer.VectorTileLayer = _Layer_VectorTileLayer__WEBPACK_IMPORTED_MODULE_11__["default"];
+Itowns.CRS = _CRS_CRS__WEBPACK_IMPORTED_MODULE_13__["default"];
+Itowns.GlobeViewExtended = _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_12__["default"];
  // Expose extensions extended into itowns
 
 if (window.itowns) {
@@ -327,7 +330,7 @@ if (window.itowns) {
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.6\",\"date\":\"18/11/2019\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.5\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.5\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.4\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"^2.1.6\",\"itowns\":\"2.15.3\",\"leaflet\":\"1.5.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.2.1\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.109.0\",\"three.meshline\":\"~1.2.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^1.2.3\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.6\",\"date\":\"18/11/2019\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.5\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.5\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.4\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"^2.1.6\",\"itowns\":\"2.16.0\",\"leaflet\":\"1.5.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.2.1\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.109.0\",\"three.meshline\":\"~1.2.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^1.2.3\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -27700,6 +27703,14 @@ GlobeViewExtended.prototype.lookAt = function (target) {
  */
 
 
+GlobeViewExtended.prototype.parseMapboxStyle = function (styleUrl) {
+  return itowns__WEBPACK_IMPORTED_MODULE_1__["Fetcher"].json(styleUrl);
+};
+/**
+ * Notifies the scene it needs to be updated
+ */
+
+
 GlobeViewExtended.prototype.notifyChange = function () {
   this.getGlobeView().notifyChange(this.getGlobeView().camera.camera3D);
 };
@@ -35381,6 +35392,101 @@ LayerElevation.prototype.constructor = LayerElevation;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(135);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(132);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+/* import Extent from "itowns/Core/Geographic/Extent";
+import WMSSource from "itowns/Source/WMSSource";
+import ColorLayer from "itowns/Layer/ColorLayer"; */
+
+var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("vectorTileLayer");
+/**
+ * @classdesc
+ * Geoportal WMTS source creation
+ *
+ * @constructor
+ * @alias itowns.layer.VectorTileLayer
+ * @param {Object} options - options for function call.
+ * @param {String} options.id - id to give to the layer
+ * @param {String} options.layer - Layer name (e.g. "PLAN.IGN")
+ * @param {String} [options.url] - Url to the vector Tile json style
+ * @param {String} [options.urlService] - Url to the pbf file. Retrieved in the style file by default.
+ * @param {Function} [options.filter] - Filter applied to the vector layer style. Fill/Line layer type by default.
+ * @param {Object} [options.attributions] - Attributions of the layer.
+ * @param {Object} [options.zoom] - Between which zoom levels the layer is displayed (zoom.min and zoom.max)
+ * @example
+ * var vectorTileLayer = new itowns.layer.VectorTileLayer({
+ *      layer : "PLAN.IGN"
+ * });
+ */
+
+function VectorTileLayer(options) {
+  if (!(this instanceof VectorTileLayer)) {
+    throw new TypeError("ERROR CLASS_CONSTRUCTOR");
+  } // check layer params
+
+
+  if (!options.layer) {
+    throw new Error("ERROR PARAM_MISSING : layer");
+  }
+
+  if (typeof options.layer !== "string") {
+    throw new Error("ERROR WRONG TYPE : layer");
+  } // Check if configuration is loaded
+
+
+  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
+    throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+  }
+
+  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerId(options.layer, "TMS");
+
+  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].configuration.getLayerConf(layerId)) {
+    var config = {};
+    var tmsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerParams(options.layer, "TMS", options.apiKey); // si ssl = false on fait du http
+    // par défaut, ssl = true, on fait du https
+
+    var protocol = options.ssl === false ? "http://" : "https://";
+    config.id = layerId;
+    config.source = new itowns__WEBPACK_IMPORTED_MODULE_2__["VectorTilesSource"]({
+      style: tmsParams.url.replace(/(http|https):\/\//, protocol),
+      url: options.urlService,
+      attribution: options.attributions,
+      filter: options.filter || function (layer) {
+        return ['fill', 'line'].includes(layer.type);
+      },
+      zoom: options.zoom
+    }); // FIXME wait for next itowns release to remove this
+
+    config.isValidData = function () {
+      return false;
+    };
+
+    return new itowns__WEBPACK_IMPORTED_MODULE_2__["ColorLayer"](config.id, config);
+  } else {
+    // If layer is not in Gp.Config
+    logger.error("ERROR layer id (layer name: " + options.layer + " / service: TMS ) was not found !?");
+  }
+}
+
+;
+/*
+ * Constructor (alias)
+ */
+
+VectorTileLayer.prototype.constructor = VectorTileLayer;
+/* harmony default export */ __webpack_exports__["default"] = (VectorTileLayer);
+
+/***/ }),
+/* 155 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
 
 
@@ -35443,7 +35549,7 @@ __webpack_require__.r(__webpack_exports__);
 })();
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -35497,7 +35603,7 @@ var ProxyUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (ProxyUtils);
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -35585,7 +35691,7 @@ var ColorUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (ColorUtils);
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

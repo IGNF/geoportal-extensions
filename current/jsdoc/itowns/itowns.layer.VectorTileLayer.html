@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- !meta IGN -->
 
-    <title>Global</title>
+    <title>Class: VectorTileLayer</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -1397,7 +1397,7 @@
 
     <section class="content">
         <label class="openLeftMenu" for="showLeftMenu" title="Ouvrir le menu latéral"></label>
-        <h1 class="page-title" data-filename="global.html">Global</h1>
+        <h1 class="page-title" data-filename="itowns.layer.VectorTileLayer.html">Class: VectorTileLayer</h1>
         
 
 
@@ -1408,9 +1408,11 @@
 <header>
 -->
     <h1>
-    <span class="main-title" data-classname=>  </span>
+    <span class="main-title" data-classname=itowns.layer.VectorTileLayer> itowns.layer.VectorTileLayer </span>
     </h1>
     
+    
+        <div class="description"><p>Geoportal WMTS source creation</p></div>
     
 <!--
 </header>  
@@ -1422,109 +1424,305 @@
     
     
         
-        
-        
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-        
-        
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Members</h3>
-        
-        <dl>
-            
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="PositionFormater">PositionFormater</h4>
-    </div>
+        <h4 class="name" id="VectorTileLayer">
+            
+            new VectorTileLayer<span class="signature">(options)</span>
+        </h4>
     
+        
+        <div class="tag-source">
+            Itowns/Layer/VectorTileLayer.js, line 33
+        </div>
+        
+    </div>
+
     
 </dt>
 <dd>
     
-    <div class="description">
-        <p>...</p>
-    </div>
+    
+
     
     
     
-<dl class="details">
+    
     
         
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
             
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="Register">Register</h4>
-    </div>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Register definition for IGNF, and EPSG CRS.</p>
-    </div>
+                <td class="name">options</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>options for function call.</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">id</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>id to give to the layer</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">layer</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>Layer name (e.g. &quot;PLAN.IGN&quot;)</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">url</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Url to the vector Tile json style</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">urlService</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Url to the pbf file. Retrieved in the style file by default.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">filter</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Filter applied to the vector layer style. Fill/Line layer type by default.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">attributions</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Attributions of the layer.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">zoom</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Between which zoom levels the layer is displayed (zoom.min and zoom.max)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
     
     
     
@@ -1552,353 +1750,45 @@
     
 </dl>
 
+    
+    
+
+    
+
+    
+    
+    
+    
+    
     
     
         <h5>Example</h5>
         
 
     
-    <pre class="prettyprint"><code>Gp.Register.IGNF.AMST63
-  // return : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
-Gp.Register.get("IGNF:AMST63")
-  // same as Gp.Register.IGNF.AMST63</code></pre>
+    <pre class="prettyprint"><code>var vectorTileLayer = new itowns.layer.VectorTileLayer({
+     layer : "PLAN.IGN"
+});</code></pre>
     
 
     
 </dd>
 
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="SelectorID">SelectorID</h4>
-    </div>
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>formalisme d'un tag ID :<br>
--&gt; NAME(_ORDER)-1460636385836</p>
-<p>Ex.<br>
-GProutePoints-1460636385836<br>
-GProutePoint_10-1460636385836</p>
     </div>
     
     
     
-<dl class="details">
     
-        
     
     
     
-
     
     
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        </dl>
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="_resetCoordinateElements">
-            
-            _resetCoordinateElements<span class="signature">(editCoordinates, currentProjectionType, currentProjectionUnits)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            Common/Controls/MousePositionDOM.js, line 688
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name">editCoordinates</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>edit coordinates option</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name">currentProjectionType</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>current projection type</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name">currentProjectionUnits</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>current projection unit</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="_setEditMode">
-            
-            _setEditMode<span class="signature">(editing)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            Common/Controls/MousePositionDOM.js, line 731
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Set/unset editing mode</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name">editing</td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>active edit coordinates mode</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        </dl>
     
     
     
