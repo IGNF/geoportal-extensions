@@ -1,45 +1,45 @@
 {
-   "peerDependencies" : {},
-   "bugs" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "license" : "CECILL-B",
-   "author" : "IGNF",
-   "bundleDependencies" : [],
-   "directories" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "description" : "French Geoportal Extensions for iTowns",
-   "devDependencies" : {},
-   "version" : "2.2.4",
    "module" : "src/Itowns/index.js",
-   "name" : "geoportal-extensions-itowns",
+   "date" : "29/11/2019",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
+   "version" : "2.2.4",
+   "license" : "CECILL-B",
+   "directories" : {},
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
    "scripts" : {},
+   "devDependencies" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "bugs" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "name" : "geoportal-extensions-itowns",
+   "bundleDependencies" : [],
+   "dependencies" : {
+      "loglevel" : "~1.6.1",
+      "xmldom" : "^0.1.27",
+      "itowns" : "2.16.0",
+      "three.meshline" : "~1.2.0",
+      "geoportal-access-lib" : "^2.1.6",
+      "sortablejs" : "1.8.4",
+      "request" : "^2.83.0",
+      "three" : "~0.109.0",
+      "proj4" : "2.5.0"
+   },
    "main" : "dist/GpPluginItowns-src.js",
+   "author" : "IGNF",
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ],
-   "dependencies" : {
-      "request" : "^2.83.0",
-      "geoportal-access-lib" : "^2.1.6",
-      "proj4" : "2.5.0",
-      "three.meshline" : "~1.2.0",
-      "sortablejs" : "1.8.4",
-      "three" : "~0.109.0",
-      "loglevel" : "~1.6.1",
-      "xmldom" : "^0.1.27",
-      "itowns" : "2.15.3"
-   },
-   "date" : "16/10/2019"
+   ]
 }

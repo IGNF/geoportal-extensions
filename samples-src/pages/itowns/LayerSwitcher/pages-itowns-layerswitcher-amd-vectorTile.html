@@ -56,14 +56,26 @@
                         ssl: true
                     }));
 
-                    // Couche WMS Geoportail 
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
-                        layer: "REGION.2016",
-                        ssl: true,
-                        itownsParams: {
-                            opacity: 0.5
-                        }
-                    }));
+                    // Ajout couche Vecteur tuilé par itowns (fx: 2.5 => transparent)
+                    var mvtSource = new itowns.VectorTilesSource({
+                        style: '../../resources/itowns/planign.json',
+                        filter: function (layer) { return ['fill', 'line'].includes(layer.type) },
+                        zoom: {
+                            min: 2,
+                            max: 16,
+                        },
+                    });
+
+                    var mvtLayer = new itowns.ColorLayer('PlanIGN', {
+                        //FIXME wait for next itowns release to remove this
+                        isValidData: function() {
+                            return false;
+                        },
+                        source: mvtSource
+                        //fx: 2.5,
+                    });
+                
+                    globeView.addLayer(mvtLayer);
 
                     // ajout du control
                     var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
@@ -99,9 +111,9 @@
             }
 
             Gp.Services.getConfig({
-                // serverUrl : "./../resources/AutoConf.js",
-                // callbackSuffix : '',
-                apiKey: "{{ apikey }}",
+                serverUrl : "./../../resources/AutoConf.js",
+                callbackSuffix : '',
+                // apiKey: "{{ apikey }}",
                 timeOut: 20000,
                 onSuccess: createMap
             });

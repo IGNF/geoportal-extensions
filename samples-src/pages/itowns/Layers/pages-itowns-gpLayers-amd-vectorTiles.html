@@ -43,27 +43,25 @@
 
                 globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
 
-                    // ajout des couches
-                    // Couche MNT Geoportail (WMTS)
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
-                        layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
-                        ssl: true
-                    }));
- 
                     // Couche WMTS Geoportail
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
                         layer: "ORTHOIMAGERY.ORTHOPHOTOS",
                         ssl: true
                     }));
 
-                    // Couche WMS Geoportail 
-                    globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
-                        layer: "REGION.2016",
-                        ssl: true,
-                        itownsParams: {
-                            opacity: 0.5
+                    // Couche Vecteur tuilé Geoportail
+
+                    var vectorTileLayer = new Gp.itownsExtended.layer.VectorTileLayer({
+                        layer: "PLAN.IGN",
+                        id : "MVT",
+                        url: '../../resources/itowns/planign.json',
+                        zoom : {
+                            min: 0,
+                            max: 13
                         }
-                    }));
+                    })
+ 
+                    globeView.addLayer(vectorTileLayer);
 
                     // ajout du control
                     var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
@@ -99,9 +97,9 @@
             }
 
             Gp.Services.getConfig({
-                // serverUrl : "./../resources/AutoConf.js",
-                // callbackSuffix : '',
-                apiKey: "{{ apikey }}",
+                serverUrl : "./../../resources/AutoConf_VT.js",
+                callbackSuffix : '',
+                // apiKey: "{{ apikey }}",
                 timeOut: 20000,
                 onSuccess: createMap
             });

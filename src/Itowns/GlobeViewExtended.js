@@ -4,6 +4,7 @@ import {
     Coordinates as ItCoordinates,
     ColorLayersOrdering as ItColorLayersOrdering,
     FeaturesUtils as ItFeaturesUtils,
+    Fetcher as ItParser,
     MAIN_LOOP_EVENTS as IT_MAIN_LOOP_EVENTS,
     CONTROL_EVENTS as IT_CONTROL_EVENTS,
     GLOBE_VIEW_EVENTS as IT_GLOBE_VIEW_EVENTS,
@@ -779,6 +780,13 @@ GlobeViewExtended.prototype.setCameraPosition = function (target, distance) {
  */
 GlobeViewExtended.prototype.lookAt = function (target) {
     this.getGlobeView().camera.camera3D.lookAt(target);
+};
+
+/**
+ * Notifies the scene it needs to be updated
+ */
+GlobeViewExtended.prototype.parseMapboxStyle = function (styleUrl) {
+    return ItParser.json(styleUrl);
 };
 
 /**

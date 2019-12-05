@@ -46,6 +46,7 @@ import MiniGlobe from "./Controls/MiniGlobe";
 import GeoportalWMTS from "./Layer/LayerWMTS";
 import GeoportalWMS from "./Layer/LayerWMS";
 import GeoportalElevation from "./Layer/LayerElevation";
+import VectorTileLayer from "./Layer/VectorTileLayer";
 import GlobeViewExtended from "./GlobeViewExtended";
 
 import CRS from "./CRS/CRS";
@@ -131,6 +132,7 @@ Itowns.layer = {};
 Itowns.layer.GeoportalWMTS = GeoportalWMTS;
 Itowns.layer.GeoportalWMS = GeoportalWMS;
 Itowns.layer.GeoportalElevation = GeoportalElevation;
+Itowns.layer.VectorTileLayer = VectorTileLayer;
 Itowns.CRS = CRS;
 Itowns.GlobeViewExtended = GlobeViewExtended;
 
