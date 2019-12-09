@@ -220,6 +220,23 @@ module.exports = (env, argv) => {
                 },
                 {
                     /**
+                    * Compatibilité IE du module olms ...
+                    */
+                    test : /\.js$/,
+                    include : [
+                        /node_modules\/ol-mapbox-style/,
+                        /node_modules\/@mapbox\/mapbox-gl-style-spec/
+                    ],
+                    use : {
+                        loader : "babel-loader",
+                        options : {
+                            presets : ["@babel/preset-env"],
+                            plugins : ["@babel/plugin-transform-template-literals"]
+                        }
+                    }
+                },
+                {
+                    /**
                     * controle des JS en mode warning.
                     * (on exclut les dependances)
                     */
