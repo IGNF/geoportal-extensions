@@ -7,7 +7,8 @@
 
 ## Summary
 
-* correctifs sur l'editeur du vecteur tuilé
+* Compatibilité IE sur l'API Fetch
+* Mise à jour sécurité des dépendances
 
 ## Changelog
 
@@ -21,13 +22,11 @@
 
 * [Fixed]
 
-    - correctifs sur l'editeur de styles (mapbox)
-    - nettoyage des ressources inutiles dans les exemples
-    - exemple "vecteur tuilé" avec la couche PLANIGN (tileJSON)
-    - exemple "vecteur tuilé" avec la couche Enseignements (Sprites)
+    - [#249] Gestion de la comptabilité IE 10/11 sur l'API Fetch (polyfill)
 
 * [Security]
 
+    - Mise à jour des dépendances de sécurités
 ---
 
 # Extension Geoportail Itowns, version 2.2.5
@@ -48,8 +47,6 @@
 * [Removed]
 
 * [Fixed]
-
-    - retrait de l'utilisation de la fonction dépréciée par iTowns "controls.getScale()"
 
 * [Security]
 

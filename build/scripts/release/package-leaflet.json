@@ -1,36 +1,6 @@
 {
    "description" : "French Geoportal Extension for Leaflet",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
    "module" : "src/Leaflet/index.js",
-   "scripts" : {},
-   "bugs" : {},
-   "license" : "CECILL-B",
-   "directories" : {},
-   "name" : "geoportal-extensions-leaflet",
-   "main" : "dist/GpPluginLeaflet-src.js",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "dependencies" : {
-      "leaflet" : "1.5.1",
-      "leaflet-draw" : "1.0.4",
-      "geoportal-access-lib" : "^2.1.6",
-      "proj4" : "2.5.0",
-      "proj4leaflet" : "~1.0.2",
-      "loglevel" : "~1.6.1",
-      "sortablejs" : "1.8.4"
-   },
-   "version" : "2.1.5",
-   "bundleDependencies" : [],
-   "devDependencies" : {},
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "leaflet",
-      "publish"
-   ],
    "files" : [
       "dist/",
       "src/",
@@ -38,7 +8,37 @@
       "README.md",
       "package.json"
    ],
-   "author" : "IGNF",
+   "devDependencies" : {},
+   "name" : "geoportal-extensions-leaflet",
+   "dependencies" : {
+      "leaflet" : "1.5.1",
+      "loglevel" : "~1.6.1",
+      "sortablejs" : "1.8.4",
+      "leaflet-draw" : "1.0.4",
+      "geoportal-access-lib" : "^2.1.6",
+      "proj4" : "2.5.0",
+      "proj4leaflet" : "~1.0.2"
+   },
+   "date" : "05/12/2019",
+   "directories" : {},
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "leaflet",
+      "publish"
+   ],
+   "bugs" : {},
    "peerDependencies" : {},
-   "date" : "16/10/2019"
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "main" : "dist/GpPluginLeaflet-src.js",
+   "scripts" : {},
+   "bundleDependencies" : [],
+   "author" : "IGNF",
+   "version" : "2.1.5",
+   "license" : "CECILL-B"
 }

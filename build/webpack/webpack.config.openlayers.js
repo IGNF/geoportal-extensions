@@ -49,7 +49,12 @@ module.exports = (env, argv) => {
     }
 
     return smp.wrap({
-        entry : { "GpPluginOpenLayers" : path.join(ROOT, "src", "OpenLayers", "index.js") },
+        entry : {
+            "GpPluginOpenLayers" : [
+                "whatwg-fetch",
+                path.join(ROOT, "src", "OpenLayers", "index.js")
+            ]
+        },
         output : {
             path : path.join(ROOT, "dist", "openlayers"),
             filename : "[name]" + suffix + ".js",
@@ -441,6 +446,12 @@ module.exports = (env, argv) => {
                 new BannerWebPackPlugin({
                     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-eventbusjs.tmpl"), "utf8"), {
                         __VERSION__ : pkg.dependencies["eventbusjs"],
+                    }),
+                    raw : true
+                }),
+                new BannerWebPackPlugin({
+                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-fetch.tmpl"), "utf8"), {
+                        __VERSION__ : pkg.dependencies["whatwg-fetch"],
                     }),
                     raw : true
                 }),

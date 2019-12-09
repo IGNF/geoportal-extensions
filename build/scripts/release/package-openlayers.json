@@ -1,13 +1,31 @@
 {
-   "scripts" : {},
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
    "directories" : {},
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "peerDependencies" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
+   "version" : "3.0.5",
+   "author" : "IGNF",
    "bugs" : {},
+   "dependencies" : {
+      "sortablejs" : "1.8.4",
+      "loglevel" : "~1.6.1",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "^2.1.6",
+      "request" : "^2.83.0",
+      "proj4" : "2.5.0",
+      "eventbusjs" : "^0.2.0",
+      "ol" : "^5.3.0",
+      "ol-mapbox-style" : "^4.2.1"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "devDependencies" : {},
    "license" : "CECILL-B",
    "files" : [
       "dist/",
@@ -16,30 +34,12 @@
       "README.md",
       "package.json"
    ],
-   "description" : "French Geoportal Extensions for OpenLayers",
    "name" : "geoportal-extensions-openlayers",
-   "version" : "3.0.5",
-   "date" : "18/11/2019",
-   "author" : "IGNF",
-   "dependencies" : {
-      "geoportal-access-lib" : "^2.1.6",
-      "proj4" : "2.5.0",
-      "request" : "^2.83.0",
-      "loglevel" : "~1.6.1",
-      "xmldom" : "^0.1.27",
-      "ol-mapbox-style" : "^4.2.1",
-      "ol" : "^5.3.0",
-      "eventbusjs" : "^0.2.0",
-      "sortablejs" : "1.8.4"
-   },
-   "bundleDependencies" : [],
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "date" : "05/12/2019",
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
    "module" : "src/OpenLayers/index.js",
-   "devDependencies" : {}
+   "bundleDependencies" : [],
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "scripts" : {}
 }
