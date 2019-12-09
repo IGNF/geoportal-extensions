@@ -49,7 +49,12 @@ module.exports = (env, argv) => {
     }
 
     return smp.wrap({
-        entry : { "GpPluginOpenLayers" : path.join(ROOT, "src", "OpenLayers", "index.js") },
+        entry : {
+            "GpPluginOpenLayers" : [
+                "whatwg-fetch",
+                path.join(ROOT, "src", "OpenLayers", "index.js")
+            ]
+        },
         output : {
             path : path.join(ROOT, "dist", "openlayers"),
             filename : "[name]" + suffix + ".js",
@@ -210,6 +215,23 @@ module.exports = (env, argv) => {
                         loader : "babel-loader",
                         options : {
                             presets : ["@babel/preset-env"]
+                        }
+                    }
+                },
+                {
+                    /**
+                    * Compatibilité IE du module olms ...
+                    */
+                    test : /\.js$/,
+                    include : [
+                        /node_modules\/ol-mapbox-style/,
+                        /node_modules\/@mapbox\/mapbox-gl-style-spec/
+                    ],
+                    use : {
+                        loader : "babel-loader",
+                        options : {
+                            presets : ["@babel/preset-env"],
+                            plugins : ["@babel/plugin-transform-template-literals"]
                         }
                     }
                 },
@@ -441,6 +463,12 @@ module.exports = (env, argv) => {
                 new BannerWebPackPlugin({
                     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-eventbusjs.tmpl"), "utf8"), {
                         __VERSION__ : pkg.dependencies["eventbusjs"],
+                    }),
+                    raw : true
+                }),
+                new BannerWebPackPlugin({
+                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-fetch.tmpl"), "utf8"), {
+                        __VERSION__ : pkg.dependencies["whatwg-fetch"],
                     }),
                     raw : true
                 }),
