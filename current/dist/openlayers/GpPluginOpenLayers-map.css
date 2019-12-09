@@ -55,6 +55,14 @@
  */
 
 /*!
+ * @overview  Fetch - window.fetch polyfill
+ * @copyright Copyright (c) 2014-2016 GitHub, Inc.
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/github/fetch/master/LICENSE
+ * @version   ^3.0.0
+ */
+
+/*!
  * @overview  EventBus - Simple JavaScript class for managing events in JavaScript
  * @copyright Copyright (c) 2014 Krasimir Tsonev
  * @license   Licensed under MIT license
