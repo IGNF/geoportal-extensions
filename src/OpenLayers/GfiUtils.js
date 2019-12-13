@@ -45,6 +45,9 @@ var GfiUtils = {
                     return "wms";
                 }
             }
+            if (type === "IMAGE") {
+                return "wms";
+            }
         } else {
             if (source instanceof TileWMSSource || source instanceof ImageWMSSource) {
                 return "wms";

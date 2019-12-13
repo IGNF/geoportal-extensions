@@ -9,6 +9,7 @@
 
 * Compatibilité IE sur l'API Fetch
 * Mise à jour sécurité des dépendances
+* Correctif sur le widget GetFeatureInfo
 
 ## Changelog
 
@@ -23,6 +24,7 @@
 * [Fixed]
 
     - [#249] Gestion de la comptabilité IE 10/11 sur l'API Fetch (polyfill)
+    - Correctif sur le getFeatureInfo d'une couche WMS de type POI
 
 * [Security]
 

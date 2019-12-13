@@ -81,6 +81,13 @@
             });
             map.addLayer(gpHydro);
 
+            var poi = new ol.layer.Tile({
+                source : new ol.source.GeoportalWMS({
+                    layer: "UTILITYANDGOVERNMENTALSERVICES.IGN.POI.ENSEIGNEMENTPRIMAIRE"
+                })
+            });
+            map.addLayer(poi);
+
             // 3. Ajout du GetFeatureInfo
             var getFeatureInfo = new ol.control.GetFeatureInfo({
                     layers : [
@@ -99,6 +106,9 @@
                         },
                         {
                             obj : gpMaps, // pas de getFeatureInfo sur cette couche...
+                        },
+                        {
+                            obj : poi,
                         },
                         {
                             obj : gpDrone,
