@@ -1394,6 +1394,10 @@ var GfiUtils = {
           return "wms";
         }
       }
+
+      if (type === "IMAGE") {
+        return "wms";
+      }
     } else {
       if (source instanceof ol_source_TileWMS__WEBPACK_IMPORTED_MODULE_3___default.a || source instanceof ol_source_ImageWMS__WEBPACK_IMPORTED_MODULE_5___default.a) {
         return "wms";
