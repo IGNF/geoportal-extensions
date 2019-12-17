@@ -1,45 +1,45 @@
 {
-   "description" : "French Geoportal Extensions for OpenLayers",
+   "directories" : {},
+   "version" : "3.0.5",
    "devDependencies" : {},
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "scripts" : {},
+   "dependencies" : {
+      "loglevel" : "~1.6.1",
+      "proj4" : "2.5.0",
+      "geoportal-access-lib" : "^2.1.6",
+      "xmldom" : "^0.1.27",
+      "eventbusjs" : "^0.2.0",
+      "request" : "^2.83.0",
+      "ol-mapbox-style" : "^4.2.1",
+      "sortablejs" : "1.8.4",
+      "ol" : "^5.3.0"
+   },
+   "license" : "CECILL-B",
+   "name" : "geoportal-extensions-openlayers",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "bugs" : {},
    "date" : "05/12/2019",
-   "version" : "3.0.5",
-   "name" : "geoportal-extensions-openlayers",
-   "directories" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "bugs" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "author" : "IGNF",
+   "module" : "src/OpenLayers/index.js",
    "peerDependencies" : {},
+   "bundleDependencies" : [],
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ],
-   "dependencies" : {
-      "ol-mapbox-style" : "^4.2.1",
-      "proj4" : "2.5.0",
-      "sortablejs" : "1.8.4",
-      "request" : "^2.83.0",
-      "eventbusjs" : "^0.2.0",
-      "geoportal-access-lib" : "^2.1.6",
-      "loglevel" : "~1.6.1",
-      "ol" : "^5.3.0",
-      "xmldom" : "^0.1.27"
-   },
-   "author" : "IGNF",
-   "module" : "src/OpenLayers/index.js",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "scripts" : {},
-   "bundleDependencies" : [],
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "license" : "CECILL-B"
+   ]
 }

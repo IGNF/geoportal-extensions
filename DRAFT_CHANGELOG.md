@@ -15,6 +15,8 @@
 
 * [Added]
 
+    - ajout du bundle ol en mode "deminifié" dans les exemples
+
 * [Changed]
 
 * [Deprecated]
