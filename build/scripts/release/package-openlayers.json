@@ -1,6 +1,6 @@
 {
    "directories" : {},
-   "version" : "3.0.5",
+   "version" : "3.0.6",
    "devDependencies" : {},
    "main" : "dist/GpPluginOpenLayers-src.js",
    "scripts" : {},
@@ -27,7 +27,7 @@
       "javascript",
       "OpenLayers"
    ],
-   "date" : "05/12/2019",
+   "date" : "17/12/2019",
    "description" : "French Geoportal Extensions for OpenLayers",
    "bugs" : {},
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
