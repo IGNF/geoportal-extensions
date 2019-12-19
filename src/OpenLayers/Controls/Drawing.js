@@ -651,7 +651,8 @@ var Drawing = (function (Control) {
             vlayer.getSource().getFeatures().forEach((feature) => {
                 var featureStyleFunction = feature.getStyleFunction();
                 if (featureStyleFunction) {
-                    var styles = featureStyleFunction.call(feature, 0);
+                    var styles = featureStyleFunction(feature, 0);
+                    // var styles = featureStyleFunction.call(feature, 0);
                     if (styles && styles.length !== 0) {
                         feature.setStyle(styles[0]);
                     }
