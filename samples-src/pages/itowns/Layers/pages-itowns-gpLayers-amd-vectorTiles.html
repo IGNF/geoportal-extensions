@@ -35,8 +35,12 @@
         ) {
             var createMap = function () {
                 /* global itowns,document,GuiTools*/
-                const positionOnGlobe = { longitude: 2.3465, latitude: 48.88, altitude: 250000 };
-
+                const positionOnGlobe = {
+                    coord: new itowns.Coordinates('EPSG:4326', 2.3465, 48.88, 0),
+                    zoom: 10,
+                    tilt: 45,
+                    heading: 0
+                };
                 // iTowns namespace defined here
                 const viewerDiv = document.getElementById('viewerDiv');
                 const globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
