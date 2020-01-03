@@ -82,7 +82,7 @@
     "proj4": "^2.5.0",
     "proj4leaflet": "~1.0.2",
     "sortablejs": "1.8.4",
-    "three": "^0.109.0",
+    "three": "^0.111.0",
     "three.meshline": "~1.2.0",
     "whatwg-fetch": "^3.0.0"
   },
