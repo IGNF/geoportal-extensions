@@ -320,7 +320,7 @@ L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leafle
 * [version 1.2.X](http://leafletjs.com/reference-1.2.0.html)
 * [version 1.3.X](http://leafletjs.com/reference-1.3.0.html)
 * [version 1.4.X](http://leafletjs.com/reference-1.4.0.html)
-* [version 1.5.X](http://leafletjs.com/reference-1.5.0.html)
+* [version 1.5.1](http://leafletjs.com/reference-1.5.1.html)
 
 La release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw).
 
