@@ -1,13 +1,13 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.6
+# Extension Geoportail OpenLayers, version 3.0.7
 
-**22/11/2019**
+**24/01/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* fix.
+* Correctif sur le widget de dessin
 
 ## Changelog
 
@@ -27,18 +27,24 @@
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.5
+# Extension Geoportail Itowns, version 2.2.6
 
-**22/11/2019**
+**24/01/2020**
 > Release Extension Geoportail Itowns
 
 ## Summary
+
+* Mise à jour des extensions pour utilisation d'iTowns 2.17
 
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+	- iTowns en version 2.17 et threejs 0.111.0
+	
+	- exemples itowns adaptés à itowns 2.17
 
 * [Deprecated]
 
