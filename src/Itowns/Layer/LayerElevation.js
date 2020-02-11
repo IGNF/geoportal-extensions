@@ -1,7 +1,9 @@
 /* globals self */
+import Gp from "geoportal-access-lib";
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import Pkg from "../../../package.json";
 import {
     Extent as ItExtent,
     WMTSSource as ItWMTSSource,
@@ -98,6 +100,11 @@ function LayerElevation (options) {
                 north : wmtsParams.extent.north
             }
         });
+
+        // ajout du tag gp-itowns-ext dans les requêtes WMTS elevation
+        config.source.url = Gp.Helper.normalyzeUrl(config.source.url, {
+            "gp-itowns-ext" : Pkg.itownsExtVersion || Pkg.version
+        }, false);
 
         // récupération des autres paramètres passés par l'utilisateur
         Utils.mergeParams(config, options.itownsParams);
