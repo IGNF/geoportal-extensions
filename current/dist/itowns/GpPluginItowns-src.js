@@ -35014,11 +35014,16 @@ var MiniGlobeDOM = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(135);
-/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(132);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(133);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(135);
+/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
+var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(132);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_5__);
+
+
 
 
 
@@ -35027,7 +35032,7 @@ __webpack_require__.r(__webpack_exports__);
 import WMTSSource from "itowns/Source/WMTSSource";
 import ColorLayer from "itowns/Layer/ColorLayer"; */
 
-var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__["default"].getLogger("wmtsLayer");
+var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__["default"].getLogger("wmtsLayer");
 /**
  * @classdesc
  * Geoportal WMTS source creation
@@ -35065,21 +35070,21 @@ function LayerWMTS(options) {
   } // Check if configuration is loaded
 
 
-  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
+  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].isConfigLoaded()) {
     throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
   }
 
-  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerId(options.layer, "WMTS");
+  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].getLayerId(options.layer, "WMTS");
 
-  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].configuration.getLayerConf(layerId)) {
+  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].configuration.getLayerConf(layerId)) {
     var config = {};
-    var wmtsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerParams(options.layer, "WMTS", options.apiKey);
+    var wmtsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].getLayerParams(options.layer, "WMTS", options.apiKey);
 
     if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
-      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_3__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_5__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
     } else {
       wmtsParams.projection = "EPSG:4326";
-      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_3__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_5__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
     }
 
     if (Object.entries(wmtsParams.tileMatrixSetLimits).length === 0 && wmtsParams.tileMatrixSetLimits.constructor === Object) {
@@ -35090,7 +35095,7 @@ function LayerWMTS(options) {
 
     var protocol = options.ssl === false ? "http://" : "https://";
     config.id = layerId;
-    config.source = new itowns__WEBPACK_IMPORTED_MODULE_3__["WMTSSource"]({
+    config.source = new itowns__WEBPACK_IMPORTED_MODULE_5__["WMTSSource"]({
       protocol: "wmts",
       url: wmtsParams.url.replace(/(http|https):\/\//, protocol),
       networkOptions: {
@@ -35112,16 +35117,20 @@ function LayerWMTS(options) {
         south: wmtsParams.extent.south,
         north: wmtsParams.extent.north
       }
-    }); // récupération des autres paramètres passés par l'utilisateur
+    }); // ajout du tag gp-itowns-ext dans les requêtes WMTS
 
-    _Common_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].mergeParams(config, options.itownsParams); // add legends and metadata (to be added to LayerSwitcher control)
+    config.source.url = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__["default"].Helper.normalyzeUrl(config.source.url, {
+      "gp-itowns-ext": _package_json__WEBPACK_IMPORTED_MODULE_4__.itownsExtVersion || _package_json__WEBPACK_IMPORTED_MODULE_4__.version
+    }, false); // récupération des autres paramètres passés par l'utilisateur
+
+    _Common_Utils__WEBPACK_IMPORTED_MODULE_1__["default"].mergeParams(config, options.itownsParams); // add legends and metadata (to be added to LayerSwitcher control)
 
     config.legends = wmtsParams.legends;
     config.metadata = wmtsParams.metadata;
     config.description = wmtsParams.description;
     config.title = wmtsParams.title;
     config.quicklookUrl = wmtsParams.quicklookUrl;
-    return new itowns__WEBPACK_IMPORTED_MODULE_3__["ColorLayer"](config.id, config);
+    return new itowns__WEBPACK_IMPORTED_MODULE_5__["ColorLayer"](config.id, config);
   } else {
     // If layer is not in Gp.Config
     logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMTS ) was not found !?");
@@ -35141,11 +35150,16 @@ LayerWMTS.prototype.constructor = LayerWMTS;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(135);
-/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(132);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(133);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(135);
+/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
+var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(132);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_5__);
+
+
 
 
 
@@ -35154,7 +35168,7 @@ __webpack_require__.r(__webpack_exports__);
 import WMSSource from "itowns/Source/WMSSource";
 import ColorLayer from "itowns/Layer/ColorLayer"; */
 
-var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__["default"].getLogger("wmsLayer");
+var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__["default"].getLogger("wmsLayer");
 /**
  * @classdesc
  * Geoportal WMTS source creation
@@ -35192,27 +35206,27 @@ function LayerWMS(options) {
   } // Check if configuration is loaded
 
 
-  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
+  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].isConfigLoaded()) {
     throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
   }
 
-  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerId(options.layer, "WMS");
+  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].getLayerId(options.layer, "WMS");
 
-  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].configuration.getLayerConf(layerId)) {
+  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].configuration.getLayerConf(layerId)) {
     var config = {};
-    var wmsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerParams(options.layer, "WMS", options.apiKey);
+    var wmsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].getLayerParams(options.layer, "WMS", options.apiKey);
 
     if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
-      wmsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_3__["Extent"]("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
+      wmsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_5__["Extent"]("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
     } else {
-      wmsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_3__["Extent"]("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
+      wmsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_5__["Extent"]("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
     } // si ssl = false on fait du http
     // par défaut, ssl = true, on fait du https
 
 
     var protocol = options.ssl === false ? "http://" : "https://";
     config.id = layerId;
-    config.source = new itowns__WEBPACK_IMPORTED_MODULE_3__["WMSSource"]({
+    config.source = new itowns__WEBPACK_IMPORTED_MODULE_5__["WMSSource"]({
       protocol: "wms",
       version: wmsParams.version,
       attribution: wmsParams.originators,
@@ -35236,16 +35250,20 @@ function LayerWMS(options) {
         south: wmsParams.extent.south,
         north: wmsParams.extent.north
       }
-    }); // récupération des autres paramètres passés par l'utilisateur
+    }); // ajout du tag gp-itowns-ext dans les requêtes WMS
 
-    _Common_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].mergeParams(config, options.itownsParams); // add legends and metadata (to be added to LayerSwitcher control)
+    config.source.url = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__["default"].Helper.normalyzeUrl(config.source.url, {
+      "gp-itowns-ext": _package_json__WEBPACK_IMPORTED_MODULE_4__.itownsExtVersion || _package_json__WEBPACK_IMPORTED_MODULE_4__.version
+    }, false); // récupération des autres paramètres passés par l'utilisateur
+
+    _Common_Utils__WEBPACK_IMPORTED_MODULE_1__["default"].mergeParams(config, options.itownsParams); // add legends and metadata (to be added to LayerSwitcher control)
 
     config.legends = wmsParams.legends;
     config.metadata = wmsParams.metadata;
     config.description = wmsParams.description;
     config.title = wmsParams.title;
     config.quicklookUrl = wmsParams.quicklookUrl;
-    return new itowns__WEBPACK_IMPORTED_MODULE_3__["ColorLayer"](config.id, config);
+    return new itowns__WEBPACK_IMPORTED_MODULE_5__["ColorLayer"](config.id, config);
   } else {
     // If layer is not in Gp.Config
     logger.error("ERROR layer id (layer name: " + options.layer + " / service: WMS ) was not found !?");
@@ -35265,12 +35283,17 @@ LayerWMS.prototype.constructor = LayerWMS;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(135);
-/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(132);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(133);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(135);
+/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
+var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(132);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_5__);
 /* globals self */
+
+
 
 
 
@@ -35279,7 +35302,7 @@ __webpack_require__.r(__webpack_exports__);
 import WMTSSource from "itowns/Source/WMTSSource";
 import ElevationLayer from "itowns/Layer/ElevationLayer"; */
 
-var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__["default"].getLogger("elevationLayer");
+var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__["default"].getLogger("elevationLayer");
 /**
  * @classdesc
  * Geoportal elevation source creation
@@ -35317,21 +35340,21 @@ function LayerElevation(options) {
   } // Check if configuration is loaded
 
 
-  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
+  if (!_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].isConfigLoaded()) {
     throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
   }
 
-  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerId(options.layer, "WMTS");
+  var layerId = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].getLayerId(options.layer, "WMTS");
 
-  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].configuration.getLayerConf(layerId)) {
+  if (layerId && _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].configuration.getLayerConf(layerId)) {
     var config = {};
-    var wmtsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getLayerParams(options.layer, "WMTS", options.apiKey);
+    var wmtsParams = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__["default"].getLayerParams(options.layer, "WMTS", options.apiKey);
 
     if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
-      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_3__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
+      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_5__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
     } else {
       wmtsParams.projection = "EPSG:4326";
-      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_3__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
+      wmtsParams.extent = new itowns__WEBPACK_IMPORTED_MODULE_5__["Extent"]("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
     } // gestion de mixContent dans l'url du service...
 
 
@@ -35345,7 +35368,7 @@ function LayerElevation(options) {
         groups: [11, 14]
       }
     };
-    config.source = new itowns__WEBPACK_IMPORTED_MODULE_3__["WMTSSource"]({
+    config.source = new itowns__WEBPACK_IMPORTED_MODULE_5__["WMTSSource"]({
       protocol: "wmts",
       url: wmtsParams.url.replace(/(http|https):\/\//, protocol),
       networkOptions: {
@@ -35363,16 +35386,20 @@ function LayerElevation(options) {
         south: wmtsParams.extent.south,
         north: wmtsParams.extent.north
       }
-    }); // récupération des autres paramètres passés par l'utilisateur
+    }); // ajout du tag gp-itowns-ext dans les requêtes WMTS elevation
 
-    _Common_Utils__WEBPACK_IMPORTED_MODULE_0__["default"].mergeParams(config, options.itownsParams); // add legends and metadata (to be added to LayerSwitcher control)
+    config.source.url = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__["default"].Helper.normalyzeUrl(config.source.url, {
+      "gp-itowns-ext": _package_json__WEBPACK_IMPORTED_MODULE_4__.itownsExtVersion || _package_json__WEBPACK_IMPORTED_MODULE_4__.version
+    }, false); // récupération des autres paramètres passés par l'utilisateur
+
+    _Common_Utils__WEBPACK_IMPORTED_MODULE_1__["default"].mergeParams(config, options.itownsParams); // add legends and metadata (to be added to LayerSwitcher control)
 
     config.legends = wmtsParams.legends;
     config.metadata = wmtsParams.metadata;
     config.description = wmtsParams.description;
     config.title = wmtsParams.title;
     config.quicklookUrl = wmtsParams.quicklookUrl;
-    return new itowns__WEBPACK_IMPORTED_MODULE_3__["ElevationLayer"](config.id, config);
+    return new itowns__WEBPACK_IMPORTED_MODULE_5__["ElevationLayer"](config.id, config);
   } else {
     // If layer is not in Gp.Config
     logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
