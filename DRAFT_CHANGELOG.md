@@ -7,7 +7,7 @@
 
 ## Summary
 
-* Correctif sur le widget de dessin
+*
 
 ## Changelog
 
@@ -21,8 +21,6 @@
 
 * [Fixed]
 
-    - Correctif sur le widget Drawing
-
 * [Security]
 
 ---
@@ -34,17 +32,15 @@
 
 ## Summary
 
-* Mise à jour des extensions pour utilisation d'iTowns 2.17
+*
 
 ## Changelog
 
 * [Added]
 
-* [Changed]
+- Ajout d'un tag "gp-itowns-ext" dans les requetes web WMTS/WMS
 
-	- iTowns en version 2.17 et threejs 0.111.0
-	
-	- exemples itowns adaptés à itowns 2.17
+* [Changed]
 
 * [Deprecated]
 
