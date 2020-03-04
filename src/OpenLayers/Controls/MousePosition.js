@@ -219,23 +219,28 @@ var MousePosition = (function (Control) {
                 });
                 map.addOverlay(this._markerOverlay);
             }
-
-            // mode "collapsed"
-            if (!this.collapsed) {
-                var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
-                inputShow.checked = "checked";
-                this._setElevationPanel(this.options.displayAltitude);
-                this._setCoordinatesPanel(this.options.displayCoordinates);
-                if (!this.options.displayCoordinates) {
-                    this._setSettingsPanel(false);
-                }
-            }
         } else {
             olObservableUnByKey(this.listenerKey);
         }
 
         // call original setMap method
         Control.prototype.setMap.call(this, map);
+
+        // HACK: on arrête l'execution de la fonction...
+        if (map === null) {
+            return;
+        }
+
+        // mode "collapsed"
+        if (!this.collapsed) {
+            var inputShow = document.getElementById("GPshowMousePosition-" + this._uid);
+            inputShow.checked = "checked";
+            this._setElevationPanel(this.options.displayAltitude);
+            this._setCoordinatesPanel(this.options.displayCoordinates);
+            if (!this.options.displayCoordinates) {
+                this._setSettingsPanel(false);
+            }
+        }
     };
 
     // ################################################################### //
