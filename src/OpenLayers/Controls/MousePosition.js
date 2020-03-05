@@ -219,13 +219,15 @@ var MousePosition = (function (Control) {
                 });
                 map.addOverlay(this._markerOverlay);
             }
+        } else {
+            olObservableUnByKey(this.listenerKey);
         }
 
         // call original setMap method
         Control.prototype.setMap.call(this, map);
 
-        // nothing else to do if map == null
-        if (map == null) {
+        // HACK: on arrête l'execution de la fonction...
+        if (map === null) {
             return;
         }
 

@@ -2,12 +2,12 @@
 
 # Extension Geoportail OpenLayers, version 3.0.7
 
-**24/01/2020**
+**02/03/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-*
+* fix sur le retrait d'un widget de la carte
 
 ## Changelog
 
@@ -20,6 +20,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - fix sur le retrait du widget "mouseposition" de la carte
 
 * [Security]
 
