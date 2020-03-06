@@ -44,6 +44,8 @@
 
 * [Changed]
 
+- Dependance itowns 2.19 + three 0.113.2
+
 * [Deprecated]
 
 * [Removed]
