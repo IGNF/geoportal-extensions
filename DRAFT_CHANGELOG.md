@@ -27,24 +27,18 @@
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.6
+# Extension Geoportail Itowns, version 2.2.7
 
-**24/01/2020**
+**06/03/2020**
 > Release Extension Geoportail Itowns
 
 ## Summary
-
-*
 
 ## Changelog
 
 * [Added]
 
-- Ajout d'un tag "gp-itowns-ext" dans les requetes web WMTS/WMS
-
 * [Changed]
-
-- Dependance itowns 2.19 + three 0.113.2
 
 * [Deprecated]
 
