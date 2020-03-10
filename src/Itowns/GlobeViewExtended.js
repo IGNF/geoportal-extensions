@@ -713,7 +713,7 @@ GlobeViewExtended.prototype.setZoom = function (zoom) {
  * @return {Number} projection in meters on globe
  */
 GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
-    return this.getGlobeView().controls.pixelsToMeters(pixels);
+    return this.getGlobeView().pixelsToMeters(pixels);
 };
 
 /**
@@ -722,7 +722,7 @@ GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
  * @return {Number} projection in pixels on screen
  */
 GlobeViewExtended.prototype.metersToPixels = function (value) {
-    return this.getGlobeView().controls.metersToPixels(value);
+    return this.getGlobeView().metersToPixels(value);
 };
 
 /**
