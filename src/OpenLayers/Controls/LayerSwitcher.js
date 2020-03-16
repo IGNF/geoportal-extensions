@@ -774,6 +774,11 @@ var LayerSwitcher = (function (Control) {
         map.getLayers().forEach(
             (layer) => {
                 id = layer.gpLayerId;
+                
+                // Si le layer est supprimé du LayerSwitcher, on l'ignore
+                if(!this._layers[id]) {
+                    return;
+                }
 
                 // on commence par désactiver temporairement l'écouteur d'événements sur le changement de zindex.
                 olObservableUnByKey(this._layers[id].onZIndexChangeEvent);
