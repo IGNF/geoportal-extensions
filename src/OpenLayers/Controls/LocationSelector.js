@@ -615,7 +615,7 @@ var LocationSelector = (function (Control) {
         var lat = this._coordinate[0].toFixed(4);
         var lng = this._coordinate[1].toFixed(4);
 
-        var value = lat + " / " + lng;
+        var value = lng + " / " + lat;
         this.GPdisplayCoordinate(value);
     };
 
