@@ -37,6 +37,10 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
 
     // stockage de l'élément html porteur du globe
+    var globeViewDiv = document.createElement('div')
+    globeViewDiv.style.width = "100%"; 
+    globeViewDiv.style.height = "100%"; 
+    viewerDiv.appendChild(globeViewDiv);
     this._viewerDiv = viewerDiv;
 
     // widget container
@@ -49,7 +53,7 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     this._isInitialized = false;
 
     // call constructor
-    this._globeView = new ItGlobeView(viewerDiv, coordCarto, options);
+    this._globeView = new ItGlobeView(globeViewDiv, coordCarto, options);
 
     var self = this;
     this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
@@ -713,7 +717,7 @@ GlobeViewExtended.prototype.setZoom = function (zoom) {
  * @return {Number} projection in meters on globe
  */
 GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
-    return this.getGlobeView().controls.pixelsToMeters(pixels);
+    return this.getGlobeView().getPixelsToMeters(pixels);
 };
 
 /**
@@ -722,7 +726,7 @@ GlobeViewExtended.prototype.pixelsToMeters = function (pixels) {
  * @return {Number} projection in pixels on screen
  */
 GlobeViewExtended.prototype.metersToPixels = function (value) {
-    return this.getGlobeView().controls.metersToPixels(value);
+    return this.getGlobeView().getMetersToPixels(value);
 };
 
 /**
