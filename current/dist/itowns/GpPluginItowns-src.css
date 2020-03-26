@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.2.7
- * @date 06/03/2020
+ * @version 2.2.8
+ * @date 26/03/2020
  *
  */
 
@@ -3015,6 +3015,12 @@ span[id^=GPshowMousePositionOpen] {
 }
 
 /* General panels */
+
+div[id^=GPmousePositionPanel-] {
+  position: relative;
+  left: 0px;
+  top: 0px;
+}
 
 div[id^=GPmousePositionPanelClose]  {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAaCAYAAAD43n+tAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAD2SURBVFiF7ZbRDoIwDEUZ36oPRP9GMVF+k1c5vpQ4l24CFkfITsIDY2l70+6yqirsDITcdcSocxdQKHxhjTMEHIE7ED0CgAMuwNkyt7kgEfOUsJ0mSsRcZc9gLsoSoOWTG+C8707WfNqcNSfxRsmnA+qgMyOP1GjOSaxioCklKuyejRhJOtLLYyZI4muilosJC4y89957P2H/LMEJUapZaGzxpuAmrv3Gn0YuNIBFXZqaUMUodszNwjVbUWuQEDPatmrpueuOQu4fq+WoSbwD76uPas1BpwbgZJV/rctpI52KupmIaoHGMndh86wxcpZs1/4KO+UFLQ+rEigj9BAAAAAASUVORK5CYII=);
