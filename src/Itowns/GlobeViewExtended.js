@@ -37,6 +37,10 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
 
     // stockage de l'élément html porteur du globe
+    var globeViewDiv = document.createElement('div')
+    globeViewDiv.style.width = "100%"; 
+    globeViewDiv.style.height = "100%"; 
+    viewerDiv.appendChild(globeViewDiv);
     this._viewerDiv = viewerDiv;
 
     // widget container
@@ -49,7 +53,7 @@ function GlobeViewExtended (viewerDiv, coordCarto, options) {
     this._isInitialized = false;
 
     // call constructor
-    this._globeView = new ItGlobeView(viewerDiv, coordCarto, options);
+    this._globeView = new ItGlobeView(globeViewDiv, coordCarto, options);
 
     var self = this;
     this.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
