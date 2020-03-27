@@ -13,6 +13,8 @@
 
 * [Added]
 
+    - gestion des icônes dans l’éditeur MapBox
+
 * [Changed]
 
 * [Deprecated]

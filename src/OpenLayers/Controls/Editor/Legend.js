@@ -13,6 +13,15 @@ var logger = Logger.getLogger("editor-legend");
  * @constructor
  * @alias ol.style.editor.Legend
  * @param {Object} options - options for function call.
+ * @param {Object} [options.target = null] - ...
+ * @param {Number} [options.position = 0] -  ...
+ * @param {Number} [options.id = null] - (internal) ...
+ * @param {Object} options.sprites - ...
+ * @param {Object} options.obj - ...
+ * @param {String} [options.obj.title] - ...
+ * @param {Boolean} [options.obj.editable = true] - ...
+ * @param {Object} [options.obj.paint] - ...
+ * @param {Object} [options.obj.layout] - ...
  * @example
  *   var legend = new Legend ({
  *      target : ...,
@@ -39,6 +48,7 @@ function Legend (options) {
         // default...
         target : null,
         position : 0,
+        sprites : null,
         obj : null
     };
 
@@ -100,7 +110,8 @@ Legend.prototype._initialize = function () {
             width : 1,
             stroke : "#FFFFFF",
             color : "#000000",
-            opacity : 1
+            opacity : 1,
+            icon : null
         }
     };
 
@@ -317,15 +328,16 @@ Legend.prototype._getValues = function (type, value) {
     var _stroke = this.legendRender.values.stroke; // couleur trait
     var _width = this.legendRender.values.width; // epaisseur
     var _opacity = this.legendRender.values.opacity; // opacité
+    var _icon = null;
 
     // cas particulier : determiner pour un symbole complexe
     if (type === "symbol") {
         // il existe 2 type de symbole :
         // - texte
         // - icone avec ou sans texte
-        var _text = value["text-field"];
-        var _icon = value["icon-image"];
-        type = (_text && _icon) ? "icon" : (_text) ? "text" : (_icon) ? "icon" : "unknow";
+        var _textValue = value["text-field"];
+        var _iconValue = value["icon-image"];
+        type = (_textValue && _iconValue) ? "icon" : (_textValue) ? "text" : (_iconValue) ? "icon" : "unknow";
         if (type === "unknow") {
             logger.warn("_getValues() - Type inconnu :", type, value);
             // on force le type texte !?
@@ -356,13 +368,23 @@ Legend.prototype._getValues = function (type, value) {
             _color = pColor || _color;
             break;
         case "icon":
-            pColor = value["icon-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
-                _color = null;
-                break;
+            var bfound = false;
+            if (value["icon-image"] && this.options.sprites && Object.keys(this.options.sprites).length) {
+                if (this.options.sprites.json && this.options.sprites.json[value["icon-image"]]) {
+                    bfound = true;
+                }
             }
-            // FIXME  c'est plus complexe !?
-            _color = pColor || _color;
+            if (bfound) {
+                _icon = value["icon-image"];
+            } else {
+                pColor = value["icon-color"];
+                if (typeof pColor === "object" || Array.isArray(pColor)) {
+                    _color = null;
+                    break;
+                }
+                // FIXME  c'est plus complexe !?
+                _color = pColor || _color;
+            }
             break;
         case "circle":
             pColor = value["circle-color"];
@@ -407,7 +429,8 @@ Legend.prototype._getValues = function (type, value) {
             color : _color,
             stroke : _stroke,
             width : _width,
-            opacity : _opacity
+            opacity : _opacity,
+            icon : _icon
         }
     };
 
@@ -438,6 +461,7 @@ Legend.prototype._setValues = function (type, values) {
     var _stroke = values.stroke || this.legendRender.values.stroke; // couleur trait
     var _width = values.width || this.legendRender.values.width; // epaisseur
     var _opacity = values.opacity || this.legendRender.values.opacity; // opacité
+    var _icon = values.icon || this.legendRender.values.icon; // nom de l'icone
     var _style = "";
 
     // SVG
@@ -456,11 +480,33 @@ Legend.prototype._setValues = function (type, values) {
                 .replace("%style%", _style);
             break;
         case "icon":
-            _style = "fill: transparent;stroke-width: 10;";
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";
-            div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%style%", _style);
+            if (_icon) {
+                // svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='xMidYMid meet' width='100%' height='100%'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>\")";
+                // div.style["background"] = svg
+                //     .replace("%x%", this.options.sprites.json[_icon].x)
+                //     .replace("%y%", this.options.sprites.json[_icon].y)
+                //     .replace(/%w%/g, this.options.sprites.json[_icon].width)
+                //     .replace(/%h%/g, this.options.sprites.json[_icon].height)
+                //     .replace("%W%", this.options.sprites.size.w)
+                //     .replace("%H%", this.options.sprites.size.h)
+                //     .replace("%URL%", this.options.sprites.url);
+                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='xMidYMid meet' width='100%' height='100%'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>";
+                svg = template
+                    .replace("%x%", this.options.sprites.json[_icon].x)
+                    .replace("%y%", this.options.sprites.json[_icon].y)
+                    .replace(/%w%/g, this.options.sprites.json[_icon].width)
+                    .replace(/%h%/g, this.options.sprites.json[_icon].height)
+                    .replace("%W%", this.options.sprites.size.w)
+                    .replace("%H%", this.options.sprites.size.h)
+                    .replace("%URL%", this.options.sprites.url);
+                div.innerHTML = svg;
+            } else {
+                _style = "fill: transparent;stroke-width: 10;";
+                svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";
+                div.style["background"] = svg
+                    .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
+                    .replace("%style%", _style);
+            }
             break;
         case "background":
             div.style["background-color"] = _color;
@@ -497,7 +543,8 @@ Legend.prototype._setValues = function (type, values) {
             color : _color,
             stroke : _stroke,
             width : _width,
-            opacity : _opacity
+            opacity : _opacity,
+            icon : _icon
         }
     };
 

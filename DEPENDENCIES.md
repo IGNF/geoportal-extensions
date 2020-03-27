@@ -28,7 +28,7 @@ last
 * geoportal-access-lib
 
 last
-└── geoportal-access-lib@2.1.5
+└── geoportal-access-lib@2.1.6
 
 * leaflet
 
@@ -43,7 +43,7 @@ last
 
 * "itowns"
 
-└── "itowns@2.15.3"
+└── "itowns@2.19.0"
 
 * loglevel
 
