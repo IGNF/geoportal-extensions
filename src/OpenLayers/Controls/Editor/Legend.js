@@ -16,21 +16,32 @@ var logger = Logger.getLogger("editor-legend");
  * @param {Object} [options.target = null] - ...
  * @param {Number} [options.position = 0] -  ...
  * @param {Number} [options.id = null] - (internal) ...
- * @param {Object} options.sprites - ...
+ * @param {Object} [options.sprites = null] - ...
+ * @param {String} [options.sprites.url] - ...
+ * @param {Object} [options.sprites.size] - {h:, w:} ...
+ * @param {Object} [options.sprites.json] - ...
  * @param {Object} options.obj - ...
  * @param {String} [options.obj.title] - ...
  * @param {Boolean} [options.obj.editable = true] - ...
- * @param {Object} [options.obj.paint] - ...
- * @param {Object} [options.obj.layout] - ...
+ * @param {Object} options.obj.paint - ...
+ * @param {Object} options.obj.layout - ...
  * @example
  *   var legend = new Legend ({
  *      target : ...,
  *      position : 1, // identifiant de position (unique !)
+ *      sprites : {
+ *          url : "http://localhost/sprites.png",
+ *          size : { w : 450, h : 550 },
+ *          json : {
+ *              icon-1 : {x:,y:,height:,width:,pixelRatio:},
+ *              icon-2 : {x:,y:,height:,width:,pixelRatio:}
+ *          }
+ *      },
  *      obj : {
  *          title : "",
  *          editable : true, // tag non standard issue du style json dédié à l'edition
- *          paint : {},
- *          layout : {}
+ *          paint : {"fill-color": "#2BB3E1"},
+ *          layout : {visibility:"none"}
  *      }
  *   });
  *  legend.add();
@@ -481,6 +492,9 @@ Legend.prototype._setValues = function (type, values) {
             break;
         case "icon":
             if (_icon) {
+                // cf. https://www.tripadvisor.com/engineering/optimizing-image-sprites-for-high-density-displays-with-svg/
+
+                // beurk !
                 // svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='xMidYMid meet' width='100%' height='100%'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>\")";
                 // div.style["background"] = svg
                 //     .replace("%x%", this.options.sprites.json[_icon].x)
@@ -490,7 +504,10 @@ Legend.prototype._setValues = function (type, values) {
                 //     .replace("%W%", this.options.sprites.size.w)
                 //     .replace("%H%", this.options.sprites.size.h)
                 //     .replace("%URL%", this.options.sprites.url);
-                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='xMidYMid meet' width='100%' height='100%'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>";
+
+                // on reste dans le paradigme d'utilisation du SVG..., mais probleme
+                // de ratio de l'image !?
+                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='%w%px' height='%h%px'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>";
                 svg = template
                     .replace("%x%", this.options.sprites.json[_icon].x)
                     .replace("%y%", this.options.sprites.json[_icon].y)
@@ -500,6 +517,12 @@ Legend.prototype._setValues = function (type, values) {
                     .replace("%H%", this.options.sprites.size.h)
                     .replace("%URL%", this.options.sprites.url);
                 div.innerHTML = svg;
+
+                // bonne solution mais on sort du tout SVG...
+                // div.style["background-image"] = "url(" + this.options.sprites.url + ")";
+                // div.style["background-position-x"] = this.options.sprites.json[_icon].x + "px";
+                // div.style["background-position-y"] = this.options.sprites.json[_icon].y + "px";
+                // div.style["background-size"] = "cover";
             } else {
                 _style = "fill: transparent;stroke-width: 10;";
                 svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";
