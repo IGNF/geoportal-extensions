@@ -1,16 +1,16 @@
 {
-   "date" : "06/03/2020",
-   "bundleDependencies" : [],
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "scripts" : {},
+   "date" : "26/03/2020",
+   "version" : "2.2.8",
+   "module" : "src/Itowns/index.js",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "peerDependencies" : {},
+   "devDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "name" : "geoportal-extensions-itowns",
-   "author" : "IGNF",
-   "bugs" : {},
+   "description" : "French Geoportal Extensions for iTowns",
    "files" : [
       "dist/",
       "src/",
@@ -18,28 +18,28 @@
       "README.md",
       "package.json"
    ],
-   "main" : "dist/GpPluginItowns-src.js",
-   "directories" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "license" : "CECILL-B",
+   "bugs" : {},
+   "bundleDependencies" : [],
    "dependencies" : {
-      "three.meshline" : "~1.2.0",
-      "loglevel" : "~1.6.1",
-      "itowns" : "2.19.0",
-      "sortablejs" : "1.8.4",
-      "proj4" : "2.5.0",
-      "xmldom" : "^0.1.27",
-      "three" : "^0.113.2",
       "request" : "^2.83.0",
-      "geoportal-access-lib" : "^2.1.6"
+      "proj4" : "2.5.0",
+      "three" : "^0.113.2",
+      "geoportal-access-lib" : "^2.1.6",
+      "loglevel" : "~1.6.1",
+      "sortablejs" : "1.8.4",
+      "three.meshline" : "~1.2.0",
+      "itowns" : "2.19.0",
+      "xmldom" : "^0.1.27"
    },
-   "description" : "French Geoportal Extensions for iTowns",
-   "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "version" : "2.2.7",
-   "module" : "src/Itowns/index.js",
-   "peerDependencies" : {}
+   "directories" : {},
+   "license" : "CECILL-B",
+   "main" : "dist/GpPluginItowns-src.js",
+   "author" : "IGNF",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "scripts" : {}
 }

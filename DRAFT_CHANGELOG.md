@@ -22,14 +22,15 @@
 * [Fixed]
 
     - fix sur le retrait du widget "mouseposition" de la carte
+    - Control LocationSelector OL : inversion affichage lon/lat
 
 * [Security]
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.7
+# Extension Geoportail Itowns, version 2.2.8
 
-**06/03/2020**
+**26/03/2020**
 > Release Extension Geoportail Itowns
 
 ## Summary
@@ -45,6 +46,11 @@
 * [Removed]
 
 * [Fixed]
+
+- Retrait d'appels à des fonctions dépréciées d'iTowns
+- Fix mauvais affichage du dom du mousePosition itowns
+- Fix mouseListeners inactifs sur les controls par encapsulation de la viewerDiv d'iTowns
+
 
 * [Security]
 
