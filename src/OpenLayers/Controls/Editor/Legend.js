@@ -492,22 +492,9 @@ Legend.prototype._setValues = function (type, values) {
             break;
         case "icon":
             if (_icon) {
-                // cf. https://www.tripadvisor.com/engineering/optimizing-image-sprites-for-high-density-displays-with-svg/
-
-                // beurk !
-                // svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='xMidYMid meet' width='100%' height='100%'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>\")";
-                // div.style["background"] = svg
-                //     .replace("%x%", this.options.sprites.json[_icon].x)
-                //     .replace("%y%", this.options.sprites.json[_icon].y)
-                //     .replace(/%w%/g, this.options.sprites.json[_icon].width)
-                //     .replace(/%h%/g, this.options.sprites.json[_icon].height)
-                //     .replace("%W%", this.options.sprites.size.w)
-                //     .replace("%H%", this.options.sprites.size.h)
-                //     .replace("%URL%", this.options.sprites.url);
-
-                // on reste dans le paradigme d'utilisation du SVG..., mais probleme
-                // de ratio de l'image !?
-                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='%w%px' height='%h%px'><svg x='0' y='0' width='%w%px' height='%h%px' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg></svg>";
+                // FIXME on reste dans le paradigme d'utilisation du SVG...,
+                // mais probleme de ratio de l'image !?
+                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>";
                 svg = template
                     .replace("%x%", this.options.sprites.json[_icon].x)
                     .replace("%y%", this.options.sprites.json[_icon].y)
@@ -517,12 +504,6 @@ Legend.prototype._setValues = function (type, values) {
                     .replace("%H%", this.options.sprites.size.h)
                     .replace("%URL%", this.options.sprites.url);
                 div.innerHTML = svg;
-
-                // bonne solution mais on sort du tout SVG...
-                // div.style["background-image"] = "url(" + this.options.sprites.url + ")";
-                // div.style["background-position-x"] = this.options.sprites.json[_icon].x + "px";
-                // div.style["background-position-y"] = this.options.sprites.json[_icon].y + "px";
-                // div.style["background-size"] = "cover";
             } else {
                 _style = "fill: transparent;stroke-width: 10;";
                 svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";

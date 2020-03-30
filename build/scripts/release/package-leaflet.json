@@ -12,12 +12,12 @@
    "name" : "geoportal-extensions-leaflet",
    "dependencies" : {
       "leaflet" : "1.5.1",
-      "loglevel" : "~1.6.1",
+      "loglevel" : "1.6.1",
       "sortablejs" : "1.8.4",
       "leaflet-draw" : "1.0.4",
-      "geoportal-access-lib" : "^2.1.6",
-      "proj4" : "2.5.0",
-      "proj4leaflet" : "~1.0.2"
+      "geoportal-access-lib" : "2.1.6",
+      "proj4" : "2.6.0",
+      "proj4leaflet" : "1.0.2"
    },
    "date" : "05/12/2019",
    "directories" : {},

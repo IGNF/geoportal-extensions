@@ -8,6 +8,7 @@
 ## Summary
 
 * fix sur le retrait d'un widget de la carte
+* versions des dépendances
 
 ## Changelog
 
@@ -17,6 +18,8 @@
 
 * [Changed]
 
+    - choix fixé des versions des dépendances dans le package.json
+
 * [Deprecated]
 
 * [Removed]
@@ -24,7 +27,7 @@
 * [Fixed]
 
     - fix sur le retrait du widget "mouseposition" de la carte
-    - Control LocationSelector OL : inversion affichage lon/lat
+    - correctif sur l'inversion affichage lon/lat du widget "mouseposition"
 
 * [Security]
 
@@ -42,6 +45,8 @@
 * [Added]
 
 * [Changed]
+
+    - choix fixé des versions des dépendances dans le package.json
 
 * [Deprecated]
 
@@ -70,6 +75,8 @@
 * [Added]
 
 * [Changed]
+
+    - choix fixé des versions des dépendances dans le package.json
 
 * [Deprecated]
 
