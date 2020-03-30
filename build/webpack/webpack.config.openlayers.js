@@ -407,7 +407,7 @@ module.exports = (env, argv) => {
                     context : [
                         path.join(ROOT, "samples-src", "config.json"),
                         {
-                            mode : (devMode) ? "-src" : suffix,
+                            mode : suffix,
                             version : pkg.dependencies["ol"] === 'latest' ? pkg.dependencies["ol"] : 'v' + pkg.dependencies["ol"].match(/(\d+\.\d+\.\d+)/)[0]
                         }
                     ]

@@ -1334,6 +1334,7 @@ var Drawing = (function (Control) {
             case this._addUID("drawing-tool-point"):
                 if (context.dtOptions["points"].active) {
                     context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new Style({
                             image : new Icon(this._getIconStyleOptions(this.options.markersList[0]))
@@ -1350,6 +1351,7 @@ var Drawing = (function (Control) {
             case this._addUID("drawing-tool-line"):
                 if (context.dtOptions["lines"].active) {
                     context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new Style({
                             image : new Circle({
@@ -1379,6 +1381,7 @@ var Drawing = (function (Control) {
             case this._addUID("drawing-tool-polygon"):
                 if (context.dtOptions["polygons"].active) {
                     context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new Style({
                             image : new Circle({
@@ -1415,6 +1418,7 @@ var Drawing = (function (Control) {
                 // text : creation de points invisibles avec un label.
                 if (context.dtOptions["text"].active) {
                     context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
                         features : context.layer.getSource().getFeaturesCollection(),
                         style : new Style({
                             image : new Circle({
