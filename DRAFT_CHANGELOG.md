@@ -8,7 +8,7 @@
 ## Summary
 
 * fix sur le retrait d'un widget de la carte
-* versions des dépendances
+* fix sur les versions des dépendances (mapbox)
 
 ## Changelog
 
@@ -18,8 +18,6 @@
 
 * [Changed]
 
-    - choix fixé des versions des dépendances dans le package.json
-
 * [Deprecated]
 
 * [Removed]
@@ -28,8 +26,10 @@
 
     - fix sur le retrait du widget "mouseposition" de la carte
     - correctif sur l'inversion affichage lon/lat du widget "mouseposition"
+    - fix sur la version de "@mapbox/mapbox-gl-style-spec" : "13.11.0"
 
 * [Security]
+
 
 ---
 
