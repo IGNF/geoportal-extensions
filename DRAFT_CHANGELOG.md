@@ -1,19 +1,25 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.7
+# Extension Geoportail OpenLayers, version 3.0.8
 
-**02/03/2020**
+**31/03/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* fix sur le retrait d'un widget de la carte
+* correctif sur les widgets
+* correctif sur l'éditeur de styles (mapbox)
+* fix sur les versions des dépendances (mapbox)
 
 ## Changelog
 
 * [Added]
 
+    - gestion des icônes dans l’éditeur MapBox ([\#261](https://github.com/IGNF/geoportal-extensions/pull/261))
+
 * [Changed]
+
+    - mise à jour du plugin de minification : "terser-webpack-plugin" ([\#261](https://github.com/IGNF/geoportal-extensions/pull/261))
 
 * [Deprecated]
 
@@ -21,10 +27,19 @@
 
 * [Fixed]
 
-    - fix sur le retrait du widget "mouseposition" de la carte
-    - Control LocationSelector OL : inversion affichage lon/lat
+    - widget "mouseposition" :
+      - fix sur le retrait de la carte
+      - correctif sur l'inversion affichage lon/lat
+
+    - fix sur la gestion des evenements du widget "drawing"
+
+    - utilisation de la version "13.11.0" de la dépendance "@mapbox/mapbox-gl-style-spec" ([\#261](https://github.com/IGNF/geoportal-extensions/pull/261))
 
 * [Security]
+
+**BREAKING CHANGES**
+
+> compilation du projet avec une version nodejs > 8.9.0
 
 ---
 
@@ -40,6 +55,8 @@
 * [Added]
 
 * [Changed]
+
+    - choix fixé des versions des dépendances dans le package.json
 
 * [Deprecated]
 
@@ -68,6 +85,8 @@
 * [Added]
 
 * [Changed]
+
+    - choix fixé des versions des dépendances dans le package.json
 
 * [Deprecated]
 

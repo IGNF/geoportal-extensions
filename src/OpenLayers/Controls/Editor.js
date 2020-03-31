@@ -183,11 +183,28 @@ Editor.prototype._initialize = function () {
     };
 
     this.mapbox = {};
+    // les sprites :
+    // {
+    //     url : null,
+    //     size : {
+    //         h : null,
+    //         w : null
+    //     },
+    //     json : {}
+    // }
+    this.sprites = {};
 
     // objet json
     if (typeof this.options.style === "object") {
         this.mapbox = this.options.style;
-        this._initContainer();
+        this._getSprites(this.mapbox.sprite)
+            .then(function () {
+                // init du DOM
+                self._initContainer();
+            })
+            .catch(error => {
+                logger.warn("fetch sprites exception :", error);
+            });
     }
 
     // url
@@ -202,7 +219,15 @@ Editor.prototype._initialize = function () {
                     })
                     .then(function () {
                         // init du DOM
-                        self._initContainer();
+                        // self._initContainer();
+                        self._getSprites(self.mapbox.sprite)
+                            .then(function () {
+                                // init du DOM
+                                self._initContainer();
+                            })
+                            .catch(error => {
+                                logger.warn("fetch sprites exception :", error);
+                            });
                     })
                     .catch(error => {
                         logger.error("json exception :", error);
@@ -535,6 +560,7 @@ Editor.prototype._initContainer = function () {
                         var oLegend = new Legend({
                             id : this.id,
                             target : target,
+                            sprites : this.sprites,
                             obj : {
                                 "id" : data.id,
                                 "source" : data.source,
@@ -623,6 +649,86 @@ Editor.prototype._initContainer = function () {
     }
     // dispatch event
     EventBus.dispatch(Event.onloaded, this);
+};
+
+/**
+ * Getting Sprites informations
+ * (called by _initialize)
+ *
+ * @param {String} sprites - url des sprites
+ * @returns {Promise} - promise
+ * @private
+ */
+Editor.prototype._getSprites = function (sprites) {
+    var self = this;
+
+    // on ne doit pas mettre de promise en échec...
+    // car on souhaite continuer le traitement même si on n'a pas de sprites !
+
+    // si le protocole est mapbox://
+    if (sprites.startsWith("mapbox://")) {
+        return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+            resolve("Protocole mapbox:// non géré !");
+        });
+    }
+    // si pas de sprites
+    if (!sprites) {
+        return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+            resolve("Auncun sprites disponibles !");
+        });
+    }
+
+    var fetchSpritesImage = function () {
+        var spritesImage = sprites + ".png";
+        return fetch(spritesImage)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.blob()
+                        .then(function (blob) {
+                            self.sprites.url = spritesImage;
+                            // decode de l'image
+                            var theImage = new Image();
+                            theImage.src = spritesImage;
+                            return theImage.decode()
+                                .then(function () {
+                                    self.sprites.size = {};
+                                    self.sprites.size.h = theImage.height;
+                                    self.sprites.size.w = theImage.width;
+                                });
+                        })
+                        .catch(error => {
+                            logger.warn("fetch image sprites exception :", error);
+                        });
+                } else {}
+            })
+            .catch(error => {
+                logger.warn("fetch sprites exception :", error);
+            });
+    };
+    var fetchSpritesJson = function () {
+        var spritesJson = sprites + ".json";
+        return fetch(spritesJson)
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json()
+                        .then(function (json) {
+                            self.sprites.json = json;
+                        })
+                        .catch(error => {
+                            logger.warn("fetch json sprites exception :", error);
+                        });
+                } else {}
+            })
+            .catch(error => {
+                logger.warn("fetch sprites exception :", error);
+            });
+    };
+
+    // promise
+    return Promise.all([
+        fetchSpritesImage(),
+        fetchSpritesJson()
+    ]);
 };
 
 // ################################################################### //

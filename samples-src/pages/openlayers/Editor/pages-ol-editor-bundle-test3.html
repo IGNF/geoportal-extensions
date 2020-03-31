@@ -1,0 +1,60 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Themes Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des themes MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <div id="editor">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            var editor = new ol.style.Editor({
+                target: document.getElementById("editor"),
+                style: "{{ resources }}/data/mapbox/styles/enseignements.json",
+                events : {
+                    "editor:themes:onclicktitle" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor:themes:onclicktitle", this.getID(), e);
+                        }
+                    }
+                },
+                themes : {
+                    themesSummary : "editor",
+                    themes : [
+                        {
+                            "name" : "standard",
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style0.json",
+                            "selected" : true
+                        }
+                    ]
+                },
+                tools : {
+                    themes : true,
+                    layers : true,
+                    filter : true,
+                    style :true,
+                    legend : true
+                }
+            });
+            
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                editor.display(true);
+            });
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                editor.display(false);
+            });
+            </script>
+{{/content}}
+{{/extend}}
