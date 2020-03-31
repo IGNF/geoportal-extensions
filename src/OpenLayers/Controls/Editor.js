@@ -209,7 +209,9 @@ Editor.prototype._initialize = function () {
 
     // url
     if (typeof this.options.style === "string") {
-        fetch(this.options.style)
+        fetch(this.options.style, {
+            credentials : "same-origin"
+        })
             .then(response => {
                 // sauvegarde du json
                 response.json()
@@ -680,7 +682,9 @@ Editor.prototype._getSprites = function (sprites) {
 
     var fetchSpritesImage = function () {
         var spritesImage = sprites + ".png";
-        return fetch(spritesImage)
+        return fetch(spritesImage, {
+            credentials : "same-origin"
+        })
             .then(function (response) {
                 if (response.ok) {
                     return response.blob()
@@ -707,7 +711,9 @@ Editor.prototype._getSprites = function (sprites) {
     };
     var fetchSpritesJson = function () {
         var spritesJson = sprites + ".json";
-        return fetch(spritesJson)
+        return fetch(spritesJson, {
+            credentials : "same-origin"
+        })
             .then(function (response) {
                 if (response.ok) {
                     return response.json()
