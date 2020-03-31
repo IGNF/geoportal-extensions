@@ -666,7 +666,7 @@ Editor.prototype._getSprites = function (sprites) {
     // car on souhaite continuer le traitement même si on n'a pas de sprites !
 
     // si le protocole est mapbox://
-    if (sprites.startsWith("mapbox://")) {
+    if (sprites && sprites.startsWith("mapbox://")) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
             resolve("Protocole mapbox:// non géré !");
         });
