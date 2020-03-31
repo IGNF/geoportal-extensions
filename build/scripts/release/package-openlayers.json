@@ -1,5 +1,7 @@
 {
-   "directories" : {},
+   "peerDependencies" : {},
+   "devDependencies" : {},
+   "main" : "dist/GpPluginOpenLayers-src.js",
    "files" : [
       "dist/",
       "src/",
@@ -7,40 +9,38 @@
       "README.md",
       "package.json"
    ],
-   "dependencies" : {
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
-      "ol" : "^5.3.0",
-      "loglevel" : "1.6.1",
-      "sortablejs" : "1.8.4",
-      "eventbusjs" : "0.2.0",
-      "geoportal-access-lib" : "2.1.6",
-      "request" : "^2.83.0",
-      "xmldom" : "^0.1.27",
-      "ol-mapbox-style" : "4.3.0",
-      "proj4" : "2.6.0"
-   },
-   "module" : "src/OpenLayers/index.js",
-   "version" : "3.0.7",
-   "peerDependencies" : {},
-   "devDependencies" : {},
-   "license" : "CECILL-B",
-   "bundleDependencies" : [],
+   "author" : "IGNF",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "name" : "geoportal-extensions-openlayers",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   "bundleDependencies" : [],
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "scripts" : {},
+   "dependencies" : {
+      "sortablejs" : "1.8.4",
+      "request" : "^2.83.0",
+      "eventbusjs" : "0.2.0",
+      "proj4" : "2.6.0",
+      "geoportal-access-lib" : "2.1.6",
+      "loglevel" : "1.6.1",
+      "xmldom" : "^0.1.27",
+      "ol" : "^5.3.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
+      "ol-mapbox-style" : "^4.3.0"
    },
    "bugs" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "date" : "26/03/2020",
-   "scripts" : {},
-   "main" : "dist/GpPluginOpenLayers-src.js",
+   "date" : "31/03/2020",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "author" : "IGNF"
+   "license" : "CECILL-B",
+   "directories" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "name" : "geoportal-extensions-openlayers",
+   "module" : "src/OpenLayers/index.js",
+   "version" : "3.0.8"
 }
