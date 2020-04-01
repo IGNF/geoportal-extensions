@@ -1,25 +1,19 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.8
+# Extension Geoportail OpenLayers, version 3.0.9
 
-**31/03/2020**
+**01/04/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* correctif sur les widgets
-* correctif sur l'éditeur de styles (mapbox)
-* fix sur les versions des dépendances (mapbox)
+* hotfix sur la gestion des sprites des couches mapbox
 
 ## Changelog
 
 * [Added]
 
-    - gestion des icônes dans l’éditeur MapBox ([\#261](https://github.com/IGNF/geoportal-extensions/pull/261))
-
 * [Changed]
-
-    - mise à jour du plugin de minification : "terser-webpack-plugin" ([\#261](https://github.com/IGNF/geoportal-extensions/pull/261))
 
 * [Deprecated]
 
@@ -27,13 +21,7 @@
 
 * [Fixed]
 
-    - widget "mouseposition" :
-      - fix sur le retrait de la carte
-      - correctif sur l'inversion affichage lon/lat
-
-    - fix sur la gestion des evenements du widget "drawing"
-
-    - utilisation de la version "13.11.0" de la dépendance "@mapbox/mapbox-gl-style-spec" ([\#261](https://github.com/IGNF/geoportal-extensions/pull/261))
+    - meilleure gestion et fetch des sprites avec CORB
 
 * [Security]
 
