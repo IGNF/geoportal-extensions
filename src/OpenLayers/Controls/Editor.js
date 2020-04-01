@@ -209,7 +209,9 @@ Editor.prototype._initialize = function () {
 
     // url
     if (typeof this.options.style === "string") {
-        fetch(this.options.style)
+        fetch(this.options.style, {
+            credentials : "same-origin"
+        })
             .then(response => {
                 // sauvegarde du json
                 response.json()
@@ -666,7 +668,7 @@ Editor.prototype._getSprites = function (sprites) {
     // car on souhaite continuer le traitement même si on n'a pas de sprites !
 
     // si le protocole est mapbox://
-    if (sprites.startsWith("mapbox://")) {
+    if (sprites && sprites.startsWith("mapbox://")) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
             resolve("Protocole mapbox:// non géré !");
         });
@@ -680,7 +682,9 @@ Editor.prototype._getSprites = function (sprites) {
 
     var fetchSpritesImage = function () {
         var spritesImage = sprites + ".png";
-        return fetch(spritesImage)
+        return fetch(spritesImage, {
+            credentials : "same-origin"
+        })
             .then(function (response) {
                 if (response.ok) {
                     return response.blob()
@@ -707,7 +711,9 @@ Editor.prototype._getSprites = function (sprites) {
     };
     var fetchSpritesJson = function () {
         var spritesJson = sprites + ".json";
-        return fetch(spritesJson)
+        return fetch(spritesJson, {
+            credentials : "same-origin"
+        })
             .then(function (response) {
                 if (response.ok) {
                     return response.json()
