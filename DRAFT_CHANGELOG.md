@@ -29,12 +29,14 @@
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.8
+# Extension Geoportail Itowns, version 2.2.9
 
-**26/03/2020**
+**02/04/2020**
 > Release Extension Geoportail Itowns
 
 ## Summary
+
+* Release mineure sur le fixe de la version des dépendances
 
 ## Changelog
 
@@ -49,11 +51,6 @@
 * [Removed]
 
 * [Fixed]
-
-- Retrait d'appels à des fonctions dépréciées d'iTowns
-- Fix mauvais affichage du dom du mousePosition itowns
-- Fix mouseListeners inactifs sur les controls par encapsulation de la viewerDiv d'iTowns
-
 
 * [Security]
 
