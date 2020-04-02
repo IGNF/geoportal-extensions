@@ -1407,6 +1407,7 @@ var LayerImport = (function (Control) {
                     group : false
                 }
             });
+            this.editor.createElement();
 
             // TODO style par defaut au cas où l'application du style échoue !
             // FIXME bug avec le geojson, très bizarre !?

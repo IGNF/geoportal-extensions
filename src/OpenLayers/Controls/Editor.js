@@ -116,8 +116,7 @@ Editor.prototype.constructor = Editor;
  * @private
  */
 Editor.prototype._initialize = function () {
-    var self = this;
-
+    // gestion des options
     if (!this.options.target) {
         logger.info("La 'target' n'est pas renseignée (options.target).");
     }
@@ -137,6 +136,7 @@ Editor.prototype._initialize = function () {
         logger.info("Les 'themes' MapBox ne sont pas renseignés (options.themes).");
     }
 
+    // options par defaut
     var _toolsDefault = {
         themes : false,
         layers : true,
@@ -166,10 +166,11 @@ Editor.prototype._initialize = function () {
     // id unique
     this.id = this.options.id || ID.generate();
 
+    // property layers
     this.layers = [];
-
+    // property container
     this.container = null;
-
+    // property name
     this.name = {
         target : "GPEditorMapBoxTarget",
         container : "GPEditorMapBoxContainer",
@@ -181,9 +182,9 @@ Editor.prototype._initialize = function () {
         titleThemesID : "GPEditorMapBoxThemesTitle_ID_",
         sep : "GPEditorMapBoxSep"
     };
-
+    // property mapbox
     this.mapbox = {};
-    // les sprites :
+    // property sprites :
     // {
     //     url : null,
     //     size : {
@@ -193,52 +194,6 @@ Editor.prototype._initialize = function () {
     //     json : {}
     // }
     this.sprites = {};
-
-    // objet json
-    if (typeof this.options.style === "object") {
-        this.mapbox = this.options.style;
-        this._getSprites(this.mapbox.sprite)
-            .then(function () {
-                // init du DOM
-                self._initContainer();
-            })
-            .catch(error => {
-                logger.warn("fetch sprites exception :", error);
-            });
-    }
-
-    // url
-    if (typeof this.options.style === "string") {
-        fetch(this.options.style, {
-            credentials : "same-origin"
-        })
-            .then(response => {
-                // sauvegarde du json
-                response.json()
-                    .then(style => {
-                        self.mapbox = style;
-                        return self.mapbox;
-                    })
-                    .then(function () {
-                        // init du DOM
-                        // self._initContainer();
-                        self._getSprites(self.mapbox.sprite)
-                            .then(function () {
-                                // init du DOM
-                                self._initContainer();
-                            })
-                            .catch(error => {
-                                logger.warn("fetch sprites exception :", error);
-                            });
-                    })
-                    .catch(error => {
-                        logger.error("json exception :", error);
-                    });
-            })
-            .catch(error => {
-                logger.error("fetch exception :", error);
-            });
-    }
 };
 
 /**
@@ -670,13 +625,15 @@ Editor.prototype._getSprites = function (sprites) {
     // si le protocole est mapbox://
     if (sprites && sprites.startsWith("mapbox://")) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            resolve("Protocole mapbox:// non géré !");
+            logger.info("Protocole mapbox:// non géré !");
+            resolve(self);
         });
     }
     // si pas de sprites
     if (!sprites) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            resolve("Auncun sprites disponibles !");
+            logger.info("Auncun sprites disponibles !");
+            resolve(self);
         });
     }
 
@@ -740,6 +697,74 @@ Editor.prototype._getSprites = function (sprites) {
 // ################################################################### //
 // ##################### public methods ############################## //
 // ################################################################### //
+/**
+ * Create Editor
+ *
+ * @returns {Promise} - promise
+ */
+Editor.prototype.createElement = function () {
+    var self = this;
+    // objet json
+    if (typeof this.options.style === "object") {
+        this.mapbox = this.options.style;
+        // les sprites sont utiles que si on veut une legende !
+        if (this.options.tools.legend) {
+            return this._getSprites(this.mapbox.sprite)
+                .then(function () {
+                    // init du DOM
+                    self._initContainer();
+                    return self;
+                })
+                .catch(error => {
+                    logger.warn("fetch sprites exception :", error);
+                });
+        } else {
+            return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+                self._initContainer();
+                resolve(self);
+            });
+        }
+    }
+
+    // url
+    if (typeof this.options.style === "string") {
+        return fetch(this.options.style, {
+            credentials : "same-origin"
+        })
+            .then(response => {
+                // sauvegarde du json
+                return response.json()
+                    .then(style => {
+                        self.mapbox = style;
+                    })
+                    .then(function () {
+                        // les sprites sont utiles que si on veut une legende !
+                        if (self.options.tools.legend) {
+                            return self._getSprites(self.mapbox.sprite)
+                                .then(function () {
+                                    // init du DOM
+                                    self._initContainer();
+                                    return self;
+                                })
+                                .catch(error => {
+                                    logger.warn("fetch sprites exception :", error);
+                                });
+                        } else {
+                            return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+                                self._initContainer();
+                                resolve(self);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        logger.error("json exception :", error);
+                    });
+            })
+            .catch(error => {
+                logger.error("fetch exception :", error);
+            });
+    }
+};
 
 /**
  * Set display container (DOM)

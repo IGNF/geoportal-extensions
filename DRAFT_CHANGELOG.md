@@ -1,19 +1,21 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.9
+# Extension Geoportail OpenLayers, version 3.0.10
 
-**01/04/2020**
+**02/04/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* hotfix sur la gestion des sprites des couches mapbox
+* Second hotfix sur la gestion des sprites des couches mapbox et versions des dépendances fixées
 
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - versions des dépendances fixées dans le package.json
 
 * [Deprecated]
 
@@ -24,10 +26,6 @@
     - meilleure gestion et fetch des sprites avec CORB
 
 * [Security]
-
-**BREAKING CHANGES**
-
-> compilation du projet avec une version nodejs > 8.9.0
 
 ---
 
