@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.0.9
- * @date 01/04/2020
+ * @version 3.0.10
+ * @date 02/04/2020
  *
  */
 
@@ -19,7 +19,7 @@
  * @copyright Copyright (c) 2016 openlayers
  * @license   BSD 2-Clause "Simplified" License
  *            See https://raw.githubusercontent.com/openlayers/ol-mapbox-style/master/LICENSE
- * @version   ^4.3.0
+ * @version   4.2.1
  */
 
 /*!
@@ -59,7 +59,7 @@
  * @copyright Copyright (c) 2014-2016 GitHub, Inc.
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/github/fetch/master/LICENSE
- * @version   ^3.0.0
+ * @version   3.0.0
  */
 
 /*!
@@ -67,7 +67,7 @@
  * @copyright Copyright (c) 2014 Krasimir Tsonev
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/krasimir/EventBus/master/LICENSE
- * @version   ^0.2.0
+ * @version   0.2.0
  */
 
 /*!
@@ -92,7 +92,7 @@
  * @copyright Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/proj4js/proj4js/master/LICENSE.md
- * @version   ^2.5.0
+ * @version   2.6.0
  */
 
 var Gp =
@@ -1004,7 +1004,7 @@ if (window.ol) {
 /* 3 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.12\",\"date\":\"01/04/2020\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.5\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.9\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.8\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"^0.2.0\",\"geoportal-access-lib\":\"^2.1.6\",\"itowns\":\"2.19.0\",\"leaflet\":\"1.5.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"~1.6.1\",\"ol\":\"^5.3.0\",\"ol-mapbox-style\":\"^4.3.0\",\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"proj4\":\"^2.5.0\",\"proj4leaflet\":\"~1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.113.2\",\"three.meshline\":\"~1.2.0\",\"whatwg-fetch\":\"^3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars\":\"^4.7.2\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^2.0.0\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.13\",\"date\":\"02/04/2020\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.5\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.10\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.8\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"test\":\"cd test && mocha-webpack --require setup.js --webpack-config webpack.test.js --glob \\\"test-*.js\\\" spec/Common/*/*\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"cover\":\"nyc --report-dir build/coverage --clean --reporter=lcov --reporter=text npm run test\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.6\",\"itowns\":\"2.19.0\",\"leaflet\":\"1.5.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"1.6.6\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"proj4\":\"2.6.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.113.2\",\"three.meshline\":\"1.2.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^2.4.2\",\"clean-webpack-plugin\":\"^2.0.1\",\"copy-webpack-plugin\":\"^5.0.3\",\"css-loader\":\"^2.1.1\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-loader\":\"^2.1.2\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^8.0.1\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^8.0.1\",\"handlebars\":\"^4.7.2\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^3.1.0\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.1.0\",\"jsdom\":\"^9.9.1\",\"mini-css-extract-plugin\":\"^0.6.0\",\"mocha\":\"^5.2.0\",\"mocha-loader\":\"^2.0.1\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"npm-run-all\":\"^4.1.5\",\"nyc\":\"^14.1.1\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^0.23.1\",\"terser-webpack-plugin\":\"^2.0.0\",\"uglify-es\":\"github:mishoo/UglifyJS2#harmony\",\"uglifyjs-webpack-plugin\":\"^2.1.2\",\"url-loader\":\"^1.1.2\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-merge\":\"^4.2.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 4 */
@@ -2817,7 +2817,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     // Slightly dubious tricks to cut down minimized file size
     var noop = function() {};
     var undefinedType = "undefined";
-    var isIE = (typeof window !== undefinedType) && (typeof window.navigator !== undefinedType) && (
+    var isIE = (typeof window !== undefinedType) && (
         /Trident\/|MSIE /.test(window.navigator.userAgent)
     );
 
@@ -55357,7 +55357,8 @@ var LayerImport = function (Control) {
           legend: true,
           group: false
         }
-      }); // TODO style par defaut au cas où l'application du style échoue !
+      });
+      this.editor.createElement(); // TODO style par defaut au cas où l'application du style échoue !
       // FIXME bug avec le geojson, très bizarre !?
       //      Si on desactive l'editeur, OK
       //      Sinon NOK !?
@@ -57009,17 +57010,15 @@ function getFonts(fonts) {
     return fonts;
   }
 
-  var googleFontDescriptions = fonts.map(function (font) {
-    var parts = mapbox_to_css_font__WEBPACK_IMPORTED_MODULE_0___default()(font, 1).split(' ');
-    return [parts.slice(3, 5).join(' ').replace(/"/g, ''), parts[1] + parts[0]];
+  var families = fonts.map(function (font) {
+    return mapbox_to_css_font__WEBPACK_IMPORTED_MODULE_0___default()(font, 1).split(' 1px ')[1].replace(/"/g, '');
   });
 
-  for (var i = 0, ii = googleFontDescriptions.length; i < ii; ++i) {
-    var googleFontDescription = googleFontDescriptions[i];
-    var family = googleFontDescription[0];
+  for (var i = 0, ii = families.length; i < ii; ++i) {
+    var family = families[i];
 
     if (!hasFontFamily(family) && googleFamilies.indexOf(family) !== -1) {
-      var fontUrl = 'https://fonts.googleapis.com/css?family=' + family.replace(/ /g, '+') + ':' + googleFontDescription[1];
+      var fontUrl = 'https://fonts.googleapis.com/css?family=' + family.replace(/ /g, '+');
 
       if (!document.querySelector('link[href="' + fontUrl + '"]')) {
         var markup = document.createElement('link');
@@ -57383,13 +57382,6 @@ function processStyle(glStyle, map, baseUrl, host, path, accessToken) {
   var promises = [];
   var view = map.getView();
 
-  if (!view.isDef() && !view.getRotation() && !view.getResolutions()) {
-    view = new ol_View__WEBPACK_IMPORTED_MODULE_7___default.a({
-      resolutions: _util__WEBPACK_IMPORTED_MODULE_18__["defaultResolutions"]
-    });
-    map.setView(view);
-  }
-
   if ('center' in glStyle && !view.getCenter()) {
     view.setCenter(Object(ol_proj__WEBPACK_IMPORTED_MODULE_3__["fromLonLat"])(glStyle.center));
   }
@@ -57419,10 +57411,8 @@ function processStyle(glStyle, map, baseUrl, host, path, accessToken) {
 
   for (var i = 0, ii = glLayers.length; i < ii; ++i) {
     glLayer = glLayers[i];
-    var type = glLayer.type;
 
-    if (type == 'heatmap' || type == 'fill-extrusion' || type == 'hillshade') {//FIXME Unsupported layer type
-    } else if (type == 'background') {
+    if (glLayer.type == 'background') {
       setBackground(map, glLayer);
     } else {
       id = glLayer.source || getSourceIdByRef(glLayers, glLayer.ref); // this technique assumes gl layers will be in a particular order
@@ -57517,7 +57507,10 @@ function olms(map, style) {
 
   if (!(map instanceof ol_Map__WEBPACK_IMPORTED_MODULE_6___default.a)) {
     map = new ol_Map__WEBPACK_IMPORTED_MODULE_6___default.a({
-      target: map
+      target: map,
+      view: new ol_View__WEBPACK_IMPORTED_MODULE_7___default.a({
+        resolutions: _util__WEBPACK_IMPORTED_MODULE_18__["defaultResolutions"]
+      })
     });
   }
 
@@ -57965,15 +57958,25 @@ function evaluateFilter(layerId, filter, feature, zoom) {
   return filterCache[layerId](zoomObj, feature);
 }
 
+var colorCache = {};
+
 function colorWithOpacity(color, opacity) {
-  if (color) {
+  if (color && opacity !== undefined) {
     if (color.a === 0 || opacity === 0) {
       return undefined;
     }
 
-    var a = color.a;
-    opacity = opacity === undefined ? 1 : opacity;
-    return 'rgba(' + Math.round(color.r * 255 / a) + ',' + Math.round(color.g * 255 / a) + ',' + Math.round(color.b * 255 / a) + ',' + a * opacity + ')';
+    var colorData = colorCache[color];
+
+    if (!colorData) {
+      colorCache[color] = colorData = {
+        color: color.toArray(),
+        opacity: color.a
+      };
+    }
+
+    color = colorData.color;
+    color[3] = colorData.opacity * opacity;
   }
 
   return color;
@@ -58417,7 +58420,7 @@ function fromTemplate(text, properties) {
           iconImg = iconImageCache[cache_key];
 
           if (!iconImg) {
-            iconImg = iconImageCache[cache_key] = new ol_style_Circle__WEBPACK_IMPORTED_MODULE_5___default.a({
+            iconImg = new ol_style_Circle__WEBPACK_IMPORTED_MODULE_5___default.a({
               radius: circleRadius,
               stroke: circleStrokeColor && circleStrokeWidth > 0 ? new ol_style_Stroke__WEBPACK_IMPORTED_MODULE_2___default.a({
                 width: circleStrokeWidth,
@@ -58489,8 +58492,7 @@ function fromTemplate(text, properties) {
 
           text.setPlacement(_placement);
           var textHaloWidth = getValue(_layer, 'paint', 'text-halo-width', zoom, f);
-          var textOffset = getValue(_layer, 'layout', 'text-offset', zoom, f);
-          var textTranslate = getValue(_layer, 'paint', 'text-translate', zoom, f); // Text offset has to take halo width and line height into account
+          var textOffset = getValue(_layer, 'layout', 'text-offset', zoom, f); // Text offset has to take halo width and line height into account
 
           var vOffset = 0;
           var hOffset = 0;
@@ -58508,7 +58510,6 @@ function fromTemplate(text, properties) {
 
             text.setTextAlign(textAlign);
           } else {
-            text.setMaxAngle(Object(_util__WEBPACK_IMPORTED_MODULE_11__["deg2rad"])(getValue(_layer, 'layout', 'text-max-angle', zoom, f)));
             text.setTextAlign();
           }
 
@@ -58523,8 +58524,8 @@ function fromTemplate(text, properties) {
           }
 
           text.setTextBaseline(textBaseline);
-          text.setOffsetX(textOffset[0] * textSize + hOffset + textTranslate[0]);
-          text.setOffsetY(textOffset[1] * textSize + vOffset + textTranslate[1]);
+          text.setOffsetX(textOffset[0] * textSize + hOffset);
+          text.setOffsetY(textOffset[1] * textSize + vOffset);
           textColor.setColor(colorWithOpacity(getValue(_layer, 'paint', 'text-color', zoom, f), opacity));
           text.setFill(textColor);
           var haloColor = colorWithOpacity(getValue(_layer, 'paint', 'text-halo-color', zoom, f), opacity);
@@ -75228,7 +75229,7 @@ function wrapText(text, font, em, letterSpacing) {
       for (var _i = 0, _ii = lines.length; _i < _ii; ++_i) {
         var _line = lines[_i];
 
-        if (measureText(_line, letterSpacing) < maxWidth * 0.35) {
+        if (measureText(_line, letterSpacing) < maxWidth * 0.3) {
           var prevWidth = _i > 0 ? measureText(lines[_i - 1], letterSpacing) : Infinity;
           var nextWidth = _i < _ii - 1 ? measureText(lines[_i + 1], letterSpacing) : Infinity;
           lines.splice(_i, 1);
@@ -76693,7 +76694,7 @@ function getUid(obj) {
  * OpenLayers version.
  * @type {string}
  */
-var VERSION = '5.3.3';
+var VERSION = '5.3.0';
 
 //# sourceMappingURL=util.js.map
 
@@ -77488,8 +77489,7 @@ Editor.prototype.constructor = Editor;
  */
 
 Editor.prototype._initialize = function () {
-  var self = this;
-
+  // gestion des options
   if (!this.options.target) {
     logger.info("La 'target' n'est pas renseignée (options.target).");
   }
@@ -77507,7 +77507,8 @@ Editor.prototype._initialize = function () {
 
   if (!this.options.themes) {
     logger.info("Les 'themes' MapBox ne sont pas renseignés (options.themes).");
-  }
+  } // options par defaut
+
 
   var _toolsDefault = {
     themes: false,
@@ -77535,9 +77536,12 @@ Editor.prototype._initialize = function () {
 
   _Common_Utils__WEBPACK_IMPORTED_MODULE_2__["default"].mergeParams(this.options.tools, _toolsDefault, false); // id unique
 
-  this.id = this.options.id || _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_3__["default"].generate();
-  this.layers = [];
-  this.container = null;
+  this.id = this.options.id || _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_3__["default"].generate(); // property layers
+
+  this.layers = []; // property container
+
+  this.container = null; // property name
+
   this.name = {
     target: "GPEditorMapBoxTarget",
     container: "GPEditorMapBoxContainer",
@@ -77548,8 +77552,9 @@ Editor.prototype._initialize = function () {
     titleThemes: "GPEditorMapBoxThemesTitle",
     titleThemesID: "GPEditorMapBoxThemesTitle_ID_",
     sep: "GPEditorMapBoxSep"
-  };
-  this.mapbox = {}; // les sprites :
+  }; // property mapbox
+
+  this.mapbox = {}; // property sprites :
   // {
   //     url : null,
   //     size : {
@@ -77559,44 +77564,7 @@ Editor.prototype._initialize = function () {
   //     json : {}
   // }
 
-  this.sprites = {}; // objet json
-
-  if (_typeof(this.options.style) === "object") {
-    this.mapbox = this.options.style;
-
-    this._getSprites(this.mapbox.sprite).then(function () {
-      // init du DOM
-      self._initContainer();
-    })["catch"](function (error) {
-      logger.warn("fetch sprites exception :", error);
-    });
-  } // url
-
-
-  if (typeof this.options.style === "string") {
-    fetch(this.options.style, {
-      credentials: "same-origin"
-    }).then(function (response) {
-      // sauvegarde du json
-      response.json().then(function (style) {
-        self.mapbox = style;
-        return self.mapbox;
-      }).then(function () {
-        // init du DOM
-        // self._initContainer();
-        self._getSprites(self.mapbox.sprite).then(function () {
-          // init du DOM
-          self._initContainer();
-        })["catch"](function (error) {
-          logger.warn("fetch sprites exception :", error);
-        });
-      })["catch"](function (error) {
-        logger.error("json exception :", error);
-      });
-    })["catch"](function (error) {
-      logger.error("fetch exception :", error);
-    });
-  }
+  this.sprites = {};
 };
 /**
 * Initialize events with handlers
@@ -78047,7 +78015,8 @@ Editor.prototype._getSprites = function (sprites) {
   if (sprites && sprites.startsWith("mapbox://")) {
     return new Promise(function (resolve, reject) {
       // eslint-disable-line no-unused-vars
-      resolve("Protocole mapbox:// non géré !");
+      logger.info("Protocole mapbox:// non géré !");
+      resolve(self);
     });
   } // si pas de sprites
 
@@ -78055,7 +78024,8 @@ Editor.prototype._getSprites = function (sprites) {
   if (!sprites) {
     return new Promise(function (resolve, reject) {
       // eslint-disable-line no-unused-vars
-      resolve("Auncun sprites disponibles !");
+      logger.info("Auncun sprites disponibles !");
+      resolve(self);
     });
   }
 
@@ -78107,6 +78077,73 @@ Editor.prototype._getSprites = function (sprites) {
 // ##################### public methods ############################## //
 // ################################################################### //
 
+/**
+ * Create Editor
+ *
+ * @returns {Promise} - promise
+ */
+
+
+Editor.prototype.createElement = function () {
+  var self = this; // objet json
+
+  if (_typeof(this.options.style) === "object") {
+    this.mapbox = this.options.style; // les sprites sont utiles que si on veut une legende !
+
+    if (this.options.tools.legend) {
+      return this._getSprites(this.mapbox.sprite).then(function () {
+        // init du DOM
+        self._initContainer();
+
+        return self;
+      })["catch"](function (error) {
+        logger.warn("fetch sprites exception :", error);
+      });
+    } else {
+      return new Promise(function (resolve, reject) {
+        // eslint-disable-line no-unused-vars
+        self._initContainer();
+
+        resolve(self);
+      });
+    }
+  } // url
+
+
+  if (typeof this.options.style === "string") {
+    return fetch(this.options.style, {
+      credentials: "same-origin"
+    }).then(function (response) {
+      // sauvegarde du json
+      return response.json().then(function (style) {
+        self.mapbox = style;
+      }).then(function () {
+        // les sprites sont utiles que si on veut une legende !
+        if (self.options.tools.legend) {
+          return self._getSprites(self.mapbox.sprite).then(function () {
+            // init du DOM
+            self._initContainer();
+
+            return self;
+          })["catch"](function (error) {
+            logger.warn("fetch sprites exception :", error);
+          });
+        } else {
+          return new Promise(function (resolve, reject) {
+            // eslint-disable-line no-unused-vars
+            self._initContainer();
+
+            resolve(self);
+          });
+        }
+      })["catch"](function (error) {
+        logger.error("json exception :", error);
+      });
+    })["catch"](function (error) {
+      logger.error("fetch exception :", error);
+    });
+  }
+};
 /**
  * Set display container (DOM)
  *
