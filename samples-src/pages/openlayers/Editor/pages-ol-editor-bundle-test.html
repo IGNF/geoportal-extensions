@@ -48,6 +48,8 @@
                     legend : true
                 }
             });
+            // create DOM
+            editor0.createElement();
 
             var editor1 = new ol.style.Editor({
                 target: document.getElementById("editor"),
@@ -111,6 +113,8 @@
                     group : true
                 }
             });
+            // create DOM
+            editor1.createElement();
 
             var editor2 = new ol.style.Editor({
                 target: document.getElementById("editor"),
@@ -138,6 +142,8 @@
                     editable : false
                 }
             });
+            // create DOM
+            editor2.createElement();
 
             var editor3 = new ol.style.Editor({
                 target: document.getElementById("editor"),
@@ -170,7 +176,8 @@
                     editable : false
                 }
             });
-
+            // create DOM
+            editor3.createElement();
 
             document.getElementById("displayTrue").addEventListener("click", function () {
                 editor1.display(true);

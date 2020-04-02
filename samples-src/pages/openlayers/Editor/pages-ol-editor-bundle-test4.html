@@ -22,7 +22,47 @@
 
             var editor = new ol.style.Editor({
                 target: document.getElementById("editor"),
-                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
+                style: {
+                    "version": 8,
+                    "name": "Style Enseignements",
+                    "sprite": "{{ resources }}/data/mapbox/styles/pictos-enseignements/sprites-etablissements",
+                    "zoom": 14,
+                    "center": [2.35,48.84],
+                    "sources": {
+                        "Enseignement": {
+                            "type": "vector",
+                            "url": "https://vectortiles.ign.fr/rok4server/1.0.0/Enseignement/metadata.json"
+                        }
+                    },
+                    "layers": [
+                        {
+                            "id": "Etablissement - Autre",
+                            "type": "symbol",
+                            "source": "Enseignement",
+                            "source-layer": "Enseignement",
+                            "minzoom": 0,
+                            "layout": {
+                                "visibility": "visible",
+                                "icon-image": "elementaire",
+                                "icon-size": 0.5
+                            },
+                            "filter": ["in", "nature", "Autre"]
+                        },
+                        {
+                            "id": "Etablissement - Collège",
+                            "type": "symbol",
+                            "source": "Enseignement",
+                            "source-layer": "Enseignement",
+                            "minzoom": 0,
+                            "layout": {
+                                "visibility": "visible",
+                                "icon-image": "college",
+                                "icon-size": 0.5
+                            },
+                            "filter": ["in", "nature", "Collège"]
+                        }
+                    ]
+                },
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
                         if (this.getID() === e.target.editorID) {
@@ -43,8 +83,6 @@
                 tools : {
                     themes : true,
                     layers : true,
-                    filter : true,
-                    style :true,
                     legend : true
                 }
             });
