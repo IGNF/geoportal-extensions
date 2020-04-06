@@ -1,17 +1,19 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.9
+# Extension Geoportail OpenLayers, version X.X.X
 
-**01/04/2020**
+**XX/XX/XXX**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* hotfix sur la gestion des sprites des couches mapbox
+* mise à jour des dépendances
 
 ## Changelog
 
 * [Added]
+
+    - ajout de la commande : npm run eslint
 
 * [Changed]
 
@@ -19,67 +21,78 @@
 
 * [Removed]
 
-* [Fixed]
+    - suppression des tests en mode console
+    - suppression de la couverture du code
 
-    - meilleure gestion et fetch des sprites avec CORB
+* [Fixed]
 
 * [Security]
 
-**BREAKING CHANGES**
-
-> compilation du projet avec une version nodejs > 8.9.0
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.8
+# Extension Geoportail Itowns, version X.X.X
 
-**26/03/2020**
+**XX/XX/XXX**
 > Release Extension Geoportail Itowns
 
 ## Summary
 
+* mise à jour des dépendances
+
 ## Changelog
 
 * [Added]
 
-* [Changed]
+    - ajout de la commande : npm run eslint
 
-    - choix fixé des versions des dépendances dans le package.json
+* [Changed]
 
 * [Deprecated]
 
 * [Removed]
 
+    - suppression des tests en mode console
+    - suppression de la couverture du code
+
 * [Fixed]
-
-- Retrait d'appels à des fonctions dépréciées d'iTowns
-- Fix mauvais affichage du dom du mousePosition itowns
-- Fix mouseListeners inactifs sur les controls par encapsulation de la viewerDiv d'iTowns
-
 
 * [Security]
 
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
+
 ---
 
-# Extension Geoportail Leaflet, version 2.1.6
+# Extension Geoportail Leaflet, version X.X.X
 
-**22/11/2019**
+**XX/XX/XXX**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
+* mise à jour des dépendances
+
 ## Changelog
 
 * [Added]
 
-* [Changed]
+    - ajout de la commande : npm run eslint
 
-    - choix fixé des versions des dépendances dans le package.json
+* [Changed]
 
 * [Deprecated]
 
 * [Removed]
 
+    - suppression des tests en mode console
+    - suppression de la couverture du code
+
 * [Fixed]
 
 * [Security]
+
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
