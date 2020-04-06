@@ -1,8 +1,8 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version X.X.X
+# Extension Geoportail OpenLayers, version 3.0.10
 
-**XX/XX/XXX**
+**02/04/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
@@ -16,6 +16,8 @@
     - ajout de la commande : npm run eslint
 
 * [Changed]
+
+    - versions des dépendances fixées dans le package.json
 
 * [Deprecated]
 
