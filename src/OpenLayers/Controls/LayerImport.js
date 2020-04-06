@@ -1618,7 +1618,7 @@ var LayerImport = (function (Control) {
                             layout.visibility = (target.checked) ? "visible" : "none";
                         } else {
                             layers[i].layout = {
-                                "visibility" : (target.checked) ? "visible" : "none"
+                                visibility : (target.checked) ? "visible" : "none"
                             };
                         }
                         break;
