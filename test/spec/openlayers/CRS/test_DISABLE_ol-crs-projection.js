@@ -37,24 +37,24 @@ describe("-- Test Projection register", function () {
 
 describe("-- Test Projection register into ol.proj (variable globale)", function () {
 
-    it("EPSG:27572 is defined into ol", function () {
+    xit("EPSG:27572 is defined into ol", function () {
         expect(ol.proj.get('EPSG:27572').getCode()).to.be.equal('EPSG:27572');
         expect(ol.proj.get('EPSG:27572').getExtent()).not.to.be.null;
         expect(ol.proj.get('EPSG:27572').getExtent().length).to.be.equal(4);
     });
 
-    it("EPSG:2154 is defined into ol", function () {
+    xit("EPSG:2154 is defined into ol", function () {
         expect(ol.proj.get('EPSG:2154').getCode()).to.be.equal('EPSG:2154');
         expect(ol.proj.get('EPSG:2154').getExtent()).not.to.be.null;
         expect(ol.proj.get('EPSG:2154').getExtent().length).to.be.equal(4);
     });
 
-    it("IGNF:LAMB93 is defined into ol", function () {
+    xit("IGNF:LAMB93 is defined into ol", function () {
         expect(ol.proj.get('IGNF:LAMB93').getCode()).to.be.equal('IGNF:LAMB93');
         expect(ol.proj.get('IGNF:LAMB93').getExtent()).to.be.null;
     });
 
-    it("CRS:84 is defined into ol", function () {
+    xit("CRS:84 is defined into ol", function () {
         expect(ol.proj.get('CRS:84').getCode()).to.be.equal('CRS:84');
         expect(ol.proj.get('CRS:84').getExtent()).to.be.eql([ -180, -90, 180, 90 ]);
     });
