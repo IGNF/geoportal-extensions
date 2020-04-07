@@ -69,7 +69,7 @@ function LayerWMTS (options) {
         if (Object.entries(wmtsParams.tileMatrixSetLimits).length === 0 && wmtsParams.tileMatrixSetLimits.constructor === Object) {
             wmtsParams.tileMatrixSetLimits = undefined;
         }
-        
+
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";

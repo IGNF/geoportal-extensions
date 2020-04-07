@@ -7,11 +7,13 @@
 
 ## Summary
 
-* Second hotfix sur la gestion des sprites des couches mapbox et versions des dépendances fixées
+* mise à jour des dépendances
 
 ## Changelog
 
 * [Added]
+
+    - ajout de la commande : npm run eslint
 
 * [Changed]
 
@@ -21,60 +23,78 @@
 
 * [Removed]
 
-* [Fixed]
+    - suppression des tests en mode console
+    - suppression de la couverture du code
 
-    - meilleure gestion et fetch des sprites avec CORB
+* [Fixed]
 
 * [Security]
 
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
+
 ---
 
-# Extension Geoportail Itowns, version 2.2.9
+# Extension Geoportail Itowns, version X.X.X
 
-**02/04/2020**
+**XX/XX/XXX**
 > Release Extension Geoportail Itowns
 
 ## Summary
 
-* Release mineure sur le fixe de la version des dépendances
+* mise à jour des dépendances
 
 ## Changelog
 
 * [Added]
 
-* [Changed]
+    - ajout de la commande : npm run eslint
 
-    - choix fixé des versions des dépendances dans le package.json
+* [Changed]
 
 * [Deprecated]
 
 * [Removed]
 
+    - suppression des tests en mode console
+    - suppression de la couverture du code
+
 * [Fixed]
 
 * [Security]
 
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
+
 ---
 
-# Extension Geoportail Leaflet, version 2.1.6
+# Extension Geoportail Leaflet, version X.X.X
 
-**22/11/2019**
+**XX/XX/XXX**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
+* mise à jour des dépendances
+
 ## Changelog
 
 * [Added]
 
-* [Changed]
+    - ajout de la commande : npm run eslint
 
-    - choix fixé des versions des dépendances dans le package.json
+* [Changed]
 
 * [Deprecated]
 
 * [Removed]
 
+    - suppression des tests en mode console
+    - suppression de la couverture du code
+
 * [Fixed]
 
 * [Security]
+
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"

@@ -45,6 +45,7 @@ var GroupLocationSelector = L.Control.extend(/** @lends GroupLocationSelector.pr
 
     /**
      * constructor
+     * @param {Object} options - options
      */
     initialize : function (options) {
         /** liste de points selectionnée */
@@ -60,6 +61,8 @@ var GroupLocationSelector = L.Control.extend(/** @lends GroupLocationSelector.pr
      * this method is called by this.addTo(map) when the control is added on the map
      * and fills variable 'this._container = this.onAdd(map)',
      * and create or disable events on map.
+     * @param {L.Map} map - object map
+     * @returns {DOMElement} container
      */
     onAdd : function (map) {
         // initialisation du DOM du composant
@@ -86,6 +89,8 @@ var GroupLocationSelector = L.Control.extend(/** @lends GroupLocationSelector.pr
     /**
      * this method is called by this.onAdd(map)
      * and initialize the container HTMLElement
+     * @param {L.Map} map - object map
+     * @returns {DOMElement} container
      */
     _initLayout : function (map) {
         // create main container
@@ -165,6 +170,7 @@ var GroupLocationSelector = L.Control.extend(/** @lends GroupLocationSelector.pr
      * see event !
      * OVERWRITTEN !
      *
+     * @param {L.Map} map - object map
      * @returns {Array} List DOM element
      */
     _createRoutePanelFormPointsElement : function (map) {

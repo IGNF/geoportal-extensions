@@ -170,7 +170,7 @@ module.exports = (env, argv) => {
                 warnings : false
             }
         },
-        // stats : "none",
+        stats : "verbose", // "none",
         optimization : {
             /** MINIFICATION */
             minimizer: [
@@ -215,7 +215,19 @@ module.exports = (env, argv) => {
                     use : {
                         loader : "babel-loader",
                         options : {
-                            presets : ["@babel/preset-env"]
+                            compact : false,
+                            presets : [[
+                                "@babel/preset-env", {
+                                    // "useBuiltIns": "usage",
+                                    "corejs": { version: '3.6', proposals: false },
+                                    "debug": true,
+                                    // "loose": true,
+                                    // "exclude": ['transform-typeof-symbol'],
+                                    // "targets": {
+                                    //     "ie" : "10"
+                                    // }
+                                }
+                            ]]
                         }
                     }
                 },
@@ -231,8 +243,20 @@ module.exports = (env, argv) => {
                     use : {
                         loader : "babel-loader",
                         options : {
-                            presets : ["@babel/preset-env"],
-                            plugins : ["@babel/plugin-transform-template-literals"]
+                            compact : false,
+                            plugins : ["@babel/plugin-transform-template-literals"],
+                            presets : [[
+                                "@babel/preset-env", {
+                                    // "useBuiltIns": "usage",
+                                    "corejs": { version: '3.6', proposals: false },
+                                    "debug": true,
+                                    // "loose": true,
+                                    // "exclude": ['transform-typeof-symbol'],
+                                    // "targets": {
+                                    //     "ie" : "10"
+                                    // }
+                                }
+                            ]]
                         }
                     }
                 },

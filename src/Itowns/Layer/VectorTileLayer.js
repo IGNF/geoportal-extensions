@@ -52,25 +52,25 @@ function VectorTileLayer (options) {
     var layerId = Config.getLayerId(options.layer, "TMS");
 
     if (layerId && Config.configuration.getLayerConf(layerId)) {
-            var config = {};
-            var tmsParams = Config.getLayerParams(options.layer, "TMS", options.apiKey);
+        var config = {};
+        var tmsParams = Config.getLayerParams(options.layer, "TMS", options.apiKey);
 
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
-        
+
         config.id = layerId;
 
         config.source = new ItVectorTilesSource({
-            style: tmsParams.url.replace(/(http|https):\/\//, protocol),
-            url: options.urlService,
-            attribution: options.attributions,
-            filter: options.filter || function (layer) { return ['fill', 'line'].includes(layer.type) },
-            zoom: options.zoom
+            style : tmsParams.url.replace(/(http|https):\/\//, protocol),
+            url : options.urlService,
+            attribution : options.attributions,
+            filter : options.filter || function (layer) { return ["fill", "line"].includes(layer.type); },
+            zoom : options.zoom
         });
 
         // FIXME wait for next itowns release to remove this
-        config.isValidData = function() { 
+        config.isValidData = function () {
             return false;
         };
 
@@ -78,7 +78,7 @@ function VectorTileLayer (options) {
     } else {
         // If layer is not in Gp.Config
         logger.error("ERROR layer id (layer name: " + options.layer + " / service: TMS ) was not found !?");
-    }   
+    }
 };
 
 /*

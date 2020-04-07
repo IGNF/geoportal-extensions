@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "8"
+  - "10"
 stages:
   - name: deploy
     # require the branch name to be master

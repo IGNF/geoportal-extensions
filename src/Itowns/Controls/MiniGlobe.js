@@ -2,7 +2,6 @@ import GlobeViewExtended from "../GlobeViewExtended";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MiniGlobeDOM from "../../Common/Controls/MiniGlobeDOM";
-import GeoportalWMTS from "../Layer/LayerWMTS";
 import Widget from "./Widget";
 
 /**
@@ -82,7 +81,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             // we're don't need a precise globe model
             // since the mini globe will always be seen from a far point of view (see minDistance above)
             maxSubdivisionLevel : 6,
-            sseSubdivisionThreshold: 3,
+            sseSubdivisionThreshold : 3,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
             noControls : true,

@@ -17,6 +17,7 @@
     },
     "rules": {
         "curly": "error",
+        "dot-notation" : "off",
         "key-spacing": [
             "error",
             {
@@ -39,7 +40,8 @@
             }
         ],
         "no-console": "warn",
-        "no-proto": 0,
+        "no-proto": "off",
+        "no-prototype-builtins": "off",
         "linebreak-style": [
             "error",
             "unix"
