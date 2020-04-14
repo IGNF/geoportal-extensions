@@ -57,24 +57,27 @@ class LayerManager {
         return config;
     };
 
+    createFileSourceFromConfig(config) {
+        config.source = new itowns.FileSource(config.source);
+        return config;
+    };
+
     addColorLayerFromConfig(config) {
         var layer = new itowns.ColorLayer(config.id, config);
-        globeViewExtended.addLayer(layer);
-        this._layers.push(layer);      
+        this._layers.push(layer);
+        return this._view.addLayer(layer);
     };
 
     addElevationLayerFromConfig(config) {
         var layer = new itowns.ElevationLayer(config.id, config);
-        globeViewExtended.addLayer(layer);
         this._layers.push(layer);
+        return this._view.addLayer(layer);
     };
 
     add(layer) {
         if (layer.type !== 'color' && layer.type !== 'elevation') throw (`unkown layer type '${layer.type}'`);
-
-        var promise = this._view.addLayer(layer);
         this._layers.push(layer);
-        return promise;
+        return this._view.addLayer(layer);
     }
 
     //
@@ -89,12 +92,12 @@ class LayerManager {
 
     //
     getColorLayers() {
-        return this._layers.filter(layer => layer.type === "color");
+        return this._layers.filter(layer => layer.type === "color" || layer.type === "vector");
     }
 
     //
     pickColorLayer() {
-        var layer = this._layers.find(layer => layer.type === "color");
+        var layer = this._layers.find(layer => layer.type === "color" || layer.type === "vector");
         assert(layer, 'no color layer found');
         return layer;
     }
@@ -106,12 +109,12 @@ class LayerManager {
 
     //
     getVectorLayers() {
-        return this._layers.filter(layer => layer.protocol === "rasterizer");
+        return this._layers.filter(layer => layer.type === "vector");
     }
 
     //
     pickVectorLayer() {
-        var layer = this._layers.find(layer => layer.protocol === "rasterizer");
+        var layer = this._layers.find(layer => layer.type === "vector");
         assert(layer, 'no vector layer found');
         return layer;
     }
@@ -180,37 +183,50 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 done();
             } else {
                 var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, function () {
-                    // ordered color layers
-                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/Ortho.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
-                        layerManager.addColorLayerFromConfig(result);
-                    }.bind(this));
-
-                    // layerManager.add({
-                    //     type : 'color',
-                    //     id : 'S_TOP100',
-                    //     name : 'kml',
-                    //     transparent : true,
-                    //     source : {
-                    //         protocol : 'file',
-                    //         url : 'spec/itowns/resources/KML/S_TOP100.kml',
-                    //         projection : 'EPSG:4326'
-                    //     }
-                    // });
-
-                    // elevation layers
-                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/IGN_MNT.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
-                        layerManager.addElevationLayerFromConfig(result);
-                    }.bind(this));
-
-                    window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/IGN_MNT_HIGHRES.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
-                        layerManager.addElevationLayerFromConfig(result);
-                    }.bind(this));
-
                     assert.ok(true);
                     globeViewExtended.forgetByKey(eventKey);
                     done();
                 });
             }
+        });
+
+        it('should correctly add layers', function (done) {
+            this.timeout(8000);
+
+            // ordered color layers
+            let p1 = window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/Ortho.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
+                return layerManager.addColorLayerFromConfig(result);
+            }.bind(this));
+
+            let p2 = layerManager.addColorLayerFromConfig(layerManager.createFileSourceFromConfig({
+                type : 'vector', //pour le comptage par layermanager
+                id : 'S_TOP100',
+                name : 'kml',
+                transparent : true,
+                source : {
+                    url : 'spec/itowns/resources/KML/S_TOP100.kml',
+                    projection : 'EPSG:4326',
+                    fetcher: itowns.Fetcher.xml,
+                    parser: itowns.KMLParser.parse
+                }
+            }));
+
+            // elevation layers
+            let p3 = window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/IGN_MNT.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
+                return layerManager.addElevationLayerFromConfig(result);
+            }.bind(this));
+
+            let p4 = window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/IGN_MNT_HIGHRES.json').then(layerManager.createWMTSSourceFromConfig).then(function(result) {
+                return layerManager.addElevationLayerFromConfig(result);
+            }.bind(this));
+
+            Promise.all([p1, p2, p3, p4]).then( () => {
+                var eventKey = globeViewExtended.listen(GlobeViewExtended.EVENTS.PRE_RENDER, (event) => {
+                    globeViewExtended.forgetByKey(eventKey);
+                    assert.ok(true);
+                    done();
+                });
+            });
         });
     });
 
@@ -255,16 +271,17 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             }).catch(e => done(e));
         });
 
-        it('should get coordinate from pixel', () => {
+        it('should get coordinate from pixel', (done) => {
             globeViewExtended.setZoom(zoomScale.zoom).then(() => {
                 var coords = globeViewExtended.getCoordinateFromPixel(Math.floor(viewWidth / 2), Math.floor(viewHeight / 2));
                 assert(typeof coords === 'object', 'coords is not an object');
                 assertIsNumber(coords.longitude);
                 assertIsNumber(coords.latitude);
-            });
+                done();
+            }).catch(e => done(e));
         });
 
-        it('should get coordinate from mouse event', () => {
+        it('should get coordinate from mouse event', (done) => {
             var mouseEvent = {
                 offsetX: viewWidth / 2,
                 offsetY: viewHeight / 2
@@ -275,7 +292,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 assert(typeof coords === 'object', 'coords is not an object');
                 assertIsNumber(coords.longitude);
                 assertIsNumber(coords.latitude);
-            });
+                done();
+            }).catch(e => done(e));
         });
 
         it('should get a layer by his id', () => {
@@ -285,7 +303,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             var vectorLayer = globeViewExtended.getLayerById("S_TOP100");
             assert(vectorLayer, 'vector layer not found');
 
-            var elevationLayer = globeViewExtended.getLayerById("ELEVATION.ELEVATIONGRIDCOVERAGE$GEOPORTAIL:OGC:WMTS");
+            var elevationLayer = globeViewExtended.getLayerById("IGN_MNT");
             assert(elevationLayer, 'elevation layer not found');
         });
 
@@ -297,7 +315,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             var colorLayer = globeViewExtended.getColorLayerById("S_TOP100");
             assert(colorLayer, 'vector layer not found');
 
-            var elevationLayer = globeViewExtended.getColorLayerById("ELEVATION.ELEVATIONGRIDCOVERAGE$GEOPORTAIL:OGC:WMTS");
+            var elevationLayer = globeViewExtended.getColorLayerById("IGN_MNT");
             assert(!elevationLayer, 'elevation layer found');
         });
 
@@ -414,7 +432,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
 
         it('should change camera position', () => {
             var cameraPos1 = globeViewExtended.getGlobeView().camera.camera3D.position.clone();
-            var target = globeViewExtended.getGlobeView().controls.getCameraTargetGeoPosition().as('EPSG:4978'); // Geocentric system;
+            var target = globeViewExtended.getGlobeView().controls.getCameraTargetPosition(); // EPSG:4978 Geocentric system;
             var newTarget = {
                 x: target.x + 10000,
                 y: target.y + 10000,
@@ -713,6 +731,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                             assert(event.colorLayersId.indexOf(layerRef.id) >= 0, `layer '${layerRef.id}' not found`);
                         });
 
+                        // test en echec car 1 seul elevation est recupéré par la fonction d'itowns globeView.tileLayer.info.displayed
+                        // voir constructeur de GlobeViewExtended
                         assert(event.elevationLayersId, "info 'elevation layers id' not fetched");
                         layerManager.getElevationLayers().forEach((layerRef) => {
                             assert(event.elevationLayersId.indexOf(layerRef.id) >= 0, `layer '${layerRef.id}' not found`);
