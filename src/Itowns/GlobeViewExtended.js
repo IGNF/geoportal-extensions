@@ -34,7 +34,7 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
-    if (!viewerDiv.style.position || (options & options.position) ) {
+    if (!viewerDiv.style.position || (options & options.position)) {
         viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
     }
 
@@ -522,10 +522,7 @@ GlobeViewExtended.prototype.getExtent = function () {
 GlobeViewExtended.prototype.addWidget = function (widget) {
     if (!widget.getTarget()) {
         // default position value is 'absolute' if the target div is the viewer div
-        widget.setTarget(this._viewerDiv, widget.getPosition() ? 
-            widget.getPosition() : 
-            "absolute"
-        );
+        widget.setTarget(this._viewerDiv, widget.getPosition() ? widget.getPosition() : "absolute");
     }
     widget.setGlobe(this);
     this._widgets.push(widget);

@@ -23,12 +23,12 @@ var logger = Logger.getLogger("Widget");
 * });
 */
 function Widget (options) {
-    this._name = (options.name !== undefined)? options.name : null;
-    this._element = (options.element !== undefined)? options.element : null;
-    this._position = (options.position !== undefined)? options.position : null;
+    this._name = (options.name !== undefined) ? options.name : null;
+    this._element = (options.element !== undefined) ? options.element : null;
+    this._position = (options.position !== undefined) ? options.position : null;
     this._target = null;
     this._globe = null;
-    
+
     if (options.target) {
         this.setTarget(options.target, this._position);
     }
@@ -57,9 +57,7 @@ Widget.prototype.getElement = function getElement () {
  * @param {String} position - html position attribute.
  */
 Widget.prototype.setTarget = function setTarget (target, position) {
-    this._target = typeof target === 'string' ?
-        document.getElementById(target) :
-        target;
+    this._target = typeof target === "string" ? document.getElementById(target) : target;
 
     if (!this._element) {
         logger.error("Widget:setTarget - widget element not created");
