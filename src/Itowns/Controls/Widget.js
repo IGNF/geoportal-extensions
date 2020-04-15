@@ -23,12 +23,15 @@ var logger = Logger.getLogger("Widget");
 * });
 */
 function Widget (options) {
-    this.name = null;
-    this._element = null;
+    this._name = (options.name !== undefined)? options.name : null;
+    this._element = (options.element !== undefined)? options.element : null;
+    this._position = (options.position !== undefined)? options.position : null;
     this._target = null;
     this._globe = null;
-
-    this.setOptions(options);
+    
+    if (options.target) {
+        this.setTarget(options.target, this._position);
+    }
 }
 
 /**
@@ -50,24 +53,13 @@ Widget.prototype.getElement = function getElement () {
  * Associates the widget to a specified target div.
  *
  * @method
- * @param {HTMLElement} targetDiv - widget target div.
+ * @param {HTMLElement|String} target - widget target div html element or target div id.
  * @param {String} position - html position attribute.
  */
-Widget.prototype.setTarget = function setTarget (targetDiv, position) {
-    if (!targetDiv) {
-        return;
-    }
-
-    if (position && position !== "absolute" && position !== "relative") {
-        logger.error("Widget:setTarget - position value should be 'absolute' or 'relative'");
-        return;
-    }
-
-    if (this._target && this._element) {
-        this._target.removeChild(this._element);
-    }
-
-    this._target = targetDiv;
+Widget.prototype.setTarget = function setTarget (target, position) {
+    this._target = typeof target === 'string' ?
+        document.getElementById(target) :
+        target;
 
     if (!this._element) {
         logger.error("Widget:setTarget - widget element not created");
@@ -76,7 +68,7 @@ Widget.prototype.setTarget = function setTarget (targetDiv, position) {
 
     this._element.style.position = position || "relative";
 
-    targetDiv.appendChild(this._element);
+    this._target.appendChild(this._element);
 };
 
 /**
@@ -90,15 +82,13 @@ Widget.prototype.getTarget = function getTarget () {
 };
 
 /**
- * Change the options of the widget.
+ * Return the widget's element position.
  *
  * @method
- * @param {Object} options - The new options of the control.
+ * @return {String} widget's element position.
  */
-Widget.prototype.setOptions = function setOptions (options) {
-    this.name = options.name;
-    this._element = options.element;
-    this.setTarget(options.target, options.position);
+Widget.prototype.getPosition = function getPosition () {
+    return this._position;
 };
 
 /**

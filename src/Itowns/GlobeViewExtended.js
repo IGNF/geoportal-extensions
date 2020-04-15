@@ -34,7 +34,9 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
-    viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
+    if (!viewerDiv.style.position || (options & options.position) ) {
+        viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
+    }
 
     // stockage de l'élément html porteur du globe
     var globeViewDiv = document.createElement("div");
@@ -519,7 +521,11 @@ GlobeViewExtended.prototype.getExtent = function () {
  */
 GlobeViewExtended.prototype.addWidget = function (widget) {
     if (!widget.getTarget()) {
-        widget.setTarget(this._viewerDiv, "absolute");
+        // default position value is 'absolute' if the target div is the viewer div
+        widget.setTarget(this._viewerDiv, widget.getPosition() ? 
+            widget.getPosition() : 
+            "absolute"
+        );
     }
     widget.setGlobe(this);
     this._widgets.push(widget);

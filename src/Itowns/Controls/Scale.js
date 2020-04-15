@@ -32,13 +32,11 @@ function Scale (options) {
 
     var container = this._initContainer();
 
-    var targetDiv = document.getElementById(options.target) || null;
-
     Widget.call(
         this, {
             name : "GraphicScale",
             element : container,
-            target : targetDiv,
+            target : options.target,
             position : options.position
         }
     );

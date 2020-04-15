@@ -90,12 +90,13 @@ function MousePosition (options) {
 
     // init control DOM container
     var container = this._initContainer(options);
-    var targetDiv = document.getElementById(options.target) || null;
+
     Widget.call(
         this, {
             name : "MousePosition",
             element : container,
-            target : targetDiv
+            target : options.target,
+            position : options.position
         }
     );
 };
