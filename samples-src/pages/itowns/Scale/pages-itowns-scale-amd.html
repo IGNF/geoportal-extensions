@@ -72,10 +72,7 @@
                     itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
                     itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
 
-                    var scalebar = new Gp.itownsExtended.control.Scale({
-                        target : viewerDiv,
-                        position : "absolute"
-                    });
+                    var scalebar = new Gp.itownsExtended.control.Scale({});
                     globeView.addWidget( scalebar );
 
                     globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {

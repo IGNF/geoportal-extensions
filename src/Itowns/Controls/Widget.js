@@ -12,7 +12,7 @@ var logger = Logger.getLogger("Widget");
 * @param {Object} options - options for function call.
 * @param {String}  options.name - Name of the widget.
 * @param {Object}  options.element - HTML element of the widget
-* @param {Object}  options.target - HTML element where to put the widget
+* @param {Object|String}  options.target - HTML element or HTML element id where to put the widget
 * @param {String}  options.position - "absolute" or "relative"
 * @example
 * var myWidget = new itowns.control.Widget({
