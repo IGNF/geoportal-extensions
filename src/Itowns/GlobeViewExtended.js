@@ -306,7 +306,6 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
     // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
-        this.getGlobeView().notifyChange(layer);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -570,12 +569,10 @@ GlobeViewExtended.prototype.getScale = function () {
  * Sets tilt
  *
  * @param {Number} tilt - Tilt value
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
-    this.onCameraMoveStop(function () {
-        this.getGlobeView().controls.setTilt(tilt, false);
-        this.notifyChange();
-    }.bind(this));
+    return this.getGlobeView().controls.setTilt(tilt, false);
 };
 
 /**
@@ -591,12 +588,10 @@ GlobeViewExtended.prototype.getTilt = function () {
  * Sets azimuth
  *
  * @param {Number} azimuth - Azimuth value
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
-    this.onCameraMoveStop(function () {
-        this.getGlobeView().controls.setHeading(azimuth, false);
-        this.notifyChange();
-    }.bind(this));
+    return this.getGlobeView().controls.setHeading(azimuth, false);
 };
 
 /**
