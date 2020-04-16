@@ -712,7 +712,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
             }).catch(e => done(e));
         });
 
-        it('pre-render event should correctly fetch infos', function (done) {
+        xit('pre-render event should correctly fetch infos', function (done) {
             globeViewExtended.setCameraTargetGeoPosition(initPosition).then(() => {
                 doubleDone(); //reset operator
 
