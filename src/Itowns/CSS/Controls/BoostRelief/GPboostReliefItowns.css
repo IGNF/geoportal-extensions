@@ -1,0 +1,24 @@
+/* BOOST RELIEF ITOWNS */
+
+div[id^=GPboostRelief-]  {
+  top: 8px;
+  left: 8px;
+}
+
+/* Relief slider : Chrome, Safari, Opera */
+
+.GPlayerRelief input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Relief slider : Firefox */
+
+.GPlayerRelief input[type="range"]::-moz-range-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Relief slider : IE */
+
+.GPlayerRelief input[type="range"]::-ms-track {
+  background: url("img/GPopacitySlider.png");
+}

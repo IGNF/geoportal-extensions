@@ -1,0 +1,86 @@
+{{#extend "layout-itowns-sample-bundle"}}
+
+{{#content "head"}}
+    <script> var apiKey = "{{ apikey }}"; </script>
+    <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <title>Sample itowns BoostRelief</title>
+{{/content}}
+
+{{#content "style"}}
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            overflow:hidden;
+            height:100%;
+        }
+
+        #viewerDiv {
+            margin : auto auto;
+            width: 100%;
+            height: 70%;
+            padding: 0;
+        }
+    </style>
+{{/content}}
+
+{{#content "body"}}
+    <h2>Ajout d'un contrôle d'exageration du relief en 3D' : BoostRelief</h2>
+    <!-- map -->
+    <div id="viewerDiv"></div>
+{{/content}}
+
+{{#content "js"}}
+    <script type="text/javascript">
+
+        const positionOnGlobe = {
+            coord: new itowns.Coordinates('EPSG:4326', 2.3465, 48.88, 0),
+            zoom: 10,
+            tilt: 45,
+            heading: 0
+        };
+
+        const viewerDiv = document.getElementById('viewerDiv');
+        const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+        // globeView.addLayer(layerOrtho);
+
+        function createWMTSSourceFromConfig(config) {
+            config.source = new itowns.WMTSSource(config.source);
+            return config;
+        };
+    
+        function addColorLayerFromConfig(config) {
+            var layer = new itowns.ColorLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+    
+        function addElevationLayerFromConfig(config) {
+            var layer = new itowns.ElevationLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+
+        // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+        // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+
+        globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+            // eslint-disable-next-line no-console
+            console.info('Globe initialized');
+            var myElevationLayer = globeView.getLayerById("IGN_MNT");
+            var boostRelief = new itowns.control.BoostRelief({
+                elevationLayer : myElevationLayer
+            });
+            globeView.addWidget( boostRelief );
+
+        });
+    </script>
+{{/content}}
+
+{{/extend}}
