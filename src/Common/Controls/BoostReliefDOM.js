@@ -153,6 +153,66 @@ var BoostReliefDOM = {
         list.push(divC);
 
         return list;
+    },
+
+    /**
+     * Hidden checkbox for minimizing/maximizing
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowBoostReliefElement : function () {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowBoostRelief");
+        input.type = "checkbox";
+        return input;
+    },
+
+    /**
+     * Show boostRelief control
+     * @param {Boolean} isDesktop - specifies if the support is desktop or tactile
+     *
+     * @returns {DOMElement} DOM element
+     */
+    _createShowBoostReliefPictoElement : function (isDesktop) {
+        // contexte d'execution
+        var self = this;
+
+        var label = document.createElement("label");
+        label.id = this._addUID("GPshowBoostReliefPicto");
+        label.className = "GPshowAdvancedToolPicto";
+        label.htmlFor = this._addUID("GPshowBoostRelief");
+        label.title = "Afficher le control d'exageration du relief";
+
+        // FIXME detection disponible dans le JS !
+        // Detection : test for desktop or tactile
+        // var isDesktop = true;
+        // var userAgent = window.navigator.userAgent.toLowerCase();
+        // if (userAgent.indexOf("iphone") !== -1 ||
+        // userAgent.indexOf("ipod") !== -1 ||
+        // userAgent.indexOf("ipad") !== -1 ||
+        // userAgent.indexOf("android") !== -1 ||
+        // userAgent.indexOf("mobile") !== -1 ||
+        // userAgent.indexOf("blackberry") !== -1 ||
+        // userAgent.indexOf("tablet") !== -1 ||
+        // userAgent.indexOf("phone") !== -1 ||
+        // userAgent.indexOf("touch") !== -1 ) {
+        //     isDesktop = false;
+        // }
+        // if (userAgent.indexOf("msie") !== -1 ||
+        // userAgent.indexOf("trident") !== -1) {
+        //     isDesktop = true;
+        // }
+
+        // label.addEventListener("click", function (e) {
+        //     self.onShowMousePositionClick(e);
+        // });
+
+        var spanOpen = document.createElement("span");
+        spanOpen.id = this._addUID("GPshowBoostReliefOpen");
+        spanOpen.className = "GPshowAdvancedToolOpen";
+        label.appendChild(spanOpen);
+
+        return label;
     }
 };
 

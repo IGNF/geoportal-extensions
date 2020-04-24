@@ -5,20 +5,26 @@ div[id^=GPboostRelief-]  {
   left: 8px;
 }
 
+/* Showing/hiding mouse position panel */
+
+span[id^=GPshowBoostReliefOpen] {
+  background-image: url("img/GPboostReliefOpen.png");
+}
+
 /* Relief slider : Chrome, Safari, Opera */
 
 .GPlayerRelief input[type="range"]::-webkit-slider-runnable-track {
-  background: url("img/GPopacitySlider.png");
+  background: url("img/GPreliefSlider.png");
 }
 
 /* Relief slider : Firefox */
 
 .GPlayerRelief input[type="range"]::-moz-range-track {
-  background: url("img/GPopacitySlider.png");
+  background: url("img/GPreliefSlider.png");
 }
 
 /* Relief slider : IE */
 
 .GPlayerRelief input[type="range"]::-ms-track {
-  background: url("img/GPopacitySlider.png");
+  background: url("img/GPreliefSlider.png");
 }

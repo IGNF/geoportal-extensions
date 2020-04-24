@@ -160,6 +160,16 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     // creation of the main container
     var container = this._createMainContainerElement();
 
+    var inputShow = this._showBoostReliefContainer = this._createShowBoostReliefElement();
+    if (!brOptions.collapsed) {
+        inputShow.checked = "checked";
+    }
+    container.appendChild(inputShow);
+
+    // ajout du picto
+    var picto = this._createShowBoostReliefPictoElement(this._isDesktop);
+    container.appendChild(picto);
+
     // adding in the main container
     var cursor = this._createAdvancedToolElement(brOptions);
     container.appendChild(cursor);
