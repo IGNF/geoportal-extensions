@@ -157,7 +157,25 @@ BoostRelief.prototype._initialize = function () {
  * @private
  */
 BoostRelief.prototype._initContainer = function (brOptions) {
+    var container = this._createMainContainerElement();
+
+    // adds in the main container the layer display selector
+    var inputShow = this._createMainBoostReliefShowElement();
+    container.appendChild(inputShow);
+
+    // adds the layer list in the main container
+    var divA = this._boostReliefListContainer = this._createMainBoostReliefListContainer();
+    var boostReliefList = this._createAdvancedToolElement(brOptions);
+    divA.appendChild(boostReliefList)
+    container.appendChild(divA);
+
+    // adds the widget picto in the main container
+    var picto = this._createMainPictoElement(brOptions.collapsed);
+    container.appendChild(picto);
+
+    return container;
     // creation of the main container
+    /*
     var container = this._createMainContainerElement();
 
     var inputShow = this._showBoostReliefContainer = this._createShowBoostReliefElement();
@@ -167,7 +185,7 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     container.appendChild(inputShow);
 
     // ajout du picto
-    var picto = this._createShowBoostReliefPictoElement(this._isDesktop);
+    var picto = this._createShowBoostReliefPictoElement(brOptions.collapsed);
     container.appendChild(picto);
 
     // adding in the main container
@@ -175,6 +193,7 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     container.appendChild(cursor);
 
     return container;
+    */
 };
 
 // ################################################################### //

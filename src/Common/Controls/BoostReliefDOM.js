@@ -26,6 +26,18 @@ var BoostReliefDOM = {
         return container;
     },
 
+    /**
+     * Creation du selecteur (caché) pour l'affichage/masquage des attributions (DOM)
+     *
+     * @returns {DOMElement} checkbox DOM
+     */
+    _createMainBoostReliefShowElement : function () {
+        var input = document.createElement("input");
+        input.id = this._addUID("GPshowBoostReliefList");
+        input.type = "checkbox";
+        return input;
+    },
+
     // ################################################################### //
     // ############################ Relief tool ########################### //
     // ################################################################### //
@@ -156,15 +168,15 @@ var BoostReliefDOM = {
     },
 
     /**
-     * Hidden checkbox for minimizing/maximizing
+     * Création du conteneur principal des couches MNT boostRelief (DOM)
      *
-     * @returns {DOMElement} DOM element
+     * @returns {DOMElement} div DOM
      */
-    _createShowBoostReliefElement : function () {
-        var input = document.createElement("input");
-        input.id = this._addUID("GPshowBoostRelief");
-        input.type = "checkbox";
-        return input;
+    _createMainBoostReliefListContainer : function () {
+        var div = document.createElement("div");
+        div.id = this._addUID("GPBoostReliefListContainer");
+
+        return div;
     },
 
     /**
@@ -173,44 +185,36 @@ var BoostReliefDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createShowBoostReliefPictoElement : function (isDesktop) {
-        // contexte d'execution
+    _createMainPictoElement : function (collapsed) {
+
         var self = this;
 
         var label = document.createElement("label");
-        label.id = this._addUID("GPshowBoostReliefPicto");
+        label.id = this._addUID("GPshowBoostReliefListPicto");
         label.className = "GPshowAdvancedToolPicto";
-        label.htmlFor = this._addUID("GPshowBoostRelief");
-        label.title = "Afficher le control d'exageration du relief";
+        label.htmlFor = this._addUID("GPshowBoostReliefList");
+        label.title = "Afficher/Masquer le control d'exageration du relief";
 
-        // FIXME detection disponible dans le JS !
-        // Detection : test for desktop or tactile
-        // var isDesktop = true;
-        // var userAgent = window.navigator.userAgent.toLowerCase();
-        // if (userAgent.indexOf("iphone") !== -1 ||
-        // userAgent.indexOf("ipod") !== -1 ||
-        // userAgent.indexOf("ipad") !== -1 ||
-        // userAgent.indexOf("android") !== -1 ||
-        // userAgent.indexOf("mobile") !== -1 ||
-        // userAgent.indexOf("blackberry") !== -1 ||
-        // userAgent.indexOf("tablet") !== -1 ||
-        // userAgent.indexOf("phone") !== -1 ||
-        // userAgent.indexOf("touch") !== -1 ) {
-        //     isDesktop = false;
-        // }
-        // if (userAgent.indexOf("msie") !== -1 ||
-        // userAgent.indexOf("trident") !== -1) {
-        //     isDesktop = true;
-        // }
+        var divOpenClose = document.createElement("div");
+        divOpenClose.id = this._addUID("GPshowBoostReliefOpenClose");
+        divOpenClose.className = "GPshowAdvancedToolOpen";
+        if (collapsed) {
+            divOpenClose.className = "spanOpen";
+        } else {
+            divOpenClose.className = "spanClose";
+        }
+        /** Evenement de type 'click' sur le picto du controle */
+        label.addEventListener("click", function () {
+            if (document.getElementById(self._addUID("GPshowBoostReliefList")).checked) {
+                divOpenClose.className = "spanOpen";
+                document.getElementById(self._addUID("GPBoostReliefListContainer")).style.display = "block";
+            } else {
+                divOpenClose.className = "spanClose";
+                document.getElementById(self._addUID("GPBoostReliefListContainer")).style.display = "none";
+            }
+        });
 
-        // label.addEventListener("click", function (e) {
-        //     self.onShowMousePositionClick(e);
-        // });
-
-        var spanOpen = document.createElement("span");
-        spanOpen.id = this._addUID("GPshowBoostReliefOpen");
-        spanOpen.className = "GPshowAdvancedToolOpen";
-        label.appendChild(spanOpen);
+        label.appendChild(divOpenClose);
 
         return label;
     }
