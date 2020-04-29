@@ -13,7 +13,7 @@ import Widget from "./Widget";
  * @extends {itowns.control.Widget}
  * @alias itowns.control.Scale
  * @param {Object} options - widget options
- * @param {String}  options.target - HTML target element id
+ * @param {String}  options.target - HTML target element or HTML target element id
  * @param {String}  options.position - "absolute" or "relative"
  * @example
  * var scale = new itowns.control.Scale();
@@ -32,13 +32,11 @@ function Scale (options) {
 
     var container = this._initContainer();
 
-    var targetDiv = document.getElementById(options.target) || null;
-
     Widget.call(
         this, {
             name : "GraphicScale",
             element : container,
-            target : targetDiv,
+            target : options.target,
             position : options.position
         }
     );

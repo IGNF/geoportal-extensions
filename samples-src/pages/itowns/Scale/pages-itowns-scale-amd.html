@@ -67,7 +67,17 @@
                         globeView.addLayer(layer);
                     };
 
+<<<<<<< HEAD
                     
+=======
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+
+                    var scalebar = new Gp.itownsExtended.control.Scale({});
+                    globeView.addWidget( scalebar );
+>>>>>>> a1e663d183159536a088dcf2c577a63a698f312e
 
                     globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                         // eslint-disable-next-line no-console
