@@ -58,10 +58,7 @@
                     globeView.addLayer(layer);
                 };
 
-                var scalebar = new itowns.control.Scale({
-                    target : viewerDiv,
-                    position : "absolute"
-                });
+                var scalebar = new itowns.control.Scale({});
                 globeView.addWidget( scalebar );
 
                 globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {

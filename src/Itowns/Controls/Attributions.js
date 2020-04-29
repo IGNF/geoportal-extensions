@@ -40,13 +40,13 @@ function Attributions (aOptions) {
     this._initialize(options);
 
     var container = this._initContainer(options);
-    var targetDiv = document.getElementById(options.target) || null;
 
     Widget.call(
         this, {
             name : "Attributions",
             element : container,
-            target : targetDiv
+            target : options.target,
+            position : options.position
         }
     );
 }

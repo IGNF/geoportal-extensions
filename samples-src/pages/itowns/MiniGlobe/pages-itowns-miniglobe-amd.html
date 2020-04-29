@@ -20,7 +20,7 @@
     }
 </style>
 {{/content}} {{#content "body"}}
-<h2>Ajout d'un contrôle de gestion des couches : LayerSwitcher</h2>
+<h2>Ajout du contrôle MiniGlobe</h2>
 <!-- map -->
 <div id="viewerDiv"></div>
 {{/content}} {{#content "js"}}
@@ -70,7 +70,7 @@
                         }
                     }));
 
-                    // ajout du control
+                    // Ajout du contrôle MiniGlobe
                     var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
                         options: {
                             collapsed: true
@@ -107,8 +107,6 @@
                     })
 
                     var miniglobe = new Gp.itownsExtended.control.MiniGlobe({
-                        target : viewerDiv,
-                        position : "absolute",
                         layer : miniGlobeLayer
                     });
                     
