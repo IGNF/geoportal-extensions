@@ -160,7 +160,7 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     var container = this._createMainContainerElement();
 
     // adds in the main container the layer display selector
-    var inputShow = this._createMainBoostReliefShowElement();
+    var inputShow = this._createMainBoostReliefShowElement(brOptions.collapsed);
     container.appendChild(inputShow);
 
     // adds the layer list in the main container
@@ -170,30 +170,16 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     container.appendChild(divA);
 
     // adds the widget picto in the main container
-    var picto = this._createMainPictoElement(brOptions.collapsed);
+    var picto = this._createMainPictoElement();
     container.appendChild(picto);
 
-    return container;
-    // creation of the main container
-    /*
-    var container = this._createMainContainerElement();
-
-    var inputShow = this._showBoostReliefContainer = this._createShowBoostReliefElement();
-    if (!brOptions.collapsed) {
-        inputShow.checked = "checked";
+    if (brOptions.collapsed) {
+        divA.style.display = "block";
+    } else {
+        divA.style.display = "none";
     }
-    container.appendChild(inputShow);
-
-    // ajout du picto
-    var picto = this._createShowBoostReliefPictoElement(brOptions.collapsed);
-    container.appendChild(picto);
-
-    // adding in the main container
-    var cursor = this._createAdvancedToolElement(brOptions);
-    container.appendChild(cursor);
 
     return container;
-    */
 };
 
 // ################################################################### //

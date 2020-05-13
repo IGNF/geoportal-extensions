@@ -27,14 +27,17 @@ var BoostReliefDOM = {
     },
 
     /**
-     * Creation du selecteur (caché) pour l'affichage/masquage des attributions (DOM)
+     * Creation du selecteur (caché) pour l'affichage/masquage des slides de boostRelief (DOM)
      *
      * @returns {DOMElement} checkbox DOM
      */
-    _createMainBoostReliefShowElement : function () {
+    _createMainBoostReliefShowElement : function (collapsed) {
         var input = document.createElement("input");
         input.id = this._addUID("GPshowBoostReliefList");
         input.type = "checkbox";
+        if (collapsed) {
+            input.checked = true;
+        }
         return input;
     },
 
@@ -185,7 +188,7 @@ var BoostReliefDOM = {
      *
      * @returns {DOMElement} DOM element
      */
-    _createMainPictoElement : function (collapsed) {
+    _createMainPictoElement : function () {
 
         var self = this;
 
@@ -195,26 +198,20 @@ var BoostReliefDOM = {
         label.htmlFor = this._addUID("GPshowBoostReliefList");
         label.title = "Afficher/Masquer le control d'exageration du relief";
 
-        var divOpenClose = document.createElement("div");
-        divOpenClose.id = this._addUID("GPshowBoostReliefOpenClose");
-        divOpenClose.className = "GPshowAdvancedToolOpen";
-        if (collapsed) {
-            divOpenClose.className = "spanOpen";
-        } else {
-            divOpenClose.className = "spanClose";
-        }
+        var spanOpenClose = document.createElement("span");
+        spanOpenClose.id = this._addUID("GPshowBoostReliefOpenClose");
+        spanOpenClose.className = "GPshowAdvancedToolOpen";
+
         /** Evenement de type 'click' sur le picto du controle */
         label.addEventListener("click", function () {
             if (document.getElementById(self._addUID("GPshowBoostReliefList")).checked) {
-                divOpenClose.className = "spanOpen";
-                document.getElementById(self._addUID("GPBoostReliefListContainer")).style.display = "block";
-            } else {
-                divOpenClose.className = "spanClose";
                 document.getElementById(self._addUID("GPBoostReliefListContainer")).style.display = "none";
+            } else {
+                document.getElementById(self._addUID("GPBoostReliefListContainer")).style.display = "block";
             }
         });
 
-        label.appendChild(divOpenClose);
+        label.appendChild(spanOpenClose);
 
         return label;
     }
