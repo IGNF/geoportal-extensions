@@ -27,7 +27,10 @@ import {
     Modify as ModifyInteraction,
     Draw as DrawInteraction
 } from "ol/interaction";
-import { singleClick as eventSingleClick } from "ol/events/condition";
+import {
+    singleClick as eventSingleClick,
+    pointerMove as eventPointerMove
+} from "ol/events/condition";
 import {
     getArea as olGetAreaSphere,
     getDistance as olGetDistanceSphere
@@ -1458,9 +1461,21 @@ var Drawing = (function (Control) {
                 break;
             case this._addUID("drawing-tool-holes"):
                 if (context.dtOptions["holes"].active) {
+                    // selection du polygone à modifier
+                    context.interactionSelectEdit = new SelectInteraction({
+                        condition : eventPointerMove,
+                        layers : [this.layer]
+                    });
+                    context.interactionSelectEdit.setProperties({
+                        name : "Drawing",
+                        source : context
+                    });
+                    map.addInteraction(context.interactionSelectEdit);
+
+                    // saisie
                     context.interactionCurrent = new DrawInteraction({
                         stopClick : true,
-                        features : context.layer.getSource().getFeaturesCollection(),
+                        features : this.interactionSelectEdit.getFeatures(),
                         style : new Style({
                             image : new Circle({
                                 radius : this.options.cursorStyle.radius,
@@ -1486,45 +1501,34 @@ var Drawing = (function (Control) {
                         type : ("Polygon")
                     });
 
-                    context.interactionCurrent.on("drawstart", function (deEv) {
-
-                    },
-                    context);
+                    context.interactionCurrent.on("drawstart", function (deEv) {}, context);
 
                     context.interactionCurrent.on("drawend", function (deEv) {
-                        // pour la gestion des trous dans un polygone :
-                        // - rechercher si il y'a un polygone à trouer
-                        // - dessiner le trou (polygone provisoire)
-                        // - enregistrer le polygone troué
-                        // - mettre à jour les meta informations
-                        // - supprimer le polygone provisoire
-                        var coordinates = deEv.feature.getGeometry().getCoordinates()[0][0];
-                        // on peut avoir un liste de polygones candidats !
-                        var features = map.getFeaturesAtPixel(
-                            map.getPixelFromCoordinate(coordinates), {
-                                layerFilter : function (l) {
-                                    // recherche sur la couche active !
-                                    if (l === context.layer) {
-                                        return true;
-                                    }
-                                    return false;
+                        // recuperation du feature selectionné
+                        var features = context.interactionSelectEdit.getFeatures();
+                        if (features.getLength()) {
+                            // choix sur le 1er feature de la liste
+                            var feature = features.item(0);
+                            var hole = deEv.feature.getGeometry().getCoordinates()[0];
+                            // test pour savoir si le polygone est entièrement
+                            // inclu dans l'autre afin de faciliter les calculs d'aire !
+                            var bHoleIsIncluded = true;
+                            for (var i = 0; i < hole.length; i++) {
+                                if (!feature.getGeometry().intersectsCoordinate(hole[i])) {
+                                    bHoleIsIncluded = false;
+                                    break;
                                 }
                             }
-                        );
-                        // au cas où si auncun polygone à trouer n'est trouvé,
-                        // on gardera le trou comme polygone à dessiner !
-                        if (features) {
-                            // on choisie le 1er polygone à trouer
-                            var feature = features[0];
-                            // FIXME polygone devrait être entièrement inclu dans l'autre !
-                            // on troue le polygone choisi
-                            feature.getGeometry().appendLinearRing(new LinearRing(deEv.feature.getGeometry().getCoordinates()[0]));
-                            // on l'enregistre
+                            if (!bHoleIsIncluded) {
+                                return;
+                            }
+                            // ajout du rings
+                            feature.getGeometry().appendLinearRing(new LinearRing(hole));
+                            // enregistrement !
                             deEv.feature = feature;
-                            // FIXME comment nettoie t on le polygone ou annule t on la saisie ?
+                            // finalisation du dessin...
+                            context._drawEndFeature(deEv.feature, "Polygon");
                         }
-                        // on termine la saisie
-                        context._drawEndFeature(deEv.feature, "Polygon");
                     },
                     context);
                 }

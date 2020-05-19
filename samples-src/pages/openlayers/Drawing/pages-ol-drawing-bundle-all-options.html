@@ -114,12 +114,18 @@
                       });
 
                       if (feature) {
-
+                          var message = "";
                           var coord = evt.coordinate;
                           var props = feature.getProperties();
+                          for (const property in props) {
+                              message += property;
+                              message += " : ";
+                              message += props[property];
+                              message += "<br>";
+                          }
                           // Offset the popup so it points at the middle of the marker not the tip
                           popup.setOffset([0, -22]);
-                          popup.show(coord, props);
+                          popup.show(coord, message);
 
                       }
                     });
