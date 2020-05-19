@@ -58,6 +58,9 @@ var logger = Logger.getLogger("Drawing");
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {Object} [options.popup = {}] - Popup informations
+ * @param {Boolean} [options.popup.display = true] - Specify if popup is displayed when create a drawing
+ * @param {Function} [options.popup.apply] - Function to display popup informations (param function = {geomType / feature})
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
@@ -601,6 +604,14 @@ var Drawing = (function (Control) {
         // detection du support : desktop ou tactile
         // FIXME : utile ?
         this._isDesktop = this._detectSupport();
+
+        // applying default popup
+        if (!this.options.popup) {
+            this.options.popup = {
+                display : true,
+                apply : null
+            };
+        }
     };
 
     /**
@@ -811,46 +822,60 @@ var Drawing = (function (Control) {
         // gestion des mesures
         this._updateMeasure(feature, geomType);
 
-        // creation overlay pour saisie du label
-        var popupOvl = null;
-        var context = this;
+        if (this.options.popup.display) {
+            // creation overlay pour saisie du label
+            var popupOvl = null;
+            var context = this;
 
-        /**
-         * Enregistrement de la valeur saisie dans l'input.
-         *
-         * @param {String} value - valeur de l'attribut.
-         * @param {Boolean} save - true si on garde le label.
-         */
-        var setAttValue = function (value, save) {
-            context.getMap().removeOverlay(popupOvl);
-            if (save && value && value.trim().length > 0) {
-                var formated = value.replace(/\n/g, "<br>");
-                feature.setProperties({
-                    description : formated
+            /**
+            * Enregistrement de la valeur saisie dans l'input.
+            *
+            * @param {String} value - valeur de l'attribut.
+            * @param {Boolean} save - true si on garde le label.
+            */
+            var setAttValue = function (value, save) {
+                context.getMap().removeOverlay(popupOvl);
+                if (save && value && value.trim().length > 0) {
+                    var formated = value.replace(/\n/g, "<br>");
+                    feature.setProperties({
+                        description : formated
+                    });
+                }
+            };
+            var popup = null;
+
+            var displayFunction = this.options.popup.apply;
+            if (displayFunction && typeof displayFunction === "function") {
+                popup = displayFunction.call(this, {
+                    feature : feature,
+                    geomType : geomType
+                });
+            } else {
+                // function by default
+                popup = this._createLabelDiv({
+                    applyFunc : setAttValue,
+                    inputId : this._addUID("att-input"),
+                    placeholder : "Saisir une description...",
+                    measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
+                    geomType : geomType
                 });
             }
-        };
-        var popup = null;
-        popup = this._createLabelDiv({
-            applyFunc : setAttValue,
-            inputId : this._addUID("att-input"),
-            placeholder : "Saisir une description...",
-            measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
-            geomType : geomType
-        });
-        popupOvl = new Overlay({
-            element : popup,
-            // FIXME : autres valeurs.
-            positioning : "top-center"
-            // stopEvent : false
-        });
-        // context.getMap().addOverlay(popupOvl) ;
-        this.getMap().addOverlay(popupOvl);
-        var geomExtent = feature.getGeometry().getExtent();
-        popupOvl.setPosition([
-            (geomExtent[0] + geomExtent[2]) / 2, (geomExtent[1] + geomExtent[3]) / 2
-        ]);
-        document.getElementById(this._addUID("att-input")).focus();
+            popupOvl = new Overlay({
+                element : popup,
+                // FIXME : autres valeurs.
+                positioning : "top-center"
+                // stopEvent : false
+            });
+            // context.getMap().addOverlay(popupOvl) ;
+            this.getMap().addOverlay(popupOvl);
+            var geomExtent = feature.getGeometry().getExtent();
+            popupOvl.setPosition([
+                (geomExtent[0] + geomExtent[2]) / 2, (geomExtent[1] + geomExtent[3]) / 2
+            ]);
+            if (document.getElementById(this._addUID("att-input"))) {
+                document.getElementById(this._addUID("att-input")).focus();
+            }
+        }
     };
 
     /**
