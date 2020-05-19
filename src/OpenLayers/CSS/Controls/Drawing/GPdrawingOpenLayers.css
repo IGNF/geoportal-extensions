@@ -92,6 +92,14 @@ li[id^=drawing-tool-line.drawing-tool-active-] {
     background-position: -120px 0;
 }
 
+li[id^=drawing-tool-holes-] {
+    background-position: -160px 0;
+}
+
+li[id^=drawing-tool-holes.drawing-tool-active] {
+    background-position: -200px 0;
+}
+
 li[id^=drawing-tool-polygon-] {
     background-position: -160px 0;
 }

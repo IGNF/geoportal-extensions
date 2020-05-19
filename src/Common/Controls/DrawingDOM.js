@@ -171,6 +171,14 @@ var DrawingDOM = {
                 id : "polygon"
             };
         }
+        if (this.options.tools.holes) {
+            this.dtOptions.holes = {
+                label : this.options.labels.holes,
+                active : false,
+                panel : "draw",
+                id : "holes"
+            };
+        }
         if (this.options.tools.text) {
             this.dtOptions.text = {
                 label : this.options.labels.text,

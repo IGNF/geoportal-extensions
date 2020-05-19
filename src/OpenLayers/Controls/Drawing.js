@@ -19,7 +19,8 @@ import {
 import {
     LineString,
     Point,
-    Polygon
+    Polygon,
+    LinearRing
 } from "ol/geom";
 import {
     Select as SelectInteraction,
@@ -64,6 +65,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
  * @param {Boolean} [options.tools.polygons = true] - Display polygons drawing tool
+ * @param {Boolean} [options.tools.holes = true] - Display polygons with holes drawing tool
  * @param {Boolean} [options.tools.text = true] - Display text drawing tool
  * @param {Boolean} [options.tools.remove = true] - Display feature removing tool
  * @param {Boolean} [options.tools.display = true] - Display style editing tool
@@ -76,6 +78,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.labels.points] - Label for points drawing tool
  * @param {String} [options.labels.lines] - Label for lines drawing tool
  * @param {String} [options.labels.polygons] - Label for polygons drawing tool
+ * @param {String} [options.labels.holes] - Label for polygons with holes drawing tool
  * @param {String} [options.labels.text] - Label for text drawing tool
  * @param {String} [options.labels.edit] - Label for editing tool
  * @param {String} [options.labels.display] - Label for style editing tool
@@ -140,6 +143,7 @@ var Drawing = (function (Control) {
         points : true,
         lines : true,
         polygons : true,
+        holes : true,
         text : true,
         remove : true,
         display : true,
@@ -160,6 +164,7 @@ var Drawing = (function (Control) {
         points : "Placer des points",
         lines : "Dessiner des lignes",
         polygons : "Dessiner des polygones",
+        holes : "Dessiner des trous",
         text : "Ecrire sur la carte",
         editingTools : "Outils d'édition",
         edit : "Editer les tracés",
@@ -764,6 +769,7 @@ var Drawing = (function (Control) {
      * Callback de fin de dessin de geometrie
      * @param {Object} feature - ol feature
      * @param {String} geomType - geometry type
+     * @param {Boolean} clean - clean last feature
      *
      * @private
      */
@@ -824,7 +830,8 @@ var Drawing = (function (Control) {
                 });
             }
         };
-        var popup = this._createLabelDiv({
+        var popup = null;
+        popup = this._createLabelDiv({
             applyFunc : setAttValue,
             inputId : this._addUID("att-input"),
             placeholder : "Saisir une description...",
@@ -1281,6 +1288,16 @@ var Drawing = (function (Control) {
                 var coordinatesAera = geom.getLinearRing(0).getCoordinates();
                 measureArea = Math.abs(olGetAreaSphere(new Polygon([coordinatesAera])));
 
+                // FIXME on se limite à des trous uniquement !
+                // cad les polygones sont strictement contenus dans le 1er !
+                var rings = geom.getLinearRings();
+                if (rings.length > 1) {
+                    for (var ij = 1; ij < rings.length; ij++) {
+                        var coordinatesRings = rings[ij].getCoordinates();
+                        measureArea -= Math.abs(olGetAreaSphere(new Polygon([coordinatesRings])));
+                    }
+                }
+
                 measure = (measureArea > 1000000)
                     ? __roundDecimal(measureArea / 1000000, 3) + " km^2"
                     : __roundDecimal(measureArea, 2) + " m^2";
@@ -1414,6 +1431,79 @@ var Drawing = (function (Control) {
                     context);
                 }
                 break;
+            case this._addUID("drawing-tool-holes"):
+                if (context.dtOptions["holes"].active) {
+                    context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
+                        features : context.layer.getSource().getFeaturesCollection(),
+                        style : new Style({
+                            image : new Circle({
+                                radius : this.options.cursorStyle.radius,
+                                stroke : new Stroke({
+                                    color : this.options.cursorStyle.strokeColor,
+                                    width : this.options.cursorStyle.strokeWidth
+                                }),
+                                fill : new Fill({
+                                    color : this.options.cursorStyle.fillColor
+                                })
+                            }),
+                            stroke : new Stroke({
+                                color : this.options.defaultStyles.polyStrokeColor,
+                                width : this.options.defaultStyles.polyStrokeWidth
+                            }),
+                            fill : new Fill({
+                                color : Color.hexToRgba(
+                                    this.options.defaultStyles.polyFillColor,
+                                    this.options.defaultStyles.polyFillOpacity
+                                )
+                            })
+                        }),
+                        type : ("Polygon")
+                    });
+
+                    context.interactionCurrent.on("drawstart", function (deEv) {
+
+                    },
+                    context);
+
+                    context.interactionCurrent.on("drawend", function (deEv) {
+                        // pour la gestion des trous dans un polygone :
+                        // - rechercher si il y'a un polygone à trouer
+                        // - dessiner le trou (polygone provisoire)
+                        // - enregistrer le polygone troué
+                        // - mettre à jour les meta informations
+                        // - supprimer le polygone provisoire
+                        var coordinates = deEv.feature.getGeometry().getCoordinates()[0][0];
+                        // on peut avoir un liste de polygones candidats !
+                        var features = map.getFeaturesAtPixel(
+                            map.getPixelFromCoordinate(coordinates), {
+                                layerFilter : function (l) {
+                                    // recherche sur la couche active !
+                                    if (l === context.layer) {
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                            }
+                        );
+                        // au cas où si auncun polygone à trouer n'est trouvé,
+                        // on gardera le trou comme polygone à dessiner !
+                        if (features) {
+                            // on choisie le 1er polygone à trouer
+                            var feature = features[0];
+                            // FIXME polygone devrait être entièrement inclu dans l'autre !
+                            // on troue le polygone choisi
+                            feature.getGeometry().appendLinearRing(new LinearRing(deEv.feature.getGeometry().getCoordinates()[0]));
+                            // on l'enregistre
+                            deEv.feature = feature;
+                            // FIXME comment nettoie t on le polygone ou annule t on la saisie ?
+                        }
+                        // on termine la saisie
+                        context._drawEndFeature(deEv.feature, "Polygon");
+                    },
+                    context);
+                }
+                break;
             case this._addUID("drawing-tool-text"):
                 // text : creation de points invisibles avec un label.
                 if (context.dtOptions["text"].active) {
@@ -1438,11 +1528,11 @@ var Drawing = (function (Control) {
                         // creation overlay pour saisie du label
                         var popupOvl = null;
                         /**
-                             * Enregistrement de la valeur saisie dans l'input.
-                             *
-                             * @param {String} value - valeur du label
-                             * @param {Boolean} save - true si on garde le label.
-                             */
+                        * Enregistrement de la valeur saisie dans l'input.
+                        *
+                        * @param {String} value - valeur du label
+                        * @param {Boolean} save - true si on garde le label.
+                        */
                         var setTextValue = function (/* context,feature, */ value, save) {
                             context.getMap().removeOverlay(popupOvl);
                             if (!save) {
@@ -1516,11 +1606,9 @@ var Drawing = (function (Control) {
                                     color : this.options.cursorStyle.fillColor
                                 })
                             })
-                        }),
-                        // deleteCondition : aucune en mode "edition"
-                        deleteCondition : function (/* event */) {
-                            return false;
-                        }
+                        })
+                        // deleteCondition : function (/* event */) { return false },
+                        // insertVertexCondition : function (/* event */) { return false }
                     });
                     context.interactionCurrent.on("modifyend", (deEv) => {
                         var feature = deEv.features.item(0);
