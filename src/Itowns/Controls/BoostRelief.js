@@ -166,7 +166,9 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     // adds the layer list in the main container
     var divA = this._boostReliefListContainer = this._createMainBoostReliefListContainer();
     var boostReliefList = this._createAdvancedToolElement(brOptions);
-    divA.appendChild(boostReliefList)
+    for (var i=0; i<boostReliefList.length; i++) {
+        divA.appendChild(boostReliefList[i])
+    }
     container.appendChild(divA);
 
     // adds the widget picto in the main container

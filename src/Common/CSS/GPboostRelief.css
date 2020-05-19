@@ -16,6 +16,7 @@
   }
   
   .GPlayerRelief {
+    position: relative;
     left: 28px;
     width: calc(100% - 100px);
     height: 28px;
