@@ -85,6 +85,10 @@ var BoostReliefDOM = {
      */
     _createAdvancedToolReliefElement : function (elevationLayer, scale) {
         // exemple :
+        // <div id="GPReliefLayerId_ID_Layer1" class="GPlayerReliefLayerId" title="Layer ID">
+        //     <span id="GPReliefLayerId_ID_Layer1">Layer1</span>
+        // </div>
+        //
         // <div id="GPrelief_ID_Layer1" class="GPlayerRelief" title="Opacité">
         //   <input id="GPreliefRange_ID_Layer1" type="range" value="100" oninput="GPchangeLayerRelief(this);" onchange="GPchangeLayerRelief(this);">
         // </div>
@@ -95,11 +99,23 @@ var BoostReliefDOM = {
 
         var list = [];
 
+        // affichage de l'id de la couche
+        var divA = document.createElement("div");
+        divA.id = this._addUID("GPReliefLayerId_ID_" + elevationLayer.id);
+        divA.className = "GPlayerReliefLayerId";
+        divA.title = "Layer ID";
+
+        var IDspan = document.createElement("span");
+        IDspan.id = this._addUID("GPReliefLayerId_ID_" + elevationLayer.id);
+        IDspan.innerHTML = elevationLayer.id;
+
+        divA.appendChild(IDspan);
+
         // curseur pour changer l'opacité
-        var divO = document.createElement("div");
-        divO.id = this._addUID("GPRelief_ID_" + elevationLayer.id);
-        divO.className = "GPlayerRelief";
-        divO.title = "Relief";
+        var divB = document.createElement("div");
+        divB.id = this._addUID("GPRelief_ID_" + elevationLayer.id);
+        divB.className = "GPlayerRelief";
+        divB.title = "Relief";
 
         // on recupere la valeur actuelle d'echelle du relief depuis la couche donnée en parametre
         var relief = elevationLayer.scale || 1;
@@ -158,7 +174,7 @@ var BoostReliefDOM = {
             );
         }
 
-        divO.appendChild(input);
+        divB.appendChild(input);
 
         // Valeur d'echelle du relief
         var divC = document.createElement("div");
@@ -171,7 +187,8 @@ var BoostReliefDOM = {
 
         divC.appendChild(span);
 
-        list.push(divO);
+        list.push(divA);
+        list.push(divB);
         list.push(divC);
 
         return list;
@@ -185,6 +202,7 @@ var BoostReliefDOM = {
     _createMainBoostReliefListContainer : function () {
         var div = document.createElement("div");
         div.id = this._addUID("GPBoostReliefListContainer");
+        div.className = "GPpanel";
 
         return div;
     },

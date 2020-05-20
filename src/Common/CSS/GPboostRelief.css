@@ -2,11 +2,15 @@
 
   div[id^=GPboostRelief-] {
     font-size: 11px;
-    width: 180px;
+    width: 220px;
   }
   
   div[id^=GPboostRelief-] label {
     display: block;
+  }
+
+  div[id^=GPBoostReliefListContainer-] {
+    padding: 1px;
   }
   
   .GPlayerRelief,
@@ -16,16 +20,15 @@
   }
   
   .GPlayerRelief {
-    position: relative;
-    left: 28px;
-    width: calc(100% - 100px);
+    left: 100px;
+    width: calc(100% - 140px);
     height: 28px;
     padding-left: 8px;
   }
   
   .GPlayerReliefValue {
     width: 32px;
-    left: calc(100% - 60px);
+    left: calc(100% - 30px);
     line-height: 28px;
     font-size: 10px;
     font-style: italic;
@@ -56,18 +59,28 @@
 
   /* Showing layer advanced tools */
 
-  .GPlayerAdvancedToolsRelief {
-    display: block;
-  }
-
   div[id^=GPboostRelief-] input[type="checkbox"]:checked + label + .GPlayerAdvancedToolsRelief {
     max-height: 28px;
     opacity: 1;
   }
 
   .GPlayerAdvancedToolsRelief {
+    display: block;
     position: relative;
     width: 100%;
+    border-bottom : 1px dotted #CCC;
+    background-color : #FFF;
+  }
+
+  .GPlayerReliefLayerId {
+    position: relative;
+    width: 100px;
+    height: 28px;
+    padding-left: 8px;
+    line-height: 28px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   
   /* Relief slider : general */

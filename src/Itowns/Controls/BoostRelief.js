@@ -15,7 +15,12 @@ var logger = Logger.getLogger("BoostRelief");
  * @extends {itowns.control.Widget}
  * @alias itowns.control.BoostRelief
  * @param {Object} brOptions - control options
- * @param {Boolean} [brOptions.options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on globe loading.
+ * @param {Array} [brOptions.elevationLayers] - array of elevation layers ids to be displayed in the boostRelief control.
+ * @param {Object} [brOptions.scale] - Defines the scale used to boost the relief
+ * @param {Object} [brOptions.scale.min] - Minimum of the scale - 1 by default
+ * @param {Object} [brOptions.scale.max] - Maximum of the scale - 50 by default
+ * @param {Object} [brOptions.scale.step] - Step of the scale - 1 by default
+ * @param {Boolean} [brOptions.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on globe loading.
  * @example
  * var boostRelief = new itowns.control.BoostRelief({
  *  layers : [
@@ -87,12 +92,13 @@ BoostRelief.prototype.setGlobe = function (globe) {
     if (globe) { // in the case the control is added to the globe
         var self = this;
 
-        // adding of listeners
-        this._callbacks.onReliefLayerCallBack = function (e) {
-            self._updateLayerRelief(e.target.id, e.new.relief);
-        };
+        // TODO - adding of listeners
+        // this._callbacks.onReliefLayerCallBack = function (e) {
+        //     self._updateLayerRelief(e.target.id, e.new.relief);
+        // };
     } else {
-        this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.Relief_PROPERTY_CHANGED, this._callbacks.onReliefLayerCallBack);
+        // TODO - removing listeners
+        // this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.Relief_PROPERTY_CHANGED, this._callbacks.onReliefLayerCallBack);
         // deletes the layerSwitcher DOM
         while (this._element.hasChildNodes()) {
             this._element.removeChild(this._element.lastChild);
@@ -223,26 +229,23 @@ BoostRelief.prototype._onChangeLayerRelief = function (e) {
  * @param {Number} relief - relief value
  * @private
  */
-/*
-BoostRelief.prototype._updateLayerRelief = function (layerId, relief) {
-    if (relief > 1) {
-        relief = 1;
-    }
-    if (relief < 0) {
-        relief = 0;
-    }
 
-    var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv_ID_" + layerId));
-    if (layerReliefInput) {
-        layerReliefInput.value = Math.round(relief * 100);
-    }
+// BoostRelief.prototype._updateLayerRelief = function (layerId, relief) {
+//     if (relief < 1) {
+//         relief = 1;
+//     }
+// 
+//     var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv_ID_" + layerId));
+//     if (layerReliefInput) {
+//         layerReliefInput.value = Math.round(relief * 100);
+//     }
+// 
+//     var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue_ID_" + layerId));
+//     if (layerReliefSpan) {
+//         layerReliefSpan.innerHTML = Math.round(relief * 100) + "%";
+//     }
+// };
 
-    var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue_ID_" + layerId));
-    if (layerReliefSpan) {
-        layerReliefSpan.innerHTML = Math.round(relief * 100) + "%";
-    }
-};
-*/
 
 /**
  * Gets layer id from div id
