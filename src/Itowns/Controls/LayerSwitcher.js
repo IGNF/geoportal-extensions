@@ -65,13 +65,13 @@ function LayerSwitcher (lsOptions) {
     var container = this._initContainer(options);
     // property to save layers conf added after the LS is initialized
     this._addedLayerConf = {};
-    var targetDiv = document.getElementById(options.target) || null;
 
     Widget.call(
         this, {
             name : "LayerSwitcher",
             element : container,
-            target : targetDiv
+            target : options.target,
+            position : options.position
         }
     );
 }

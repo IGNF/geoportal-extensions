@@ -5,6 +5,8 @@ import View from "ol/View";
 import OSMSource from "ol/source/OSM";
 import TileLayer from "ol/layer/Tile";
 import MousePosition from "../../../../src/OpenLayers/Controls/MousePosition";
+import Register from "../../../../src/Common/Utils/Register";
+import CRS from "../../../../src/OpenLayers/CRS/CRS";
 
 import { assert, expect, should } from "chai";
 should();
@@ -12,8 +14,15 @@ should();
 var logger = Logger.getLogger("test-controls-MousePosition");
 
 describe("-- Test Plugin OpenLayers MousePosition --", function () {
+    this.timeout(4000)
 
     var div, map;
+
+    before(function() {
+        // On force le chargement du registre de projections
+        Register.isLoaded = false
+        CRS.load();
+    })
 
     beforeEach(function () {
         div = document.createElement('div');

@@ -33,13 +33,11 @@ function MiniGlobe (options) {
     var container = this._initContainer();
     this._options = options;
 
-    var targetDiv = document.getElementById(options.target) || null;
-
     Widget.call(
         this, {
             name : "Overview",
             element : container,
-            target : targetDiv,
+            target : options.target,
             position : options.position
         }
     );
@@ -84,8 +82,7 @@ MiniGlobe.prototype.setGlobe = function (globe) {
             sseSubdivisionThreshold : 3,
             // Don't instance default controls since miniview's camera will be synced
             // on the main view's one (see globeView.onAfterRender)
-            noControls : true,
-            position : "absolute"
+            noControls : true
         });
 
         miniView.setBackground();
