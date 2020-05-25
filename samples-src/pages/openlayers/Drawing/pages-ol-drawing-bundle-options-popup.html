@@ -14,6 +14,21 @@
                 background-position:center center;
                 background-repeat:no-repeat;
             }
+            .ol-popup {
+                display: block;
+                position: absolute;
+                background-color: white;
+                padding: 15px 25px 15px 15px;
+                border: 1px solid #cccccc;
+                bottom: 12px;
+                left: -50px;
+            }
+            .ol-popup-content {
+                min-width: 170px;
+                max-height: 200px;
+                overflow-x: auto;
+            }
+
         </style>
 {{/content}}
 
@@ -27,7 +42,7 @@
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                var createMap = function() {
+                window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
@@ -48,9 +63,26 @@
                         popup : {
                             display : true,
                             apply : function ({geomType : geomType, feature : feature}) {
+                                var element = document.createElement('div');
+                                element.className = "ol-popup";
                                 console.log(geomType);
                                 var props = feature.getProperties();
                                 console.log(props);
+                                if (feature) {
+                                    var message = "";
+                                    var props = feature.getProperties();
+                                    for (const property in props) {
+                                        message += property;
+                                        message += " : ";
+                                        message += props[property];
+                                        message += "<br>";
+                                    }
+                                    var content = document.createElement('div');
+                                    content.className = "ol-popup-content";
+                                    content.innerHTML = message;
+                                    element.appendChild(content);
+                                }
+                                return element;
                             }
                         },
                     });
@@ -64,13 +96,6 @@
 
                     map.addControl(drawing);
                 };
-                Gp.Services.getConfig({
-                    serverUrl : "{{ resources }}/AutoConf.js",
-                    callbackSuffix : "",
-                    // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
-                    timeOut : 20000,
-                    onSuccess : createMap
-                });
            </script>
 {{/content}}
 

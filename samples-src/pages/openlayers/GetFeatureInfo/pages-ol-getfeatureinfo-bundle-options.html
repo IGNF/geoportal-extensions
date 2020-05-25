@@ -232,6 +232,9 @@
                 }
             });
             map.addControl(layerSwitcher);
+
+            var iso = new ol.control.Isocurve({});
+            map.addControl(iso);
         }
     </script>
 {{/content}}
