@@ -63,7 +63,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
  * @param {Object} [options.popup = {}] - Popup informations
  * @param {Boolean} [options.popup.display = true] - Specify if popup is displayed when create a drawing
- * @param {Function} [options.popup.function] - Function to display popup informations (params : {geomType / feature / saveFunc(message) / closeFunc()})
+ * @param {Function} [options.popup.function] - Function to display popup informations if you want to cutomise it. You may also provide your own function with params : {geomType / feature / saveFunc(message) / closeFunc()}. This function must return the DOM object of the popup content.
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
@@ -114,6 +114,45 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.cursorStyle.strokeColor = "#FFF"] - Cursor stroke color.
  * @param {String} [options.cursorStyle.strokeWidth = 1] - Cursor surrounding stroke width.
  * @param {String} [options.cursorStyle.radius = 6] - Cursor radius.
+ * @example
+ * var drawing = new ol.control.Drawing({
+ *   collapsed : false,
+ *   draggable : true,
+ *   layerswitcher : {
+ *      title : "Dessins",
+ *      description : "Mes dessins..."
+ *   },
+ *   markersList : [{
+ *      src : "http://api.ign.fr/api/images/api/markers/marker_01.png",
+ *      anchor : [0.5, 1]
+ *   }],
+ *   defaultStyles : {},
+ *   cursorStyle : {},
+ *   tools : {
+ *      points : true,
+ *      lines : true,
+ *      polygons :true,
+ *      holes : true,
+ *      text : false,
+ *      remove : true,
+ *      display : true,
+ *      tooltip : true,
+ *      export : true,
+ *      measure : true
+ *   },
+ *   popup : {
+ *      display : true,
+ *      function : function (params) {
+ *          var container = document.createElement("div");
+ *          // - params.geomType;
+ *          // - params.feature;
+ *          // Les 2 fonctions ferment la popup avec ou sans sauvegarde des informations
+ *          // dans les properties de la feature (key : description)
+ *          // - params.saveFunc(message);
+ *          // - params.closeFunc();
+ *          return container;
+ *      }
+ * });
  */
 var Drawing = (function (Control) {
     function Drawing (options) {
