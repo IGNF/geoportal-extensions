@@ -71,7 +71,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
  * @param {Boolean} [options.tools.polygons = true] - Display polygons drawing tool
- * @param {Boolean} [options.tools.holes = true] - Display polygons with holes drawing tool
+ * @param {Boolean} [options.tools.holes = false] - Display polygons with holes drawing tool
  * @param {Boolean} [options.tools.text = true] - Display text drawing tool
  * @param {Boolean} [options.tools.remove = true] - Display feature removing tool
  * @param {Boolean} [options.tools.display = true] - Display style editing tool
@@ -188,7 +188,7 @@ var Drawing = (function (Control) {
         points : true,
         lines : true,
         polygons : true,
-        holes : true,
+        holes : false,
         text : true,
         remove : true,
         display : true,
@@ -209,7 +209,7 @@ var Drawing = (function (Control) {
         points : "Placer des points",
         lines : "Dessiner des lignes",
         polygons : "Dessiner des polygones",
-        holes : "Dessiner des trous",
+        holes : "Créer des trous sur un polygone",
         text : "Ecrire sur la carte",
         editingTools : "Outils d'édition",
         edit : "Editer les tracés",
