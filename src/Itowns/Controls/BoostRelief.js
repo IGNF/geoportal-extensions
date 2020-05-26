@@ -1,4 +1,3 @@
-import GlobeViewExtended from "../GlobeViewExtended";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -88,24 +87,15 @@ BoostRelief.prototype.constructor = BoostRelief;
  * @param {GlobeViewExtended} globe - the globe
  */
 BoostRelief.prototype.setGlobe = function (globe) {
-    var layers;
-    if (globe) { // in the case the control is added to the globe
-        var self = this;
-
-        // TODO - adding of listeners
-        // this._callbacks.onReliefLayerCallBack = function (e) {
-        //     self._updateLayerRelief(e.target.id, e.new.relief);
-        // };
-    } else {
-        // TODO - removing listeners
-        // this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.Relief_PROPERTY_CHANGED, this._callbacks.onReliefLayerCallBack);
-        // deletes the layerSwitcher DOM
+    // TODO - removing listeners
+    // this._globe.removeLayerListener(layers[j], GlobeViewExtended.EVENTS.Relief_PROPERTY_CHANGED, this._callbacks.onReliefLayerCallBack);
+    // deletes the layerSwitcher DOM
+    if (!globe) {
         while (this._element.hasChildNodes()) {
             this._element.removeChild(this._element.lastChild);
         }
         this._element.parentNode.removeChild(this._element);
     }
-
     // calls original setGlobe method
     Widget.prototype.setGlobe.call(this, globe);
 };
@@ -120,9 +110,22 @@ BoostRelief.prototype.setCollapsed = function (collapsed) {
         logger.error("BoostRelief:setCollapsed - missing collapsed parameter");
         return;
     }
+    if (typeof collapsed !== "boolean") {
+        logger.error("BoostRelief:setCollapsed - collapsed parameter is not a boolean");
+        return;
+    }
     var isCollapsed = this.getCollapsed();
+
     if ((collapsed && isCollapsed) || (!collapsed && !isCollapsed)) {
         return;
+    }
+    var controlDiv = document.getElementById(this._addUID("GPBoostReliefListContainer"));
+    if (collapsed) {
+        controlDiv.style.display = "block";
+        document.getElementById(this._addUID("GPshowBoostReliefList")).checked = true;
+    } else {
+        controlDiv.style.display = "none";
+        document.getElementById(this._addUID("GPshowBoostReliefList")).checked = false;
     }
 };
 
@@ -131,7 +134,7 @@ BoostRelief.prototype.setCollapsed = function (collapsed) {
  * @return {Boolean} is collapsed
  */
 BoostRelief.prototype.getCollapsed = function () {
-    return !document.getElementById(this._addUID("GPshowLayersList")).checked;
+    return document.getElementById(this._addUID("GPshowBoostReliefList")).checked;
 };
 
 // ################################################################### //
@@ -158,7 +161,7 @@ BoostRelief.prototype._initialize = function () {
  * Creates control main container
  *
  * @method _initContainer
- * @param {Object} options - control options
+ * @param {Object} brOptions - control options
  * @returns {DOMElement} container - widget container
  * @private
  */
@@ -172,8 +175,8 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     // adds the layer list in the main container
     var divA = this._boostReliefListContainer = this._createMainBoostReliefListContainer();
     var boostReliefList = this._createAdvancedToolElement(brOptions);
-    for (var i=0; i<boostReliefList.length; i++) {
-        divA.appendChild(boostReliefList[i])
+    for (var i = 0; i < boostReliefList.length; i++) {
+        divA.appendChild(boostReliefList[i]);
     }
     container.appendChild(divA);
 
@@ -211,9 +214,9 @@ BoostRelief.prototype._onChangeLayerRelief = function (e) {
 
     // et qui finit à 101/2 = 50
     reliefId.innerHTML = "x" + reliefValue;
-    
+
     var elevationLayer = globe.getLayerById(layerID);
-    function updateScale(layer, value) {
+    function updateScale (layer, value) {
         layer.scale = value;
         globe.notifyChange(layer);
     }
@@ -234,18 +237,17 @@ BoostRelief.prototype._onChangeLayerRelief = function (e) {
 //     if (relief < 1) {
 //         relief = 1;
 //     }
-// 
+//
 //     var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv_ID_" + layerId));
 //     if (layerReliefInput) {
 //         layerReliefInput.value = Math.round(relief * 100);
 //     }
-// 
+//
 //     var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue_ID_" + layerId));
 //     if (layerReliefSpan) {
 //         layerReliefSpan.innerHTML = Math.round(relief * 100) + "%";
 //     }
 // };
-
 
 /**
  * Gets layer id from div id

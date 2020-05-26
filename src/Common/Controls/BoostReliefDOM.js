@@ -29,6 +29,8 @@ var BoostReliefDOM = {
     /**
      * Creation du selecteur (caché) pour l'affichage/masquage des slides de boostRelief (DOM)
      *
+     * @param {Boolean} collapsed - option indiquant si le control est déplié
+     *
      * @returns {DOMElement} checkbox DOM
      */
     _createMainBoostReliefShowElement : function (collapsed) {
@@ -67,7 +69,7 @@ var BoostReliefDOM = {
             var container = document.createElement("div");
             container.id = this._addUID("GPadvancedToolsRelief_ID_" + elevationLayer.id);
             container.className = "GPlayerAdvancedToolsRelief";
-    
+
             var array = this._createAdvancedToolReliefElement(elevationLayer, brOptions.scale);
             for (var j = 0; j < array.length; j++) {
                 container.appendChild(array[j]);
@@ -79,7 +81,8 @@ var BoostReliefDOM = {
     /**
      * Creation de l'icone de gestion du relief du layer (DOM)
      *
-     * @param {Object} brOptions - Options du control boostRelief
+     * @param {Object} elevationLayer - couche itowns de type elevation
+     * @param {Object} scale - définition de l'echelle que le slider utilise (min,max,step)
      *
      * @returns {DOMElement[]} array of two containers
      */
@@ -213,11 +216,11 @@ var BoostReliefDOM = {
      *
      * @returns {DOMElement} DOM element
      */
+
     _createMainPictoElement : function () {
-
         var self = this;
-
         var label = document.createElement("label");
+
         label.id = this._addUID("GPshowBoostReliefListPicto");
         label.className = "GPshowAdvancedToolPicto";
         label.htmlFor = this._addUID("GPshowBoostReliefList");
