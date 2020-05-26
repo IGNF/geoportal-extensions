@@ -847,7 +847,9 @@ var Drawing = (function (Control) {
                     });
                 }
             };
+
             var popup = null;
+            var popupByDefault = true;
 
             var displayFunction = this.options.popup.function;
             if (displayFunction && typeof displayFunction === "function") {
@@ -864,14 +866,19 @@ var Drawing = (function (Control) {
                     }
                 });
                 if (popup) {
-                    // FIXME ...
+                    // on est sûr que la popup customisée existe,
+                    // donc on n'utilise pas celle par defaut...
+                    popupByDefault = false;
+                    // FIXME comment forcer le focus sur une div ?
                     popup.tabIndex = -1; // hack sur le focus sur une div ?
                     popup.onblur = function () {
                         context.getMap().removeOverlay(context.popupOvl);
                         context.popupOvl = null;
                     };
                 }
-            } else {
+            }
+            // use popup by default
+            if (popupByDefault) {
                 // function by default
                 popup = this._createLabelDiv({
                     applyFunc : setAttValue,
@@ -881,10 +888,12 @@ var Drawing = (function (Control) {
                     geomType : geomType
                 });
             }
+            // un peu de menage...
             if (this.popupOvl) {
                 this.getMap().removeOverlay(this.popupOvl);
                 this.popupOvl = null;
             }
+            // creation de l'overlay
             this.popupOvl = new Overlay({
                 element : popup,
                 // FIXME : autres valeurs.
