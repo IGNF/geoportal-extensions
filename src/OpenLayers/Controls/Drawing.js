@@ -63,7 +63,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
  * @param {Object} [options.popup = {}] - Popup informations
  * @param {Boolean} [options.popup.display = true] - Specify if popup is displayed when create a drawing
- * @param {Function} [options.popup.apply] - Function to display popup informations (param function = {geomType / feature})
+ * @param {Function} [options.popup.function] - Function to display popup informations (params : {geomType / feature / saveFunc(message) / closeFunc()})
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
@@ -598,6 +598,7 @@ var Drawing = (function (Control) {
         this.interactionSelectEdit = null;
 
         this.stylingOvl = null;
+        this.popupOvl = null;
 
         this.layer = null;
         if (this.options.layer && this.options.layer instanceof VectorLayer) {
@@ -827,7 +828,7 @@ var Drawing = (function (Control) {
 
         if (this.options.popup.display) {
             // creation overlay pour saisie du label
-            var popupOvl = null;
+            // contexte
             var context = this;
 
             /**
@@ -837,7 +838,8 @@ var Drawing = (function (Control) {
             * @param {Boolean} save - true si on garde le label.
             */
             var setAttValue = function (value, save) {
-                context.getMap().removeOverlay(popupOvl);
+                context.getMap().removeOverlay(context.popupOvl);
+                context.popupOvl = null;
                 if (save && value && value.trim().length > 0) {
                     var formated = value.replace(/\n/g, "<br>");
                     feature.setProperties({
@@ -847,12 +849,28 @@ var Drawing = (function (Control) {
             };
             var popup = null;
 
-            var displayFunction = this.options.popup.apply;
+            var displayFunction = this.options.popup.function;
             if (displayFunction && typeof displayFunction === "function") {
-                popup = displayFunction.call(this, {
+                // la sauvegarde et la fermeture sont des actions à implementer par l'utilisateur
+                // par contre, la destruction est à gerer en interne
+                popup = displayFunction.call(context, {
                     feature : feature,
-                    geomType : geomType
+                    geomType : geomType,
+                    closeFunc : function () {
+                        setAttValue(null, false);
+                    },
+                    saveFunc : function (message) {
+                        setAttValue(message, true);
+                    }
                 });
+                if (popup) {
+                    // FIXME ...
+                    popup.tabIndex = -1; // hack sur le focus sur une div ?
+                    popup.onblur = function () {
+                        context.getMap().removeOverlay(context.popupOvl);
+                        context.popupOvl = null;
+                    };
+                }
             } else {
                 // function by default
                 popup = this._createLabelDiv({
@@ -863,16 +881,19 @@ var Drawing = (function (Control) {
                     geomType : geomType
                 });
             }
-            popupOvl = new Overlay({
+            if (this.popupOvl) {
+                this.getMap().removeOverlay(this.popupOvl);
+                this.popupOvl = null;
+            }
+            this.popupOvl = new Overlay({
                 element : popup,
                 // FIXME : autres valeurs.
                 positioning : "top-center"
                 // stopEvent : false
             });
-            // context.getMap().addOverlay(popupOvl) ;
-            this.getMap().addOverlay(popupOvl);
+            this.getMap().addOverlay(this.popupOvl);
             var geomExtent = feature.getGeometry().getExtent();
-            popupOvl.setPosition([
+            this.popupOvl.setPosition([
                 (geomExtent[0] + geomExtent[2]) / 2, (geomExtent[1] + geomExtent[3]) / 2
             ]);
             if (document.getElementById(this._addUID("att-input"))) {
@@ -1369,6 +1390,12 @@ var Drawing = (function (Control) {
         if (context.interactionSelectEdit) {
             map.removeInteraction(context.interactionSelectEdit);
             context.interactionSelectEdit = null;
+        }
+
+        // on supprime la popup courante s'il y en a une.
+        if (context.popupOvl) {
+            context.getMap().removeOverlay(context.popupOvl);
+            context.popupOvl = null;
         }
 
         // si aucune couche de dessin, on en crée une vide.

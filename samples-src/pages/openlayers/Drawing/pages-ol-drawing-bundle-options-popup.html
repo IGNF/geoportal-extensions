@@ -20,15 +20,21 @@
                 background-color: white;
                 padding: 15px 25px 15px 15px;
                 border: 1px solid #cccccc;
-                bottom: 12px;
-                left: -50px;
             }
             .ol-popup-content {
                 min-width: 170px;
                 max-height: 200px;
                 overflow-x: auto;
             }
-
+            .ol-popup-closer {
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                color: gray;
+            }
+            .ol-popup-saver {
+                position: absolute;
+            }
         </style>
 {{/content}}
 
@@ -62,25 +68,48 @@
                         collapsed : true,
                         popup : {
                             display : true,
-                            apply : function ({geomType : geomType, feature : feature}) {
+                            function : function (params) {
                                 var element = document.createElement('div');
                                 element.className = "ol-popup";
-                                console.log(geomType);
-                                var props = feature.getProperties();
-                                console.log(props);
-                                if (feature) {
+                                // liste des params
+                                console.log(params.geomType);
+                                console.log(params.feature);
+                                if (params.feature) {
                                     var message = "";
-                                    var props = feature.getProperties();
+                                    var props = params.feature.getProperties();
                                     for (const property in props) {
+                                        // properties de sauvegarde
+                                        if (property === "description") {
+                                            continue;
+                                        }
                                         message += property;
                                         message += " : ";
                                         message += props[property];
                                         message += "<br>";
                                     }
+                                    // element de fermeture
+                                    var closer = document.createElement('input');
+                                    closer.type = "button";
+                                    closer.value = "X";
+                                    closer.className = 'ol-popup-closer';
+                                    closer.onclick = function () {
+                                        params.closeFunc();
+                                    };
+                                    element.appendChild(closer);
+                                    // contenu
                                     var content = document.createElement('div');
                                     content.className = "ol-popup-content";
                                     content.innerHTML = message;
                                     element.appendChild(content);
+                                    // element de sauvegarde
+                                    var save = document.createElement('input');
+                                    save.type = "button";
+                                    save.value = "Sauvegarde";
+                                    save.className = 'ol-popup-saver';
+                                    save.onclick = function () {
+                                        params.saveFunc(message);
+                                    };
+                                    element.appendChild(save);
                                 }
                                 return element;
                             }
