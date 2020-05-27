@@ -2,7 +2,7 @@
 
   div[id^=GPboostRelief-] {
     font-size: 11px;
-    width: 220px;
+    width: 150px;
   }
   
   div[id^=GPboostRelief-] label {
@@ -10,7 +10,11 @@
   }
 
   div[id^=GPBoostReliefListContainer-] {
-    padding: 1px;
+    position: relative;
+    width: 100%;
+    height: 28px;
+    padding-left: 8px;
+    line-height: 28px;
   }
   
   .GPlayerRelief,
@@ -20,15 +24,14 @@
   }
   
   .GPlayerRelief {
-    left: 100px;
-    width: calc(100% - 140px);
+    width: calc(100% - 60px);
     height: 28px;
     padding-left: 8px;
   }
   
   .GPlayerReliefValue {
     width: 32px;
-    left: calc(100% - 30px);
+    left: calc(100% - 40px);
     line-height: 28px;
     font-size: 10px;
     font-style: italic;

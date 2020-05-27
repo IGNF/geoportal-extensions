@@ -1,5 +1,4 @@
 import "./CSS/GPgeneralWidgetItowns.css";
-
 import "./CSS/Controls/Attribution/GPattributionItowns.css";
 import "./CSS/Controls/BoostRelief/GPboostReliefItowns.css";
 import "./CSS/Controls/LayerSwitcher/GPlayerSwitcherItowns.css";

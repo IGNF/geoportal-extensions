@@ -59,34 +59,24 @@ var BoostReliefDOM = {
         // <div id="GPadvancedToolsRelief_ID_Layer1" class="GPlayerAdvancedToolsRelief">
         //     <!-- _createAdvancedToolOpacityElement -->
         // </div>
-        var containers = [];
-        if (!Array.isArray(brOptions.elevationLayers)) {
-            brOptions.elevationLayers = [brOptions.elevationLayers];
+        var container = document.createElement("div");
+        container.className = "GPlayerAdvancedToolsRelief";
+
+        var array = this._createAdvancedToolReliefElement(brOptions.scale);
+        for (var j = 0; j < array.length; j++) {
+            container.appendChild(array[j]);
         }
 
-        for (var i = 0; i < brOptions.elevationLayers.length; i++) {
-            var elevationLayer = brOptions.elevationLayers[i];
-            var container = document.createElement("div");
-            container.id = this._addUID("GPadvancedToolsRelief_ID_" + elevationLayer.id);
-            container.className = "GPlayerAdvancedToolsRelief";
-
-            var array = this._createAdvancedToolReliefElement(elevationLayer, brOptions.scale);
-            for (var j = 0; j < array.length; j++) {
-                container.appendChild(array[j]);
-            }
-            containers.push(container);
-        }
-        return containers;
+        return container;
     },
     /**
      * Creation de l'icone de gestion du relief du layer (DOM)
      *
-     * @param {Object} elevationLayer - couche itowns de type elevation
      * @param {Object} scale - définition de l'echelle que le slider utilise (min,max,step)
      *
      * @returns {DOMElement[]} array of two containers
      */
-    _createAdvancedToolReliefElement : function (elevationLayer, scale) {
+    _createAdvancedToolReliefElement : function (scale) {
         // exemple :
         // <div id="GPReliefLayerId_ID_Layer1" class="GPlayerReliefLayerId" title="Layer ID">
         //     <span id="GPReliefLayerId_ID_Layer1">Layer1</span>
@@ -102,29 +92,16 @@ var BoostReliefDOM = {
 
         var list = [];
 
-        // affichage de l'id de la couche
-        var divA = document.createElement("div");
-        divA.id = this._addUID("GPReliefLayerId_ID_" + elevationLayer.id);
-        divA.className = "GPlayerReliefLayerId";
-        divA.title = "Layer ID";
-
-        var IDspan = document.createElement("span");
-        IDspan.id = this._addUID("GPReliefLayerId_ID_" + elevationLayer.id);
-        IDspan.innerHTML = elevationLayer.id;
-
-        divA.appendChild(IDspan);
-
-        // curseur pour changer l'opacité
+        // curseur pour changer l'exageration du relief
         var divB = document.createElement("div");
-        divB.id = this._addUID("GPRelief_ID_" + elevationLayer.id);
         divB.className = "GPlayerRelief";
         divB.title = "Relief";
 
-        // on recupere la valeur actuelle d'echelle du relief depuis la couche donnée en parametre
-        var relief = elevationLayer.scale || 1;
+        // le relief est à un facteur 1 par défaut
+        var relief = 1;
 
         var input = document.createElement("input");
-        input.id = this._addUID("GPreliefValueDiv_ID_" + elevationLayer.id);
+        input.id = this._addUID("GPreliefValueDiv");
         input.type = "range";
 
         // echelle de 1 à 50 par defaut
@@ -181,16 +158,15 @@ var BoostReliefDOM = {
 
         // Valeur d'echelle du relief
         var divC = document.createElement("div");
-        divC.id = this._addUID("GPreliefValueDiv_ID_" + elevationLayer.id);
+        divC.id = this._addUID("GPreliefValueDiv");
         divC.className = "GPlayerReliefValue";
 
         var span = document.createElement("span");
-        span.id = this._addUID("GPreliefValue_ID_" + elevationLayer.id);
-        span.innerHTML = relief + "%";
+        span.id = this._addUID("GPreliefValue");
+        span.innerHTML = "x" + relief;
 
         divC.appendChild(span);
 
-        list.push(divA);
         list.push(divB);
         list.push(divC);
 

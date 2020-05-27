@@ -175,9 +175,8 @@ BoostRelief.prototype._initContainer = function (brOptions) {
     // adds the layer list in the main container
     var divA = this._boostReliefListContainer = this._createMainBoostReliefListContainer();
     var boostReliefList = this._createAdvancedToolElement(brOptions);
-    for (var i = 0; i < boostReliefList.length; i++) {
-        divA.appendChild(boostReliefList[i]);
-    }
+
+    divA.appendChild(boostReliefList);
     container.appendChild(divA);
 
     // adds the widget picto in the main container
@@ -206,22 +205,24 @@ BoostRelief.prototype._initContainer = function (brOptions) {
  */
 BoostRelief.prototype._onChangeLayerRelief = function (e) {
     var globe = this.getGlobe();
-    var layerID = this._resolveLayerId(e.target.id);
 
     // echelle qui commence à 1
     var reliefValue = parseInt(e.target.value);
-    var reliefId = document.getElementById(this._addUID("GPreliefValue_ID_" + layerID));
+    var reliefId = document.getElementById(this._addUID("GPreliefValue"));
 
     // et qui finit à 101/2 = 50
     reliefId.innerHTML = "x" + reliefValue;
 
-    var elevationLayer = globe.getLayerById(layerID);
     function updateScale (layer, value) {
         layer.scale = value;
         globe.notifyChange(layer);
     }
     // echelle sur 51
-    updateScale(elevationLayer, reliefValue);
+    var elevationLayers = globe.getElevationLayers();
+
+    for (var i = 0; i < elevationLayers.length; i++) {
+        updateScale(elevationLayers[i], reliefValue);
+    }
 };
 
 /**
@@ -238,12 +239,12 @@ BoostRelief.prototype._onChangeLayerRelief = function (e) {
 //         relief = 1;
 //     }
 //
-//     var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv_ID_" + layerId));
+//     var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv"));
 //     if (layerReliefInput) {
 //         layerReliefInput.value = Math.round(relief * 100);
 //     }
 //
-//     var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue_ID_" + layerId));
+//     var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue"));
 //     if (layerReliefSpan) {
 //         layerReliefSpan.innerHTML = Math.round(relief * 100) + "%";
 //     }
