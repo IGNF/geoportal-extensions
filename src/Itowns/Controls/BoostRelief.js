@@ -14,27 +14,20 @@ var logger = Logger.getLogger("BoostRelief");
  * @extends {itowns.control.Widget}
  * @alias itowns.control.BoostRelief
  * @param {Object} brOptions - control options
- * @param {Array} [brOptions.elevationLayers] - array of elevation layers ids to be displayed in the boostRelief control.
  * @param {Object} [brOptions.scale] - Defines the scale used to boost the relief
  * @param {Object} [brOptions.scale.min] - Minimum of the scale - 1 by default
  * @param {Object} [brOptions.scale.max] - Maximum of the scale - 50 by default
  * @param {Object} [brOptions.scale.step] - Step of the scale - 1 by default
  * @param {Boolean} [brOptions.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on globe loading.
+ * @param {Boolean} [brOptions.defaultBoost = 1] - Default boost value applied to the widget and the elevation layers when loaded
  * @example
  * var boostRelief = new itowns.control.BoostRelief({
- *  layers : [
- *      {
- *          id : "myLayer",
- *          config : {
- *              title : "test layer name 1",
- *              description : "test layer desc 1",
- *          }
- *      }
- *  ],
- *  options : {
- *      collapsed : false
- *  }
- * ));
+ *      scale : {
+ *          max : 30,
+ *          step : 2
+ *      },
+ *      defaultBoost : 6
+ * })
  */
 function BoostRelief (brOptions) {
     brOptions = brOptions || {};
@@ -204,51 +197,73 @@ BoostRelief.prototype._initContainer = function (brOptions) {
  * @private
  */
 BoostRelief.prototype._onChangeLayerRelief = function (e) {
-    var globe = this.getGlobe();
 
-    // echelle qui commence à 1
     var reliefValue = parseInt(e.target.value);
     var reliefId = document.getElementById(this._addUID("GPreliefValue"));
 
-    // et qui finit à 101/2 = 50
     reliefId.innerHTML = "x" + reliefValue;
+
+    this._updateLayersRelief(reliefValue);
+};
+
+/**
+ * Updates relief values of all elevation layers
+ *
+ * @method _updateLayerRelief
+ * @param {Number} reliefValue - relief value
+ * @private
+ */
+
+BoostRelief.prototype._updateLayersRelief = function (reliefValue) {
+    var globe = this.getGlobe();
 
     function updateScale (layer, value) {
         layer.scale = value;
         globe.notifyChange(layer);
     }
-    // echelle sur 51
+    // if the scale of a single elevationLayer change, we update the scale of all others
     var elevationLayers = globe.getElevationLayers();
 
     for (var i = 0; i < elevationLayers.length; i++) {
         updateScale(elevationLayers[i], reliefValue);
     }
+
 };
 
 /**
- * Updates picto relief value on layer relief change
+ * Updates relief slider and all elevation layers with the given boost value
  *
- * @method _updateLayerRelief
- * @param {String} layerId - layer id
- * @param {Number} relief - relief value
- * @private
+ * @method changeBoost
+ * @param {Number} reliefValue - relief value
  */
+BoostRelief.prototype.changeBoost = function (reliefValue) {
+    var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv"));
 
-// BoostRelief.prototype._updateLayerRelief = function (layerId, relief) {
-//     if (relief < 1) {
-//         relief = 1;
-//     }
-//
-//     var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv"));
-//     if (layerReliefInput) {
-//         layerReliefInput.value = Math.round(relief * 100);
-//     }
-//
-//     var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue"));
-//     if (layerReliefSpan) {
-//         layerReliefSpan.innerHTML = Math.round(relief * 100) + "%";
-//     }
-// };
+    if (!layerReliefInput) {
+        logger.error("BoostRelief:changeBoost - boostRelief slider not loaded");
+        return;
+    }
+
+    // the reliefValue given must me in the slider range
+    if (reliefValue > layerReliefInput.max) {
+        reliefValue = layerReliefInput.max;
+    }
+    if (reliefValue < layerReliefInput.min) {
+        reliefValue = layerReliefInput.min;
+    }
+
+    // updates the relief of all the elevationlayers
+    this._updateLayersRelief(reliefValue);
+
+    // updates the slider cursor
+    layerReliefInput.value = reliefValue;
+
+    // updates the slider text
+    var layerReliefSpan = document.getElementById(this._addUID("GPreliefValue"));
+    if (layerReliefSpan) {
+        layerReliefSpan.innerHTML = "x" + reliefValue;
+    }
+};
 
 /**
  * Gets layer id from div id

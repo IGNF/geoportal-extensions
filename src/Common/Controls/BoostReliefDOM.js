@@ -62,7 +62,7 @@ var BoostReliefDOM = {
         var container = document.createElement("div");
         container.className = "GPlayerAdvancedToolsRelief";
 
-        var array = this._createAdvancedToolReliefElement(brOptions.scale);
+        var array = this._createAdvancedToolReliefElement(brOptions.scale, brOptions.defaultBoost);
         for (var j = 0; j < array.length; j++) {
             container.appendChild(array[j]);
         }
@@ -76,7 +76,7 @@ var BoostReliefDOM = {
      *
      * @returns {DOMElement[]} array of two containers
      */
-    _createAdvancedToolReliefElement : function (scale) {
+    _createAdvancedToolReliefElement : function (scale, defaultBoost) {
         // exemple :
         // <div id="GPReliefLayerId_ID_Layer1" class="GPlayerReliefLayerId" title="Layer ID">
         //     <span id="GPReliefLayerId_ID_Layer1">Layer1</span>
@@ -116,7 +116,25 @@ var BoostReliefDOM = {
         input.min = scale.min || 1;
         input.max = scale.max || 50;
         input.step = scale.step || 1;
-        input.value = relief;
+
+
+        // le relief est à un facteur 1 par défaut
+        var defaultBoostValue = 1;
+        if (defaultBoost) {
+            defaultBoostValue = defaultBoost;
+        }
+
+        // the reliefValue given must me in the slider range
+        if (defaultBoostValue > input.max) {
+            defaultBoostValue = input.max;
+        }
+        
+        if (defaultBoostValue < input.min) {
+            defaultBoostValue = input.min;
+        }
+    
+        // mise à jour des couches et du slider une fois le controle ajouté
+        input.value = defaultBoostValue;
 
         // add event for relief change
         var context = this;
