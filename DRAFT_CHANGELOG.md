@@ -1,37 +1,29 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.10
+# Extension Geoportail OpenLayers, version 3.0.11
 
-**02/04/2020**
+**09/06/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* mise à jour des dépendances
+* saisie de polygones avec trous dans l'outil de dessin
 
 ## Changelog
 
 * [Added]
 
-    - ajout de la commande : npm run eslint
+    - [DRAWING] outil de saisie de trou dans les polygones
 
 * [Changed]
-
-    - versions des dépendances fixées dans le package.json
 
 * [Deprecated]
 
 * [Removed]
 
-    - suppression des tests en mode console
-    - suppression de la couverture du code
-
 * [Fixed]
 
 * [Security]
-
-    - maj des dépendances
-    - suppression de la dépendance "mocha-webpack"
 
 ---
 
@@ -42,13 +34,11 @@
 
 ## Summary
 
-* mise à jour des dépendances
+* ...
 
 ## Changelog
 
 * [Added]
-
-    - ajout de la commande : npm run eslint
 
 * [Changed]
 
@@ -56,15 +46,9 @@
 
 * [Removed]
 
-    - suppression des tests en mode console
-    - suppression de la couverture du code
-
 * [Fixed]
 
 * [Security]
-
-    - maj des dépendances
-    - suppression de la dépendance "mocha-webpack"
 
 ---
 
@@ -75,13 +59,11 @@
 
 ## Summary
 
-* mise à jour des dépendances
+* ...
 
 ## Changelog
 
 * [Added]
-
-    - ajout de la commande : npm run eslint
 
 * [Changed]
 
@@ -89,12 +71,7 @@
 
 * [Removed]
 
-    - suppression des tests en mode console
-    - suppression de la couverture du code
-
 * [Fixed]
 
 * [Security]
 
-    - maj des dépendances
-    - suppression de la dépendance "mocha-webpack"
