@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  extensions:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: extensions
+    container_name: extensions-server
+    expose:
+      - 9021
+    ports:
+      - 9021:9021
+    volumes:
+      - extensions-data-volume:/home/docker/html
+      - ${EXTENSIONS}/src:/home/docker/geoportal-extensions/src
+      - ${EXTENSIONS}/test:/home/docker/geoportal-extensions/test
+      - ${EXTENSIONS}/test_rendering:/home/docker/geoportal-extensions/test_rendering
+      - ${EXTENSIONS}/samples-src:/home/docker/geoportal-extensions/samples-src
+    networks:
+      - api-network
+  
+  nginx:
+    image: nginx:1.17.9
+    container_name: nginx-server
+    command: nginx-debug -g 'daemon off;'
+    ports:
+      - 8081:80
+    volumes:
+      - ./conf/default:/etc/nginx/sites-enabled/default:ro
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - extensions-data-volume:/var/www/html
+    networks:
+      - api-network
+
+volumes:
+  extensions-data-volume:
+    name: extensions-data-volume
+
+networks:
+  api-network:
+    name: api-network
+    driver: bridge
+    ipam:
+      driver: default
