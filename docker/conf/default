@@ -18,7 +18,7 @@ server {
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 rewrite ^/geoportal-extensions/test/(.*)$ /$1 break;
-                proxy_pass http://extensions-server:9012;
+                proxy_pass http://extensions-server:9021;
         }
 
 }

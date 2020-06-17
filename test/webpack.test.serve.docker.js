@@ -18,7 +18,7 @@ module.exports = {
     externals : ["request", "xmldom"],
     resolve : {
         alias : {
-            proj4 : path.resolve("..", "node_modules", "proj4", "dist", "proj4-src.js")
+            proj4 : path.resolve("node_modules", "proj4", "dist", "proj4-src.js")
         }
     },
     devtool : "eval-source-map",
