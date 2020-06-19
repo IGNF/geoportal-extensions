@@ -19,14 +19,18 @@ import {
 import {
     LineString,
     Point,
-    Polygon
+    Polygon,
+    LinearRing
 } from "ol/geom";
 import {
     Select as SelectInteraction,
     Modify as ModifyInteraction,
     Draw as DrawInteraction
 } from "ol/interaction";
-import { singleClick as eventSingleClick } from "ol/events/condition";
+import {
+    singleClick as eventSingleClick,
+    pointerMove as eventPointerMove
+} from "ol/events/condition";
 import {
     getArea as olGetAreaSphere,
     getDistance as olGetDistanceSphere
@@ -67,6 +71,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
  * @param {Boolean} [options.tools.polygons = true] - Display polygons drawing tool
+ * @param {Boolean} [options.tools.holes = false] - Display polygons with holes drawing tool
  * @param {Boolean} [options.tools.text = true] - Display text drawing tool
  * @param {Boolean} [options.tools.remove = true] - Display feature removing tool
  * @param {Boolean} [options.tools.display = true] - Display style editing tool
@@ -79,6 +84,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.labels.points] - Label for points drawing tool
  * @param {String} [options.labels.lines] - Label for lines drawing tool
  * @param {String} [options.labels.polygons] - Label for polygons drawing tool
+ * @param {String} [options.labels.holes] - Label for polygons with holes drawing tool
  * @param {String} [options.labels.text] - Label for text drawing tool
  * @param {String} [options.labels.edit] - Label for editing tool
  * @param {String} [options.labels.display] - Label for style editing tool
@@ -126,6 +132,7 @@ var logger = Logger.getLogger("Drawing");
  *      points : true,
  *      lines : true,
  *      polygons :true,
+ *      holes : true,
  *      text : false,
  *      remove : true,
  *      display : true,
@@ -181,6 +188,7 @@ var Drawing = (function (Control) {
         points : true,
         lines : true,
         polygons : true,
+        holes : false,
         text : true,
         remove : true,
         display : true,
@@ -201,6 +209,7 @@ var Drawing = (function (Control) {
         points : "Placer des points",
         lines : "Dessiner des lignes",
         polygons : "Dessiner des polygones",
+        holes : "Créer des trous sur un polygone",
         text : "Ecrire sur la carte",
         editingTools : "Outils d'édition",
         edit : "Editer les tracés",
@@ -1376,6 +1385,16 @@ var Drawing = (function (Control) {
                 var coordinatesAera = geom.getLinearRing(0).getCoordinates();
                 measureArea = Math.abs(olGetAreaSphere(new Polygon([coordinatesAera])));
 
+                // FIXME on se limite à des trous uniquement !
+                // cad les polygones sont strictement contenus dans le 1er !
+                var rings = geom.getLinearRings();
+                if (rings.length > 1) {
+                    for (var ij = 1; ij < rings.length; ij++) {
+                        var coordinatesRings = rings[ij].getCoordinates();
+                        measureArea -= Math.abs(olGetAreaSphere(new Polygon([coordinatesRings])));
+                    }
+                }
+
                 measure = (measureArea > 1000000)
                     ? __roundDecimal(measureArea / 1000000, 3) + " km^2"
                     : __roundDecimal(measureArea, 2) + " m^2";
@@ -1511,6 +1530,80 @@ var Drawing = (function (Control) {
                     context.interactionCurrent.on("drawend", function (deEv) {
                         // ajout eventuel d'un attribut description sur le feature
                         context._drawEndFeature(deEv.feature, "Polygon");
+                    },
+                    context);
+                }
+                break;
+            case this._addUID("drawing-tool-holes"):
+                if (context.dtOptions["holes"].active) {
+                    // selection du polygone à modifier
+                    context.interactionSelectEdit = new SelectInteraction({
+                        condition : eventPointerMove,
+                        layers : [this.layer]
+                    });
+                    context.interactionSelectEdit.setProperties({
+                        name : "Drawing",
+                        source : context
+                    });
+                    map.addInteraction(context.interactionSelectEdit);
+
+                    // saisie
+                    context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
+                        features : this.interactionSelectEdit.getFeatures(),
+                        style : new Style({
+                            image : new Circle({
+                                radius : this.options.cursorStyle.radius,
+                                stroke : new Stroke({
+                                    color : this.options.cursorStyle.strokeColor,
+                                    width : this.options.cursorStyle.strokeWidth
+                                }),
+                                fill : new Fill({
+                                    color : this.options.cursorStyle.fillColor
+                                })
+                            }),
+                            stroke : new Stroke({
+                                color : this.options.defaultStyles.polyStrokeColor,
+                                width : this.options.defaultStyles.polyStrokeWidth
+                            }),
+                            fill : new Fill({
+                                color : Color.hexToRgba(
+                                    this.options.defaultStyles.polyFillColor,
+                                    this.options.defaultStyles.polyFillOpacity
+                                )
+                            })
+                        }),
+                        type : ("Polygon")
+                    });
+
+                    context.interactionCurrent.on("drawstart", function (deEv) {}, context);
+
+                    context.interactionCurrent.on("drawend", function (deEv) {
+                        // recuperation du feature selectionné
+                        var features = context.interactionSelectEdit.getFeatures();
+                        if (features.getLength()) {
+                            // choix sur le 1er feature de la liste
+                            var feature = features.item(0);
+                            var hole = deEv.feature.getGeometry().getCoordinates()[0];
+                            // test pour savoir si le polygone est entièrement
+                            // inclu dans l'autre afin de faciliter les calculs d'aire !
+                            var bHoleIsIncluded = true;
+                            for (var i = 0; i < hole.length; i++) {
+                                if (!feature.getGeometry().intersectsCoordinate(hole[i])) {
+                                    bHoleIsIncluded = false;
+                                    break;
+                                }
+                            }
+                            if (!bHoleIsIncluded) {
+                                return;
+                            }
+                            // ajout du rings
+                            feature.getGeometry().appendLinearRing(new LinearRing(hole));
+                            // enregistrement !
+                            deEv.feature = feature;
+                            // finalisation du dessin...
+                            context._drawEndFeature(deEv.feature, "Polygon");
+                        }
                     },
                     context);
                 }
