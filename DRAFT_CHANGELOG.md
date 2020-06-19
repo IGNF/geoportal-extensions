@@ -7,6 +7,7 @@
 
 ## Summary
 
+* evolution du widget de dessin sur la gestion des popups
 * saisie de polygones avec trous dans l'outil de dessin
 * mise à jour des dépendances (#263)
 
@@ -21,7 +22,8 @@
 
     - versions des dépendances fixées dans le package.json (#263)
     - [DRAWING] faire des polygones à trous (#270)
-    - !A VENIR! [DRAWING] pouvoir editer le style des pop-ups (#269)
+    - [DRAWING] choix d'afficher ou non les popups après chaque saisie (#269)
+    - [DRAWING] possibilité de surcharger le style des popups (#269)
 
 * [Deprecated]
 
@@ -31,7 +33,6 @@
 
 	- fix des tests unitaires sur mouseposition (#264)
 	- fix getFeatureInfo (4aa57fea565d65cd5cb10927ab76179aa8a84ae5)
-
 
 * [Security]
 
