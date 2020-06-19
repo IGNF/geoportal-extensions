@@ -7,6 +7,7 @@
 
 ## Summary
 
+* saisie de polygones avec trous dans l'outil de dessin
 * mise à jour des dépendances (#263)
 
 ## Changelog
@@ -19,15 +20,12 @@
 * [Changed]
 
     - versions des dépendances fixées dans le package.json (#263)
-    - !A VENIR! drawingControl : faire des polygones à trous (#270)
-    - !A VENIR! drawingControl : pouvoir editer le style des pop-ups (#269)
+    - [DRAWING] faire des polygones à trous (#270)
+    - !A VENIR! [DRAWING] pouvoir editer le style des pop-ups (#269)
 
 * [Deprecated]
 
 * [Removed]
-
-    - suppression des tests en mode console
-    - suppression de la couverture du code
 
 * [Fixed]
 
@@ -36,9 +34,6 @@
 
 
 * [Security]
-
-    - maj des dépendances
-    - suppression de la dépendance "mocha-webpack"
 
 ---
 
@@ -55,8 +50,8 @@
 
 * [Added]
 
-    - ajout de la commande : npm run eslint (#263)
-    - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
+  - ajout de la commande : npm run eslint (#263)
+  - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
 	- ajout d'un controle d'exageration du relief, boostRelief control (#268)
 
 * [Changed]
@@ -77,9 +72,6 @@
 
 * [Security]
 
-    - maj des dépendances
-    - suppression de la dépendance "mocha-webpack"
-
 ---
 
 # Extension Geoportail Leaflet, version X.X.X
@@ -98,7 +90,6 @@
     - ajout de la commande : npm run eslint (#263)
     - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
 
-
 * [Changed]
 
 * [Deprecated]
@@ -112,5 +103,3 @@
 
 * [Security]
 
-    - maj des dépendances
-    - suppression de la dépendance "mocha-webpack"

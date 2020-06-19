@@ -61,7 +61,7 @@ ul.drawing-tools-flex-display {
 
 .drawing-tool {
     background-image: url("img/drawing-tools.svg");
-    background-size: 640px 40px;
+    background-size: 720px 40px;
 }
 
 .drawing-tool {
@@ -90,6 +90,14 @@ li[id^=drawing-tool-line-] {
 
 li[id^=drawing-tool-line.drawing-tool-active-] {
     background-position: -120px 0;
+}
+
+li[id^=drawing-tool-holes-] {
+    background-position: -640px 0;
+}
+
+li[id^=drawing-tool-holes.drawing-tool-active] {
+    background-position: -680px 0;
 }
 
 li[id^=drawing-tool-polygon-] {
