@@ -36,7 +36,11 @@ cp *.tgz /home/docker/html/geoportal-extensions/package/
 popd
 
 # Observation des changements 
-# bash /home/docker/watch.sh &
+bash /home/docker/watchCommon.sh &
+bash /home/docker/watchItowns.sh &
+bash /home/docker/watchLeaflet.sh &
+bash /home/docker/watchOl.sh &
+bash /home/docker/watchSamples.sh &
 
 # Lancement des serveurs pour les tests et observation des changements 
 cd /home/docker/geoportal-extensions/ && npm run test:serve:docker 
