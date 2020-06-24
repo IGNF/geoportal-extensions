@@ -27,6 +27,7 @@ fi
 
 # On build au cas où le code ait changé
 pushd /home/docker/geoportal-extensions/
+rm -rf node_modules package-lock.json && npm install
 npm run build
 cp -rf ./dist/* /home/docker/html/geoportal-extensions/dist/
 cp -rf ./samples/* /home/docker/html/geoportal-extensions/samples/

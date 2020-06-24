@@ -10,10 +10,14 @@ RUN apt install -y git inotify-tools
 WORKDIR /home/docker/
 RUN git clone https://github.com/IGNF/geoportal-extensions.git
 WORKDIR /home/docker/geoportal-extensions
-RUN git checkout docker && rm -rf node_modules package-lock.json && npm install
+# TO DELETE
+RUN git checkout docker
+
+# Modification du package.json pour la suite 
+# RUN sed -i -e ///g package.json
 
 # Copie des scripts 
-COPY ./scripts/* /home/docker/
+COPY ./docker/scripts/* /home/docker/
 
 # Volume pour partager les samples 
 VOLUME ["/home/docker/html"]

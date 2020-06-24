@@ -3,10 +3,12 @@ version: "3.7"
 services:
   extensions:
     build:
-      context: .
-      dockerfile: ./Dockerfile
+      context: ..
+      dockerfile: ./docker/Dockerfile
     image: extensions
     container_name: extensions-server
+    depends_on: 
+      - access-lib
     expose:
       - 9021
     ports:
@@ -19,6 +21,27 @@ services:
       - ${EXTENSIONS}/samples-src:/home/docker/geoportal-extensions/samples-src
     networks:
       - api-network
+
+  access-lib:
+    build:
+      context: ${ACCESSLIB}
+      dockerfile: ./docker/Dockerfile
+    image: access-lib
+    container_name: access-lib-server
+    expose:
+      - 9012
+      - 9013
+    ports:
+      - 9012:9012
+      - 9013:9013
+    volumes:
+      - extensions-data-volume:/home/docker/html
+      - ${ACCESSLIB}/src:/home/docker/geoportal-access-lib/src
+      - ${ACCESSLIB}/test:/home/docker/geoportal-access-lib/test
+      - ${ACCESSLIB}/samples-src:/home/docker/geoportal-access-lib/samples-src
+    networks:
+      - api-network
+    
   
   nginx:
     image: nginx:1.17.9
