@@ -10,7 +10,7 @@
  * @license CeCILL-B
  * @author IGN
  * @version 2.2.9
- * @date 02/04/2020
+ * @date 29/06/2020
  *
  */
 
@@ -71,6 +71,186 @@
  * @version   2.6.0
  */
 
+/* BOOST RELIEF */
+
+  div[id^=GPboostRelief-] {
+    font-size: 11px;
+    width: 150px;
+  }
+  
+  div[id^=GPboostRelief-] label {
+    display: block;
+  }
+
+  div[id^=GPBoostReliefListContainer-] {
+    position: relative;
+    width: 100%;
+    height: 28px;
+    padding-left: 8px;
+    line-height: 28px;
+  }
+  
+  .GPlayerRelief,
+  .GPlayerReliefValue {
+    position: absolute;
+    top: 0;
+  }
+  
+  .GPlayerRelief {
+    width: calc(100% - 60px);
+    height: 28px;
+    padding-left: 8px;
+  }
+  
+  .GPlayerReliefValue {
+    width: 32px;
+    left: calc(100% - 40px);
+    line-height: 28px;
+    font-size: 10px;
+    font-style: italic;
+    cursor: default;
+  }
+
+  /* Showing/hiding boost relief panel */
+
+  label[id^=GPshowBoostReliefPicto] {
+    display: inline-block;
+  }
+
+  input[id^=GPshowBoostRelief-] + label {
+    display: block;
+  }
+
+  input[id^=GPshowBoostRelief-]:checked + label {
+    display: none;
+  }
+
+  input[id^=GPshowBoostRelief-] + label + div {
+    display: none;
+  }
+
+  input[id^=GPshowBoostRelief-]:checked + label + div {
+    display: block;
+  }
+
+  /* Showing layer advanced tools */
+
+  div[id^=GPboostRelief-] input[type="checkbox"]:checked + label + .GPlayerAdvancedToolsRelief {
+    max-height: 28px;
+    opacity: 1;
+  }
+
+  .GPlayerAdvancedToolsRelief {
+    display: block;
+    position: relative;
+    width: 100%;
+    border-bottom : 1px dotted #CCC;
+    background-color : #FFF;
+  }
+
+  .GPlayerReliefLayerId {
+    position: relative;
+    width: 100px;
+    height: 28px;
+    padding-left: 8px;
+    line-height: 28px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  /* Relief slider : general */
+  
+  .GPlayerRelief input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .GPlayerRelief input[type="range"]:focus {
+    box-shadow: none;
+    outline: none;
+  }
+  
+  /* Relief slider : Chrome, Safari, Opera */
+  
+  .GPlayerRelief input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    height: 3px;
+  }
+  
+  .GPlayerRelief input[type="range"]::-webkit-slider-thumb:before {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    left: -200px;
+    height: 3px;
+    pointer-events: none;
+  }
+  
+  .GPlayerRelief input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 9px;
+    height: 17px;
+    -webkit-appearance: none;
+    border: 2px solid #FFF;
+    background-color: #505050;
+    position: relative;
+    top: -7px;
+  }
+  
+  /* Relief slider : Firefox */
+  
+  .GPlayerRelief input[type="range"]::-moz-range-track {
+    width: 80px;
+    height: 3px;
+  }
+  
+  .GPlayerRelief input[type="range"]::-moz-range-thumb {
+    width: 5px;
+    height: 13px;
+    border: 2px solid #FFF;
+    border-radius: 0;
+    box-shadow: 0;
+    background-color: #505050;
+    position: relative;
+  }
+  
+  /* Relief slider : IE */
+  
+  .GPlayerRelief input[type="range"]::-ms-track {
+    border: 0;
+    border-color: transparent;
+    border-radius: 0;
+    border-width: 0;
+    color: transparent;
+    height: 3px;
+    width: 80px;
+  }
+  
+  .GPlayerRelief input[type="range"]::-ms-fill-lower,
+  .GPlayerRelief input[type="range"]::-ms-fill-upper {
+    background: transparent;
+    border-radius: 0;
+  }
+  
+  .GPlayerRelief input[type="range"]::-ms-thumb {
+    width: 5px;
+    height: 13px;
+    border: 2px solid #FFF;
+    background-color: #505050;
+  }
+  
+  .GPlayerRelief input[type="range"]::-ms-tooltip {
+    display: none;
+  }
 /* MOUSE POSITION */
 
 /* Showing/hiding drawing panel */
@@ -2898,6 +3078,81 @@ div[id^=GPAttributionsListContainer-] a:link {
 
 div[id^=GPAttributionsListContainer-] a:visited {
     text-decoration: none;
+}
+
+/* BOOST RELIEF ITOWNS */
+
+div[id^=GPboostRelief-]  {
+  top: 8px;
+  left: 8px;
+}
+
+/* Showing/hiding boostRelief panel */
+label[id^=GPshowBoostReliefPicto-] {
+  display: flex;
+  z-index: 1;
+  position: relative;
+  margin-left: auto;
+}
+
+label[id^=GPshowBoostReliefListPicto-] {
+  display: flex;
+  z-index: 1;
+  position: relative;
+}
+
+/*
+span[id^=GPshowBoostReliefOpenClose-] {
+  color: #fff;
+  font-size: 1.6em;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2em;
+}*/
+
+span[id^="GPshowBoostReliefOpenClose-"] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAA5ElEQVRIx+2VTQ+CMBBE31Y0hnjz//9RDYwHi6nYLiVF4sE5Qd9OPwayNQBJARBgwMBTwcwUeQeMQADukR/MbKzxf0jSNLGm5y35W1H6no618vlODjGGt+KEn2KMJZ71AwRJMjOLrAdeE03jCb8CZ4dn/ZJk6fESA7mMW3kx4y3fwwyeJB0pSNJFUu/woj9kxgZ83Ra47/92dJ0Hlzazlv+1j9yGueUiX1+sqjs7Cj+Vf2nnXn2x16XXRUv+7jxe/jXdoFSbMptdfNnFc7y2riqd2gibeuDa77RUH/b8pa31NDW+B1R2l0Qaq9wyAAAAAElFTkSuQmCC);
+}
+
+.spanClose span[id^="GPshowBoostReliefOpenClose-"]  {
+  background-position: 0 0;
+}
+
+.spanOpen span[id^="GPshowBoostReliefOpenClose-"]  {
+  background-position: -26px 0;
+}
+
+/*
+div[id^=GPboostRelief-]  input[type="checkbox"]:checked + div + label[id^=GPshowBoostReliefPicto]  span[id^=GPshowBoostReliefOpen]  {
+  opacity: 0.7;
+}
+
+div[id^=GPboostRelief-]  input[type="checkbox"]:checked + div + label[id^=GPshowBoostReliefPicto]  span[id^=GPshowBoostReliefClose]  {
+  background-color: rgba(0,60,136,0.3);
+}
+
+div[id^=GPboostRelief-]  input[type="checkbox"]:checked + div + label[id^=GPshowBoostReliefPicto] :hover span[id^=GPshowBoostReliefClose]  {
+  background-color: rgba(0,60,136,0.4);
+}
+
+*/
+
+/* Relief slider : Chrome, Safari, Opera */
+
+.GPlayerRelief input[type="range"]::-webkit-slider-runnable-track {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAECAYAAAAZDrhMAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAwSURBVDiNY/z379//v3//Mvz9+5fh379/DITYxKobKWYxMYwCisBoAFIIRgOQQgAADrTuhXfc36kAAAAASUVORK5CYII=);
+}
+
+/* Relief slider : Firefox */
+
+.GPlayerRelief input[type="range"]::-moz-range-track {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAECAYAAAAZDrhMAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAwSURBVDiNY/z379//v3//Mvz9+5fh379/DITYxKobKWYxMYwCisBoAFIIRgOQQgAADrTuhXfc36kAAAAASUVORK5CYII=);
+}
+
+/* Relief slider : IE */
+
+.GPlayerRelief input[type="range"]::-ms-track {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAECAYAAAAZDrhMAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAwSURBVDiNY/z379//v3//Mvz9+5fh379/DITYxKobKWYxMYwCisBoAFIIRgOQQgAADrTuhXfc36kAAAAASUVORK5CYII=);
 }
 
 /* LAYER SWITCHER OL3 */

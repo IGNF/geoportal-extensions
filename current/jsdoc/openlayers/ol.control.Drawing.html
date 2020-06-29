@@ -2405,7 +2405,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 109
+            OpenLayers/Controls/Drawing.js, line 157
         </div>
         
     </div>
@@ -2586,6 +2586,137 @@
                     
                 
                 <p>Openlayers layer that will hosts created features. If none, an empty vector layer will be created.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">popup</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Popup informations</p>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Default</th>
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name">display</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Specify if popup is displayed when create a drawing</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">function</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Function to display popup informations if you want to cutomise it. You may also provide your own function with params : {geomType / feature / saveFunc(message) / closeFunc()}. This function must return the DOM object of the popup content.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+
+            </td>
         </tr>
 	
 	
@@ -2877,6 +3008,42 @@
                     
                 
                 <p>Display polygons drawing tool</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">holes</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Display polygons with holes drawing tool</p></td>
         </tr>
 	
 	
@@ -3306,6 +3473,36 @@
                     
                 
                 <p>Label for polygons drawing tool</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name">holes</td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                <p>Label for polygons with holes drawing tool</p></td>
         </tr>
 	
 	
@@ -4367,6 +4564,51 @@
     
     
     
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>var drawing = new ol.control.Drawing({
+  collapsed : false,
+  draggable : true,
+  layerswitcher : {
+     title : "Dessins",
+     description : "Mes dessins..."
+  },
+  markersList : [{
+     src : "http://api.ign.fr/api/images/api/markers/marker_01.png",
+     anchor : [0.5, 1]
+  }],
+  defaultStyles : {},
+  cursorStyle : {},
+  tools : {
+     points : true,
+     lines : true,
+     polygons :true,
+     holes : true,
+     text : false,
+     remove : true,
+     display : true,
+     tooltip : true,
+     export : true,
+     measure : true
+  },
+  popup : {
+     display : true,
+     function : function (params) {
+         var container = document.createElement("div");
+         // - params.geomType;
+         // - params.feature;
+         // Les 2 fonctions ferment la popup avec ou sans sauvegarde des informations
+         // dans les properties de la feature (key : description)
+         // - params.saveFunc(message);
+         // - params.closeFunc();
+         return container;
+     }
+});</code></pre>
+    
+
+    
 </dd>
 
     
@@ -4498,7 +4740,7 @@
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 298
+            OpenLayers/Controls/Drawing.js, line 348
         </div>
         
     </div>
@@ -4579,7 +4821,7 @@ KML representation of drawn features or null if not possible.
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 365
+            OpenLayers/Controls/Drawing.js, line 415
         </div>
         
     </div>
@@ -4660,7 +4902,7 @@ name
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 338
+            OpenLayers/Controls/Drawing.js, line 388
         </div>
         
     </div>
@@ -4777,7 +5019,7 @@ name
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 356
+            OpenLayers/Controls/Drawing.js, line 406
         </div>
         
     </div>
@@ -4894,7 +5136,7 @@ name
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 624
+            OpenLayers/Controls/Drawing.js, line 683
         </div>
         
     </div>
@@ -5011,7 +5253,7 @@ name
     
         
         <div class="tag-source">
-            OpenLayers/Controls/Drawing.js, line 246
+            OpenLayers/Controls/Drawing.js, line 296
         </div>
         
     </div>
@@ -5139,7 +5381,7 @@ name
     <footer>
         Geoportail - Copyright (c) IGN, released under the CECILL-B license
         </br>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Apr 02 2020 18:46:24 GMT+0000 (UTC)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Mon Jun 29 2020 16:25:01 GMT+0000 (Coordinated Universal Time)
     </footer>
 
 
