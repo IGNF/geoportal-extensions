@@ -19,14 +19,18 @@ import {
 import {
     LineString,
     Point,
-    Polygon
+    Polygon,
+    LinearRing
 } from "ol/geom";
 import {
     Select as SelectInteraction,
     Modify as ModifyInteraction,
     Draw as DrawInteraction
 } from "ol/interaction";
-import { singleClick as eventSingleClick } from "ol/events/condition";
+import {
+    singleClick as eventSingleClick,
+    pointerMove as eventPointerMove
+} from "ol/events/condition";
 import {
     getArea as olGetAreaSphere,
     getDistance as olGetDistanceSphere
@@ -57,6 +61,9 @@ var logger = Logger.getLogger("Drawing");
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {Object} [options.popup = {}] - Popup informations
+ * @param {Boolean} [options.popup.display = true] - Specify if popup is displayed when create a drawing
+ * @param {Function} [options.popup.function] - Function to display popup informations if you want to cutomise it. You may also provide your own function with params : {geomType / feature / saveFunc(message) / closeFunc()}. This function must return the DOM object of the popup content.
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Croquis"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon croquis"] - Layer description to be displayed in LayerSwitcher
@@ -64,6 +71,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {Boolean} [options.tools.points = true] - Display points drawing tool
  * @param {Boolean} [options.tools.lines = true] - Display lines drawing tool
  * @param {Boolean} [options.tools.polygons = true] - Display polygons drawing tool
+ * @param {Boolean} [options.tools.holes = false] - Display polygons with holes drawing tool
  * @param {Boolean} [options.tools.text = true] - Display text drawing tool
  * @param {Boolean} [options.tools.remove = true] - Display feature removing tool
  * @param {Boolean} [options.tools.display = true] - Display style editing tool
@@ -76,6 +84,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.labels.points] - Label for points drawing tool
  * @param {String} [options.labels.lines] - Label for lines drawing tool
  * @param {String} [options.labels.polygons] - Label for polygons drawing tool
+ * @param {String} [options.labels.holes] - Label for polygons with holes drawing tool
  * @param {String} [options.labels.text] - Label for text drawing tool
  * @param {String} [options.labels.edit] - Label for editing tool
  * @param {String} [options.labels.display] - Label for style editing tool
@@ -105,6 +114,45 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.cursorStyle.strokeColor = "#FFF"] - Cursor stroke color.
  * @param {String} [options.cursorStyle.strokeWidth = 1] - Cursor surrounding stroke width.
  * @param {String} [options.cursorStyle.radius = 6] - Cursor radius.
+ * @example
+ * var drawing = new ol.control.Drawing({
+ *   collapsed : false,
+ *   draggable : true,
+ *   layerswitcher : {
+ *      title : "Dessins",
+ *      description : "Mes dessins..."
+ *   },
+ *   markersList : [{
+ *      src : "http://api.ign.fr/api/images/api/markers/marker_01.png",
+ *      anchor : [0.5, 1]
+ *   }],
+ *   defaultStyles : {},
+ *   cursorStyle : {},
+ *   tools : {
+ *      points : true,
+ *      lines : true,
+ *      polygons :true,
+ *      holes : true,
+ *      text : false,
+ *      remove : true,
+ *      display : true,
+ *      tooltip : true,
+ *      export : true,
+ *      measure : true
+ *   },
+ *   popup : {
+ *      display : true,
+ *      function : function (params) {
+ *          var container = document.createElement("div");
+ *          // - params.geomType;
+ *          // - params.feature;
+ *          // Les 2 fonctions ferment la popup avec ou sans sauvegarde des informations
+ *          // dans les properties de la feature (key : description)
+ *          // - params.saveFunc(message);
+ *          // - params.closeFunc();
+ *          return container;
+ *      }
+ * });
  */
 var Drawing = (function (Control) {
     function Drawing (options) {
@@ -140,6 +188,7 @@ var Drawing = (function (Control) {
         points : true,
         lines : true,
         polygons : true,
+        holes : false,
         text : true,
         remove : true,
         display : true,
@@ -160,6 +209,7 @@ var Drawing = (function (Control) {
         points : "Placer des points",
         lines : "Dessiner des lignes",
         polygons : "Dessiner des polygones",
+        holes : "Créer des trous sur un polygone",
         text : "Ecrire sur la carte",
         editingTools : "Outils d'édition",
         edit : "Editer les tracés",
@@ -587,6 +637,7 @@ var Drawing = (function (Control) {
         this.interactionSelectEdit = null;
 
         this.stylingOvl = null;
+        this.popupOvl = null;
 
         this.layer = null;
         if (this.options.layer && this.options.layer instanceof VectorLayer) {
@@ -596,6 +647,14 @@ var Drawing = (function (Control) {
         // detection du support : desktop ou tactile
         // FIXME : utile ?
         this._isDesktop = this._detectSupport();
+
+        // applying default popup
+        if (!this.options.popup) {
+            this.options.popup = {
+                display : true,
+                apply : null
+            };
+        }
     };
 
     /**
@@ -764,6 +823,7 @@ var Drawing = (function (Control) {
      * Callback de fin de dessin de geometrie
      * @param {Object} feature - ol feature
      * @param {String} geomType - geometry type
+     * @param {Boolean} clean - clean last feature
      *
      * @private
      */
@@ -805,45 +865,89 @@ var Drawing = (function (Control) {
         // gestion des mesures
         this._updateMeasure(feature, geomType);
 
-        // creation overlay pour saisie du label
-        var popupOvl = null;
-        var context = this;
+        if (this.options.popup.display) {
+            // creation overlay pour saisie du label
+            // contexte
+            var context = this;
 
-        /**
-         * Enregistrement de la valeur saisie dans l'input.
-         *
-         * @param {String} value - valeur de l'attribut.
-         * @param {Boolean} save - true si on garde le label.
-         */
-        var setAttValue = function (value, save) {
-            context.getMap().removeOverlay(popupOvl);
-            if (save && value && value.trim().length > 0) {
-                var formated = value.replace(/\n/g, "<br>");
-                feature.setProperties({
-                    description : formated
+            /**
+            * Enregistrement de la valeur saisie dans l'input.
+            *
+            * @param {String} value - valeur de l'attribut.
+            * @param {Boolean} save - true si on garde le label.
+            */
+            var setAttValue = function (value, save) {
+                context.getMap().removeOverlay(context.popupOvl);
+                context.popupOvl = null;
+                if (save && value && value.trim().length > 0) {
+                    var formated = value.replace(/\n/g, "<br>");
+                    feature.setProperties({
+                        description : formated
+                    });
+                }
+            };
+
+            var popup = null;
+            var popupByDefault = true;
+
+            var displayFunction = this.options.popup.function;
+            if (displayFunction && typeof displayFunction === "function") {
+                // la sauvegarde et la fermeture sont des actions à implementer par l'utilisateur
+                // par contre, la destruction est à gerer en interne
+                popup = displayFunction.call(context, {
+                    feature : feature,
+                    geomType : geomType,
+                    closeFunc : function () {
+                        setAttValue(null, false);
+                    },
+                    saveFunc : function (message) {
+                        setAttValue(message, true);
+                    }
+                });
+                if (popup) {
+                    // on est sûr que la popup customisée existe,
+                    // donc on n'utilise pas celle par defaut...
+                    popupByDefault = false;
+                    // FIXME comment forcer le focus sur une div ?
+                    popup.tabIndex = -1; // hack sur le focus sur une div ?
+                    popup.onblur = function () {
+                        context.getMap().removeOverlay(context.popupOvl);
+                        context.popupOvl = null;
+                    };
+                }
+            }
+            // use popup by default
+            if (popupByDefault) {
+                // function by default
+                popup = this._createLabelDiv({
+                    applyFunc : setAttValue,
+                    inputId : this._addUID("att-input"),
+                    placeholder : "Saisir une description...",
+                    measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
+                    geomType : geomType
                 });
             }
-        };
-        var popup = this._createLabelDiv({
-            applyFunc : setAttValue,
-            inputId : this._addUID("att-input"),
-            placeholder : "Saisir une description...",
-            measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
-            geomType : geomType
-        });
-        popupOvl = new Overlay({
-            element : popup,
-            // FIXME : autres valeurs.
-            positioning : "top-center"
-            // stopEvent : false
-        });
-        // context.getMap().addOverlay(popupOvl) ;
-        this.getMap().addOverlay(popupOvl);
-        var geomExtent = feature.getGeometry().getExtent();
-        popupOvl.setPosition([
-            (geomExtent[0] + geomExtent[2]) / 2, (geomExtent[1] + geomExtent[3]) / 2
-        ]);
-        document.getElementById(this._addUID("att-input")).focus();
+            // un peu de menage...
+            if (this.popupOvl) {
+                this.getMap().removeOverlay(this.popupOvl);
+                this.popupOvl = null;
+            }
+            // creation de l'overlay
+            this.popupOvl = new Overlay({
+                element : popup,
+                // FIXME : autres valeurs.
+                positioning : "top-center"
+                // stopEvent : false
+            });
+            this.getMap().addOverlay(this.popupOvl);
+            var geomExtent = feature.getGeometry().getExtent();
+            this.popupOvl.setPosition([
+                (geomExtent[0] + geomExtent[2]) / 2, (geomExtent[1] + geomExtent[3]) / 2
+            ]);
+            if (document.getElementById(this._addUID("att-input"))) {
+                document.getElementById(this._addUID("att-input")).focus();
+            }
+        }
     };
 
     /**
@@ -1281,6 +1385,16 @@ var Drawing = (function (Control) {
                 var coordinatesAera = geom.getLinearRing(0).getCoordinates();
                 measureArea = Math.abs(olGetAreaSphere(new Polygon([coordinatesAera])));
 
+                // FIXME on se limite à des trous uniquement !
+                // cad les polygones sont strictement contenus dans le 1er !
+                var rings = geom.getLinearRings();
+                if (rings.length > 1) {
+                    for (var ij = 1; ij < rings.length; ij++) {
+                        var coordinatesRings = rings[ij].getCoordinates();
+                        measureArea -= Math.abs(olGetAreaSphere(new Polygon([coordinatesRings])));
+                    }
+                }
+
                 measure = (measureArea > 1000000)
                     ? __roundDecimal(measureArea / 1000000, 3) + " km^2"
                     : __roundDecimal(measureArea, 2) + " m^2";
@@ -1324,6 +1438,12 @@ var Drawing = (function (Control) {
         if (context.interactionSelectEdit) {
             map.removeInteraction(context.interactionSelectEdit);
             context.interactionSelectEdit = null;
+        }
+
+        // on supprime la popup courante s'il y en a une.
+        if (context.popupOvl) {
+            context.getMap().removeOverlay(context.popupOvl);
+            context.popupOvl = null;
         }
 
         // si aucune couche de dessin, on en crée une vide.
@@ -1414,6 +1534,80 @@ var Drawing = (function (Control) {
                     context);
                 }
                 break;
+            case this._addUID("drawing-tool-holes"):
+                if (context.dtOptions["holes"].active) {
+                    // selection du polygone à modifier
+                    context.interactionSelectEdit = new SelectInteraction({
+                        condition : eventPointerMove,
+                        layers : [this.layer]
+                    });
+                    context.interactionSelectEdit.setProperties({
+                        name : "Drawing",
+                        source : context
+                    });
+                    map.addInteraction(context.interactionSelectEdit);
+
+                    // saisie
+                    context.interactionCurrent = new DrawInteraction({
+                        stopClick : true,
+                        features : this.interactionSelectEdit.getFeatures(),
+                        style : new Style({
+                            image : new Circle({
+                                radius : this.options.cursorStyle.radius,
+                                stroke : new Stroke({
+                                    color : this.options.cursorStyle.strokeColor,
+                                    width : this.options.cursorStyle.strokeWidth
+                                }),
+                                fill : new Fill({
+                                    color : this.options.cursorStyle.fillColor
+                                })
+                            }),
+                            stroke : new Stroke({
+                                color : this.options.defaultStyles.polyStrokeColor,
+                                width : this.options.defaultStyles.polyStrokeWidth
+                            }),
+                            fill : new Fill({
+                                color : Color.hexToRgba(
+                                    this.options.defaultStyles.polyFillColor,
+                                    this.options.defaultStyles.polyFillOpacity
+                                )
+                            })
+                        }),
+                        type : ("Polygon")
+                    });
+
+                    context.interactionCurrent.on("drawstart", function (deEv) {}, context);
+
+                    context.interactionCurrent.on("drawend", function (deEv) {
+                        // recuperation du feature selectionné
+                        var features = context.interactionSelectEdit.getFeatures();
+                        if (features.getLength()) {
+                            // choix sur le 1er feature de la liste
+                            var feature = features.item(0);
+                            var hole = deEv.feature.getGeometry().getCoordinates()[0];
+                            // test pour savoir si le polygone est entièrement
+                            // inclu dans l'autre afin de faciliter les calculs d'aire !
+                            var bHoleIsIncluded = true;
+                            for (var i = 0; i < hole.length; i++) {
+                                if (!feature.getGeometry().intersectsCoordinate(hole[i])) {
+                                    bHoleIsIncluded = false;
+                                    break;
+                                }
+                            }
+                            if (!bHoleIsIncluded) {
+                                return;
+                            }
+                            // ajout du rings
+                            feature.getGeometry().appendLinearRing(new LinearRing(hole));
+                            // enregistrement !
+                            deEv.feature = feature;
+                            // finalisation du dessin...
+                            context._drawEndFeature(deEv.feature, "Polygon");
+                        }
+                    },
+                    context);
+                }
+                break;
             case this._addUID("drawing-tool-text"):
                 // text : creation de points invisibles avec un label.
                 if (context.dtOptions["text"].active) {
@@ -1438,11 +1632,11 @@ var Drawing = (function (Control) {
                         // creation overlay pour saisie du label
                         var popupOvl = null;
                         /**
-                             * Enregistrement de la valeur saisie dans l'input.
-                             *
-                             * @param {String} value - valeur du label
-                             * @param {Boolean} save - true si on garde le label.
-                             */
+                        * Enregistrement de la valeur saisie dans l'input.
+                        *
+                        * @param {String} value - valeur du label
+                        * @param {Boolean} save - true si on garde le label.
+                        */
                         var setTextValue = function (/* context,feature, */ value, save) {
                             context.getMap().removeOverlay(popupOvl);
                             if (!save) {
@@ -1516,11 +1710,9 @@ var Drawing = (function (Control) {
                                     color : this.options.cursorStyle.fillColor
                                 })
                             })
-                        }),
-                        // deleteCondition : aucune en mode "edition"
-                        deleteCondition : function (/* event */) {
-                            return false;
-                        }
+                        })
+                        // deleteCondition : function (/* event */) { return false },
+                        // insertVertexCondition : function (/* event */) { return false }
                     });
                     context.interactionCurrent.on("modifyend", (deEv) => {
                         var feature = deEv.features.item(0);

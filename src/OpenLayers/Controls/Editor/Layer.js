@@ -115,9 +115,9 @@ Layer.prototype._initialize = function () {
     Utils.mergeParams(this.options.tools, _toolsDefault, false);
 
     var _objDefault = {
-        "id" : "",
-        "type" : "", // icone sur le type de geometrie
-        "source" : "",
+        id : "",
+        type : "", // icone sur le type de geometrie
+        source : "",
         "source-layer" : ""
     };
 

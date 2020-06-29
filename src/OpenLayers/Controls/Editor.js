@@ -492,9 +492,9 @@ Editor.prototype._initContainer = function () {
                                 pin : this.options.tools.pin
                             },
                             obj : {
-                                "id" : data.id,
-                                "type" : data.type,
-                                "source" : data.source,
+                                id : data.id,
+                                type : data.type,
+                                source : data.source,
                                 "source-layer" : data["source-layer"]
                             }
                         });
@@ -519,12 +519,12 @@ Editor.prototype._initContainer = function () {
                             target : target,
                             sprites : this.sprites,
                             obj : {
-                                "id" : data.id,
-                                "source" : data.source,
-                                "title" : data.id,
-                                "editable" : (typeof isEditable !== "undefined") ? isEditable : false,
-                                "paint" : data.paint,
-                                "layout" : data.layout
+                                id : data.id,
+                                source : data.source,
+                                title : data.id,
+                                editable : (typeof isEditable !== "undefined") ? isEditable : false,
+                                paint : data.paint,
+                                layout : data.layout
                             }
                         });
                         oLegend.add();
@@ -541,10 +541,10 @@ Editor.prototype._initContainer = function () {
                             target : target,
                             position : index + "_" + this.id, // unique !,
                             obj : {
-                                "id" : data.id,
-                                "source" : data.source,
-                                "layout" : data.layout,
-                                "paint" : data.paint
+                                id : data.id,
+                                source : data.source,
+                                layout : data.layout,
+                                paint : data.paint
                             }
                         });
                         oStyle.add();
@@ -564,9 +564,9 @@ Editor.prototype._initContainer = function () {
                             target : target,
                             position : index + "_" + this.id, // unique !,
                             obj : {
-                                "id" : data.id,
-                                "source" : data.source,
-                                "filter" : data.Filter
+                                id : data.id,
+                                source : data.source,
+                                filter : data.Filter
                             }
                         });
                         oFilter.add();

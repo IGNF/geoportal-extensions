@@ -1,0 +1,86 @@
+{
+    "type": "elevation",
+	"id":         "IGN_MNT_SRTM",
+	"noDataValue" : -99999,
+	"source": {
+		"protocol":   "wmts",
+		"url":        "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
+		"updateStrategy": {
+			"type": 1,
+			"options": {
+				"groups": [3, 7, 11, 14]
+			}
+		},
+		"networkOptions" : {
+			"crossOrigin" : "omit"
+		},
+		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE.SRTM3",
+        "attribution" :  [{
+            "name" : "NASA",
+            "attribution" : "NGA",
+            "url" : "http://www.nasa.gov",
+            "constraints" : [{
+                "crs":"EPSG:4326"
+            }]
+        }],
+		"format": "image/x-bil;bits=32",
+		"projection" : "EPSG:4326",
+		"tileMatrixSet": "WGS84G",
+		"tileMatrixSetLimits": {
+            "1": {
+				"minTileRow": 0,
+				"maxTileRow": 1,
+				"minTileCol": 0,
+				"maxTileCol": 4
+            },
+            "2": {
+				"minTileRow": 0,
+				"maxTileRow": 3,
+				"minTileCol": 0,
+				"maxTileCol": 8
+			},
+			"3": {
+				"minTileRow": 1,
+				"maxTileRow": 6,
+				"minTileCol": 0,
+				"maxTileCol": 16
+			},
+			"4": {
+				"minTileRow": 2,
+				"maxTileRow": 12,
+				"minTileCol": 0,
+				"maxTileCol": 32
+			},
+			"5": {
+				"minTileRow": 5,
+				"maxTileRow": 25,
+				"minTileCol": 0,
+				"maxTileCol": 64
+			},
+			"6": {
+				"minTileRow": 10,
+				"maxTileRow": 51,
+				"minTileCol": 0,
+				"maxTileCol": 128
+			},
+			"7": {
+				"minTileRow": 20,
+				"maxTileRow": 103,
+				"minTileCol": 0,
+				"maxTileCol": 256
+			},
+			"8": {
+				"minTileRow": 41,
+				"maxTileRow": 207,
+				"minTileCol": 0,
+				"maxTileCol": 512
+			},
+			"9": {
+				"minTileRow": 82,
+				"maxTileRow": 415,
+				"minTileCol": 0,
+				"maxTileCol": 1024
+			}
+		}
+	}
+}

@@ -1,12 +1,13 @@
 {
    "directories" : {},
-   "bundleDependencies" : [],
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
    "peerDependencies" : {},
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-openlayers",
    "bugs" : {},
-   "module" : "src/OpenLayers/index.js",
-   "date" : "02/04/2020",
-   "version" : "3.0.10",
-   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -14,33 +15,32 @@
       "README.md",
       "package.json"
    ],
-   "name" : "geoportal-extensions-openlayers",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
+   "version" : "3.0.11",
+   "date" : "29/06/2020",
+   "scripts" : {},
+   "module" : "src/OpenLayers/index.js",
    "main" : "dist/GpPluginOpenLayers-src.js",
-   "dependencies" : {
-      "ol-mapbox-style" : "4.2.1",
-      "sortablejs" : "1.8.4",
-      "loglevel" : "1.6.6",
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
-      "geoportal-access-lib" : "2.1.6",
-      "request" : "^2.83.0",
-      "xmldom" : "^0.1.27",
-      "ol" : "5.3.0",
-      "proj4" : "2.6.0",
-      "eventbusjs" : "0.2.0"
-   },
-   "author" : "IGNF",
-   "license" : "CECILL-B",
-   "devDependencies" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "description" : "French Geoportal Extensions for OpenLayers"
+   "devDependencies" : {},
+   "license" : "CECILL-B",
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "dependencies" : {
+      "ol" : "5.3.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
+      "sortablejs" : "1.8.4",
+      "ol-mapbox-style" : "4.2.1",
+      "loglevel" : "1.6.6",
+      "proj4" : "2.6.0",
+      "geoportal-access-lib" : "2.1.6",
+      "request" : "^2.83.0",
+      "xmldom" : "^0.1.27",
+      "eventbusjs" : "0.2.0"
+   },
+   "author" : "IGNF",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html"
 }

@@ -21,9 +21,7 @@
   * [Construction des exemples](#construction-des-exemples)
   * [Ouvrir les exemples sur un navigateur](#ouvrir-les-exemples-sur-un-navigateur)
 - [Les tests](#les-tests)
-  * [Unitaires](#unitaires)
   * [Fonctionnels](#fonctionnels)
-  * [Couverture du code](#couverture-du-code)
   * [Tests de rendu](#tests-de-rendu)
 - [Carte des sources et des dépendances](#carte-des-sources-et-des-dependances)
   * [Analyse (The Official Analyse Tool)](#analyse-the-official-analyse-tool)
@@ -212,59 +210,15 @@ https://localhost:9001/
 
 ## Les tests
 
-### Unitaires
-
-**ouvrir une console :**
-
-    npm run test
-
 ### Fonctionnels
 
 **ouvrir une console :**
 
+    npm run test
     npm run test:serve
 
 Le navigateur s'ouvre sur la page des tests sur l'URL suivante :
 http://localhost:9001/
-
-**Note**
-> les tests unitaires sont disponibles aussi sur la page de Tests
-
-### Couverture du code
-
-**ouvrir une console :**
-
-    npm run cover
-
-**Résultats :**
-
-    -----------------------------|----------|----------|----------|----------|
-    File                         |  % Stmts | % Branch |  % Funcs |  % Lines |
-    -----------------------------|----------|----------|----------|----------|
-    All files                    |    20.57 |    18.38 |    14.96 |    20.57 |
-     Controls                    |    16.06 |     8.37 |    11.96 |    16.06 |
-      AttributionDOM.js          |    96.77 |       50 |    85.71 |    96.77 |
-      DrawingDOM.js              |    42.31 |    36.26 |    36.67 |    42.31 |
-      ElevationPathDOM.js        |    80.58 |    29.17 |    55.56 |    80.58 |
-      GetFeatureInfoDOM.js       |    96.55 |       50 |       80 |    96.55 |
-      IsoDOM.js                  |    70.08 |    31.58 |    41.51 |    70.08 |
-      LayerImportDOM.js          |     0.34 |        0 |        0 |     0.34 |
-      LayerSwitcherDOM.js        |     0.39 |        0 |        0 |     0.39 |
-      LocationSelectorDOM.js     |     0.83 |        0 |        0 |     0.83 |
-      MeasureAreaDOM.js          |     3.57 |        0 |        0 |     3.57 |
-    (...)
-
-Possibilité d'ouvrir ensuite les résultats dans un navigateur :
-
-    (http|file)://{URL|PATH}/coverage/lcov-report/index.html
-
-Explications :
-
-    statements coverage :
-    http://istqbexamcertification.com/what-is-statement-coverage-advantages-and-disadvantages/
-    branchs coverage :
-    http://istqbexamcertification.com/what-is-decision-coverage-its-advantages-and-disadvantages/
-    (...)
 
 ### Tests de rendu
 
