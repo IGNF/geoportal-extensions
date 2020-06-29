@@ -1,8 +1,8 @@
 **TODO : PREPARATION POUR PROCHAINE LIVRAISON**
 
-# Extension Geoportail OpenLayers, version 3.0.10
+# Extension Geoportail OpenLayers, version 3.0.11
 
-**xx/06/2020**
+**29/06/2020**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
@@ -38,9 +38,9 @@
 
 ---
 
-# Extension Geoportail Itowns, version X.X.X
+# Extension Geoportail Itowns, version 2.2.10
 
-**XX/XX/XXX**
+**29/06/2020**
 > Release Extension Geoportail Itowns
 
 ## Summary
@@ -75,9 +75,9 @@
 
 ---
 
-# Extension Geoportail Leaflet, version X.X.X
+# Extension Geoportail Leaflet, version 2.1.6
 
-**XX/XX/XXX**
+**29/06/2020**
 > Release Extension Geoportail Leaflet
 
 ## Summary
