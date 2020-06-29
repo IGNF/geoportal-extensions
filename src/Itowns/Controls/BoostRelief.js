@@ -15,9 +15,9 @@ var logger = Logger.getLogger("BoostRelief");
  * @alias itowns.control.BoostRelief
  * @param {Object} brOptions - control options
  * @param {Object} [brOptions.scale] - Defines the scale used to boost the relief
- * @param {Object} [brOptions.scale.min] - Minimum of the scale - 1 by default
- * @param {Object} [brOptions.scale.max] - Maximum of the scale - 50 by default
- * @param {Object} [brOptions.scale.step] - Step of the scale - 1 by default
+ * @param {Number} [brOptions.scale.min] - Minimum of the scale - 1 by default
+ * @param {Number} [brOptions.scale.max] - Maximum of the scale - 50 by default
+ * @param {Number} [brOptions.scale.step] - Step of the scale - 1 by default
  * @param {Boolean} [brOptions.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on globe loading.
  * @param {Boolean} [brOptions.defaultBoost = 1] - Default boost value applied to the widget and the elevation layers when loaded
  * @example
