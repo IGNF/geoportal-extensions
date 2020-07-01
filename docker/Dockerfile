@@ -13,13 +13,10 @@ WORKDIR /home/docker/geoportal-extensions
 # TO DELETE
 RUN git checkout docker
 
-# Modification du package.json pour la suite 
-# RUN sed -i -e ///g package.json
-
 # Copie des scripts 
 COPY ./docker/scripts/* /home/docker/
 
 # Volume pour partager les samples 
-VOLUME ["/home/docker/html"]
+VOLUME ["/home/docker/html/geoportal-extensions"]
 
 CMD bash /home/docker/start.sh

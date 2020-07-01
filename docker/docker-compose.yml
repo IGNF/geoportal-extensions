@@ -14,7 +14,8 @@ services:
     ports:
       - 9021:9021
     volumes:
-      - extensions-data-volume:/home/docker/html
+      - extensions-data-ext-volume:/home/docker/html/geoportal-extensions
+      - extensions-data-acc-volume:/home/docker/html/geoportal-access-lib
       - ${EXTENSIONS}/src:/home/docker/geoportal-extensions/src
       - ${EXTENSIONS}/test:/home/docker/geoportal-extensions/test
       - ${EXTENSIONS}/test_rendering:/home/docker/geoportal-extensions/test_rendering
@@ -35,7 +36,7 @@ services:
       - 9012:9012
       - 9013:9013
     volumes:
-      - extensions-data-volume:/home/docker/html
+      - extensions-data-acc-volume:/home/docker/html/geoportal-access-lib
       - ${ACCESSLIB}/src:/home/docker/geoportal-access-lib/src
       - ${ACCESSLIB}/test:/home/docker/geoportal-access-lib/test
       - ${ACCESSLIB}/samples-src:/home/docker/geoportal-access-lib/samples-src
@@ -47,18 +48,24 @@ services:
     image: nginx:1.17.9
     container_name: nginx-server
     command: nginx-debug -g 'daemon off;'
+    depends_on: 
+      - access-lib
+      - extensions
     ports:
       - 8081:80
     volumes:
       - ./conf/default:/etc/nginx/sites-enabled/default:ro
       - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
-      - extensions-data-volume:/var/www/html
+      - extensions-data-ext-volume:/var/www/html/geoportal-extensions
+      - extensions-data-acc-volume:/var/www/html/geoportal-access-lib
     networks:
       - api-network
 
 volumes:
-  extensions-data-volume:
-    name: extensions-data-volume
+  extensions-data-ext-volume:
+    name: extensions-data-ext-volume
+  extensions-data-acc-volume:
+    name: extensions-data-acc-volume
 
 networks:
   api-network:
