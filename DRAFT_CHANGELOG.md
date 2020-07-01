@@ -40,7 +40,7 @@
 
 # Extension Geoportail Itowns, version 2.2.10
 
-**29/06/2020**
+**01/07/2020**
 > Release Extension Geoportail Itowns
 
 ## Summary
@@ -53,23 +53,23 @@
 
   - ajout de la commande : npm run eslint (#263)
   - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
-	- ajout d'un controle d'exageration du relief, boostRelief control (#268)
+  - ajout d'un controle d'exageration du relief, boostRelief control (#268)
 
 * [Changed]
 
-	- refacto exemples : ajout des couches après initialisation de la carte (e43dc1fb675b54c9777b8726a9110584c0cca5e1)
+  - refacto exemples : ajout des couches après initialisation de la carte (e43dc1fb675b54c9777b8726a9110584c0cca5e1)
 
 * [Deprecated]
 
 * [Removed]
 
-    - suppression des tests en mode console (#263)
-    - suppression de la couverture du code (#263)
+  - suppression des tests en mode console (#263)
+  - suppression de la couverture du code (#263)
 
 * [Fixed]
 
-	- fix des tests unitaires (#264)
-	- fix de la position des widgets à l'initialisation (#265)
+  - fix des tests unitaires (#264)
+  - fix de la position des widgets à l'initialisation (#265)
 
 * [Security]
 
