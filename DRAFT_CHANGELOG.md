@@ -77,12 +77,12 @@
 
 # Extension Geoportail Leaflet, version 2.1.6
 
-**29/06/2020**
+**01/07/2020**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
-* mise à jour des dépendances (#263)
+Mise à jour des dépendances (#263) et correctifs mineurs
 
 ## Changelog
 
