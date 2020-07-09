@@ -1,0 +1,67 @@
+/* General panels */
+
+.GPpanel {
+  box-shadow: 0 0 6px #000;
+  border-radius: 4px;
+}
+
+.GPpanelHeader {
+  height: 32px;
+  padding: 3px;
+  background-color: #9DB1BD;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.GPpanelTitle {
+  line-height: 26px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  background-color: #366291;
+  color: #FFF;
+}
+
+.GPpanelClose {
+  top: 3px;
+  right: 3px;
+  width: 26px;
+  height: 26px;
+  background-position: -26px 0;
+}
+
+/* Showing/hiding advanced panels */
+
+.GPshowAdvancedToolPicto {
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+.GPshowAdvancedToolPicto:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.GPshowAdvancedToolOpen {
+  width: 26px;
+  height: 26px;
+  background-color: rgba(0,60,136,0.5);
+  border-radius: 2px;
+}
+
+.GPshowAdvancedToolPicto:hover .GPshowAdvancedToolOpen {
+  background-color: rgba(0,60,136,0.7);
+}
+
+/* Submit inputs */
+
+input.GPinputSubmit {
+  background-color: #366291;
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptionsImage {
+  background-image: url("img/GPshowMoreOptions.png");
+}
