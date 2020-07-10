@@ -71,6 +71,12 @@
                         };
                         
                         globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+                            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+                            // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+
+                            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+                            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+
                             var mousePosition = new Gp.itownsExtended.control.MousePosition({
                                 collapsed: true,
                                 displayCoordinates: true,
@@ -78,12 +84,6 @@
                             });
                             globeView.addWidget( mousePosition );
                         });
-
-                        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
-                        // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
-
-                        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
-                        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
                     }
 
                     Gp.Services.getConfig({

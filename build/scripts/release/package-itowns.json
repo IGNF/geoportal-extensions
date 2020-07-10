@@ -1,30 +1,8 @@
 {
-   "peerDependencies" : {},
-   "description" : "French Geoportal Extensions for iTowns",
-   "main" : "dist/GpPluginItowns-src.js",
-   "scripts" : {},
-   "author" : "IGNF",
-   "license" : "CECILL-B",
-   "module" : "src/Itowns/index.js",
+   "date" : "01/07/2020",
    "repository" : {
       "type" : "git",
       "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "devDependencies" : {},
-   "version" : "2.2.9",
-   "name" : "geoportal-extensions-itowns",
-   "bundleDependencies" : [],
-   "directories" : {},
-   "dependencies" : {
-      "request" : "^2.83.0",
-      "loglevel" : "1.6.6",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "itowns" : "2.19.0",
-      "three" : "0.113.2",
-      "three.meshline" : "1.2.0",
-      "proj4" : "2.6.0",
-      "geoportal-access-lib" : "2.1.6"
    },
    "keywords" : [
       "geoportail",
@@ -32,14 +10,36 @@
       "javascript",
       "Itowns"
    ],
-   "bugs" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "date" : "02/04/2020",
+   "dependencies" : {
+      "three" : "0.113.2",
+      "proj4" : "2.6.0",
+      "three.meshline" : "1.2.0",
+      "loglevel" : "1.6.6",
+      "sortablejs" : "1.8.4",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "2.1.6",
+      "itowns" : "2.19.0",
+      "request" : "^2.83.0"
+   },
+   "main" : "dist/GpPluginItowns-src.js",
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ]
+   ],
+   "module" : "src/Itowns/index.js",
+   "bugs" : {},
+   "directories" : {},
+   "name" : "geoportal-extensions-itowns",
+   "bundleDependencies" : [],
+   "scripts" : {},
+   "author" : "IGNF",
+   "description" : "French Geoportal Extensions for iTowns",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "peerDependencies" : {},
+   "version" : "2.2.10",
+   "license" : "CECILL-B",
+   "devDependencies" : {}
 }

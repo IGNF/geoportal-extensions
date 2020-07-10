@@ -1,0 +1,131 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample OpenLayers Drawing</title>
+{{/content}}
+
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+                background-image:url("{{ resources }}/geoportail-waiting.gif");
+                background-position:center center;
+                background-repeat:no-repeat;
+            }
+            .ol-popup {
+                display: block;
+                position: absolute;
+                background-color: white;
+                padding: 15px 25px 15px 15px;
+                border: 1px solid #cccccc;
+            }
+            .ol-popup-content {
+                min-width: 170px;
+                max-height: 200px;
+                overflow-x: auto;
+            }
+            .ol-popup-closer {
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                color: gray;
+            }
+            .ol-popup-saver {
+                position: absolute;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout des outils de dessin avec affichage des mesures</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    //Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        layers : [new ol.layer.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        })],
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 8
+                        })
+                    });
+
+                    var drawing = new ol.control.Drawing({
+                        collapsed : true,
+                        popup : {
+                            display : true,
+                            function : function (params) {
+                                var element = document.createElement('div');
+                                element.className = "ol-popup";
+                                // liste des params
+                                console.log(params.geomType);
+                                console.log(params.feature);
+                                if (params.feature) {
+                                    var message = "";
+                                    var props = params.feature.getProperties();
+                                    for (const property in props) {
+                                        // properties de sauvegarde
+                                        if (property === "description") {
+                                            continue;
+                                        }
+                                        message += property;
+                                        message += " : ";
+                                        message += props[property];
+                                        message += "<br>";
+                                    }
+                                    // element de fermeture
+                                    var closer = document.createElement('input');
+                                    closer.type = "button";
+                                    closer.value = "X";
+                                    closer.className = 'ol-popup-closer';
+                                    closer.onclick = function () {
+                                        params.closeFunc();
+                                    };
+                                    element.appendChild(closer);
+                                    // contenu
+                                    var content = document.createElement('div');
+                                    content.className = "ol-popup-content";
+                                    content.innerHTML = message;
+                                    element.appendChild(content);
+                                    // element de sauvegarde
+                                    var save = document.createElement('input');
+                                    save.type = "button";
+                                    save.value = "Sauvegarde";
+                                    save.className = 'ol-popup-saver';
+                                    save.onclick = function () {
+                                        params.saveFunc(message);
+                                    };
+                                    element.appendChild(save);
+                                }
+                                return element;
+                            }
+                        },
+                    });
+
+                    drawing.on(
+                        "change:collapsed",
+                        function (e) {
+                            console.log("change:collapsed : collapsed =", e.target.collapsed);
+                        }
+                    );
+
+                    map.addControl(drawing);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

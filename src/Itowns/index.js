@@ -40,6 +40,7 @@ import "./Styles";
 
 import MousePosition from "./Controls/MousePosition";
 import LayerSwitcher from "./Controls/LayerSwitcher";
+import BoostRelief from "./Controls/BoostRelief";
 import Attributions from "./Controls/Attributions";
 import Scale from "./Controls/Scale";
 import MiniGlobe from "./Controls/MiniGlobe";
@@ -125,6 +126,7 @@ var Itowns = {};
 Itowns.control = {};
 Itowns.control.MousePosition = MousePosition;
 Itowns.control.LayerSwitcher = LayerSwitcher;
+Itowns.control.BoostRelief = BoostRelief;
 Itowns.control.Attributions = Attributions;
 Itowns.control.Scale = Scale;
 Itowns.control.MiniGlobe = MiniGlobe;

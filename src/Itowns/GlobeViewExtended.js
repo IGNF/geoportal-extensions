@@ -34,7 +34,9 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
-    viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
+    if (!viewerDiv.style.position || (options & options.position)) {
+        viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
+    }
 
     // stockage de l'élément html porteur du globe
     var globeViewDiv = document.createElement("div");
@@ -306,7 +308,6 @@ GlobeViewExtended.prototype.addLayer = function (layer) {
     // is integrated into an iTowns release
     try {
         var promise = this.getGlobeView().addLayer(layer);
-        this.getGlobeView().notifyChange(layer);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -519,7 +520,8 @@ GlobeViewExtended.prototype.getExtent = function () {
  */
 GlobeViewExtended.prototype.addWidget = function (widget) {
     if (!widget.getTarget()) {
-        widget.setTarget(this._viewerDiv, "absolute");
+        // default position value is 'absolute' if the target div is the viewer div
+        widget.setTarget(this._viewerDiv, widget.getPosition() ? widget.getPosition() : "absolute");
     }
     widget.setGlobe(this);
     this._widgets.push(widget);
@@ -570,12 +572,10 @@ GlobeViewExtended.prototype.getScale = function () {
  * Sets tilt
  *
  * @param {Number} tilt - Tilt value
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
-    this.onCameraMoveStop(function () {
-        this.getGlobeView().controls.setTilt(tilt, false);
-        this.notifyChange();
-    }.bind(this));
+    return this.getGlobeView().controls.setTilt(tilt, false);
 };
 
 /**
@@ -591,12 +591,10 @@ GlobeViewExtended.prototype.getTilt = function () {
  * Sets azimuth
  *
  * @param {Number} azimuth - Azimuth value
+ * @return {Promise}
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
-    this.onCameraMoveStop(function () {
-        this.getGlobeView().controls.setHeading(azimuth, false);
-        this.notifyChange();
-    }.bind(this));
+    return this.getGlobeView().controls.setHeading(azimuth, false);
 };
 
 /**

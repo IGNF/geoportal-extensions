@@ -35,6 +35,9 @@ describe("-- [TODO] Test Plugin OpenLayers Editor --", function () {
                 target: document.getElementById("editor"),
                 style: "spec/openlayers/fixtures/osm.json"
             });
+            // create DOM
+            editor.createElement();
+
             setTimeout(function() {
                 resolve(editor);
             }, 200);
@@ -58,8 +61,7 @@ describe("-- [TODO] Test Plugin OpenLayers Editor --", function () {
             expect(main.hasChildNodes(), "has not child nodes ?").to.be.true;
             var child = main.childNodes;
             expect(child.length, "is not an array with one element ?").to.be.equal(1);
-            expect(child[0].id, "is not the good id ?").to.be.equal("GPEditorMapBoxContainer_ID_0");
-
+            expect(child[0].id, "is not the good id ?").to.have.string("GPEditorMapBoxContainer_ID_");
         });
     });
     

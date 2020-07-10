@@ -67,20 +67,20 @@
                         globeView.addLayer(layer);
                     };
 
-                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
-
-                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
-                    itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
-
-                    var scalebar = new Gp.itownsExtended.control.Scale({
-                        target : viewerDiv,
-                        position : "absolute"
-                    });
-                    globeView.addWidget( scalebar );
-
                     globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                         // eslint-disable-next-line no-console
                         console.info("Globe initialized");
+
+                        itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/Ortho.json").then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+
+                        itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+                        itowns.Fetcher.json("{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+
+                        var scalebar = new Gp.itownsExtended.control.Scale({
+                            target : viewerDiv,
+                            position : "absolute"
+                        });
+                        globeView.addWidget( scalebar );
                     });
                 });
             </script>

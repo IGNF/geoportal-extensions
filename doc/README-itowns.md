@@ -928,10 +928,7 @@ const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 // Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
 globeView.addLayer(orthoLayer);
 
-var miniglobe = new itowns.control.MiniGlobe({
-    target : viewerDiv,
-    position : "absolute"
-});
+var miniglobe = new itowns.control.MiniGlobe({});
 
 globeView.addWidget( miniglobe );
 ```
@@ -964,10 +961,7 @@ const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 // Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
 globeView.addLayer(orthoLayer);
 
-var scalebar = new itowns.control.Scale({
-    target : viewerDiv,
-    position : "absolute"
-});
+var scalebar = new itowns.control.Scale({});
 
 globeView.addWidget( scalebar );
 ```
