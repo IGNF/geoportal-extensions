@@ -50,8 +50,13 @@ npm run build
 cp -rf ./dist/* /home/docker/html/geoportal-extensions/dist/
 cp -rf ./samples/* /home/docker/html/geoportal-extensions/samples/
 cp -rf ./jsdoc/* /home/docker/html/geoportal-extensions/jsdoc/
-npm pack
-cp *.tgz /home/docker/html/geoportal-extensions/package/
+popd
+pushd /home/docker/geoportal-extensions/build/scripts/release/
+rm -rf ./geoportal-extensions*.tgz
+bash build-pack.sh -a
+cp ./geoportal-extensions-itowns*.tgz /home/docker/html/geoportal-extensions/package/geoportal-extensions-itowns-local.tgz
+cp ./geoportal-extensions-leaflet*.tgz /home/docker/html/geoportal-extensions/package/geoportal-extensions-leaflet-local.tgz
+cp ./geoportal-extensions-openlayers*.tgz /home/docker/html/geoportal-extensions/package/geoportal-extensions-openlayers-local.tgz
 popd
 
 # Observation des changements 
@@ -60,6 +65,7 @@ bash /home/docker/watchItowns.sh &
 bash /home/docker/watchLeaflet.sh &
 bash /home/docker/watchOl.sh &
 bash /home/docker/watchSamples.sh &
+bash /home/docker/watchAccessLib.sh &
 
 # Lancement des serveurs pour les tests et observation des changements 
 cd /home/docker/geoportal-extensions/ && npm run test:serve:docker 
