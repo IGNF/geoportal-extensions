@@ -516,9 +516,6 @@ var SearchEngineDOM = {
             }, {
                 id : "CadastralParcel",
                 title : "Parcelles cadastrales"
-            }, {
-                id : "Administratif",
-                title : "Administratif"
             }];
         }
 
@@ -728,13 +725,13 @@ var SearchEngineDOM = {
             if (places.freeform) {
                 // reponse en freeForm
                 div.innerHTML = places.freeform;
-            } else if (places.postalCode) {
-                // cas des StreetAddress, PositionOfInterest, Administratif
-                // on affiche uniquement ce qui est commun aux ressources ...
-                div.innerHTML = places.postalCode + " " + places.commune;
-            } else if (places.cadastralParcel) {
+            } else if (location.type === "PositionOfInterest") {
+                div.innerHTML = places.postalCode + " " + places.toponyme ;
+            } else if (location.type === "StreetAddress") {
+                div.innerHTML = places.postalCode + " " + places.city ;
+            } else if (location.type === "CadastralParcel") {
                 // cas des CadastralParcel
-                div.innerHTML = places.cadastralParcel;
+                div.innerHTML = places.identifiant;
             } else {
                 div.innerHTML = "...";
             }

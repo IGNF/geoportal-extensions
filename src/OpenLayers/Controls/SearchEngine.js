@@ -30,7 +30,7 @@ var logger = Logger.getLogger("searchengine");
  * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
  * @param {Object}   [options.resources] - resources to be used by geocode and autocompletion services :
- * @param {Array}   [options.resources.geocode] - resources geocoding, by default : ["PositionOfInterest", "StreetAddress"]
+ * @param {String}   [options.resources.geocode] - resources geocoding, by default : "location"
  * @param {Array}   [options.resources.autocomplete] - resources autocompletion, by default : ["PositionOfInterest", "StreetAddress"]
  * @param {Boolean}  [options.displayAdvancedSearch = true] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
  * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
@@ -199,7 +199,7 @@ var SearchEngine = (function (Control) {
         // merge with user options
         Utils.mergeParams(this.options, options);
         if (this.options.resources.geocode.length === 0) {
-            this.options.resources.geocode = ["PositionOfInterest", "StreetAddress"];
+            this.options.resources.geocode = "location";
         }
         if (this.options.resources.autocomplete.length === 0) {
             this.options.resources.autocomplete = ["PositionOfInterest", "StreetAddress"];
@@ -369,12 +369,6 @@ var SearchEngine = (function (Control) {
                         title : "Parcelles cadastrales"
                     });
                     break;
-                case "Administratif":
-                    this._advancedSearchCodes.push({
-                        id : "Administratif",
-                        title : "Administratif"
-                    });
-                    break;
                 default:
                     break;
             }
@@ -387,6 +381,9 @@ var SearchEngine = (function (Control) {
             }, {
                 id : "PositionOfInterest",
                 title : "Lieux/toponymes"
+            }, {
+                id : "CadastralParcel",
+                title : "Cadastre"
             }];
         }
 
@@ -635,7 +632,8 @@ var SearchEngine = (function (Control) {
         if (!_resources || _resources.length === 0) {
             _resources = [
                 "StreetAddress",
-                "PositionOfInterest"
+                "PositionOfInterest",
+                "CadastralParcel"
             ];
         }
         var rightManagementAutoComplete = RightManagement.check({
@@ -647,9 +645,9 @@ var SearchEngine = (function (Control) {
 
         // les ressources du service de geocodage
         _key = this.options.geocodeOptions.apiKey;
-        _opts = this.options.geocodeOptions.filterOptions;
+        var _index = this.options.geocodeOptions.index;
         // on récupère les éventuelles ressources passées en option, soit dans geocodeOptions :
-        _resources = (_opts) ? _opts.type : [];
+        _resources = (_index) ? _index : "";
         // soit directement dans options.resources.geocode :
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources.geocode;
@@ -658,7 +656,8 @@ var SearchEngine = (function (Control) {
         if (!_resources || _resources.length === 0) {
             _resources = [
                 "StreetAddress",
-                "PositionOfInterest"
+                "PositionOfInterest",
+                "CadastralParcel"
             ];
         }
         var rightManagementGeocode = RightManagement.check({
@@ -799,7 +798,7 @@ var SearchEngine = (function (Control) {
         }
 
         // on ne fait pas de requête si la parametre 'text' est vide !
-        if (!settings.location) {
+        if (settings.location === null) {
             return;
         }
 
@@ -814,14 +813,11 @@ var SearchEngine = (function (Control) {
 
         // on ajoute le paramètre filterOptions.type spécifiant les ressources.
         var resources = this.options.resources.geocode;
-        if (resources && Array.isArray(resources)) {
-            if (!options.filterOptions) {
-                options.filterOptions = {};
-            }
+        if (resources) {
             // il se peut que l'utilisateur ait surchargé ce paramètre dans geocodeOptions,
             // ou qu'il ait déjà été rempli (cas de la recherche avancée)
-            if (!options.filterOptions.type) {
-                options.filterOptions.type = resources;
+            if (!options.index) {
+                options.index = resources;
             }
         }
 
@@ -1050,7 +1046,7 @@ var SearchEngine = (function (Control) {
             var attributes = information.attributes;
             for (var attr in attributes) {
                 if (attributes.hasOwnProperty(attr)) {
-                    if (attr !== "bbox") {
+                    if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
                         popupContent += "<li>";
                         popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                         popupContent += attributes[attr];
@@ -1344,6 +1340,9 @@ var SearchEngine = (function (Control) {
         this._setLabel(label);
         info.label = label;
 
+        // on sauvegarde le localisant
+        this._currentGeocodingLocation = label;
+
         // Info : la position est en EPSG:4326, à transformer dans la projection de la carte
         var view = this.getMap().getView();
         var mapProj = view.getProjection().getCode();
@@ -1425,8 +1424,8 @@ var SearchEngine = (function (Control) {
         }
 
         var position = [
-            this._geocodedLocations[idx].position.y,
-            this._geocodedLocations[idx].position.x
+            this._geocodedLocations[idx].position.lon,
+            this._geocodedLocations[idx].position.lat
         ];
         var attributes = this._geocodedLocations[idx].placeAttributes;
         var info = {
@@ -1440,14 +1439,14 @@ var SearchEngine = (function (Control) {
         if (attributes.freeform) {
             // reponse en freeForm
             label = attributes.freeform;
-        } else if (attributes.postalCode) {
-            // cas des StreetAddress, PositionOfInterest, Administratif
-            // on affiche uniquement ce qui est commun aux ressources ...
-            label = attributes.postalCode + " " + attributes.commune;
+        } else if (this._geocodedLocations[idx].type === "PositionOfInterest") {
+            label = attributes.postalCode + " " + attributes.toponyme;
             info.attributes = attributes;
-        } else if (attributes.cadastralParcel) {
-            // cas des CadastralParcel
-            label = attributes.cadastralParcel;
+        } else if (this._geocodedLocations[idx].type === "StreetAddress") {
+            label = attributes.postalCode + " " + attributes.city;
+            info.attributes = attributes;
+        } else if (this._geocodedLocations[idx].type === "CadastralParcel") {
+            label = attributes.identifiant;
             info.attributes = attributes;
         } else {
             label = "...";
@@ -1521,34 +1520,28 @@ var SearchEngine = (function (Control) {
 
         var _location;
         var _filterOptions = {};
-        var filter;
-        _filterOptions.type = [this._currentGeocodingCode];
+
         for (var i = 0; i < data.length; i++) {
-            filter = data[i];
-            _filterOptions[filter.key] = filter.value;
+            var filter = data[i];
+            if ( filter.value ) {
+                _filterOptions[filter.key] = filter.value;
+            }
         }
 
-        if (this._currentGeocodingCode === "CadastralParcel") {
-            // dans ce cas, les filtres de recherche avancée ne sont pas vraiment des filtres,
-            // mais simplement la décomposition des informations de la parcelle, à concaténer.
-            _location = this._getCadastralParcelRequestParams(_filterOptions);
+        var inputSearchTextContainer = document.getElementById("GPsearchInputText-" + this._uid);
+        _location = inputSearchTextContainer.value;
 
-            // FIXME ne marche pas bien !
-            _filterOptions = {
-                type : [this._currentGeocodingCode]
-            };
-        } else {
-            // recuperation des parametres des filtres pour les transmettre
-            // à la requête, ainsi que le type de table de ressources de geocodage,
-            // et le localisant (freeform)
-            _location = this._currentGeocodingLocation;
+        // Pour pouvoir utiliser les filtres comme des champs de recherche
+        if (this._currentGeocodingCode === "CadastralParcel" && _location === null) {
+            _location = "";
         }
 
         // on met en place l'affichage des resultats dans une fenetre de recherche.
         var context = this;
         this._requestGeocoding({
             location : _location,
-            filterOptions : _filterOptions,
+            index: this._currentGeocodingCode,
+            filters : _filterOptions,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);

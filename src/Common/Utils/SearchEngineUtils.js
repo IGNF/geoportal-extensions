@@ -4,23 +4,14 @@ var SearchEngineUtils = {
      */
     advancedSearchFiltersByDefault : {
         PositionOfInterest : [{
-            name : "importance",
-            title : "Importance"
+            name : "type",
+            title : "Type"
         }, {
-            name : "nature",
-            title : "Nature"
+            name : "postalCode",
+            title : "Code postal"
         }, {
-            name : "territory",
-            title : "Territoire"
-        }, {
-            name : "insee",
+            name : "inseeCode",
             title : "Code INSEE"
-        }, {
-            name : "municipality",
-            title : "Ville"
-        }, {
-            name : "department",
-            title : "Département"
         }],
         StreetAddress : [
             // INFO
@@ -30,59 +21,54 @@ var SearchEngineUtils = {
             // {name : "postalCode", title : "Code Postal"},
             // {name : "city", title : "Commune"},
             {
-                name : "territory",
-                title : "Territoire"
-            }, {
-                name : "insee",
-                title : "Code INSEE"
-            }, {
-                name : "municipality",
+                name : "city",
                 title : "Ville"
             }, {
-                name : "department",
-                title : "Département"
+                name : "postalCode",
+                title : "Code postal"
+            }, {
+                name : "inseeCode",
+                title : "Code INSEE"
             }
         ],
         CadastralParcel : [{
-            name : "department",
-            title : "Département",
-            description : "Numéro du département (ex: 01, 94)"
+            name : "identifiant",
+            title : "Identifiant",
+            description : "Identifiant cadastral"
         }, {
-            name : "commune",
+            name : "codeDepartement",
+            title : "Code département (INSEE)",
+            description : "Code INSEE du département (ex: 01, 94)"
+        }, {
+            name : "codeCommune",
             title : "Code commune (INSEE)",
-            description : "Code commune (INSEE) : 3 chiffres (ex: 067)"
-        },
-        // {
-        //     name : "insee",
-        //     title : "Code INSEE"
-        // },
-        {
-            name : "absorbedCity",
+            description : "Code INSEE de la commune : 3 chiffres (ex: 067)"
+        }, {
+            name : "nomCommune",
+            title : "Nom commune",
+            description : "Nom de la commune"
+        }, {
+            name : "codeCommuneAbs",
             title : "Commune absorbée",
             description : "Commune absorbée : 3 chiffres (ex: 000, 001)"
         }, {
+            name : "codeArrondissement",
+            title : "Arrondissement",
+            description : "Arrondissement : 3 chiffres (ex: 004, 012)"
+        }, {
             name : "section",
             title : "Section",
-            description : "Section : 2 caractères (ex: AA, 0D)"
+            description : "Section Cadastrale : 2 caractères (chiffre et/ou lettre)"
         }, {
-            name : "number",
+            name : "numero",
             title : "Numéro",
             description : "Numéro de la parcelle : 4 chiffres (ex: 0041, 0250)"
+        }, {
+            name : "feuille",
+            title : "Feuille",
+            description : "Numéro de la feuille cadastrale"
         }
-        ],
-        Administratif : [{
-            name : "prefecture",
-            title : "Préfecture"
-        }, {
-            name : "inseeRegion",
-            title : "Code région (INSEE)"
-        }, {
-            name : "inseeDepartment",
-            title : "Code département (INSEE)"
-        }, {
-            name : "municipality",
-            title : "Ville"
-        }]
+        ]
     },
 
     /**
