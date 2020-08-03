@@ -3,23 +3,19 @@ var SearchEngineUtils = {
      * Advanced Search Filters by default
      */
     advancedSearchFiltersByDefault : {
-        PositionOfInterest : [{
-            name : "type",
-            title : "Type"
-        }, {
-            name : "postalCode",
-            title : "Code postal"
-        }, {
-            name : "inseeCode",
-            title : "Code INSEE"
-        }],
+        PositionOfInterest : [
+            {
+                name : "type",
+                title : "Type"
+            }, {
+                name : "postalCode",
+                title : "Code postal"
+            }, {
+                name : "inseeCode",
+                title : "Code INSEE"
+            }
+        ],
         StreetAddress : [
-            // INFO
-            // ce ne sont pas des filtres mais une location dite structurée !
-            // {name : "number", title : "Numéro"},
-            // {name : "street", title : "Rue"},
-            // {name : "postalCode", title : "Code Postal"},
-            // {name : "city", title : "Commune"},
             {
                 name : "city",
                 title : "Ville"
@@ -31,43 +27,40 @@ var SearchEngineUtils = {
                 title : "Code INSEE"
             }
         ],
-        CadastralParcel : [{
-            name : "identifiant",
-            title : "Identifiant",
-            description : "Identifiant cadastral"
-        }, {
-            name : "codeDepartement",
-            title : "Code département (INSEE)",
-            description : "Code INSEE du département (ex: 01, 94)"
-        }, {
-            name : "codeCommune",
-            title : "Code commune (INSEE)",
-            description : "Code INSEE de la commune : 3 chiffres (ex: 067)"
-        }, {
-            name : "nomCommune",
-            title : "Nom commune",
-            description : "Nom de la commune"
-        }, {
-            name : "codeCommuneAbs",
-            title : "Commune absorbée",
-            description : "Commune absorbée : 3 chiffres (ex: 000, 001)"
-        }, {
-            name : "codeArrondissement",
-            title : "Arrondissement",
-            description : "Arrondissement : 3 chiffres (ex: 004, 012)"
-        }, {
-            name : "section",
-            title : "Section",
-            description : "Section Cadastrale : 2 caractères (chiffre et/ou lettre)"
-        }, {
-            name : "numero",
-            title : "Numéro",
-            description : "Numéro de la parcelle : 4 chiffres (ex: 0041, 0250)"
-        }, {
-            name : "feuille",
-            title : "Feuille",
-            description : "Numéro de la feuille cadastrale"
-        }
+        CadastralParcel : [
+            {
+                name : "codeDepartement",
+                title : "Code département (INSEE)",
+                description : "Code INSEE du département (ex: 01, 94)"
+            }, {
+                name : "codeCommune",
+                title : "Code commune (INSEE)",
+                description : "Code INSEE de la commune : 3 chiffres (ex: 067)"
+            }, {
+                name : "nomCommune",
+                title : "Nom commune",
+                description : "Nom de la commune"
+            }, {
+                name : "codeCommuneAbs",
+                title : "Commune absorbée",
+                description : "Commune absorbée : 3 chiffres (ex: 000, 001)"
+            }, {
+                name : "codeArrondissement",
+                title : "Arrondissement",
+                description : "Arrondissement : 3 chiffres (ex: 004, 012)"
+            }, {
+                name : "section",
+                title : "Section",
+                description : "Section Cadastrale : 2 caractères (chiffre et/ou lettre)"
+            }, {
+                name : "numero",
+                title : "Numéro",
+                description : "Numéro de la parcelle : 4 chiffres (ex: 0041, 0250)"
+            }, {
+                name : "feuille",
+                title : "Feuille",
+                description : "Numéro de la feuille cadastrale"
+            }
         ]
     },
 

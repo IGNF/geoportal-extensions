@@ -300,7 +300,7 @@ var SearchEngine = (function (Control) {
                         logger.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
                         geocodeResources = null;
                     }
-                    var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+                    var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel"];
                     for (i = 0; i < geocodeResources.length; i++) {
                         if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
                             // si la resource n'est pas référencée, on l'enlève
@@ -1539,7 +1539,7 @@ var SearchEngine = (function (Control) {
         // on met en place l'affichage des resultats dans une fenetre de recherche.
         var context = this;
         this._requestGeocoding({
-            location : _location,
+            query : _location,
             index: this._currentGeocodingCode,
             filters : _filterOptions,
             // callback onSuccess
