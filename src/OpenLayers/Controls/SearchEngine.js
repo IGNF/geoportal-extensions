@@ -1269,19 +1269,18 @@ var SearchEngine = (function (Control) {
         Gp.Services.geocode({
             apiKey : this.options.apiKey,
             ssl : this.options.ssl,
-            location : suggestedLocation.fullText,
-            filterOptions : {
-                type : suggestedLocation.type
-            },
+            q : suggestedLocation.fullText,
+            index : suggestedLocation.type,
             // callback onSuccess
             onSuccess : function (response) {
                 logger.log("request from Geocoding (coordinates null)", response);
                 if (response.locations && response.locations.length !== 0 && response.locations[0].position) {
                     // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
+                    /// \TODO verifier si l'inversion des coordonnees est necessaire
                     if (context._suggestedLocations && context._suggestedLocations[i]) {
                         context._suggestedLocations[i].position = {
-                            x : response.locations[0].position.y,
-                            y : response.locations[0].position.x
+                            lon : response.locations[0].position.y,
+                            lat : response.locations[0].position.x
                         };
                         // et on l'affiche dans la liste
                         context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
