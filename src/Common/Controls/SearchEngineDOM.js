@@ -726,7 +726,7 @@ var SearchEngineDOM = {
                 // reponse en freeForm
                 div.innerHTML = places.freeform;
             } else if (location.type === "PositionOfInterest") {
-                div.innerHTML = places.postalCode + " " + places.toponyme ;
+                div.innerHTML = (places.postalCode.length === 1 ? places.postalCode + " " : "") + places.toponyme ;
             } else if (location.type === "StreetAddress") {
                 div.innerHTML = places.postalCode + " " + places.city ;
             } else if (location.type === "CadastralParcel") {

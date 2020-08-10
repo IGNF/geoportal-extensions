@@ -180,7 +180,7 @@ var SearchEngine = (function (Control) {
             collapsed : true,
             zoomTo : "",
             resources : {
-                geocode : [],
+                geocode : "",
                 autocomplete : []
             },
             displayAdvancedSearch : true,
@@ -198,7 +198,7 @@ var SearchEngine = (function (Control) {
 
         // merge with user options
         Utils.mergeParams(this.options, options);
-        if (this.options.resources.geocode.length === 0) {
+        if (this.options.resources.geocode === "") {
             this.options.resources.geocode = "location";
         }
         if (this.options.resources.autocomplete.length === 0) {
@@ -349,6 +349,12 @@ var SearchEngine = (function (Control) {
         // ressource de geocodage à afficher
 
         var geocodeResources = this.options.resources.geocode;
+        if (geocodeResources==="location") {
+            geocodeResources = ["PositionOfInterest","StreetAddress","CadastralParcel"];
+        }
+        if (!Array.isArray(geocodeResources)){
+            geocodeResources = [geocodeResources];
+        }
         for (var i = 0; i < geocodeResources.length; i++) {
             switch (geocodeResources[i]) {
                 case "PositionOfInterest":
@@ -615,15 +621,13 @@ var SearchEngine = (function (Control) {
         // si on ne trouve pas de ressources ou certaines ressources ne sont
         // pas disponible, on previent l'utilisateur (message d'information).
 
-        var _resources = [];
-        var _key;
-        var _opts = null;
+        var _resources = null;
+        var _key = null;
 
         // les ressources du service d'autocompletion
         _key = this.options.autocompleteOptions.apiKey;
-        _opts = this.options.autocompleteOptions.filterOptions;
         // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
-        _resources = (_opts) ? _opts.type : [];
+        _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
         // soit dans options.resources.autocomplete
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources.autocomplete;
@@ -632,8 +636,7 @@ var SearchEngine = (function (Control) {
         if (!_resources || _resources.length === 0) {
             _resources = [
                 "StreetAddress",
-                "PositionOfInterest",
-                "CadastralParcel"
+                "PositionOfInterest"
             ];
         }
         var rightManagementAutoComplete = RightManagement.check({
@@ -643,23 +646,28 @@ var SearchEngine = (function (Control) {
         });
         logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
 
-        // les ressources du service de geocodage
-        _key = this.options.geocodeOptions.apiKey;
-        var _index = this.options.geocodeOptions.index;
+        // les ressources du service de geocodage_checkRightsManagement
         // on récupère les éventuelles ressources passées en option, soit dans geocodeOptions :
-        _resources = (_index) ? _index : "";
+        _resources = (this.options.geocodeOptions.index) ? this.options.geocodeOptions.index : "";
         // soit directement dans options.resources.geocode :
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources.geocode;
         }
         // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
+        if (!_resources || _resources === "") {
+            _resources = "location";
+        }
+
+        if (_resources === "location") {
             _resources = [
                 "StreetAddress",
                 "PositionOfInterest",
                 "CadastralParcel"
             ];
+        } else {
+            _resources = [_resources];
         }
+        
         var rightManagementGeocode = RightManagement.check({
             key : _key || this.options.apiKey,
             resources : _resources,
@@ -731,12 +739,9 @@ var SearchEngine = (function (Control) {
         // on ajoute le paramètre filterOptions.type spécifiant les ressources.
         var resources = this.options.resources.autocomplete;
         if (resources && Array.isArray(resources)) {
-            if (!options.filterOptions) {
-                options.filterOptions = {};
-            }
             // il se peut que l'utilisateur ait surchargé ce paramètre dans geocodeOptions,
-            if (!options.filterOptions.type) {
-                options.filterOptions.type = resources;
+            if (!options.type) {
+                options.type = resources;
             }
         }
 
@@ -798,7 +803,7 @@ var SearchEngine = (function (Control) {
         }
 
         // on ne fait pas de requête si la parametre 'text' est vide !
-        if (settings.location === null) {
+        if (settings.query === null) {
             return;
         }
 
@@ -1389,7 +1394,7 @@ var SearchEngine = (function (Control) {
         // on met en place l'affichage des resultats dans une fenetre de recherche.
         var context = this;
         this._requestGeocoding({
-            location : value,
+            query : value,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log("request from Geocoding", results);
