@@ -291,7 +291,7 @@ var ReverseGeocode = (function (Control) {
 
         // options pour la requête de géocodage inverse
         this._requestOptions = null;
-        // geometrie de recherch du géocodage inverse qui sera envoyée dans la requête
+        // geometrie de recherche du géocodage inverse qui sera envoyée dans la requête
         this._requestGeom = null;
         // pour savoir si un calcul est en cours ou non
         this._waiting = false;
@@ -343,7 +343,7 @@ var ReverseGeocode = (function (Control) {
                 logger.log("[ReverseGeocode] 'options.resources' parameter should be an array");
                 resources = null;
             }
-            var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+            var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel"];
             var wrongResourcesIndexes = [];
             for (i = 0; i < resources.length; i++) {
                 if (resourcesList.indexOf(resources[i]) === -1) {
@@ -388,7 +388,7 @@ var ReverseGeocode = (function (Control) {
 
     /**
      * this method is called by this.initialize() and initialize geocoding type (=resource)
-     * ("StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif")
+     * ("StreetAddress", "PositionOfInterest", "CadastralParcel")
      *
      * @private
      */
@@ -515,7 +515,8 @@ var ReverseGeocode = (function (Control) {
         if (!_resources || _resources.length === 0) {
             _resources = [
                 "StreetAddress",
-                "PositionOfInterest"
+                "PositionOfInterest",
+                "CadastralParcel"
             ];
         }
         var rightManagementGeocode = RightManagement.check({
@@ -1076,11 +1077,7 @@ var ReverseGeocode = (function (Control) {
         var context = this;
         var requestOptions = {
             apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
-            // ssl : this.options.ssl || true,
-            // position : this._requestPosition,
             index : this._currentGeocodingType,
-            // srs : "CRS:84",
-            // returnFreeForm : false,
             maximumResponses : reverseGeocodeOptions.maximumResponses || 10,
             timeOut : reverseGeocodeOptions.timeOut || 30000,
             // protocol : reverseGeocodeOptions.protocol || "XHR",
@@ -1132,7 +1129,6 @@ var ReverseGeocode = (function (Control) {
             } else {
                 requestOptions.searchGeometry = this._requestGeom;
             }
-            
         }
 
         logger.log("reverseGeocode request options : ", requestOptions);

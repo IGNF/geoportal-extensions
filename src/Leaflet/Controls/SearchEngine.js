@@ -704,22 +704,15 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         L.Util.extend(options, this.options.geocodeOptions);
         // ainsi que la recherche, les filtres du geocodage avancé et les callbacks
         L.Util.extend(options, settings);
-        // on y force le param suivant, s'il n'a pas été surchargé :
-        if (!options.hasOwnProperty("returnFreeForm")) {
-            L.Util.extend(options, {
-                returnFreeForm : true
-            });
-        }
 
+        // on ajoute le paramètre index spécifiant les ressources.
         var resources = this.options.resources.geocode;
-        if (!resources || Object.keys(resources).length === 0) {
-            return;
-        }
-
-        // au cas où les options du services ne sont pas renseignées, on y ajoute
-        // les tables de ressources
-        if (resources && L.Util.isArray(resources)) {
-            options.index = resources;
+        if (resources) {
+            // il se peut que l'utilisateur ait surchargé ce paramètre dans geocodeOptions,
+            // ou qu'il ait déjà été rempli (cas de la recherche avancée)
+            if (!options.index) {
+                options.index = resources;
+            }
         }
 
         // gestion de la clef !
@@ -798,8 +791,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     // on modifie les coordonnées du résultat en EPSG:4326 donc lat,lon
                     if (context._suggestedLocations && context._suggestedLocations[i]) {
                         context._suggestedLocations[i].position = {
-                            x : response.locations[0].position.y,
-                            y : response.locations[0].position.x
+                            lat : response.locations[0].position.y,
+                            lon : response.locations[0].position.x
                         };
                         // et on l'affiche dans la liste
                         context._locationsToBeDisplayed.unshift(context._suggestedLocations[i]);
@@ -847,8 +840,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
     _setPosition : function (position, zoom) {
         var map = this._map;
 
-        map.setZoomAround(L.latLng(position.x, position.y), zoom, true);
-        map.panTo(L.latLng(position.x, position.y));
+        map.setZoomAround(L.latLng(position), zoom, true);
+        map.panTo(L.latLng(position));
     },
 
     /**
@@ -968,7 +961,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 icon : _icon
             };
 
-            this._marker = L.marker(L.latLng(position.x, position.y), options);
+            this._marker = L.marker(L.latLng(position), options);
             this._marker.addTo(map);
 
             // FIXME
@@ -980,27 +973,25 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 var popupContent = null;
 
                 if (typeof information !== "string") {
-                    var values = [];
                     if (information.service === "DirectGeocodedLocation") {
-                        if (information.fields.freeform) {
-                            popupContent = information.fields.freeform;
-                        } else {
-                            var attributs = this._advancedSearchFilters[information.type];
-                            for (var i = 0; i < attributs.length; i++) {
-                                var key = attributs[i].name;
-                                var value = information.fields[key];
-                                // on prend que les chaines de caractères
-                                if (typeof value === "string" || typeof value === "number") {
-                                    values.push(value);
+                        popupContent = "<ul>";
+                        var attributes = information.fields;
+                        for (var attr in attributes) {
+                            if (attributes.hasOwnProperty(attr)) {
+                                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                                    popupContent += "<li>";
+                                    popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
+                                    popupContent += attributes[attr];
+                                    popupContent += " </li>";
                                 }
                             }
-
-                            popupContent = values.join(" - ");
                         }
+                        popupContent += " </ul>";
                     } else if (information.service === "SuggestedLocation") {
                         if (information.fields.fullText) {
                             popupContent = information.fields.fullText;
                         } else {
+                            var values = [];
                             values.push(information.fields.street || "");
                             values.push(information.fields.postalCode || "");
                             values.push(information.fields.commune || "");
@@ -1196,7 +1187,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                             logger.warn("Launch a geocode request (code postal) !");
                             context._requestGeocoding({
                                 query : value,
-                                returnFreeForm : true,
                                 // callback onSuccess
                                 onSuccess : function (results) {
                                     logger.log("request from Geocoding", results);
@@ -1207,10 +1197,10 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                                         var locations = results.locations;
                                         for (var i = 0; i < locations.length; i++) {
                                             var location = locations[i];
-                                            location.fullText = location.placeAttributes.freeform;
+                                            location.fullText = SearchEngineUtils.getGeocodedLocationFreeform(location);
                                             location.position = {
-                                                x : location.position.y,
-                                                y : location.position.x
+                                                x : location.position.lon,
+                                                y : location.position.lat
                                             };
                                             context._locationsToBeDisplayed.push(location);
                                         }
@@ -1254,8 +1244,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // AutoCompletion : lon/lat
         // Geocoding : lat/lon
         var position = {
-            x : this._locationsToBeDisplayed[idx].position.y,
-            y : this._locationsToBeDisplayed[idx].position.x
+            lat : this._locationsToBeDisplayed[idx].position.y,
+            lon : this._locationsToBeDisplayed[idx].position.x
         };
         var info = {
             service : "SuggestedLocation",
@@ -1415,56 +1405,13 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // à la requête, ainsi que le type de table de ressources de geocodage,
         // et le localisant
         var _index = this._currentGeocodingCode
-
-        var _location = this._currentGeocodingLocation || "";
-        if (this._currentGeocodingCode === "CadastralParcel") {
-            _location = ""; // on ne souhaite plus la saisie libre...
-        }
-
+        var _location = inputSearchTextContainer.value;
         var _filterOptions = {};
+
         for (var i = 0; i < data.length; i++) {
             var filter = data[i];
-            // on ne verifie pas les clefs sans valeur...
-            if (!filter.value) {
-                continue;
-            }
-
-            var filters = this._advancedSearchFilters[this._currentGeocodingCode];
-            for (var j = 0; j < filters.length; j++) {
-                var o = filters[j];
-
-                if (o.name === filter.key) {
-                    if (o.filter) {
-                        _filterOptions[filter.key] = filter.value;
-                    } else {
-                        // on concatene tous les valeurs des champs de recherche,
-                        // et on complete au besoin avec les valeur par defaut
-                        // (ex. '_')
-                        if (o.value) {
-                            var cur = filter.value.length;
-                            var max = o.value.length;
-                            if (max !== cur) {
-                                var masked = max - cur;
-                                var filler = o.value.charAt(0);
-                                while (filler.length < masked) {
-                                    filler += filler;
-                                }
-                                var fillerSlice = filler.slice(0, masked);
-                                filter.value = filter.value + fillerSlice;
-                            }
-                            // la location est de type concaténée dite "freeform"
-                            _location += filter.value;
-                        } else {
-                            // on est dans le cas où l'utilisateur utilise
-                            // la location structurée de la recherche avancée,
-                            // donc on ne tient plus compte de la saisie libre...
-                            if (typeof _location === "string") {
-                                _location = {};
-                            }
-                            _location[filter.key] = filter.value;
-                        }
-                    }
-                }
+            if ( filter.value ) {
+                _filterOptions[filter.key] = filter.value;
             }
         }
 

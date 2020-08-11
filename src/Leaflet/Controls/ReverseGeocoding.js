@@ -120,11 +120,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         // #################################################################### //
         // ################### informations pour la requête ################### //
 
-        // position du géocodage inverse qui sera envoyée dans la requête
-        this._requestPosition = null;
-        // eventuels filtres géométriques saisis par l'utilisateur : cercle ou bbox
-        this._requestCircleFilter = null;
-        this._requestBboxFilter = null;
+        // geometrie de recherche du géocodage inverse qui sera envoyée dans la requête
+        this._requestGeom = null;
 
         // pour savoir si un calcul est en cours ou non
         this._waiting = false;
@@ -493,7 +490,6 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 this._activateCircleInteraction(map);
                 break;
             case "extent":
-
                 this._activateBoxInteraction(map);
                 break;
             default :
@@ -548,7 +544,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         // TODO styles des icones
         var markerOptions = {
             // icon : par defaut...
-            repeatMode : true
+            repeatMode : false
         };
 
         this._currentFeature = new L.Draw.Marker(map, markerOptions);
@@ -570,7 +566,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         }
 
         var circleOptions = {
-            repeatMode : true
+            repeatMode : false
         }; // TODO styles
 
         this._currentFeature = new L.Draw.Circle(map, circleOptions);
@@ -592,7 +588,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         }
 
         var rectangleOptions = {
-            repeatMode : true
+            repeatMode : false
         }; // TODO styles
 
         this._currentFeature = new L.Draw.Rectangle(map, rectangleOptions);
@@ -612,38 +608,29 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         var oLatLng = null;
         if (type === "marker") {
             oLatLng = layer.getLatLng();
-            this._requestPosition = {
-                x : oLatLng.lat,
-                y : oLatLng.lng
-            };
+            this._requestGeom = {
+                type: "Point",
+                coordinates: [oLatLng.lng, oLatLng.lat]
+            }
         } else if (type === "circle") {
             oLatLng = layer.getLatLng();
-            this._requestPosition = {
-                x : oLatLng.lat,
-                y : oLatLng.lng
-            };
-            this._requestCircleFilter = {
-                x : oLatLng.lat,
-                y : oLatLng.lng,
-                radius : layer.getRadius()
+            this._requestGeom = {
+                type: "Cirle",
+                coordinates: [oLatLng.lng, oLatLng.lat],
+                radius: layer.getRadius()
             };
         } else if (type === "rectangle") {
             oLatLng = layer.getBounds();
-            var center = {
-                lng : (oLatLng.getSouthWest().lng + oLatLng.getNorthEast().lng) / 2,
-                lat : (oLatLng.getSouthWest().lat + oLatLng.getNorthEast().lat) / 2
-            };
-
-            this._requestPosition = {
-                x : center.lat,
-                y : center.lng
-            };
-
-            this._requestBboxFilter = {
-                left : oLatLng.getSouthWest().lat,
-                right : oLatLng.getNorthEast().lat,
-                bottom : oLatLng.getSouthWest().lng,
-                top : oLatLng.getNorthEast().lng
+            this._requestGeom = {
+                type: "Polygon",
+                coordinates: [
+                    [oLatLng.getNorthWest().lng, oLatLng.getNorthWest().lat],
+                    [oLatLng.getNorthEast().lng, oLatLng.getNorthEast().lat],
+                    [oLatLng.getSouthEast().lng, oLatLng.getSouthEast().lat],
+                    [oLatLng.getSouthWest().lng, oLatLng.getSouthWest().lat],
+                    [oLatLng.getNorthWest().lng, oLatLng.getNorthWest().lat],
+                ],
+                radius: layer.getRadius()
             };
         } else {
             logger.warn("type gemetric not defined !?");
@@ -713,41 +700,35 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         // options par defaut
         L.Util.extend(options, {
             apiKey : this.options.apiKey,
-            ssl : this.options.ssl,
-            srs : "EPSG:4326",
-            returnFreeForm : false,
             // maximumResponses : 25, // on peut la surcharger !
             timeOut : 30000,
             protocol : "XHR"
 
         });
 
-        // FIXME pourquoi je perds cette option ????
-        var _type = options.filterOptions.type;
-
         // on récupère d'éventuels filtres
-        if (this._currentGeocodingDelimitation.toLowerCase() === "circle" && this._requestCircleFilter) {
+        if (this._requestGeom.type.toLowerCase() === "circle") {
             // FIXME : a confirmer !
-            if (this._requestCircleFilter.radius > 1000) {
-                logger.log("INFO : initial circle radius (" + this._requestCircleFilter.radius + ") limited to 1000m.");
-                this._requestCircleFilter.radius = 1000;
+            if (this._requestGeom.radius > 1000) {
+                logger.log("INFO : initial circle radius (" + this._requestGeom.radius + ") limited to 1000m.");
+                this._requestGeom.radius = 1000;
             }
-
-            L.Util.extend(options, {
-                filterOptions : {
-                    type : _type,
-                    circle : this._requestCircleFilter
-                }
-            });
+            options.searchGeometry = this._requestGeom;
         }
-
-        if (this._currentGeocodingDelimitation.toLowerCase() === "extent" && this._requestBboxFilter) {
-            L.Util.extend(options, {
-                filterOptions : {
-                    type : _type,
-                    bbox : this._requestBboxFilter
-                }
-            });
+        else if (this._requestGeom.type.toLowerCase() === "polygon") {
+            options.searchGeometry = this._requestGeom;
+        }
+        else if (this._requestGeom.type.toLowerCase() === "point") {
+            if (this._currentGeocodingType === "StreetAddress") {
+                options.searchGeometry = {
+                    type: "Circle",
+                    radius: 50,
+                    coordinates: this._requestGeom.coordinates
+                };
+                options.maximumResponses = 1;
+            } else {
+                options.searchGeometry = this._requestGeom;
+            }
         }
 
         logger.log("reverseGeocode request options : ", options);
@@ -1080,8 +1061,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
      */
     onReverseGeocodingSubmit : function () {
         // le paramètre position est obligatoire
-        if (!this._requestPosition) {
-            logger.log("missing position");
+        if (!this._requestGeom) {
+            logger.log("missing search geometry");
             return;
         }
 
@@ -1093,10 +1074,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         var map = this._map;
         var self = this;
         this._reverseGeocodingRequest({
-            position : self._requestPosition,
-            filterOptions : {
-                type : [self._currentGeocodingType]
-            },
+            index : self._currentGeocodingType,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);

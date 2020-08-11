@@ -810,13 +810,12 @@ var SearchEngine = (function (Control) {
         logger.log(settings);
 
         var options = {};
-        options.returnFreeForm = true;
         // on recupere les options du service
         Utils.assign(options, this.options.geocodeOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
 
-        // on ajoute le paramètre filterOptions.type spécifiant les ressources.
+        // on ajoute le paramètre index spécifiant les ressources.
         var resources = this.options.resources.geocode;
         if (resources) {
             // il se peut que l'utilisateur ait surchargé ce paramètre dans geocodeOptions,
@@ -1045,24 +1044,42 @@ var SearchEngine = (function (Control) {
         var map = this.getMap();
 
         var popupContent = "";
-        if (information.attributes) {
-            // si on a des attributes (freeform = false)
-            popupContent = "<ul>";
-            var attributes = information.attributes;
-            for (var attr in attributes) {
-                if (attributes.hasOwnProperty(attr)) {
-                    if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
-                        popupContent += "<li>";
-                        popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
-                        popupContent += attributes[attr];
-                        popupContent += " </li>";
+        if (typeof information !== "string") {
+            if (information.service === "DirectGeocodedLocation") {
+                popupContent = "<ul>";
+                var attributes = information.fields;
+                for (var attr in attributes) {
+                    if (attributes.hasOwnProperty(attr)) {
+                        if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                            popupContent += "<li>";
+                            popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
+                            popupContent += attributes[attr];
+                            popupContent += " </li>";
+                        }
                     }
                 }
+                popupContent += " </ul>";
+            } else if (information.service === "SuggestedLocation") {
+                if (information.fields.fullText) {
+                    popupContent = information.fields.fullText;
+                } else {
+                    var values = [];
+                    values.push(information.fields.street || "");
+                    values.push(information.fields.postalCode || "");
+                    values.push(information.fields.commune || "");
+
+                    if (information.type === "PositionOfInterest") {
+                        values.push(information.fields.poi || "");
+                        values.push(information.fields.kind || "");
+                    }
+
+                    popupContent = values.join(" - ");
+                }
+            } else {
+                popupContent = "sans informations.";
             }
-            popupContent += " </ul>";
         } else {
-            // freeform
-            popupContent = information.label;
+            popupContent = information;
         }
 
         this._popupContent.innerHTML = popupContent;
@@ -1214,7 +1231,6 @@ var SearchEngine = (function (Control) {
                             logger.warn("Launch a geocode request (code postal) !");
                             context._requestGeocoding({
                                 location : value,
-                                returnFreeForm : true,
                                 // callback onSuccess
                                 onSuccess : function (results) {
                                     logger.log("request from Geocoding", results);
@@ -1225,10 +1241,10 @@ var SearchEngine = (function (Control) {
                                         var locations = results.locations;
                                         for (var i = 0; i < locations.length; i++) {
                                             var location = locations[i];
-                                            location.fullText = location.placeAttributes.freeform;
+                                            location.fullText = SearchEngineUtils.getGeocodedLocationFreeform(location);
                                             location.position = {
-                                                x : location.position.y,
-                                                y : location.position.x
+                                                x : location.position.lon,
+                                                y : location.position.lat
                                             };
                                             context._locationsToBeDisplayed.push(location);
                                         }
@@ -1342,7 +1358,6 @@ var SearchEngine = (function (Control) {
         // on ajoute le texte de l'autocomplétion dans l'input
         var label = this._locationsToBeDisplayed[idx].fullText;
         this._setLabel(label);
-        info.label = label;
 
         // on sauvegarde le localisant
         this._currentGeocodingLocation = label;
@@ -1431,32 +1446,15 @@ var SearchEngine = (function (Control) {
             this._geocodedLocations[idx].position.lon,
             this._geocodedLocations[idx].position.lat
         ];
-        var attributes = this._geocodedLocations[idx].placeAttributes;
         var info = {
             service : "DirectGeocodedLocation",
             type : this._geocodedLocations[idx].type,
-            fields : this._geocodedLocations[idx]
+            fields : this._geocodedLocations[idx].placeAttributes
         };
 
         // on ajoute le texte du géocodage dans l'input
-        var label;
-        if (attributes.freeform) {
-            // reponse en freeForm
-            label = attributes.freeform;
-        } else if (this._geocodedLocations[idx].type === "PositionOfInterest") {
-            label = attributes.postalCode + " " + attributes.toponyme;
-            info.attributes = attributes;
-        } else if (this._geocodedLocations[idx].type === "StreetAddress") {
-            label = attributes.postalCode + " " + attributes.city;
-            info.attributes = attributes;
-        } else if (this._geocodedLocations[idx].type === "CadastralParcel") {
-            label = attributes.identifiant;
-            info.attributes = attributes;
-        } else {
-            label = "...";
-        }
+        var label = SearchEngineUtils.getGeocodedLocationFreeform(this._geocodedLocations[idx]);
         this._setLabel(label);
-        info.label = label;
 
         // Info : la position est en EPSG:4326, à transformer dans la projection de la carte
         var view = this.getMap().getView();
