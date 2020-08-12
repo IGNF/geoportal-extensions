@@ -24,7 +24,7 @@ div[id^=GPAttributionsListContainer-] ul {
 
 label[id^=GPshowAttributionsListPicto-] {
     display: flex;
-    z-index: 1;
+    z-index: auto;
     position: relative;
     margin-left: auto;
 }
