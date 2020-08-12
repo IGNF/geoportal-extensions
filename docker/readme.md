@@ -13,25 +13,24 @@ On prendra le temps de renseigner les variables du fichier `./docker/.env` en se
 - la variable `EXTENSIONS` permettra d'indiquer l'emplacement du projet `geoportal-extensions`.
 - la variable `ACCESSLIB` permettra d'indiquer l'emplacement du projet `geoportal-access-lib`.
 
-Il suffit de lancer la commande dans le répertoire `./docker`: 
+On vérifiera que les dépôts `geoportal-access-lib` et `geoportal-extensions` sont bien dans la version souhaitée. Par exemple, être sur la branche `develop` à jour, ou sur un tag précis, ou encore dans une version modifiée. Mais dans tous les cas, cette version devra être compatible avec un usage dockerisé. 
+
+On pourra alors lancer la commande suivante dans le répertoire `./docker`: 
 `docker-compose build`
 
 ## Problèmes possibles 
 
 Lors du lancement du build, il peut y avoir des erreurs dont voici celles déjà rencontrées:
 
-- ```ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a supported version (e.g "2.2" or "3.3") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.```
-Cette erreur est généralement lié à un problème de versions entre le `docker` de la machine utilisée et celui indiqué dans les prérequis. On pourra se référer à la page suivante pour voir la matrice des compatibilités: https://docs.docker.com/compose/compose-file/compose-versioning/. 
+- ```ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a supported version (e.g "2.2" or "3.3") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.```. Cette erreur est généralement lié à un problème de versions entre le `docker` de la machine utilisée et celui indiqué dans les prérequis. On pourra se référer à la page suivante pour voir la matrice des compatibilités: https://docs.docker.com/compose/compose-file/compose-versioning/. 
 
 - ```WARNING: The ACCESSLIB variable is not set. Defaulting to a blank string.```
 Cette erreur indique que le fichier `/docker/.env` est mal rempli. Dans ce cas, c'est la variable `ACCESSLIB` qui est absente. On pourra voir la même erreur avec différentes variables du fichier. 
 
 - ```ERROR: Cannot locate specified Dockerfile: ./docker/Dockerfile```
-Cette erreur indique que le fichier `/docker/.env` est mal rempli. Dans ce cas, le chemin indiquant le `geoportal-access-lib` est incorrect et donc le `Dockerfile` n'est pas trouvé pour le build. 
+Cette erreur peut indiquer que le fichier `/docker/.env` est mal rempli. Par exemple, le chemin indiquant le `geoportal-access-lib` est incorrect et donc le `Dockerfile` n'est pas trouvé pour le build. 
 
-- ```ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?
-``` 
-Cette erreur peut avoir plusieurs origines. Il peut être intéressant de regarder les étapes proposées sur cette page: https://docs.docker.com/engine/install/linux-postinstall/. 
+- ```ERROR: Couldn't connect to Docker daemon at http+docker://localhost - is it running?``` . Cette erreur peut avoir plusieurs origines. Il peut être intéressant de regarder les étapes proposées sur cette page: https://docs.docker.com/engine/install/linux-postinstall/. 
 
 
 # Lancer un container 
