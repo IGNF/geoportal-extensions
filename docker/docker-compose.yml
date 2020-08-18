@@ -52,7 +52,7 @@ services:
       - access-lib
       - extensions
     ports:
-      - 8081:80
+      - 8087:80
     volumes:
       - ./conf/default:/etc/nginx/sites-enabled/default:ro
       - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro

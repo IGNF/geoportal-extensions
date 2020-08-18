@@ -15,8 +15,11 @@ do
     cp -rf ./dist/* /home/docker/html/geoportal-extensions/dist/
     cp -rf ./samples/* /home/docker/html/geoportal-extensions/samples/
     cp -rf ./jsdoc/* /home/docker/html/geoportal-extensions/jsdoc/
-    npm pack
-    cp *.tgz /home/docker/html/geoportal-extensions/package/
+    popd
+    pushd /home/docker/geoportal-extensions/build/scripts/release/
+    rm -rf ./geoportal-extensions-leaflet*.tgz
+    bash build-pack.sh -a
+    cp ./geoportal-extensions-leaflet*.tgz /home/docker/html/geoportal-extensions/package/geoportal-extensions-leaflet-local.tgz
     popd
     old=$message
   fi

@@ -15,8 +15,6 @@ do
     cp -rf ./dist/* /home/docker/html/geoportal-extensions/dist/
     cp -rf ./samples/* /home/docker/html/geoportal-extensions/samples/
     cp -rf ./jsdoc/* /home/docker/html/geoportal-extensions/jsdoc/
-    npm pack
-    cp *.tgz /home/docker/html/geoportal-extensions/package/
     popd
     old=$message
   fi

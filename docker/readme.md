@@ -51,9 +51,9 @@ Il suffira de lancer la commande `docker-compose up` (ou `docker-compose up -d` 
 
 ## Usage 2: Effectuer des développements 
 
-L'idée est de développer du code sur la machine mais qui est exécuté dans docker. 
+L'idée est de développer du code sur la machine mais qui soit exécuté dans docker. 
 
-Ainsi, lorsqu'une modification est effectuée dans `./src`,`./test`, `./test_rendering` ou `./sample-src`, il y a plusieurs conséquences, si elles sont nécessaires : 
+Ainsi, lorsqu'une modification est effectuée dans `./src`,`./test` ou `./sample-src`, il y a plusieurs conséquences, si elles sont nécessaires : 
 - les tests sont mis à jour, 
 - la documentation est mise à jour, 
 - le package `.tgz` est de nouveau généré dans le dossier `./build/scripts/release/`. 
@@ -68,7 +68,7 @@ Puis, il suffira de lancer la commande `docker-compose up` ou `docker-compose up
 ## Problèmes possibles
 
 - Lors du lancement d'un container, on pourra avoir l'erreur suivante:
-`Error starting userland proxy: listen tcp 0.0.0.0:8081: bind: address already in use.`
+`Error starting userland proxy: listen tcp 0.0.0.0:8087: bind: address already in use.`
 Cela signifie que le port est déjà utilisé par une autre application. 
 
 - Lors d'un changement du `package.json`, il sera nécessaire de commiter le changement et relancer un build de l'image sans cache: `docker-compose build --no-cache`. 
