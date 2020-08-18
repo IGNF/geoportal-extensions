@@ -136,7 +136,7 @@ module.exports = (env, argv) => {
                 warnings : false
             }
         },
-        // stats : "none",
+        stats : "verbose", // "none",
         optimization : {
             /** MINIFICATION */
             minimizer: [
