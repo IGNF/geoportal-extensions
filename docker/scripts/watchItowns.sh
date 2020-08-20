@@ -18,7 +18,7 @@ do
     popd
     pushd /home/docker/geoportal-extensions/build/scripts/release/
     rm -rf ./geoportal-extensions-itowns*.tgz
-    bash build-pack.sh -a
+    bash build-pack.sh -i
     cp ./geoportal-extensions-itowns*.tgz /home/docker/html/geoportal-extensions/package/geoportal-extensions-itowns-local.tgz
     popd
     old=$message

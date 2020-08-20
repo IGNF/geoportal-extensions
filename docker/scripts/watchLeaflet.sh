@@ -18,7 +18,7 @@ do
     popd
     pushd /home/docker/geoportal-extensions/build/scripts/release/
     rm -rf ./geoportal-extensions-leaflet*.tgz
-    bash build-pack.sh -a
+    bash build-pack.sh -l
     cp ./geoportal-extensions-leaflet*.tgz /home/docker/html/geoportal-extensions/package/geoportal-extensions-leaflet-local.tgz
     popd
     old=$message
