@@ -1,0 +1,161 @@
+/* REVERSE GEOCODING */
+
+[id^="GPreverseGeocoding-"] {
+  top: 180px;
+}
+
+/* Showing/hiding reverse geocoding panel */
+
+[id^="GPshowReverseGeocodingPicto-"] {
+  display: inline-block;
+}
+
+[id^="GPshowReverseGeocoding-"] + label {
+  display: block;
+}
+
+[id^="GPshowReverseGeocoding-"]:checked + label {
+  display: none;
+}
+
+[id^="GPshowReverseGeocoding-"] + label + div {
+  display: none;
+}
+
+[id^="GPshowReverseGeocoding-"]:checked + label + div {
+  display: block;
+}
+
+/* General panels */
+
+div[id^=GPreverseGeocodingResultsClose] {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+  /*background-position: -26px 0;*/
+}
+
+[id^="GPreverseGeocodingPanel-"] {
+  width: 280px;
+}
+
+.GPreverseGeocodingComponentHidden {
+  display: none;
+}
+
+div[id^="GPreverseGeocodingReturnPicto-"] {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  opacity: 1;
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+.GPreverseGeocodingReturnPictoHidden {
+    display: none;
+}
+
+/* Calc waiting */
+
+.GPreverseGeocodingCalcWaitingContainerVisible,
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPreverseGeocodingCalcWaitingContainerVisible {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+}
+
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  display: none;
+}
+
+.GPreverseGeocodingCalcWaiting {
+  margin: auto;
+}
+
+/* Search panel */
+
+[id^="GPreverseGeocodingForm-"] {
+  position: relative;
+  max-height: 270px;
+  overflow-y: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+}
+
+.GPreverseGeocodingCodeLabel,
+.GPreverseGeocodingFilterLabel {
+  max-width: 105px;
+}
+
+.GPreverseGeocodingCodeLabel,
+.GPreverseGeocodingCode {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.GPreverseGeocodingFilterLabel,
+.GPreverseGeocodingFilterInput {
+  margin-bottom: 5px;
+}
+
+input[id^="GPreverseGeocodingSubmit-"] {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 100px;
+}
+
+/* Calc waiting */
+
+/* TODO: waiting  */
+.GPreverseGeocodingCalcWaitingContainerVisible,
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPreverseGeocodingCalcWaitingContainerVisible {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+}
+
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  display: none;
+}
+
+.GPreverseGeocodingCalcWaiting {
+  margin: auto;
+}
+
+/* Result panel */
+
+div[id^=GPreverseGeocodingResultsList-] {
+  position: relative;
+  max-height: 210px;
+  overflow-y: auto;
+}
