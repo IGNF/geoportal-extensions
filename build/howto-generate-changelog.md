@@ -45,7 +45,7 @@ Requête pour obtenir la liste des releases sur github
 ```
 # Extension Geoportail [Itowns|OpenLayers|Leaflet], version X.X.X
 
-**01/01/2019 : version X.X.X**
+**01/01/2019**
 > Release Extension Geoportail [Itowns|OpenLayers|Leaflet]
 
 ## Summary
