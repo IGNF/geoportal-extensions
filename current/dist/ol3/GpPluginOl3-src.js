@@ -1,1 +1,0 @@
-../openlayers/GpPluginOpenLayers-src.js
