@@ -254,19 +254,19 @@ var LocationSelector = (function (Control) {
      * check
      */
     LocationSelector.prototype._checkRightsManagement = function () {
-        // les ressources du service d'autocompletion
-        var _opts = this.options.autocompleteOptions.filterOptions;
-        var _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = [
-                "PositionOfInterest",
-                "StreetAddress"
+        // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
+        var _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
+        // ou celles par défaut sinon.
+        if (!_resources || _resources.length === 0) {
+            _resources = [
+                "StreetAddress",
+                "PositionOfInterest"
             ];
         }
 
         var rightManagement = RightManagement.check({
             key : this.options.apiKey,
-            resources : _res,
+            resources : _resources,
             services : ["AutoCompletion"]
         });
 
@@ -494,7 +494,7 @@ var LocationSelector = (function (Control) {
      * this method is called by event 'click' on 'GProuteOriginLabel' tag label
      * (cf. this._createRoutePointLabelElement).
      * this point is erased.
-     *
+     *Missing
      * @private
      */
     LocationSelector.prototype.onLocationClearPointClick = function () {

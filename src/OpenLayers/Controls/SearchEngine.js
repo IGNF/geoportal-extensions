@@ -349,10 +349,10 @@ var SearchEngine = (function (Control) {
         // ressource de geocodage à afficher
 
         var geocodeResources = this.options.resources.geocode;
-        if (geocodeResources==="location") {
-            geocodeResources = ["PositionOfInterest","StreetAddress","CadastralParcel"];
+        if (geocodeResources === "location") {
+            geocodeResources = ["PositionOfInterest", "StreetAddress", "CadastralParcel"];
         }
-        if (!Array.isArray(geocodeResources)){
+        if (!Array.isArray(geocodeResources)) {
             geocodeResources = [geocodeResources];
         }
         for (var i = 0; i < geocodeResources.length; i++) {
@@ -667,7 +667,7 @@ var SearchEngine = (function (Control) {
         } else {
             _resources = [_resources];
         }
-        
+
         var rightManagementGeocode = RightManagement.check({
             key : _key || this.options.apiKey,
             resources : _resources,
@@ -1525,7 +1525,7 @@ var SearchEngine = (function (Control) {
 
         for (var i = 0; i < data.length; i++) {
             var filter = data[i];
-            if ( filter.value ) {
+            if (filter.value) {
                 _filterOptions[filter.key] = filter.value;
             }
         }
@@ -1542,7 +1542,7 @@ var SearchEngine = (function (Control) {
         var context = this;
         this._requestGeocoding({
             query : _location,
-            index: this._currentGeocodingCode,
+            index : this._currentGeocodingCode,
             filters : _filterOptions,
             // callback onSuccess
             onSuccess : function (results) {

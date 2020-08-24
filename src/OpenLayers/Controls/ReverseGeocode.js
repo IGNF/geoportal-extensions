@@ -498,27 +498,28 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype._checkRightsManagement = function () {
-        var _resources = [];
-        var _key;
-        var _opts = null;
-
-        // les ressources du service de geocodage
-        _key = this.options.reverseGeocodeOptions.apiKey;
-        _opts = this.options.reverseGeocodeOptions.filterOptions;
+        var _key = this.options.reverseGeocodeOptions.apiKey;
         // on récupère les éventuelles ressources passées en option, soit dans reverseGeocodeOptions :
-        _resources = (_opts) ? _opts.type : [];
-        // soit directement dans options.resources.geocode :
+        var _resources = (this.options.reverseGeocodeOptions.index) ? this.options.reverseGeocodeOptions.index : "";
+        // soit directement dans options.resources :
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources;
         }
         // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
+        if (!_resources || _resources === "") {
+            _resources = "location";
+        }
+
+        if (_resources === "location") {
             _resources = [
                 "StreetAddress",
                 "PositionOfInterest",
                 "CadastralParcel"
             ];
+        } else {
+            _resources = [_resources];
         }
+
         var rightManagementGeocode = RightManagement.check({
             key : _key || this.options.apiKey,
             resources : _resources,
@@ -742,8 +743,8 @@ var ReverseGeocode = (function (Control) {
                 // on récupère le rayon du cercle qui vient d'être tracé
                 if (e.feature && e.feature.getGeometry) {
                     this._requestGeom = {
-                        type: "Point",
-                        coordinates: [
+                        type : "Point",
+                        coordinates : [
                             this._requestPosition.lon,
                             this._requestPosition.lat
                         ]
@@ -806,11 +807,11 @@ var ReverseGeocode = (function (Control) {
                     var radius = e.feature.getGeometry().getRadius();
                     // et on le stocke comme filtre pour la requête
                     this._requestGeom = {};
-                    this._requestGeom.type = 'Circle';
+                    this._requestGeom.type = "Circle";
                     this._requestGeom.radius = radius;
                     if (this._requestPosition) {
                         this._requestGeom.coordinates = [
-                            this._requestPosition.lon, 
+                            this._requestPosition.lon,
                             this._requestPosition.lat
                         ];
                     }
@@ -1114,16 +1115,14 @@ var ReverseGeocode = (function (Control) {
                 this._requestGeom.radius = 1000;
             }
             requestOptions.searchGeometry = this._requestGeom;
-        }
-        else if (this._requestGeom.type.toLowerCase() === "polygon") {
+        } else if (this._requestGeom.type.toLowerCase() === "polygon") {
             requestOptions.searchGeometry = this._requestGeom;
-        }
-        else if (this._requestGeom.type.toLowerCase() === "point") {
+        } else if (this._requestGeom.type.toLowerCase() === "point") {
             if (this._currentGeocodingType === "StreetAddress") {
                 requestOptions.searchGeometry = {
-                    type: "Circle",
-                    radius: 50,
-                    coordinates: this._requestGeom.coordinates
+                    type : "Circle",
+                    radius : 50,
+                    coordinates : this._requestGeom.coordinates
                 };
                 requestOptions.maximumResponses = 1;
             } else {
@@ -1218,7 +1217,7 @@ var ReverseGeocode = (function (Control) {
                 if (attr.postalCode.length === 1) {
                     locationDescription += ", " + attr.postalCode[0];
                 }
-                locationDescription += " (" + attr.type.join(",") + ")" ;
+                locationDescription += " (" + attr.type.join(",") + ")";
                 break;
 
             case "CadastralParcel":

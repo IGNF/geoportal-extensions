@@ -420,10 +420,10 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // ressource de geocodage à afficher
 
         var geocodeResources = this.options.resources.geocode;
-        if (geocodeResources==="location") {
-            geocodeResources = ["PositionOfInterest","StreetAddress","CadastralParcel"];
+        if (geocodeResources === "location") {
+            geocodeResources = ["PositionOfInterest", "StreetAddress", "CadastralParcel"];
         }
-        if (!Array.isArray(geocodeResources)){
+        if (!Array.isArray(geocodeResources)) {
             geocodeResources = [geocodeResources];
         }
         for (var i = 0; i < geocodeResources.length; i++) {
@@ -1404,13 +1404,14 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // recuperation des parametres des filtres pour les transmettre
         // à la requête, ainsi que le type de table de ressources de geocodage,
         // et le localisant
-        var _index = this._currentGeocodingCode
+        var _index = this._currentGeocodingCode;
+        var inputSearchTextContainer = L.DomUtil.get("GPsearchInputText-" + this._uid);
         var _location = inputSearchTextContainer.value;
         var _filterOptions = {};
 
         for (var i = 0; i < data.length; i++) {
             var filter = data[i];
-            if ( filter.value ) {
+            if (filter.value) {
                 _filterOptions[filter.key] = filter.value;
             }
         }
