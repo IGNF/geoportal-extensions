@@ -77,7 +77,6 @@
     "proj4leaflet": "1.0.2",
     "sortablejs": "1.8.4",
     "three": "0.113.2",
-    "three.meshline": "1.2.0",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {
