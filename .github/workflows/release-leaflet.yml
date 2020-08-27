@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt-get install perl-base libjson-perl
 
-      # FIXME doit on commiter le package ?
+      # FIXME commiter into develop branch ?
       - name: Build & Package
         run: |
           cd ./build/scripts/release/
@@ -54,6 +54,7 @@ jobs:
           name: dist
           path: dist/leaflet
 
+      # FIXME artifacts bundles and binary are the same !?
       - name: Upload Bundles artifacts
         if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
         uses: actions/upload-artifact@v2
@@ -146,10 +147,17 @@ jobs:
           echo ::set-output name=DATE::$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_; my $field = 'date'; print $DS->{$field};' | sed -e 's/\//\\\//g')
 
       - name: Create ChangeLog
-        run: |
+        run: | # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
           cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoportail OpenLayers/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__VERSION__/${{ steps.get_package_value.outputs.VERSION }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__DATE__/${{ steps.get_package_value.outputs.DATE }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+
+      - name: Upload ChangeLog artifacts
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        uses: actions/upload-artifact@v2
+        with:
+          name: changelog
+          path: DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
 
       - name: Create Release
         id: create_release
@@ -214,3 +222,76 @@ jobs:
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_GEOPORTAL_TOKEN }}
+
+  changelog:
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: [create_release, publish_package]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: IGNF/geoportal-extensions
+          ref: develop
+
+      - name: Download ChangeLog artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
+
+      - name: Install Libs
+        run: |
+          npm install markdown-toc
+
+      # cf. https://www.grymoire.com/Unix/Sed.html
+      # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
+      - name: Reset draft changelog
+        run: |
+          sed -i -e '/# Extension Geoportail Leaflet/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
+          sed -e 's/__UP_LIBRARY__/Leaflet/' DRAFT_CHANGELOG.md
+          sed -e 's/__LO_LIBRARY__/leaflet/' DRAFT_CHANGELOG.md
+
+      - name: Archive changelog
+        run: |
+          cat DRAFT_CHANGELOG_${{ env.LIBRARY }}.md >> doc/CHANGELOG-leaflet.md
+          ./node_modules/.bin/markdown-toc -i doc/CHANGELOG-leaflet.md
+
+      - name: Clean and publish # TODO TO CHANGE !
+        run: |
+          rm  DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          git config user.name lowzonenose
+          git config user.email jpbazonnais@gmail.com
+          git add -A
+          git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
+          git push
+
+  # TODO not yet implemented !
+  rollback:
+    if: false # always skip job !
+    # if: failure()
+    # if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: [create_release, publish_package, changelog]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the tagname
+        id: get_tagname
+        run: echo ::set-output name=TAGNAME::$(echo ${GITHUB_REF##*/})
+
+      - name: Rollback jsdoc (gh-pages)
+        run: |
+          echo "not yet implemented !"
+
+      - name: Rollback changelog (develop)
+        run: |
+          echo "not yet implemented !"
+
+      - name: Rollback Release
+        if: job.create_release.steps.create_release.outputs.id != ''
+        uses: author/action-rollback@stable
+        with:
+          # Using a known release ID
+          id: ${{ job.create_release.steps.create_release.id }}
+          # Using a tag name
+          tag: ${{ steps.get_tagname.outputs.TAGNAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

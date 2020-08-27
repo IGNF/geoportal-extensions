@@ -149,10 +149,17 @@ jobs:
           echo ::set-output name=VERSION::$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_; my $field = 'olExtVersion'; print $DS->{$field};')
 
       - name: Create ChangeLog
-        run: |
+        run: | # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
           cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoportail OpenLayers/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__VERSION__/${{ steps.get_package_value.outputs.VERSION }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__DATE__/${{ steps.get_package_value.outputs.DATE }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+
+      - name: Upload ChangeLog artifacts
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        uses: actions/upload-artifact@v2
+        with:
+          name: changelog
+          path: DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
 
       - name: Create Release
         id: create_release
@@ -220,8 +227,7 @@ jobs:
 
   # TODO not yet implemented !
   changelog:
-    if: false # always skip job !
-    # if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
     needs: [create_release, publish_package]
     runs-on: ubuntu-latest
     steps:
@@ -231,13 +237,36 @@ jobs:
           repository: IGNF/geoportal-extensions
           ref: develop
 
-      - name: Archive changelog
-        run: |
-          echo "not yet implemented !"
+      - name: Download ChangeLog artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
 
+      - name: Install Libs
+        run: |
+          npm install markdown-toc
+
+      # cf. https://www.grymoire.com/Unix/Sed.html
+      # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
       - name: Reset draft changelog
         run: |
-          echo "not yet implemented !"
+          sed -i -e '/# Extension Geoportail OpenLayers/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
+          sed -e 's/__UP_LIBRARY__/OpenLayers/' DRAFT_CHANGELOG.md
+          sed -e 's/__LO_LIBRARY__/openlayers/' DRAFT_CHANGELOG.md
+
+      - name: Archive changelog
+        run: |
+          cat DRAFT_CHANGELOG_${{ env.LIBRARY }}.md >> doc/CHANGELOG-openlayers.md
+          ./node_modules/.bin/markdown-toc -i doc/CHANGELOG-openlayers.md
+
+      - name: Clean and publish # TODO TO CHANGE !
+        run: |
+          rm  DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          git config user.name lowzonenose
+          git config user.email jpbazonnais@gmail.com
+          git add -A
+          git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
+          git push
 
   # TODO not yet implemented !
   rollback:
@@ -252,6 +281,10 @@ jobs:
         run: echo ::set-output name=TAGNAME::$(echo ${GITHUB_REF##*/})
 
       - name: Rollback jsdoc (gh-pages)
+        run: |
+          echo "not yet implemented !"
+
+      - name: Rollback changelog (develop)
         run: |
           echo "not yet implemented !"
 
