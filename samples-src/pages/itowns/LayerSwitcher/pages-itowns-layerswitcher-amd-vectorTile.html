@@ -64,7 +64,6 @@
                     // Ajout couche Vecteur tuilé par itowns (fx: 2.5 => transparent)
                     var mvtSource = new itowns.VectorTilesSource({
                         style: '../../resources/itowns/planign.json',
-                        filter: function (layer) { return ['fill', 'line'].includes(layer.type) },
                         zoom: {
                             min: 2,
                             max: 16,
@@ -76,8 +75,9 @@
                         isValidData: function() {
                             return false;
                         },
+                        noTextureParentOutsideLimit: true,
+                        labelEnabled: true,
                         source: mvtSource
-                        //fx: 2.5,
                     });
                 
                     globeView.addLayer(mvtLayer);
