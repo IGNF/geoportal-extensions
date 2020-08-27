@@ -6,6 +6,7 @@ import ID from "../../Common/Utils/SelectorID";
 import LocationSelectorDOM from "../../Common/Controls/LocationSelectorDOM";
 import PositionFormater from "./Utils/PositionFormater";
 import IconDefault from "./Utils/IconDefault";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 
 var logger = Logger.getLogger("locationselector");
 
@@ -469,20 +470,28 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
                 var popupContent = null;
 
                 if (typeof information !== "string") {
-                    if (information.fields.fullText) {
-                        popupContent = information.fields.fullText;
-                    } else {
-                        var values = [];
-                        values.push(information.fields.street || "");
-                        values.push(information.fields.postalCode || "");
-                        values.push(information.fields.commune || "");
+                    if (information.service === "GeocodedLocation") {
+                        popupContent = GeocodeUtils.getGeocodedLocationFreeform({
+                            type : information.type,
+                            placeAttributes : information.fields
+                        });
+                    } else if (information.service === "SuggestedLocation") {
+                        if (information.fields.fullText) {
+                            popupContent = information.fields.fullText;
+                        } else {
+                            var values = [];
+                            values.push(information.fields.street || "");
+                            values.push(information.fields.postalCode || "");
+                            values.push(information.fields.commune || "");
 
-                        if (information.type === "PositionOfInterest") {
-                            values.push(information.fields.poi || "");
-                            values.push(information.fields.kind || "");
+                            if (information.type === "PositionOfInterest") {
+                                values.push(information.fields.poi || "");
+                                values.push(information.fields.kind || "");
+                            }
+                            popupContent = values.join(" - ");
                         }
-
-                        popupContent = values.join(" - ");
+                    } else {
+                        popupContent = "sans informations.";
                     }
                 } else {
                     popupContent = information;
@@ -765,8 +774,14 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         // on transmet le texte au panneau
         this._setLabel(label);
 
+        var info = {
+            service: "GeocodedLocation",
+            type: oLocation.type,
+            fields: oLocation.placeAttributes
+        };
+
         // on met en place le marker
-        this._setMarker(oLocation.position, null, false);
+        this._setMarker(oLocation.position, info, true);
 
         this._inputShowPointerContainer.checked = false;
         this._inputAutoCompleteContainer.className = "GPlocationOriginVisible";
@@ -870,6 +885,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         };
 
         var info = {
+            service : "SuggestedLocation",
             type : this._suggestedLocations[idx].type,
             fields : this._suggestedLocations[idx]
         };

@@ -5,6 +5,7 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 import IconDefault from "./Utils/IconDefault";
 import SearchEngineDOM from "../../Common/Controls/SearchEngineDOM";
 import Utils from "../../Common/Utils";
@@ -973,7 +974,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 var popupContent = null;
 
                 if (typeof information !== "string") {
-                    if (information.service === "DirectGeocodedLocation") {
+                    if (information.service === "GeocodedLocation") {
                         popupContent = "<ul>";
                         var attributes = information.fields;
                         for (var attr in attributes) {
@@ -1000,7 +1001,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                                 values.push(information.fields.poi || "");
                                 values.push(information.fields.kind || "");
                             }
-
                             popupContent = values.join(" - ");
                         }
                     } else {
@@ -1197,7 +1197,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                                         var locations = results.locations;
                                         for (var i = 0; i < locations.length; i++) {
                                             var location = locations[i];
-                                            location.fullText = SearchEngineUtils.getGeocodedLocationFreeform(location);
+                                            location.fullText = GeocodeUtils.getGeocodedLocationFreeform(location);
                                             location.position = {
                                                 x : location.position.lon,
                                                 y : location.position.lat
@@ -1335,7 +1335,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         var position = this._geocodedLocations[idx].position;
         var info = {
-            service : "DirectGeocodedLocation",
+            service : "GeocodedLocation",
             type : this._geocodedLocations[idx].type,
             fields : this._geocodedLocations[idx].placeAttributes
         };

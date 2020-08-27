@@ -13,6 +13,7 @@ import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 // DOM
 import SearchEngineDOM from "../../Common/Controls/SearchEngineDOM";
 
@@ -1045,7 +1046,7 @@ var SearchEngine = (function (Control) {
 
         var popupContent = "";
         if (typeof information !== "string") {
-            if (information.service === "DirectGeocodedLocation") {
+            if (information.service === "GeocodedLocation") {
                 popupContent = "<ul>";
                 var attributes = information.fields;
                 for (var attr in attributes) {
@@ -1241,7 +1242,7 @@ var SearchEngine = (function (Control) {
                                         var locations = results.locations;
                                         for (var i = 0; i < locations.length; i++) {
                                             var location = locations[i];
-                                            location.fullText = SearchEngineUtils.getGeocodedLocationFreeform(location);
+                                            location.fullText = GeocodeUtils.getGeocodedLocationFreeform(location);
                                             location.position = {
                                                 x : location.position.lon,
                                                 y : location.position.lat
@@ -1447,13 +1448,13 @@ var SearchEngine = (function (Control) {
             this._geocodedLocations[idx].position.lat
         ];
         var info = {
-            service : "DirectGeocodedLocation",
+            service : "GeocodedLocation",
             type : this._geocodedLocations[idx].type,
             fields : this._geocodedLocations[idx].placeAttributes
         };
 
         // on ajoute le texte du géocodage dans l'input
-        var label = SearchEngineUtils.getGeocodedLocationFreeform(this._geocodedLocations[idx]);
+        var label = GeocodeUtils.getGeocodedLocationFreeform(this._geocodedLocations[idx]);
         this._setLabel(label);
 
         // Info : la position est en EPSG:4326, à transformer dans la projection de la carte
