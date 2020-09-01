@@ -212,7 +212,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 "CadastralParcel"
             ];
         } else {
-            _resources = [_resources];
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
 
         var rightManagementGeocode = RightManagement.check({
@@ -914,7 +914,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             var attributes = location.placeAttributes;
             for (var attr in attributes) {
                 if (attributes.hasOwnProperty(attr)) {
-                    if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                    if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                         popupContent += "<li>";
                         popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                         popupContent += attributes[attr];

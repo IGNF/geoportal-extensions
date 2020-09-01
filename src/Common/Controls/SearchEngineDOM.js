@@ -1,4 +1,5 @@
 import ID from "../Utils/SelectorID";
+import GeocodeUtils from "../Utils/GeocodeUtils";
 
 var SearchEngineDOM = {
 
@@ -366,7 +367,7 @@ var SearchEngineDOM = {
         var div = document.createElement("div");
         div.id = this._addUID("AutoCompletedLocation_" + id);
         div.className = "GPautoCompleteProposal";
-        div.innerHTML = location.fullText;
+        div.innerHTML = GeocodeUtils.getSuggestedLocationFreeform(location);
         if (div.addEventListener) {
             div.addEventListener("click", function (e) {
                 container.click(e);
@@ -720,21 +721,7 @@ var SearchEngineDOM = {
         if (typeof location === "string") {
             div.innerHTML = location;
         } else {
-            var places = location.placeAttributes;
-
-            if (places.freeform) {
-                // reponse en freeForm
-                div.innerHTML = places.freeform;
-            } else if (location.type === "PositionOfInterest") {
-                div.innerHTML = (places.postalCode.length === 1 ? places.postalCode + " " : "") + places.toponyme;
-            } else if (location.type === "StreetAddress") {
-                div.innerHTML = places.postalCode + " " + places.city;
-            } else if (location.type === "CadastralParcel") {
-                // cas des CadastralParcel
-                div.innerHTML = places.identifiant;
-            } else {
-                div.innerHTML = "...";
-            }
+            div.innerHTML = GeocodeUtils.getGeocodedLocationFreeform(location);
         }
 
         container.appendChild(div);

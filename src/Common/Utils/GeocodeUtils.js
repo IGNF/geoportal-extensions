@@ -18,6 +18,32 @@ var GeocodeUtils = {
         } else {
             return "...";
         }
+    },
+
+    /**
+     * Return the freeform of a structured suggested item
+     *
+     * @param {Object} suggestedLocation - Suggested location
+     * @returns {String} freeform string
+     */
+    getSuggestedLocationFreeform : function (suggestedLocation) {
+        if (suggestedLocation.fullText) {
+            if (suggestedLocation.type === "PositionOfInterest") {
+                return suggestedLocation.fullText + (suggestedLocation.postalCode ? " " + suggestedLocation.postalCode : "");
+            }
+            return suggestedLocation.fullText;
+        } else {
+            var values = [];
+            values.push(suggestedLocation.street || "");
+            values.push(suggestedLocation.postalCode || "");
+            values.push(suggestedLocation.commune || "");
+
+            if (suggestedLocation.type === "PositionOfInterest") {
+                values.push(suggestedLocation.poi || "");
+                values.push(suggestedLocation.kind || "");
+            }
+            return values.join(" - ");
+        }
     }
 };
 

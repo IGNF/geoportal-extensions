@@ -281,7 +281,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 "CadastralParcel"
             ];
         } else {
-            _resources = [_resources];
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
 
         var rightManagementGeocode = RightManagement.check({
@@ -780,7 +780,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @private
      */
     _getGeocodeCoordinatesFromFullText : function (suggestedLocation, i) {
-        var _location = suggestedLocation.fullText;
+        var _location = GeocodeUtils.getSuggestedLocationFreeform(suggestedLocation);
 
         var context = this;
         this._requestGeocoding({
@@ -976,10 +976,10 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 if (typeof information !== "string") {
                     if (information.service === "GeocodedLocation") {
                         popupContent = "<ul>";
-                        var attributes = information.fields;
+                        var attributes = information.location.placeAttributes;
                         for (var attr in attributes) {
                             if (attributes.hasOwnProperty(attr)) {
-                                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                                     popupContent += "<li>";
                                     popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                                     popupContent += attributes[attr];
@@ -989,20 +989,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                         }
                         popupContent += " </ul>";
                     } else if (information.service === "SuggestedLocation") {
-                        if (information.fields.fullText) {
-                            popupContent = information.fields.fullText;
-                        } else {
-                            var values = [];
-                            values.push(information.fields.street || "");
-                            values.push(information.fields.postalCode || "");
-                            values.push(information.fields.commune || "");
-
-                            if (information.type === "PositionOfInterest") {
-                                values.push(information.fields.poi || "");
-                                values.push(information.fields.kind || "");
-                            }
-                            popupContent = values.join(" - ");
-                        }
+                        popupContent = GeocodeUtils.getSuggestedLocationFreeform(information.location);
                     } else {
                         popupContent = "sans informations.";
                     }
@@ -1249,8 +1236,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         };
         var info = {
             service : "SuggestedLocation",
-            type : this._locationsToBeDisplayed[idx].type,
-            fields : this._locationsToBeDisplayed[idx]
+            location : this._locationsToBeDisplayed[idx]
         };
 
         var zoom = this._getZoom(info);
@@ -1336,8 +1322,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         var position = this._geocodedLocations[idx].position;
         var info = {
             service : "GeocodedLocation",
-            type : this._geocodedLocations[idx].type,
-            fields : this._geocodedLocations[idx].placeAttributes
+            location : this._geocodedLocations[idx]
         };
 
         var zoom = this._getZoom(info);

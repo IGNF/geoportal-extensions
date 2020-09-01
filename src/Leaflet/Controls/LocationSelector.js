@@ -300,7 +300,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
                 "CadastralParcel"
             ];
         } else {
-            _resources = [_resources];
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
 
         var rightManagementRerverse = RightManagement.check({
@@ -471,25 +471,9 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
                 if (typeof information !== "string") {
                     if (information.service === "GeocodedLocation") {
-                        popupContent = GeocodeUtils.getGeocodedLocationFreeform({
-                            type : information.type,
-                            placeAttributes : information.fields
-                        });
+                        popupContent = GeocodeUtils.getGeocodedLocationFreeform(information.location);
                     } else if (information.service === "SuggestedLocation") {
-                        if (information.fields.fullText) {
-                            popupContent = information.fields.fullText;
-                        } else {
-                            var values = [];
-                            values.push(information.fields.street || "");
-                            values.push(information.fields.postalCode || "");
-                            values.push(information.fields.commune || "");
-
-                            if (information.type === "PositionOfInterest") {
-                                values.push(information.fields.poi || "");
-                                values.push(information.fields.kind || "");
-                            }
-                            popupContent = values.join(" - ");
-                        }
+                        popupContent = GeocodeUtils.getSuggestedLocationFreeform(information.location);
                     } else {
                         popupContent = "sans informations.";
                     }
@@ -756,13 +740,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         // FIXME on construit une addresse car l'option freeForm ne semble pas
         // être fonctionnelle...
-
-        // Par defaut, on doit être sur du type 'StreetAddress' par defaut.
-        var places = oLocation.placeAttributes;
-        var label = places.number + " " +
-            places.street + ", " +
-            places.postalCode + " " +
-            places.city;
+        var label = GeocodeUtils.getGeocodedLocationFreeform(oLocation);
 
         // on transmet les coordonnées au panneau,
         // même si on ne les affiche pas...
@@ -776,8 +754,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         var info = {
             service: "GeocodedLocation",
-            type: oLocation.type,
-            fields: oLocation.placeAttributes
+            location: oLocation,
         };
 
         // on met en place le marker
@@ -886,11 +863,10 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         var info = {
             service : "SuggestedLocation",
-            type : this._suggestedLocations[idx].type,
-            fields : this._suggestedLocations[idx]
+            location : this._suggestedLocations[idx]
         };
 
-        var label = this._suggestedLocations[idx].fullText;
+        var label = GeocodeUtils.getSuggestedLocationFreeform(this._suggestedLocations[idx]);
         this._setLabel(label);
         this._setPosition(position);
         this._setMarker(position, info, this.options.displayInfo);

@@ -426,7 +426,7 @@ var ReverseGeocode = (function (Control) {
                 }
             }
             // récupération du type par défaut
-            if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel" || resources[0] === "Administratif") {
+            if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];
             }
         }
@@ -517,7 +517,7 @@ var ReverseGeocode = (function (Control) {
                 "CadastralParcel"
             ];
         } else {
-            _resources = [_resources];
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
 
         var rightManagementGeocode = RightManagement.check({
@@ -1400,7 +1400,7 @@ var ReverseGeocode = (function (Control) {
         var attributes = location.placeAttributes;
         for (var attr in attributes) {
             if (attributes.hasOwnProperty(attr)) {
-                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                     popupContent += "<li>";
                     popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                     popupContent += attributes[attr];

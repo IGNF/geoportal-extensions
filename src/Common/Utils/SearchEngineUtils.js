@@ -99,7 +99,7 @@ var SearchEngineUtils = {
         }
 
         // Geocodage POI
-        if (service === "DirectGeocodedLocation") {
+        if (service === "GeocodedLocation") {
             if (type === "PositionOfInterest") {
                 zoom = importance[fields.importance] || 14; // au cas où la recherche est en freeform !
             }
@@ -114,7 +114,7 @@ var SearchEngineUtils = {
         }
 
         return zoom;
-    },
+    }
 };
 
 export default SearchEngineUtils;

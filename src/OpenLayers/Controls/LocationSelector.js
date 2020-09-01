@@ -10,6 +10,7 @@ import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
@@ -451,7 +452,7 @@ var LocationSelector = (function (Control) {
         };
 
         // on ajoute le texte de l'autocomplétion dans l'input
-        var label = this._suggestedLocations[idx].fullText;
+        var label = GeocodeUtils.getSuggestedLocationFreeform(this._suggestedLocations[idx]);
         this._setLabel(label);
 
         // Info : la position est en EPSG:4326, à transformer dans la projection de la carte

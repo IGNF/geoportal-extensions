@@ -666,7 +666,7 @@ var SearchEngine = (function (Control) {
                 "CadastralParcel"
             ];
         } else {
-            _resources = [_resources];
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
 
         var rightManagementGeocode = RightManagement.check({
@@ -1048,10 +1048,10 @@ var SearchEngine = (function (Control) {
         if (typeof information !== "string") {
             if (information.service === "GeocodedLocation") {
                 popupContent = "<ul>";
-                var attributes = information.fields;
+                var attributes = information.location.placeAttributes;
                 for (var attr in attributes) {
                     if (attributes.hasOwnProperty(attr)) {
-                        if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                        if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                             popupContent += "<li>";
                             popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                             popupContent += attributes[attr];
@@ -1061,21 +1061,7 @@ var SearchEngine = (function (Control) {
                 }
                 popupContent += " </ul>";
             } else if (information.service === "SuggestedLocation") {
-                if (information.fields.fullText) {
-                    popupContent = information.fields.fullText;
-                } else {
-                    var values = [];
-                    values.push(information.fields.street || "");
-                    values.push(information.fields.postalCode || "");
-                    values.push(information.fields.commune || "");
-
-                    if (information.type === "PositionOfInterest") {
-                        values.push(information.fields.poi || "");
-                        values.push(information.fields.kind || "");
-                    }
-
-                    popupContent = values.join(" - ");
-                }
+                popupContent = GeocodeUtils.getSuggestedLocationFreeform(information.location);
             } else {
                 popupContent = "sans informations.";
             }
@@ -1291,7 +1277,7 @@ var SearchEngine = (function (Control) {
         Gp.Services.geocode({
             apiKey : this.options.apiKey,
             ssl : this.options.ssl,
-            q : suggestedLocation.fullText,
+            q : GeocodeUtils.getSuggestedLocationFreeform(suggestedLocation),
             index : suggestedLocation.type,
             // callback onSuccess
             onSuccess : function (response) {
@@ -1352,12 +1338,11 @@ var SearchEngine = (function (Control) {
         ];
         var info = {
             service : "SuggestedLocation",
-            type : this._locationsToBeDisplayed[idx].type,
-            fields : this._locationsToBeDisplayed[idx]
+            location : this._locationsToBeDisplayed[idx]
         };
 
         // on ajoute le texte de l'autocomplétion dans l'input
-        var label = this._locationsToBeDisplayed[idx].fullText;
+        var label = GeocodeUtils.getSuggestedLocationFreeform(this._locationsToBeDisplayed[idx]);
         this._setLabel(label);
 
         // on sauvegarde le localisant
@@ -1449,8 +1434,7 @@ var SearchEngine = (function (Control) {
         ];
         var info = {
             service : "GeocodedLocation",
-            type : this._geocodedLocations[idx].type,
-            fields : this._geocodedLocations[idx].placeAttributes
+            location : this._geocodedLocations[idx]
         };
 
         // on ajoute le texte du géocodage dans l'input
