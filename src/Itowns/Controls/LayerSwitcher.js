@@ -376,7 +376,11 @@ LayerSwitcher.prototype.removeLayer = function (layerId) {
     }
     // remove layer div
     var layerDiv = document.getElementById(this._addUID("GPlayerSwitcher_ID_" + layerId));
-    layerList.removeChild(layerDiv);
+
+    // no layerDiv retrieved for VT-label layers
+    if (layerDiv) {
+        layerList.removeChild(layerDiv);
+    }
 
     // removes layer of the layer list
     delete this._layers[layerId];
