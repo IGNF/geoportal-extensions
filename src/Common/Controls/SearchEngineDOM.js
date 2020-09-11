@@ -614,7 +614,20 @@ var SearchEngineDOM = {
         input.type = "text";
         input.name = name;
         if (value) {
-            input.value = value;
+            if (Array.isArray(value)) {
+                var listId = name + "_list";
+                input.setAttribute("list", listId);
+                var dl = document.createElement("datalist");
+                dl.id = listId;
+                for (var i = 0; i < value.length; ++i) {
+                    var option = document.createElement("option");
+                    option.value = value[i];
+                    dl.appendChild(option);
+                }
+                div.appendChild(dl);
+            } else {
+                input.value = value;
+            }
         }
         div.appendChild(input);
 
@@ -726,9 +739,9 @@ var SearchEngineDOM = {
                 // reponse en freeForm
                 div.innerHTML = places.freeform;
             } else if (location.type === "PositionOfInterest") {
-                div.innerHTML = (places.postalCode.length === 1 ? places.postalCode + " " : "") + places.toponyme ;
+                div.innerHTML = (places.postalCode.length === 1 ? places.postalCode + " " : "") + places.toponyme;
             } else if (location.type === "StreetAddress") {
-                div.innerHTML = places.postalCode + " " + places.city ;
+                div.innerHTML = places.postalCode + " " + places.city;
             } else if (location.type === "CadastralParcel") {
                 // cas des CadastralParcel
                 div.innerHTML = places.identifiant;

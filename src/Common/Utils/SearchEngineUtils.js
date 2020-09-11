@@ -6,7 +6,26 @@ var SearchEngineUtils = {
         PositionOfInterest : [
             {
                 name : "type",
-                title : "Type"
+                title : "Type",
+                value : [
+                    "cimetière",
+                    "aérodrome",
+                    "réservoir",
+                    "administratif",
+                    "construction linéaire",
+                    "construction ponctuelle",
+                    "construction surfacique",
+                    "cours d'eau",
+                    "détail hydrographique",
+                    "détail orographique",
+                    "équipement de transport",
+                    "plan d'eau",
+                    "poste de transformation",
+                    "terrain de sport",
+                    "transport par câble",
+                    "zone d'activite ou d'interet",
+                    "zone d'habitation"
+                ]
             }, {
                 name : "postalCode",
                 title : "Code postal"
@@ -118,14 +137,14 @@ var SearchEngineUtils = {
 
     /**
      * Return the freeform of a structured geocoded item
-     * 
+     *
      * @param {Object} geocodedLocation - Geocoded location
      * @returns {String} freeform string
      */
     getGeocodedLocationFreeform : function (geocodedLocation) {
         var attributes = geocodedLocation.placeAttributes;
         if (attributes.freeform) {
-            return  attributes.freeform;
+            return attributes.freeform;
         } else if (geocodedLocation.type === "PositionOfInterest") {
             return attributes.postalCode + " " + attributes.toponyme;
         } else if (geocodedLocation.type === "StreetAddress") {
