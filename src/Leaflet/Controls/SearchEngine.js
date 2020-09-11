@@ -5,6 +5,7 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 import IconDefault from "./Utils/IconDefault";
 import SearchEngineDOM from "../../Common/Controls/SearchEngineDOM";
 import Utils from "../../Common/Utils";
@@ -280,7 +281,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 "CadastralParcel"
             ];
         } else {
-            _resources = [_resources];
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
 
         var rightManagementGeocode = RightManagement.check({
@@ -420,10 +421,10 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // ressource de geocodage à afficher
 
         var geocodeResources = this.options.resources.geocode;
-        if (geocodeResources==="location") {
-            geocodeResources = ["PositionOfInterest","StreetAddress","CadastralParcel"];
+        if (geocodeResources === "location") {
+            geocodeResources = ["PositionOfInterest", "StreetAddress", "CadastralParcel"];
         }
-        if (!Array.isArray(geocodeResources)){
+        if (!Array.isArray(geocodeResources)) {
             geocodeResources = [geocodeResources];
         }
         for (var i = 0; i < geocodeResources.length; i++) {
@@ -779,7 +780,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @private
      */
     _getGeocodeCoordinatesFromFullText : function (suggestedLocation, i) {
-        var _location = suggestedLocation.fullText;
+        var _location = GeocodeUtils.getSuggestedLocationFreeform(suggestedLocation);
 
         var context = this;
         this._requestGeocoding({
@@ -973,12 +974,12 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                 var popupContent = null;
 
                 if (typeof information !== "string") {
-                    if (information.service === "DirectGeocodedLocation") {
+                    if (information.service === "GeocodedLocation") {
                         popupContent = "<ul>";
-                        var attributes = information.fields;
+                        var attributes = information.location.placeAttributes;
                         for (var attr in attributes) {
                             if (attributes.hasOwnProperty(attr)) {
-                                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                                     popupContent += "<li>";
                                     popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                                     popupContent += attributes[attr];
@@ -988,21 +989,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                         }
                         popupContent += " </ul>";
                     } else if (information.service === "SuggestedLocation") {
-                        if (information.fields.fullText) {
-                            popupContent = information.fields.fullText;
-                        } else {
-                            var values = [];
-                            values.push(information.fields.street || "");
-                            values.push(information.fields.postalCode || "");
-                            values.push(information.fields.commune || "");
-
-                            if (information.type === "PositionOfInterest") {
-                                values.push(information.fields.poi || "");
-                                values.push(information.fields.kind || "");
-                            }
-
-                            popupContent = values.join(" - ");
-                        }
+                        popupContent = GeocodeUtils.getSuggestedLocationFreeform(information.location);
                     } else {
                         popupContent = "sans informations.";
                     }
@@ -1197,7 +1184,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                                         var locations = results.locations;
                                         for (var i = 0; i < locations.length; i++) {
                                             var location = locations[i];
-                                            location.fullText = SearchEngineUtils.getGeocodedLocationFreeform(location);
+                                            location.fullText = GeocodeUtils.getGeocodedLocationFreeform(location);
                                             location.position = {
                                                 x : location.position.lon,
                                                 y : location.position.lat
@@ -1249,8 +1236,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         };
         var info = {
             service : "SuggestedLocation",
-            type : this._locationsToBeDisplayed[idx].type,
-            fields : this._locationsToBeDisplayed[idx]
+            location : this._locationsToBeDisplayed[idx]
         };
 
         var zoom = this._getZoom(info);
@@ -1335,9 +1321,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         var position = this._geocodedLocations[idx].position;
         var info = {
-            service : "DirectGeocodedLocation",
-            type : this._geocodedLocations[idx].type,
-            fields : this._geocodedLocations[idx].placeAttributes
+            service : "GeocodedLocation",
+            location : this._geocodedLocations[idx]
         };
 
         var zoom = this._getZoom(info);
@@ -1404,13 +1389,14 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // recuperation des parametres des filtres pour les transmettre
         // à la requête, ainsi que le type de table de ressources de geocodage,
         // et le localisant
-        var _index = this._currentGeocodingCode
+        var _index = this._currentGeocodingCode;
+        var inputSearchTextContainer = L.DomUtil.get("GPsearchInputText-" + this._uid);
         var _location = inputSearchTextContainer.value;
         var _filterOptions = {};
 
         for (var i = 0; i < data.length; i++) {
             var filter = data[i];
-            if ( filter.value ) {
+            if (filter.value) {
                 _filterOptions[filter.key] = filter.value;
             }
         }

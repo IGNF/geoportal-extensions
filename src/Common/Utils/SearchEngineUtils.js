@@ -118,7 +118,7 @@ var SearchEngineUtils = {
         }
 
         // Geocodage POI
-        if (service === "DirectGeocodedLocation") {
+        if (service === "GeocodedLocation") {
             if (type === "PositionOfInterest") {
                 zoom = importance[fields.importance] || 14; // au cas où la recherche est en freeform !
             }
@@ -133,27 +133,6 @@ var SearchEngineUtils = {
         }
 
         return zoom;
-    },
-
-    /**
-     * Return the freeform of a structured geocoded item
-     *
-     * @param {Object} geocodedLocation - Geocoded location
-     * @returns {String} freeform string
-     */
-    getGeocodedLocationFreeform : function (geocodedLocation) {
-        var attributes = geocodedLocation.placeAttributes;
-        if (attributes.freeform) {
-            return attributes.freeform;
-        } else if (geocodedLocation.type === "PositionOfInterest") {
-            return attributes.postalCode + " " + attributes.toponyme;
-        } else if (geocodedLocation.type === "StreetAddress") {
-            return attributes.postalCode + " " + attributes.city;
-        } else if (geocodedLocation.type === "CadastralParcel") {
-            return attributes.identifiant;
-        } else {
-            return "...";
-        }
     }
 };
 

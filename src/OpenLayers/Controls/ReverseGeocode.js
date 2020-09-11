@@ -426,7 +426,7 @@ var ReverseGeocode = (function (Control) {
                 }
             }
             // récupération du type par défaut
-            if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel" || resources[0] === "Administratif") {
+            if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];
             }
         }
@@ -498,27 +498,28 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype._checkRightsManagement = function () {
-        var _resources = [];
-        var _key;
-        var _opts = null;
-
-        // les ressources du service de geocodage
-        _key = this.options.reverseGeocodeOptions.apiKey;
-        _opts = this.options.reverseGeocodeOptions.filterOptions;
+        var _key = this.options.reverseGeocodeOptions.apiKey;
         // on récupère les éventuelles ressources passées en option, soit dans reverseGeocodeOptions :
-        _resources = (_opts) ? _opts.type : [];
-        // soit directement dans options.resources.geocode :
+        var _resources = (this.options.reverseGeocodeOptions.index) ? this.options.reverseGeocodeOptions.index : "";
+        // soit directement dans options.resources :
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources;
         }
         // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
+        if (!_resources || _resources === "") {
+            _resources = "location";
+        }
+
+        if (_resources === "location") {
             _resources = [
                 "StreetAddress",
                 "PositionOfInterest",
                 "CadastralParcel"
             ];
+        } else {
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
+
         var rightManagementGeocode = RightManagement.check({
             key : _key || this.options.apiKey,
             resources : _resources,
@@ -1399,7 +1400,7 @@ var ReverseGeocode = (function (Control) {
         var attributes = location.placeAttributes;
         for (var attr in attributes) {
             if (attributes.hasOwnProperty(attr)) {
-                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos") {
+                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                     popupContent += "<li>";
                     popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                     popupContent += attributes[attr];
