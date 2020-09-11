@@ -67,7 +67,7 @@
     "@mapbox/mapbox-gl-style-spec": "13.11.0",
     "eventbusjs": "0.2.0",
     "geoportal-access-lib": "2.1.6",
-    "itowns": "2.24.2",
+    "itowns": "2.24.3",
     "leaflet": "1.5.1",
     "leaflet-draw": "1.0.4",
     "loglevel": "^1.6.7",
