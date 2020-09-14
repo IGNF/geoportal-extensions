@@ -4,7 +4,7 @@ FROM node:12.16.1-slim
 RUN apt update && apt -y upgrade 
 
 # Paquets utiles 
-RUN apt install -y git inotify-tools
+RUN apt install -y git inotify-tools libjson-perl
 
 # Installation de access-lib 
 WORKDIR /home/docker/
@@ -12,8 +12,6 @@ RUN git clone https://github.com/IGNF/geoportal-extensions.git
 WORKDIR /home/docker/geoportal-extensions
 # TO DELETE
 RUN git checkout docker
-# TO MOVE 
-RUN apt install -y libjson-perl
 
 # Copie des scripts 
 COPY ./docker/scripts/* /home/docker/

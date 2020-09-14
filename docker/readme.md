@@ -41,7 +41,6 @@ Une fois les images construites, on pourra utiliser les containers de plusieurs 
 
 Pour voir le résultats des tests unitaires et des tests de bout en bout, ainsi que pour utiliser les exemples ou encore voir la documentation, il suffira de lancer le container puis de se rendre sur les urls suivantes:
 - http://localhost:8081/geoportal-extensions/test/
-- http://localhost:8081/geoportal-extensions/rendering/
 - http://localhost:8081/geoportal-extensions/samples/
 - http://localhost:8081/geoportal-extensions/jsdoc/
 
