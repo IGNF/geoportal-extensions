@@ -960,7 +960,8 @@ var Drawing = (function (Control) {
     Drawing.prototype._createRemoveInteraction = function () {
         var interaction = new SelectInteraction({
             // features : this.layer.getSource().getFeaturesCollection(),
-            layers : [this.layer]
+            layers : [this.layer],
+            style: false
         });
         interaction.on("select", (seEv) => {
             if (!seEv || !seEv.selected || seEv.selected.length === 0) {
@@ -983,7 +984,8 @@ var Drawing = (function (Control) {
      */
     Drawing.prototype._createStylingInteraction = function () {
         var interaction = new SelectInteraction({
-            layers : [this.layer]
+            layers : [this.layer],
+            style: false
         });
         interaction.on("select", (seEv) => {
             // suppression de toute popup existante
@@ -1234,7 +1236,8 @@ var Drawing = (function (Control) {
      */
     Drawing.prototype._createLabelInteraction = function () {
         var interaction = new SelectInteraction({
-            layers : [this.layer]
+            layers : [this.layer],
+            style: false
         });
         interaction.on("select", (seEv) => {
             // suppression de toute popup existante
@@ -1539,6 +1542,7 @@ var Drawing = (function (Control) {
                 if (context.dtOptions["holes"].active) {
                     // selection du polygone à modifier
                     context.interactionSelectEdit = new SelectInteraction({
+                        stopClick: true,
                         condition : eventPointerMove,
                         layers : [this.layer]
                     });
@@ -1698,6 +1702,7 @@ var Drawing = (function (Control) {
                     map.addInteraction(context.interactionSelectEdit);
 
                     context.interactionCurrent = new ModifyInteraction({
+                        stopClick: true,
                         // features : context.layer.getSource().getFeaturesCollection(),
                         features : this.interactionSelectEdit.getFeatures(),
                         style : new Style({
