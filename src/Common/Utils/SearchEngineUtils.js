@@ -23,8 +23,9 @@ var SearchEngineUtils = {
                     "poste de transformation",
                     "terrain de sport",
                     "transport par câble",
-                    "zone d'activite ou d'interet",
-                    "zone d'habitation"
+                    "zone d'activite ou d'intérêt",
+                    "zone d'habitation",
+                    "lieu-dit non habité"
                 ]
             }, {
                 name : "postalCode",
