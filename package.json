@@ -6,7 +6,7 @@
   "leafletExtName": "French Geoportal Extension for Leaflet",
   "leafletExtVersion": "2.1.6",
   "olExtName": "French Geoportal Extension for OpenLayers",
-  "olExtVersion": "3.0.11",
+  "olExtVersion": "3.0.12",
   "itownsExtName": "French Geoportal Extension for Itowns",
   "itownsExtVersion": "2.2.11",
   "main": "dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js",
