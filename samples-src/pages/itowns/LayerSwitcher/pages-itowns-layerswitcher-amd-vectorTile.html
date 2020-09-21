@@ -63,11 +63,17 @@
 
                     // Ajout couche Vecteur tuilé par itowns (fx: 2.5 => transparent)
                     var mvtSource = new itowns.VectorTilesSource({
-                        style: '../../resources/itowns/planign.json',
+                        style: '../../resources/data/mapbox/styles/planign/planign.json',
+                        sprite: 'https://vectortiles.ign.fr/demonstrateur/sprite/PlanIgn',
                         zoom: {
                             min: 2,
                             max: 16,
                         },
+                    });
+
+                    var mvtSourceEcole = new itowns.VectorTilesSource({
+                        style: '../../resources/data/mapbox/styles/enseignements.json',
+                        sprite: '../../resources/data/mapbox/styles/pictos-enseignements/sprites-etablissements'
                     });
 
                     var mvtLayer = new itowns.ColorLayer('PlanIGN', {
@@ -79,8 +85,19 @@
                         labelEnabled: true,
                         source: mvtSource
                     });
+
+                    var mvtLayerEcole = new itowns.ColorLayer('Ecoles', {
+                        //FIXME wait for next itowns release to remove this
+                        isValidData: function() {
+                            return false;
+                        },
+                        noTextureParentOutsideLimit: true,
+                        labelEnabled: true,
+                        source: mvtSourceEcole
+                    });
                 
                     globeView.addLayer(mvtLayer);
+                    globeView.addLayer(mvtLayerEcole);
 
                     // ajout du control
                     var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
