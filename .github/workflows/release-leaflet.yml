@@ -120,6 +120,8 @@ jobs:
       - name: Clean and publish
         run: |
           rm -rf tmp/
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add -A
           git commit -m "update jsdoc / bundles to release ${{ env.LIBRARY }} : ${{ steps.get_tagname.outputs.TAGNAME }}"
           git push
@@ -148,7 +150,7 @@ jobs:
 
       - name: Create ChangeLog
         run: | # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
-          cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoportail OpenLayers/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoportail Leaflet/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__VERSION__/${{ steps.get_package_value.outputs.VERSION }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__DATE__/${{ steps.get_package_value.outputs.DATE }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
 
@@ -259,8 +261,8 @@ jobs:
       - name: Clean and publish # TODO TO CHANGE !
         run: |
           rm  DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
-          git config user.name lowzonenose
-          git config user.email jpbazonnais@gmail.com
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add -A
           git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
           git push
