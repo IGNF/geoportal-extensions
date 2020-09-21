@@ -65,7 +65,7 @@ function VectorTileLayer (options) {
             style : tmsParams.url.replace(/(http|https):\/\//, protocol),
             url : options.urlService,
             attribution : options.attributions,
-            filter : options.filter || function (layer) { return ["fill", "line"].includes(layer.type); },
+            filter : options.filter,
             zoom : options.zoom
         });
 

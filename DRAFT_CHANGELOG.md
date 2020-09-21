@@ -16,11 +16,15 @@
 
 * [Removed]
 
-* [Fixed]
+    - suppression des tests en mode console
+    - suppression de la couverture du code
 
 	-  correctif sur exception de compilation avec la classe ol.geom.LinearRing
 
 * [Security]
+
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
 
 ---
 
@@ -44,6 +48,9 @@
   - fix le control MousePosition en reglant un zindex superieur au mousePositionPanel 
 
 * [Security]
+
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
 
 ---
 

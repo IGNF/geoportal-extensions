@@ -45,7 +45,6 @@ Ex.
     nyc                   12.0.2        12.0.2   14.0.0  geoportal-extensions
     sortablejs             1.8.4         1.8.4    1.9.0  geoportal-extensions
     three                 0.93.0        0.93.0  0.104.0  geoportal-extensions
-    three.meshline         1.1.0         1.1.0    1.2.0  geoportal-extensions
     uglify-es             3.3.10           git      git  geoportal-extensions
 
 *Notes*
