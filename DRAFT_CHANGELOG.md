@@ -1,95 +1,81 @@
-**TODO : PREPARATION POUR PROCHAINE LIVRAISON**
+# Extension Geoportail OpenLayers, version __VERSION__
 
-# Extension Geoportail OpenLayers, version 3.0.11
-
-**29/06/2020**
+**__DATE__**
 > Release Extension Geoportail OpenLayers
 
 ## Summary
 
-* evolution du widget de dessin sur la gestion des popups
-* saisie de polygones avec trous dans l'outil de dessin
-* mise à jour des dépendances (#263)
+	* Correction sur la compilation (build) lié à openlayers
 
 ## Changelog
 
 * [Added]
 
-    - ajout de la commande : npm run eslint (#263)
-    - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
-
 * [Changed]
-
-    - versions des dépendances fixées dans le package.json (#263)
-    - [DRAWING] faire des polygones à trous (#270)
-    - [DRAWING] choix d'afficher ou non les popups après chaque saisie (#269)
-    - [DRAWING] possibilité de surcharger le style des popups (#269)
 
 * [Deprecated]
 
 * [Removed]
 
-* [Fixed]
+    - suppression des tests en mode console
+    - suppression de la couverture du code
 
-	- fix des tests unitaires sur mouseposition (#264)
-	- fix getFeatureInfo (4aa57fea565d65cd5cb10927ab76179aa8a84ae5)
+	-  correctif sur exception de compilation avec la classe ol.geom.LinearRing
 
 * [Security]
 
+    - maj des dépendances
+    - suppression de la dépendance "mocha-webpack"
+
 ---
 
-# Extension Geoportail Itowns, version 2.2.10
+# Extension Geoportail Itowns, version __VERSION__
 
-**01/07/2020**
+**__DATE__**
 > Release Extension Geoportail Itowns
 
 ## Summary
 
-* mise à jour des dépendances (#263)
+	* Mise à jour majeure des dépendances du projet
+	* Mise à jour d'iTowns en version 2.25 pour meilleur gestion de l'affichage du vecteur tuilé
+	* Fix sur le DOM des widgets
 
 ## Changelog
 
 * [Added]
 
-  - ajout de la commande : npm run eslint (#263)
-  - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
-  - ajout d'un controle d'exageration du relief, boostRelief control (#268)
-
 * [Changed]
 
-  - refacto exemples : ajout des couches après initialisation de la carte (e43dc1fb675b54c9777b8726a9110584c0cca5e1)
+	- maj iTowns en version 2.25.0 (https://github.com/IGNF/geoportal-extensions/pull/278)
+	- maj des peerDependencies d'iTowns (52000d6a4e7e1ff5bf48c3cede5873b989a9b3cb)
 
 * [Deprecated]
 
 * [Removed]
 
-  - suppression des tests en mode console (#263)
-  - suppression de la couverture du code (#263)
-
 * [Fixed]
 
-  - fix des tests unitaires (#264)
-  - fix de la position des widgets à l'initialisation (#265)
+	- fix le control MousePosition en reglant un zindex superieur au mousePositionPanel (746e6162352b02e1d92425055da544c11c2def59)
+	- fix le control boostRelief en reglant un z-index (959f89331ec1fdd3af23805d2c3f85dfe21d3863)
+	- fix le control Layerswitcher en réglant un z-index (b2a5ad6fb252c4b83adf3644cf05e73e61da2447)
 
 * [Security]
 
+    - maj des dépendances (https://github.com/IGNF/geoportal-extensions/pull/278)
+    - suppression de la dépendance "mocha-webpack"
+
 ---
 
-# Extension Geoportail Leaflet, version 2.1.6
+# Extension Geoportail Leaflet, version __VERSION__
 
-**01/07/2020**
+**__DATE__**
 > Release Extension Geoportail Leaflet
 
 ## Summary
 
-Mise à jour des dépendances (#263) et correctifs mineurs
-
 ## Changelog
 
 * [Added]
-
-    - ajout de la commande : npm run eslint (#263)
-    - ajout d'un guide sur les bonnes pratiques de dev (0e396cce78ccbcb0691f9a4f2f73cd7a43d57b5f)
 
 * [Changed]
 
@@ -97,10 +83,8 @@ Mise à jour des dépendances (#263) et correctifs mineurs
 
 * [Removed]
 
-    - suppression des tests en mode console (#263)
-    - suppression de la couverture du code (#263)
-
 * [Fixed]
 
 * [Security]
 
+---

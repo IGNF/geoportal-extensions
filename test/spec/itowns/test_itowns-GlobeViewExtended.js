@@ -284,7 +284,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         it('should get coordinate from mouse event', (done) => {
             var mouseEvent = {
                 offsetX: viewWidth / 2,
-                offsetY: viewHeight / 2
+                offsetY: viewHeight / 2,
+                target : globeViewExtended.getGlobeView().domElement
             };
             globeViewExtended.setZoom(zoomScale.zoom).then(() => {
                 var coords = globeViewExtended.getCoordinateFromMouseEvent(mouseEvent);
@@ -472,7 +473,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 setTimeout(function () {
                     var mouseEvent = {
                         offsetX: viewWidth / 2,
-                        offsetY: viewHeight / 2
+                        offsetY: viewHeight / 2,
+                        target: globeViewExtended.getGlobeView().domElement
                     }
                     var feats = globeViewExtended.getFeaturesAtMousePosition(mouseEvent);
 

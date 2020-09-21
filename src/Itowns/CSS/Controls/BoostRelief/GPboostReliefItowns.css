@@ -3,6 +3,7 @@
 div[id^=GPboostRelief-]  {
   top: 8px;
   left: 8px;
+  z-index: 1;
 }
 
 /* Showing/hiding boostRelief panel */

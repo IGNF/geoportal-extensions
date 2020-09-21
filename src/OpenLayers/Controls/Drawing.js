@@ -19,9 +19,10 @@ import {
 import {
     LineString,
     Point,
-    Polygon,
-    LinearRing
+    Polygon
 } from "ol/geom";
+// FIXME not include into ol/geom !?
+import LinearRing from "ol/geom/LinearRing";
 import {
     Select as SelectInteraction,
     Modify as ModifyInteraction,

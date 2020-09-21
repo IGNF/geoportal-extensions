@@ -3,6 +3,7 @@
 div[id^=GPlayerSwitcher-]  {
   top: 8px;
   right: 8px;
+  z-index: 1;
 }
 
 /* Showing/hiding layers list */
