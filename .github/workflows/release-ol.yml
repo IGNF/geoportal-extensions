@@ -220,14 +220,13 @@ jobs:
           name: package
           path: package
 
-      - name: Publish on npm # TODO create secrets github and token npm
+      - name: Publish on npm
         run: |
           cd ./package
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_GEOPORTAL_TOKEN }}
 
-  # TODO not yet implemented !
   changelog:
     if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
     needs: [create_release, publish_package]
@@ -268,7 +267,7 @@ jobs:
           git config user.email github-actions@github.com
           git add -A
           git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
-          git push
+          git push --force
 
   # TODO not yet implemented !
   rollback:

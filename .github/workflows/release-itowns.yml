@@ -218,7 +218,7 @@ jobs:
           name: package
           path: package
 
-      - name: Publish on npm # TODO create secrets github and token npm
+      - name: Publish on npm
         run: |
           cd ./package
           npm publish
@@ -258,14 +258,14 @@ jobs:
           cat DRAFT_CHANGELOG_${{ env.LIBRARY }}.md >> doc/CHANGELOG-itowns.md
           ./node_modules/.bin/markdown-toc -i doc/CHANGELOG-itowns.md
 
-      - name: Clean and publish # TODO TO CHANGE !
+      - name: Clean and publish
         run: |
           rm  DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -A
           git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
-          git push
+          git push --force
 
   # TODO not yet implemented !
   rollback:
