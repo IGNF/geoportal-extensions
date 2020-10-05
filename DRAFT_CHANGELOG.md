@@ -17,9 +17,9 @@
 
 * [Removed]
 
-- suppression des tests en mode console
-- suppression de la couverture du code
-- correctif sur exception de compilation avec la classe ol.geom.LinearRing
+    - suppression des tests en mode console
+    - suppression de la couverture du code
+    - correctif sur exception de compilation avec la classe ol.geom.LinearRing
 
 * [Security]
 
@@ -41,7 +41,7 @@ Fix du DOM du mousePosition itowns
 
 * [Added]
 
-* [Changed] 
+* [Changed]
 
 * [Deprecated]
 
@@ -49,7 +49,7 @@ Fix du DOM du mousePosition itowns
 
 * [Fixed]
 
-- fix le control mousePosition itowns en réglant un z-index
+    - fix le control mousePosition itowns en réglant un z-index
 
 * [Security]
 
@@ -62,11 +62,15 @@ Fix du DOM du mousePosition itowns
 
 ## Summary
 
+Version Leaflet 1.7.1
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - mise à jour de la documentation
 
 * [Deprecated]
 
