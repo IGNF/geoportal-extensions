@@ -574,7 +574,7 @@ var GetFeatureInfo = (function (Control) {
             this._eventsHandler["pointermove"] = displayCursor;
             map.on("pointermove", displayCursor);
         } else {
-            if ( this._eventsHandler.hasOwnProperty("pointermove") ){ // si le widget n'a jamais ete active l'evenement pointermove n'existe pas
+            if (this._eventsHandler.hasOwnProperty("pointermove")) { // si le widget n'a jamais ete active l'evenement pointermove n'existe pas
                 map.un("pointermove", this._eventsHandler["pointermove"]);
                 delete this._eventsHandler["pointermove"];
             }
