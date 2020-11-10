@@ -67,7 +67,7 @@
     "@mapbox/mapbox-gl-style-spec": "13.11.0",
     "eventbusjs": "0.2.0",
     "geoportal-access-lib": "2.1.6",
-    "itowns": "2.25.0",
+    "itowns": "2.27.0",
     "leaflet": "1.7.1",
     "leaflet-draw": "1.0.4",
     "loglevel": "^1.6.7",
@@ -76,7 +76,7 @@
     "proj4": "^2.6.2",
     "proj4leaflet": "1.0.2",
     "sortablejs": "1.8.4",
-    "three": "^0.117.1",
+    "three": "^0.120.1",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {

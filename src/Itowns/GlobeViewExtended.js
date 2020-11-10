@@ -11,14 +11,6 @@ import {
     VIEW_EVENTS as IT_VIEW_EVENTS
 } from "itowns";
 
-/* import GlobeView, { GLOBE_VIEW_EVENTS } from "itowns/Core/Prefab/GlobeView";
-import Coordinates from "itowns/Core/Geographic/Coordinates";
-import ColorLayersOrdering from "itowns/Renderer/ColorLayersOrdering";
-import FeaturesUtils from "itowns/Utils/FeaturesUtils";
-import { MAIN_LOOP_EVENTS } from "itowns/Core/MainLoop";
-import { CONTROL_EVENTS } from "itowns/Controls/GlobeControls";
-import { VIEW_EVENTS } from "itowns/Core/View"; */
-
 var logger = Logger.getLogger("GlobeViewExtended");
 
 /**
@@ -30,7 +22,8 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @extends {itowns.GlobeView}
  * @param {HTMLElement} viewerDiv - Where to instanciate the Three.js scene in the DOM
  * @param {Object} coordCarto - longitude, latitude, altitude
- * @param {Object} [options] - Optional properties.
+ * @param {Object} [options] - Optional properties which includes Itowns GlobeView optional properties (see Itowns documentation).
+ * @param {Boolean} [options.renderer.isWebGL2=True] - is an Itowns GlobeView optional property to enable webgl 2.0 for THREE.js.
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
