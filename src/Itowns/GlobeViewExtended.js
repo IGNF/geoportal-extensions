@@ -628,34 +628,37 @@ GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) 
  * Get all visible features that intersect a pixel
  *
  * @param {MouseEvent} mouseEvent - A mouse event.
- * @return {Array} visibleFeatures - The array of visible features.
+ * @return {Promise} promise
  */
 GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
-    var vectorLayers = this.getVectorLayers();
+    let vectorLayers = this.getVectorLayers();
     if (!vectorLayers) {
-        return;
+        return Promise.resolve([]);
     }
     // array of the visible features on the clicker coord
-    var visibleFeatures = [];
-    var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
-    if (geoCoord) {
-        // buffer around the click inside we retrieve the features
-        var precision = this.getGlobeView().controls.pixelsToDegrees(5);
-        for (var i = 0; i < vectorLayers.length; i++) {
-            var idx;
-            var layer = vectorLayers[i];
-            // if the layer is not visible, we ignore it
-            if (!layer.visible) {
-                continue;
-            }
-            var result = ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.source.parsedData, precision);
-            // we add the features to the visible features array
-            for (idx = 0; idx < result.length; idx++) {
-                visibleFeatures.push(result[idx]);
-            }
-        }
+    let geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
+    if (!geoCoord) {
+        return Promise.resolve([]);
     }
-    return visibleFeatures;
+    // buffer around the click inside we retrieve the features
+    let precisionInMeters = this.getGlobeView().getPixelsToMeters(5);
+    let precision = this.getGlobeView().getMetersToDegrees(precisionInMeters);
+
+    const promises = [];
+    for (let i = 0; i < vectorLayers.length; i++) {
+        if (!vectorLayers[i].visible) {
+            continue;
+        }
+        promises.push(vectorLayers[i].source.loadData({}, { crs: 'EPSG:4326' }));
+    }
+
+    return Promise.all(promises).then(result => {
+        let visibleFeatures = []
+        for(let i = 0; i < result.length; i++) {
+            visibleFeatures = visibleFeatures.concat(ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, result[i], precision));
+        }
+        return visibleFeatures;
+    });
 };
 
 /**

@@ -76,7 +76,7 @@
     "proj4": "^2.6.2",
     "proj4leaflet": "1.0.2",
     "sortablejs": "1.8.4",
-    "three": "^0.120.1",
+    "three": "^0.121.1",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {
