@@ -73,6 +73,7 @@ var BoostReliefDOM = {
      * Creation de l'icone de gestion du relief du layer (DOM)
      *
      * @param {Object} scale - définition de l'echelle que le slider utilise (min,max,step)
+     * @param {Number} defaultBoost - valeur d'exageration par défaut
      *
      * @returns {DOMElement[]} array of two containers
      */
@@ -117,7 +118,6 @@ var BoostReliefDOM = {
         input.max = scale.max || 50;
         input.step = scale.step || 1;
 
-
         // le relief est à un facteur 1 par défaut
         var defaultBoostValue = 1;
         if (defaultBoost) {
@@ -128,11 +128,11 @@ var BoostReliefDOM = {
         if (defaultBoostValue > input.max) {
             defaultBoostValue = input.max;
         }
-        
+
         if (defaultBoostValue < input.min) {
             defaultBoostValue = input.min;
         }
-    
+
         // mise à jour des couches et du slider une fois le controle ajouté
         input.value = defaultBoostValue;
 

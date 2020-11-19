@@ -24,7 +24,7 @@
 			"crossOrigin" : "omit"
 		},
 		"format": "image/x-bil;bits=32",
-		"projection" : "EPSG:4326",
+		"crs" : "EPSG:4326",
 		"tileMatrixSet": "WGS84G",
 		"tileMatrixSetLimits": {
 			"6": {

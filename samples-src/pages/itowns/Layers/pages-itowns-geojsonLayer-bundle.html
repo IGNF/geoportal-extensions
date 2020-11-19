@@ -67,10 +67,10 @@
                 var vectorLayer = new itowns.ColorLayer("geojsonLayer", {
                     name : "geojsonLayer",
                     transparent : true,
-                    projection : "EPSG:4326",
+                    crs : "EPSG:4326",
                     source : new itowns.FileSource({
                         url : "../../resources/data/mapbox/geojson/test_with_points.geojson",
-                        projection : "EPSG:4326",
+                        crs : "EPSG:4326",
                         fetcher : itowns.Fetcher.json,
                         parser : itowns.GeoJsonParser.parse
                     }),

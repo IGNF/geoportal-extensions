@@ -22,7 +22,7 @@
       }],
         "name": "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD",
         "format": "image/jpeg",
-        "projection" : "EPSG:3857",
+        "crs" : "EPSG:3857",
         "tileMatrixSet": "PM",
         "extent": {
             "west": "-63.2838",
