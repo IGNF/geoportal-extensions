@@ -565,7 +565,7 @@ GlobeViewExtended.prototype.getScale = function () {
  * Sets tilt
  *
  * @param {Number} tilt - Tilt value
- * @return {Promise}
+ * @return {Promise} - Promise when setTilt is done
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
     return this.getGlobeView().controls.setTilt(tilt, false);
@@ -584,7 +584,7 @@ GlobeViewExtended.prototype.getTilt = function () {
  * Sets azimuth
  *
  * @param {Number} azimuth - Azimuth value
- * @return {Promise}
+ * @return {Promise} - Promise when setAzimuth is done
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
     return this.getGlobeView().controls.setHeading(azimuth, false);
@@ -631,30 +631,32 @@ GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) 
  * @return {Promise} promise
  */
 GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
-    let vectorLayers = this.getVectorLayers();
+    const vectorLayers = this.getVectorLayers();
     if (!vectorLayers) {
         return Promise.resolve([]);
     }
     // array of the visible features on the clicker coord
-    let geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
+    const geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
     if (!geoCoord) {
         return Promise.resolve([]);
     }
     // buffer around the click inside we retrieve the features
-    let precisionInMeters = this.getGlobeView().getPixelsToMeters(5);
-    let precision = this.getGlobeView().getMetersToDegrees(precisionInMeters);
+    const precisionInMeters = this.getGlobeView().getPixelsToMeters(5);
+    const precision = this.getGlobeView().getMetersToDegrees(precisionInMeters);
 
     const promises = [];
     for (let i = 0; i < vectorLayers.length; i++) {
         if (!vectorLayers[i].visible) {
             continue;
         }
-        promises.push(vectorLayers[i].source.loadData({}, { crs: 'EPSG:4326' }));
+        promises.push(vectorLayers[i].source.loadData({}, {
+            crs : "EPSG:4326"
+        }));
     }
 
     return Promise.all(promises).then(result => {
-        let visibleFeatures = []
-        for(let i = 0; i < result.length; i++) {
+        let visibleFeatures = [];
+        for (let i = 0; i < result.length; i++) {
             visibleFeatures = visibleFeatures.concat(ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, result[i], precision));
         }
         return visibleFeatures;
