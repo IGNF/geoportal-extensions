@@ -5,8 +5,6 @@
 
 ## Summary
 
-* Correction sur la compilation (build) lié à openlayers
-
 ## Changelog
 
 * [Added]
@@ -17,14 +15,7 @@
 
 * [Removed]
 
-    - suppression des tests en mode console
-    - suppression de la couverture du code
-    - correctif sur exception de compilation avec la classe ol.geom.LinearRing
-
 * [Security]
-
-- maj des dépendances
-- suppression de la dépendance "mocha-webpack"
 
 ---
 
@@ -35,7 +26,7 @@
 
 ## Summary
 
-Fix du DOM du mousePosition itowns
+Version iTowns 2.27.0
 
 ## Changelog
 
@@ -43,13 +34,13 @@ Fix du DOM du mousePosition itowns
 
 * [Changed]
 
+    - mise à jour iTowns 2.27.0 (utilisation par défaut du webGL 2.0)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - fix le control mousePosition itowns en réglant un z-index
 
 * [Security]
 
