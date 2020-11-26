@@ -18,10 +18,12 @@ var logger = Logger.getLogger("geoportalattribution");
  * @alias ol.control.GeoportalAttribution
  * @param {Object} options - ol.control.Attribution options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Attribution.html ol.Control.Attribution})
  * @example
- * map.addControl(
- *      new ol.control.GeoportalAttribution({
- *          collapsed : false
- * );
+ * var attribution = new ol.control.GeoportalAttribution({
+ *   collapsed : false
+ * });
+ * map.addControl(attribution);
+ * // listeners for attributions update :
+ * attribution.on("attributions:update", function (e) {});
  */
 var GeoportalAttribution = (function (Attribution) {
     function GeoportalAttribution (options) {
@@ -213,6 +215,12 @@ var GeoportalAttribution = (function (Attribution) {
             // update source attribution
             if (attributions.length !== 0) {
                 src.setAttributions(attributions);
+                // INFO :
+                // ex. d'abonnement à l'evenement 'change:attribution'
+                // GeoportalAttribution.on("update", function (e) {
+                //      console.log(e);
+                // })
+                this.dispatchEvent("attributions:update");
             }
         }
     };

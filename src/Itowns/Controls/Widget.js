@@ -1,3 +1,4 @@
+import { THREE } from "itowns";
 import Logger from "../../Common/Utils/LoggerByDefault";
 
 var logger = Logger.getLogger("Widget");
@@ -33,6 +34,11 @@ function Widget (options) {
         this.setTarget(options.target, this._position);
     }
 }
+
+/*
+ * @lends module:Attributions
+ */
+Widget.prototype = Object.create(THREE.EventDispatcher.prototype, {});
 
 /**
  * Constructor (alias)

@@ -52,13 +52,13 @@
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
                         layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
                     }));
-                
+
                     // Couche WMTS Geoportail
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
                         layer: "ORTHOIMAGERY.ORTHOPHOTOS"
                     }));
-                
-                    // Couche WMS Geoportail 
+
+                    // Couche WMS Geoportail
                     globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
                         layer: "REGION.2016",
                         itownsParams: {
@@ -74,6 +74,9 @@
                         }
                     });
                     globeView.addWidget(attribution);
+                    attribution.addEventListener("attributions:update", function (e) {
+                        console.warn(e);
+                    });
                 });
             };
 

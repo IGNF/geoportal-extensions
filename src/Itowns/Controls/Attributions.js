@@ -23,7 +23,9 @@ var logger = Logger.getLogger("Attributions");
  *  options : {
  *      collapsed: true
  *  }
- * ));
+ * });
+ * // listeners for attributions update :
+ * attribution.addEventListener("attributions:update", function (e) {...});
  */
 function Attributions (aOptions) {
     aOptions = aOptions || {};
@@ -258,7 +260,14 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
             }
         }
     }
-    this._updateAttributionListContainer(attributions);
+    if (attributions.size) {
+        this._updateAttributionListContainer(attributions);
+        // dispatch event
+        this.dispatchEvent({
+            type:"attributions:update",
+            attributions : attributions
+        });
+    }
 };
 
 // ################################################################### //
