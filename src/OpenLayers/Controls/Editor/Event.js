@@ -18,6 +18,8 @@
 * @property {Event} "editor:group:oncollapse" - event ...
 * @property {Event} "editor:onloaded" - event ...
 *
+* @mixin
+*
 * @example
 * // dispatch event
 * EventBus.dispatch(EventEditor.layer.visibility, e);

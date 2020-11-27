@@ -65,6 +65,8 @@ var logger = Logger.getLogger("elevationpath");
  * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
  * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ([DISPLAY_PROFILE_BY_DEFAULT()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT)) is used. Helper functions to use with D3 ([DISPLAY_PROFILE_LIB_D3()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3)) or AmCharts ([DISPLAY_PROFILE_LIB_AMCHARTS()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS)) frameworks are also provided. You may also provide your own function.
  * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
+ * @fires elevationpath:drawstart
+ * @fires elevationpath:drawend
  * @example
  *
  * var measure = new ol.control.ElevationPath({
@@ -957,24 +959,34 @@ var ElevationPath = (function (Control) {
             for (var i = 0; i < _features.length; i++) {
                 this._measureSource.removeFeature(_features[i]);
             }
+            /**
+            * event triggered at the start of drawing input
+            * @event elevationpath:drawstart
+            */
+            this.dispatchEvent("elevationpath:drawstart");
         });
 
         // Event end
         this._measureDraw.on("drawend", (evt) => {
             logger.trace("drawend", evt);
+            /**
+            * event triggered at the end of drawing input
+            * @event elevationpath:drawend
+            */
+            this.dispatchEvent("elevationpath:drawend");
 
             // set feature
             this._lastSketch = this._currentSketch;
 
-            // set an alti request and display results
 
-            // FIXME à revoir...
             // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
             // resultats, on realise l'affichage du panneau
             if (typeof this.options.elevationOptions.onSuccess === "undefined" && this.options.displayProfileOptions.target === null) {
                 this._panelContainer.style.display = "block";
                 // self._panelContainer.style.visibility = "visible";
             }
+
+            // set an alti request and display results
             this._requestService();
         });
     };

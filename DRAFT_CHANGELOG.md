@@ -5,9 +5,15 @@
 
 ## Summary
 
+Ajout d'évènement sur les contrôles
+
 ## Changelog
 
 * [Added]
+
+    - déclenchement de l'event 'attributions:update' sur la mise à jour des attributions sur le contrôle GeoportalAttribution
+    
+    - déclenchement de l'event 'elevationpath:drawend' et 'elevationpath:drawstart' sur la saisie sur le contrôle ElevationPath
 
 * [Changed]
 
@@ -26,11 +32,16 @@
 
 ## Summary
 
-Version iTowns 2.27.0
+* Version iTowns 2.27.0
+* Ajout d'évènement sur les contrôles
 
 ## Changelog
 
 * [Added]
+
+    - mise en place du mécanisme des evenements sur tous les widgets
+
+    - déclenchement de l'event 'attributions:update' sur la mise à jour des attributions sur le contrôle Attributions
 
 * [Changed]
 
