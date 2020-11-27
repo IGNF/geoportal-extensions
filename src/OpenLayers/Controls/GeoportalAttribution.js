@@ -221,7 +221,7 @@ var GeoportalAttribution = (function (Attribution) {
                 *
                 * @event attributions:update
                 * @type Object
-                * @property {Map} attributions - list of attributions
+                * @property {Array} attributions - list of attributions
                 */
                 this.dispatchEvent({
                     type : "attributions:update",

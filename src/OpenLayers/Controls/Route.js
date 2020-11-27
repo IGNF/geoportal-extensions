@@ -54,6 +54,8 @@ var logger = Logger.getLogger("route");
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Itinéraire"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
+ * @fires route:drawstart
+ * @fires route:drawend
  * @example
  *  var route = ol.control.Route({
  *      "collapsed" : true
@@ -933,6 +935,7 @@ var Route = (function (Control) {
         //     }
         // );
         olObservableUnByKey(this.listenerKey);
+        this.dispatchEvent("route:drawend");
     };
 
     /**
@@ -956,8 +959,21 @@ var Route = (function (Control) {
                     if (this._formRouteContainer.className === "GProuteFormMini") {
                         this._formRouteContainer.className = "";
                     }
+                    olObservableUnByKey(this.listenerKey);
+                    /**
+                    * event triggered at the end of drawing input
+                    *
+                    * @event route:drawend
+                    */
+                    this.dispatchEvent("route:drawend");
                 }
             );
+            /**
+            * event triggered at the start of drawing input
+            *
+            * @event route:drawstart
+            */
+            this.dispatchEvent("route:drawstart");
         } else {
             // si on déselectionne le pointer, on rétablit le formulaire en mode normal
             this._formRouteContainer.className = "";
@@ -972,7 +988,9 @@ var Route = (function (Control) {
             //     }
             // );
             olObservableUnByKey(this.listenerKey);
+            this.dispatchEvent("route:drawend");
         }
+
     };
 
     /**

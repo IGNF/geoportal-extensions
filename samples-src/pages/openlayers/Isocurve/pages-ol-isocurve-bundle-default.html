@@ -44,6 +44,14 @@
                 var iso = new ol.control.Isocurve({});
                 map.addControl(iso);
 
+                // listener sur la saisie des points
+                iso.on("isocurve:drawstart", function (e) {
+                    console.warn(e);
+                });
+                iso.on("isocurve:drawend", function (e) {
+                    console.warn(e);
+                });
+
                 var layerSwitcher = new ol.control.LayerSwitcher({});
                 map.addControl(layerSwitcher);
              };

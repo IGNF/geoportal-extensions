@@ -53,6 +53,8 @@ var logger = Logger.getLogger("isocurve");
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Isochrone/Isodistance"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
+ * @fires isocurve:drawstart
+ * @fires isocurve:drawend
  * @example
  *  var iso = ol.control.Isocurve({
  *      "collapsed" : false,
@@ -789,6 +791,7 @@ var Isocurve = (function (Control) {
                     "click",
                     () => {
                         self._formContainer.className = "";
+                        self.dispatchEvent("isocurve:drawend");
                     }
                 );
             } else {
@@ -798,6 +801,12 @@ var Isocurve = (function (Control) {
                 // map.un("click", () => { self._formContainer.className = ""; });
                 olObservableUnByKey(this.listenerKey);
             }
+            /**
+            * event triggered at the start of drawing input
+            *
+            * @event isocurve:drawstart
+            */
+            self.dispatchEvent("isocurve:drawstart");
         };
         /** click sur le label */
         document.getElementById("GPlocationOriginLabel_1-" + this._uid).onclick = function () {
@@ -810,10 +819,17 @@ var Isocurve = (function (Control) {
                     self._formContainer.className = "";
                 }
             );
+            self.dispatchEvent("isocurve:drawend");
         };
         /** click sur la zone de saisie */
         document.getElementById("GPlocationOrigin_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
+            /**
+            * event triggered at the end of drawing input
+            *
+            * @event isocurve:drawend
+            */
+            self.dispatchEvent("isocurve:drawend");
         };
         return this._originPoint._container;
     };

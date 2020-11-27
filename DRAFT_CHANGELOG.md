@@ -11,15 +11,23 @@ Ajout d'évènement sur les contrôles
 
 * [Added]
 
-    - déclenchement de l'event 'attributions:update' sur la mise à jour des attributions sur le contrôle GeoportalAttribution
-    
-    - déclenchement de l'event 'elevationpath:drawend' et 'elevationpath:drawstart' sur la saisie sur le contrôle ElevationPath
+    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **GeoportalAttribution**
+
+    - event '*elevationpath:drawend*' et '*elevationpath:drawstart*' sur la saisie sur le contrôle **ElevationPath**
+
+    - event '*route:drawend*' et '*route:drawstart*' sur la saisie sur le contrôle **Route**
+
+    - event '*isocurve:drawend*' et '*isocurve:drawstart*' sur la saisie sur le contrôle **IsoCurve**
 
 * [Changed]
 
 * [Deprecated]
 
 * [Removed]
+
+* [Fixed]
+
+    - nettoyage des *listeners* sur le contrôle **Route**
 
 * [Security]
 
@@ -41,7 +49,7 @@ Ajout d'évènement sur les contrôles
 
     - mise en place du mécanisme des evenements sur tous les widgets
 
-    - déclenchement de l'event 'attributions:update' sur la mise à jour des attributions sur le contrôle Attributions
+    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **Attributions**
 
 * [Changed]
 
