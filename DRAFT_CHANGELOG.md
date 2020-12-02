@@ -5,7 +5,7 @@
 
 ## Summary
 
-Ajout d'évènement sur les contrôles
+Ajout d'évènements sur les contrôles
 
 ## Changelog
 
