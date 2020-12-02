@@ -5,11 +5,19 @@
 
 ## Summary
 
-* Correction sur la compilation (build) lié à openlayers
+Ajout d'évènement sur les contrôles
 
 ## Changelog
 
 * [Added]
+
+    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **GeoportalAttribution**
+
+    - event '*elevationpath:drawend*' et '*elevationpath:drawstart*' sur la saisie sur le contrôle **ElevationPath**
+
+    - event '*route:drawend*' et '*route:drawstart*' sur la saisie sur le contrôle **Route**
+
+    - event '*isocurve:drawend*' et '*isocurve:drawstart*' sur la saisie sur le contrôle **IsoCurve**
 
 * [Changed]
 
@@ -17,14 +25,11 @@
 
 * [Removed]
 
-- suppression des tests en mode console
-- suppression de la couverture du code
-- correctif sur exception de compilation avec la classe ol.geom.LinearRing
+* [Fixed]
+
+    - nettoyage des *listeners* sur le contrôle **Route**
 
 * [Security]
-
-- maj des dépendances
-- suppression de la dépendance "mocha-webpack"
 
 ---
 
@@ -35,21 +40,26 @@
 
 ## Summary
 
-Fix du DOM du mousePosition itowns
+* Version iTowns 2.27.0
+* Ajout d'évènement sur les contrôles
 
 ## Changelog
 
 * [Added]
 
-* [Changed] 
+    - mise en place du mécanisme des evenements sur tous les widgets
+
+    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **Attributions**
+
+* [Changed]
+
+    - mise à jour iTowns 2.27.0 (utilisation par défaut du webGL 2.0)
 
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-- fix le control mousePosition itowns en réglant un z-index
 
 * [Security]
 
@@ -62,11 +72,15 @@ Fix du DOM du mousePosition itowns
 
 ## Summary
 
+Version Leaflet 1.7.1
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - mise à jour de la documentation
 
 * [Deprecated]
 

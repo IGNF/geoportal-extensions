@@ -44,6 +44,14 @@
                 var route = new ol.control.Route({});
                 map.addControl(route);
 
+                // listener sur la saisie des points
+                route.on("route:drawstart", function (e) {
+                    console.warn(e);
+                });
+                route.on("route:drawend", function (e) {
+                    console.warn(e);
+                });
+
                 var layerSwitcher = new ol.control.LayerSwitcher({});
                 map.addControl(layerSwitcher);
              };

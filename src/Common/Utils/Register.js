@@ -141,7 +141,7 @@ var Register = {
      * @param {Object} Proj4 - proj4 instance
      */
     loadByDefault : function (Proj4) {
-        // FIXME definir la liste de projections par defaut...
+        // la liste de projections par defaut...
         var registers = {
             EPSG : {
                 2154 : Register["EPSG"]["2154"],
@@ -192,7 +192,7 @@ var Register = {
         try {
             Proj4.defs(name, this.get(name));
         } catch (e) {
-            // FIXME !?
+            // FIXME message !?
             return false;
         }
 
