@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.2.12
- * @date 23/09/2020
+ * @version 2.3.0
+ * @date 02/12/2020
  *
  */
 
@@ -3018,6 +3018,7 @@ div[id^=GPAttribution-] {
     bottom: 8px;
     right: 8px;
     width: calc(90% - 1.3em);
+    z-index: 1;
 }
 
 div[id^=GPAttributionsListContainer-] {
@@ -3263,7 +3264,7 @@ div[id^=GPminiglobeContainer-] {
 div[id^=GPmousePosition-] {
   bottom: 8px;
   left: 10px;
-  z-index: 1;
+  z-index: 2; /* > z-index attribution*/
 }
 
 /* Showing/hiding mouse position panel */
