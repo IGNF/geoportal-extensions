@@ -45,6 +45,7 @@ var logger = Logger.getLogger("elevationpath");
  * @alias ol.control.ElevationPath
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
+ * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
