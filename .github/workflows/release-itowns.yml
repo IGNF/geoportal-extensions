@@ -235,6 +235,7 @@ jobs:
         with:
           repository: IGNF/geoportal-extensions
           ref: develop
+          token: ${{ secrets.ADMIN_GEOPORTAL_TOKEN }}
 
       - name: Download ChangeLog artifacts
         uses: actions/download-artifact@v2

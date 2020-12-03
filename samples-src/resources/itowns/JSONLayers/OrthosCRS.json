@@ -19,7 +19,7 @@
             "url" : "http://www.ign.fr"
         }],
         "format": "image/jpeg",
-        "crs" : "EPSG:4326",
+        "projection" : "EPSG:4326",
         "tileMatrixSet": "WGS84",
         "extent": {
             "west": "-178.187",
