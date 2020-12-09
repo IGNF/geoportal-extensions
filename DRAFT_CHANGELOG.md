@@ -72,7 +72,7 @@ Ajout d'évènements sur les contrôles
 
 ## Summary
 
-Version Leaflet 1.7.1
+Mise à jour de Leaflet en version 1.7.1
 
 ## Changelog
 
@@ -80,7 +80,8 @@ Version Leaflet 1.7.1
 
 * [Changed]
 
-    - mise à jour de la documentation
+    - leaflet en version 1.7.1
+    - mise à jour de la documentation (5c189f7ef6de22e398ca7426d84abb751f049717)
 
 * [Deprecated]
 
