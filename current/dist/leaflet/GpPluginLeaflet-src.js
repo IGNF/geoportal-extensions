@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.6
- * @date 01/07/2020
+ * @version 2.1.7
+ * @date 09/12/2020
  *
  */
 
@@ -84,7 +84,7 @@
  * @copyright Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/proj4js/proj4js/master/LICENSE.md
- * @version   2.6.0
+ * @version   ^2.6.2
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -315,7 +315,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.2.15\",\"date\":\"01/07/2020\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.6\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.11\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.2.10\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.6\",\"itowns\":\"2.19.0\",\"leaflet\":\"1.5.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"2.6.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.113.2\",\"three.meshline\":\"1.2.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.1\",\"date\":\"09/12/2020\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.7\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.13\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.0\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.6\",\"itowns\":\"2.27.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"^2.6.2\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.121.1\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -2011,15 +2011,18 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     function Logger(name, defaultLevel, factory) {
       var self = this;
       var currentLevel;
+
       var storageKey = "loglevel";
-      if (name) {
+      if (typeof name === "string") {
         storageKey += ":" + name;
+      } else if (typeof name === "symbol") {
+        storageKey = undefined;
       }
 
       function persistLevelIfPossible(levelNum) {
           var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
 
-          if (typeof window === undefinedType) return;
+          if (typeof window === undefinedType || !storageKey) return;
 
           // Use localStorage if available
           try {
@@ -2037,7 +2040,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
       function getPersistedLevel() {
           var storedLevel;
 
-          if (typeof window === undefinedType) return;
+          if (typeof window === undefinedType || !storageKey) return;
 
           try {
               storedLevel = window.localStorage[storageKey];
@@ -2130,7 +2133,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
     var _loggersByName = {};
     defaultLogger.getLogger = function getLogger(name) {
-        if (typeof name !== "string" || name === "") {
+        if ((typeof name !== "symbol" && typeof name !== "string") || name === "") {
           throw new TypeError("You must supply a name when creating a logger.");
         }
 
@@ -2156,6 +2159,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     defaultLogger.getLoggers = function getLoggers() {
         return _loggersByName;
     };
+
+    // ES6 default export, for compatibility
+    defaultLogger['default'] = defaultLogger;
 
     return defaultLogger;
 }));
@@ -10541,7 +10547,7 @@ var DefaultUrlService = {
 /* 57 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.6\",\"_id\":\"geoportal-access-lib@2.1.6\",\"_inBundle\":false,\"_integrity\":\"sha512-zQpSjZq8YkGW+ooB1WloQd2KZHCKyg4/pbIFLSPCk3et2Zan/O2hZlKOf2alEX2zbsg7Wd+e8KiLc7cHZKniag==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.6\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.6\",\"saveSpec\":null,\"fetchSpec\":\"2.1.6\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.6.tgz\",\"_shasum\":\"8bb0d4cc7045c39c3392fe076ba699aace2b6066\",\"_spec\":\"geoportal-access-lib@2.1.6\",\"_where\":\"/home/travis/build/IGNF/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"03/10/2019\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-loader\":\"^7.1.2\",\"babel-preset-env\":\"^1.7.0\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^0.1.18\",\"copy-webpack-plugin\":\"^4.5.1\",\"eslint\":\"^4.18.2\",\"eslint-config-standard\":\"^11.0.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.9.0\",\"eslint-plugin-node\":\"^6.0.1\",\"eslint-plugin-promise\":\"^3.7.0\",\"eslint-plugin-standard\":\"^3.0.1\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^2.30.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"0.0.1\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^4.0.0\",\"mocha-loader\":\"^1.1.3\",\"mocha-webpack\":\"^1.0.1\",\"nyc\":\"^12.0.2\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^4.3.0\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.2.2\",\"string-template\":\"^1.0.0\",\"webpack\":\"^3.11.0\",\"webpack-dev-server\":\"^2.11.3\",\"webpack-node-externals\":\"^1.6.0\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack\",\"build:dev\":\"webpack --env.development\",\"build:prod\":\"webpack --env.production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --open-page samples/index-src.html --https --content-base .  --output-public-path '/dist/' --port 9001 --open 'google-chrome'\",\"sample:serve:dev\":\"webpack-dev-server --env.development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"sample:serve:prod\":\"webpack-dev-server --env.production --open-page samples/index.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --webpack-config webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config webpack.end-to-end.serve.js\",\"test:serve\":\"webpack-dev-server --hot --config webpack.test.serve.js\"},\"version\":\"2.1.6\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.6\",\"_id\":\"geoportal-access-lib@2.1.6\",\"_inBundle\":false,\"_integrity\":\"sha512-zQpSjZq8YkGW+ooB1WloQd2KZHCKyg4/pbIFLSPCk3et2Zan/O2hZlKOf2alEX2zbsg7Wd+e8KiLc7cHZKniag==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.6\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.6\",\"saveSpec\":null,\"fetchSpec\":\"2.1.6\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.6.tgz\",\"_shasum\":\"8bb0d4cc7045c39c3392fe076ba699aace2b6066\",\"_spec\":\"geoportal-access-lib@2.1.6\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"03/10/2019\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-loader\":\"^7.1.2\",\"babel-preset-env\":\"^1.7.0\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^0.1.18\",\"copy-webpack-plugin\":\"^4.5.1\",\"eslint\":\"^4.18.2\",\"eslint-config-standard\":\"^11.0.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.9.0\",\"eslint-plugin-node\":\"^6.0.1\",\"eslint-plugin-promise\":\"^3.7.0\",\"eslint-plugin-standard\":\"^3.0.1\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^2.30.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"0.0.1\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^4.0.0\",\"mocha-loader\":\"^1.1.3\",\"mocha-webpack\":\"^1.0.1\",\"nyc\":\"^12.0.2\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^4.3.0\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.2.2\",\"string-template\":\"^1.0.0\",\"webpack\":\"^3.11.0\",\"webpack-dev-server\":\"^2.11.3\",\"webpack-node-externals\":\"^1.6.0\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack\",\"build:dev\":\"webpack --env.development\",\"build:prod\":\"webpack --env.production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --open-page samples/index-src.html --https --content-base .  --output-public-path '/dist/' --port 9001 --open 'google-chrome'\",\"sample:serve:dev\":\"webpack-dev-server --env.development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"sample:serve:prod\":\"webpack-dev-server --env.production --open-page samples/index.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --webpack-config webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config webpack.end-to-end.serve.js\",\"test:serve\":\"webpack-dev-server --hot --config webpack.test.serve.js\"},\"version\":\"2.1.6\"}");
 
 /***/ }),
 /* 58 */
@@ -30820,6 +30826,13 @@ var CRS = {
         obj[key] = v;
         return;
       }
+      if (key === 'AXIS') {
+        if (!(key in obj)) {
+          obj[key] = [];
+        }
+        obj[key].push(v);
+        return;
+      }
       if (!Array.isArray(key)) {
         obj[key] = {};
       }
@@ -30912,6 +30925,28 @@ var CRS = {
           wkt.projName = wkt.PROJECTION;
         }
       }
+      if (wkt.AXIS) {
+        var axisOrder = '';
+        for (var i = 0, ii = wkt.AXIS.length; i < ii; ++i) {
+          var axis = wkt.AXIS[i];
+          var descriptor = axis[0].toLowerCase();
+          if (descriptor.indexOf('north') !== -1) {
+            axisOrder += 'n';
+          } else if (descriptor.indexOf('south') !== -1) {
+            axisOrder += 's';
+          } else if (descriptor.indexOf('east') !== -1) {
+            axisOrder += 'e';
+          } else if (descriptor.indexOf('west') !== -1) {
+            axisOrder += 'w';
+          }
+        }
+        if (axisOrder.length === 2) {
+          axisOrder += 'u';
+        }
+        if (axisOrder.length === 3) {
+          wkt.axis = axisOrder;
+        }
+      }
       if (wkt.UNIT) {
         wkt.units = wkt.UNIT.name.toLowerCase();
         if (wkt.units === 'metre') {
@@ -30946,7 +30981,7 @@ var CRS = {
         if (wkt.datumCode === 'new_zealand_geodetic_datum_1949' || wkt.datumCode === 'new_zealand_1949') {
           wkt.datumCode = 'nzgd49';
         }
-        if (wkt.datumCode === 'wgs_1984') {
+        if (wkt.datumCode === 'wgs_1984' || wkt.datumCode === 'world_geodetic_system_1984') {
           if (wkt.PROJECTION === 'Mercator_Auxiliary_Sphere') {
             wkt.sphere = true;
           }
@@ -32149,11 +32184,20 @@ var CRS = {
         }
         if (i === 0) {
           v = xin;
-          t = 'x';
+          if ("ew".indexOf(crs.axis[i]) !== -1) {
+            t = 'x';
+          } else {
+            t = 'y';
+          }
+
         }
         else if (i === 1) {
           v = yin;
-          t = 'y';
+          if ("ns".indexOf(crs.axis[i]) !== -1) {
+            t = 'y';
+          } else {
+            t = 'x';
+          }
         }
         else {
           v = zin;
@@ -32256,6 +32300,9 @@ var CRS = {
           };
         }
         point = source.inverse(point); // Convert Cartesian to longlat
+        if (!point) {
+          return;
+        }
       }
       // Adjust for the prime meridian if necessary
       if (source.from_greenwich) {
@@ -34691,7 +34738,7 @@ var CRS = {
           if (this.mode === this.N_POLE) {
             coslam = -coslam;
           }
-          if (Math.abs(phi + this.phi0) < EPSLN) {
+          if (Math.abs(phi + this.lat0) < EPSLN) {
             return null;
           }
           y = FORTPI - phi * 0.5;
@@ -34790,7 +34837,7 @@ var CRS = {
           y = cosz * rh;
           break;
         case this.OBLIQ:
-          phi = (Math.abs(rh) <= EPSLN) ? this.phi0 : Math.asin(cosz * this.sinph0 + y * sinz * this.cosph0 / rh);
+          phi = (Math.abs(rh) <= EPSLN) ? this.lat0 : Math.asin(cosz * this.sinph0 + y * sinz * this.cosph0 / rh);
           x *= sinz * this.cosph0;
           y = (cosz - Math.sin(phi) * this.sinph0) * rh;
           break;
@@ -34811,8 +34858,8 @@ var CRS = {
           y *= this.dd;
           rho = Math.sqrt(x * x + y * y);
           if (rho < EPSLN) {
-            p.x = 0;
-            p.y = this.phi0;
+            p.x = this.long0;
+            p.y = this.lat0;
             return p;
           }
           sCe = 2 * Math.asin(0.5 * rho / this.rq);
@@ -34835,8 +34882,8 @@ var CRS = {
           }
           q = (x * x + y * y);
           if (!q) {
-            p.x = 0;
-            p.y = this.phi0;
+            p.x = this.long0;
+            p.y = this.lat0;
             return p;
           }
           ab = 1 - q / this.qp;
@@ -36118,7 +36165,7 @@ var CRS = {
           //default case
           cos_c = this.sin_p12 * sinphi + this.cos_p12 * cosphi * Math.cos(dlon);
           c = Math.acos(cos_c);
-          kp = c / Math.sin(c);
+          kp = c ? c / Math.sin(c) : 1;
           p.x = this.x0 + this.a * kp * cosphi * Math.sin(dlon);
           p.y = this.y0 + this.a * kp * (this.cos_p12 * sinphi - this.sin_p12 * cosphi * Math.cos(dlon));
           return p;
@@ -36182,7 +36229,7 @@ var CRS = {
     function inverse$24(p) {
       p.x -= this.x0;
       p.y -= this.y0;
-      var rh, z, sinz, cosz, lon, lat, con, e0, e1, e2, e3, Mlp, M, N1, psi, Az, cosAz, tmp, A, B, D, Ee, F;
+      var rh, z, sinz, cosz, lon, lat, con, e0, e1, e2, e3, Mlp, M, N1, psi, Az, cosAz, tmp, A, B, D, Ee, F, sinpsi;
       if (this.sphere) {
         rh = Math.sqrt(p.x * p.x + p.y * p.y);
         if (rh > (2 * HALF_PI * this.a)) {
@@ -36266,7 +36313,8 @@ var CRS = {
           F = 1 - A * Ee * Ee / 2 - D * Ee * Ee * Ee / 6;
           psi = Math.asin(this.sin_p12 * Math.cos(Ee) + this.cos_p12 * Math.sin(Ee) * cosAz);
           lon = adjust_lon(this.long0 + Math.asin(Math.sin(Az) * Math.sin(Ee) / Math.cos(psi)));
-          lat = Math.atan((1 - this.es * F * this.sin_p12 / Math.sin(psi)) * Math.tan(psi) / (1 - this.es));
+          sinpsi = Math.sin(psi);
+          lat = Math.atan2((sinpsi - this.es * F * this.sin_p12) * Math.tan(psi), sinpsi * (1 - this.es));
           p.x = lon;
           p.y = lat;
           return p;
@@ -36919,6 +36967,172 @@ var CRS = {
         names: names$30
     };
 
+    var mode = {
+      N_POLE: 0,
+      S_POLE: 1,
+      EQUIT: 2,
+      OBLIQ: 3
+    };
+
+    var params = {
+      h:     { def: 100000, num: true },           // default is Karman line, no default in PROJ.7
+      azi:   { def: 0, num: true, degrees: true }, // default is North
+      tilt:  { def: 0, num: true, degrees: true }, // default is Nadir
+      long0: { def: 0, num: true },                // default is Greenwich, conversion to rad is automatic
+      lat0:  { def: 0, num: true }                 // default is Equator, conversion to rad is automatic
+    };
+
+    function init$30() {
+      Object.keys(params).forEach(function (p) {
+        if (typeof this[p] === "undefined") {
+          this[p] = params[p].def;
+        } else if (params[p].num && isNaN(this[p])) {
+          throw new Error("Invalid parameter value, must be numeric " + p + " = " + this[p]);
+        } else if (params[p].num) {
+          this[p] = parseFloat(this[p]);
+        }
+        if (params[p].degrees) {
+          this[p] = this[p] * D2R;
+        }
+      }.bind(this));
+
+      if (Math.abs((Math.abs(this.lat0) - HALF_PI)) < EPSLN) {
+        this.mode = this.lat0 < 0 ? mode.S_POLE : mode.N_POLE;
+      } else if (Math.abs(this.lat0) < EPSLN) {
+        this.mode = mode.EQUIT;
+      } else {
+        this.mode = mode.OBLIQ;
+        this.sinph0 = Math.sin(this.lat0);
+        this.cosph0 = Math.cos(this.lat0);
+      }
+
+      this.pn1 = this.h / this.a;  // Normalize relative to the Earth's radius
+
+      if (this.pn1 <= 0 || this.pn1 > 1e10) {
+        throw new Error("Invalid height");
+      }
+      
+      this.p = 1 + this.pn1;
+      this.rp = 1 / this.p;
+      this.h1 = 1 / this.pn1;
+      this.pfact = (this.p + 1) * this.h1;
+      this.es = 0;
+
+      var omega = this.tilt;
+      var gamma = this.azi;
+      this.cg = Math.cos(gamma);
+      this.sg = Math.sin(gamma);
+      this.cw = Math.cos(omega);
+      this.sw = Math.sin(omega);
+    }
+
+    function forward$29(p) {
+      p.x -= this.long0;
+      var sinphi = Math.sin(p.y);
+      var cosphi = Math.cos(p.y);
+      var coslam = Math.cos(p.x);
+      var x, y;
+      switch (this.mode) {
+        case mode.OBLIQ:
+          y = this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
+          break;
+        case mode.EQUIT:
+          y = cosphi * coslam;
+          break;
+        case mode.S_POLE:
+          y = -sinphi;
+          break;
+        case mode.N_POLE:
+          y = sinphi;
+          break;
+      }
+      y = this.pn1 / (this.p - y);
+      x = y * cosphi * Math.sin(p.x);
+
+      switch (this.mode) {
+        case mode.OBLIQ:
+          y *= this.cosph0 * sinphi - this.sinph0 * cosphi * coslam;
+          break;
+        case mode.EQUIT:
+          y *= sinphi;
+          break;
+        case mode.N_POLE:
+          y *= -(cosphi * coslam);
+          break;
+        case mode.S_POLE:
+          y *= cosphi * coslam;
+          break;
+      }
+
+      // Tilt 
+      var yt, ba;
+      yt = y * this.cg + x * this.sg;
+      ba = 1 / (yt * this.sw * this.h1 + this.cw);
+      x = (x * this.cg - y * this.sg) * this.cw * ba;
+      y = yt * ba;
+
+      p.x = x * this.a;
+      p.y = y * this.a;
+      return p;
+    }
+
+    function inverse$29(p) {
+      p.x /= this.a;
+      p.y /= this.a;
+      var r = { x: p.x, y: p.y };
+
+      // Un-Tilt
+      var bm, bq, yt;
+      yt = 1 / (this.pn1 - p.y * this.sw);
+      bm = this.pn1 * p.x * yt;
+      bq = this.pn1 * p.y * this.cw * yt;
+      p.x = bm * this.cg + bq * this.sg;
+      p.y = bq * this.cg - bm * this.sg;
+
+      var rh = hypot(p.x, p.y);
+      if (Math.abs(rh) < EPSLN) {
+        r.x = 0;
+        r.y = p.y;
+      } else {
+        var cosz, sinz;
+        sinz = 1 - rh * rh * this.pfact;
+        sinz = (this.p - Math.sqrt(sinz)) / (this.pn1 / rh + rh / this.pn1);
+        cosz = Math.sqrt(1 - sinz * sinz);
+        switch (this.mode) {
+          case mode.OBLIQ:
+            r.y = Math.asin(cosz * this.sinph0 + p.y * sinz * this.cosph0 / rh);
+            p.y = (cosz - this.sinph0 * Math.sin(r.y)) * rh;
+            p.x *= sinz * this.cosph0;
+            break;
+          case mode.EQUIT:
+            r.y = Math.asin(p.y * sinz / rh);
+            p.y = cosz * rh;
+            p.x *= sinz;
+            break;
+          case mode.N_POLE:
+            r.y = Math.asin(cosz);
+            p.y = -p.y;
+            break;
+          case mode.S_POLE:
+            r.y = -Math.asin(cosz);
+            break;
+        }
+        r.x = Math.atan2(p.x, p.y);
+      }
+
+      p.x = r.x + this.long0;
+      p.y = r.y;
+      return p;
+    }
+
+    var names$31 = ["Tilted_Perspective", "tpers"];
+    var tpers = {
+      init: init$30,
+      forward: forward$29,
+      inverse: inverse$29,
+      names: names$31
+    };
+
     var includedProjections = function(proj4){
       proj4.Proj.projections.add(tmerc);
       proj4.Proj.projections.add(etmerc);
@@ -36947,6 +37161,7 @@ var CRS = {
       proj4.Proj.projections.add(qsc);
       proj4.Proj.projections.add(robin);
       proj4.Proj.projections.add(geocent);
+      proj4.Proj.projections.add(tpers);
     };
 
     proj4$1.defaultDatum = 'WGS84'; //default datum
@@ -36957,7 +37172,7 @@ var CRS = {
     proj4$1.defs = defs;
     proj4$1.transform = transform;
     proj4$1.mgrs = mgrs;
-    proj4$1.version = '2.6.0';
+    proj4$1.version = '2.6.3';
     includedProjections(proj4$1);
 
     return proj4$1;
@@ -37385,7 +37600,7 @@ var Register = {
    * @param {Object} Proj4 - proj4 instance
    */
   loadByDefault: function loadByDefault(Proj4) {
-    // FIXME definir la liste de projections par defaut...
+    // la liste de projections par defaut...
     var registers = {
       EPSG: {
         2154: Register["EPSG"]["2154"],
@@ -37437,7 +37652,7 @@ var Register = {
     try {
       Proj4.defs(name, this.get(name));
     } catch (e) {
-      // FIXME !?
+      // FIXME message !?
       return false;
     }
 
