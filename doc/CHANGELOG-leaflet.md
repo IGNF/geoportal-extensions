@@ -48,6 +48,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.1.6](#extension-geoportail-leaflet-version-216)
   * [Summary](#summary-12)
   * [Changelog](#changelog-9)
+- [Extension Geoportail Leaflet, version 2.1.7](#extension-geoportail-leaflet-version-217)
+  * [Summary](#summary-13)
+  * [Changelog](#changelog-10)
 
 <!-- tocstop -->
 
@@ -386,5 +389,32 @@ Mise à jour des dépendances (#263) et correctifs mineurs
 
     - suppression des tests en mode console (#263)
     - suppression de la couverture du code (#263)
+
+---
+# Extension Geoportail Leaflet, version 2.1.7
+
+**09/12/2020**
+> Release Extension Geoportail Leaflet
+
+## Summary
+
+Mise à jour de Leaflet en version 1.7.1
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - leaflet en version 1.7.1
+    - mise à jour de la documentation (5c189f7ef6de22e398ca7426d84abb751f049717)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
 
 ---

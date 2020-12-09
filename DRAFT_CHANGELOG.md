@@ -65,23 +65,19 @@ Ajout d'évènements sur les contrôles
 
 ---
 
-# Extension Geoportail Leaflet, version __VERSION__
+
+# Extension Geoportail __UP_LIBRARY__, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoportail __LO_LIBRARY__
 
 ## Summary
-
-Mise à jour de Leaflet en version 1.7.1
 
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - leaflet en version 1.7.1
-    - mise à jour de la documentation (5c189f7ef6de22e398ca7426d84abb751f049717)
 
 * [Deprecated]
 
