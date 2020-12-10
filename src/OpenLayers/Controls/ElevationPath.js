@@ -979,7 +979,6 @@ var ElevationPath = (function (Control) {
             // set feature
             this._lastSketch = this._currentSketch;
 
-
             // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
             // resultats, on realise l'affichage du panneau
             if (typeof this.options.elevationOptions.onSuccess === "undefined" && this.options.displayProfileOptions.target === null) {
@@ -1210,15 +1209,7 @@ var ElevationPath = (function (Control) {
 
         var _data = elevations;
 
-        // FIXME facteur à 2000 doit il etre une option ?
-        var _limite = 2000; // metres
-        var _unit = "km";
-        var _factor = 1000;
-        var _length = this._getLength();
-        if (_length < _limite) {
-            _factor = 1;
-            _unit = "m";
-        }
+        var _unit = "m";
 
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
         _data[0].dist = 0;
@@ -1252,7 +1243,7 @@ var ElevationPath = (function (Control) {
                 _distancePlus += dist;
                 _ascendingElevation += slope;
             }
-            _distance += dist / _factor;
+            _distance += dist;
             _data[i].dist = _distance;
 
             _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
@@ -1276,19 +1267,6 @@ var ElevationPath = (function (Control) {
             _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
         }
 
-        // Valeur du coeff d'arrondi des distances en fonction de la distance totale
-        var coeffArrond = 100;
-        if (_distance > 100) {
-            coeffArrond = 1;
-        } else if (_distance > 10) {
-            coeffArrond = 10;
-        }
-
-        // Correction arrondi distance totale
-        _distance = Math.round(_distance * coeffArrond) / coeffArrond;
-        _distanceMinus = Math.round(_distanceMinus * coeffArrond) / coeffArrond;
-        _distancePlus = Math.round(_distancePlus * coeffArrond) / coeffArrond;
-
         // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
         var _altMin = _data[0].z;
         var _altMax = _data[0].z;
@@ -1306,7 +1284,6 @@ var ElevationPath = (function (Control) {
                 _altMin = d.z;
             }
 
-            d.dist = Math.round(d.dist * coeffArrond) / coeffArrond;
             // FIXME erreur avec D3 car cette lib souhaite un numerique !
             // d.dist = d.dist.toLocaleString();
 
@@ -1318,13 +1295,13 @@ var ElevationPath = (function (Control) {
         return {
             greaterSlope : _greaterSlope, // pente max
             meanSlope : Math.round(_slopes / _data.length), // pente moyenne
-            distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
-            distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
+            distancePlus : _distancePlus, // distance cumulée positive
+            distanceMinus : _distanceMinus, // distance cumulée négative
             ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
             descendingElevation : _descendingElevation, // dénivelé cumulée négative
             altMin : _altMin.toLocaleString(), // altitude min
             altMax : _altMax.toLocaleString(), // altitude max
-            distance : _distance.toLocaleString(), // distance totale
+            distance : _distance, // distance totale
             unit : _unit, // unité des mesures de distance
             points : _data
         };

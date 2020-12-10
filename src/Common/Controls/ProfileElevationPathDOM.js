@@ -36,7 +36,7 @@ var ProfileElevationPathDOM = {
         var maxZ = sortedElev[sortedElev.length - 1].z;
         var diff = maxZ - minZ;
         var dist = data.distance;
-        var unit = data.unit;
+        // var dist_unit = "m";
         // var distMin = 0;
         var barwidth = 100 / _points.length;
 
@@ -47,22 +47,36 @@ var ProfileElevationPathDOM = {
         var divBox = document.createElement("div");
         divBox.className = "profile-box";
 
+        // Détermination des guides en ordonnée :
+        const maxNumZguides = 7;
+        let gradZ = Math.pow(10, (Math.ceil(Math.log((maxZ - minZ) / maxNumZguides) / Math.log(10)))) / 2;
+        const minGraphZ = Math.floor(minZ / gradZ) * gradZ;
+        const maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
+
+        let numZguides = (maxGraphZ - minGraphZ) / gradZ;
+
+        // Si plus de guides que le max, on passe à la puissance de 10 supérieure
+        if (numZguides > maxNumZguides) {
+            gradZ = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumZguides) / Math.log(10)) + 1)) / 2;
+            numZguides = Math.floor(maxGraphZ / gradZ);
+        }
+
         var divZ = document.createElement("div");
         divZ.className = "profile-z-vertical";
         var ulZ = document.createElement("ul");
-        var liZmin = document.createElement("li");
-        liZmin.setAttribute("class", "profile-min-z");
-        liZmin.innerHTML = minZ + " m";
-        var liZmax = document.createElement("li");
-        liZmax.setAttribute("class", "profile-max-z");
-        liZmax.innerHTML = maxZ + " m";
+
+        // Ajout des graduations au graphique
+        for (let i = numZguides; i >= 0; i--) {
+            let liZ = document.createElement("li");
+            liZ.setAttribute("class", "profile-z-graduation");
+            liZ.innerHTML = minGraphZ + i * gradZ;
+            ulZ.appendChild(liZ);
+        }
 
         // var divUnit = document.createElement("div");
         // divUnit.className = "profile-unit";
         // divUnit.innerHTML = "m";
 
-        ulZ.appendChild(liZmax);
-        ulZ.appendChild(liZmin);
         divZ.appendChild(ulZ);
         // divZ.appendChild(divUnit);
         divBox.appendChild(divZ);
@@ -123,17 +137,42 @@ var ProfileElevationPathDOM = {
         divBox.appendChild(divData);
         div.appendChild(divBox);
 
+        // Détermination des guides en abscisse :
+        // Passage éventuel en km
+        if (dist > 2000) {
+            dist /= 1000;
+            // dist_unit = "km";
+        }
+
+        const maxNumXguides = 8;
+        let gradX = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumXguides) / Math.log(10)))) / 2;
+        const maxGraphX = dist;
+
+        // Si plus de guides que le max, on passe à la puissance de 10 supérieure
+        let numXguides = Math.floor(maxGraphX / gradX);
+        if (numXguides > maxNumXguides) {
+            gradX = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumXguides) / Math.log(10)) + 1)) / 2;
+            numXguides = Math.floor(maxGraphX / gradX);
+        }
+
         var divX = document.createElement("div");
-        divX.className = "profile-x-horizontal";
+        divX.className = "profile-X-vertical";
         var ulX = document.createElement("ul");
-        var liXmin = document.createElement("li");
-        liXmin.setAttribute("class", "profile-min-x");
-        liXmin.innerHTML = "";
-        var liXmax = document.createElement("li");
-        liXmax.setAttribute("class", "profile-max-x");
-        liXmax.innerHTML = dist + " " + unit;
-        ulX.appendChild(liXmin);
-        ulX.appendChild(liXmax);
+
+        // Ajout des graduations au graphique
+        for (let i = 0; i < numXguides + 1; i++) {
+            let liX = document.createElement("li");
+            liX.setAttribute("class", "profile-x-graduation");
+            liX.innerHTML = +i * gradX;
+            ulX.appendChild(liX);
+        }
+
+        let liX = document.createElement("li");
+        liX.setAttribute("class", "profile-x-max");
+        liX.innerHTML = +dist.toFixed(2);
+        ulX.appendChild(liX);
+
+        divX.className = "profile-x-horizontal";
         divX.appendChild(ulX);
         div.appendChild(divX);
 
