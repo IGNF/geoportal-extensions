@@ -2,6 +2,37 @@
 var ProfileElevationPathDOM = {
 
     /**
+     * Gets a css property from an element
+     *
+     * @param {String} element The element to get the property from
+     * @param {String} property The css property
+     * @returns {String} The value of the property
+     *
+     * @see https://stackoverflow.com/questions/7444451/how-to-get-the-actual-rendered-font-when-its-not-defined-in-css
+     */
+    _getCssProperty : function (element, property) {
+        return window.getComputedStyle(element, null).getPropertyValue(property);
+    },
+
+    /**
+     * Uses canvas.measureText to compute and return the width of the given text of given font in pixels.
+     *
+     * @param {String} text The text to be rendered.
+     * @param {String} container The container of the text
+     * @returns {Number} The width of the text
+     *
+     * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
+     */
+    _getTextWidth : function (text, container) {
+        // re-use canvas object for better performance
+        var canvas = this.canvas || (this.canvas = document.createElement("canvas"));
+        var context = canvas.getContext("2d");
+        context.font = `${this._getCssProperty(container, "font-weight")} ${this._getCssProperty(container, "font-size")} ${this._getCssProperty(container, "font-family")}`;
+        var metrics = context.measureText(text);
+        return metrics.width;
+    },
+
+    /**
      * Display Profile function used by default : no additonal framework needed.
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
@@ -23,6 +54,13 @@ var ProfileElevationPathDOM = {
             return;
         }
 
+        const margin = {
+            top : 10,
+            right : 10,
+            bottom : 10,
+            left : 10
+        };
+
         var _displayProfileOptions = self.options.displayProfileOptions;
 
         var _points = data.points;
@@ -36,7 +74,7 @@ var ProfileElevationPathDOM = {
         var maxZ = sortedElev[sortedElev.length - 1].z;
         var diff = maxZ - minZ;
         var dist = data.distance;
-        // var dist_unit = "m";
+        let dist_unit = "m";
         // var distMin = 0;
         var barwidth = 100 / _points.length;
 
@@ -44,14 +82,30 @@ var ProfileElevationPathDOM = {
         div.id = "profileElevationByDefault";
         container.appendChild(div);
 
-        var divBox = document.createElement("div");
-        divBox.className = "profile-box";
+        // Détermination des tailles en pixels des éléments du widget
+        const widgetHeigth = container.clientHeight - margin.top - margin.bottom;
+        const widgetWidth = container.clientWidth - margin.left - margin.right;
+
+        const zLabelWidth = 15;
+        const zGradWidth = this._getTextWidth(maxZ, container);
+        const xLabelHeight = 15;
+        const xGradHeight = 12;
+
+        const minZguideHeigth = 20;
+        const minXguideWidth = 40;
+
+        const pathHeight = widgetHeigth - xLabelHeight - xGradHeight;
+        const pathWidth = widgetWidth - zLabelWidth - zGradWidth;
+
+        const elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        elevationSvg.id = "profileElevationByDefaultSvg";
+        elevationSvg.setAttribute("style", `width: ${widgetWidth}px; height: ${widgetHeigth}px; display: block; margin: auto;`);
 
         // Détermination des guides en ordonnée :
-        const maxNumZguides = 7;
+        const maxNumZguides = Math.floor(pathHeight / minZguideHeigth);
         let gradZ = Math.pow(10, (Math.ceil(Math.log((maxZ - minZ) / maxNumZguides) / Math.log(10)))) / 2;
-        const minGraphZ = Math.floor(minZ / gradZ) * gradZ;
-        const maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
+        let minGraphZ = Math.floor(minZ / gradZ) * gradZ;
+        let maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
 
         let numZguides = (maxGraphZ - minGraphZ) / gradZ;
 
@@ -59,27 +113,132 @@ var ProfileElevationPathDOM = {
         if (numZguides > maxNumZguides) {
             gradZ = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumZguides) / Math.log(10)) + 1)) / 2;
             numZguides = Math.floor(maxGraphZ / gradZ);
+            minGraphZ = Math.floor(minZ / gradZ) * gradZ;
+            maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
         }
 
-        var divZ = document.createElement("div");
-        divZ.className = "profile-z-vertical";
-        var ulZ = document.createElement("ul");
+        numZguides = Math.max(numZguides, 1);
+
+        const axisZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        axisZ.setAttribute("class", "profile-z-vertical");
+
+        const guidesZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+        const gradZyOffsetPx = Math.round(pathHeight / (numZguides + 1));
 
         // Ajout des graduations au graphique
-        for (let i = numZguides; i >= 0; i--) {
-            let liZ = document.createElement("li");
-            liZ.setAttribute("class", "profile-z-graduation");
-            liZ.innerHTML = minGraphZ + i * gradZ;
-            ulZ.appendChild(liZ);
+        for (let i = 0; i <= numZguides + 1; i++) {
+            let gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            gradZtext.setAttribute("class", "profile-z-graduation");
+            gradZtext.innerHTML = minGraphZ + i * gradZ;
+
+            gradZtext.setAttribute("transform", `translate(${zLabelWidth}, ${pathHeight - i * gradZyOffsetPx + (xGradHeight / 2)})`);
+            axisZ.appendChild(gradZtext);
+
+            let gradZstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            let gradZpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradZpath.setAttribute("cs", "100,100");
+            gradZpath.setAttribute("stroke-width", "1");
+            gradZpath.setAttribute("stroke-opacity", "0.15");
+            gradZpath.setAttribute("stroke", "#000000");
+            gradZpath.setAttribute("stroke-dasharray", "5,5");
+            gradZpath.setAttribute("fill", "none");
+            gradZpath.setAttribute("d", `M${zLabelWidth + zGradWidth},${pathHeight - i * gradZyOffsetPx} L${pathWidth},${pathHeight - i * gradZyOffsetPx}`);
+
+            let gradZgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradZgrad.setAttribute("cs", "100,100");
+            gradZgrad.setAttribute("stroke-width", "1");
+            gradZgrad.setAttribute("stroke-opacity", "1");
+            gradZgrad.setAttribute("stroke", "#000000");
+            gradZgrad.setAttribute("fill", "none");
+            gradZgrad.setAttribute("d", `M${zLabelWidth + zGradWidth},${pathHeight - i * gradZyOffsetPx} L${zLabelWidth + zGradWidth + 5},${pathHeight - i * gradZyOffsetPx}`);
+            gradZgrad.setAttribute("transform", "translate(-6, 0)");
+
+            gradZstroke.appendChild(gradZgrad);
+            gradZstroke.appendChild(gradZpath);
+            guidesZ.appendChild(gradZstroke);
         }
 
-        // var divUnit = document.createElement("div");
-        // divUnit.className = "profile-unit";
-        // divUnit.innerHTML = "m";
+        var axisZLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        axisZLegend.setAttribute("class", "profile-z-legend");
+        axisZLegend.innerHTML = "Altitude (m)";
 
-        divZ.appendChild(ulZ);
-        // divZ.appendChild(divUnit);
-        divBox.appendChild(divZ);
+        axisZLegend.setAttribute("transform", `translate(${zLabelWidth}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
+        axisZLegend.setAttribute("text-anchor", "middle");
+
+        axisZ.appendChild(axisZLegend);
+        elevationSvg.appendChild(axisZ);
+        elevationSvg.appendChild(guidesZ);
+
+        // Détermination des guides en abscisse :
+        // Passage éventuel en km
+        if (dist > 2000) {
+            dist /= 1000;
+            dist_unit = "km";
+        }
+
+        const maxNumXguides = Math.floor(pathWidth / minXguideWidth);
+        let gradX = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumXguides) / Math.log(10)))) / 2;
+        const maxGraphX = dist;
+
+        // Si plus de guides que le max, on passe à la puissance de 10 supérieure
+        let numXguides = Math.floor(maxGraphX / gradX);
+        if (numXguides > maxNumXguides) {
+            gradX = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumXguides) / Math.log(10)) + 1)) / 2;
+            numXguides = Math.floor(maxGraphX / gradX);
+        }
+
+
+        const axisX = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        axisX.setAttribute("class", "profile-x-vertical");
+
+        const guidesX = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+        const gradXyOffsetPx = Math.round(pathWidth / (numXguides + 1));
+
+        // Ajout des graduations au graphique
+        for (let i = 0; i <= numXguides + 1; i++) {
+            let gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            gradXtext.setAttribute("class", "profile-z-graduation");
+            gradXtext.innerHTML = +i * gradX;
+
+            gradXtext.setAttribute("transform", `translate(${}, ${pathHeight + xGradHeight})`);
+            axisX.appendChild(gradXtext);
+
+            let gradXstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            let gradXpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradXpath.setAttribute("cs", "100,100");
+            gradXpath.setAttribute("stroke-width", "1");
+            gradXpath.setAttribute("stroke-opacity", "0.15");
+            gradXpath.setAttribute("stroke", "#000000");
+            gradXpath.setAttribute("stroke-dasharray", "5,5");
+            gradXpath.setAttribute("fill", "none");
+            gradXpath.setAttribute("d", `M${},${pathHeight} L${},${0}`);
+
+            let gradXgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradXgrad.setAttribute("cs", "100,100");
+            gradXgrad.setAttribute("stroke-width", "1");
+            gradXgrad.setAttribute("stroke-opacity", "1");
+            gradXgrad.setAttribute("stroke", "#000000");
+            gradXgrad.setAttribute("fill", "none");
+            gradXgrad.setAttribute("d", `M${},${pathHeight} L${},${pathHeight - 5}`);
+            gradXgrad.setAttribute("transform", "translate(-6, 0)");
+
+            gradXstroke.appendChild(gradXgrad);
+            gradXstroke.appendChild(gradXpath);
+            guidesX.appendChild(gradXstroke);
+        }
+
+        var axisXLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        axisXLegend.setAttribute("class", "profile-z-legend");
+        axisXLegend.innerHTML = `Distance (${dist_unit})`;
+
+        axisXLegend.setAttribute("transform", `translate(${}, ${})`);
+        axisXLegend.setAttribute("text-anchor", "middle");
+
+        axisX.appendChild(axisXLegend);
+        elevationSvg.appendChild(axisX);
+        elevationSvg.appendChild(guidesX);
 
         var divData = document.createElement("div");
         divData.className = "profile-content";
@@ -134,47 +293,7 @@ var ProfileElevationPathDOM = {
             ulData.appendChild(li);
         }
 
-        divBox.appendChild(divData);
-        div.appendChild(divBox);
-
-        // Détermination des guides en abscisse :
-        // Passage éventuel en km
-        if (dist > 2000) {
-            dist /= 1000;
-            // dist_unit = "km";
-        }
-
-        const maxNumXguides = 8;
-        let gradX = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumXguides) / Math.log(10)))) / 2;
-        const maxGraphX = dist;
-
-        // Si plus de guides que le max, on passe à la puissance de 10 supérieure
-        let numXguides = Math.floor(maxGraphX / gradX);
-        if (numXguides > maxNumXguides) {
-            gradX = Math.pow(10, (Math.ceil(Math.log((dist) / maxNumXguides) / Math.log(10)) + 1)) / 2;
-            numXguides = Math.floor(maxGraphX / gradX);
-        }
-
-        var divX = document.createElement("div");
-        divX.className = "profile-X-vertical";
-        var ulX = document.createElement("ul");
-
-        // Ajout des graduations au graphique
-        for (let i = 0; i < numXguides + 1; i++) {
-            let liX = document.createElement("li");
-            liX.setAttribute("class", "profile-x-graduation");
-            liX.innerHTML = +i * gradX;
-            ulX.appendChild(liX);
-        }
-
-        let liX = document.createElement("li");
-        liX.setAttribute("class", "profile-x-max");
-        liX.innerHTML = +dist.toFixed(2);
-        ulX.appendChild(liX);
-
-        divX.className = "profile-x-horizontal";
-        divX.appendChild(ulX);
-        div.appendChild(divX);
+        div.appendChild(elevationSvg);
 
         return container;
     },
