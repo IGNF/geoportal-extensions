@@ -74,7 +74,7 @@ var ProfileElevationPathDOM = {
         var maxZ = sortedElev[sortedElev.length - 1].z;
         var diff = maxZ - minZ;
         var dist = data.distance;
-        let dist_unit = "m";
+        let distUnit = "m";
         // var distMin = 0;
         var barwidth = 100 / _points.length;
 
@@ -86,10 +86,10 @@ var ProfileElevationPathDOM = {
         const widgetHeigth = container.clientHeight - margin.top - margin.bottom;
         const widgetWidth = container.clientWidth - margin.left - margin.right;
 
-        const zLabelWidth = 15;
+        const zLabelWidth = 17;
         const zGradWidth = this._getTextWidth(maxZ, container);
-        const xLabelHeight = 15;
-        const xGradHeight = 12;
+        const xLabelHeight = 17;
+        const xGradHeight = 15;
 
         const minZguideHeigth = 20;
         const minXguideWidth = 40;
@@ -99,7 +99,7 @@ var ProfileElevationPathDOM = {
 
         const elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         elevationSvg.id = "profileElevationByDefaultSvg";
-        elevationSvg.setAttribute("style", `width: ${widgetWidth}px; height: ${widgetHeigth}px; display: block; margin: auto;`);
+        elevationSvg.setAttribute("style", `width: ${widgetWidth}px; height: ${widgetHeigth}px; display: block; margin: auto; overflow: visible;`);
 
         // Détermination des guides en ordonnée :
         const maxNumZguides = Math.floor(pathHeight / minZguideHeigth);
@@ -125,6 +125,7 @@ var ProfileElevationPathDOM = {
         const guidesZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
         const gradZyOffsetPx = Math.round(pathHeight / (numZguides + 1));
+        const zRemainder = pathHeight - gradZyOffsetPx * (numZguides + 1);
 
         // Ajout des graduations au graphique
         for (let i = 0; i <= numZguides + 1; i++) {
@@ -132,18 +133,23 @@ var ProfileElevationPathDOM = {
             gradZtext.setAttribute("class", "profile-z-graduation");
             gradZtext.innerHTML = minGraphZ + i * gradZ;
 
-            gradZtext.setAttribute("transform", `translate(${zLabelWidth}, ${pathHeight - i * gradZyOffsetPx + (xGradHeight / 2)})`);
+            gradZtext.setAttribute("transform", `translate(${zLabelWidth + zGradWidth - 8}, ${pathHeight - i * gradZyOffsetPx + 7})`);
+            gradZtext.setAttribute("text-anchor", "end");
             axisZ.appendChild(gradZtext);
 
             let gradZstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
             let gradZpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradZpath.setAttribute("cs", "100,100");
             gradZpath.setAttribute("stroke-width", "1");
-            gradZpath.setAttribute("stroke-opacity", "0.15");
+            if (i != 0) {
+                gradZpath.setAttribute("stroke-opacity", "0.15");
+                gradZpath.setAttribute("stroke-dasharray", "5,5");
+            } else {
+                gradZpath.setAttribute("stroke-opacity", "1");
+            }
             gradZpath.setAttribute("stroke", "#000000");
-            gradZpath.setAttribute("stroke-dasharray", "5,5");
             gradZpath.setAttribute("fill", "none");
-            gradZpath.setAttribute("d", `M${zLabelWidth + zGradWidth},${pathHeight - i * gradZyOffsetPx} L${pathWidth},${pathHeight - i * gradZyOffsetPx}`);
+            gradZpath.setAttribute("d", `M${zLabelWidth + zGradWidth},${pathHeight - i * gradZyOffsetPx} L${pathWidth + zLabelWidth + zGradWidth},${pathHeight - i * gradZyOffsetPx}`);
 
             let gradZgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradZgrad.setAttribute("cs", "100,100");
@@ -152,7 +158,7 @@ var ProfileElevationPathDOM = {
             gradZgrad.setAttribute("stroke", "#000000");
             gradZgrad.setAttribute("fill", "none");
             gradZgrad.setAttribute("d", `M${zLabelWidth + zGradWidth},${pathHeight - i * gradZyOffsetPx} L${zLabelWidth + zGradWidth + 5},${pathHeight - i * gradZyOffsetPx}`);
-            gradZgrad.setAttribute("transform", "translate(-6, 0)");
+            gradZgrad.setAttribute("transform", "translate(-5, 0)");
 
             gradZstroke.appendChild(gradZgrad);
             gradZstroke.appendChild(gradZpath);
@@ -163,7 +169,7 @@ var ProfileElevationPathDOM = {
         axisZLegend.setAttribute("class", "profile-z-legend");
         axisZLegend.innerHTML = "Altitude (m)";
 
-        axisZLegend.setAttribute("transform", `translate(${zLabelWidth}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
+        axisZLegend.setAttribute("transform", `translate(${zLabelWidth - 5}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
         axisZLegend.setAttribute("text-anchor", "middle");
 
         axisZ.appendChild(axisZLegend);
@@ -174,7 +180,7 @@ var ProfileElevationPathDOM = {
         // Passage éventuel en km
         if (dist > 2000) {
             dist /= 1000;
-            dist_unit = "km";
+            distUnit = "km";
         }
 
         const maxNumXguides = Math.floor(pathWidth / minXguideWidth);
@@ -188,32 +194,36 @@ var ProfileElevationPathDOM = {
             numXguides = Math.floor(maxGraphX / gradX);
         }
 
-
         const axisX = document.createElementNS("http://www.w3.org/2000/svg", "g");
         axisX.setAttribute("class", "profile-x-vertical");
 
         const guidesX = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
-        const gradXyOffsetPx = Math.round(pathWidth / (numXguides + 1));
+        const gradXxOffsetPx = Math.round(pathWidth / (numXguides + 1));
 
         // Ajout des graduations au graphique
         for (let i = 0; i <= numXguides + 1; i++) {
             let gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            gradXtext.setAttribute("class", "profile-z-graduation");
+            gradXtext.setAttribute("class", "profile-x-graduation");
             gradXtext.innerHTML = +i * gradX;
 
-            gradXtext.setAttribute("transform", `translate(${}, ${pathHeight + xGradHeight})`);
+            gradXtext.setAttribute("transform", `translate(${zLabelWidth + zGradWidth + i * gradXxOffsetPx}, ${pathHeight + xGradHeight + 5})`);
+            gradXtext.setAttribute("text-anchor", "middle");
             axisX.appendChild(gradXtext);
 
             let gradXstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
             let gradXpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradXpath.setAttribute("cs", "100,100");
             gradXpath.setAttribute("stroke-width", "1");
-            gradXpath.setAttribute("stroke-opacity", "0.15");
+            if (i != 0) {
+                gradXpath.setAttribute("stroke-opacity", "0.15");
+                gradXpath.setAttribute("stroke-dasharray", "5,5");
+            } else {
+                gradXpath.setAttribute("stroke-opacity", "1");
+            }
             gradXpath.setAttribute("stroke", "#000000");
-            gradXpath.setAttribute("stroke-dasharray", "5,5");
             gradXpath.setAttribute("fill", "none");
-            gradXpath.setAttribute("d", `M${},${pathHeight} L${},${0}`);
+            gradXpath.setAttribute("d", `M${zLabelWidth + zGradWidth + i * gradXxOffsetPx},${pathHeight} L${zLabelWidth + zGradWidth + i * gradXxOffsetPx},${zRemainder}`);
 
             let gradXgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradXgrad.setAttribute("cs", "100,100");
@@ -221,8 +231,8 @@ var ProfileElevationPathDOM = {
             gradXgrad.setAttribute("stroke-opacity", "1");
             gradXgrad.setAttribute("stroke", "#000000");
             gradXgrad.setAttribute("fill", "none");
-            gradXgrad.setAttribute("d", `M${},${pathHeight} L${},${pathHeight - 5}`);
-            gradXgrad.setAttribute("transform", "translate(-6, 0)");
+            gradXgrad.setAttribute("d", `M${zLabelWidth + zGradWidth + i * gradXxOffsetPx},${pathHeight} L${zLabelWidth + zGradWidth + i * gradXxOffsetPx},${pathHeight - 5}`);
+            gradXgrad.setAttribute("transform", "translate(0, 5)");
 
             gradXstroke.appendChild(gradXgrad);
             gradXstroke.appendChild(gradXpath);
@@ -231,9 +241,9 @@ var ProfileElevationPathDOM = {
 
         var axisXLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
         axisXLegend.setAttribute("class", "profile-z-legend");
-        axisXLegend.innerHTML = `Distance (${dist_unit})`;
+        axisXLegend.innerHTML = `Distance (${distUnit})`;
 
-        axisXLegend.setAttribute("transform", `translate(${}, ${})`);
+        axisXLegend.setAttribute("transform", `translate(${zLabelWidth + zGradWidth + pathWidth / 2}, ${pathHeight + xGradHeight + xLabelHeight + 3})`);
         axisXLegend.setAttribute("text-anchor", "middle");
 
         axisX.appendChild(axisXLegend);
