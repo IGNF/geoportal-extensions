@@ -33,6 +33,34 @@ var ProfileElevationPathDOM = {
     },
 
     /**
+     * Converts a data point z to svg y coord
+     *
+     * @param {Object} z The z to convert.
+     * @param {Number} pathHeight The height of the path in the svg container in px
+     * @param {Number} minGraphZ Min z of the graph
+     * @param {Number} pxPerMZ Number of pixels per meter for the z (y) axis
+     * @returns {Number} The y svg coordinate of the point
+     *
+     */
+    _dataZToSvgY : function (z, pathHeight, minGraphZ, pxPerMZ) {
+        return pathHeight - (z - minGraphZ) * pxPerMZ;
+    },
+
+    /**
+     * Converts a data point dist value to svg x coord
+     *
+     * @param {Number} dist The dist to convert
+     * @param {Number} svgWidth The witdth of the svg container in px
+     * @param {Number} pathWidth The witdth of the path in the svg container in px
+     * @param {Number} pxPerMX Number of pixels per meter for the x axis
+     * @returns {Array} The x svg coordinate of the point
+     *
+     */
+    _dataDistToSvgX : function (dist, svgWidth, pathWidth, pxPerMX) {
+        return (svgWidth - pathWidth) + dist * pxPerMX;
+    },
+
+    /**
      * Display Profile function used by default : no additonal framework needed.
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
@@ -92,7 +120,7 @@ var ProfileElevationPathDOM = {
         const xLabelHeight = 17;
         const xGradHeight = 15;
 
-        const minZguideHeigth = 20;
+        const minZguideHeigth = 15;
         const minXguideWidth = 40;
         const minNumXGuides = 2;
 
@@ -134,6 +162,7 @@ var ProfileElevationPathDOM = {
 
         const gradZyOffsetPx = Math.round(pathHeight / (numZguides + 1));
         const zRemainder = pathHeight - gradZyOffsetPx * (numZguides + 1);
+        const pxPerMZ = (pathHeight - zRemainder) / (maxGraphZ - minGraphZ);
 
         // Ajout des graduations au graphique
         for (let i = 0; i <= numZguides + 1; i++) {
@@ -219,7 +248,8 @@ var ProfileElevationPathDOM = {
         const guidesX = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
         // Décalage des graduations pour que la dernière corresponde à la distance max
-        const xOffset = (maxGraphX - lastGradX) * (pathWidth / maxGraphX);
+        const pxPerMX = pathWidth / maxGraphX;
+        const xOffset = (maxGraphX - lastGradX) * pxPerMX;
         const gradXxOffsetPx = Math.round((pathWidth - xOffset) / numXguides);
 
         // Ajout des graduations au graphique
@@ -282,6 +312,35 @@ var ProfileElevationPathDOM = {
         axisX.appendChild(axisXLegend);
         elevationSvg.appendChild(axisX);
         elevationSvg.appendChild(guidesX);
+
+        const elevationPathG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        const circlesG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+        let factor = 1;
+        if (distUnit === "km") {
+            factor = 1000;
+        }
+
+        let pointX = this._dataDistToSvgX(_points[0].dist / factor, widgetWidth, pathWidth, pxPerMX);
+        let pointY = this._dataZToSvgY(_points[0].z, pathHeight, minGraphZ, pxPerMZ);
+        let pathD = `M${pointX},${pointY}`;
+
+        for (let i = 1; i < _points.length; i++) {
+            pointX = this._dataDistToSvgX(_points[i].dist / factor, widgetWidth, pathWidth, pxPerMX);
+            pointY = this._dataZToSvgY(_points[i].z, pathHeight, minGraphZ, pxPerMZ);
+            pathD += ` L${pointX},${pointY}`;
+        }
+
+        const pathPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pathPath.setAttribute("cs", "100,100");
+        pathPath.setAttribute("stroke-width", "1");
+        pathPath.setAttribute("stroke-opacity", "1");
+        pathPath.setAttribute("stroke", "#0B6BA7");
+        pathPath.setAttribute("fill", "none");
+        pathPath.setAttribute("d", pathD);
+
+        elevationPathG.appendChild(pathPath);
+        elevationSvg.appendChild(elevationPathG);
 
         var divData = document.createElement("div");
         divData.className = "profile-content";
