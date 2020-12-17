@@ -185,7 +185,6 @@ var ProfileElevationPathDOM = {
             gradZpath.setAttribute("stroke-width", "1");
             if (i !== 0) {
                 gradZpath.setAttribute("stroke-opacity", "0.2");
-                gradZpath.setAttribute("stroke-dasharray", "5,5");
             } else {
                 gradZpath.setAttribute("stroke-opacity", "1");
             }
@@ -280,7 +279,6 @@ var ProfileElevationPathDOM = {
             gradXpath.setAttribute("stroke-width", "1");
             if (i !== 0) {
                 gradXpath.setAttribute("stroke-opacity", "0.2");
-                gradXpath.setAttribute("stroke-dasharray", "5,5");
             } else {
                 gradXpath.setAttribute("stroke-opacity", "1");
             }
@@ -314,7 +312,6 @@ var ProfileElevationPathDOM = {
         elevationSvg.appendChild(guidesX);
 
         const elevationPathG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        const circlesG = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
         let factor = 1;
         if (distUnit === "km") {
@@ -339,8 +336,47 @@ var ProfileElevationPathDOM = {
         pathPath.setAttribute("fill", "none");
         pathPath.setAttribute("d", pathD);
 
+        // Fermeture du path pour le fill
+        pathD += ` L${pointX},${pathHeight}`;
+        pathD += ` L${widgetWidth - pathWidth},${pathHeight}`;
+
+        const pathFill = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pathFill.setAttribute("cs", "100,100");
+        pathFill.setAttribute("stroke-width", "1");
+        pathFill.setAttribute("stroke-opacity", "0");
+        pathFill.setAttribute("stroke", "#000000");
+        pathFill.setAttribute("fill", "#00B798");
+        pathFill.setAttribute("fill-opacity", "0.4");
+        pathFill.setAttribute("d", pathD);
+
         elevationPathG.appendChild(pathPath);
+        elevationPathG.appendChild(pathFill);
         elevationSvg.appendChild(elevationPathG);
+
+        // Mise en place de l'écouteur d'évènement : pour l'affichage dynamique
+        const dynamicsG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        // Pour écouter la position de la souris
+        const pathRectangle = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        pathRectangle.setAttribute("width", pathWidth);
+        pathRectangle.setAttribute("height", pathHeight - zRemainder);
+        pathRectangle.setAttribute("transform", `translate(${widgetWidth - pathWidth}, ${zRemainder})`);
+        pathRectangle.setAttribute("visibility", "hidden");
+        pathRectangle.setAttribute("pointer-events", "all");
+
+        pathRectangle.addEventListener("mouseover", function () {
+            console.log("testOver");
+        });
+
+        pathRectangle.addEventListener("mousemove", function (e) {
+            console.log("testMove" + e.clientX);
+        });
+
+        pathRectangle.addEventListener("mouseout", function () {
+            console.log("testOut");
+        });
+
+        dynamicsG.appendChild(pathRectangle);
+        elevationSvg.appendChild(dynamicsG);
 
         var divData = document.createElement("div");
         divData.className = "profile-content";
