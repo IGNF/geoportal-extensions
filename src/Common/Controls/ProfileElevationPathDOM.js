@@ -61,6 +61,41 @@ var ProfileElevationPathDOM = {
     },
 
     /**
+     * Converts a svg x coord to dist value
+     *
+     * @param {Number} svgX The dist to convert
+     * @param {Number} svgWidth The witdth of the svg container in px
+     * @param {Number} pathWidth The witdth of the path in the svg container in px
+     * @param {Number} pxPerMX Number of pixels per meter for the x axis
+     * @returns {Array} The dist value
+     *
+     */
+    _svgXToDataDist : function (svgX, svgWidth, pathWidth, pxPerMX) {
+        return (svgX + pathWidth - svgWidth) / pxPerMX;
+    },
+
+    /**
+     * Returns the index of value if it were inserted in sorted (by dist) array of data points.
+     *
+     * @param {Array} array Sorted array of data points (with dist property)
+     * @param {Number} value Value to test the index of.
+     * @returns {Number} The index the value would have.
+     *
+     */
+    _arrayBisect : function (array, value) {
+        let idx;
+        if (array.length === 0) {
+            return 0;
+        }
+        for (idx = 0; idx < array.length; idx++) {
+            if (value < array[idx].dist) {
+                return idx;
+            }
+        }
+        return idx;
+    },
+
+    /**
      * Display Profile function used by default : no additonal framework needed.
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
@@ -83,7 +118,7 @@ var ProfileElevationPathDOM = {
         }
 
         const margin = {
-            top : 10,
+            top : 25,
             right : 10,
             bottom : 10,
             left : 10
@@ -100,23 +135,19 @@ var ProfileElevationPathDOM = {
 
         var minZ = sortedElev[0].z;
         var maxZ = sortedElev[sortedElev.length - 1].z;
-        var diff = maxZ - minZ;
         var dist = data.distance;
         let distUnit = "m";
-        // var distMin = 0;
-        var barwidth = 100 / _points.length;
 
-        var div = document.createElement("div");
-        div.id = "profileElevationByDefault";
-        container.appendChild(div);
+        const widgetDiv = document.createElement("div");
+        widgetDiv.id = "profileElevationByDefault";
+        container.appendChild(widgetDiv);
 
         // Détermination des tailles en pixels des éléments du widget
         const widgetHeigth = container.clientHeight - margin.top - margin.bottom;
         const widgetWidth = container.clientWidth - margin.left - margin.right;
 
         const zLabelWidth = 17;
-        // Le max est pour gérer le cas limite où maxZ vaut 0
-        const zGradWidth = 5 + Math.max(this._getTextWidth("0.2", container), this._getTextWidth(maxZ, container));
+        const zGradWidth = 5 + Math.max(this._getTextWidth(minZ, container), this._getTextWidth(maxZ, container));
         const xLabelHeight = 17;
         const xGradHeight = 15;
 
@@ -153,6 +184,9 @@ var ProfileElevationPathDOM = {
             maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
         }
 
+        console.log(minGraphZ);
+        console.log(maxGraphZ);
+
         numZguides = Math.max(numZguides, 1);
 
         const axisZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
@@ -160,12 +194,12 @@ var ProfileElevationPathDOM = {
 
         const guidesZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
-        const gradZyOffsetPx = Math.round(pathHeight / (numZguides + 1));
-        const zRemainder = pathHeight - gradZyOffsetPx * (numZguides + 1);
+        const gradZyOffsetPx = Math.round(pathHeight / (numZguides));
+        const zRemainder = pathHeight - gradZyOffsetPx * numZguides;
         const pxPerMZ = (pathHeight - zRemainder) / (maxGraphZ - minGraphZ);
 
         // Ajout des graduations au graphique
-        for (let i = 0; i <= numZguides + 1; i++) {
+        for (let i = 0; i <= numZguides; i++) {
             let gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
             gradZtext.setAttribute("class", "profile-z-graduation");
             // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
@@ -363,75 +397,184 @@ var ProfileElevationPathDOM = {
         pathRectangle.setAttribute("visibility", "hidden");
         pathRectangle.setAttribute("pointer-events", "all");
 
-        pathRectangle.addEventListener("mouseover", function () {
-            console.log("testOver");
+        const sortedDist = JSON.parse(JSON.stringify(_points));
+        sortedDist.sort(function (e1, e2) {
+            return e1.dist - e2.dist;
         });
 
-        pathRectangle.addEventListener("mousemove", function (e) {
-            console.log("testMove" + e.clientX);
+        const focusLineX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        focusLineX.setAttribute("id", "focusLineX");
+        focusLineX.setAttribute("class", "focusLine-default");
+        focusLineX.setAttribute("fill", "none");
+        focusLineX.setAttribute("stroke", "#F90");
+        focusLineX.setAttribute("stroke-width", "0.5px");
+        focusLineX.setAttribute("visibility", "hidden");
+
+        const focusLineY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        focusLineY.setAttribute("id", "focusLineY");
+        focusLineY.setAttribute("class", "focusLine-default");
+        focusLineY.setAttribute("fill", "none");
+        focusLineY.setAttribute("stroke", "#F90");
+        focusLineY.setAttribute("stroke-width", "0.5px");
+        focusLineY.setAttribute("visibility", "hidden");
+
+        const focusCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        focusCircle.setAttribute("id", "focusCircle");
+        focusCircle.setAttribute("r", 4);
+        focusCircle.setAttribute("class", "circle-default focusCircle-default");
+        focusCircle.setAttribute("fill", "#F90");
+        focusCircle.setAttribute("visibility", "hidden");
+
+        dynamicsG.appendChild(focusCircle);
+        dynamicsG.appendChild(focusLineX);
+        dynamicsG.appendChild(focusLineY);
+
+        // Tooltip
+        const tooltipDiv = document.createElement("div");
+        const altiSpan = document.createElement("span");
+        const br = document.createElement("br");
+        const slopeSpan = document.createElement("span");
+        const br2 = document.createElement("br");
+        const coordsSpan = document.createElement("span");
+
+        tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
+        tooltipDiv.style.pointerEvents = "none";
+        tooltipDiv.style.transition = "opacity 350ms ease 0ms";
+        tooltipDiv.style.position = "fixed";
+        tooltipDiv.style.opacity = 0;
+
+        widgetDiv.appendChild(tooltipDiv);
+
+        altiSpan.setAttribute("class", "altiPathValue");
+        slopeSpan.setAttribute("class", "altiPathValue");
+        coordsSpan.setAttribute("class", "altiPathCoords");
+
+        tooltipDiv.appendChild(altiSpan);
+        tooltipDiv.appendChild(br);
+        if (_displayProfileOptions.currentSlope) {
+            tooltipDiv.appendChild(slopeSpan);
+            tooltipDiv.appendChild(br2);
+        }
+        tooltipDiv.appendChild(coordsSpan);
+
+        const tooltipG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        tooltipG.style.transition = "opacity 350ms ease 0ms, ";
+
+        dynamicsG.appendChild(tooltipG);
+
+        pathRectangle.addEventListener("mouseover", function () {
+            focusLineX.setAttribute("visibility", "visible");
+            focusLineY.setAttribute("visibility", "visible");
+            focusCircle.setAttribute("visibility", "visible");
+            className.__createProfileMarker(self, _points[0]);
+
+            // tooltips
+            tooltipDiv.style.opacity = 1;
+            tooltipG.style.opacity = 1;
         });
 
         pathRectangle.addEventListener("mouseout", function () {
-            console.log("testOut");
+            focusLineX.setAttribute("visibility", "hidden");
+            focusLineY.setAttribute("visibility", "hidden");
+            focusCircle.setAttribute("visibility", "hidden");
+            className.__removeProfileMarker(self);
+            // tooltips
+            tooltipDiv.style.opacity = 0;
+            tooltipG.style.opacity = 0;
         });
+
+        pathRectangle.addEventListener("mousemove", function (e) {
+            tooltipG.textContent = "";
+            let mousePoint = elevationSvg.createSVGPoint();
+            mousePoint.x = e.clientX;
+            mousePoint.y = e.clientY;
+            let svgMousePoint = mousePoint.matrixTransform(elevationSvg.getScreenCTM().inverse());
+            let mouseDist = this._svgXToDataDist(svgMousePoint.x, widgetWidth, pathWidth, pxPerMX) * factor;
+
+            let distIndex = this._arrayBisect(sortedDist, mouseDist);
+
+            let d0 = _points[distIndex - 1];
+            let d1 = _points[distIndex];
+            let d = mouseDist - d0[0] > d1[0] - mouseDist ? d1 : d0;
+
+            let focusX = this._dataDistToSvgX(d.dist / factor, widgetWidth, pathWidth, pxPerMX);
+            let focusY = this._dataZToSvgY(d.z, pathHeight, minGraphZ, pxPerMZ);
+
+            // Mise à jour des éléments graphiques
+            focusCircle.setAttribute("cx", focusX);
+            focusCircle.setAttribute("cy", focusY);
+
+            focusLineX.setAttribute("x1", focusX);
+            focusLineX.setAttribute("y1", pathHeight);
+            focusLineX.setAttribute("x2", focusX);
+            focusLineX.setAttribute("y2", zRemainder);
+
+            focusLineY.setAttribute("x1", zLabelWidth + zGradWidth);
+            focusLineY.setAttribute("y1", focusY);
+            focusLineY.setAttribute("x2", pathWidth + zLabelWidth + zGradWidth);
+            focusLineY.setAttribute("y2", focusY);
+
+            className.__updateProfileMarker(self, d);
+
+            // Mise à jour du tooltip
+            let altiSpanTxt = `Altitude : ${d.z} m`;
+            let slopeSpanTxt = `Pente : ${d.slope} %`;
+            let coordsSpanTxt = `(lat : ${d.lat} / lon : ${d.lon})`;
+
+            altiSpan.innerHTML = altiSpanTxt;
+            slopeSpan.innerHTML = slopeSpanTxt;
+            coordsSpan.innerHTML = coordsSpanTxt;
+
+            let tooltipTextWidth = Math.max(
+                this._getTextWidth(coordsSpanTxt, coordsSpan),
+                this._getTextWidth(altiSpanTxt, altiSpan)
+            );
+
+            let tooltipBubble = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            tooltipBubble.setAttribute("cs", "100,100");
+            tooltipBubble.setAttribute("fill", "#FFFFFF");
+            tooltipBubble.setAttribute("stroke", "#CCCCCC");
+            tooltipBubble.setAttribute("fill-opacity", "0.8");
+            tooltipBubble.setAttribute("stoke-width", "1");
+            tooltipBubble.setAttribute("stoke-opacity", "1");
+
+            let tooltipBubbleShadow = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            tooltipBubbleShadow.setAttribute("cs", "100,100");
+            tooltipBubbleShadow.setAttribute("fill", "#FFFFFF");
+            tooltipBubbleShadow.setAttribute("stroke", "#000000");
+            tooltipBubbleShadow.setAttribute("fill-opacity", "0");
+            tooltipBubbleShadow.setAttribute("stoke-width", "1");
+            tooltipBubbleShadow.setAttribute("stoke-opacity", "0.4");
+            tooltipBubbleShadow.setAttribute("transform", "translate(1,1)");
+
+            let tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.scrollX + focusX;
+            let tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.scrollY + focusY - 19;
+
+            let toolTipBubbleD;
+            if (d.dist > (dist * factor) / 2) {
+                toolTipBubbleD = `M -0.5 -0.5 l -6 6 l 0 16 l -${tooltipTextWidth + 5} 0 l 0 -44 l ${tooltipTextWidth + 5} 0 l 0 16 l 6 6`;
+                tooltipDivLeft -= tooltipTextWidth;
+            } else if (d.dist <= (dist * factor) / 2) {
+                toolTipBubbleD = `M -0.5 -0.5 l 6 6 l 0 16 l ${tooltipTextWidth + 5} 0 l 0 -44 l -${tooltipTextWidth + 5} 0 l 0 16 l -6 6`;
+                // Largeur de la fleche de la bulle du tooltip
+                tooltipDivLeft += 15;
+            }
+
+            tooltipBubble.setAttribute("d", toolTipBubbleD);
+            tooltipBubbleShadow.setAttribute("d", toolTipBubbleD);
+
+            tooltipG.setAttribute("transform", `translate(${focusX},${focusY})`);
+            tooltipG.appendChild(tooltipBubbleShadow);
+            tooltipG.appendChild(tooltipBubble);
+
+            tooltipDiv.style.left = `${tooltipDivLeft}px`;
+            tooltipDiv.style.top = `${tooltipDivTop}px`;
+        }.bind(this));
 
         dynamicsG.appendChild(pathRectangle);
         elevationSvg.appendChild(dynamicsG);
 
-        var divData = document.createElement("div");
-        divData.className = "profile-content";
-        divData.addEventListener("mouseover", function (e) {
-            var _lon = parseFloat(e.target.dataset["lon"]);
-            var _lat = parseFloat(e.target.dataset["lat"]);
-
-            if (_lon && _lat) {
-                className.__createProfileMarker(self, {
-                    lat : _lat,
-                    lon : _lon
-                });
-            }
-        });
-        divData.addEventListener("mousemove", function (e) {
-            var _lon = parseFloat(e.target.dataset["lon"]);
-            var _lat = parseFloat(e.target.dataset["lat"]);
-
-            if (_lon && _lat) {
-                className.__updateProfileMarker(self, {
-                    lat : _lat,
-                    lon : _lon
-                });
-            }
-        });
-        divData.addEventListener("mouseout", function () {
-            className.__removeProfileMarker(self);
-        });
-
-        var ulData = document.createElement("ul");
-        ulData.id = "profile-data";
-        ulData.className = "profile-z-axis profile-x-axis";
-        divData.appendChild(ulData);
-
-        for (var i = 0; i < _points.length; i++) {
-            var d = _points[i];
-            var li = document.createElement("li");
-            li.setAttribute("data-z", d.z);
-            li.setAttribute("data-lon", d.lon);
-            li.setAttribute("data-lat", d.lat);
-            li.setAttribute("data-dist", d.dist);
-
-            var pct = Math.floor((d.z - minZ) * 100 / diff);
-            li.setAttribute("class", "percent v" + pct);
-            li.title = "Altitude : " + d.z + "m";
-            if (_displayProfileOptions.currentSlope) {
-                li.title += " - Pente : " + d.slope + "%";
-            }
-            li.title += " (Lat : " + d.lat + " / Lon : " + d.lon + ")";
-
-            li.setAttribute("style", "width: " + barwidth + "%");
-            ulData.appendChild(li);
-        }
-
-        div.appendChild(elevationSvg);
+        widgetDiv.appendChild(elevationSvg);
 
         return container;
     },
