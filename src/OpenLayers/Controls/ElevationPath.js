@@ -1167,7 +1167,7 @@ var ElevationPath = (function (Control) {
             var _sampling = 50;
             var _length = this._getLength();
             logger.trace("length", _length);
-            var p = Math.floor(_length) / 5; // en mètre sur un pas moyen de 5m !
+            var p = Math.max(10, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
             if (p >= 200) {
                 _sampling = 200;
             } else {
@@ -1214,6 +1214,8 @@ var ElevationPath = (function (Control) {
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
         _data[0].dist = 0;
         _data[0].slope = 0;
+        _data[0].lat = Math.round(_data[0].lat * 10000) / 10000;
+        _data[0].lon = Math.round(_data[0].lon * 10000) / 10000;
 
         var _distanceMinus = 0;
         var _distancePlus = 0;
@@ -1274,7 +1276,7 @@ var ElevationPath = (function (Control) {
 
         for (var ji = 0; ji < _data.length; ji++) {
             var d = _data[ji];
-            if (d.z < 0) {
+            if (d.z < -100) {
                 d.z = 0;
             }
             if (d.z >= _altMax) {
