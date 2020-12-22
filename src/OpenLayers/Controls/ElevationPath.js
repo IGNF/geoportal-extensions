@@ -1167,7 +1167,7 @@ var ElevationPath = (function (Control) {
             var _sampling = 50;
             var _length = this._getLength();
             logger.trace("length", _length);
-            var p = Math.max(10, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
+            var p = Math.max(3, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
             if (p >= 200) {
                 _sampling = 200;
             } else {
@@ -1279,15 +1279,12 @@ var ElevationPath = (function (Control) {
             if (d.z < -100) {
                 d.z = 0;
             }
-            if (d.z >= _altMax) {
+            if (d.z > _altMax) {
                 _altMax = d.z;
             }
-            if (d.z <= _altMin) {
+            if (d.z < _altMin) {
                 _altMin = d.z;
             }
-
-            // FIXME erreur avec D3 car cette lib souhaite un numerique !
-            // d.dist = d.dist.toLocaleString();
 
             if (d.slope > _greaterSlope) {
                 _greaterSlope = d.slope;
@@ -1301,8 +1298,8 @@ var ElevationPath = (function (Control) {
             distanceMinus : _distanceMinus, // distance cumulée négative
             ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
             descendingElevation : _descendingElevation, // dénivelé cumulée négative
-            altMin : _altMin.toLocaleString(), // altitude min
-            altMax : _altMax.toLocaleString(), // altitude max
+            altMin : _altMin.toLocaleString(), // altitude min TODO: inutile ?
+            altMax : _altMax.toLocaleString(), // altitude max TODO: inutile ?
             distance : _distance, // distance totale
             unit : _unit, // unité des mesures de distance
             points : _data

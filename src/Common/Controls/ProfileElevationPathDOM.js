@@ -147,9 +147,7 @@ var ProfileElevationPathDOM = {
         const widgetWidth = container.clientWidth - margin.left - margin.right;
 
         const zLabelWidth = 17;
-        const zGradWidth = 5 + this._getTextWidth(Math.round(maxZ) + ".88", container);
-        console.log(Math.round(maxZ) + ".88");
-        console.log(zGradWidth);
+        const zGradWidth = 8 + this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container);
         const xLabelHeight = 17;
         const xGradHeight = 15;
 
@@ -182,8 +180,11 @@ var ProfileElevationPathDOM = {
         if (maxGraphZ === maxZ) {
             maxGraphZ += gradZ;
         }
+        // cas où gradZ < 1 : nombres flottants capricieux...
+        minGraphZ = Math.round(minGraphZ * 100) / 100;
+        maxGraphZ = Math.round(maxGraphZ * 100) / 100;
 
-        let numZguides = (maxGraphZ - minGraphZ) / gradZ;
+        let numZguides = Math.round((maxGraphZ - minGraphZ) / gradZ);
 
         // Si plus de guides que le max, on passe à une graduation de 10**x en 10**x (et non 10**x / 2)
         if (numZguides + 1 > maxNumZguides) {
@@ -197,6 +198,9 @@ var ProfileElevationPathDOM = {
             if (maxGraphZ === maxZ) {
                 maxGraphZ += gradZ;
             }
+            // cas où gradZ < 1 : nombres flottants capricieux...
+            minGraphZ = Math.round(minGraphZ * 100) / 100;
+            maxGraphZ = Math.round(maxGraphZ * 100) / 100;
             numZguides = Math.floor((maxGraphZ - minGraphZ) / gradZ);
         }
 
@@ -216,15 +220,13 @@ var ProfileElevationPathDOM = {
             pxPerMZ = pathHeight / (maxGraphZ - minGraphZ);
         }
 
-        console.log(numZguides);
-        console.log(maxZ);
-        console.log(maxGraphZ);
         // Ajout des graduations au graphique
         for (let i = 0; i <= numZguides; i++) {
             let gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
             gradZtext.setAttribute("class", "profile-z-graduation");
+            // Cas où gradZ < 1 : nombres flottants capricieux...
             // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
-            gradZtext.innerHTML = +Math.round(100 * (minGraphZ + i * gradZ)) / 100;
+            gradZtext.innerHTML = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
 
             let yTextTranslation = pathHeight - i * gradZyOffsetPx;
 
@@ -265,7 +267,7 @@ var ProfileElevationPathDOM = {
         axisZLegend.setAttribute("class", "profile-z-legend");
         axisZLegend.innerHTML = "Altitude (m)";
 
-        axisZLegend.setAttribute("transform", `translate(${zLabelWidth - 5}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
+        axisZLegend.setAttribute("transform", `translate(${zLabelWidth - 8}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
         axisZLegend.setAttribute("text-anchor", "middle");
 
         axisZ.appendChild(axisZLegend);
@@ -313,7 +315,8 @@ var ProfileElevationPathDOM = {
 
             // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
             if (i !== numXguides + 1) {
-                gradXtext.innerHTML = +i * gradX;
+                // Cas où gradX < 1 : nombres flottants capricieux...
+                gradXtext.innerHTML = (Math.round(100 * i * gradX) / 100).toLocaleString();
             }
 
             let xTextTranslation = zLabelWidth + zGradWidth + i * gradXxOffsetPx;
@@ -460,9 +463,8 @@ var ProfileElevationPathDOM = {
 
         tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
         tooltipDiv.style.pointerEvents = "none";
-        tooltipDiv.style.transition = "opacity 350ms ease 0ms";
         tooltipDiv.style.position = "fixed";
-        tooltipDiv.style.opacity = 0;
+        tooltipDiv.classList.add("tooltipInit");
 
         widgetDiv.appendChild(tooltipDiv);
 
@@ -479,9 +481,31 @@ var ProfileElevationPathDOM = {
         tooltipDiv.appendChild(coordsSpan);
 
         const tooltipG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        tooltipG.style.transition = "opacity 350ms ease 0ms, ";
 
         dynamicsG.appendChild(tooltipG);
+
+        const tooltipBubble = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        tooltipBubble.setAttribute("cs", "100,100");
+        tooltipBubble.setAttribute("fill", "#FFFFFF");
+        tooltipBubble.setAttribute("stroke", "#CCCCCC");
+        tooltipBubble.setAttribute("fill-opacity", "0.8");
+        tooltipBubble.setAttribute("stroke-width", "1");
+        tooltipBubble.setAttribute("stroke-opacity", "1");
+
+        const tooltipBubbleShadow = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        tooltipBubbleShadow.setAttribute("cs", "100,100");
+        tooltipBubbleShadow.setAttribute("fill", "#FFFFFF");
+        tooltipBubbleShadow.setAttribute("stroke", "#000000");
+        tooltipBubbleShadow.setAttribute("fill-opacity", "0");
+        tooltipBubbleShadow.setAttribute("stroke-width", "1");
+        tooltipBubbleShadow.setAttribute("stroke-opacity", "0.4");
+        tooltipBubbleShadow.setAttribute("transform", "translate(1,1)");
+
+        tooltipG.appendChild(tooltipBubbleShadow);
+        tooltipG.appendChild(tooltipBubble);
+
+        tooltipG.classList.add("tooltipInit");
+        tooltipG.style.pointerEvents = "none";
 
         pathRectangle.addEventListener("mouseover", function () {
             focusLineX.setAttribute("visibility", "visible");
@@ -490,8 +514,12 @@ var ProfileElevationPathDOM = {
             className.__createProfileMarker(self, _points[0]);
 
             // tooltips
-            tooltipDiv.style.opacity = 1;
-            tooltipG.style.opacity = 1;
+            tooltipDiv.classList.remove("tooltipInit");
+            tooltipG.classList.remove("tooltipInit");
+            tooltipDiv.classList.remove("tooltipFadeOut");
+            tooltipG.classList.remove("tooltipFadeOut");
+            tooltipDiv.classList.add("tooltipFadeIn");
+            tooltipG.classList.add("tooltipFadeIn");
         });
 
         pathRectangle.addEventListener("mouseout", function () {
@@ -500,12 +528,13 @@ var ProfileElevationPathDOM = {
             focusCircle.setAttribute("visibility", "hidden");
             className.__removeProfileMarker(self);
             // tooltips
-            tooltipDiv.style.opacity = 0;
-            tooltipG.style.opacity = 0;
+            tooltipDiv.classList.remove("tooltipFadeIn");
+            tooltipG.classList.remove("tooltipFadeIn");
+            tooltipDiv.classList.add("tooltipFadeOut");
+            tooltipG.classList.add("tooltipFadeOut");
         });
 
         pathRectangle.addEventListener("mousemove", function (e) {
-            tooltipG.textContent = "";
             let mousePoint = elevationSvg.createSVGPoint();
             mousePoint.x = e.clientX;
             mousePoint.y = e.clientY;
@@ -541,9 +570,9 @@ var ProfileElevationPathDOM = {
             className.__updateProfileMarker(self, d);
 
             // Mise à jour du tooltip
-            let altiSpanTxt = `Altitude : ${d.z} m`;
+            let altiSpanTxt = `Altitude : ${d.z.toLocaleString()} m`;
             let slopeSpanTxt = `Pente : ${d.slope} %`;
-            let coordsSpanTxt = `(lat : ${d.lat} / lon : ${d.lon})`;
+            let coordsSpanTxt = `(lat : ${d.lat.toLocaleString()} / lon : ${d.lon.toLocaleString()})`;
 
             altiSpan.innerHTML = altiSpanTxt;
             slopeSpan.innerHTML = slopeSpanTxt;
@@ -554,22 +583,6 @@ var ProfileElevationPathDOM = {
                 this._getTextWidth(altiSpanTxt, altiSpan)
             );
 
-            let tooltipBubble = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            tooltipBubble.setAttribute("cs", "100,100");
-            tooltipBubble.setAttribute("fill", "#FFFFFF");
-            tooltipBubble.setAttribute("stroke", "#CCCCCC");
-            tooltipBubble.setAttribute("fill-opacity", "0.8");
-            tooltipBubble.setAttribute("stoke-width", "1");
-            tooltipBubble.setAttribute("stoke-opacity", "1");
-
-            let tooltipBubbleShadow = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            tooltipBubbleShadow.setAttribute("cs", "100,100");
-            tooltipBubbleShadow.setAttribute("fill", "#FFFFFF");
-            tooltipBubbleShadow.setAttribute("stroke", "#000000");
-            tooltipBubbleShadow.setAttribute("fill-opacity", "0");
-            tooltipBubbleShadow.setAttribute("stoke-width", "1");
-            tooltipBubbleShadow.setAttribute("stoke-opacity", "0.4");
-            tooltipBubbleShadow.setAttribute("transform", "translate(1,1)");
 
             let tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.scrollX + focusX;
             let tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.scrollY + focusY - 19;
@@ -587,9 +600,7 @@ var ProfileElevationPathDOM = {
             tooltipBubble.setAttribute("d", toolTipBubbleD);
             tooltipBubbleShadow.setAttribute("d", toolTipBubbleD);
 
-            tooltipG.setAttribute("transform", `translate(${focusX},${focusY})`);
-            tooltipG.appendChild(tooltipBubbleShadow);
-            tooltipG.appendChild(tooltipBubble);
+            tooltipG.style.transform = `translate(${focusX}px,${focusY}px)`;
 
             tooltipDiv.style.left = `${tooltipDivLeft}px`;
             tooltipDiv.style.top = `${tooltipDivTop}px`;
