@@ -125,7 +125,6 @@ var ProfileElevationPathDOM = {
         };
 
         var _displayProfileOptions = self.options.displayProfileOptions;
-
         var _points = data.points;
 
         var sortedElev = JSON.parse(JSON.stringify(_points));
@@ -220,24 +219,30 @@ var ProfileElevationPathDOM = {
             pxPerMZ = pathHeight / (maxGraphZ - minGraphZ);
         }
 
+        let gradZtext;
+        let yTextTranslation;
+        let yStrokeTranslation;
+        let gradZstroke;
+        let gradZpath;
+        let gradZgrad;
         // Ajout des graduations au graphique
         for (let i = 0; i <= numZguides; i++) {
-            let gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
             gradZtext.setAttribute("class", "profile-z-graduation");
             // Cas où gradZ < 1 : nombres flottants capricieux...
             // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
             gradZtext.innerHTML = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
 
-            let yTextTranslation = pathHeight - i * gradZyOffsetPx;
+            yTextTranslation = pathHeight - i * gradZyOffsetPx;
 
             gradZtext.setAttribute("transform", `translate(${zLabelWidth + zGradWidth - 8}, ${yTextTranslation + 5})`);
             gradZtext.setAttribute("text-anchor", "end");
             axisZ.appendChild(gradZtext);
 
-            let yStrokeTranslation = Math.round(yTextTranslation) - 0.5;
+            yStrokeTranslation = Math.round(yTextTranslation) - 0.5;
 
-            let gradZstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            let gradZpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradZstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            gradZpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradZpath.setAttribute("cs", "100,100");
             gradZpath.setAttribute("stroke-width", "1");
             if (i !== 0) {
@@ -249,7 +254,7 @@ var ProfileElevationPathDOM = {
             gradZpath.setAttribute("fill", "none");
             gradZpath.setAttribute("d", `M${zLabelWidth + zGradWidth},${yStrokeTranslation} L${pathWidth + zLabelWidth + zGradWidth},${yStrokeTranslation}`);
 
-            let gradZgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradZgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradZgrad.setAttribute("cs", "100,100");
             gradZgrad.setAttribute("stroke-width", "1");
             gradZgrad.setAttribute("stroke-opacity", "1");
@@ -308,9 +313,15 @@ var ProfileElevationPathDOM = {
         const xOffset = (maxGraphX - lastGradX) * pxPerMX;
         const gradXxOffsetPx = Math.round((pathWidth - xOffset) / numXguides);
 
+        let gradXtext;
+        let xTextTranslation;
+        let xStrokeTranslation;
+        let gradXstroke;
+        let gradXpath;
+        let gradXgrad;
         // Ajout des graduations au graphique
         for (let i = 0; i <= numXguides + 1; i++) {
-            let gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
             gradXtext.setAttribute("class", "profile-x-graduation");
 
             // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
@@ -319,7 +330,7 @@ var ProfileElevationPathDOM = {
                 gradXtext.innerHTML = (Math.round(100 * i * gradX) / 100).toLocaleString();
             }
 
-            let xTextTranslation = zLabelWidth + zGradWidth + i * gradXxOffsetPx;
+            xTextTranslation = zLabelWidth + zGradWidth + i * gradXxOffsetPx;
             // Cas de la dernière graduation : correspond à la distance max
             if (i === numXguides + 1) {
                 xTextTranslation = zLabelWidth + zGradWidth + pathWidth;
@@ -329,10 +340,10 @@ var ProfileElevationPathDOM = {
             gradXtext.setAttribute("text-anchor", "middle");
             axisX.appendChild(gradXtext);
 
-            let xStrokeTranslation = xTextTranslation - 0.5;
+            xStrokeTranslation = xTextTranslation - 0.5;
 
-            let gradXstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            let gradXpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradXstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            gradXpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradXpath.setAttribute("cs", "100,100");
             gradXpath.setAttribute("stroke-width", "1");
             if (i !== 0) {
@@ -344,7 +355,7 @@ var ProfileElevationPathDOM = {
             gradXpath.setAttribute("fill", "none");
             gradXpath.setAttribute("d", `M${xStrokeTranslation},${pathHeight} L${xStrokeTranslation},0`);
 
-            let gradXgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            gradXgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
             gradXgrad.setAttribute("cs", "100,100");
             gradXgrad.setAttribute("stroke-width", "1");
             gradXgrad.setAttribute("stroke-opacity", "1");
@@ -535,23 +546,23 @@ var ProfileElevationPathDOM = {
         });
 
         pathRectangle.addEventListener("mousemove", function (e) {
-            let mousePoint = elevationSvg.createSVGPoint();
+            const mousePoint = elevationSvg.createSVGPoint();
             mousePoint.x = e.clientX;
             mousePoint.y = e.clientY;
-            let svgMousePoint = mousePoint.matrixTransform(elevationSvg.getScreenCTM().inverse());
-            let mouseDist = this._svgXToDataDist(svgMousePoint.x, widgetWidth, pathWidth, pxPerMX) * factor;
+            const svgMousePoint = mousePoint.matrixTransform(elevationSvg.getScreenCTM().inverse());
+            const mouseDist = this._svgXToDataDist(svgMousePoint.x, widgetWidth, pathWidth, pxPerMX) * factor;
 
-            let distIndex = this._arrayBisect(sortedDist, mouseDist);
+            const distIndex = this._arrayBisect(sortedDist, mouseDist);
 
-            let d0 = _points[distIndex - 1];
-            let d1 = _points[distIndex];
+            const d0 = _points[distIndex - 1];
+            const d1 = _points[distIndex];
             let d = d0;
             if (mouseDist - d0.dist > d1.dist - mouseDist) {
                 d = d1;
             }
 
-            let focusX = this._dataDistToSvgX(d.dist / factor, widgetWidth, pathWidth, pxPerMX);
-            let focusY = this._dataZToSvgY(d.z, pathHeight, minGraphZ, pxPerMZ);
+            const focusX = this._dataDistToSvgX(d.dist / factor, widgetWidth, pathWidth, pxPerMX);
+            const focusY = this._dataZToSvgY(d.z, pathHeight, minGraphZ, pxPerMZ);
 
             // Mise à jour des éléments graphiques
             focusCircle.setAttribute("cx", focusX);
@@ -570,22 +581,21 @@ var ProfileElevationPathDOM = {
             className.__updateProfileMarker(self, d);
 
             // Mise à jour du tooltip
-            let altiSpanTxt = `Altitude : ${d.z.toLocaleString()} m`;
-            let slopeSpanTxt = `Pente : ${d.slope} %`;
-            let coordsSpanTxt = `(lat : ${d.lat.toLocaleString()} / lon : ${d.lon.toLocaleString()})`;
+            const altiSpanTxt = `Altitude : ${d.z.toLocaleString()} m`;
+            const slopeSpanTxt = `Pente : ${d.slope} %`;
+            const coordsSpanTxt = `(lat : ${d.lat.toLocaleString()} / lon : ${d.lon.toLocaleString()})`;
 
             altiSpan.innerHTML = altiSpanTxt;
             slopeSpan.innerHTML = slopeSpanTxt;
             coordsSpan.innerHTML = coordsSpanTxt;
 
-            let tooltipTextWidth = Math.max(
+            const tooltipTextWidth = Math.max(
                 this._getTextWidth(coordsSpanTxt, coordsSpan),
                 this._getTextWidth(altiSpanTxt, altiSpan)
             );
 
-
             let tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.scrollX + focusX;
-            let tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.scrollY + focusY - 19;
+            const tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.scrollY + focusY - 19;
 
             let toolTipBubbleD;
             if (d.dist > (dist * factor) / 2) {

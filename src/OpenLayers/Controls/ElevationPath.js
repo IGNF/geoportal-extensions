@@ -1052,8 +1052,8 @@ var ElevationPath = (function (Control) {
                 ll = olTransformProj(xy, projSrc, projDest);
             }
             geometry.push({
-                lon : ll[0],
-                lat : ll[1]
+                lon : Math.round(ll[0] * 1e8) / 1e8,
+                lat : Math.round(ll[1] * 1e8) / 1e8
             });
         }
 
@@ -1083,10 +1083,44 @@ var ElevationPath = (function (Control) {
         for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
             var c1 = olTransformProj(coordinates[i], projSrc, projDest);
             var c2 = olTransformProj(coordinates[i + 1], projSrc, projDest);
+            c1[0] = Math.round(c1[0] * 1e8) / 1e8;
+            c1[1] = Math.round(c1[1] * 1e8) / 1e8;
+            c2[0] = Math.round(c2[0] * 1e8) / 1e8;
+            c2[1] = Math.round(c2[1] * 1e8) / 1e8;
             length += olGetDistanceSphere(c1, c2);
         }
 
         return length;
+    };
+
+    /**
+     * get geometry feature point coords in EPSG:4326 [lon, lat]
+     *
+     * @returns {Array} point coords in EPSG:4326 [lon, lat]
+     *
+     * @private
+     */
+    ElevationPath.prototype._getSketchCoords = function () {
+        if (this._currentSketch === null) {
+            logger.warn("Current Feature undefined !?");
+            return;
+        }
+
+        var map = this.getMap();
+        var projSrc = map.getView().getProjection();
+        var projDest = "EPSG:4326";
+
+        var pointCoords = [];
+
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0; i < coordinates.length; i++) {
+            var c1 = olTransformProj(coordinates[i], projSrc, projDest);
+            c1[0] = Math.round(c1[0] * 1e8) / 1e8;
+            c1[1] = Math.round(c1[1] * 1e8) / 1e8;
+            pointCoords.push(c1);
+        }
+
+        return pointCoords;
     };
 
     /**
@@ -1167,8 +1201,9 @@ var ElevationPath = (function (Control) {
             var _sampling = 50;
             var _length = this._getLength();
             logger.trace("length", _length);
-            var p = Math.max(3, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
-            if (p >= 200) {
+            var minSampling = this._getSketchCoords();
+            var p = Math.max(3, minSampling, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
+            if (p > 200) {
                 _sampling = 200;
             } else {
                 _sampling = Math.floor(p);
@@ -1211,6 +1246,13 @@ var ElevationPath = (function (Control) {
 
         var _unit = "m";
 
+        var _sketchPoints = this._getSketchCoords();
+        // section actuelle du sketch sur laquelle on est
+        var _currentSection = 0;
+        // longueur cumulée des sections précédentes
+        var _previousSectionsLength = 0;
+        var _nextSectionBegining = _sketchPoints[1];
+
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
         _data[0].dist = 0;
         _data[0].slope = 0;
@@ -1224,10 +1266,22 @@ var ElevationPath = (function (Control) {
         var _distance = 0;
         var _slopes = 0;
 
+        var distances = [];
+
         for (var i = 1; i < _data.length; i++) {
             var a = [_data[i].lon, _data[i].lat];
-            var b = [_data[i - 1].lon, _data[i - 1].lat];
-            var dist = olGetDistanceSphere(a, b);
+            var distanceToStart = _previousSectionsLength + olGetDistanceSphere(a, _sketchPoints[_currentSection]);
+            var dist = distanceToStart - _distance;
+
+            // Changement de section
+            if (a[0] === _nextSectionBegining[0] && a[1] === _nextSectionBegining[1]) {
+                _currentSection++;
+                _previousSectionsLength += distanceToStart;
+                // Pas de next section si on est sur le dernier point
+                if (i !== _data.length - 1) {
+                    _nextSectionBegining = _sketchPoints[_currentSection + 1];
+                }
+            }
 
             var za = _data[i].z;
             var zb = _data[i - 1].z;
@@ -1245,8 +1299,10 @@ var ElevationPath = (function (Control) {
                 _distancePlus += dist;
                 _ascendingElevation += slope;
             }
-            _distance += dist;
-            _data[i].dist = _distance;
+            _distance = distanceToStart;
+            _data[i].dist = distanceToStart;
+
+            distances.push(distanceToStart);
 
             _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
             _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
@@ -1300,7 +1356,7 @@ var ElevationPath = (function (Control) {
             descendingElevation : _descendingElevation, // dénivelé cumulée négative
             altMin : _altMin.toLocaleString(), // altitude min TODO: inutile ?
             altMax : _altMax.toLocaleString(), // altitude max TODO: inutile ?
-            distance : _distance, // distance totale
+            distance : this._getLength(), // distance totale
             unit : _unit, // unité des mesures de distance
             points : _data
         };
