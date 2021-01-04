@@ -475,7 +475,9 @@ var ProfileElevationPathDOM = {
         tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
         tooltipDiv.style.pointerEvents = "none";
         tooltipDiv.style.position = "fixed";
-        tooltipDiv.classList.add("tooltipInit");
+        // tooltipDiv.classList.add("tooltipInit");
+        // IE...
+        tooltipDiv.className = "tooltipInit";
 
         widgetDiv.appendChild(tooltipDiv);
 
@@ -515,7 +517,9 @@ var ProfileElevationPathDOM = {
         tooltipG.appendChild(tooltipBubbleShadow);
         tooltipG.appendChild(tooltipBubble);
 
-        tooltipG.classList.add("tooltipInit");
+        // tooltipG.classList.add("tooltipInit");
+        // IE... deprecated
+        tooltipG.className = "tooltipInit";
         tooltipG.style.pointerEvents = "none";
 
         pathRectangle.addEventListener("mouseover", function () {
@@ -525,12 +529,15 @@ var ProfileElevationPathDOM = {
             className.__createProfileMarker(self, _points[0]);
 
             // tooltips
-            tooltipDiv.classList.remove("tooltipInit");
-            tooltipG.classList.remove("tooltipInit");
-            tooltipDiv.classList.remove("tooltipFadeOut");
-            tooltipG.classList.remove("tooltipFadeOut");
-            tooltipDiv.classList.add("tooltipFadeIn");
-            tooltipG.classList.add("tooltipFadeIn");
+            // tooltipDiv.classList.remove("tooltipInit");
+            // tooltipG.classList.remove("tooltipInit");
+            // tooltipDiv.classList.remove("tooltipFadeOut");
+            // tooltipG.classList.remove("tooltipFadeOut");
+            // tooltipDiv.classList.add("tooltipFadeIn");
+            // tooltipG.classList.add("tooltipFadeIn");
+            // IE... deprecated
+            tooltipDiv.className = "tooltipFadeIn";
+            tooltipG.className = "tooltipFadeIn";
         });
 
         pathRectangle.addEventListener("mouseout", function () {
@@ -539,10 +546,13 @@ var ProfileElevationPathDOM = {
             focusCircle.setAttribute("visibility", "hidden");
             className.__removeProfileMarker(self);
             // tooltips
-            tooltipDiv.classList.remove("tooltipFadeIn");
-            tooltipG.classList.remove("tooltipFadeIn");
-            tooltipDiv.classList.add("tooltipFadeOut");
-            tooltipG.classList.add("tooltipFadeOut");
+            // tooltipDiv.classList.remove("tooltipFadeIn");
+            // tooltipG.classList.remove("tooltipFadeIn");
+            // tooltipDiv.classList.add("tooltipFadeOut");
+            // tooltipG.classList.add("tooltipFadeOut");
+            // IE... deprecated
+            tooltipDiv.className = "tooltipFadeOut";
+            tooltipG.className = "tooltipFadeOut";
         });
 
         pathRectangle.addEventListener("mousemove", function (e) {
