@@ -1276,7 +1276,7 @@ var ElevationPath = (function (Control) {
             // Changement de section
             if (a[0] === _nextSectionBegining[0] && a[1] === _nextSectionBegining[1]) {
                 _currentSection++;
-                _previousSectionsLength += distanceToStart;
+                _previousSectionsLength = distanceToStart;
                 // Pas de next section si on est sur le dernier point
                 if (i !== _data.length - 1) {
                     _nextSectionBegining = _sketchPoints[_currentSection + 1];
