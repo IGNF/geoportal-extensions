@@ -477,7 +477,7 @@ var ProfileElevationPathDOM = {
         tooltipDiv.style.position = "fixed";
         // tooltipDiv.classList.add("tooltipInit");
         // IE...
-        tooltipDiv.className = "tooltipInit";
+        tooltipDiv.setAttribute("class", "tooltipInit");
 
         widgetDiv.appendChild(tooltipDiv);
 
@@ -519,7 +519,7 @@ var ProfileElevationPathDOM = {
 
         // tooltipG.classList.add("tooltipInit");
         // IE... deprecated
-        tooltipG.className = "tooltipInit";
+        tooltipG.setAttribute("class", "tooltipInit");
         tooltipG.style.pointerEvents = "none";
 
         pathRectangle.addEventListener("mouseover", function () {
@@ -536,8 +536,8 @@ var ProfileElevationPathDOM = {
             // tooltipDiv.classList.add("tooltipFadeIn");
             // tooltipG.classList.add("tooltipFadeIn");
             // IE... deprecated
-            tooltipDiv.className = "tooltipFadeIn";
-            tooltipG.className = "tooltipFadeIn";
+            tooltipDiv.setAttribute("class", "tooltipFadeIn");
+            tooltipG.setAttribute("class", "tooltipFadeIn");
         });
 
         pathRectangle.addEventListener("mouseout", function () {
@@ -551,8 +551,8 @@ var ProfileElevationPathDOM = {
             // tooltipDiv.classList.add("tooltipFadeOut");
             // tooltipG.classList.add("tooltipFadeOut");
             // IE... deprecated
-            tooltipDiv.className = "tooltipFadeOut";
-            tooltipG.className = "tooltipFadeOut";
+            tooltipDiv.setAttribute("class", "tooltipFadeOut");
+            tooltipG.setAttribute("class", "tooltipFadeOut");
         });
 
         pathRectangle.addEventListener("mousemove", function (e) {
