@@ -119,14 +119,14 @@ module.exports = (env, argv) => {
             //      }
             // },
             stats : "errors-only",
-            // host : "localhost",
-            // https: true,
-            // port : 9001,
-            // hot : true,
-            // contentBase : path.join(__dirname),
-            // publicPath : "/dist/itowns/",
-            // openPage : "/samples/index-itowns-map.html",
-            // open : "google-chrome",
+            host : "localhost",
+            https: true,
+            port : 9001,
+            hot : true,
+            contentBase : path.join(__dirname),
+            publicPath : "/dist/itowns/",
+            openPage : "/samples/index-itowns-map.html",
+            open : "google-chrome",
             watchOptions : {
                 watch : true,
                 poll : true

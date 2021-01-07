@@ -979,7 +979,6 @@ var ElevationPath = (function (Control) {
             // set feature
             this._lastSketch = this._currentSketch;
 
-
             // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
             // resultats, on realise l'affichage du panneau
             if (typeof this.options.elevationOptions.onSuccess === "undefined" && this.options.displayProfileOptions.target === null) {
