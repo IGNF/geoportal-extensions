@@ -43,7 +43,7 @@ var ProfileElevationPathDOM = {
      *
      */
     _dataZToSvgY : function (z, pathHeight, minGraphZ, pxPerMZ) {
-        return pathHeight - (z - minGraphZ) * pxPerMZ;
+        return pathHeight - (z - minGraphZ) * pxPerMZ - 0.5;
     },
 
     /**
@@ -119,7 +119,7 @@ var ProfileElevationPathDOM = {
 
         const margin = {
             top : 25,
-            right : 10,
+            right : 15,
             bottom : 10,
             left : 10
         };
@@ -151,8 +151,8 @@ var ProfileElevationPathDOM = {
         const xGradHeight = 15;
 
         const minZguideHeigth = 15;
-        const minXguideWidth = 40;
-        const minNumXGuides = 2;
+        const minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString(), container);
+        const minNumXGuides = 1;
 
         const pathHeight = widgetHeigth - xLabelHeight - xGradHeight;
         const pathWidth = widgetWidth - zLabelWidth - zGradWidth;
@@ -173,9 +173,6 @@ var ProfileElevationPathDOM = {
         let minGraphZ = Math.floor(minZ / gradZ) * gradZ;
         let maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
         // cas où le path atteint pile les graduations extremes : ajout d'une gradiation
-        if (minGraphZ === minZ) {
-            minGraphZ -= gradZ;
-        }
         if (maxGraphZ === maxZ) {
             maxGraphZ += gradZ;
         }
@@ -191,9 +188,6 @@ var ProfileElevationPathDOM = {
             minGraphZ = Math.floor(minZ / gradZ) * gradZ;
             maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ;
             // cas où le path atteint pile les graduations extremes : ajout d'une gradiation
-            if (minGraphZ === minZ) {
-                minGraphZ -= gradZ;
-            }
             if (maxGraphZ === maxZ) {
                 maxGraphZ += gradZ;
             }
@@ -231,7 +225,7 @@ var ProfileElevationPathDOM = {
             gradZtext.setAttribute("class", "profile-z-graduation");
             // Cas où gradZ < 1 : nombres flottants capricieux...
             // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
-            gradZtext.innerHTML = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
+            gradZtext.textContent = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
 
             yTextTranslation = pathHeight - i * gradZyOffsetPx;
 
@@ -270,7 +264,7 @@ var ProfileElevationPathDOM = {
 
         var axisZLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
         axisZLegend.setAttribute("class", "profile-z-legend");
-        axisZLegend.innerHTML = "Altitude (m)";
+        axisZLegend.textContent = "Altitude (m)";
 
         axisZLegend.setAttribute("transform", `translate(${zLabelWidth - 8}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
         axisZLegend.setAttribute("text-anchor", "middle");
@@ -300,6 +294,7 @@ var ProfileElevationPathDOM = {
             numXguides = Math.floor(maxGraphX / gradX);
         }
 
+
         numXguides = Math.max(numXguides, 1);
         const lastGradX = gradX * numXguides;
 
@@ -327,7 +322,7 @@ var ProfileElevationPathDOM = {
             // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
             if (i !== numXguides + 1) {
                 // Cas où gradX < 1 : nombres flottants capricieux...
-                gradXtext.innerHTML = (Math.round(100 * i * gradX) / 100).toLocaleString();
+                gradXtext.textContent = (Math.round(100 * i * gradX) / 100).toLocaleString();
             }
 
             xTextTranslation = zLabelWidth + zGradWidth + i * gradXxOffsetPx;
@@ -371,7 +366,7 @@ var ProfileElevationPathDOM = {
 
         var axisXLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
         axisXLegend.setAttribute("class", "profile-x-legend");
-        axisXLegend.innerHTML = `Distance (${distUnit})`;
+        axisXLegend.textContent = `Distance (${distUnit})`;
 
         axisXLegend.setAttribute("transform", `translate(${zLabelWidth + zGradWidth + pathWidth / 2}, ${pathHeight + xGradHeight + xLabelHeight + 3})`);
         axisXLegend.setAttribute("text-anchor", "middle");
