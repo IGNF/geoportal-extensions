@@ -294,7 +294,6 @@ var ProfileElevationPathDOM = {
             numXguides = Math.floor(maxGraphX / gradX);
         }
 
-
         numXguides = Math.max(numXguides, 1);
         const lastGradX = gradX * numXguides;
 
@@ -599,8 +598,8 @@ var ProfileElevationPathDOM = {
                 this._getTextWidth(altiSpanTxt, altiSpan)
             );
 
-            let tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.scrollX + focusX;
-            const tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.scrollY + focusY - 19;
+            let tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.pageXOffset + focusX;
+            const tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.pageYOffset + focusY - 19;
 
             let toolTipBubbleD;
             if (d.dist > (dist * factor) / 2) {
@@ -615,6 +614,7 @@ var ProfileElevationPathDOM = {
             tooltipBubble.setAttribute("d", toolTipBubbleD);
             tooltipBubbleShadow.setAttribute("d", toolTipBubbleD);
 
+            tooltipG.setAttribute("transform", `translate(${focusX},${focusY})`); // IE11 !
             tooltipG.style.transform = `translate(${focusX}px,${focusY}px)`;
 
             tooltipDiv.style.left = `${tooltipDivLeft}px`;

@@ -208,6 +208,11 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.__createProfileMarker = function (context, d) {
         var self = context;
+        // suppression de l'ancien marker
+        if (self._marker) {
+            self._measureSource.removeFeature(self._marker);
+            self._marker = null;
+        }
         var map = self.getMap();
         var proj = map.getView().getProjection();
 
