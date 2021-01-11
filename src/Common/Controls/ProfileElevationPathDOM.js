@@ -556,7 +556,8 @@ var ProfileElevationPathDOM = {
             const svgMousePoint = mousePoint.matrixTransform(elevationSvg.getScreenCTM().inverse());
             const mouseDist = this._svgXToDataDist(svgMousePoint.x, widgetWidth, pathWidth, pxPerMX) * factor;
 
-            const distIndex = this._arrayBisect(sortedDist, mouseDist);
+            // Math.max pour éviter de sortir de l'array
+            const distIndex = Math.max(1, this._arrayBisect(sortedDist, mouseDist));
 
             const d0 = _points[distIndex - 1];
             const d1 = _points[distIndex];
@@ -861,7 +862,8 @@ var ProfileElevationPathDOM = {
             .on("mousemove", function () {
                 var m = d3.mouse(this);
                 var distance = x.invert(m[0]);
-                var i = bisectDist(_points, distance);
+                // Math.max pour éviter de sortir de l'array
+                var i = Math.max(1, bisectDist(_points, distance));
 
                 var d0 = _points[i - 1];
                 var d1 = _points[i];
