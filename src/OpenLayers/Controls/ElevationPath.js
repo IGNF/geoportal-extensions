@@ -59,6 +59,7 @@ var logger = Logger.getLogger("elevationpath");
  * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
  * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
  * @param {Object} [options.displayProfileOptions = {}] - profile options.
+ * @param {Boolean} [options.displayProfileOptions.totalDistance = true] - display the total distance of the path
  * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
  * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
  * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
@@ -624,6 +625,7 @@ var ElevationPath = (function (Control) {
                 description : "Mon profil altimétrique"
             },
             displayProfileOptions : {
+                totalDistance : true,
                 greaterSlope : true,
                 meanSlope : true,
                 ascendingElevation : true,
@@ -1399,7 +1401,8 @@ var ElevationPath = (function (Control) {
         var opts = this.options.displayProfileOptions;
         var element = document.getElementById("GPelevationPathPanelInfo-" + this._uid);
         if (element) {
-            if (opts.greaterSlope ||
+            if (opts.totalDistance ||
+                opts.greaterSlope ||
                 opts.meanSlope ||
                 opts.ascendingElevation ||
                 opts.descendingElevation) {
@@ -1452,6 +1455,7 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
         // options d'affichage
+        var totalDistance = this.options.displayProfileOptions.totalDistance;
         var meanSlope = this.options.displayProfileOptions.meanSlope;
         var greaterSlope = this.options.displayProfileOptions.greaterSlope;
         var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
@@ -1466,6 +1470,9 @@ var ElevationPath = (function (Control) {
         }
 
         // creation des infomations
+        if (totalDistance) {
+            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance.toLocaleString()) + " m");
+        }
 
         if (ascendingElevation) {
             this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");

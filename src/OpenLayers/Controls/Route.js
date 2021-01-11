@@ -990,7 +990,6 @@ var Route = (function (Control) {
             olObservableUnByKey(this.listenerKey);
             this.dispatchEvent("route:drawend");
         }
-
     };
 
     /**
