@@ -1476,7 +1476,7 @@ var ElevationPath = (function (Control) {
 
         // creation des infomations
         if (totalDistance) {
-            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance.toLocaleString()) + " m");
+            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance).toLocaleString() + " m");
         }
 
         if (ascendingElevation) {
