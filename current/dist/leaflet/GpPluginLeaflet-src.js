@@ -30423,8 +30423,12 @@ var CRS = {
 
     var PJD_3PARAM = 1;
     var PJD_7PARAM = 2;
+    var PJD_GRIDSHIFT = 3;
     var PJD_WGS84 = 4; // WGS84 or equivalent
     var PJD_NODATUM = 5; // WGS84 or equivalent
+    var SRS_WGS84_SEMIMAJOR = 6378137.0;  // only used in grid shift transforms
+    var SRS_WGS84_SEMIMINOR = 6356752.314;  // only used in grid shift transforms
+    var SRS_WGS84_ESQUARED = 0.0066943799901413165; // only used in grid shift transforms
     var SEC_TO_RAD = 4.84813681109535993589914102357e-6;
     var HALF_PI = Math.PI/2;
     // ellipoid pj_set_ell.c
@@ -30593,6 +30597,9 @@ var CRS = {
           if (v.length === 3 && legalAxis.indexOf(v.substr(0, 1)) !== -1 && legalAxis.indexOf(v.substr(1, 1)) !== -1 && legalAxis.indexOf(v.substr(2, 1)) !== -1) {
             self.axis = v;
           }
+        },
+        approx: function() {
+          self.approx = true;
         }
       };
       for (paramName in paramObj) {
@@ -31142,7 +31149,7 @@ var CRS = {
     function testDef(code){
       return code in defs;
     }
-     var codeWords = ['PROJECTEDCRS', 'PROJCRS', 'GEOGCS','GEOCCS','PROJCS','LOCAL_CS', 'GEODCRS', 'GEODETICCRS', 'GEODETICDATUM', 'ENGCRS', 'ENGINEERINGCRS'];
+    var codeWords = ['PROJECTEDCRS', 'PROJCRS', 'GEOGCS','GEOCCS','PROJCS','LOCAL_CS', 'GEODCRS', 'GEODETICCRS', 'GEODETICDATUM', 'ENGCRS', 'ENGINEERINGCRS'];
     function testWKT(code){
       return codeWords.some(function (word) {
         return code.indexOf(word) > -1;
@@ -31797,7 +31804,7 @@ var CRS = {
       datumName: "Reseau National Belge 1972"
     };
 
-    function datum(datumCode, datum_params, a, b, es, ep2) {
+    function datum(datumCode, datum_params, a, b, es, ep2, nadgrids) {
       var out = {};
 
       if (datumCode === undefined || datumCode === 'none') {
@@ -31822,11 +31829,158 @@ var CRS = {
         }
       }
 
+      if (nadgrids) {
+        out.datum_type = PJD_GRIDSHIFT;
+        out.grids = nadgrids;
+      }
       out.a = a; //datum object also uses these values
       out.b = b;
       out.es = es;
       out.ep2 = ep2;
       return out;
+    }
+
+    /**
+     * Resources for details of NTv2 file formats:
+     * - https://web.archive.org/web/20140127204822if_/http://www.mgs.gov.on.ca:80/stdprodconsume/groups/content/@mgs/@iandit/documents/resourcelist/stel02_047447.pdf
+     * - http://mimaka.com/help/gs/html/004_NTV2%20Data%20Format.htm
+     */
+
+    var loadedNadgrids = {};
+
+    /**
+     * Load a binary NTv2 file (.gsb) to a key that can be used in a proj string like +nadgrids=<key>. Pass the NTv2 file
+     * as an ArrayBuffer.
+     */
+    function nadgrid(key, data) {
+      var view = new DataView(data);
+      var isLittleEndian = detectLittleEndian(view);
+      var header = readHeader(view, isLittleEndian);
+      if (header.nSubgrids > 1) {
+        console.log('Only single NTv2 subgrids are currently supported, subsequent sub grids are ignored');
+      }
+      var subgrids = readSubgrids(view, header, isLittleEndian);
+      var nadgrid = {header: header, subgrids: subgrids};
+      loadedNadgrids[key] = nadgrid;
+      return nadgrid;
+    }
+
+    /**
+     * Given a proj4 value for nadgrids, return an array of loaded grids
+     */
+    function getNadgrids(nadgrids) {
+      // Format details: http://proj.maptools.org/gen_parms.html
+      if (nadgrids === undefined) { return null; }
+      var grids = nadgrids.split(',');
+      return grids.map(parseNadgridString);
+    }
+
+    function parseNadgridString(value) {
+      if (value.length === 0) {
+        return null;
+      }
+      var optional = value[0] === '@';
+      if (optional) {
+        value = value.slice(1);
+      }
+      if (value === 'null') {
+        return {name: 'null', mandatory: !optional, grid: null, isNull: true};
+      }
+      return {
+        name: value,
+        mandatory: !optional,
+        grid: loadedNadgrids[value] || null,
+        isNull: false
+      };
+    }
+
+    function secondsToRadians(seconds) {
+      return (seconds / 3600) * Math.PI / 180;
+    }
+
+    function detectLittleEndian(view) {
+      var nFields = view.getInt32(8, false);
+      if (nFields === 11) {
+        return false;
+      }
+      nFields = view.getInt32(8, true);
+      if (nFields !== 11) {
+        console.warn('Failed to detect nadgrid endian-ness, defaulting to little-endian');
+      }
+      return true;
+    }
+
+    function readHeader(view, isLittleEndian) {
+      return {
+        nFields: view.getInt32(8, isLittleEndian),
+        nSubgridFields: view.getInt32(24, isLittleEndian),
+        nSubgrids: view.getInt32(40, isLittleEndian),
+        shiftType: decodeString(view, 56, 56 + 8).trim(),
+        fromSemiMajorAxis: view.getFloat64(120, isLittleEndian),
+        fromSemiMinorAxis: view.getFloat64(136, isLittleEndian),
+        toSemiMajorAxis: view.getFloat64(152, isLittleEndian),
+        toSemiMinorAxis: view.getFloat64(168, isLittleEndian),
+      };
+    }
+
+    function decodeString(view, start, end) {
+      return String.fromCharCode.apply(null, new Uint8Array(view.buffer.slice(start, end)));
+    }
+
+    function readSubgrids(view, header, isLittleEndian) {
+      var gridOffset = 176;
+      var grids = [];
+      for (var i = 0; i < header.nSubgrids; i++) {
+        var subHeader = readGridHeader(view, gridOffset, isLittleEndian);
+        var nodes = readGridNodes(view, gridOffset, subHeader, isLittleEndian);
+        var lngColumnCount = Math.round(
+          1 + (subHeader.upperLongitude - subHeader.lowerLongitude) / subHeader.longitudeInterval);
+        var latColumnCount = Math.round(
+          1 + (subHeader.upperLatitude - subHeader.lowerLatitude) / subHeader.latitudeInterval);
+        // Proj4 operates on radians whereas the coordinates are in seconds in the grid
+        grids.push({
+          ll: [secondsToRadians(subHeader.lowerLongitude), secondsToRadians(subHeader.lowerLatitude)],
+          del: [secondsToRadians(subHeader.longitudeInterval), secondsToRadians(subHeader.latitudeInterval)],
+          lim: [lngColumnCount, latColumnCount],
+          count: subHeader.gridNodeCount,
+          cvs: mapNodes(nodes)
+        });
+      }
+      return grids;
+    }
+
+    function mapNodes(nodes) {
+      return nodes.map(function (r) {return [secondsToRadians(r.longitudeShift), secondsToRadians(r.latitudeShift)];});
+    }
+
+    function readGridHeader(view, offset, isLittleEndian) {
+      return {
+        name: decodeString(view, offset + 8, offset + 16).trim(),
+        parent: decodeString(view, offset + 24, offset + 24 + 8).trim(),
+        lowerLatitude: view.getFloat64(offset + 72, isLittleEndian),
+        upperLatitude: view.getFloat64(offset + 88, isLittleEndian),
+        lowerLongitude: view.getFloat64(offset + 104, isLittleEndian),
+        upperLongitude: view.getFloat64(offset + 120, isLittleEndian),
+        latitudeInterval: view.getFloat64(offset + 136, isLittleEndian),
+        longitudeInterval: view.getFloat64(offset + 152, isLittleEndian),
+        gridNodeCount: view.getInt32(offset + 168, isLittleEndian)
+      };
+    }
+
+    function readGridNodes(view, offset, gridHeader, isLittleEndian) {
+      var nodesOffset = offset + 176;
+      var gridRecordLength = 16;
+      var gridShiftRecords = [];
+      for (var i = 0; i < gridHeader.gridNodeCount; i++) {
+        var record = {
+          latitudeShift: view.getFloat32(nodesOffset + i * gridRecordLength, isLittleEndian),
+          longitudeShift: view.getFloat32(nodesOffset + i * gridRecordLength + 4, isLittleEndian),
+          latitudeAccuracy: view.getFloat32(nodesOffset + i * gridRecordLength + 8, isLittleEndian),
+          longitudeAccuracy: view.getFloat32(nodesOffset + i * gridRecordLength + 12, isLittleEndian),
+        };
+        gridShiftRecords.push(record);
+      }
+      return gridShiftRecords;
     }
 
     function Projection(srsCode,callback) {
@@ -31861,7 +32015,9 @@ var CRS = {
       json.ellps = json.ellps || 'wgs84';
       var sphere_ = sphere(json.a, json.b, json.rf, json.ellps, json.sphere);
       var ecc = eccentricity(sphere_.a, sphere_.b, sphere_.rf, json.R_A);
-      var datumObj = json.datum || datum(json.datumCode, json.datum_params, sphere_.a, sphere_.b, ecc.es, ecc.ep2);
+      var nadgrids = getNadgrids(json.nadgrids);
+      var datumObj = json.datum || datum(json.datumCode, json.datum_params, sphere_.a, sphere_.b, ecc.es, ecc.ep2,
+        nadgrids);
 
       extend(this, json); // transfer everything over from the projection because we don't know what we'll need
       extend(this, ourProj); // transfer all the methods from the projection
@@ -32153,14 +32309,33 @@ var CRS = {
       }
 
       // If this datum requires grid shifts, then apply it to geodetic coordinates.
+      var source_a = source.a;
+      var source_es = source.es;
+      if (source.datum_type === PJD_GRIDSHIFT) {
+        var gridShiftCode = applyGridShift(source, false, point);
+        if (gridShiftCode !== 0) {
+          return undefined;
+        }
+        source_a = SRS_WGS84_SEMIMAJOR;
+        source_es = SRS_WGS84_ESQUARED;
+      }
+
+      var dest_a = dest.a;
+      var dest_b = dest.b;
+      var dest_es = dest.es;
+      if (dest.datum_type === PJD_GRIDSHIFT) {
+        dest_a = SRS_WGS84_SEMIMAJOR;
+        dest_b = SRS_WGS84_SEMIMINOR;
+        dest_es = SRS_WGS84_ESQUARED;
+      }
 
       // Do we need to go through geocentric coordinates?
-      if (source.es === dest.es && source.a === dest.a && !checkParams(source.datum_type) &&  !checkParams(dest.datum_type)) {
+      if (source_es === dest_es && source_a === dest_a && !checkParams(source.datum_type) &&  !checkParams(dest.datum_type)) {
         return point;
       }
 
       // Convert to geocentric coordinates.
-      point = geodeticToGeocentric(point, source.es, source.a);
+      point = geodeticToGeocentric(point, source_es, source_a);
       // Convert between datums
       if (checkParams(source.datum_type)) {
         point = geocentricToWgs84(point, source.datum_type, source.datum_params);
@@ -32168,9 +32343,132 @@ var CRS = {
       if (checkParams(dest.datum_type)) {
         point = geocentricFromWgs84(point, dest.datum_type, dest.datum_params);
       }
-      return geocentricToGeodetic(point, dest.es, dest.a, dest.b);
+      point = geocentricToGeodetic(point, dest_es, dest_a, dest_b);
 
+      if (dest.datum_type === PJD_GRIDSHIFT) {
+        var destGridShiftResult = applyGridShift(dest, true, point);
+        if (destGridShiftResult !== 0) {
+          return undefined;
+        }
+      }
+
+      return point;
     };
+
+    function applyGridShift(source, inverse, point) {
+      if (source.grids === null || source.grids.length === 0) {
+        console.log('Grid shift grids not found');
+        return -1;
+      }
+      var input = {x: -point.x, y: point.y};
+      var output = {x: Number.NaN, y: Number.NaN};
+      var attemptedGrids = [];
+      for (var i = 0; i < source.grids.length; i++) {
+        var grid = source.grids[i];
+        attemptedGrids.push(grid.name);
+        if (grid.isNull) {
+          output = input;
+          break;
+        }
+        if (grid.grid === null) {
+          if (grid.mandatory) {
+            console.log("Unable to find mandatory grid '" + grid.name + "'");
+            return -1;
+          }
+          continue;
+        }
+        var subgrid = grid.grid.subgrids[0];
+        // skip tables that don't match our point at all
+        var epsilon = (Math.abs(subgrid.del[1]) + Math.abs(subgrid.del[0])) / 10000.0;
+        var minX = subgrid.ll[0] - epsilon;
+        var minY = subgrid.ll[1] - epsilon;
+        var maxX = subgrid.ll[0] + (subgrid.lim[0] - 1) * subgrid.del[0] + epsilon;
+        var maxY = subgrid.ll[1] + (subgrid.lim[1] - 1) * subgrid.del[1] + epsilon;
+        if (minY > input.y || minX > input.x || maxY < input.y || maxX < input.x ) {
+          continue;
+        }
+        output = applySubgridShift(input, inverse, subgrid);
+        if (!isNaN(output.x)) {
+          break;
+        }
+      }
+      if (isNaN(output.x)) {
+        console.log("Failed to find a grid shift table for location '"+
+          -input.x * R2D + " " + input.y * R2D + " tried: '" + attemptedGrids + "'");
+        return -1;
+      }
+      point.x = -output.x;
+      point.y = output.y;
+      return 0;
+    }
+
+    function applySubgridShift(pin, inverse, ct) {
+      var val = {x: Number.NaN, y: Number.NaN};
+      if (isNaN(pin.x)) { return val; }
+      var tb = {x: pin.x, y: pin.y};
+      tb.x -= ct.ll[0];
+      tb.y -= ct.ll[1];
+      tb.x = adjust_lon(tb.x - Math.PI) + Math.PI;
+      var t = nadInterpolate(tb, ct);
+      if (inverse) {
+        if (isNaN(t.x)) {
+          return val;
+        }
+        t.x = tb.x - t.x;
+        t.y = tb.y - t.y;
+        var i = 9, tol = 1e-12;
+        var dif, del;
+        do {
+          del = nadInterpolate(t, ct);
+          if (isNaN(del.x)) {
+            console.log("Inverse grid shift iteration failed, presumably at grid edge.  Using first approximation.");
+            break;
+          }
+          dif = {x: tb.x - (del.x + t.x), y: tb.y - (del.y + t.y)};
+          t.x += dif.x;
+          t.y += dif.y;
+        } while (i-- && Math.abs(dif.x) > tol && Math.abs(dif.y) > tol);
+        if (i < 0) {
+          console.log("Inverse grid shift iterator failed to converge.");
+          return val;
+        }
+        val.x = adjust_lon(t.x + ct.ll[0]);
+        val.y = t.y + ct.ll[1];
+      } else {
+        if (!isNaN(t.x)) {
+          val.x = pin.x + t.x;
+          val.y = pin.y + t.y;
+        }
+      }
+      return val;
+    }
+
+    function nadInterpolate(pin, ct) {
+      var t = {x: pin.x / ct.del[0], y: pin.y / ct.del[1]};
+      var indx = {x: Math.floor(t.x), y: Math.floor(t.y)};
+      var frct = {x: t.x - 1.0 * indx.x, y: t.y - 1.0 * indx.y};
+      var val= {x: Number.NaN, y: Number.NaN};
+      var inx;
+      if (indx.x < 0 || indx.x >= ct.lim[0]) {
+        return val;
+      }
+      if (indx.y < 0 || indx.y >= ct.lim[1]) {
+        return val;
+      }
+      inx = (indx.y * ct.lim[0]) + indx.x;
+      var f00 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+      inx++;
+      var f10= {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+      inx += ct.lim[0];
+      var f11 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+      inx--;
+      var f01 = {x: ct.cvs[inx][0], y: ct.cvs[inx][1]};
+      var m11 = frct.x * frct.y, m10 = frct.x * (1.0 - frct.y),
+        m00 = (1.0 - frct.x) * (1.0 - frct.y), m01 = (1.0 - frct.x) * frct.y;
+      val.x = (m00 * f00.x + m10 * f10.x + m01 * f01.x + m11 * f11.x);
+      val.y = (m00 * f00.y + m10 * f10.y + m01 * f01.y + m11 * f11.y);
+      return val;
+    }
 
     var adjust_axis = function(crs, denorm, point) {
       var xin = point.x,
@@ -32311,6 +32609,9 @@ var CRS = {
 
       // Convert datums if needed, and if possible.
       point = datum_transform(source.datum, dest.datum, point);
+      if (!point) {
+        return;
+      }
 
       // Adjust for the prime meridian if necessary
       if (dest.from_greenwich) {
@@ -33416,7 +33717,7 @@ var CRS = {
       return p;
     }
 
-    var names$3 = ["Transverse_Mercator", "Transverse Mercator", "tmerc"];
+    var names$3 = ["Fast_Transverse_Mercator", "Fast Transverse Mercator"];
     var tmerc = {
       init: init$2,
       forward: forward$2,
@@ -33525,8 +33826,14 @@ var CRS = {
     // https://github.com/mbloch/mapshaper-proj/blob/master/src/projections/etmerc.js
 
     function init$3() {
-      if (this.es === undefined || this.es <= 0) {
-        throw new Error('incorrect elliptical usage');
+      if (!this.approx && (isNaN(this.es) || this.es <= 0)) {
+        throw new Error('Incorrect elliptical usage. Try using the +approx option in the proj string, or PROJECTION["Fast_Transverse_Mercator"] in the WKT.');
+      }
+      if (this.approx) {
+        // When '+approx' is set, use tmerc instead
+        tmerc.init.apply(this);
+        this.forward = tmerc.forward;
+        this.inverse = tmerc.inverse;
       }
 
       this.x0 = this.x0 !== undefined ? this.x0 : 0;
@@ -33671,7 +33978,7 @@ var CRS = {
       return p;
     }
 
-    var names$4 = ["Extended_Transverse_Mercator", "Extended Transverse Mercator", "etmerc"];
+    var names$4 = ["Extended_Transverse_Mercator", "Extended Transverse Mercator", "etmerc", "Transverse_Mercator", "Transverse Mercator", "tmerc"];
     var etmerc = {
       init: init$3,
       forward: forward$3,
@@ -37170,9 +37477,10 @@ var CRS = {
     proj4$1.Point = Point;
     proj4$1.toPoint = toPoint;
     proj4$1.defs = defs;
+    proj4$1.nadgrid = nadgrid;
     proj4$1.transform = transform;
     proj4$1.mgrs = mgrs;
-    proj4$1.version = '2.6.3';
+    proj4$1.version = '2.7.0';
     includedProjections(proj4$1);
 
     return proj4$1;
