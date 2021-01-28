@@ -22,7 +22,7 @@
         }],
         "name": "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD",
         "format": "image/jpeg",
-        "crs" : "EPSG:3857",
+        "projection" : "EPSG:3857",
         "tileMatrixSet": "PM",
         "tileMatrixSetLimits": {
           "6" : {

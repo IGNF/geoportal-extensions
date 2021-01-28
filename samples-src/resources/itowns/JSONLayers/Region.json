@@ -8,7 +8,7 @@
         "format"  : "image/png",
         "name"      : "REGION.2016",
         "style"      : "",
-        "crs" : "EPSG:3857",
+        "projection" : "EPSG:3857",
         "transparent" : true,
         "featureInfoMimeType" : "",
         "dateTime"  : "",
