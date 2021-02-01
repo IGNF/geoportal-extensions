@@ -17,6 +17,9 @@
 
 * [Fixed]
 
+    - fix sur la prise en compte du paramètre ssl=false pour les controles qui interrogent les services (a71811bb85785af93759a77de793be0c9d313fbf)
+    - fix sur l'interface des options données au controle SearchEngine (ee5130f376f83702328d55659ad73bd30f561a02)
+
 * [Security]
 
 ---
@@ -39,6 +42,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - fix sur la prise en compte du paramètre ssl=false du mousePosition (cfa88c4546cb146902357b0a75b790acfb405c7d)
 
 * [Security]
 
