@@ -1099,8 +1099,10 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
     // true par défaut (https)
-    options.ssl = this.options.ssl;
-
+    if (typeof this.options.ssl === "boolean") {
+        options.ssl = this.options.ssl;
+    }
+    
     Gp.Services.getAltitude(options);
 };
 
