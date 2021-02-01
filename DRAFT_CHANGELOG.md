@@ -5,19 +5,9 @@
 
 ## Summary
 
-Ajout d'évènements sur les contrôles
-
 ## Changelog
 
 * [Added]
-
-    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **GeoportalAttribution**
-
-    - event '*elevationpath:drawend*' et '*elevationpath:drawstart*' sur la saisie sur le contrôle **ElevationPath**
-
-    - event '*route:drawend*' et '*route:drawstart*' sur la saisie sur le contrôle **Route**
-
-    - event '*isocurve:drawend*' et '*isocurve:drawstart*' sur la saisie sur le contrôle **IsoCurve**
 
 * [Changed]
 
@@ -26,8 +16,6 @@ Ajout d'évènements sur les contrôles
 * [Removed]
 
 * [Fixed]
-
-    - nettoyage des *listeners* sur le contrôle **Route**
 
 * [Security]
 
@@ -40,20 +28,11 @@ Ajout d'évènements sur les contrôles
 
 ## Summary
 
-* Version iTowns 2.27.0
-* Ajout d'évènement sur les contrôles
-
 ## Changelog
 
 * [Added]
 
-    - mise en place du mécanisme des evenements sur tous les widgets
-
-    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **Attributions**
-
 * [Changed]
-
-    - mise à jour iTowns 2.27.0 (utilisation par défaut du webGL 2.0)
 
 * [Deprecated]
 
