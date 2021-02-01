@@ -27,16 +27,17 @@ var logger = Logger.getLogger("searchengine");
  * @alias ol.control.SearchEngine
  * @param {Object}  options - control options
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
- * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
  * @param {Object}   [options.resources] - resources to be used by geocode and autocompletion services :
  * @param {Array}   [options.resources.geocode] - resources geocoding, by default : ["PositionOfInterest", "StreetAddress"]
  * @param {Array}   [options.resources.autocomplete] - resources autocompletion, by default : ["PositionOfInterest", "StreetAddress"]
  * @param {Boolean}  [options.displayAdvancedSearch = true] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
  * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
- * @param {Object}  [options.geocodeOptions = {}] - options of geocode service (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
- * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
- * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service
+ * @param {Object}  [options.geocodeOptions = {}] - options of geocode service
+ * @param {Object}  [options.geocodeOptions.serviceOptions] - options of geocode service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
+ * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service
+ * @param {Object}  [options.autocompleteOptions.serviceOptions] - options of autocomplete service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete})
  * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
  * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
@@ -747,8 +748,13 @@ var SearchEngine = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        options.ssl = options.ssl || this.options.ssl || true;
-
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
         logger.log(options);
 
         Gp.Services.autoComplete(options);
@@ -808,7 +814,7 @@ var SearchEngine = (function (Control) {
         var options = {};
         options.returnFreeForm = true;
         // on recupere les options du service
-        Utils.assign(options, this.options.geocodeOptions);
+        Utils.assign(options, this.options.geocodeOptions.serviceOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
 
@@ -831,8 +837,14 @@ var SearchEngine = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        options.ssl = options.ssl || this.options.ssl || true;
-
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
+        
         logger.log(options);
 
         Gp.Services.geocode(options);
