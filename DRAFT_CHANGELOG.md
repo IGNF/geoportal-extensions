@@ -5,21 +5,14 @@
 
 ## Summary
 
-Ajout d'évènements sur les contrôles
 
 ## Changelog
 
 * [Added]
 
-    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **GeoportalAttribution**
-
-    - event '*elevationpath:drawend*' et '*elevationpath:drawstart*' sur la saisie sur le contrôle **ElevationPath**
-
-    - event '*route:drawend*' et '*route:drawstart*' sur la saisie sur le contrôle **Route**
-
-    - event '*isocurve:drawend*' et '*isocurve:drawstart*' sur la saisie sur le contrôle **IsoCurve**
-
 * [Changed]
+
+        - nouvel affichage du profil altimétrique par défaut (DISPLAY_PROFILE_BY_DEFAULT)
 
 * [Deprecated]
 
@@ -27,7 +20,7 @@ Ajout d'évènements sur les contrôles
 
 * [Fixed]
 
-    - nettoyage des *listeners* sur le contrôle **Route**
+        - correctif sur l'export de la version en mode module
 
 * [Security]
 
@@ -40,36 +33,32 @@ Ajout d'évènements sur les contrôles
 
 ## Summary
 
-* Version iTowns 2.27.0
-* Ajout d'évènement sur les contrôles
 
 ## Changelog
 
 * [Added]
 
-    - mise en place du mécanisme des evenements sur tous les widgets
-
-    - event '*attributions:update*' sur la mise à jour des attributions sur le contrôle **Attributions**
-
 * [Changed]
 
-    - mise à jour iTowns 2.27.0 (utilisation par défaut du webGL 2.0)
-
 * [Deprecated]
+
+        - remplacement du parametre déprecié : projection -> crs
 
 * [Removed]
 
 * [Fixed]
+
+        - correctif sur l'export de la version en mode module
 
 * [Security]
 
 ---
 
 
-# Extension Geoportail __UP_LIBRARY__, version __VERSION__
+# Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail __LO_LIBRARY__
+> Release Extension Geoportail Leaflet
 
 ## Summary
 
@@ -79,11 +68,15 @@ Ajout d'évènements sur les contrôles
 
 * [Changed]
 
+        - nouvel affichage du profil altimétrique par défaut (DISPLAY_PROFILE_BY_DEFAULT)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+        - correctif sur l'export de la version en mode module
 
 * [Security]
 
