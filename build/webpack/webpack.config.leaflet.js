@@ -103,8 +103,8 @@ module.exports = (env, argv) => {
             port : 9001,
             hot : true,
             contentBase : path.join(__dirname),
-            publicPath : "/dist/leaflet/",
-            openPage : "/samples/index-leaflet-map.html",
+            // publicPath : "/dist/leaflet/",
+            // openPage : "/samples/index-leaflet-map.html",
             open : "google-chrome",
             watchOptions : {
                 watch : true,

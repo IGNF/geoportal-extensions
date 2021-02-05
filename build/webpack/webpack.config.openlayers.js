@@ -158,8 +158,8 @@ module.exports = (env, argv) => {
             port : 9001,
             hot : true,
             contentBase : path.join(__dirname),
-            publicPath : "/dist/openlayers/",
-            openPage : "/samples/index-openlayers-map.html",
+            // publicPath : "/dist/openlayers/",
+            // openPage : "/samples/index-openlayers-map.html",
             open : "google-chrome",
             watchOptions : {
                 watch : true,

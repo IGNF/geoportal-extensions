@@ -66,7 +66,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {String} [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.displayInfo] - get informations on popup marker
-     * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+     * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
      *       Value possible : auto or zoom level.
      *       Possible to overload it with a function :
      *       zoomTo : function (info) {
@@ -76,7 +76,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
      * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
      * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }).
-     * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
      * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
      * @param {Object} [options.advancedSearch] - advanced search for geocoding (filters)

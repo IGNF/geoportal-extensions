@@ -47,7 +47,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * @constructor Route
      * @private
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
