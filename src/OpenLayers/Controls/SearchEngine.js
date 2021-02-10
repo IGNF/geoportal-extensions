@@ -46,7 +46,7 @@ var logger = Logger.getLogger("searchengine");
  * @param {Object}  [options.autocompleteOptions.serviceOptions] - overload other options : options of autocomplete service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete})
  * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
- * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+ * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
  *       Value possible : auto or zoom level.
  *       Possible to overload it with a function :
  *       zoomTo : function (info) {

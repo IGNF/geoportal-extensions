@@ -137,8 +137,8 @@ module.exports = (env, argv) => {
             port : 9001,
             hot : true,
             contentBase : path.join(__dirname),
-            publicPath : "/dist/itowns/",
-            openPage : "/samples/index-itowns-map.html",
+            // publicPath : "/dist/itowns/",
+            // openPage : "/samples/index-itowns-map.html",
             open : "google-chrome",
             watchOptions : {
                 watch : true,

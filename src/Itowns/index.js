@@ -117,7 +117,7 @@ function deepCopy (source, target) {
 
 // Adds extensions properties in the namespace
 /** Version */
-export const itownsExtVersion = Pkg.itownsExtVersion;
+export const itownsExtVersion = Pkg.itownsExtVersion || Pkg.version;
 /** Publication date */
 export const itownsExtDate = Pkg.date;
 
