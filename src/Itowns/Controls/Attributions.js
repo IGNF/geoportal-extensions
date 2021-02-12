@@ -271,7 +271,7 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
         * @property {Map} attributions - list of attributions
         */
         this.dispatchEvent({
-            type:"attributions:update",
+            type : "attributions:update",
             attributions : attributions
         });
     }

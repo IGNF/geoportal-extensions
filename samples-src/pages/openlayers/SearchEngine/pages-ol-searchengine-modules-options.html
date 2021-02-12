@@ -93,9 +93,8 @@
                           ]
                         },
                         resources : {
-                          geocode : ["CadastralParcel", "StreetAddress", "PositionOfInterest", "test"],
-                          // autocomplete : ["PositionOfInterest"]
-                          autocomplete : ["StreetAddress", "test"]
+                          geocode : ["CadastralParcel", "StreetAddress", "PositionOfInterest"],
+                          autocomplete : ["PositionOfInterest", "StreetAddress"]
                         },
                         geocodeOptions : {
                           filterOptions : {
@@ -103,7 +102,7 @@
                             // department : "31"
                           },
                           maximumResponses : 5,
-                          returnFreeForm : false,
+                          returnFreeForm : true,
                           // rawResponse : true
                         },
                         autocompleteOptions : {
@@ -123,9 +122,9 @@
                 };
 
                  Gp.Services.getConfig({
-                     serverUrl : "{{ resources }}/AutoConf.js",
+                     //serverUrl : "{{ resources }}/AutoConf.js",
                      callbackSuffix : "",
-                     // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+                     apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
                      timeOut : 20000,
                      onSuccess : createMap
                  });

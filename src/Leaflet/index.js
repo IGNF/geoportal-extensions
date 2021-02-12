@@ -91,7 +91,7 @@ export {
 
 // Rajout des propriétés de l'extension dans le namespace
 /** Version */
-export const leafletExtVersion = Pkg.leafletExtVersion;
+export const leafletExtVersion = Pkg.leafletExtVersion || Pkg.version;
 /** Publication date */
 export const leafletExtDate = Pkg.date;
 

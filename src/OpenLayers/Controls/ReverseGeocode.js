@@ -1051,9 +1051,12 @@ var ReverseGeocode = (function (Control) {
 
         // on crée les options pour le service reverseGeocode
         var context = this;
+        if (typeof this.options.ssl !== "boolean") {
+            this.options.ssl = true;
+        }
         var requestOptions = {
             apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
-            ssl : this.options.ssl || true,
+            ssl : this.options.ssl,
             position : this._requestPosition,
             filterOptions : {
                 type : [this._currentGeocodingType]

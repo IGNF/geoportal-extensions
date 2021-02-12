@@ -153,14 +153,14 @@ module.exports = (env, argv) => {
             //      }
             // },
             stats : "errors-only",
-            // host : "localhost",
-            // https: true,
-            // port : 9001,
-            // hot : true,
-            // contentBase : path.join(__dirname),
+            host : "localhost",
+            https: true,
+            port : 9001,
+            hot : true,
+            contentBase : path.join(__dirname),
             // publicPath : "/dist/openlayers/",
             // openPage : "/samples/index-openlayers-map.html",
-            // open : "google-chrome",
+            open : "google-chrome",
             watchOptions : {
                 watch : true,
                 poll : true

@@ -145,7 +145,7 @@ export {
 };
 
 /** Version */
-export const olExtVersion = Pkg.olExtVersion;
+export const olExtVersion = Pkg.olExtVersion || Pkg.version;
 /** Publication date */
 export const olExtDate = Pkg.date;
 

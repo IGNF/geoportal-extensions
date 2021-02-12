@@ -40,7 +40,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @alias ol.control.GeoportalMousePosition
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
- * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
@@ -1326,7 +1326,14 @@ var MousePosition = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        var _ssl = options.ssl || this.options.ssl || true;
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
+        var _ssl = options.ssl;
 
         Gp.Services.getAltitude({
             apiKey : _apiKey,
