@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.7
- * @date 09/12/2020
+ * @version 2.1.8
+ * @date 12/02/2021
  *
  */
 
@@ -281,7 +281,7 @@ var servicesVersion = geoportal_access_lib__WEBPACK_IMPORTED_MODULE_9__["default
 
 /** Version */
 
-var leafletExtVersion = _package_json__WEBPACK_IMPORTED_MODULE_0__.leafletExtVersion;
+var leafletExtVersion = _package_json__WEBPACK_IMPORTED_MODULE_0__.leafletExtVersion || _package_json__WEBPACK_IMPORTED_MODULE_0__.version;
 /** Publication date */
 
 var leafletExtDate = _package_json__WEBPACK_IMPORTED_MODULE_0__.date; // Classes utilitaires
@@ -315,7 +315,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.1\",\"date\":\"09/12/2020\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.7\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.13\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.0\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.6\",\"itowns\":\"2.27.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"^2.6.2\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.121.1\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.2\",\"date\":\"12/02/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.8\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.14\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.1\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.7\",\"itowns\":\"2.27.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"^2.6.2\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.121.1\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -670,7 +670,7 @@ var Controls = {
    * @static
    * @alias L.geoportalControl.Isocurve
    * @param {Object} options - Isocurve control options
-   * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
    * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
    * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -708,7 +708,7 @@ var Controls = {
    * @static
    * @alias L.geoportalControl.MousePosition
    * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
    * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
    * @param {Boolean} [options.collapsed] - collapse mode, false by default
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -806,7 +806,7 @@ var Controls = {
    * @alias L.geoportalControl.Route
    * @extends {L.Control}
    * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
    * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
    * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -851,7 +851,7 @@ var Controls = {
    * @param {Boolean} [options.displayMarker = true] - set a marker on search result
    * @param {String|Object}  [options.markerStyle = "blue"] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon })
    * @param {Boolean} [options.displayInfo = true] - get informations on popup marker
-   * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+   * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
    *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
    *
    *       ```
@@ -866,7 +866,7 @@ var Controls = {
    *           fields : { // fields of service response }
    *       }
    *       ```
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
    * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
    * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
    * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
@@ -905,7 +905,7 @@ var Controls = {
    * @static
    * @alias L.geoportalControl.ElevationPath
    * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
+   * @param {String}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
    * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
    * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
@@ -5412,7 +5412,7 @@ var Isocurve = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.extend(
    *
    * @private
    * @param {Object} options - Isocurve control options
-   * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
    * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
    * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
@@ -7253,8 +7253,7 @@ var LoggerByDefault = {
         // Substitute global constants configured at compile time
         // cf. webpack.config.js
         // FIXME howtodo !? DefineWebpackPlugin ? EnvironmentWebpackPlugin ?
-        ("false".match(/true/))
-            ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
+        ("false".match(/true/)) ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
         var logname = name || "default";
         return loglevel__WEBPACK_IMPORTED_MODULE_0__["getLogger"](logname);
     }
@@ -8229,7 +8228,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_Helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47);
 /* harmony import */ var es6_promise__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(50);
 /* harmony import */ var es6_promise__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(es6_promise__WEBPACK_IMPORTED_MODULE_2__);
-/* global Promise, require */
+/* global Promise, require, XDomainRequest */
 
 
 
@@ -8311,9 +8310,7 @@ var XHR = {
             case "POST":
                 // on force sur ces params spécifiques au mode POST
                 options.content = settings.content ? settings.content : "application/x-www-form-urlencoded"; // FIXME en attente des services : bascule en "application/xml" ou "application/json"
-                options.headers = settings.headers ? settings.headers : {
-                    referer : "http://localhost" // todo ...
-                };
+                options.headers = settings.headers ? settings.headers : { referer : "http://localhost" }; // FIXME parametrable...
                 break;
             case "HEAD":
             case "OPTIONS":
@@ -10547,7 +10544,7 @@ var DefaultUrlService = {
 /* 57 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.6\",\"_id\":\"geoportal-access-lib@2.1.6\",\"_inBundle\":false,\"_integrity\":\"sha512-zQpSjZq8YkGW+ooB1WloQd2KZHCKyg4/pbIFLSPCk3et2Zan/O2hZlKOf2alEX2zbsg7Wd+e8KiLc7cHZKniag==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.6\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.6\",\"saveSpec\":null,\"fetchSpec\":\"2.1.6\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.6.tgz\",\"_shasum\":\"8bb0d4cc7045c39c3392fe076ba699aace2b6066\",\"_spec\":\"geoportal-access-lib@2.1.6\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"03/10/2019\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"babel-core\":\"^6.26.3\",\"babel-loader\":\"^7.1.2\",\"babel-preset-env\":\"^1.7.0\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^0.1.18\",\"copy-webpack-plugin\":\"^4.5.1\",\"eslint\":\"^4.18.2\",\"eslint-config-standard\":\"^11.0.0\",\"eslint-loader\":\"^2.0.0\",\"eslint-plugin-import\":\"^2.9.0\",\"eslint-plugin-node\":\"^6.0.1\",\"eslint-plugin-promise\":\"^3.7.0\",\"eslint-plugin-standard\":\"^3.0.1\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^2.30.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"0.0.1\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^4.0.0\",\"mocha-loader\":\"^1.1.3\",\"mocha-webpack\":\"^1.0.1\",\"nyc\":\"^12.0.2\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^4.3.0\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.2.2\",\"string-template\":\"^1.0.0\",\"webpack\":\"^3.11.0\",\"webpack-dev-server\":\"^2.11.3\",\"webpack-node-externals\":\"^1.6.0\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack\",\"build:dev\":\"webpack --env.development\",\"build:prod\":\"webpack --env.production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --open-page samples/index-src.html --https --content-base .  --output-public-path '/dist/' --port 9001 --open 'google-chrome'\",\"sample:serve:dev\":\"webpack-dev-server --env.development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"sample:serve:prod\":\"webpack-dev-server --env.production --open-page samples/index.html --content-base . --output-public-path '/dist/' --port 9001 --open 'google-chrome\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --webpack-config webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config webpack.end-to-end.serve.js\",\"test:serve\":\"webpack-dev-server --hot --config webpack.test.serve.js\"},\"version\":\"2.1.6\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.7\",\"_id\":\"geoportal-access-lib@2.1.7\",\"_inBundle\":false,\"_integrity\":\"sha512-yF3R+yeJpXHdg0/WKF4B+1t3F3Ig7pmkNbDRRcAm+B6xHIp6QdFivIXBgyquuqeGA8w4LNN++TXX7GjDSmZI+g==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.7\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.7\",\"saveSpec\":null,\"fetchSpec\":\"2.1.7\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.7.tgz\",\"_shasum\":\"5ed0ac870810a9b1aa73a0d343b8b65425110e1b\",\"_spec\":\"geoportal-access-lib@2.1.7\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"12/02/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"2.1.7\"}");
 
 /***/ }),
 /* 58 */
@@ -14941,7 +14938,7 @@ Layer.prototype = {
         if (this.isAggregate) {
             return this.aggregatedLayers;
         } else {
-
+            // ...
         }
     }
 
@@ -27792,7 +27789,7 @@ var MousePosition = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
    * @alias MousePosition
    * @extends {L.Control}
    * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
    * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
    * @param {Boolean} [options.collapsed] - collapse mode, false by default
@@ -45317,7 +45314,7 @@ var Route = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend(
    * @constructor Route
    * @private
    * @param {Object} options - options for function call.
-   * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
    * @param {String}  [options.position] - position of component into the map, 'topleft' by default
    * @param {Boolean} [options.collapsed] - collapse mode, false by default
@@ -47963,7 +47960,7 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
    * @param {Boolean} [options.collapsed] - collapse mode, false by default
    * @param {String} [options.position] - position of component into the map, 'topleft' by default
    * @param {Boolean} [options.displayInfo] - get informations on popup marker
-   * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+   * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
    *       Value possible : auto or zoom level.
    *       Possible to overload it with a function :
    *       zoomTo : function (info) {
@@ -47973,7 +47970,7 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
    * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
    * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
    * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }).
-   * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+   * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
    * @param {Object} [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
    * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
    * @param {Object} [options.advancedSearch] - advanced search for geocoding (filters)
@@ -50529,7 +50526,7 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
    *
    * @private
    * @param {Object} options - ElevationPath control options
-   * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+   * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
   * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
    * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
    * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
@@ -51847,6 +51844,103 @@ __webpack_require__.r(__webpack_exports__);
 /* globals AmCharts, d3 */
 var ProfileElevationPathDOM = {
   /**
+   * Gets a css property from an element
+   *
+   * @param {String} element The element to get the property from
+   * @param {String} property The css property
+   * @returns {String} The value of the property
+   *
+   * @see https://stackoverflow.com/questions/7444451/how-to-get-the-actual-rendered-font-when-its-not-defined-in-css
+   */
+  _getCssProperty: function _getCssProperty(element, property) {
+    return window.getComputedStyle(element, null).getPropertyValue(property);
+  },
+
+  /**
+   * Uses canvas.measureText to compute and return the width of the given text of given font in pixels.
+   *
+   * @param {String} text The text to be rendered.
+   * @param {String} container The container of the text
+   * @returns {Number} The width of the text
+   *
+   * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
+   */
+  _getTextWidth: function _getTextWidth(text, container) {
+    // re-use canvas object for better performance
+    var canvas = this.canvas || (this.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = "".concat(this._getCssProperty(container, "font-weight"), " ").concat(this._getCssProperty(container, "font-size"), " ").concat(this._getCssProperty(container, "font-family"));
+    var metrics = context.measureText(text);
+    return metrics.width;
+  },
+
+  /**
+   * Converts a data point z to svg y coord
+   *
+   * @param {Object} z The z to convert.
+   * @param {Number} pathHeight The height of the path in the svg container in px
+   * @param {Number} minGraphZ Min z of the graph
+   * @param {Number} pxPerMZ Number of pixels per meter for the z (y) axis
+   * @returns {Number} The y svg coordinate of the point
+   *
+   */
+  _dataZToSvgY: function _dataZToSvgY(z, pathHeight, minGraphZ, pxPerMZ) {
+    return pathHeight - (z - minGraphZ) * pxPerMZ - 0.5;
+  },
+
+  /**
+   * Converts a data point dist value to svg x coord
+   *
+   * @param {Number} dist The dist to convert
+   * @param {Number} svgWidth The witdth of the svg container in px
+   * @param {Number} pathWidth The witdth of the path in the svg container in px
+   * @param {Number} pxPerMX Number of pixels per meter for the x axis
+   * @returns {Array} The x svg coordinate of the point
+   *
+   */
+  _dataDistToSvgX: function _dataDistToSvgX(dist, svgWidth, pathWidth, pxPerMX) {
+    return svgWidth - pathWidth + dist * pxPerMX;
+  },
+
+  /**
+   * Converts a svg x coord to dist value
+   *
+   * @param {Number} svgX The dist to convert
+   * @param {Number} svgWidth The witdth of the svg container in px
+   * @param {Number} pathWidth The witdth of the path in the svg container in px
+   * @param {Number} pxPerMX Number of pixels per meter for the x axis
+   * @returns {Array} The dist value
+   *
+   */
+  _svgXToDataDist: function _svgXToDataDist(svgX, svgWidth, pathWidth, pxPerMX) {
+    return (svgX + pathWidth - svgWidth) / pxPerMX;
+  },
+
+  /**
+   * Returns the index of value if it were inserted in sorted (by dist) array of data points.
+   *
+   * @param {Array} array Sorted array of data points (with dist property)
+   * @param {Number} value Value to test the index of.
+   * @returns {Number} The index the value would have.
+   *
+   */
+  _arrayBisect: function _arrayBisect(array, value) {
+    var idx;
+
+    if (array.length === 0) {
+      return 0;
+    }
+
+    for (idx = 0; idx < array.length; idx++) {
+      if (value < array[idx].dist) {
+        return idx;
+      }
+    }
+
+    return idx - 1;
+  },
+
+  /**
    * Display Profile function used by default : no additonal framework needed.
    * @param {Object} data - elevations values for profile
    * @param {HTMLElement} container - html container where to display profile
@@ -51867,6 +51961,12 @@ var ProfileElevationPathDOM = {
       return;
     }
 
+    var margin = {
+      top: 25,
+      right: 15,
+      bottom: 10,
+      left: 10
+    };
     var _displayProfileOptions = self.options.displayProfileOptions;
     var _points = data.points;
     var sortedElev = JSON.parse(JSON.stringify(_points));
@@ -51875,102 +51975,449 @@ var ProfileElevationPathDOM = {
     });
     var minZ = sortedElev[0].z;
     var maxZ = sortedElev[sortedElev.length - 1].z;
-    var diff = maxZ - minZ;
     var dist = data.distance;
-    var unit = data.unit; // var distMin = 0;
+    var distUnit = "m";
+    var widgetDiv = document.createElement("div");
+    widgetDiv.id = "profileElevationByDefault";
+    container.appendChild(widgetDiv); // Détermination des tailles en pixels des éléments du widget
 
-    var barwidth = 100 / _points.length;
-    var div = document.createElement("div");
-    div.id = "profileElevationByDefault";
-    container.appendChild(div);
-    var divBox = document.createElement("div");
-    divBox.className = "profile-box";
-    var divZ = document.createElement("div");
-    divZ.className = "profile-z-vertical";
-    var ulZ = document.createElement("ul");
-    var liZmin = document.createElement("li");
-    liZmin.setAttribute("class", "profile-min-z");
-    liZmin.innerHTML = minZ + " m";
-    var liZmax = document.createElement("li");
-    liZmax.setAttribute("class", "profile-max-z");
-    liZmax.innerHTML = maxZ + " m"; // var divUnit = document.createElement("div");
-    // divUnit.className = "profile-unit";
-    // divUnit.innerHTML = "m";
+    var widgetHeigth = container.clientHeight - margin.top - margin.bottom;
+    var widgetWidth = container.clientWidth - margin.left - margin.right;
+    var zLabelWidth = 17;
 
-    ulZ.appendChild(liZmax);
-    ulZ.appendChild(liZmin);
-    divZ.appendChild(ulZ); // divZ.appendChild(divUnit);
+    var zGradWidth = 8 + this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container);
 
-    divBox.appendChild(divZ);
-    var divData = document.createElement("div");
-    divData.className = "profile-content";
-    divData.addEventListener("mouseover", function (e) {
-      var _lon = parseFloat(e.target.dataset["lon"]);
+    var xLabelHeight = 17;
+    var xGradHeight = 15;
+    var minZguideHeigth = 15;
 
-      var _lat = parseFloat(e.target.dataset["lat"]);
+    var minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString(), container);
 
-      if (_lon && _lat) {
-        className.__createProfileMarker(self, {
-          lat: _lat,
-          lon: _lon
-        });
-      }
-    });
-    divData.addEventListener("mousemove", function (e) {
-      var _lon = parseFloat(e.target.dataset["lon"]);
+    var minNumXGuides = 1;
+    var pathHeight = widgetHeigth - xLabelHeight - xGradHeight;
+    var pathWidth = widgetWidth - zLabelWidth - zGradWidth;
+    var elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    elevationSvg.id = "profileElevationByDefaultSvg";
+    elevationSvg.setAttribute("style", "width: ".concat(widgetWidth, "px; height: ").concat(widgetHeigth, "px; display: block; margin: auto; overflow: visible;")); // Détermination des guides en ordonnée :
 
-      var _lat = parseFloat(e.target.dataset["lat"]);
+    var maxNumZguides = Math.floor(pathHeight / minZguideHeigth);
+    var gradZ; // Traitement du cas altitude max = altitude min
 
-      if (_lon && _lat) {
-        className.__updateProfileMarker(self, {
-          lat: _lat,
-          lon: _lon
-        });
-      }
-    });
-    divData.addEventListener("mouseout", function () {
-      className.__removeProfileMarker(self);
-    });
-    var ulData = document.createElement("ul");
-    ulData.id = "profile-data";
-    ulData.className = "profile-z-axis profile-x-axis";
-    divData.appendChild(ulData);
-
-    for (var i = 0; i < _points.length; i++) {
-      var d = _points[i];
-      var li = document.createElement("li");
-      li.setAttribute("data-z", d.z);
-      li.setAttribute("data-lon", d.lon);
-      li.setAttribute("data-lat", d.lat);
-      li.setAttribute("data-dist", d.dist);
-      var pct = Math.floor((d.z - minZ) * 100 / diff);
-      li.setAttribute("class", "percent v" + pct);
-      li.title = "Altitude : " + d.z + "m";
-
-      if (_displayProfileOptions.currentSlope) {
-        li.title += " - Pente : " + d.slope + "%";
-      }
-
-      li.title += " (Lat : " + d.lat + " / Lon : " + d.lon + ")";
-      li.setAttribute("style", "width: " + barwidth + "%");
-      ulData.appendChild(li);
+    if (maxZ === minZ) {
+      gradZ = 0.1;
+    } else {
+      gradZ = Math.pow(10, Math.ceil(Math.log((maxZ - minZ) / maxNumZguides) / Math.log(10))) / 2;
     }
 
-    divBox.appendChild(divData);
-    div.appendChild(divBox);
-    var divX = document.createElement("div");
-    divX.className = "profile-x-horizontal";
-    var ulX = document.createElement("ul");
-    var liXmin = document.createElement("li");
-    liXmin.setAttribute("class", "profile-min-x");
-    liXmin.innerHTML = "";
-    var liXmax = document.createElement("li");
-    liXmax.setAttribute("class", "profile-max-x");
-    liXmax.innerHTML = dist + " " + unit;
-    ulX.appendChild(liXmin);
-    ulX.appendChild(liXmax);
-    divX.appendChild(ulX);
-    div.appendChild(divX);
+    var minGraphZ = Math.floor(minZ / gradZ) * gradZ;
+    var maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ; // cas où le path atteint pile les graduations extremes : ajout d'une gradiation
+
+    if (maxGraphZ === maxZ) {
+      maxGraphZ += gradZ;
+    } // cas où gradZ < 1 : nombres flottants capricieux...
+
+
+    minGraphZ = Math.round(minGraphZ * 100) / 100;
+    maxGraphZ = Math.round(maxGraphZ * 100) / 100;
+    var numZguides = Math.round((maxGraphZ - minGraphZ) / gradZ); // Si plus de guides que le max, on passe à une graduation de 10**x en 10**x (et non 10**x / 2)
+
+    if (numZguides + 1 > maxNumZguides) {
+      gradZ = Math.pow(10, Math.ceil(Math.log((maxZ - minZ) / maxNumZguides) / Math.log(10)));
+      minGraphZ = Math.floor(minZ / gradZ) * gradZ;
+      maxGraphZ = Math.ceil(maxZ / gradZ) * gradZ; // cas où le path atteint pile les graduations extremes : ajout d'une gradiation
+
+      if (maxGraphZ === maxZ) {
+        maxGraphZ += gradZ;
+      } // cas où gradZ < 1 : nombres flottants capricieux...
+
+
+      minGraphZ = Math.round(minGraphZ * 100) / 100;
+      maxGraphZ = Math.round(maxGraphZ * 100) / 100;
+      numZguides = Math.floor((maxGraphZ - minGraphZ) / gradZ);
+    }
+
+    numZguides = Math.max(Math.round(numZguides), 1);
+    var axisZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    axisZ.setAttribute("class", "profile-z-vertical");
+    var guidesZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    var gradZyOffsetPx = pathHeight / numZguides;
+    var pxPerMZ = pathHeight / (maxGraphZ - minGraphZ); // Traitement du cas altitude max = altitude min
+
+    if (maxZ === minZ) {
+      pxPerMZ = pathHeight / 0.2;
+    } else {
+      pxPerMZ = pathHeight / (maxGraphZ - minGraphZ);
+    }
+
+    var gradZtext;
+    var yTextTranslation;
+    var yStrokeTranslation;
+    var gradZstroke;
+    var gradZpath;
+    var gradZgrad; // Ajout des graduations au graphique
+
+    for (var i = 0; i <= numZguides; i++) {
+      gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      gradZtext.setAttribute("class", "profile-z-graduation"); // Cas où gradZ < 1 : nombres flottants capricieux...
+      // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
+
+      gradZtext.textContent = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
+      yTextTranslation = pathHeight - i * gradZyOffsetPx;
+      gradZtext.setAttribute("transform", "translate(".concat(zLabelWidth + zGradWidth - 8, ", ").concat(yTextTranslation + 5, ")"));
+      gradZtext.setAttribute("text-anchor", "end");
+      axisZ.appendChild(gradZtext);
+      yStrokeTranslation = Math.round(yTextTranslation) - 0.5;
+      gradZstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      gradZpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      gradZpath.setAttribute("cs", "100,100");
+      gradZpath.setAttribute("stroke-width", "1");
+
+      if (i !== 0) {
+        gradZpath.setAttribute("stroke-opacity", "0.2");
+      } else {
+        gradZpath.setAttribute("stroke-opacity", "1");
+      }
+
+      gradZpath.setAttribute("stroke", "#000000");
+      gradZpath.setAttribute("fill", "none");
+      gradZpath.setAttribute("d", "M".concat(zLabelWidth + zGradWidth, ",").concat(yStrokeTranslation, " L").concat(pathWidth + zLabelWidth + zGradWidth, ",").concat(yStrokeTranslation));
+      gradZgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      gradZgrad.setAttribute("cs", "100,100");
+      gradZgrad.setAttribute("stroke-width", "1");
+      gradZgrad.setAttribute("stroke-opacity", "1");
+      gradZgrad.setAttribute("stroke", "#000000");
+      gradZgrad.setAttribute("fill", "none");
+      gradZgrad.setAttribute("d", "M".concat(zLabelWidth + zGradWidth, ",").concat(yStrokeTranslation, " L").concat(zLabelWidth + zGradWidth + 5, ",").concat(yStrokeTranslation));
+      gradZgrad.setAttribute("transform", "translate(-5, 0)");
+      gradZstroke.appendChild(gradZgrad);
+      gradZstroke.appendChild(gradZpath);
+      guidesZ.appendChild(gradZstroke);
+    }
+
+    var axisZLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    axisZLegend.setAttribute("class", "profile-z-legend");
+    axisZLegend.textContent = "Altitude (m)";
+    axisZLegend.setAttribute("transform", "translate(".concat(zLabelWidth - 8, ", ").concat(Math.round(pathHeight / 2), ") rotate(-90)"));
+    axisZLegend.setAttribute("text-anchor", "middle");
+    axisZ.appendChild(axisZLegend);
+    elevationSvg.appendChild(axisZ);
+    elevationSvg.appendChild(guidesZ); // Détermination des guides en abscisse :
+    // Passage éventuel en km
+
+    if (dist > 2000) {
+      dist /= 1000;
+      distUnit = "km";
+    }
+
+    var maxNumXguides = Math.floor(pathWidth / minXguideWidth);
+    var gradX = Math.pow(10, Math.ceil(Math.log(dist / maxNumXguides) / Math.log(10))) / 2;
+    var maxGraphX = dist; // Si plus de guides que le max, on passe à une graduation de 10**x en 10**x (et non 10**x / 2)
+
+    var numXguides = Math.floor(maxGraphX / gradX);
+
+    if (numXguides > maxNumXguides) {
+      gradX = Math.pow(10, Math.ceil(Math.log(dist / maxNumXguides) / Math.log(10)));
+      numXguides = Math.floor(maxGraphX / gradX);
+    } else if (numXguides < minNumXGuides) {
+      gradX = Math.pow(10, Math.ceil(Math.log(dist / maxNumXguides) / Math.log(10)) - 1);
+      numXguides = Math.floor(maxGraphX / gradX);
+    }
+
+    numXguides = Math.max(numXguides, 1);
+    var lastGradX = gradX * numXguides;
+    var axisX = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    axisX.setAttribute("class", "profile-x-vertical");
+    var guidesX = document.createElementNS("http://www.w3.org/2000/svg", "g"); // Décalage des graduations pour que la dernière corresponde à la distance max
+
+    var pxPerMX = pathWidth / maxGraphX;
+    var xOffset = (maxGraphX - lastGradX) * pxPerMX;
+    var gradXxOffsetPx = Math.round((pathWidth - xOffset) / numXguides);
+    var gradXtext;
+    var xTextTranslation;
+    var xStrokeTranslation;
+    var gradXstroke;
+    var gradXpath;
+    var gradXgrad; // Ajout des graduations au graphique
+
+    for (var _i = 0; _i <= numXguides + 1; _i++) {
+      gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      gradXtext.setAttribute("class", "profile-x-graduation"); // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
+
+      if (_i !== numXguides + 1) {
+        // Cas où gradX < 1 : nombres flottants capricieux...
+        gradXtext.textContent = (Math.round(100 * _i * gradX) / 100).toLocaleString();
+      }
+
+      xTextTranslation = zLabelWidth + zGradWidth + _i * gradXxOffsetPx; // Cas de la dernière graduation : correspond à la distance max
+
+      if (_i === numXguides + 1) {
+        xTextTranslation = zLabelWidth + zGradWidth + pathWidth;
+      }
+
+      gradXtext.setAttribute("transform", "translate(".concat(xTextTranslation, ", ").concat(pathHeight + xGradHeight + 5, ")"));
+      gradXtext.setAttribute("text-anchor", "middle");
+      axisX.appendChild(gradXtext);
+      xStrokeTranslation = xTextTranslation - 0.5;
+      gradXstroke = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      gradXpath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      gradXpath.setAttribute("cs", "100,100");
+      gradXpath.setAttribute("stroke-width", "1");
+
+      if (_i !== 0) {
+        gradXpath.setAttribute("stroke-opacity", "0.2");
+      } else {
+        gradXpath.setAttribute("stroke-opacity", "1");
+      }
+
+      gradXpath.setAttribute("stroke", "#000000");
+      gradXpath.setAttribute("fill", "none");
+      gradXpath.setAttribute("d", "M".concat(xStrokeTranslation, ",").concat(pathHeight, " L").concat(xStrokeTranslation, ",0"));
+      gradXgrad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      gradXgrad.setAttribute("cs", "100,100");
+      gradXgrad.setAttribute("stroke-width", "1");
+      gradXgrad.setAttribute("stroke-opacity", "1");
+      gradXgrad.setAttribute("stroke", "#000000");
+      gradXgrad.setAttribute("fill", "none");
+      gradXgrad.setAttribute("d", "M".concat(xStrokeTranslation, ",").concat(pathHeight, " L").concat(xStrokeTranslation, ",").concat(pathHeight - 5));
+      gradXgrad.setAttribute("transform", "translate(0, 5)");
+      gradXstroke.appendChild(gradXgrad);
+      gradXstroke.appendChild(gradXpath);
+      guidesX.appendChild(gradXstroke);
+    }
+
+    var axisXLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    axisXLegend.setAttribute("class", "profile-x-legend");
+    axisXLegend.textContent = "Distance (".concat(distUnit, ")");
+    axisXLegend.setAttribute("transform", "translate(".concat(zLabelWidth + zGradWidth + pathWidth / 2, ", ").concat(pathHeight + xGradHeight + xLabelHeight + 3, ")"));
+    axisXLegend.setAttribute("text-anchor", "middle");
+    axisX.appendChild(axisXLegend);
+    elevationSvg.appendChild(axisX);
+    elevationSvg.appendChild(guidesX);
+    var elevationPathG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    var factor = 1;
+
+    if (distUnit === "km") {
+      factor = 1000;
+    }
+
+    var pointX = this._dataDistToSvgX(_points[0].dist / factor, widgetWidth, pathWidth, pxPerMX);
+
+    var pointY = this._dataZToSvgY(_points[0].z, pathHeight, minGraphZ, pxPerMZ);
+
+    var pathD = "M".concat(pointX, ",").concat(pointY);
+
+    for (var _i2 = 1; _i2 < _points.length; _i2++) {
+      pointX = this._dataDistToSvgX(_points[_i2].dist / factor, widgetWidth, pathWidth, pxPerMX);
+      pointY = this._dataZToSvgY(_points[_i2].z, pathHeight, minGraphZ, pxPerMZ);
+      pathD += " L".concat(pointX, ",").concat(pointY);
+    }
+
+    var pathPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathPath.setAttribute("cs", "100,100");
+    pathPath.setAttribute("stroke-width", "1");
+    pathPath.setAttribute("stroke-opacity", "1");
+    pathPath.setAttribute("stroke", "#0B6BA7");
+    pathPath.setAttribute("fill", "none");
+    pathPath.setAttribute("d", pathD); // Fermeture du path pour le fill
+
+    pathD += " L".concat(pointX, ",").concat(pathHeight);
+    pathD += " L".concat(widgetWidth - pathWidth, ",").concat(pathHeight);
+    var pathFill = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathFill.setAttribute("cs", "100,100");
+    pathFill.setAttribute("stroke-width", "1");
+    pathFill.setAttribute("stroke-opacity", "0");
+    pathFill.setAttribute("stroke", "#000000");
+    pathFill.setAttribute("fill", "#00B798");
+    pathFill.setAttribute("fill-opacity", "0.4");
+    pathFill.setAttribute("d", pathD);
+    elevationPathG.appendChild(pathPath);
+    elevationPathG.appendChild(pathFill);
+    elevationSvg.appendChild(elevationPathG); // Mise en place de l'écouteur d'évènement : pour l'affichage dynamique
+
+    var dynamicsG = document.createElementNS("http://www.w3.org/2000/svg", "g"); // Pour écouter la position de la souris
+
+    var pathRectangle = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    pathRectangle.setAttribute("width", pathWidth);
+    pathRectangle.setAttribute("height", pathHeight);
+    pathRectangle.setAttribute("transform", "translate(".concat(widgetWidth - pathWidth, ",0)"));
+    pathRectangle.setAttribute("visibility", "hidden");
+    pathRectangle.setAttribute("pointer-events", "all");
+    var sortedDist = JSON.parse(JSON.stringify(_points));
+    sortedDist.sort(function (e1, e2) {
+      return e1.dist - e2.dist;
+    });
+    var focusLineX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    focusLineX.setAttribute("id", "focusLineX");
+    focusLineX.setAttribute("class", "focusLine-default");
+    focusLineX.setAttribute("fill", "none");
+    focusLineX.setAttribute("stroke", "#F90");
+    focusLineX.setAttribute("stroke-width", "0.5px");
+    focusLineX.setAttribute("visibility", "hidden");
+    var focusLineY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    focusLineY.setAttribute("id", "focusLineY");
+    focusLineY.setAttribute("class", "focusLine-default");
+    focusLineY.setAttribute("fill", "none");
+    focusLineY.setAttribute("stroke", "#F90");
+    focusLineY.setAttribute("stroke-width", "0.5px");
+    focusLineY.setAttribute("visibility", "hidden");
+    var focusCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    focusCircle.setAttribute("id", "focusCircle");
+    focusCircle.setAttribute("r", 4);
+    focusCircle.setAttribute("class", "circle-default focusCircle-default");
+    focusCircle.setAttribute("fill", "#F90");
+    focusCircle.setAttribute("visibility", "hidden");
+    dynamicsG.appendChild(focusCircle);
+    dynamicsG.appendChild(focusLineX);
+    dynamicsG.appendChild(focusLineY); // Tooltip
+
+    var tooltipDiv = document.createElement("div");
+    var altiSpan = document.createElement("span");
+    var br = document.createElement("br");
+    var slopeSpan = document.createElement("span");
+    var br2 = document.createElement("br");
+    var coordsSpan = document.createElement("span");
+    tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
+    tooltipDiv.style.pointerEvents = "none";
+    tooltipDiv.style.position = "fixed"; // tooltipDiv.classList.add("tooltipInit");
+    // IE...
+
+    tooltipDiv.setAttribute("class", "tooltipInit");
+    widgetDiv.appendChild(tooltipDiv);
+    altiSpan.setAttribute("class", "altiPathValue");
+    slopeSpan.setAttribute("class", "altiPathValue");
+    coordsSpan.setAttribute("class", "altiPathCoords");
+    tooltipDiv.appendChild(altiSpan);
+    tooltipDiv.appendChild(br);
+
+    if (_displayProfileOptions.currentSlope) {
+      tooltipDiv.appendChild(slopeSpan);
+      tooltipDiv.appendChild(br2);
+    }
+
+    tooltipDiv.appendChild(coordsSpan);
+    var tooltipG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    dynamicsG.appendChild(tooltipG);
+    var tooltipBubble = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    tooltipBubble.setAttribute("cs", "100,100");
+    tooltipBubble.setAttribute("fill", "#FFFFFF");
+    tooltipBubble.setAttribute("stroke", "#CCCCCC");
+    tooltipBubble.setAttribute("fill-opacity", "0.8");
+    tooltipBubble.setAttribute("stroke-width", "1");
+    tooltipBubble.setAttribute("stroke-opacity", "1");
+    var tooltipBubbleShadow = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    tooltipBubbleShadow.setAttribute("cs", "100,100");
+    tooltipBubbleShadow.setAttribute("fill", "#FFFFFF");
+    tooltipBubbleShadow.setAttribute("stroke", "#000000");
+    tooltipBubbleShadow.setAttribute("fill-opacity", "0");
+    tooltipBubbleShadow.setAttribute("stroke-width", "1");
+    tooltipBubbleShadow.setAttribute("stroke-opacity", "0.4");
+    tooltipBubbleShadow.setAttribute("transform", "translate(1,1)");
+    tooltipG.appendChild(tooltipBubbleShadow);
+    tooltipG.appendChild(tooltipBubble); // tooltipG.classList.add("tooltipInit");
+    // IE... deprecated
+
+    tooltipG.setAttribute("class", "tooltipInit");
+    tooltipG.style.pointerEvents = "none";
+    pathRectangle.addEventListener("mouseover", function () {
+      focusLineX.setAttribute("visibility", "visible");
+      focusLineY.setAttribute("visibility", "visible");
+      focusCircle.setAttribute("visibility", "visible");
+
+      className.__createProfileMarker(self, _points[0]); // tooltips
+      // tooltipDiv.classList.remove("tooltipInit");
+      // tooltipG.classList.remove("tooltipInit");
+      // tooltipDiv.classList.remove("tooltipFadeOut");
+      // tooltipG.classList.remove("tooltipFadeOut");
+      // tooltipDiv.classList.add("tooltipFadeIn");
+      // tooltipG.classList.add("tooltipFadeIn");
+      // IE... deprecated
+
+
+      tooltipDiv.setAttribute("class", "tooltipFadeIn");
+      tooltipG.setAttribute("class", "tooltipFadeIn");
+    });
+    pathRectangle.addEventListener("mouseout", function () {
+      focusLineX.setAttribute("visibility", "hidden");
+      focusLineY.setAttribute("visibility", "hidden");
+      focusCircle.setAttribute("visibility", "hidden");
+
+      className.__removeProfileMarker(self); // tooltips
+      // tooltipDiv.classList.remove("tooltipFadeIn");
+      // tooltipG.classList.remove("tooltipFadeIn");
+      // tooltipDiv.classList.add("tooltipFadeOut");
+      // tooltipG.classList.add("tooltipFadeOut");
+      // IE... deprecated
+
+
+      tooltipDiv.setAttribute("class", "tooltipFadeOut");
+      tooltipG.setAttribute("class", "tooltipFadeOut");
+    });
+    pathRectangle.addEventListener("mousemove", function (e) {
+      var mousePoint = elevationSvg.createSVGPoint();
+      mousePoint.x = e.clientX;
+      mousePoint.y = e.clientY;
+      var svgMousePoint = mousePoint.matrixTransform(elevationSvg.getScreenCTM().inverse());
+      var mouseDist = this._svgXToDataDist(svgMousePoint.x, widgetWidth, pathWidth, pxPerMX) * factor; // Math.max pour éviter de sortir de l'array
+
+      var distIndex = Math.max(1, this._arrayBisect(sortedDist, mouseDist));
+      var d0 = _points[distIndex - 1];
+      var d1 = _points[distIndex];
+      var d = d0;
+
+      if (mouseDist - d0.dist > d1.dist - mouseDist) {
+        d = d1;
+      }
+
+      var focusX = this._dataDistToSvgX(d.dist / factor, widgetWidth, pathWidth, pxPerMX);
+
+      var focusY = this._dataZToSvgY(d.z, pathHeight, minGraphZ, pxPerMZ); // Mise à jour des éléments graphiques
+
+
+      focusCircle.setAttribute("cx", focusX);
+      focusCircle.setAttribute("cy", focusY);
+      focusLineX.setAttribute("x1", focusX);
+      focusLineX.setAttribute("y1", pathHeight);
+      focusLineX.setAttribute("x2", focusX);
+      focusLineX.setAttribute("y2", 0);
+      focusLineY.setAttribute("x1", zLabelWidth + zGradWidth);
+      focusLineY.setAttribute("y1", focusY);
+      focusLineY.setAttribute("x2", pathWidth + zLabelWidth + zGradWidth);
+      focusLineY.setAttribute("y2", focusY);
+
+      className.__updateProfileMarker(self, d); // Mise à jour du tooltip
+
+
+      var altiSpanTxt = "Altitude : ".concat(d.z.toLocaleString(), " m");
+      var slopeSpanTxt = "Pente : ".concat(d.slope, " %");
+      var coordsSpanTxt = "(lat : ".concat(d.lat.toLocaleString(), " / lon : ").concat(d.lon.toLocaleString(), ")");
+      altiSpan.innerHTML = altiSpanTxt;
+      slopeSpan.innerHTML = slopeSpanTxt;
+      coordsSpan.innerHTML = coordsSpanTxt;
+      var tooltipTextWidth = Math.max(this._getTextWidth(coordsSpanTxt, coordsSpan), this._getTextWidth(altiSpanTxt, altiSpan));
+      var tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.pageXOffset + focusX;
+      var tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.pageYOffset + focusY - 19;
+      var toolTipBubbleD;
+
+      if (d.dist > dist * factor / 2) {
+        toolTipBubbleD = "M -0.5 -0.5 l -6 6 l 0 16 l -".concat(tooltipTextWidth + 5, " 0 l 0 -44 l ").concat(tooltipTextWidth + 5, " 0 l 0 16 l 6 6");
+        tooltipDivLeft -= tooltipTextWidth;
+      } else if (d.dist <= dist * factor / 2) {
+        toolTipBubbleD = "M -0.5 -0.5 l 6 6 l 0 16 l ".concat(tooltipTextWidth + 5, " 0 l 0 -44 l -").concat(tooltipTextWidth + 5, " 0 l 0 16 l -6 6"); // Largeur de la fleche de la bulle du tooltip
+
+        tooltipDivLeft += 15;
+      }
+
+      tooltipBubble.setAttribute("d", toolTipBubbleD);
+      tooltipBubbleShadow.setAttribute("d", toolTipBubbleD);
+      tooltipG.setAttribute("transform", "translate(".concat(focusX, ",").concat(focusY, ")")); // IE11 !
+
+      tooltipG.style.transform = "translate(".concat(focusX, "px,").concat(focusY, "px)");
+      tooltipDiv.style.left = "".concat(tooltipDivLeft, "px");
+      tooltipDiv.style.top = "".concat(tooltipDivTop, "px");
+    }.bind(this));
+    dynamicsG.appendChild(pathRectangle);
+    elevationSvg.appendChild(dynamicsG);
+    widgetDiv.appendChild(elevationSvg);
     return container;
   },
 
@@ -52097,8 +52544,9 @@ var ProfileElevationPathDOM = {
       div.transition().duration(500).style("opacity", 0);
     }).on("mousemove", function () {
       var m = d3.mouse(this);
-      var distance = x.invert(m[0]);
-      var i = bisectDist(_points, distance);
+      var distance = x.invert(m[0]); // Math.max pour éviter de sortir de l'array
+
+      var i = Math.max(1, bisectDist(_points, distance));
       var d0 = _points[i - 1];
       var d1 = _points[i];
       var d = distance - d0[0] > d1[0] - distance ? d1 : d0;
