@@ -54,6 +54,8 @@
 
 ## Summary
 
+Nouveau widget de profil altimétrique par défaut, et correctif mineur
+
 ## Changelog
 
 * [Added]
