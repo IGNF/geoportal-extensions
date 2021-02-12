@@ -52,6 +52,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.1.0](#extension-geoportail-itowns-version-210-1)
   * [Summary](#summary-14)
   * [Changelog](#changelog-13)
+- [Extension Geoportail Itowns, version 2.3.1](#extension-geoportail-itowns-version-231)
+  * [Summary](#summary-15)
+  * [Changelog](#changelog-14)
 
 <!-- tocstop -->
 
@@ -381,5 +384,32 @@ Structure du projet :
 
 Documentation :
 * Mise à jour de la documentation des fichiers README : version des releases, liens d'accès direct, documentation des widgets d'échelle et du miniglobe
+
+---
+# Extension Geoportail Itowns, version 2.3.1
+
+**12/02/2021**
+> Release Extension Geoportail Itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+    - remplacement du parametre déprecié : projection -> crs
+
+* [Removed]
+
+* [Fixed]
+
+    - fix sur la prise en compte du paramètre ssl=false du mousePosition (cfa88c4546cb146902357b0a75b790acfb405c7d)
+    - correctif sur l'export de la version en mode module
+
+* [Security]
 
 ---
