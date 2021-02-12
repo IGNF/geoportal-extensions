@@ -47,14 +47,13 @@
 ---
 
 
-# Extension Geoportail Leaflet, version __VERSION__
+
+# Extension Geoportail __UP_LIBRARY__, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoportail __LO_LIBRARY__
 
 ## Summary
-
-Nouveau widget de profil altimétrique par défaut, et correctif mineur
 
 ## Changelog
 
@@ -62,15 +61,11 @@ Nouveau widget de profil altimétrique par défaut, et correctif mineur
 
 * [Changed]
 
-        - nouvel affichage du profil altimétrique par défaut (DISPLAY_PROFILE_BY_DEFAULT)
-
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-        - correctif sur l'export de la version en mode module
 
 * [Security]
 

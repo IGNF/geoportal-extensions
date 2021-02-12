@@ -51,6 +51,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.1.7](#extension-geoportail-leaflet-version-217)
   * [Summary](#summary-13)
   * [Changelog](#changelog-10)
+- [Extension Geoportail Leaflet, version 2.1.8](#extension-geoportail-leaflet-version-218)
+  * [Summary](#summary-14)
+  * [Changelog](#changelog-11)
 
 <!-- tocstop -->
 
@@ -414,6 +417,34 @@ Mise à jour de Leaflet en version 1.7.1
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.1.8
+
+**12/02/2021**
+> Release Extension Geoportail Leaflet
+
+## Summary
+
+Nouveau widget de profil altimétrique par défaut, et correctif mineur
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+        - nouvel affichage du profil altimétrique par défaut (DISPLAY_PROFILE_BY_DEFAULT)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+        - correctif sur l'export de la version en mode module
 
 * [Security]
 
