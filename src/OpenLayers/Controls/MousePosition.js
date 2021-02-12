@@ -1326,7 +1326,14 @@ var MousePosition = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        var _ssl = options.ssl || this.options.ssl || true;
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
+        var _ssl = options.ssl;
 
         Gp.Services.getAltitude({
             apiKey : _apiKey,
