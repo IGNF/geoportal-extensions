@@ -359,19 +359,19 @@ Legend.prototype._getValues = function (type, value) {
     switch (type) {
         case "line":
             pColor = value["line-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
+            if (Array.isArray(pColor) || typeof pColor === "object") {
                 _color = null;
                 break;
             }
             _color = pColor || _color;
             pWidth = value["line-width"];
-            _width = (typeof pWidth === "object" || Array.isArray(pWidth)) ? _width : pWidth || _width;
+            _width = (Array.isArray(pWidth) || typeof pWidth === "object") ? _width : pWidth || _width;
             pOpacity = value["line-opacity"];
-            _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
+            _opacity = (Array.isArray(pOpacity) || typeof pOpacity === "object") ? _opacity : pOpacity || _opacity;
             break;
         case "text":
             pColor = value["text-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
+            if (Array.isArray(pColor) || typeof pColor === "object") {
                 _color = null;
                 break;
             }
@@ -399,21 +399,21 @@ Legend.prototype._getValues = function (type, value) {
             break;
         case "circle":
             pColor = value["circle-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
+            if (Array.isArray(pColor) || typeof pColor === "object") {
                 _color = null;
                 break;
             }
             _color = pColor || _color;
             pStroke = value["circle-stroke-color"];
-            _stroke = (typeof pStroke === "object" || Array.isArray(pStroke)) ? _stroke : pStroke || _stroke;
+            _stroke = (Array.isArray(pStroke) || typeof pStroke === "object") ? _stroke : pStroke || _stroke;
             pOpacity = value["circle-opacity"];
-            _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
+            _opacity = (Array.isArray(pOpacity) || typeof pOpacity === "object") ? _opacity : pOpacity || _opacity;
             pWidth = value["circle-stroke-width"];
-            _width = (typeof pWidth === "object" || Array.isArray(pWidth)) ? _width : pWidth || _width;
+            _width = (Array.isArray(pWidth) || typeof pWidth === "object") ? _width : pWidth || _width;
             break;
         case "background":
             pColor = value["background-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
+            if (Array.isArray(pColor) || typeof pColor === "object") {
                 _color = null;
                 break;
             }
@@ -421,13 +421,13 @@ Legend.prototype._getValues = function (type, value) {
             break;
         case "fill":
             pColor = value["fill-color"];
-            if (typeof pColor === "object" || Array.isArray(pColor)) {
+            if (Array.isArray(pColor) || typeof pColor === "object") {
                 _color = null;
                 break;
             }
             _color = pColor || _color;
             pOpacity = value["fill-opacity"];
-            _opacity = (typeof pOpacity === "object" || Array.isArray(pOpacity)) ? _opacity : pOpacity || _opacity;
+            _opacity = (Array.isArray(pOpacity) || typeof pOpacity === "object") ? _opacity : pOpacity || _opacity;
             break;
         default:
             // return false;

@@ -891,9 +891,9 @@ MousePosition.prototype._setCoordinate = function (coords) {
 
     // transforms the point in the wanted coords system
     var oSrs = this._currentProjectionSystems;
-    var crsProp = oSrs.crs;
+    var crsProp = (oSrs) ? oSrs.crs : null;
 
-    if (!oSrs || !crsProp) {
+    if (!crsProp) {
         logger.error("system crs not found");
         return;
     }
