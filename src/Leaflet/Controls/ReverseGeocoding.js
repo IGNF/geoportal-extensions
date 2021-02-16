@@ -253,34 +253,36 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         if (this.options.resources) {
             var resources = this.options.resources;
             // on vérifie que la liste des ressources de geocodage est bien un tableau
-            if (!Array.isArray(resources)) {
+            if (Array.isArray(resources)) {
+                var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+                for (i = 0; i < resources.length; i++) {
+                    if (resourcesList.indexOf(resources[i]) === -1) {
+                        // si la resource n'est pas référencée, on l'enlève
+                        // resources.splice(i, 1);
+                        logger.log("[ReverseGeocoding] options.resources : " + resources[i] + " is not a resource for reverse geocode");
+                    }
+                }
+            } else {
                 logger.log("[ReverseGeocoding] 'options.resources' parameter should be an array");
                 resources = null;
-            }
-            var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
-            for (i = 0; i < resources.length; i++) {
-                if (resourcesList.indexOf(resources[i]) === -1) {
-                    // si la resource n'est pas référencée, on l'enlève
-                    // resources.splice(i, 1);
-                    logger.log("[ReverseGeocoding] options.resources : " + resources[i] + " is not a resource for reverse geocode");
-                }
             }
         }
         // et le tableau des délimitations
         if (this.options.delimitations) {
             var delimitations = this.options.delimitations;
             // on vérifie que la liste des delimitations est bien un tableau
-            if (!Array.isArray(delimitations)) {
+            if (Array.isArray(delimitations)) {
+                var delimitationsList = ["Circle", "Point", "Extent"];
+                for (i = 0; i < delimitations.length; i++) {
+                    if (delimitationsList.indexOf(delimitations[i]) === -1) {
+                        // si la delimitations n'est pas référencée, on l'enlève
+                        // resources.splice(i, 1);
+                        logger.log("[ReverseGeocoding] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
+                    }
+                }
+            } else {
                 logger.log("[ReverseGeocoding] 'options.delimitations' parameter should be an array");
                 delimitations = null;
-            }
-            var delimitationsList = ["Circle", "Point", "Extent"];
-            for (i = 0; i < delimitations.length; i++) {
-                if (delimitationsList.indexOf(delimitations[i]) === -1) {
-                    // si la delimitations n'est pas référencée, on l'enlève
-                    // resources.splice(i, 1);
-                    logger.log("[ReverseGeocoding] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
-                }
             }
         }
     },
