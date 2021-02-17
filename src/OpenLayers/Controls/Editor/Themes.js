@@ -90,7 +90,7 @@ Themes.prototype._initialize = function () {
         }
     };
 
-    if (!this.options.tools || Object.keys(this.options.tools) === 0) {
+    if (!this.options.tools || Object.keys(this.options.tools).length === 0) {
         this.options.tools = _toolsDefault;
     }
 

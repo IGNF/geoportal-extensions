@@ -1926,9 +1926,10 @@ var LayerImport = (function (Control) {
     LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
         if (!layerObj) {
             logger.warn("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
-        } else {
-            logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
+            return;
         }
+
+        logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
 
         // récupération de la projection de la map (pour vérifier que l'on peut reprojeter les couches disponibles)
         var mapProjCode = this._getMapProjectionCode();
@@ -1954,7 +1955,7 @@ var LayerImport = (function (Control) {
                 if (Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0) {
                     if (Array.isArray(layerObj[key]) && layerObj[key].length !== 0) {
                         // on ajoute celles de la couche parent
-                        for (var n = 0; n < parentLayersInfos[key]; n++) {
+                        for (var n = 0; n < parentLayersInfos[key].length; n++) {
                             if (layerObj[key].indexOf(parentLayersInfos[key][n]) === -1) {
                                 // si le CRS/Style parent n'est pas dans les CRS/Style de la couche, on l'ajoute
                                 layerObj[key].push(parentLayersInfos[key][n]);
@@ -2064,7 +2065,7 @@ var LayerImport = (function (Control) {
         if (e.target && e.target.id) {
             var proposalId = parseInt(e.target.id.substr(23), 10);
 
-            if (proposalId == null) {
+            if (isNaN(proposalId)) {
                 return;
             }
 

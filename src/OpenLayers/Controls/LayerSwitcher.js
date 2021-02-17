@@ -407,7 +407,6 @@ var LayerSwitcher = (function (Control) {
             return;
         }
         var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
-        logger.log(removalDiv.style.display);
         if (removalDiv) {
             if (removable === false) {
                 removalDiv.style.display = "none";

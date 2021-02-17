@@ -886,7 +886,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         }
         coordinate = format(this._project(oLatLng, oSrs));
 
-        if (!coordinate || Object.keys(coordinate).lenght === 0) {
+        if (!coordinate || Object.keys(coordinate).length === 0) {
             return;
         }
 
