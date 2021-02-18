@@ -94,7 +94,7 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         // de titre ou description  ...
 
         // a ton une configuration des layers ?
-        this._hasLayersConfig = !(!this.options.layers || Object.keys(this.options.layers).length === 0);
+        this._hasLayersConfig = !((!this.options.layers || Object.keys(this.options.layers).length === 0));
 
         // configuration des layers
         this._layersConfig = (this._hasLayersConfig) ? this.options.layers : [];
@@ -302,7 +302,7 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         };
 
         // surcharge la config ci dessus avec les options de configuration saisies
-        if (layerConfig && Object.keys(layerConfig).length) {
+        if (layerConfig && Object.keys(layerConfig)) {
             L.Util.extend(this._layers[id], layerConfig);
         }
 

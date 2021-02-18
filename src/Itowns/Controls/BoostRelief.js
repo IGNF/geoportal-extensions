@@ -37,7 +37,7 @@ function BoostRelief (brOptions) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (typeof options !== "object") {
+    if (options && typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 

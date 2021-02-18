@@ -667,7 +667,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         var _sampling = options.sampling;
         if (!_sampling) {
             // computing sampling
-            var _computeSampling;
+            var _computeSampling = 50;
             var _length = this._currentFeature._measurementRunningTotal; // FIXME !!!
             logger.trace("length", _length);
             var p = Math.floor(_length) / 5; // en mètre sur un pas moyen de 5m !
