@@ -578,7 +578,7 @@ var KML = (function (olKML) {
         var kmlStringFormatted = _kmlFormattedToString(kmlStringExtended);
 
         // au cas où...
-        if (kmlStringFormatted === null) {
+        if (kmlStringFormatted && kmlStringFormatted === "") {
             kmlStringFormatted = kmlString;
         }
 

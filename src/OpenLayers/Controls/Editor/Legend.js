@@ -389,7 +389,7 @@ Legend.prototype._getValues = function (type, value) {
                 _icon = value["icon-image"];
             } else {
                 pColor = value["icon-color"];
-                if (typeof pColor === "object" || Array.isArray(pColor)) {
+                if (Array.isArray(pColor) || typeof pColor === "object") {
                     _color = null;
                     break;
                 }
