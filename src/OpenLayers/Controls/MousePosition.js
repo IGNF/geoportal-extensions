@@ -491,8 +491,9 @@ var MousePosition = (function (Control) {
      */
     MousePosition.prototype._initialize = function (options) {
         // Set default options
+        options = options || {};
         // {Object} control options - set by user or by default
-        this.options = options || {};
+        this.options = options;
         this.options.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
@@ -1304,7 +1305,7 @@ var MousePosition = (function (Control) {
             // dans le cas général
             // callback onSuccess
             _onSuccess = function (results) {
-                if (results && Object.keys(results)) {
+                if (results && Object.keys(results).length) {
                     callback.call(this, results.elevations[0].z);
                 }
             };
@@ -1369,13 +1370,8 @@ var MousePosition = (function (Control) {
         // evenement declenché à l'ouverture/fermeture du panneau,
         // et en fonction du mode : desktop ou tactile !
         if (this._showMousePositionContainer.checked) {
-            if (this._isDesktop) {
-                // map.un("pointermove", (e) => { this.onMouseMove(e); });
-                olObservableUnByKey(this.listenerKey);
-            } else {
-                // map.un("moveend", (e) => this.onMapMove(e));
-                olObservableUnByKey(this.listenerKey);
-            }
+            olObservableUnByKey(this.listenerKey);
+            
         } else if (!this.editing) {
             if (this._isDesktop) {
                 this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });

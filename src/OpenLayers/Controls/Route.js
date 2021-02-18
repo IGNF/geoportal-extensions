@@ -353,23 +353,19 @@ var Route = (function (Control) {
         // vérification des options
         // mode de transport
         if (options.graphs) {
-            if (Array.isArray(options.graphs)) {
-                // on ne permet pas de passer un tableau vide : on spécifie au moins un graph
-                if (options.graphs.length === 0) {
-                    options.graphs = null;
-                } else {
-                    for (var i = 0; i < options.graphs.length; i++) {
-                        if (typeof options.graphs[i] !== "string") {
-                            logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
-                            options.graphs = null;
-                        } else {
-                            if (options.graphs[i].toLowerCase() === "pieton") {
-                                options.graphs[i] = "Pieton";
-                            }
-                            if (options.graphs[i].toLowerCase() === "voiture") {
-                                options.graphs[i] = "Voiture";
-                            }
+            // on ne permet pas de passer un tableau vide : on spécifie au moins un graph
+            if (Array.isArray(options.graphs) && options.graphs.length) {
+                for (var i = 0; i < options.graphs.length; i++) {
+                    if (typeof options.graphs[i] === "string") {
+                        if (options.graphs[i].toLowerCase() === "pieton") {
+                            options.graphs[i] = "Pieton";
                         }
+                        if (options.graphs[i].toLowerCase() === "voiture") {
+                            options.graphs[i] = "Voiture";
+                        }
+                    } else {
+                        logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        options.graphs[i] = null;
                     }
                 }
             } else {
@@ -1686,7 +1682,7 @@ var Route = (function (Control) {
 
         var bridgeInput = document.getElementById("GProuteExclusionsBridge-" + this._uid);
         if (bridgeInput) {
-            if (this._currentExclusions.indexOf("bridge") !== -1 && bridgeInput) {
+            if (this._currentExclusions.indexOf("bridge") !== -1) {
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;

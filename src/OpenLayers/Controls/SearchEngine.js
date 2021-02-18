@@ -161,11 +161,8 @@ var SearchEngine = (function (Control) {
         if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
             return;
         }
-        if (collapsed) {
-            this._showSearchEngineInput.click();
-        } else {
-            this._showSearchEngineInput.click();
-        }
+        
+        this._showSearchEngineInput.click();
         this.collapsed = collapsed;
     };
 
@@ -305,17 +302,18 @@ var SearchEngine = (function (Control) {
                 var geocodeResources = options.resources.geocode;
                 if (geocodeResources) {
                     // on vérifie que la liste des ressources de geocodage est bien un tableau
-                    if (!Array.isArray(geocodeResources)) {
+                    if (Array.isArray(geocodeResources)) {
+                        var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+                        for (i = 0; i < geocodeResources.length; i++) {
+                            if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
+                                // si la resource n'est pas référencée, on l'enlève
+                                // geocodeResources.splice(i, 1);
+                                logger.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
+                            }
+                        }
+                    } else {
                         logger.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
                         geocodeResources = null;
-                    }
-                    var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
-                    for (i = 0; i < geocodeResources.length; i++) {
-                        if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
-                            // si la resource n'est pas référencée, on l'enlève
-                            // geocodeResources.splice(i, 1);
-                            logger.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
-                        }
                     }
                 }
 
@@ -323,17 +321,18 @@ var SearchEngine = (function (Control) {
                 var autocompleteResources = options.resources.autocomplete;
                 if (autocompleteResources) {
                     // on vérifie que la liste des ressources d'autocompletion est bien un tableau
-                    if (!Array.isArray(autocompleteResources)) {
+                    if (Array.isArray(autocompleteResources)) {
+                        var autocompleteResourcesList = ["StreetAddress", "PositionOfInterest"];
+                        for (i = 0; i < autocompleteResources.length; i++) {
+                            if (autocompleteResourcesList.indexOf(autocompleteResources[i]) === -1) {
+                                // si la resource n'est pas référencée, on l'enlève
+                                // autocompleteResources.splice(i, 1);
+                                logger.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
+                            }
+                        }
+                    } else {
                         logger.log("[SearchEngine] 'options.resources.autocomplete' parameter should be an array");
                         autocompleteResources = null;
-                    }
-                    var autocompleteResourcesList = ["StreetAddress", "PositionOfInterest"];
-                    for (i = 0; i < autocompleteResources.length; i++) {
-                        if (autocompleteResourcesList.indexOf(autocompleteResources[i]) === -1) {
-                            // si la resource n'est pas référencée, on l'enlève
-                            // autocompleteResources.splice(i, 1);
-                            logger.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
-                        }
                     }
                 }
             } else {

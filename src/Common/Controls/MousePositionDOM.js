@@ -831,7 +831,7 @@ var MousePositionDOM = {
      */
     GPdisplayCoords : function (coordinate) {
         // Compute coords in case of cursor position (desktop)
-        if (coordinate && coordinate != null) {
+        if (coordinate) {
             var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
             var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
 
@@ -911,7 +911,7 @@ var MousePositionDOM = {
         var minThreshold = noDataValue - noDataValueTolerance;
 
         // Compute coords in case of cursor position (desktop)
-        if (coordinate && coordinate != null) {
+        if (coordinate) {
             // If no altitude panel, don't call altitude request
             if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
                 altitudeTimeout = setTimeout(function () {

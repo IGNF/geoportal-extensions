@@ -130,9 +130,7 @@ var LayerEvent = {
         }
 
         // suppression des attributions de liste
-        if (this._attributions) {
-            this._attributions = [];
-        }
+        this._attributions = [];
     },
 
     /**

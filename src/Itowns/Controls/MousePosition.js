@@ -80,7 +80,7 @@ function MousePosition (options) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (options && typeof options !== "object") {
+    if (typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
@@ -891,9 +891,9 @@ MousePosition.prototype._setCoordinate = function (coords) {
 
     // transforms the point in the wanted coords system
     var oSrs = this._currentProjectionSystems;
-    var crsProp = oSrs.crs;
+    var crsProp = (oSrs) ? oSrs.crs : null;
 
-    if (!oSrs || !crsProp) {
+    if (!crsProp) {
         logger.error("system crs not found");
         return;
     }
@@ -1080,7 +1080,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     if (!options.rawResponse) {
         // in the general case
         options.onSuccess = function (results) {
-            if (results && Object.keys(results)) {
+            if (results && Object.keys(results).length) {
                 callback.call(this, results.elevations[0].z);
             }
         };
