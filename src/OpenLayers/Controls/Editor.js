@@ -681,7 +681,7 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch image sprites exception :", error);
                         });
-                } else {}
+                }
             })
             .catch(error => {
                 logger.warn("fetch sprites exception :", error);
@@ -701,7 +701,7 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch json sprites exception :", error);
                         });
-                } else {}
+                }
             })
             .catch(error => {
                 logger.warn("fetch sprites exception :", error);

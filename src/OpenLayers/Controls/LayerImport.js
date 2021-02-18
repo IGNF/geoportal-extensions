@@ -1849,9 +1849,6 @@ var LayerImport = (function (Control) {
         // Parse GetCapabilities Response
         if (this._currentImportType === "WMS") {
             parser = new WMSCapabilities();
-            if (!parser) {
-                return;
-            }
             var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
             logger.log("getCapabilities response : ", getCapResponseWMS);
 
@@ -1874,9 +1871,6 @@ var LayerImport = (function (Control) {
         } else
         if (this._currentImportType === "WMTS") {
             parser = new WMTSCapabilities();
-            if (!parser) {
-                return;
-            }
             var getCapResponseWMTS = this._getCapResponseWMTS = parser.read(xmlResponse);
             logger.log("getCapabilities response : ", getCapResponseWMTS);
 

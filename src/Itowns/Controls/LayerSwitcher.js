@@ -799,7 +799,7 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
     }
 
     var targetIndex = null;
-    if (e.newIndex && e.newIndex !== 0) {
+    if (e.newIndex) {
         var layerTargetID = this._resolveLayerId(e.from.childNodes[e.newIndex + (e.newIndex - e.oldIndex < 0 ? 1 : -1)].id);
         targetIndex = globe.getLayerById(layerTargetID).sequence;
     } else {
