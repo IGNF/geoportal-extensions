@@ -880,7 +880,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         // au cas où les options du services ne sont pas renseignées, on y ajoute
         // les tables de ressources
-        if (L.Util.isArray(resources) && !options.filterOptions) {
+        if (resources && L.Util.isArray(resources) && !options.filterOptions) {
             if (!options.filterOptions) {
                 options.filterOptions = {};
             }

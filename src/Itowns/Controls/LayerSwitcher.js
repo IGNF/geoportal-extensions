@@ -52,11 +52,11 @@ function LayerSwitcher (lsOptions) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (!Array.isArray(layers)) {
+    if (layers && !Array.isArray(layers)) {
         throw new Error("ERROR WRONG_TYPE : layers should be an array");
     }
 
-    if (typeof options !== "object") {
+    if (options && typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
@@ -316,7 +316,7 @@ LayerSwitcher.prototype.addLayer = function (layer, config) {
         this._updateLayerListContainer();
 
         // user may also add a new configuration for an already added layer
-    } else {
+    } else if (this._layers[id] && config) {
         // add new configuration parameters to layer informations
         for (var prop in config) {
             if (config.hasOwnProperty(prop)) {

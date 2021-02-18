@@ -1080,7 +1080,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     if (!options.rawResponse) {
         // in the general case
         options.onSuccess = function (results) {
-            if (results && Object.keys(results).length) {
+            if (results && Object.keys(results)) {
                 callback.call(this, results.elevations[0].z);
             }
         };

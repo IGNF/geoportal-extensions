@@ -54,7 +54,7 @@ var GetFeatureInfo = (function (Control) {
             throw new Error("ERROR WRONG_TYPE : layers should be an array");
         }
 
-        if (typeof options !== "object") {
+        if (options && typeof options !== "object") {
             throw new Error("ERROR WRONG_TYPE : options should be an object");
         }
 

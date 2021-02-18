@@ -1352,7 +1352,7 @@ var Isocurve = (function (Control) {
         }
         var bridgeInput = document.getElementById("GPisoExclusionsBridge-" + this._uid);
         if (bridgeInput) {
-            if (this._currentExclusions.indexOf("bridge") !== -1) {
+            if (this._currentExclusions.indexOf("bridge") !== -1 && bridgeInput) {
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;

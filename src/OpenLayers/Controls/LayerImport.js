@@ -2666,7 +2666,7 @@ var LayerImport = (function (Control) {
                         }
 
                         // tri des résolutions par ordre décroissant
-                        if (resolutions.sort !== undefined) {
+                        if (Array.isArray(resolutions) && resolutions.sort !== undefined) {
                             resolutions.sort(
                                 function (x, y) {
                                     return y - x;
@@ -2674,7 +2674,7 @@ var LayerImport = (function (Control) {
                             );
                         }
                         // tri des identifiants des niveaux de pyramide (matrixIds) par ordre croissant
-                        if (matrixIds.sort !== undefined) {
+                        if (Array.isArray(matrixIds) && matrixIds.sort !== undefined) {
                             matrixIds.sort(
                                 function (x, y) {
                                     return x - y;

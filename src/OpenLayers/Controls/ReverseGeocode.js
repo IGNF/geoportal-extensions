@@ -543,7 +543,9 @@ var ReverseGeocode = (function (Control) {
             this.options.apiKey = rightManagementGeocode.key;
         }
 
-        this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
+        if (rightManagementGeocode) {
+            this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
+        }
     };
 
     /**

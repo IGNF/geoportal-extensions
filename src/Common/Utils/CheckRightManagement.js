@@ -35,7 +35,7 @@ export default {
 
         // si aucune information sur les ressources,
         // il est impossible de controler quelquechose !!!
-        if (_resources.length === 0) {
+        if (!_resources || _resources.length === 0) {
             // message orienté pour le developpeur !
             logger.error("WARNING : " +
                 "no parameter 'resources' specified !");
@@ -44,7 +44,7 @@ export default {
 
         // si aucune information sur les services,
         // il est impossible de controler quelquechose !!!
-        if (_services.length === 0) {
+        if (!_services || _services.length === 0) {
             // message orienté pour le developpeur !
             logger.error("WARNING : " +
                 "no parameter 'services' specified !");
