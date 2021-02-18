@@ -27,7 +27,7 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
-    if (!viewerDiv.style.position || (options && options.position)) {
+    if (!viewerDiv.style.position || (options & options.position)) {
         viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
     }
 
