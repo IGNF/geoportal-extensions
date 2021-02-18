@@ -479,9 +479,8 @@ var Drawing = (function (Control) {
         this._exportName = "Croquis";
         this._exportFormat = ".kml";
 
-        options = options || {};
         // Set default options
-        this.options = options;
+        this.options = options || {};
 
         if (!this.options.layerDescription) {
             this.options.layerDescription = {

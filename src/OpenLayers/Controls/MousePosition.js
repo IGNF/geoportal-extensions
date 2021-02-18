@@ -491,9 +491,8 @@ var MousePosition = (function (Control) {
      */
     MousePosition.prototype._initialize = function (options) {
         // Set default options
-        options = options || {};
         // {Object} control options - set by user or by default
-        this.options = options;
+        this.options = options || {};
         this.options.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;

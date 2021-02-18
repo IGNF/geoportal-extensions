@@ -106,19 +106,17 @@ var ProfileElevationPathDOM = {
     displayProfileByDefault : function (data, container, context, className) {
         var self = context;
 
-        if (!container) {
-            return;
+        // on nettoie toujours...
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
         }
 
         if (!data) {
             return;
         }
 
-        // on nettoie toujours...
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
-        
         const margin = {
             top : 25,
             right : 15,
@@ -641,17 +639,14 @@ var ProfileElevationPathDOM = {
      * @returns {DOMElement} profil container
      */
     displayProfileRaw : function (data, container, context, className) {
-
-        if (!container) {
-            return;
-        }
-
         // on nettoie toujours...
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
         }
 
-        var _points = (data && data.points) ? data.points : {};
+        var _points = data.points;
 
         var div = document.createElement("textarea");
         div.id = "profilElevationResults";
@@ -691,17 +686,11 @@ var ProfileElevationPathDOM = {
     displayProfileLibD3 : function (data, container, context, className) {
         var self = context;
 
-        if (!container) {
-            return;
-        }
-
-        if (!data) {
-            return;
-        }
-
         // on nettoie toujours...
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
+        if (container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
         }
 
         var _points = data.points;
@@ -927,14 +916,6 @@ var ProfileElevationPathDOM = {
     displayProfileLibAmCharts : function (data, container, context, className) {
         var self = context;
 
-        if(!container) {
-            return;
-        }
-
-        if (!data) {
-            return;
-        }
-        
         var _points = data.points;
 
         var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";
