@@ -59,7 +59,7 @@ function LayerWMTS (options) {
         var config = {};
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
-        if (wmtsParams.projection === "EPSG:3857") {
+        if (wmtsParams.projection === "EPSG:3857" && wmtsParams.extent) {
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
         } else {
             wmtsParams.projection = "EPSG:4326";

@@ -517,9 +517,9 @@ var KML = (function (olKML) {
                     x = anchor[0];
                     y = anchor[1];
                     if (yunits === "fraction") {
-                        y = (y === 1) ? 0 : 1 - y; // cf. fixme contribution à faire !
+                        y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme contribution à faire !
                     } else {
-                        y = (yunits === "pixels" && y === size[1]) ? 0 : size[1] - y; // cf. fixme contribution à faire !
+                        y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme contribution à faire !
                     }
                 }
 
