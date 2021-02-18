@@ -152,7 +152,7 @@ export default {
                     }
                 }
 
-                if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
+                if (Object.keys(_rightManagement).length === 0) {
                     logger.warn("WARNING : " +
                         "The contract key configuration has been loaded, " +
                         "and the 'apiKey' parameter has been set, " +
