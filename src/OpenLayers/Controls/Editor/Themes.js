@@ -171,7 +171,7 @@ Themes.prototype._initContainer = function () {
             var _url = _theme.url;
             // style selectionné par defaut (uniquement en mode radio-button !?)
             var _selected = _theme.selected || false;
-            if (_url && _url !== "") {
+            if (_url) {
                 // bouton
                 var button = this.options.tools.button;
                 if (button.visible) {

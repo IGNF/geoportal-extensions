@@ -50,7 +50,7 @@ var GetFeatureInfo = (function (Control) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        if (layers && !Array.isArray(layers)) {
+        if (!Array.isArray(layers)) {
             throw new Error("ERROR WRONG_TYPE : layers should be an array");
         }
 
