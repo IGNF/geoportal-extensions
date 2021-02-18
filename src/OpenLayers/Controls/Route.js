@@ -1682,7 +1682,7 @@ var Route = (function (Control) {
 
         var bridgeInput = document.getElementById("GProuteExclusionsBridge-" + this._uid);
         if (bridgeInput) {
-            if (this._currentExclusions.indexOf("bridge") !== -1) {
+            if (this._currentExclusions.indexOf("bridge") !== -1 && bridgeInput) {
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;

@@ -1305,7 +1305,7 @@ var MousePosition = (function (Control) {
             // dans le cas général
             // callback onSuccess
             _onSuccess = function (results) {
-                if (results && Object.keys(results).length) {
+                if (results && Object.keys(results)) {
                     callback.call(this, results.elevations[0].z);
                 }
             };

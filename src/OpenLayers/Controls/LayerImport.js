@@ -2329,7 +2329,7 @@ var LayerImport = (function (Control) {
                         layerTileOptions.extent = extent;
                         break;
                     } else {
-                        if (typeof crs === "string") {
+                        if (crs && typeof crs === "string") {
                             var olProj = olGetProj(crs) ? olGetProj(crs) : olGetProj(crs.toUpperCase());
                             // if ( olGetProj(crs) || olGetProj(crs.toUpperCase()) ) {
                             if (olProj) {

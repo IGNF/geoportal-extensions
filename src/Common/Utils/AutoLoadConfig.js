@@ -7,7 +7,7 @@ import Gp from "geoportal-access-lib";
     // in case of several keys
     if (key) {
         var splitKeys = key.split(/;|,|\|/);
-        if (splitKeys.length > 1) {
+        if (key && splitKeys.length > 1) {
             var keys = [];
             for (var i = 0; i < splitKeys.length; i++) {
                 keys.push(splitKeys[i]);
