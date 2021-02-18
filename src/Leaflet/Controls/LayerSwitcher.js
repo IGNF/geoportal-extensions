@@ -506,7 +506,11 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
             this._update();
         }
 
-        this._map.fire((e.type === "layeradd") ? "overlayadd" : "overlayremove", obj);
+        var type = (e.type === "layeradd") ? "overlayadd" : "overlayremove";
+
+        if (type) {
+            this._map.fire(type, obj);
+        }
     },
 
     /**

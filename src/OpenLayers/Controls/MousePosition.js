@@ -1369,8 +1369,13 @@ var MousePosition = (function (Control) {
         // evenement declenché à l'ouverture/fermeture du panneau,
         // et en fonction du mode : desktop ou tactile !
         if (this._showMousePositionContainer.checked) {
-            olObservableUnByKey(this.listenerKey);
-            
+            if (this._isDesktop) {
+                // map.un("pointermove", (e) => { this.onMouseMove(e); });
+                olObservableUnByKey(this.listenerKey);
+            } else {
+                // map.un("moveend", (e) => this.onMapMove(e));
+                olObservableUnByKey(this.listenerKey);
+            }
         } else if (!this.editing) {
             if (this._isDesktop) {
                 this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });

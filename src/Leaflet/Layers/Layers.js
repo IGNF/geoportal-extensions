@@ -29,7 +29,7 @@ var Layers = {
      * initialize options
      */
     _initOptions : function () {
-        if (!this.options || Object.keys(this.options).length === 0) {
+        if (!this.options || Object.keys(this.options) === 0) {
             throw new Error("PARAM_MISSING : options !");
         }
 
@@ -75,7 +75,7 @@ var Layers = {
             service : service
         });
 
-        if (!this.params || Object.keys(this.params).length === 0) {
+        if (!this.params || Object.keys(this.params) === 0) {
             this.params = {};
             if (!this.options.apiKey) {
                 // FIXME on retire l'exception...
