@@ -1213,7 +1213,7 @@ var ElevationPath = (function (Control) {
         var sampling = options.sampling;
         if (!sampling) {
             // computing sampling
-            var _sampling = 50;
+            var _sampling;
             var _length = this._getLength();
             logger.trace("length", _length);
             var minSampling = this._getSketchCoords();
@@ -1339,6 +1339,9 @@ var ElevationPath = (function (Control) {
             _data[i].lat = Math.round(_data[i].lat * 10000) / 10000;
             _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
         }
+
+        // check distance totale
+        logger.trace("List Distances", distances);
 
         // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
         var _altMin = _data[0].z;

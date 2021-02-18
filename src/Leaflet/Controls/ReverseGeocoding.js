@@ -236,9 +236,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             this.options.apiKey = rightManagementGeocode.key;
         }
 
-        if (rightManagementGeocode) {
-            this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
-        }
+        this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
     },
 
     /**
