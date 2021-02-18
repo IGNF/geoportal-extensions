@@ -799,11 +799,11 @@ LayerSwitcher.prototype._onDragAndDropLayerClick = function (e) {
     }
 
     var targetIndex = null;
-    if (!e.newIndex || e.newIndex === 0) {
-        targetIndex = globe.getColorLayers().length - 1;
-    } else {
+    if (e.newIndex && e.newIndex !== 0) {
         var layerTargetID = this._resolveLayerId(e.from.childNodes[e.newIndex + (e.newIndex - e.oldIndex < 0 ? 1 : -1)].id);
         targetIndex = globe.getLayerById(layerTargetID).sequence;
+    } else {
+        targetIndex = globe.getColorLayers().length - 1;
     }
 
     var layerID = this._resolveLayerId(e.item.id);

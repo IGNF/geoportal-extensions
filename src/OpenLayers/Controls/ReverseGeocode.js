@@ -1358,7 +1358,7 @@ var ReverseGeocode = (function (Control) {
 
         // récupération de la position
         var position = [location.position.x, location.position.y];
-        if (!position) {
+        if (position.length === 0) {
             return;
         }
         var view = map.getView();
