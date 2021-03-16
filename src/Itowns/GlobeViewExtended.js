@@ -341,13 +341,13 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
 
     // sync the vectorTiles layer visibility with its labels
     if (layer.source.constructor.name === "vectorTileSource") {
-      if (layer.visible === true) {
-        layer.labelEnabled = true;
-      } else {
-        layer.labelEnabled = false;
-      }
+        if (layer.visible === true) {
+            layer.labelEnabled = true;
+        } else {
+            layer.labelEnabled = false;
+        }
     }
-    
+
     this.getGlobeView().notifyChange(layer);
 };
 

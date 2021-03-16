@@ -1102,7 +1102,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     if (typeof this.options.ssl === "boolean") {
         options.ssl = this.options.ssl;
     }
-    
+
     Gp.Services.getAltitude(options);
 };
 
