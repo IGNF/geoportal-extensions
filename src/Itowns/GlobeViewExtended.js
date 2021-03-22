@@ -340,7 +340,7 @@ GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
     layer.visible = visible;
 
     // sync the vectorTiles layer visibility with its labels
-    if (layer.source.constructor.name === "vectorTileSource") {
+    if (layer.source.isVectorSource === true) {
         if (layer.visible === true) {
             layer.labelEnabled = true;
         } else {
