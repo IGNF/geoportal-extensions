@@ -118,7 +118,7 @@ var ProfileElevationPathDOM = {
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
-        
+
         const margin = {
             top : 25,
             right : 15,
@@ -641,7 +641,6 @@ var ProfileElevationPathDOM = {
      * @returns {DOMElement} profil container
      */
     displayProfileRaw : function (data, container, context, className) {
-
         if (!container) {
             return;
         }
@@ -927,14 +926,14 @@ var ProfileElevationPathDOM = {
     displayProfileLibAmCharts : function (data, container, context, className) {
         var self = context;
 
-        if(!container) {
+        if (!container) {
             return;
         }
 
         if (!data) {
             return;
         }
-        
+
         var _points = data.points;
 
         var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";

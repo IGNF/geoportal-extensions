@@ -51,7 +51,7 @@ var logger = Logger.getLogger("elevationpath");
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
- * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
+ * @param {Object} [options.stylesOptions] - styles management
  * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
  * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
@@ -1173,7 +1173,7 @@ var ElevationPath = (function (Control) {
                 options.ssl = true;
             }
         }
-        
+
         Utils.mergeParams(options, {
             ssl : options.ssl
         });

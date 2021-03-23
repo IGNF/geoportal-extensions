@@ -57,8 +57,8 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
  *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
  *      and "M" or "KM" for metric coordinates
- * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
- * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
+ * @param {Boolean}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
+ * @param {Boolean}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
  * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Object} [options.positionMarker] - options for position marker
  * @param {String} options.positionMarker.url - Marker url (define in src/Openlayers/Controls/Utils/Markers.js)
@@ -1371,7 +1371,6 @@ var MousePosition = (function (Control) {
         // et en fonction du mode : desktop ou tactile !
         if (this._showMousePositionContainer.checked) {
             olObservableUnByKey(this.listenerKey);
-            
         } else if (!this.editing) {
             if (this._isDesktop) {
                 this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });
