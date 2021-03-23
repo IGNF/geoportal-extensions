@@ -1173,7 +1173,7 @@ var ElevationPath = (function (Control) {
                 options.ssl = true;
             }
         }
-        
+
         Utils.mergeParams(options, {
             ssl : options.ssl
         });

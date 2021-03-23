@@ -161,7 +161,7 @@ var SearchEngine = (function (Control) {
         if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
             return;
         }
-        
+
         this._showSearchEngineInput.click();
         this.collapsed = collapsed;
     };
