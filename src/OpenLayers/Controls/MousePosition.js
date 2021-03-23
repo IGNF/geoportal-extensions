@@ -1371,7 +1371,6 @@ var MousePosition = (function (Control) {
         // et en fonction du mode : desktop ou tactile !
         if (this._showMousePositionContainer.checked) {
             olObservableUnByKey(this.listenerKey);
-            
         } else if (!this.editing) {
             if (this._isDesktop) {
                 this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });
