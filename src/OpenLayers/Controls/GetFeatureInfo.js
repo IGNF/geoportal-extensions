@@ -31,9 +31,9 @@ var logger = Logger.getLogger("getfeatureinfo");
  * @param {Boolean} [options.options.hidden=false] - specifies if the widget should be hidden.
  * @param {Boolean} [options.options.auto=false] - specifies if the control run in automatic mode. In automatic mode all vector layers added on run time or added at map initialization can be requested through the control. The triggering event of those layers is the default event.
  * @param {Boolean} [options.options.active=true] - specifies if the control is active or inactive. In inactive mode requests are not fired and no information are displayed.
- * @param {String} [options.options.defaultEvent='singleclick'] - default triggering event chosen in the list ('singleclick', 'dblclick', 'contextmenu'). This is the triggering event of all layers added to the control without configured triggering event.
- * @param {String} [options.options.defaultInfoFormat='text/html'] - indicates the default format mime-type of the response of GetFeatureInfo requests.
- * @param {String} [options.options.cursorStyle='pointer'] - specifies the type of cursor to be displayed when pointing on vector feature of a layer previously added to the control. The value must be choosen in the possible values of the css cursor property.
+ * @param {String} [options.options.defaultEvent="singleclick"] - default triggering event chosen in the list ('singleclick', 'dblclick', 'contextmenu'). This is the triggering event of all layers added to the control without configured triggering event.
+ * @param {String} [options.options.defaultInfoFormat="text/html"] - indicates the default format mime-type of the response of GetFeatureInfo requests.
+ * @param {String} [options.options.cursorStyle="pointer"] - specifies the type of cursor to be displayed when pointing on vector feature of a layer previously added to the control. The value must be choosen in the possible values of the css cursor property.
  * @param {String} [options.options.proxyUrl] - Proxy URL to avoid cross-domain problems.
  * @param {Array.<String>} [options.options.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
  * @param {Boolean} [options.options.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.

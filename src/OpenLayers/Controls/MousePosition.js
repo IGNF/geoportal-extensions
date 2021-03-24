@@ -44,6 +44,12 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
+ * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
+ *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
+ *      and "M" or "KM" for metric coordinates
+ * @param {Boolean}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
+ * @param {Boolean}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
+ * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
  * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -54,12 +60,6 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Number}  options.systems.geoBBox.left - Left bound.
  * @param {Number}  options.systems.geoBBox.top - Top bound.
  * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
- * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
- *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
- *      and "M" or "KM" for metric coordinates
- * @param {Boolean}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
- * @param {Boolean}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
- * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Object} [options.positionMarker] - options for position marker
  * @param {String} options.positionMarker.url - Marker url (define in src/Openlayers/Controls/Utils/Markers.js)
  * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.

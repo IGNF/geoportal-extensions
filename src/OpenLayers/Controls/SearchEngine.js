@@ -29,23 +29,6 @@ var logger = Logger.getLogger("searchengine");
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
- * @param {Object}   [options.resources] - resources to be used by geocode and autocompletion services :
- * @param {Array}   [options.resources.geocode] - resources geocoding, by default : ["PositionOfInterest", "StreetAddress"]
- * @param {Array}   [options.resources.autocomplete] - resources autocompletion, by default : ["PositionOfInterest", "StreetAddress"]
- * @param {Boolean}  [options.displayAdvancedSearch = true] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
- * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
- * @param {Object}  [options.geocodeOptions = {}] - options of geocode service
- * @param {Object}  [options.geocodeOptions.apiKey] - to overload the check of rights (only) on the given apiKey for the geocode service
- * @param {Object}  [options.geocodeOptions.filterOptions = {}] - filteroptions of the geocode service
- * @param {Array}  [options.geocodeOptions.filterOptions.type = []] - to overload the check of rights (only) on the given type of resources used by the geocode service.
- * @param {Object}  [options.geocodeOptions.serviceOptions] - overload other options : options of geocode service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
- * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service
- * @param {Object}  [options.autocompleteOptions.apiKey] - to overload the check of rights (only) on the given apiKey for the the autocomplete service
- * @param {Object}  [options.autocompleteOptions.filterOptions = {}] - filteroptions of the autocomplete service
- * @param {Array}  [options.autocompleteOptions.filterOptions.type = []] - to overload the check of rights (only) on the given type of resources used by the autocomplete service
- * @param {Object}  [options.autocompleteOptions.serviceOptions] - overload other options : options of autocomplete service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete})
- * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
- * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
  * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
  *       Value possible : auto or zoom level.
  *       Possible to overload it with a function :
@@ -54,8 +37,25 @@ var logger = Logger.getLogger("searchengine");
  *           return zoom;
  *       }
  * @param {String}  [options.placeholder] - Placeholder in search bar. Default is "Rechercher un lieu, une adresse".
- * @param {Boolean}  [options.displayMarker = true] - set a marker on search result, defaults to true.
+ * @param {Boolean} [options.displayMarker = true] - set a marker on search result, defaults to true.
  * @param {String}  [options.markerStyle = "lightOrange"] - Marker style. Currently possible values are "lightOrange" (default value), "darkOrange", "red" and "turquoiseBlue".
+ * @param {Boolean} [options.displayAdvancedSearch = true] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
+ * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
+ * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services :
+ * @param {Array}   [options.resources.geocode] - resources geocoding, by default : ["PositionOfInterest", "StreetAddress"]
+ * @param {Array}   [options.resources.autocomplete] - resources autocompletion, by default : ["PositionOfInterest", "StreetAddress"]
+ * @param {Object}  [options.geocodeOptions = {}] - options of geocode service
+ * @param {Object}  [options.geocodeOptions.apiKey] - to overload the check of rights (only) on the given apiKey for the geocode service
+ * @param {Object}  [options.geocodeOptions.filterOptions = {}] - filteroptions of the geocode service
+ * @param {Array}   [options.geocodeOptions.filterOptions.type = []] - to overload the check of rights (only) on the given type of resources used by the geocode service.
+ * @param {Object}  [options.geocodeOptions.serviceOptions] - overload other options : options of geocode service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
+ * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service
+ * @param {Object}  [options.autocompleteOptions.apiKey] - to overload the check of rights (only) on the given apiKey for the the autocomplete service
+ * @param {Object}  [options.autocompleteOptions.filterOptions = {}] - filteroptions of the autocomplete service
+ * @param {Array}   [options.autocompleteOptions.filterOptions.type = []] - to overload the check of rights (only) on the given type of resources used by the autocomplete service
+ * @param {Object}  [options.autocompleteOptions.serviceOptions] - overload other options : options of autocomplete service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete})
+ * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
+ * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
  * @example
  *  var SearchEngine = ol.control.SearchEngine({
  *      apiKey : "CLEAPI",

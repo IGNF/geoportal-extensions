@@ -32,7 +32,7 @@ var logger = Logger.getLogger("layerswitcher");
  *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
  * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
  * @param {Object} [options.options] - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
- * @param {Boolean} [options.options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Boolean} [options.options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @example
  * map.addControl(new ol.control.LayerSwitcher(
  *  [
