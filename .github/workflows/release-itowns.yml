@@ -251,8 +251,8 @@ jobs:
       - name: Reset draft changelog
         run: |
           sed -i -e '/# Extension Geoportail Itowns/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
-          sed -e 's/__UP_LIBRARY__/Itowns/' DRAFT_CHANGELOG.md
-          sed -e 's/__LO_LIBRARY__/itowns/' DRAFT_CHANGELOG.md
+          sed -i '0,/__UP_LIBRARY__/s/__UP_LIBRARY__/Itowns/' DRAFT_CHANGELOG.md
+          sed -i '0,/__LO_LIBRARY__/s/__LO_LIBRARY__/itowns/' DRAFT_CHANGELOG.md
 
       - name: Archive changelog
         run: |

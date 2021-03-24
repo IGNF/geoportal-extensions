@@ -1,8 +1,8 @@
 
-# Extension Geoportail __UP_LIBRARY__, version __VERSION__
+# Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail __LO_LIBRARY__
+> Release Extension Geoportail openLayers
 
 ## Summary
 
@@ -23,10 +23,10 @@
 ---
 
 
-# Extension Geoportail __UP_LIBRARY__, version __VERSION__
+# Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail __LO_LIBRARY__
+> Release Extension Geoportail leaflet
 
 ## Summary
 
@@ -48,10 +48,10 @@
 
 
 
-# Extension Geoportail __UP_LIBRARY__, version __VERSION__
+# Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail __LO_LIBRARY__
+> Release Extension Geoportail itowns
 
 ## Summary
 
