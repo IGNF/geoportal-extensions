@@ -56,6 +56,7 @@
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -69,18 +70,11 @@
 
 * [Changed]
 
-    - mise à jour d'iTowns en version 2.30 (#292)
-
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - corrections des erreurs à partir de DeepScan (#288)
-    - corrections syntaxiques eslint (da275a284a07ddd8e32753eda57ad4ef283d34fb et 306506a2255b2f05558ddcb05210dce39135c804)
-    - correction de la synchronisation des couches vecteur tuilé avec leurs labels (#290)
-
 
 * [Security]
 
