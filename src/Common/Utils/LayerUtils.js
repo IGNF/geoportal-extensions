@@ -217,7 +217,7 @@ var LayerUtils = {
                     }
 
                     // max zoom constraints
-                    if (drawLogo && maxZoomLevel !== null && (maxZoomLevel < zoom)) {
+                    if (drawLogo && maxZoomLevel && (maxZoomLevel < zoom)) {
                         drawLogo = false;
                     }
 

@@ -62,7 +62,7 @@ var logger = Logger.getLogger("layerimport");
  * @alias ol.control.LayerImport
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
- * @param {Boolean} [options.collapsed = false] - Specify if LayerImport control should be collapsed at startup. Default is true.
+ * @param {Boolean} [options.collapsed = true] - Specify if LayerImport control should be collapsed at startup. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Array} [options.layerTypes = ["KML", "GPX", "GeoJSON", "WMS", "WMTS", "MAPBOX"]] - data types that could be imported : "KML", "GPX", "GeoJSON", "WMS", "WMTS" and "MAPBOX". Values will be displayed in the same order in widget list.
  * @param {Object} [options.webServicesOptions = {}] - Options to import WMS or WMTS layers
@@ -1849,9 +1849,6 @@ var LayerImport = (function (Control) {
         // Parse GetCapabilities Response
         if (this._currentImportType === "WMS") {
             parser = new WMSCapabilities();
-            if (!parser) {
-                return;
-            }
             var getCapResponseWMS = this._getCapResponseWMS = parser.read(xmlResponse);
             logger.log("getCapabilities response : ", getCapResponseWMS);
 
@@ -1874,9 +1871,6 @@ var LayerImport = (function (Control) {
         } else
         if (this._currentImportType === "WMTS") {
             parser = new WMTSCapabilities();
-            if (!parser) {
-                return;
-            }
             var getCapResponseWMTS = this._getCapResponseWMTS = parser.read(xmlResponse);
             logger.log("getCapabilities response : ", getCapResponseWMTS);
 
@@ -1926,9 +1920,10 @@ var LayerImport = (function (Control) {
     LayerImport.prototype._displayGetCapResponseWMSLayer = function (layerObj, parentLayersInfos) {
         if (!layerObj) {
             logger.warn("[ol.control.LayerImport] _displayGetCapResponseWMSLayer : getCapabilities layer object not found");
-        } else {
-            logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
+            return;
         }
+
+        logger.log("[ol.control.LayerImport] _displayGetCapResponseWMSLayer - layerObj : ", layerObj);
 
         // récupération de la projection de la map (pour vérifier que l'on peut reprojeter les couches disponibles)
         var mapProjCode = this._getMapProjectionCode();
@@ -1954,7 +1949,7 @@ var LayerImport = (function (Control) {
                 if (Array.isArray(parentLayersInfos[key]) && parentLayersInfos[key].length !== 0) {
                     if (Array.isArray(layerObj[key]) && layerObj[key].length !== 0) {
                         // on ajoute celles de la couche parent
-                        for (var n = 0; n < parentLayersInfos[key]; n++) {
+                        for (var n = 0; n < parentLayersInfos[key].length; n++) {
                             if (layerObj[key].indexOf(parentLayersInfos[key][n]) === -1) {
                                 // si le CRS/Style parent n'est pas dans les CRS/Style de la couche, on l'ajoute
                                 layerObj[key].push(parentLayersInfos[key][n]);
@@ -2064,7 +2059,7 @@ var LayerImport = (function (Control) {
         if (e.target && e.target.id) {
             var proposalId = parseInt(e.target.id.substr(23), 10);
 
-            if (proposalId == null) {
+            if (isNaN(proposalId)) {
                 return;
             }
 
@@ -2328,7 +2323,7 @@ var LayerImport = (function (Control) {
                         layerTileOptions.extent = extent;
                         break;
                     } else {
-                        if (crs && typeof crs === "string") {
+                        if (typeof crs === "string") {
                             var olProj = olGetProj(crs) ? olGetProj(crs) : olGetProj(crs.toUpperCase());
                             // if ( olGetProj(crs) || olGetProj(crs.toUpperCase()) ) {
                             if (olProj) {
@@ -2665,7 +2660,7 @@ var LayerImport = (function (Control) {
                         }
 
                         // tri des résolutions par ordre décroissant
-                        if (Array.isArray(resolutions) && resolutions.sort !== undefined) {
+                        if (resolutions.sort !== undefined) {
                             resolutions.sort(
                                 function (x, y) {
                                     return y - x;
@@ -2673,7 +2668,7 @@ var LayerImport = (function (Control) {
                             );
                         }
                         // tri des identifiants des niveaux de pyramide (matrixIds) par ordre croissant
-                        if (Array.isArray(matrixIds) && matrixIds.sort !== undefined) {
+                        if (matrixIds.sort !== undefined) {
                             matrixIds.sort(
                                 function (x, y) {
                                     return x - y;

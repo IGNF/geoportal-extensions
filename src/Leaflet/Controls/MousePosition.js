@@ -886,7 +886,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         }
         coordinate = format(this._project(oLatLng, oSrs));
 
-        if (!coordinate || Object.keys(coordinate).lenght === 0) {
+        if (!coordinate || Object.keys(coordinate).length === 0) {
             return;
         }
 
@@ -1027,7 +1027,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
-                if (results && Object.keys(results)) {
+                if (results && Object.keys(results).length) {
                     // var context = this.options.scope;
                     // context._setAltidude(results.elevations[0].z);
                     callback.call(this, results.elevations[0].z);

@@ -799,7 +799,7 @@ var LocationSelector = (function (Control) {
                 options.ssl = true;
             }
         }
-        
+
         logger.log(options);
 
         Gp.Services.autoComplete(options);

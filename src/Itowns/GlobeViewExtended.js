@@ -27,7 +27,7 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
-    if (!viewerDiv.style.position || (options & options.position)) {
+    if (!viewerDiv.style.position || (options && options.position)) {
         viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
     }
 
@@ -338,6 +338,16 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
     var layer = this.getColorLayerById(layerId);
     layer.visible = visible;
+
+    // sync the vectorTiles layer visibility with its labels
+    if (layer.source.isVectorSource === true) {
+        if (layer.visible === true) {
+            layer.labelEnabled = true;
+        } else {
+            layer.labelEnabled = false;
+        }
+    }
+
     this.getGlobeView().notifyChange(layer);
 };
 

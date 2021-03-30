@@ -252,9 +252,9 @@ jobs:
       # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
       - name: Reset draft changelog
         run: |
-          sed -i -e '/# Extension Geoportail OpenLayers/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
-          sed -e 's/__UP_LIBRARY__/OpenLayers/' DRAFT_CHANGELOG.md
-          sed -e 's/__LO_LIBRARY__/openlayers/' DRAFT_CHANGELOG.md
+          sed -i '/# Extension Geoportail OpenLayers/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
+          sed -i '0,/__UP_LIBRARY__/s/__UP_LIBRARY__/OpenLayers/' DRAFT_CHANGELOG.md
+          sed -i '0,/__LO_LIBRARY__/s/__LO_LIBRARY__/openlayers/' DRAFT_CHANGELOG.md
 
       - name: Archive changelog
         run: |

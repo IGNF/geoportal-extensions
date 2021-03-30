@@ -181,6 +181,10 @@ var GeoportalAttribution = (function (Attribution) {
             return;
         }
 
+        if (!mapAttributions) {
+            mapAttributions = {};
+        }
+
         var attributions = [];
 
         var visibility = layer.getVisible();
@@ -204,7 +208,7 @@ var GeoportalAttribution = (function (Attribution) {
             for (var j = 0; j < layerAttributions.length; j++) {
                 var attributionj = layerAttributions[j];
                 // check that this attribution hasn't been added yet for another layer
-                if (!mapAttributions || !mapAttributions[attributionj]) {
+                if (!mapAttributions.hasOwnProperty(attributionj)) {
                     // add attribution html
                     attributions.push(attributionj);
 

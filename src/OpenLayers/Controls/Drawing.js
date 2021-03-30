@@ -61,7 +61,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
- * @param {ol.layer.Vector} [options.layer = null] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
+ * @param {Object} [options.layer = {}] - Openlayers layer that will hosts created features. If none, an empty vector layer will be created.
  * @param {Object} [options.popup = {}] - Popup informations
  * @param {Boolean} [options.popup.display = true] - Specify if popup is displayed when create a drawing
  * @param {Function} [options.popup.function] - Function to display popup informations if you want to cutomise it. You may also provide your own function with params : {geomType / feature / saveFunc(message) / closeFunc()}. This function must return the DOM object of the popup content.
@@ -100,7 +100,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.labels.strokeWidth] - Label for stroke width.
  * @param {String} [options.labels.fillColor] - Label for fill color.
  * @param {String} [options.labels.fillOpacity] - Label for fillOpacity.
- * @param {Array.<Object>} [options.markersList = [{src : "data:image/png;base64,xxxx", anchor : [0.5,1]}]] - List of markers src to be used for points with their anchor offsets See {@link http://openlayers.org/en/latest/apidoc/ol.style.Icon.html OpenLayers params} for anchor offset options.
+ * @param {Array.<Object>} [options.markersList = [{"src" : "data:image/png;base64,xxxx", "anchor" : [0.5,1]}]] - List of markers src to be used for points with their anchor offsets See {@link http://openlayers.org/en/latest/apidoc/ol.style.Icon.html OpenLayers params} for anchor offset options.
  * @param {Object} options.defaultStyles - Default styles applying to geometries (labels, lines and polygons).
  * @param {String} [options.defaultStyles.textFillColor = "#000000"] - Text fill color for labels (RGB hex value).
  * @param {String} [options.defaultStyles.textStrokeColor = "#FFFFFF"] - Text surrounding color for labels (RGB hex value).
@@ -479,8 +479,9 @@ var Drawing = (function (Control) {
         this._exportName = "Croquis";
         this._exportFormat = ".kml";
 
+        options = options || {};
         // Set default options
-        this.options = options || {};
+        this.options = options;
 
         if (!this.options.layerDescription) {
             this.options.layerDescription = {

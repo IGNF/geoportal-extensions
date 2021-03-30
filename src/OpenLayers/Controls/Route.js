@@ -44,13 +44,13 @@ var logger = Logger.getLogger("route");
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
- * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
+ * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
- * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
- * @param {String} [options.markersOpts[property].url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
- * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
+ * @param {String} [options.markersOpts.url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
+ * @param {Array} [options.markersOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Itinéraire"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
@@ -353,23 +353,19 @@ var Route = (function (Control) {
         // vérification des options
         // mode de transport
         if (options.graphs) {
-            if (Array.isArray(options.graphs)) {
-                // on ne permet pas de passer un tableau vide : on spécifie au moins un graph
-                if (options.graphs.length === 0) {
-                    options.graphs = null;
-                } else {
-                    for (var i = 0; i < options.graphs.length; i++) {
-                        if (typeof options.graphs[i] !== "string") {
-                            logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
-                            options.graphs = null;
-                        } else {
-                            if (options.graphs[i].toLowerCase() === "pieton") {
-                                options.graphs[i] = "Pieton";
-                            }
-                            if (options.graphs[i].toLowerCase() === "voiture") {
-                                options.graphs[i] = "Voiture";
-                            }
+            // on ne permet pas de passer un tableau vide : on spécifie au moins un graph
+            if (Array.isArray(options.graphs) && options.graphs.length) {
+                for (var i = 0; i < options.graphs.length; i++) {
+                    if (typeof options.graphs[i] === "string") {
+                        if (options.graphs[i].toLowerCase() === "pieton") {
+                            options.graphs[i] = "Pieton";
                         }
+                        if (options.graphs[i].toLowerCase() === "voiture") {
+                            options.graphs[i] = "Voiture";
+                        }
+                    } else {
+                        logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        options.graphs[i] = null;
                     }
                 }
             } else {
@@ -1686,7 +1682,7 @@ var Route = (function (Control) {
 
         var bridgeInput = document.getElementById("GProuteExclusionsBridge-" + this._uid);
         if (bridgeInput) {
-            if (this._currentExclusions.indexOf("bridge") !== -1 && bridgeInput) {
+            if (this._currentExclusions.indexOf("bridge") !== -1) {
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;
