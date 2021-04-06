@@ -55,6 +55,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.1](#extension-geoportail-itowns-version-231)
   * [Summary](#summary-15)
   * [Changelog](#changelog-14)
+- [Extension Geoportail Itowns, version 2.3.2](#extension-geoportail-itowns-version-232)
+  * [Summary](#summary-16)
+  * [Changelog](#changelog-15)
 
 <!-- tocstop -->
 
@@ -409,6 +412,35 @@ Documentation :
 
     - fix sur la prise en compte du paramètre ssl=false du mousePosition (cfa88c4546cb146902357b0a75b790acfb405c7d)
     - correctif sur l'export de la version en mode module
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.2
+
+**30/03/2021**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour d'iTowns en version 2.30 (#292)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - corrections des erreurs à partir de DeepScan (#288)
+    - corrections syntaxiques eslint (da275a284a07ddd8e32753eda57ad4ef283d34fb et 306506a2255b2f05558ddcb05210dce39135c804)
+    - correction de la synchronisation des couches vecteur tuilé avec leurs labels (#290)
+
 
 * [Security]
 

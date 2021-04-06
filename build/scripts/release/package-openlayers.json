@@ -1,36 +1,17 @@
 {
-   "module" : "src/OpenLayers/index.js",
-   "bugs" : {},
-   "peerDependencies" : {},
-   "directories" : {},
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "scripts" : {},
-   "author" : "IGNF",
    "repository" : {
       "url" : "https://github.com/IGNF/geoportal-extensions.git",
       "type" : "git"
    },
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "date" : "12/02/2021",
+   "date" : "30/03/2021",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "author" : "IGNF",
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "version" : "3.0.14",
    "main" : "dist/GpPluginOpenLayers-src.js",
-   "dependencies" : {
-      "ol-mapbox-style" : "4.2.1",
-      "eventbusjs" : "0.2.0",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
-      "request" : "^2.83.0",
-      "proj4" : "2.6.0",
-      "geoportal-access-lib" : "2.1.6",
-      "ol" : "5.3.0",
-      "loglevel" : "1.6.6"
-   },
+   "bundleDependencies" : [],
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -38,9 +19,28 @@
       "README.md",
       "package.json"
    ],
-   "devDependencies" : {},
-   "bundleDependencies" : [],
    "name" : "geoportal-extensions-openlayers",
-   "version" : "3.0.14",
-   "license" : "CECILL-B"
+   "dependencies" : {
+      "proj4" : "2.6.0",
+      "sortablejs" : "1.8.4",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "2.1.6",
+      "loglevel" : "1.6.6",
+      "ol-mapbox-style" : "4.2.1",
+      "request" : "^2.83.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
+      "ol" : "5.3.0",
+      "eventbusjs" : "0.2.0"
+   },
+   "devDependencies" : {},
+   "license" : "CECILL-B",
+   "bugs" : {},
+   "directories" : {},
+   "module" : "src/OpenLayers/index.js",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ]
 }
