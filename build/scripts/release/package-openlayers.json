@@ -1,16 +1,8 @@
 {
-   "dependencies" : {
-      "proj4" : "2.6.0",
-      "geoportal-access-lib" : "2.1.6",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "request" : "^2.83.0",
-      "ol" : "5.3.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
-      "loglevel" : "1.6.6",
-      "eventbusjs" : "0.2.0",
-      "ol-mapbox-style" : "4.2.1"
-   },
+   "module" : "src/OpenLayers/index.js",
+   "bugs" : {},
+   "peerDependencies" : {},
+   "directories" : {},
    "keywords" : [
       "geoportail",
       "plugin",
@@ -18,22 +10,27 @@
       "OpenLayers"
    ],
    "scripts" : {},
-   "name" : "geoportal-extensions-openlayers",
    "author" : "IGNF",
-   "bugs" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "date" : "12/02/2021",
-   "module" : "src/OpenLayers/index.js",
-   "license" : "CECILL-B",
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "directories" : {},
    "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
    },
-   "bundleDependencies" : [],
-   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "date" : "12/02/2021",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "dependencies" : {
+      "ol-mapbox-style" : "4.2.1",
+      "eventbusjs" : "0.2.0",
+      "xmldom" : "^0.1.27",
+      "sortablejs" : "1.8.4",
+      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
+      "request" : "^2.83.0",
+      "proj4" : "2.6.0",
+      "geoportal-access-lib" : "2.1.6",
+      "ol" : "5.3.0",
+      "loglevel" : "1.6.6"
+   },
    "files" : [
       "dist/",
       "src/",
@@ -42,5 +39,8 @@
       "package.json"
    ],
    "devDependencies" : {},
-   "version" : "3.0.14"
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-openlayers",
+   "version" : "3.0.14",
+   "license" : "CECILL-B"
 }
