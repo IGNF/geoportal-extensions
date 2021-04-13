@@ -12,7 +12,7 @@
 
 * [Changed]
 
-    - mise à jour de la jsDoc (95cff8206ef2e0fcfb7fee5989d2d74d236b9f9f)
+    - mise à jour de la jsDoc (95cff8)
 
 * [Deprecated]
 
@@ -21,7 +21,7 @@
 * [Fixed]
 
     - corrections des erreurs à partir de DeepScan (#288)
-    - corrections syntaxiques eslint (da275a284a07ddd8e32753eda57ad4ef283d34fb et 306506a2255b2f05558ddcb05210dce39135c804)
+    - corrections syntaxiques eslint (da275a et 306506)
 
 * [Security]
 
@@ -41,14 +41,18 @@
 
 * [Changed]
 
+    - mise à jour de la lib. geoportal-access-lib : 2.1.8
+
 * [Deprecated]
 
 * [Removed]
 
+    - la dépendance *request* est supprimée, et remplacée par *node-fetch*
+
 * [Fixed]
 
     - corrections des erreurs à partir de DeepScan (#288)
-    - corrections syntaxiques eslint (da275a284a07ddd8e32753eda57ad4ef283d34fb et 306506a2255b2f05558ddcb05210dce39135c804)
+    - corrections syntaxiques eslint (da275a et 306506)
 
 * [Security]
 
