@@ -1173,7 +1173,7 @@ var ElevationPath = (function (Control) {
                 options.ssl = true;
             }
         }
-        
+
         Utils.mergeParams(options, {
             ssl : options.ssl
         });
@@ -1259,7 +1259,16 @@ var ElevationPath = (function (Control) {
 
         var _data = elevations;
 
-        var _unit = "m";
+        // FIXME facteur à 2000 doit il etre une option ?
+        var _limite = 2000; // metres
+        var _unit = "km";
+        var _factor = 1000;
+        var _length = this._getLength();
+        if (_length < _limite) {
+            _factor = 1;
+            _unit = "m";
+        }
+
 
         var _sketchPoints = this._getSketchCoords();
         // section actuelle du sketch sur laquelle on est
@@ -1285,18 +1294,8 @@ var ElevationPath = (function (Control) {
 
         for (var i = 1; i < _data.length; i++) {
             var a = [_data[i].lon, _data[i].lat];
-            var distanceToStart = _previousSectionsLength + olGetDistanceSphere(a, _sketchPoints[_currentSection]);
-            var dist = distanceToStart - _distance;
-
-            // Changement de section
-            if (a[0] === _nextSectionBegining[0] && a[1] === _nextSectionBegining[1]) {
-                _currentSection++;
-                _previousSectionsLength = distanceToStart;
-                // Pas de next section si on est sur le dernier point
-                if (i !== _data.length - 1) {
-                    _nextSectionBegining = _sketchPoints[_currentSection + 1];
-                }
-            }
+            var b = [_data[i - 1].lon, _data[i - 1].lat];
+            var dist = olGetDistanceSphere(a, b);
 
             var za = _data[i].z;
             var zb = _data[i - 1].z;
@@ -1314,10 +1313,9 @@ var ElevationPath = (function (Control) {
                 _distancePlus += dist;
                 _ascendingElevation += slope;
             }
-            _distance = distanceToStart;
-            _data[i].dist = distanceToStart;
 
-            distances.push(distanceToStart);
+            _distance += dist / _factor;
+            _data[i].dist = _distance;
 
             _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
             _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
@@ -1340,6 +1338,11 @@ var ElevationPath = (function (Control) {
             _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
         }
 
+        // Correction arrondi distance totale
+        _distance = Math.round(_distance);
+        _distanceMinus = Math.round(_distanceMinus);
+        _distancePlus = Math.round(_distancePlus);
+
         // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
         var _altMin = _data[0].z;
         var _altMax = _data[0].z;
@@ -1356,6 +1359,10 @@ var ElevationPath = (function (Control) {
             if (d.z < _altMin) {
                 _altMin = d.z;
             }
+
+            d.dist = Math.round(d.dist);
+            // FIXME erreur avec D3 car cette lib souhaite un numerique !
+            // d.dist = d.dist.toLocaleString();
 
             if (d.slope > _greaterSlope) {
                 _greaterSlope = d.slope;
