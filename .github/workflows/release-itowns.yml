@@ -3,7 +3,7 @@ name: Create Itowns Release ...
 on:
   push:
     tags:
-      - 'itowns-*'
+      - 'itowns-[0-9]+.[0-9]+.[0-9]+'
 
 env:
     LIBRARY: Itowns

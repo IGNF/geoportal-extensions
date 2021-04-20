@@ -3,7 +3,7 @@ name: Create Leaflet Release ...
 on:
   push:
     tags:
-      - 'leaflet-*'
+      - 'leaflet-[0-9]+.[0-9]+.[0-9]+'
 
 env:
     LIBRARY: Leaflet

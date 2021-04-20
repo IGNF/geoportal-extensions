@@ -3,7 +3,7 @@ name: Create OpenLayers Release ...
 on:
   push:
     tags:
-      - 'ol-*'
+      - 'ol-[0-9]+.[0-9]+.[0-9]+'
 
 env:
     LIBRARY: OpenLayers
