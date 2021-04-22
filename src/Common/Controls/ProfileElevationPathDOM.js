@@ -705,6 +705,13 @@ var ProfileElevationPathDOM = {
 
         var _points = data.points;
 
+        if (data.distance > 2000) {
+          data.unit = "km";
+          for (let i = 0; i < _points.length; i++){
+            _points[i].dist /= 1000;
+          }
+        }
+
         var _displayProfileOptions = self.options.displayProfileOptions;
 
         var margin = {
