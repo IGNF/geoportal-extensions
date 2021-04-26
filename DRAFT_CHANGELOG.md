@@ -4,8 +4,6 @@
 
 ## Summary
 
-    Correction sur la compilation (build) lié à openlayers
-
 ## Changelog
 
 * [Added]
@@ -18,8 +16,6 @@
 
 * [Fixed]
 
-	-  correctif sur exception de compilation avec la classe ol.geom.LinearRing
-
 * [Security]
 
 ---
@@ -28,7 +24,6 @@
 
 ## Summary
 
- Correction sur le Control mousePosition
  
 ## Changelog
 
@@ -41,7 +36,6 @@
 * [Removed]
 
 * [Fixed]
-  - fix le control MousePosition en reglant un zindex superieur au mousePositionPanel 
 
 * [Security]
 
