@@ -56,7 +56,8 @@ module.exports = (env, argv) => {
             filename : "[name]" + suffix + ".js",
             library : "Gp",
             libraryTarget : "umd",
-            umdNamedDefine : true
+            umdNamedDefine : true,
+            globalObject: 'this'
         },
         resolve : {
             alias : {
@@ -78,9 +79,9 @@ module.exports = (env, argv) => {
                 amd : "leaflet",
                 root : "L"
             },
-            request : {
-                commonjs2 : "request",
-                commonjs : "request",
+            "node-fetch" : {
+                commonjs2 : "node-fetch",
+                commonjs : "node-fetch",
                 amd : "require"
             },
             xmldom : {

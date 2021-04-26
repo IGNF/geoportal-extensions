@@ -705,6 +705,13 @@ var ProfileElevationPathDOM = {
 
         var _points = data.points;
 
+        if (data.distance > 2000) {
+            data.unit = "km";
+            for (let i = 0; i < _points.length; i++) {
+                _points[i].dist /= 1000;
+            }
+        }
+
         var _displayProfileOptions = self.options.displayProfileOptions;
 
         var margin = {
@@ -945,6 +952,27 @@ var ProfileElevationPathDOM = {
 
         AmCharts.addInitHandler(function () {});
 
+        if (data.distance > 2000) {
+            data.unit = "km";
+            for (let i = 0; i < _points.length; i++) {
+                _points[i].dist /= 1000;
+            }
+        }
+
+        for (let i = 0; i < _points.length; i++){
+          var dist = _points[i].dist;
+          var coeffArrond = 100;
+          if (dist > 100) {
+              coeffArrond = 1;
+          } else if (dist > 10) {
+              coeffArrond = 10;
+          }
+
+          // Correction arrondi distance totale
+          dist = Math.round(dist * coeffArrond) / coeffArrond;
+          _points[i].dist = dist;
+        }
+
         var settings = {
             type : "serial",
             pathToImages : "http://cdn.amcharts.com/lib/3/images/",
@@ -960,7 +988,7 @@ var ProfileElevationPathDOM = {
             numberFormatter : {
                 precision : -1,
                 decimalSeparator : ",",
-                thousandsSeparato : " "
+                thousandsSeparator : " "
             },
             categoryAxis : {
                 color : "#5E5E5E",

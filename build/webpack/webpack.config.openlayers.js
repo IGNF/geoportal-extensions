@@ -59,8 +59,9 @@ module.exports = (env, argv) => {
             path : path.join(ROOT, "dist", "openlayers"),
             filename : "[name]" + suffix + ".js",
             library : "Gp",
-            // libraryTarget : "umd", // FIXME on abandonne le mode umd !?
-            // umdNamedDefine : true // mode umd !
+            // libraryTarget : "umd", 
+            // umdNamedDefine : true,
+            // globalObject: 'this'
         },
         resolve : {
             alias : {
@@ -132,9 +133,9 @@ module.exports = (env, argv) => {
                     amd : "ol",
                     root : "ol"
                 },
-                request : {
-                    commonjs2 : "request",
-                    commonjs : "request",
+                "node-fetch" : {
+                    commonjs2 : "node-fetch",
+                    commonjs : "node-fetch",
                     amd : "require"
                 },
                 xmldom : {
