@@ -9,6 +9,7 @@
 * gestion des loggers : 
 > Exposition de la classe statique *Logger* avec les méthodes suivantes :
 `Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
+* correctif sur le profil altimétrique
 
 ## Changelog
 
@@ -23,7 +24,7 @@
 
 * [Removed]
 
-    - la dépendance *request* est supprimée, et remplacée par *node-fetch*
+    - la dépendance *request* est supprimée, et remplacée par *node-fetch* (#295)
 
 * [Fixed]
 
@@ -38,6 +39,7 @@
     - corrections syntaxiques eslint (da275a2 et 306506a)
     - cf. issue : Erreur compilation par webpack [#294](https://github.com/IGNF/geoportal-extensions/issues/294)
     - cf. issue : Erreur dépendances à la compilation [#283](https://github.com/IGNF/geoportal-extensions/issues/283)
+    - fix profil altimetrique amCharts + D3 (#296)
 
 * [Security]
 
