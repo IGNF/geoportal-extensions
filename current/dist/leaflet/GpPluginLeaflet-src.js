@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.8
- * @date 12/02/2021
+ * @version 2.1.9
+ * @date 26/04/2021
  *
  */
 
@@ -84,19 +84,19 @@
  * @copyright Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/proj4js/proj4js/master/LICENSE.md
- * @version   ^2.6.2
+ * @version   2.7.0
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("leaflet"), require("request"), require("xmldom"));
+		module.exports = factory(require("leaflet"), require("node-fetch"), require("xmldom"));
 	else if(typeof define === 'function' && define.amd)
 		define("Gp", ["leaflet", "require", "require"], factory);
 	else if(typeof exports === 'object')
-		exports["Gp"] = factory(require("leaflet"), require("request"), require("xmldom"));
+		exports["Gp"] = factory(require("leaflet"), require("node-fetch"), require("xmldom"));
 	else
 		root["Gp"] = factory(root["L"], root[undefined], root[undefined]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__53__, __WEBPACK_EXTERNAL_MODULE__54__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__53__, __WEBPACK_EXTERNAL_MODULE__54__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -222,6 +222,9 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(148);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MathUtils", function() { return _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
+/* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(34);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+
 /**
 * Global variable Gp.
 *
@@ -238,6 +241,7 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+* > Logger: (...)
 *
 * > LExtended: (...)
 *
@@ -289,6 +293,7 @@ var leafletExtDate = _package_json__WEBPACK_IMPORTED_MODULE_0__.date; // Classes
 
 
 
+
  // creation du namespace pour les extensions leaflet
 
 leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalLayer = _Layers_Layers__WEBPACK_IMPORTED_MODULE_6__["default"]; // WMS et WMTS
@@ -315,7 +320,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.2\",\"date\":\"12/02/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.8\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.14\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.1\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.7\",\"itowns\":\"2.27.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"^2.6.2\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"^0.121.1\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.5\",\"date\":\"26/04/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.9\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.15\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.2\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.8\",\"itowns\":\"2.30.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"2.7.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.124.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -1277,7 +1282,7 @@ var LayerSwitcher = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.Layer
       quicklookUrl: layer._geoportal_id ? layer._quicklookUrl : null
     }; // surcharge la config ci dessus avec les options de configuration saisies
 
-    if (layerConfig && Object.keys(layerConfig)) {
+    if (layerConfig && Object.keys(layerConfig).length) {
       leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Util.extend(this._layers[id], layerConfig);
     } // mise à jour de la visibilité
 
@@ -1480,11 +1485,7 @@ var LayerSwitcher = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.Layer
       this._update();
     }
 
-    var type = e.type === "layeradd" ? "overlayadd" : "overlayremove";
-
-    if (type) {
-      this._map.fire(type, obj);
-    }
+    this._map.fire(e.type === "layeradd" ? "overlayadd" : "overlayremove", obj);
   },
 
   /**
@@ -1871,18 +1872,52 @@ __webpack_require__.r(__webpack_exports__);
 
 var LoggerByDefault = {
   /**
-   *logger statique
-   * @param {String} [name="default"] - the logger name
+   * creation d'un logger statique
    *
+   * @param {String} [name="default"] - the logger name
    * @returns {Object} logger
    */
   getLogger: function getLogger(name) {
-    // Substitute global constants configured at compile time
+    // INFO :
+    // à la compilation en mode production, on substitue false
+    // avec "true", ceci desactive les loggers !
+    //
+    // à la compilation en mode developpement, on substitue false
+    // avec "false", ceci permet d'avoir les loggers actifs !
+    //
+    // lors d'une utilisation en module es6, il n'y a pas de substitution de false,
+    // les loggers sont donc actifs par defaut !
+    //
+    // > Substitute global constants configured at compile time
     // cf. webpack.config.js
     // on masque cette constante afin d'eviter "referenceerror not defined"
     "false".match(/true/) ? loglevel__WEBPACK_IMPORTED_MODULE_0__["disableAll"]() : loglevel__WEBPACK_IMPORTED_MODULE_0__["enableAll"]();
     var logname = name || "default";
     return loglevel__WEBPACK_IMPORTED_MODULE_0__["getLogger"](logname);
+  },
+
+  /** desactive tous les loggers */
+  disableAll: function disableAll() {
+    var loggers = loglevel__WEBPACK_IMPORTED_MODULE_0__["getLoggers"]();
+
+    for (var key in loggers) {
+      if (Object.hasOwnProperty.call(loggers, key)) {
+        var logger = loggers[key];
+        logger.disableAll();
+      }
+    }
+  },
+
+  /** active tous les loggers */
+  enableAll: function enableAll() {
+    var loggers = loglevel__WEBPACK_IMPORTED_MODULE_0__["getLoggers"]();
+
+    for (var key in loggers) {
+      if (Object.hasOwnProperty.call(loggers, key)) {
+        var logger = loggers[key];
+        logger.enableAll();
+      }
+    }
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (LoggerByDefault);
@@ -7615,7 +7650,7 @@ function CommonService (options) {
     }
 
     // gestion du callback onSuccess
-    var bOnSuccess = !!((this.options.onSuccess !== null && typeof this.options.onSuccess === "function"));
+    var bOnSuccess = !!(this.options.onSuccess !== null && typeof this.options.onSuccess === "function");
     if (!bOnSuccess) {
         throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_2__["default"].getMessage("PARAM_MISSING", "onSuccess()"));
     }
@@ -7807,7 +7842,7 @@ CommonService.prototype = {
 
         // a t on mis en place un proxy ?
         // la proxyfication est valable uniquement en mode XHR !
-        var bUrlProxified = !!((this.options.proxyURL && this.options.protocol === "XHR"));
+        var bUrlProxified = !!(this.options.proxyURL && this.options.protocol === "XHR");
 
         // rajout de l'option gpbibaccess
         // INFO : acces au numero de version de package.conf aprés compilation !
@@ -8173,7 +8208,7 @@ var Protocol = {
             settings.wrap = true;
         }
 
-        settings.callback = (options.protocol === "JSONP") ? null : null; // FIXME non géré !?
+        settings.callback = null; // FIXME non géré !?
         settings.output = settings.wrap ? "json" : null;
 
         // on encapsule les reponses dans un objet JSON
@@ -8384,26 +8419,44 @@ var XHR = {
 
                 // test on env. nodejs or browser
                 if (typeof window === "undefined") {
-                    // Utilisation du module :
-                    // cf. http://blog.modulus.io/node.js-tutorial-how-to-use-request-module
+                    var nodefetch = __webpack_require__(53);
 
-                    var req = __webpack_require__(53);// __request
+                    var opts = {
+                        headers : {
+                            Referer : "https://localhost"
+                        }
+                    };
 
-                    // mapping data avec body param. pour le mode POST ou PUT (?)
                     if (options.data && typeof options.data === "string" && corps) {
-                        options.body = options.data;
+                        opts = {
+                            method : options.method,
+                            body : options.data,
+                            headers : {
+                                "Content-Type" : options.content,
+                                Referer : "https://localhost"
+                            }
+                        };
                     }
 
-                    // FIXME ERROR : self signed certificate in certificate chain
-                    options.rejectUnauthorized = false;
-
-                    req(options, function (error, response, body) {
-                        if (!error && response.statusCode === 200 && body) {
-                            resolve(body);
-                        } else {
-                            reject("Errors Occured on Http Request (nodejs) : " + error);
-                        }
-                    });
+                    return nodefetch(options.url, opts)
+                        .then(function (response) {
+                            if (response.ok) { // res.status >= 200 && res.status < 300
+                                resolve(response.text());
+                            } else {
+                                var message = "Errors Occured on Http Request (status : '" + response.statusText + "' | url : '" + response.url + "')";
+                                var status = response.status;
+                                reject({
+                                    message : message,
+                                    status : status
+                                });
+                            }
+                        })
+                        .catch(function (e) {
+                            reject({
+                                message : e,
+                                status : -1
+                            });
+                        });
                 } else {
                     if (window.XMLHttpRequest) {
                         logger.trace("XMLHttpRequest");
@@ -10544,7 +10597,7 @@ var DefaultUrlService = {
 /* 57 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.7\",\"_id\":\"geoportal-access-lib@2.1.7\",\"_inBundle\":false,\"_integrity\":\"sha512-yF3R+yeJpXHdg0/WKF4B+1t3F3Ig7pmkNbDRRcAm+B6xHIp6QdFivIXBgyquuqeGA8w4LNN++TXX7GjDSmZI+g==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.7\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.7\",\"saveSpec\":null,\"fetchSpec\":\"2.1.7\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.7.tgz\",\"_shasum\":\"5ed0ac870810a9b1aa73a0d343b8b65425110e1b\",\"_spec\":\"geoportal-access-lib@2.1.7\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"12/02/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"request\":\"^2.87.0\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"2.1.7\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.8\",\"_id\":\"geoportal-access-lib@2.1.8\",\"_inBundle\":false,\"_integrity\":\"sha512-Z5LFBU5Gh8I3oO22334IPhd/5lqr1ZX6qLPAGGTqnXPxfb/DgUuW/wWP2aGXKLGeQfXz7UYUaYZ9pUxWf4jheQ==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.8\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.8\",\"saveSpec\":null,\"fetchSpec\":\"2.1.8\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.8.tgz\",\"_shasum\":\"7dbb71f23e430f446d6d6df3956e76a895f3c7e0\",\"_spec\":\"geoportal-access-lib@2.1.8\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"14/04/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"2.1.8\"}");
 
 /***/ }),
 /* 58 */
@@ -10627,8 +10680,8 @@ var AltiRequestFactory = {
         settings.param.zonly = options.zonly;
 
         // gestion des callback
-        var bOnError = !!((options.onError !== null && typeof options.onError === "function"));
-        var bOnSuccess = !!((options.onSuccess !== null && typeof options.onSuccess === "function"));
+        var bOnError = !!(options.onError !== null && typeof options.onError === "function"); // cast variable to boolean
+        var bOnSuccess = !!(options.onSuccess !== null && typeof options.onSuccess === "function");
 
         var message = null;
         switch (options.api) {
@@ -11881,7 +11934,7 @@ var AltiResponseFactory = {
                         logger.trace("analyze response : json");
                         logger.trace("analyze response : ", typeof options.response);
 
-                        var JSONResponse;
+                        var JSONResponse = null;
                         if (typeof options.response === "string") {
                             JSONResponse = JSON.parse(options.response);
                         } else {
@@ -11889,7 +11942,7 @@ var AltiResponseFactory = {
                         }
 
                         // le service renvoie t il une erreur ?
-                        if (JSONResponse.error) {
+                        if (JSONResponse && JSONResponse.error) {
                             // ex. {"error": {"code": "BAD_PARAMETER","description": "The values () cannot be parsed as a valid longitude (double value such as -180 < lat < 180)."}}
                             options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"]({
                                 message : _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION", JSONResponse.error.description),
@@ -13872,7 +13925,7 @@ AutoConfResponseReader.READERS = {
                     }
                 }
                 // si aucune metadata n'a été ajoutée, on crée le tableau vide
-                if (!lyr.metadata && !Array.isArray(lyr.metadata)) {
+                if (!lyr.metadata) {
                     lyr.metadata = [];
                 }
                 lyr.metadata.push(m);
@@ -17245,15 +17298,8 @@ function Address (options) {
     };
 
     // param obligatoire
-    if (!options.location) {
+    if (!this.options.location || Object.keys(this.options.location).length === 0) {
         throw new Error("l'option 'location' n'est pas renseignée !");
-    }
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
     }
 }
 
@@ -17864,15 +17910,8 @@ function Position (options) {
     this.options = options || {};
 
     // param obligatoire
-    if (!options.position) {
+    if (!this.options.position) {
         throw new Error("l'option 'position' n'est pas renseignée !");
-    }
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
     }
 }
 
@@ -19596,7 +19635,7 @@ var ReverseGeocodeReponseFactory = {
                 if (options.scope && options.scope.options && options.scope.options.srs && options.scope.options.srs !== "EPSG:4326") {
                     var location;
                     var pos;
-                    if (data || data.locations || data.locations.length) {
+                    if (data.locations) {
                         for (var i = 0; i < data.locations.length; i++) {
                             location = data.locations[i];
                             if (location) {
@@ -20408,7 +20447,7 @@ var AutoCompleteResponseFactory = {
                 logger.trace("analyze response : raw");
                 data = options.response;
             } else {
-                var JSONResponse;
+                var JSONResponse = null;
                 if (typeof options.response === "string") {
                     JSONResponse = JSON.parse(options.response);
                 } else {
@@ -20433,17 +20472,17 @@ var AutoCompleteResponseFactory = {
 
                     // boucle sur les résultats de l'autocomplétion
                     if (JSONResponse.results && Array.isArray(JSONResponse.results)) {
-                        var suggestedLocation;
+                        var suggestedLocation = null;
 
                         for (var i = 0; i < JSONResponse.results.length; i++) {
                             var result = JSONResponse.results[i];
                             suggestedLocation = new _model_SuggestedLocation__WEBPACK_IMPORTED_MODULE_4__["default"]();
 
-                            if (suggestedLocation) {
-                                if (result && result.country === "StreetAddress") {
+                            if (result) {
+                                if (result.country === "StreetAddress") {
                                     suggestedLocation.street = result.street;
                                     suggestedLocation.type = "StreetAddress";
-                                } else if (result && result.country === "PositionOfInterest") {
+                                } else if (result.country === "PositionOfInterest") {
                                     suggestedLocation.poi = result.street;
                                     suggestedLocation.kind = result.kind;
                                     suggestedLocation.type = "PositionOfInterest";
@@ -21051,7 +21090,7 @@ var RouteRequestFactory = {
         var settings = options || {};
 
         // gestion des callback
-        var bOnError = !!((options.onError !== null && typeof options.onError === "function"));
+        var bOnError = !!(options.onError !== null && typeof options.onError === "function");
 
         var message = null;
         // choix entre les 2 types d'API pour consulter le service
@@ -21853,19 +21892,12 @@ function RoutePlan (options) {
     this.options = options || {};
 
     // param obligatoire
-    if (!options.startPoint) {
+    if (!this.options.startPoint) {
         throw new Error("l'option 'startPoint' n'est pas renseignée !");
     }
 
-    if (!options.endPoint) {
+    if (!this.options.endPoint) {
         throw new Error("l'option 'endPoint' n'est pas renseignée !");
-    }
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
     }
 }
 
@@ -22448,7 +22480,7 @@ var RouteResponseFactory = {
                     case "json":
                         logger.trace("analyze response : json");
 
-                        var JSONResponse;
+                        var JSONResponse = null;
                         if (typeof options.response === "string") {
                             JSONResponse = JSON.parse(options.response);
                         } else {
@@ -22456,7 +22488,7 @@ var RouteResponseFactory = {
                         }
 
                         // le service renvoie t il une erreur ?
-                        if (JSONResponse.message) {
+                        if (JSONResponse && JSONResponse.message) {
                             // ex. {"message":"message not null", "status":"ERROR"}
                             options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION", JSONResponse.message)));
                             return;
@@ -22521,12 +22553,12 @@ var RouteResponseFactory = {
                                         legs.push(legList[i]);
                                     }
                                 }
-                                if (Array.isArray(legs) && legs.length) {
+                                if (legs.length) {
                                     for (i = 0; i < legs.length; i++) {
                                         legSteps.push(legs[i].steps);
                                     }
                                 }
-                                if (Array.isArray(legSteps) && legSteps.length) {
+                                if (legSteps.length) {
                                     for (i = 0; i < legSteps.length; i++) {
                                         steps = steps.concat(legSteps[i]);
                                     }
@@ -22545,7 +22577,7 @@ var RouteResponseFactory = {
                                             points.push(point);
                                         }
                                     }
-                                    if (points && points.length !== 0) {
+                                    if (points.length !== 0) {
                                         data.routeInstructions[data.routeInstructions.length - 1].geometry = {
                                             coordinates : points,
                                             type : "LineString"
@@ -24145,7 +24177,7 @@ var ProcessIsoCurveResponseFactory = {
                     case "json":
                         logger.trace("analyze response : json");
 
-                        var JSONResponse;
+                        var JSONResponse = null;
                         if (typeof options.response === "string") {
                             JSONResponse = JSON.parse(options.response);
                         } else {
@@ -24153,43 +24185,39 @@ var ProcessIsoCurveResponseFactory = {
                         }
 
                         // analyse de la reponse
-                        if (JSONResponse.status === "OK" || JSONResponse.status === "ok") {
+                        if (JSONResponse && (JSONResponse.status === "OK" || JSONResponse.status === "ok")) {
                             // création de l'objet de réponse
                             data = new _model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_6__["default"]();
 
                             // remplissage de l'objet créé avec les attribtuts de la réponse du service
-                            if (data) {
-                                data.time = JSONResponse.time;
-                                data.distance = JSONResponse.distance;
-                                data.message = JSONResponse.message;
-                                data.id = JSONResponse.id;
-                                data.srs = JSONResponse.srs;
-                                // callback de la reponse
-                                var onWKTSuccess = function (json) {
-                                    data.geometry = json;
-                                };
-                                // callback d'erreur
-                                var onWKTError = function () {
-                                    options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"]({
-                                        message : _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_FORMAT", "wktGeometry")
-                                    }));
-                                };
-                                if (data.hasOwnProperty("geometry")) {
-                                    _Formats_WKT__WEBPACK_IMPORTED_MODULE_4__["default"].toJson(JSONResponse.wktGeometry, onWKTSuccess, onWKTError);
-                                    if (!data.geometry) {
-                                        return;
-                                    }
+                            data.time = JSONResponse.time;
+                            data.distance = JSONResponse.distance;
+                            data.message = JSONResponse.message;
+                            data.id = JSONResponse.id;
+                            data.srs = JSONResponse.srs;
+                            // callback de la reponse
+                            var onWKTSuccess = function (json) {
+                                data.geometry = json;
+                            };
+                            // callback d'erreur
+                            var onWKTError = function () {
+                                options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"]({
+                                    message : _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_FORMAT", "wktGeometry")
+                                }));
+                            };
+                            if (data.hasOwnProperty("geometry")) {
+                                _Formats_WKT__WEBPACK_IMPORTED_MODULE_4__["default"].toJson(JSONResponse.wktGeometry, onWKTSuccess, onWKTError);
+                                if (!data.geometry) {
+                                    options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", options.response)));
+                                    return;
                                 }
-                                var coords = JSONResponse.location.split(",");
-                                if (data.location) {
-                                    data.location.x = coords[0];
-                                    data.location.y = coords[1];
-                                }
-                            } else {
-                                options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", options.response)));
-                                return;
                             }
-                        } else if (JSONResponse.status === "ERROR" || JSONResponse.status === "error") {
+                            var coords = JSONResponse.location.split(",");
+                            if (data.location) {
+                                data.location.x = coords[0];
+                                data.location.y = coords[1];
+                            }
+                        } else if (JSONResponse && (JSONResponse.status === "ERROR" || JSONResponse.status === "error")) {
                             // JSHint bug if var message is used !?
                             var mess = JSONResponse.message;
                             mess += "\n (raw response service : '" + JSONResponse + "')";
@@ -24621,7 +24649,7 @@ __webpack_require__.r(__webpack_exports__);
     // il est impossible de controler quelquechose !!!
 
 
-    if (!_resources || _resources.length === 0) {
+    if (_resources.length === 0) {
       // message orienté pour le developpeur !
       logger.error("WARNING : " + "no parameter 'resources' specified !");
       return;
@@ -24629,7 +24657,7 @@ __webpack_require__.r(__webpack_exports__);
     // il est impossible de controler quelquechose !!!
 
 
-    if (!_services || _services.length === 0) {
+    if (_services.length === 0) {
       // message orienté pour le developpeur !
       logger.error("WARNING : " + "no parameter 'services' specified !");
       return;
@@ -24717,7 +24745,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        if (!_rightManagement || Object.keys(_rightManagement).length === 0) {
+        if (Object.keys(_rightManagement).length === 0) {
           logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
           return;
         } // on ajoute la clef
@@ -28601,7 +28629,7 @@ var MousePosition = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
 
     coordinate = format(this._project(oLatLng, oSrs));
 
-    if (!coordinate || Object.keys(coordinate).lenght === 0) {
+    if (!coordinate || Object.keys(coordinate).length === 0) {
       return;
     }
 
@@ -28736,7 +28764,7 @@ var MousePosition = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
       onSuccess: function onSuccess(results) {
         logger.log(results);
 
-        if (results && Object.keys(results)) {
+        if (results && Object.keys(results).length) {
           // var context = this.options.scope;
           // context._setAltidude(results.elevations[0].z);
           callback.call(this, results.elevations[0].z);
@@ -30189,7 +30217,7 @@ var MousePositionDOM = {
    */
   GPdisplayCoords: function GPdisplayCoords(coordinate) {
     // Compute coords in case of cursor position (desktop)
-    if (coordinate && coordinate != null) {
+    if (coordinate) {
       var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
       var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
 
@@ -30271,7 +30299,7 @@ var MousePositionDOM = {
     var maxThreshold = noDataValue + noDataValueTolerance;
     var minThreshold = noDataValue - noDataValueTolerance; // Compute coords in case of cursor position (desktop)
 
-    if (coordinate && coordinate != null) {
+    if (coordinate) {
       // If no altitude panel, don't call altitude request
       if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
         altitudeTimeout = setTimeout(function () {
@@ -38581,7 +38609,7 @@ var EPSG27572 = {
     if (_Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
       var o = _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__["default"].getTileMatrix("LAMB2E");
 
-      if (o && Object.keys(o)) {
+      if (o && Object.keys(o).length) {
         resolutions = o.nativeResolutions;
       }
     }
@@ -38957,9 +38985,7 @@ var ReverseGeocoding = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
       this.options.apiKey = rightManagementGeocode.key;
     }
 
-    if (rightManagementGeocode) {
-      this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
-    }
+    this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
   },
 
   /**
@@ -38974,19 +39000,19 @@ var ReverseGeocoding = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
     if (this.options.resources) {
       var resources = this.options.resources; // on vérifie que la liste des ressources de geocodage est bien un tableau
 
-      if (!Array.isArray(resources)) {
+      if (Array.isArray(resources)) {
+        var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+
+        for (i = 0; i < resources.length; i++) {
+          if (resourcesList.indexOf(resources[i]) === -1) {
+            // si la resource n'est pas référencée, on l'enlève
+            // resources.splice(i, 1);
+            logger.log("[ReverseGeocoding] options.resources : " + resources[i] + " is not a resource for reverse geocode");
+          }
+        }
+      } else {
         logger.log("[ReverseGeocoding] 'options.resources' parameter should be an array");
         resources = null;
-      }
-
-      var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
-
-      for (i = 0; i < resources.length; i++) {
-        if (resourcesList.indexOf(resources[i]) === -1) {
-          // si la resource n'est pas référencée, on l'enlève
-          // resources.splice(i, 1);
-          logger.log("[ReverseGeocoding] options.resources : " + resources[i] + " is not a resource for reverse geocode");
-        }
       }
     } // et le tableau des délimitations
 
@@ -38994,19 +39020,19 @@ var ReverseGeocoding = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
     if (this.options.delimitations) {
       var delimitations = this.options.delimitations; // on vérifie que la liste des delimitations est bien un tableau
 
-      if (!Array.isArray(delimitations)) {
+      if (Array.isArray(delimitations)) {
+        var delimitationsList = ["Circle", "Point", "Extent"];
+
+        for (i = 0; i < delimitations.length; i++) {
+          if (delimitationsList.indexOf(delimitations[i]) === -1) {
+            // si la delimitations n'est pas référencée, on l'enlève
+            // resources.splice(i, 1);
+            logger.log("[ReverseGeocoding] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
+          }
+        }
+      } else {
         logger.log("[ReverseGeocoding] 'options.delimitations' parameter should be an array");
         delimitations = null;
-      }
-
-      var delimitationsList = ["Circle", "Point", "Extent"];
-
-      for (i = 0; i < delimitations.length; i++) {
-        if (delimitationsList.indexOf(delimitations[i]) === -1) {
-          // si la delimitations n'est pas référencée, on l'enlève
-          // resources.splice(i, 1);
-          logger.log("[ReverseGeocoding] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
-        }
       }
     }
   },
@@ -46287,7 +46313,7 @@ var Route = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend(
     } // existe t il une geometrie pour chaque troncon de route ?
 
 
-    var bGeometryInstructions = instructions[0].geometry.length !== 0; // Geometries des tronçon
+    var bGeometryInstructions = instructions && Array.isArray(instructions) && instructions[0].geometry.length !== 0; // Geometries des tronçon
 
     if (instructions && bGeometryInstructions) {
       this._fillRouteResultsDetailsFeatureGeometry(instructions);
@@ -48650,11 +48676,8 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
     // les tables de ressources
 
 
-    if (resources && leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Util.isArray(resources) && !options.filterOptions) {
-      if (!options.filterOptions) {
-        options.filterOptions = {};
-      }
-
+    if (leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Util.isArray(resources) && !options.filterOptions) {
+      options.filterOptions = {};
       options.filterOptions.type = resources;
     } // gestion de la clef !
 
@@ -48758,11 +48781,8 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
     // les tables de ressources
 
 
-    if (resources && leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Util.isArray(resources) && !options.filterOptions) {
-      if (!options.filterOptions) {
-        options.filterOptions = {};
-      }
-
+    if (leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Util.isArray(resources) && !options.filterOptions) {
+      options.filterOptions = {};
       options.filterOptions.type = resources;
     } // gestion de la clef !
 
@@ -51124,7 +51144,8 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
 
     if (!_sampling) {
       // computing sampling
-      var _computeSampling = 50;
+      var _computeSampling;
+
       var _length = this._currentFeature._measurementRunningTotal; // FIXME !!!
 
       logger.trace("length", _length);
@@ -51949,16 +51970,19 @@ var ProfileElevationPathDOM = {
    * @returns {DOMElement} profil container
    */
   displayProfileByDefault: function displayProfileByDefault(data, container, context, className) {
-    var self = context; // on nettoie toujours...
+    var self = context;
 
-    if (container) {
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
+    if (!container) {
+      return;
     }
 
     if (!data) {
       return;
+    } // on nettoie toujours...
+
+
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
 
     var margin = {
@@ -52430,14 +52454,17 @@ var ProfileElevationPathDOM = {
    * @returns {DOMElement} profil container
    */
   displayProfileRaw: function displayProfileRaw(data, container, context, className) {
-    // on nettoie toujours...
-    if (container) {
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
+    if (!container) {
+      return;
+    } // on nettoie toujours...
+
+
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
 
-    var _points = data.points;
+    var _points = data && data.points ? data.points : {};
+
     var div = document.createElement("textarea");
     div.id = "profilElevationResults";
     div.rows = 10;
@@ -52471,15 +52498,31 @@ var ProfileElevationPathDOM = {
    * @returns {DOMElement} profil container
    */
   displayProfileLibD3: function displayProfileLibD3(data, container, context, className) {
-    var self = context; // on nettoie toujours...
+    var self = context;
 
-    if (container) {
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
+    if (!container) {
+      return;
+    }
+
+    if (!data) {
+      return;
+    } // on nettoie toujours...
+
+
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
 
     var _points = data.points;
+
+    if (data.distance > 2000) {
+      data.unit = "km";
+
+      for (var i = 0; i < _points.length; i++) {
+        _points[i].dist /= 1000;
+      }
+    }
+
     var _displayProfileOptions = self.options.displayProfileOptions;
     var margin = {
       top: 20,
@@ -52584,6 +52627,15 @@ var ProfileElevationPathDOM = {
    */
   displayProfileLibAmCharts: function displayProfileLibAmCharts(data, container, context, className) {
     var self = context;
+
+    if (!container) {
+      return;
+    }
+
+    if (!data) {
+      return;
+    }
+
     var _points = data.points;
     var ballonText = "<span class='altiPathValue'>[[title]] : [[value]]m</span><br/>";
     var currentSlope = self.options.displayProfileOptions.currentSlope;
@@ -52594,6 +52646,30 @@ var ProfileElevationPathDOM = {
 
     ballonText += "<span class='altiPathCoords'>(Lat: [[lat]] / Lon:[[lon]])</span>";
     AmCharts.addInitHandler(function () {});
+
+    if (data.distance > 2000) {
+      data.unit = "km";
+
+      for (var i = 0; i < _points.length; i++) {
+        _points[i].dist /= 1000;
+      }
+    }
+
+    for (var _i3 = 0; _i3 < _points.length; _i3++) {
+      var dist = _points[_i3].dist;
+      var coeffArrond = 100;
+
+      if (dist > 100) {
+        coeffArrond = 1;
+      } else if (dist > 10) {
+        coeffArrond = 10;
+      } // Correction arrondi distance totale
+
+
+      dist = Math.round(dist * coeffArrond) / coeffArrond;
+      _points[_i3].dist = dist;
+    }
+
     var settings = {
       type: "serial",
       pathToImages: "http://cdn.amcharts.com/lib/3/images/",
@@ -52609,7 +52685,7 @@ var ProfileElevationPathDOM = {
       numberFormatter: {
         precision: -1,
         decimalSeparator: ",",
-        thousandsSeparato: " "
+        thousandsSeparator: " "
       },
       categoryAxis: {
         color: "#5E5E5E",
@@ -52836,7 +52912,7 @@ var Layers = {
    * initialize options
    */
   _initOptions: function _initOptions() {
-    if (!this.options || Object.keys(this.options) === 0) {
+    if (!this.options || Object.keys(this.options).length === 0) {
       throw new Error("PARAM_MISSING : options !");
     }
 
@@ -52882,7 +52958,7 @@ var Layers = {
       service: service
     });
 
-    if (!this.params || Object.keys(this.params) === 0) {
+    if (!this.params || Object.keys(this.params).length === 0) {
       this.params = {};
 
       if (!this.options.apiKey) {
@@ -53364,7 +53440,7 @@ var LayerUtils = {
           } // max zoom constraints
 
 
-          if (drawLogo && maxZoomLevel !== null && maxZoomLevel < zoom) {
+          if (drawLogo && maxZoomLevel && maxZoomLevel < zoom) {
             drawLogo = false;
           } // bbox constraints
 
@@ -53839,9 +53915,7 @@ var LayerEvent = {
     } // suppression des attributions de liste
 
 
-    if (this._attributions) {
-      this._attributions = [];
-    }
+    this._attributions = [];
   },
 
   /**
@@ -54175,7 +54249,7 @@ __webpack_require__.r(__webpack_exports__);
   if (key) {
     var splitKeys = key.split(/;|,|\|/);
 
-    if (key && splitKeys.length > 1) {
+    if (splitKeys.length > 1) {
       var keys = [];
 
       for (var i = 0; i < splitKeys.length; i++) {
