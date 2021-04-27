@@ -1,8 +1,10 @@
-**TODO : PREPARATION POUR PROCHAINE LIVRAISON**
-
 # Extension Geoportail OpenLayers
 
 ## Summary
+
+upgrade des dependances :
+- openLayers@6.3.1
+- ol-mapbox-style@6.3.2
 
 ## Changelog
 
