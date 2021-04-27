@@ -16,10 +16,7 @@
 {{/content}}
 
 {{#content "body"}}
-            <b>TODO</b>
-            <h2>
-              Ajout du widget d'import de couches sur un service MapBox IGN avec une clef d'acces
-            </h2>
+            <h2>Ajout du widget d'import de couches sur un service MapBox de type TileJSON</h2>
             <div id="zoom-container">Niveau de zoom : <span id="zoom-level">?</span></div>
             <!-- map -->
             <div id="map">
@@ -52,15 +49,7 @@
                     layerTypes : ["MapBox"],
                     webServicesOptions : {
                         proxyUrl : "{{ proxy }}?url=",
-                        noProxyDomains : ["localhost", "https://api.mapbox.com/"]
-                    },
-                    vectorStyleOptions : {
-                        MapBox : {
-                            tools : {
-                                style : true,
-                                filter : true
-                            }
-                        }
+                        noProxyDomains : ["localhost"]
                     }
                 });
                 map.addControl(layerImport);
@@ -71,7 +60,7 @@
                 var div = document.querySelector("input[id^=GPimportChoiceAltUrl-");
                 div.click();
                 var input = document.querySelector("input[id^=GPimportUrl-]");
-                input.value = "{{ resources }}/data/mapbox/styles/ign-key.json?apiKey={{ apikey }}";
+                input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/mapbox/styles/planign/accentue.json";
 
                 var zoomContainer = document.getElementById('zoom-level');
                 map.on('moveend', function (event) {

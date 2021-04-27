@@ -97,6 +97,7 @@ module.exports = (env, argv) => {
                         "ol/events",
                         "ol/obj",
                         "ol/render/canvas",
+                        "ol/render/Feature",
                         "ol/css",
                         "ol/dom",
                         "ol/transform",
