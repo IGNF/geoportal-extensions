@@ -1,0 +1,300 @@
+name: Create Itowns Release ...
+
+on:
+  push:
+    tags:
+      - 'itowns-*'
+
+env:
+    LIBRARY: Itowns
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Libs Perl
+        run: |
+          sudo apt-get install perl-base libjson-perl
+
+      # FIXME commiter into develop branch ?
+      - name: Build & Package
+        run: |
+          cd ./build/scripts/release/
+          chmod 755 build-pack.sh
+          ./build-pack.sh -i
+
+      - name: Create Zip
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        run: |
+          zip --junk-paths bundles dist/itowns/*
+
+      - name: Upload JSDoc artifacts
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        uses: actions/upload-artifact@v2
+        with:
+          name: jsdoc
+          path: jsdoc/itowns
+
+      - name: Upload Binary artifacts
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/itowns
+
+      # FIXME artifacts bundles and binary are the same !?
+      - name: Upload Bundles artifacts
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        uses: actions/upload-artifact@v2
+        with:
+          name: bundles
+          path: bundles.zip
+
+      - name: Upload Package artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: build/scripts/release/geoportal-extensions-itowns
+
+  publish_gh-pages:
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: IGNF/geoportal-extensions
+          ref: gh-pages
+
+      - name: Get the tagname
+        id: get_tagname
+        run: echo ::set-output name=TAGNAME::$(echo ${GITHUB_REF##*/})
+
+      - name: Initialize
+        run: |
+          mkdir -p tmp/jsdoc/itowns/
+          mkdir -p tmp/dist/itowns/
+          mkdir -p ${{ steps.get_tagname.outputs.TAGNAME }}/jsdoc/
+          mkdir -p ${{ steps.get_tagname.outputs.TAGNAME }}/dist/
+
+      - name: Download JSDoc artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: jsdoc
+          path: tmp/jsdoc/itowns
+
+      - name: Build jsdoc
+        run: |
+          cp -r tmp/jsdoc current
+          cp -r tmp/jsdoc/itowns/* ${{ steps.get_tagname.outputs.TAGNAME }}/jsdoc/
+
+      - name: Download Binary artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: tmp/dist/itowns
+
+      - name: Build bundles
+        run: |
+          cp -r tmp/dist current
+          cp -r tmp/dist/itowns/* ${{ steps.get_tagname.outputs.TAGNAME }}/dist/
+
+      - name: Link versions
+        run: |
+          rm itowns-latest
+          ln -s ${{ steps.get_tagname.outputs.TAGNAME }} itowns-latest
+
+      - name: Clean and publish
+        run: |
+          rm -rf tmp/
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -A
+          git commit -m "update jsdoc / bundles to release ${{ env.LIBRARY }} : ${{ steps.get_tagname.outputs.TAGNAME }}"
+          git push
+
+  create_release:
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Perl
+        run: |
+          sudo apt-get install perl-base libjson-perl
+
+      - name: Checkout # checkout repository to get DRAFT_CHANGELOG.md !
+        uses: actions/checkout@v2
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo v${GITHUB_REF##*/} | cut -d - -f 2-)
+
+      - name: Get Package.json value
+        id: get_package_value
+        run: |
+          echo ::set-output name=VERSION::$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_; my $field = 'itownsExtVersion'; print $DS->{$field};')
+          echo ::set-output name=DATE::$(cat package.json | perl -MJSON -0ne 'my $DS = decode_json $_; my $field = 'date'; print $DS->{$field};' | sed -e 's/\//\\\//g')
+
+      - name: Create ChangeLog
+        run: | # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
+          cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoportail Itowns/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          sed -i 's/__VERSION__/${{ steps.get_package_value.outputs.VERSION }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          sed -i 's/__DATE__/${{ steps.get_package_value.outputs.DATE }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+
+      - name: Upload ChangeLog artifacts
+        if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+        uses: actions/upload-artifact@v2
+        with:
+          name: changelog
+          path: DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body_path: DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          draft: false
+          prerelease: false
+
+      - name: Download bundles artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: bundles
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bundles.zip
+          asset_name: GpPlugin${{ env.LIBRARY }}-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip
+
+  publish_package:
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: create_release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Initialize
+        run: |
+          mkdir -p package
+
+      - name: Use nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Use registry npm
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          # scope: '@ignf-geoportal'
+
+      - name: Download Package artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: package
+
+      - name: Publish on npm
+        run: |
+          cd ./package
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_GEOPORTAL_TOKEN }}
+
+  changelog:
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: [create_release, publish_package]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: IGNF/geoportal-extensions
+          ref: develop
+          token: ${{ secrets.ADMIN_GEOPORTAL_TOKEN }}
+
+      - name: Download ChangeLog artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
+
+      - name: Install Libs
+        run: |
+          npm install markdown-toc
+
+      # cf. https://www.grymoire.com/Unix/Sed.html
+      # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
+      - name: Reset draft changelog
+        run: |
+          sed -i -e '/# Extension Geoportail Itowns/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
+          sed -i '0,/__UP_LIBRARY__/s/__UP_LIBRARY__/Itowns/' DRAFT_CHANGELOG.md
+          sed -i '0,/__LO_LIBRARY__/s/__LO_LIBRARY__/itowns/' DRAFT_CHANGELOG.md
+
+      - name: Archive changelog
+        run: |
+          cat DRAFT_CHANGELOG_${{ env.LIBRARY }}.md >> doc/CHANGELOG-itowns.md
+          ./node_modules/.bin/markdown-toc -i doc/CHANGELOG-itowns.md
+
+      - name: Clean and publish
+        run: |
+          rm  DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -A
+          git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
+          git push --force
+
+  # TODO not yet implemented !
+  rollback:
+    if: false # always skip job !
+    # if: failure()
+    # if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: [create_release, publish_package, changelog]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the tagname
+        id: get_tagname
+        run: echo ::set-output name=TAGNAME::$(echo ${GITHUB_REF##*/})
+
+      - name: Rollback jsdoc (gh-pages)
+        run: |
+          echo "not yet implemented !"
+
+      - name: Rollback changelog (develop)
+        run: |
+          echo "not yet implemented !"
+
+      - name: Rollback Release
+        if: job.create_release.steps.create_release.outputs.id != ''
+        uses: author/action-rollback@stable
+        with:
+          # Using a known release ID
+          id: ${{ job.create_release.steps.create_release.id }}
+          # Using a tag name
+          tag: ${{ steps.get_tagname.outputs.TAGNAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

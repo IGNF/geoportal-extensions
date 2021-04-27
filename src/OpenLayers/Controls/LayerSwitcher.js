@@ -20,19 +20,19 @@ var logger = Logger.getLogger("layerswitcher");
  * @constructor
  * @extends {ol.control.Control}
  * @alias ol.control.LayerSwitcher
- * @param {Object} lsOptions - control options
- * @param {Array} [lsOptions.layers] - list of layers to be configured. Each array element is an object, with following properties :
- * @param {ol.layer.Layer} [lsOptions.layers.layer] - ol.layer.Layer layer to be configured (that has been added to map)
- * @param {Object} [lsOptions.layers.config] - custom configuration object for layer information (title, description, legends, metadata, quicklook url), with following properties :
- * @param {String} [lsOptions.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
- * @param {String} [lsOptions.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
- * @param {String} [lsOptions.layers.config.quicklookUrl] - link to a quick look image for this layer.
- * @param {Array} [lsOptions.layers.config.legends] - array of layer legends. Each array element is an object, with following properties :
+ * @param {Object} options - control options
+ * @param {Array} [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
+ * @param {ol.layer.Layer} [options.layers.layer] - ol.layer.Layer layer to be configured (that has been added to map)
+ * @param {Object} [options.layers.config] - custom configuration object for layer information (title, description, legends, metadata, quicklook url), with following properties :
+ * @param {String} [options.layers.config.title] - layer alias, to be displayed in widget layer list. E.g. : "Cartes IGN"
+ * @param {String} [options.layers.config.description] - layer description, to be displayed on title hover, or in layer information panel.
+ * @param {String} [options.layers.config.quicklookUrl] - link to a quick look image for this layer.
+ * @param {Array} [options.layers.config.legends] - array of layer legends. Each array element is an object, with following properties :
  *      - url (String, mandatory) : link to a legend
  *      - minScaleDenominator (Number, optional) : min scale denominator for legend validity.
- * @param {Array} [lsOptions.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
- * @param {Object} [lsOptions.options] - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
- * @param {Boolean} [lsOptions.options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+ * @param {Array} [options.layers.config.metadata] - array of layer metadata. Each array element is an object, with property url (String, mandatory) : link to a metadata
+ * @param {Object} [options.options] - ol.control.Control options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Control.html ol.control.Control})
+ * @param {Boolean} [options.options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @example
  * map.addControl(new ol.control.LayerSwitcher(
  *  [
@@ -50,32 +50,32 @@ var logger = Logger.getLogger("layerswitcher");
  * ));
  */
 var LayerSwitcher = (function (Control) {
-    function LayerSwitcher (lsOptions) {
-        lsOptions = lsOptions || {};
-        var options = lsOptions.options || {};
-        var layers = lsOptions.layers || [];
+    function LayerSwitcher (options) {
+        options = options || {};
+        var _options = options.options || {};
+        var _layers = options.layers || [];
 
         if (!(this instanceof LayerSwitcher)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
-        if (layers && !Array.isArray(layers)) {
+        if (!Array.isArray(_layers)) {
             throw new Error("ERROR WRONG_TYPE : layers should be an array");
         }
 
-        if (options && typeof options !== "object") {
+        if (typeof _options !== "object") {
             throw new Error("ERROR WRONG_TYPE : options should be an object");
         }
 
-        this._initialize(options, layers);
+        this._initialize(_options, _layers);
 
-        var container = this._container = this._initContainer(options);
+        var container = this._container = this._initContainer(_options);
 
         // call ol.control.Control constructor
         Control.call(this, {
             element : container,
-            target : options.target,
-            render : options.render
+            target : _options.target,
+            render : _options.render
         });
     }
 
@@ -279,7 +279,7 @@ var LayerSwitcher = (function (Control) {
             }
 
             // user may also add a new configuration for an already added layer
-        } else if (this._layers[id] && config) {
+        } else {
             // add new configuration parameters to layer informations
             for (var prop in config) {
                 if (config.hasOwnProperty(prop)) {
@@ -407,7 +407,6 @@ var LayerSwitcher = (function (Control) {
             return;
         }
         var removalDiv = document.getElementById(this._addUID("GPremove_ID_" + layerID));
-        logger.log(removalDiv.style.display);
         if (removalDiv) {
             if (removable === false) {
                 removalDiv.style.display = "none";

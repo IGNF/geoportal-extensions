@@ -73,10 +73,9 @@ var WMTS = (function (WMTSSource) {
             var x = tileCoord[1];
             var y = tileCoord[2];
             var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
-            var projectionExtent = projection.getExtent();
-            var extent = projectionExtent;
+            var extent = projection.getExtent();
 
-            if (extent != null && projection.isGlobal() && extent[0] === projectionExtent[0] && extent[2] === projectionExtent[2]) {
+            if (extent != null && projection.isGlobal()) {
                 var numCols = Math.ceil(olGetWidth(extent) / olGetWidth(tileExtent));
                 x = x % numCols;
                 tmpTileCoord[0] = tileCoord[0];
@@ -125,7 +124,7 @@ var WMTS = (function (WMTSSource) {
         /* patch parce que la fonction getTileCoordForCoordAndResolution(coords,res) d'Openlayers peut renvoyer
         une tuile dont l'étendue (getTileCoordExtent) ne contient pas le point passé en paramètre (coords) */
         var tileSize = tileGrid.getTileSize(tileCoord[0]);
-        x = Math.min(x, (tileSize[0] | tileSize)-1);
+        x = Math.min(x, (tileSize[0] | tileSize) - 1);
         y = Math.max(y, 0);
 
         baseParams["I"] = x;

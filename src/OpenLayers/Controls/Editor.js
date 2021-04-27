@@ -26,6 +26,19 @@ var logger = Logger.getLogger("editor");
  * @constructor
  * @alias ol.style.Editor
  * @param {Object} options - options for function call.
+ * @fires editor:layer:onclickvisibility
+ * @fires editor:layer:onclickclone
+ * @fires editor:layer:onclickremove
+ * @fires editor:style:oneditjson
+ * @fires editor:style:scale:onchangemin
+ * @fires editor:style:scale:onchangemax
+ * @fires editor:legend:onclickedition
+ * @fires editor:legend:onchangevalue
+ * @fires editor:filter:oneditjson
+ * @fires editor:themes:onclickimage
+ * @fires editor:themes:onclicktitle
+ * @fires editor:group:oncollapse
+ * @fires editor:onloaded
  * @example
  *   var editor = new Editor ({
  *      target : "",
@@ -83,6 +96,14 @@ var logger = Logger.getLogger("editor");
  *          editable : true | false    // active l'edition de la legende (legendes)
  *      }
  *   });
+ *   // create DOM
+ *   editor.createElement()
+ *     .then(() => {
+ *       console.warn(editor.getID());
+ *     })
+ *     .catch(error => {});
+ *   // possibility to add listeners with globale variable : eventbus
+ *   eventbus.addEventListener("editor:style:scale:onchangemin", function (e) {...});
  */
 function Editor (options) {
     logger.trace("[constructor] Editor", options);
@@ -660,7 +681,7 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch image sprites exception :", error);
                         });
-                } else {}
+                }
             })
             .catch(error => {
                 logger.warn("fetch sprites exception :", error);
@@ -680,7 +701,7 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch json sprites exception :", error);
                         });
-                } else {}
+                }
             })
             .catch(error => {
                 logger.warn("fetch sprites exception :", error);

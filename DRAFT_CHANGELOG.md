@@ -1,4 +1,8 @@
-# Extension Geoportail OpenLayers
+
+# Extension Geoportail OpenLayers, version __VERSION__
+
+**__DATE__**
+> Release Extension Geoportail openLayers
 
 ## Summary
 
@@ -22,11 +26,15 @@ upgrade des dependances :
 
 ---
 
-# Extension Geoportail Itowns
+
+
+# Extension Geoportail Leaflet, version __VERSION__
+
+**__DATE__**
+> Release Extension Geoportail leaflet
 
 ## Summary
 
- 
 ## Changelog
 
 * [Added]
@@ -43,9 +51,19 @@ upgrade des dependances :
 
 ---
 
-# Extension Geoportail Leaflet
+
+
+
+# Extension Geoportail Itowns, version __VERSION__
+
+**__DATE__**
+> Release Extension Geoportail itowns
 
 ## Summary
+
+* gestion des loggers : 
+> Exposition de la classe statique *Logger* avec les méthodes suivantes :
+`Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
 
 ## Changelog
 
@@ -59,5 +77,12 @@ upgrade des dependances :
 
 * [Fixed]
 
+    - Possibilité de activer / desactiver les loggers des API lors de l'utilisation des API en module ES6 :
+
+    ```js
+    import { Logger } from "geoportal-extensions-itowns";
+    Logger.disableAll();
+
 * [Security]
 
+---

@@ -59,7 +59,7 @@ function LayerWMS (options) {
         var config = {};
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
-        if (wmsParams.projection === "EPSG:3857" && wmsParams.extent) {
+        if (wmsParams.projection === "EPSG:3857") {
             wmsParams.extent = new ItExtent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");
         } else {
             wmsParams.extent = new ItExtent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);

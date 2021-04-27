@@ -205,7 +205,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 transparent : true,
                 source : {
                     url : 'spec/itowns/resources/KML/S_TOP100.kml',
-                    projection : 'EPSG:4326',
+                    crs : 'EPSG:4326',
                     fetcher: itowns.Fetcher.xml,
                     parser: itowns.KMLParser.parse
                 }
@@ -284,7 +284,8 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         it('should get coordinate from mouse event', (done) => {
             var mouseEvent = {
                 offsetX: viewWidth / 2,
-                offsetY: viewHeight / 2
+                offsetY: viewHeight / 2,
+                target : globeViewExtended.getGlobeView().domElement
             };
             globeViewExtended.setZoom(zoomScale.zoom).then(() => {
                 var coords = globeViewExtended.getCoordinateFromMouseEvent(mouseEvent);
@@ -472,14 +473,15 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 setTimeout(function () {
                     var mouseEvent = {
                         offsetX: viewWidth / 2,
-                        offsetY: viewHeight / 2
+                        offsetY: viewHeight / 2,
+                        target: globeViewExtended.getGlobeView().domElement
                     }
-                    var feats = globeViewExtended.getFeaturesAtMousePosition(mouseEvent);
 
-                    assert(feats, "no features returned");
-                    assert(feats.length > 0, "no features returned");
-                    done();
-
+                    globeViewExtended.getFeaturesAtMousePosition(mouseEvent).then(feats => {
+                        assert(feats, "no features returned");
+                        assert(feats.length > 0, "no features returned");
+                        done();
+                    }).catch(e => done(e));
                 }, 2000);
             }).catch(e => done(e));
         });

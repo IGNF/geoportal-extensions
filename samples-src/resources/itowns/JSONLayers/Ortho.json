@@ -4,7 +4,7 @@
     "source": {
         "protocol": "wmts",
         "url": "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
-        "projection" : "EPSG:3857",
+        "crs" : "EPSG:3857",
         "updateStrategy": {
             "type": "0",
             "options": {}
@@ -99,12 +99,12 @@
                         }
                     }
                 ]
+            },
+            {
+                "name": "IGN",
+                "url": "http://www.ign.fr/"
             }
         ],
-        "attribution": {
-            "name": "IGN",
-            "url": "http://www.ign.fr/"
-        },
         "name": "ORTHOIMAGERY.ORTHOPHOTOS",
         "format": "image/jpeg",
         "tileMatrixSet": "PM",

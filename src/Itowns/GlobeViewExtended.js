@@ -11,14 +11,6 @@ import {
     VIEW_EVENTS as IT_VIEW_EVENTS
 } from "itowns";
 
-/* import GlobeView, { GLOBE_VIEW_EVENTS } from "itowns/Core/Prefab/GlobeView";
-import Coordinates from "itowns/Core/Geographic/Coordinates";
-import ColorLayersOrdering from "itowns/Renderer/ColorLayersOrdering";
-import FeaturesUtils from "itowns/Utils/FeaturesUtils";
-import { MAIN_LOOP_EVENTS } from "itowns/Core/MainLoop";
-import { CONTROL_EVENTS } from "itowns/Controls/GlobeControls";
-import { VIEW_EVENTS } from "itowns/Core/View"; */
-
 var logger = Logger.getLogger("GlobeViewExtended");
 
 /**
@@ -30,11 +22,12 @@ var logger = Logger.getLogger("GlobeViewExtended");
  * @extends {itowns.GlobeView}
  * @param {HTMLElement} viewerDiv - Where to instanciate the Three.js scene in the DOM
  * @param {Object} coordCarto - longitude, latitude, altitude
- * @param {Object} [options] - Optional properties.
+ * @param {Object} [options] - Optional properties which includes Itowns GlobeView optional properties (see Itowns documentation).
+ * @param {Boolean} [options.renderer.isWebGL2=True] - is an Itowns GlobeView optional property to enable webgl 2.0 for THREE.js.
  * @param {String} [options.position="relative"] - "absolute" or "relative"
  */
 function GlobeViewExtended (viewerDiv, coordCarto, options) {
-    if (!viewerDiv.style.position || (options & options.position)) {
+    if (!viewerDiv.style.position || (options && options.position)) {
         viewerDiv.style.position = (!options || !options.position) ? "relative" : options.position;
     }
 
@@ -345,6 +338,16 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
     var layer = this.getColorLayerById(layerId);
     layer.visible = visible;
+
+    // sync the vectorTiles layer visibility with its labels
+    if (layer.source.isVectorSource === true) {
+        if (layer.visible === true) {
+            layer.labelEnabled = true;
+        } else {
+            layer.labelEnabled = false;
+        }
+    }
+
     this.getGlobeView().notifyChange(layer);
 };
 
@@ -572,7 +575,7 @@ GlobeViewExtended.prototype.getScale = function () {
  * Sets tilt
  *
  * @param {Number} tilt - Tilt value
- * @return {Promise}
+ * @return {Promise} - Promise when setTilt is done
  */
 GlobeViewExtended.prototype.setTilt = function (tilt) {
     return this.getGlobeView().controls.setTilt(tilt, false);
@@ -591,7 +594,7 @@ GlobeViewExtended.prototype.getTilt = function () {
  * Sets azimuth
  *
  * @param {Number} azimuth - Azimuth value
- * @return {Promise}
+ * @return {Promise} - Promise when setAzimuth is done
  */
 GlobeViewExtended.prototype.setAzimuth = function (azimuth) {
     return this.getGlobeView().controls.setHeading(azimuth, false);
@@ -635,34 +638,39 @@ GlobeViewExtended.prototype.getCoordinateFromMouseEvent = function (mouseEvent) 
  * Get all visible features that intersect a pixel
  *
  * @param {MouseEvent} mouseEvent - A mouse event.
- * @return {Array} visibleFeatures - The array of visible features.
+ * @return {Promise} promise
  */
 GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
-    var vectorLayers = this.getVectorLayers();
+    const vectorLayers = this.getVectorLayers();
     if (!vectorLayers) {
-        return;
+        return Promise.resolve([]);
     }
     // array of the visible features on the clicker coord
-    var visibleFeatures = [];
-    var geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
-    if (geoCoord) {
-        // buffer around the click inside we retrieve the features
-        var precision = this.getGlobeView().controls.pixelsToDegrees(5);
-        for (var i = 0; i < vectorLayers.length; i++) {
-            var idx;
-            var layer = vectorLayers[i];
-            // if the layer is not visible, we ignore it
-            if (!layer.visible) {
-                continue;
-            }
-            var result = ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, layer.source.parsedData, precision);
-            // we add the features to the visible features array
-            for (idx = 0; idx < result.length; idx++) {
-                visibleFeatures.push(result[idx]);
-            }
-        }
+    const geoCoord = this.getCoordinateFromMouseEvent(mouseEvent);
+    if (!geoCoord) {
+        return Promise.resolve([]);
     }
-    return visibleFeatures;
+    // buffer around the click inside we retrieve the features
+    const precisionInMeters = this.getGlobeView().getPixelsToMeters(5);
+    const precision = this.getGlobeView().getMetersToDegrees(precisionInMeters);
+
+    const promises = [];
+    for (let i = 0; i < vectorLayers.length; i++) {
+        if (!vectorLayers[i].visible) {
+            continue;
+        }
+        promises.push(vectorLayers[i].source.loadData({}, {
+            crs : "EPSG:4326"
+        }));
+    }
+
+    return Promise.all(promises).then(result => {
+        let visibleFeatures = [];
+        for (let i = 0; i < result.length; i++) {
+            visibleFeatures = visibleFeatures.concat(ItFeaturesUtils.filterFeaturesUnderCoordinate(geoCoord, result[i], precision));
+        }
+        return visibleFeatures;
+    });
 };
 
 /**

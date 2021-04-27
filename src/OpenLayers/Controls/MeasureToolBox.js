@@ -54,6 +54,7 @@ var MeasureToolBox = {
         var mapId = mapContainer.id;
 
         if (!this._toolbox || Object.keys(this._toolbox).length === 0) {
+            this._toolbox = {};
             this._toolbox[mapId] = ID.generate();
         } else {
             if (!this._toolbox[mapId]) {

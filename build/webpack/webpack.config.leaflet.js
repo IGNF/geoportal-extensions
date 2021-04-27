@@ -56,7 +56,8 @@ module.exports = (env, argv) => {
             filename : "[name]" + suffix + ".js",
             library : "Gp",
             libraryTarget : "umd",
-            umdNamedDefine : true
+            umdNamedDefine : true,
+            globalObject: 'this'
         },
         resolve : {
             alias : {
@@ -78,9 +79,9 @@ module.exports = (env, argv) => {
                 amd : "leaflet",
                 root : "L"
             },
-            request : {
-                commonjs2 : "request",
-                commonjs : "request",
+            "node-fetch" : {
+                commonjs2 : "node-fetch",
+                commonjs : "node-fetch",
                 amd : "require"
             },
             xmldom : {
@@ -98,14 +99,14 @@ module.exports = (env, argv) => {
             //      }
             // },
             stats : "errors-only",
-            // host : "localhost",
-            // https: true,
-            // port : 9001,
-            // hot : true,
-            // contentBase : path.join(__dirname),
+            host : "localhost",
+            https: true,
+            port : 9001,
+            hot : true,
+            contentBase : path.join(__dirname),
             // publicPath : "/dist/leaflet/",
             // openPage : "/samples/index-leaflet-map.html",
-            // open : "google-chrome",
+            open : "google-chrome",
             watchOptions : {
                 watch : true,
                 poll : true

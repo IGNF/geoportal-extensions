@@ -1,6 +1,6 @@
 # Extension Géoportail pour iTowns
 
-[![release](https://img.shields.io/badge/release%20-itowns%202.2.4-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.2.4)
+[![release](https://img.shields.io/badge/release%20-itowns%202.2.4-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.3.2)
 
 <!-- toc -->
 
@@ -317,7 +317,7 @@ Gp.Services.getConfig(...)
 
 ### Versions d'iTowns supportées
 
-La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.15.3** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.15.3 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
+La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.27.0** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.27.0 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
 
 
 ### Navigateurs supportés

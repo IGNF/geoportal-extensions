@@ -342,24 +342,25 @@ var ReverseGeocode = (function (Control) {
         if (options.resources) {
             var resources = options.resources;
             // on vérifie que la liste des ressources de geocodage est bien un tableau
-            if (!Array.isArray(resources)) {
+            if (Array.isArray(resources)) {
+                var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+                var wrongResourcesIndexes = [];
+                for (i = 0; i < resources.length; i++) {
+                    if (resourcesList.indexOf(resources[i]) === -1) {
+                        // si la resource n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
+                        wrongResourcesIndexes.push(i);
+                        logger.log("[ReverseGeocode] options.resources : " + resources[i] + " is not a resource for reverse geocode");
+                    }
+                }
+                // on retire les ressoures non référencées qu'on a pu rencontrer
+                if (wrongResourcesIndexes.length !== 0) {
+                    for (j = 0; j < wrongResourcesIndexes.length; j++) {
+                        resources.splice(wrongResourcesIndexes[j], 1);
+                    }
+                }
+            } else {
                 logger.log("[ReverseGeocode] 'options.resources' parameter should be an array");
                 resources = null;
-            }
-            var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
-            var wrongResourcesIndexes = [];
-            for (i = 0; i < resources.length; i++) {
-                if (resourcesList.indexOf(resources[i]) === -1) {
-                    // si la resource n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
-                    wrongResourcesIndexes.push(i);
-                    logger.log("[ReverseGeocode] options.resources : " + resources[i] + " is not a resource for reverse geocode");
-                }
-            }
-            // on retire les ressoures non référencées qu'on a pu rencontrer
-            if (wrongResourcesIndexes.length !== 0) {
-                for (j = 0; j < wrongResourcesIndexes.length; j++) {
-                    resources.splice(wrongResourcesIndexes[j], 1);
-                }
             }
         }
 
@@ -367,24 +368,25 @@ var ReverseGeocode = (function (Control) {
         if (options.delimitations) {
             var delimitations = options.delimitations;
             // on vérifie que la liste des delimitations est bien un tableau
-            if (!Array.isArray(delimitations)) {
+            if (Array.isArray(delimitations)) {
+                var delimitationsList = ["Circle", "Point", "Extent"];
+                var wrongDelimitationsIndexes = [];
+                for (i = 0; i < delimitations.length; i++) {
+                    if (delimitationsList.indexOf(delimitations[i]) === -1) {
+                        // si la delimitations n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
+                        wrongDelimitationsIndexes.push(i);
+                        logger.log("[ReverseGeocode] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
+                    }
+                }
+                // on retire les ressoures non référencées qu'on a pu rencontrer
+                if (wrongDelimitationsIndexes.length !== 0) {
+                    for (j = 0; j < wrongDelimitationsIndexes.length; j++) {
+                        delimitations.splice(wrongDelimitationsIndexes[j], 1);
+                    }
+                }
+            } else {
                 logger.log("[ReverseGeocode] 'options.delimitations' parameter should be an array");
                 delimitations = null;
-            }
-            var delimitationsList = ["Circle", "Point", "Extent"];
-            var wrongDelimitationsIndexes = [];
-            for (i = 0; i < delimitations.length; i++) {
-                if (delimitationsList.indexOf(delimitations[i]) === -1) {
-                    // si la delimitations n'est pas référencée, on stocke son index pour la retirer du tableau (après avoir terminé de parcourir le tableau)
-                    wrongDelimitationsIndexes.push(i);
-                    logger.log("[ReverseGeocode] options.delimitations : " + delimitations[i] + " is not a delimitation for reverse geocode");
-                }
-            }
-            // on retire les ressoures non référencées qu'on a pu rencontrer
-            if (wrongDelimitationsIndexes.length !== 0) {
-                for (j = 0; j < wrongDelimitationsIndexes.length; j++) {
-                    delimitations.splice(wrongDelimitationsIndexes[j], 1);
-                }
             }
         }
     };
@@ -541,9 +543,7 @@ var ReverseGeocode = (function (Control) {
             this.options.apiKey = rightManagementGeocode.key;
         }
 
-        if (rightManagementGeocode) {
-            this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
-        }
+        this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
     };
 
     /**
@@ -1051,9 +1051,12 @@ var ReverseGeocode = (function (Control) {
 
         // on crée les options pour le service reverseGeocode
         var context = this;
+        if (typeof this.options.ssl !== "boolean") {
+            this.options.ssl = true;
+        }
         var requestOptions = {
             apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
-            ssl : this.options.ssl || true,
+            ssl : this.options.ssl,
             position : this._requestPosition,
             filterOptions : {
                 type : [this._currentGeocodingType]
@@ -1355,7 +1358,7 @@ var ReverseGeocode = (function (Control) {
 
         // récupération de la position
         var position = [location.position.x, location.position.y];
-        if (!position) {
+        if (position.length === 0) {
             return;
         }
         var view = map.getView();

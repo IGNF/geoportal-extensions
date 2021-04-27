@@ -14,6 +14,7 @@
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+* > Logger: (...)
 *
 * > olExtended: (...)
 * > olUtils: (...)
@@ -145,7 +146,7 @@ export {
 };
 
 /** Version */
-export const olExtVersion = Pkg.olExtVersion;
+export const olExtVersion = Pkg.olExtVersion || Pkg.version;
 /** Publication date */
 export const olExtDate = Pkg.date;
 
@@ -159,6 +160,8 @@ export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 /** cf. Gp.MathUtils */
 export { default as MathUtils } from "../Common/Utils/MathUtils";
+/** cf. Gp.Logger */
+export { default as Logger } from "../Common/Utils/LoggerByDefault";
 
 function deepCopy (source, target) {
     // Implementing Tail Call Elimination

@@ -59,8 +59,9 @@ module.exports = (env, argv) => {
             path : path.join(ROOT, "dist", "openlayers"),
             filename : "[name]" + suffix + ".js",
             library : "Gp",
-            // libraryTarget : "umd", // FIXME on abandonne le mode umd !?
-            // umdNamedDefine : true // mode umd !
+            // libraryTarget : "umd", 
+            // umdNamedDefine : true,
+            // globalObject: 'this'
         },
         resolve : {
             alias : {
@@ -133,9 +134,9 @@ module.exports = (env, argv) => {
                     amd : "ol",
                     root : "ol"
                 },
-                request : {
-                    commonjs2 : "request",
-                    commonjs : "request",
+                "node-fetch" : {
+                    commonjs2 : "node-fetch",
+                    commonjs : "node-fetch",
                     amd : "require"
                 },
                 xmldom : {
@@ -154,14 +155,14 @@ module.exports = (env, argv) => {
             //      }
             // },
             stats : "errors-only",
-            // host : "localhost",
-            // https: true,
-            // port : 9001,
-            // hot : true,
-            // contentBase : path.join(__dirname),
+            host : "localhost",
+            https: true,
+            port : 9001,
+            hot : true,
+            contentBase : path.join(__dirname),
             // publicPath : "/dist/openlayers/",
             // openPage : "/samples/index-openlayers-map.html",
-            // open : "google-chrome",
+            open : "google-chrome",
             watchOptions : {
                 watch : true,
                 poll : true

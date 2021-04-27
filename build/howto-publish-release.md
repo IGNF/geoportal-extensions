@@ -1,3 +1,5 @@
+**DEPRECIATE**
+
 # Publication d'une nouvelle version des extensions
 
 ex. les extensions Géoportail pour OpenLayers, version x.y.z.

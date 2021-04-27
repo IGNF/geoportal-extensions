@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  pull_request:
+    branches:
+      - develop
+  push:
+    branches:
+      - master
+      - 'release-*'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      # build only source bundle because this is more faster !
+      - name: Build OpenLayers
+        run: npm run build:ol:src
+
+      - name: Build Leaflet
+        run: npm run build:leaflet:src
+
+      - name: Build Itowns
+        run: npm run build:itowns:src

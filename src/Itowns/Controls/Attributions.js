@@ -18,12 +18,15 @@ var logger = Logger.getLogger("Attributions");
  * @param {Object} aOptions - control options
  * @param {Object} [aOptions.options] - Itowns.control.Control options
  * @param {Boolean} [aOptions.options.collapsed = false] - Specify if the control has to be opened or not.
+ * @fires attributions:update
  * @example
  * var attribution = new itowns.control.Attritbution({
  *  options : {
  *      collapsed: true
  *  }
- * ));
+ * });
+ * // listeners for attributions update :
+ * attribution.addEventListener("attributions:update", function (e) {...});
  */
 function Attributions (aOptions) {
     aOptions = aOptions || {};
@@ -33,7 +36,7 @@ function Attributions (aOptions) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (options && typeof options !== "object") {
+    if (typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
@@ -258,7 +261,20 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
             }
         }
     }
-    this._updateAttributionListContainer(attributions);
+    if (attributions.size) {
+        this._updateAttributionListContainer(attributions);
+        /**
+        * event triggered when the attributions are updated
+        *
+        * @event attributions:update
+        * @type Object
+        * @property {Map} attributions - list of attributions
+        */
+        this.dispatchEvent({
+            type : "attributions:update",
+            attributions : attributions
+        });
+    }
 };
 
 // ################################################################### //

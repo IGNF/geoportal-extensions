@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"totalFeatures": 380522,
+"name": "SELECT",
+"bbox": [ 2.41114029999999, 48.8064623, 2.41444859999998, 48.8159613999999 ],                                                      
+"features": [
+{ "type": "Feature", "id": "parcelle.120335529", "geometry_name": "the_geom", "properties": { "numero": "0104", "feuille": 1, "section": "0A", "code_dep": "94", "nom_com": "Alfortville", "code_com": "002", "com_abs": "000", "code_arr": "000", "bbox": [ 268626.20982400002, 6243579.5128910998, 268630.80731896998, 6243625.8673633495 ] }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 2.4131182, 48.815573599999986 ], [ 2.4131227, 48.8155738 ], [ 2.413150200000032, 48.8153125 ], [ 2.413151599999968, 48.815302 ], [ 2.413111200000041, 48.815299599999982 ], [ 2.413110299999967, 48.815534199999981 ], [ 2.4131182, 48.815573599999986 ] ] ] ] } },
+{ "type": "Feature", "id": "testline_1", "geometry_name": "the_geom", "properties": { "message": "pouet" }, "geometry": { "type": "LineString", "coordinates": [ [ 2.413688099999963, 48.8146323 ], [ 2.413568599999962, 48.814633 ], [ 2.413568500000043, 48.814678 ], [ 2.4136843, 48.814677699999962 ] ] } },
+{ "type": "Feature", "id": "testpoint_1", "geometry_name": "the_geom", "properties": { "message": "pouet" }, "geometry": { "type": "Point", "coordinates": [ 2.412370599999965, 48.8148687 ] } },
+{ "type": "Feature", "id": "testpoint_2", "geometry_name": "the_geom", "properties": { "message": "pouet" }, "geometry": { "type": "Point", "coordinates": [ 2.413302499999962, 48.815580299999979 ] } },
+{ "type": "Feature", "id": "testpoint_3", "geometry_name": "the_geom", "properties": { "message": "pouet" }, "geometry": { "type": "Point", "coordinates": [ 2.411171699999983, 48.815280099999953 ] } }
+]
+}

@@ -40,10 +40,16 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @alias ol.control.GeoportalMousePosition
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
- * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
+ * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
+ *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
+ *      and "M" or "KM" for metric coordinates
+ * @param {Boolean}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
+ * @param {Boolean}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
+ * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
  * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -54,12 +60,6 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Number}  options.systems.geoBBox.left - Left bound.
  * @param {Number}  options.systems.geoBBox.top - Top bound.
  * @param {Number}  options.systems.geoBBox.bottom - Bottom bound.
- * @param {Array}   [options.units] - list of coordinates units, to be displayed in control units list.
- *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
- *      and "M" or "KM" for metric coordinates
- * @param {Array}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
- * @param {Array}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
- * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
  * @param {Object} [options.positionMarker] - options for position marker
  * @param {String} options.positionMarker.url - Marker url (define in src/Openlayers/Controls/Utils/Markers.js)
  * @param {Array} options.positionMarker.offset - Offsets in pixels used when positioning the marker towards targeted point.
@@ -491,8 +491,9 @@ var MousePosition = (function (Control) {
      */
     MousePosition.prototype._initialize = function (options) {
         // Set default options
+        options = options || {};
         // {Object} control options - set by user or by default
-        this.options = options || {};
+        this.options = options;
         this.options.collapsed = (options.collapsed !== undefined) ? options.collapsed : true;
         /** {Boolean} specify if MousePosition control is collapsed (true) or not (false) */
         this.collapsed = this.options.collapsed;
@@ -1304,7 +1305,7 @@ var MousePosition = (function (Control) {
             // dans le cas général
             // callback onSuccess
             _onSuccess = function (results) {
-                if (results && Object.keys(results)) {
+                if (results && Object.keys(results).length) {
                     callback.call(this, results.elevations[0].z);
                 }
             };
@@ -1326,7 +1327,14 @@ var MousePosition = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        var _ssl = options.ssl || this.options.ssl || true;
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
+        var _ssl = options.ssl;
 
         Gp.Services.getAltitude({
             apiKey : _apiKey,
@@ -1362,13 +1370,7 @@ var MousePosition = (function (Control) {
         // evenement declenché à l'ouverture/fermeture du panneau,
         // et en fonction du mode : desktop ou tactile !
         if (this._showMousePositionContainer.checked) {
-            if (this._isDesktop) {
-                // map.un("pointermove", (e) => { this.onMouseMove(e); });
-                olObservableUnByKey(this.listenerKey);
-            } else {
-                // map.un("moveend", (e) => this.onMapMove(e));
-                olObservableUnByKey(this.listenerKey);
-            }
+            olObservableUnByKey(this.listenerKey);
         } else if (!this.editing) {
             if (this._isDesktop) {
                 this.listenerKey = map.on("pointermove", (e) => { this.onMouseMove(e); });

@@ -13,7 +13,7 @@ last
 * proj4
 
 last
-└── proj4@2.6.0
+└── proj4@2.7.0
 
 * proj4leaflet
 
