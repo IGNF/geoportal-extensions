@@ -1,33 +1,6 @@
 {
-   "bugs" : {},
-   "author" : "IGNF",
-   "directories" : {},
-   "devDependencies" : {},
    "bundleDependencies" : [],
-   "name" : "geoportal-extensions-itowns",
-   "version" : "2.3.2",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "dependencies" : {
-      "itowns" : "2.30.0",
-      "geoportal-access-lib" : "2.1.8",
-      "proj4" : "2.7.0",
-      "three" : "0.124.0",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "loglevel" : "1.6.6",
-      "node-fetch" : "^2.6.1"
-   },
-   "description" : "French Geoportal Extensions for iTowns",
-   "scripts" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
+   "bugs" : {},
    "files" : [
       "dist/",
       "src/",
@@ -35,10 +8,37 @@
       "README.md",
       "package.json"
    ],
-   "date" : "30/03/2021",
-   "module" : "src/Itowns/index.js",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "date" : "26/04/2021",
    "main" : "dist/GpPluginItowns-src.js",
    "license" : "CECILL-B",
-   "peerDependencies" : {}
+   "version" : "2.3.2",
+   "scripts" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "name" : "geoportal-extensions-itowns",
+   "author" : "IGNF",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "peerDependencies" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "module" : "src/Itowns/index.js",
+   "directories" : {},
+   "description" : "French Geoportal Extensions for iTowns",
+   "devDependencies" : {},
+   "dependencies" : {
+      "three" : "0.124.0",
+      "proj4" : "2.7.0",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "2.1.8",
+      "itowns" : "2.30.0",
+      "node-fetch" : "^2.6.1",
+      "sortablejs" : "1.8.4",
+      "loglevel" : "1.6.6"
+   }
 }
