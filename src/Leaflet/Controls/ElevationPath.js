@@ -112,7 +112,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         this._lastIdLayer = 0;
         this._currentIdLayer = 0;
         this._currentFeature = null;
-        this._currentCompletedFeature = null;
 
         // graph
         this._profile = null;
