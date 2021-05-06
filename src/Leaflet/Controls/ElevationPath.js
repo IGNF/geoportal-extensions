@@ -782,7 +782,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
             var dist = distanceToStart - _distance;
 
             // Changement de section
-            if (a[0] === _nextSectionBegining.lon && a[1] === _nextSectionBegining.lat) {
+            if (a[0].toFixed(8) === _nextSectionBegining.lon.toFixed(8) && a[1].toFixed(8) === _nextSectionBegining.lat.toFixed(8)) {
                 _currentSection++;
                 _previousSectionsLength = distanceToStart;
                 // Pas de next section si on est sur le dernier point
