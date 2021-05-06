@@ -752,18 +752,20 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
         var _data = elevations;
 
-        // FIXME facteur à 2000 doit il etre une option ?
-        var _limite = 2000; // metres
-        var _unit = "km";
-        var _factor = 1000;
-        if (this._distance < _limite) {
-            _factor = 1;
-            _unit = "m";
-        }
+        var _unit = "m";
+
+        var _sketchPoints = this._geometry;
+        // section actuelle du sketch sur laquelle on est
+        var _currentSection = 0;
+        // longueur cumulée des sections précédentes
+        var _previousSectionsLength = 0;
+        var _nextSectionBegining = _sketchPoints[1];
 
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
         _data[0].dist = 0;
         _data[0].slope = 0;
+        _data[0].lat = Math.round(_data[0].lat * 10000) / 10000;
+        _data[0].lon = Math.round(_data[0].lon * 10000) / 10000;
 
         var _distanceMinus = 0;
         var _distancePlus = 0;
@@ -772,10 +774,22 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         var _distance = 0;
         var _slopes = 0;
 
+        var distances = [];
+
         for (var i = 1; i < _data.length; i++) {
             var a = [_data[i].lon, _data[i].lat];
-            var b = [_data[i - 1].lon, _data[i - 1].lat];
-            var dist = _haversineDistance(a, b);
+            var distanceToStart = _previousSectionsLength + _haversineDistance(a, [_sketchPoints[_currentSection].lon, _sketchPoints[_currentSection].lat]);
+            var dist = distanceToStart - _distance;
+
+            // Changement de section
+            if (a[0].toFixed(8) === _nextSectionBegining.lon.toFixed(8) && a[1].toFixed(8) === _nextSectionBegining.lat.toFixed(8)) {
+                _currentSection++;
+                _previousSectionsLength = distanceToStart;
+                // Pas de next section si on est sur le dernier point
+                if (i !== _data.length - 1) {
+                    _nextSectionBegining = _sketchPoints[_currentSection + 1];
+                }
+            }
 
             var za = _data[i].z;
             var zb = _data[i - 1].z;
@@ -793,8 +807,10 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
                 _distancePlus += dist;
                 _ascendingElevation += slope;
             }
-            _distance += dist / _factor;
-            _data[i].dist = _distance;
+            _distance = distanceToStart;
+            _data[i].dist = distanceToStart;
+
+            distances.push(distanceToStart);
 
             _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
             _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
@@ -817,18 +833,8 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
             _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
         }
 
-        // Valeur du coeff d'arrondi des distances en fonction de la distance totale
-        var coeffArrond = 100;
-        if (_distance > 100) {
-            coeffArrond = 1;
-        } else if (_distance > 10) {
-            coeffArrond = 10;
-        }
-
-        // Correction arrondi distance totale
-        _distance = Math.round(_distance * coeffArrond) / coeffArrond;
-        _distanceMinus = Math.round(_distanceMinus * coeffArrond) / coeffArrond;
-        _distancePlus = Math.round(_distancePlus * coeffArrond) / coeffArrond;
+        // check distance totale
+        logger.trace("List Distances", distances);
 
         // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
         var _altMin = _data[0].z;
@@ -837,35 +843,30 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
         for (var ji = 0; ji < _data.length; ji++) {
             var d = _data[ji];
-            if (d.z < 0) {
+            if (d.z < -100) {
                 d.z = 0;
             }
-            if (d.z >= _altMax) {
+            if (d.z > _altMax) {
                 _altMax = d.z;
             }
-            if (d.z <= _altMin) {
+            if (d.z < _altMin) {
                 _altMin = d.z;
             }
-
-            d.dist = Math.round(d.dist * coeffArrond) / coeffArrond;
-            // FIXME erreur avec D3 car cette lib souhaite un numerique !
-            // d.dist = d.dist.toLocaleString();
 
             if (d.slope > _greaterSlope) {
                 _greaterSlope = d.slope;
             }
         }
-
         return {
             greaterSlope : _greaterSlope, // pente max
             meanSlope : Math.round(_slopes / _data.length), // pente moyenne
-            distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
-            distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
+            distancePlus : _distancePlus, // distance cumulée positive
+            distanceMinus : _distanceMinus, // distance cumulée négative
             ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
             descendingElevation : _descendingElevation, // dénivelé cumulée négative
-            altMin : _altMin.toLocaleString(), // altitude min
-            altMax : _altMax.toLocaleString(), // altitude max
-            distance : _distance.toLocaleString(), // distance totale
+            altMin : _altMin.toLocaleString(), // altitude min TODO: inutile ?
+            altMax : _altMax.toLocaleString(), // altitude max TODO: inutile ?
+            distance : this._distance, // distance totale
             unit : _unit, // unité des mesures de distance
             points : _data
         };
