@@ -780,7 +780,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
             var a = [_data[i].lon, _data[i].lat];
             var distanceToStart = _previousSectionsLength + _haversineDistance(a, [_sketchPoints[_currentSection].lon, _sketchPoints[_currentSection].lat]);
             var dist = distanceToStart - _distance;
-            console.log(dist);
 
             // Changement de section
             if (a[0] === _nextSectionBegining.lon && a[1] === _nextSectionBegining.lat) {
