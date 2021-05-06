@@ -935,7 +935,8 @@ var ElevationPath = (function (Control) {
         this._measureDraw = new DrawInteraction({
             source : this._measureSource,
             type : "LineString",
-            style : this._drawStyleStart
+            style : this._drawStyleStart,
+            stopClick: true
         });
 
         this._measureDraw.setProperties({
@@ -994,6 +995,7 @@ var ElevationPath = (function (Control) {
             }
 
             // set an alti request and display results
+            this._measureDraw.setActive(false);
             this._requestService();
         });
     };
@@ -1190,6 +1192,7 @@ var ElevationPath = (function (Control) {
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
+                self._measureDraw.setActive(true);
             }
         };
 
@@ -1201,6 +1204,7 @@ var ElevationPath = (function (Control) {
             logger.error(error.message);
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
             self._waiting = false;
+            self._measureDraw.setActive(true);
         };
 
         Utils.mergeParams(options, {
