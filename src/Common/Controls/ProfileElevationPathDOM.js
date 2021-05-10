@@ -468,7 +468,7 @@ var ProfileElevationPathDOM = {
         const br2 = document.createElement("br");
         const coordsSpan = document.createElement("span");
 
-        tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
+        tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana; z-index:50;");
         tooltipDiv.style.pointerEvents = "none";
         tooltipDiv.style.position = "fixed";
         // tooltipDiv.classList.add("tooltipInit");
