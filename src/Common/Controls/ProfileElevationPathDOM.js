@@ -19,15 +19,21 @@ var ProfileElevationPathDOM = {
      *
      * @param {String} text The text to be rendered.
      * @param {String} container The container of the text
+     * @param {String} font The font of the container if known, format: 'weight size familiy'
      * @returns {Number} The width of the text
      *
      * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
      */
-    _getTextWidth : function (text, container) {
+    _getTextWidth : function (text, container, font = null) {
         // re-use canvas object for better performance
         var canvas = this.canvas || (this.canvas = document.createElement("canvas"));
         var context = canvas.getContext("2d");
-        context.font = `${this._getCssProperty(container, "font-weight")} ${this._getCssProperty(container, "font-size")} ${this._getCssProperty(container, "font-family")}`;
+        if (font === null) {
+            context.font = `${this._getCssProperty(container, "font-weight")} ${this._getCssProperty(container, "font-size")} ${this._getCssProperty(container, "font-family")}`;
+        } else {
+            context.font = font;
+        }
+
         var metrics = context.measureText(text);
         return metrics.width;
     },
@@ -148,7 +154,7 @@ var ProfileElevationPathDOM = {
         const widgetWidth = container.clientWidth - margin.left - margin.right;
 
         const zLabelWidth = 17;
-        const zGradWidth = 8 + this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container);
+        const zGradWidth = this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container, "400 10 Verdana");
         const xLabelHeight = 17;
         const xGradHeight = 15;
 
@@ -225,6 +231,9 @@ var ProfileElevationPathDOM = {
         for (let i = 0; i <= numZguides; i++) {
             gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
             gradZtext.setAttribute("class", "profile-z-graduation");
+            gradZtext.setAttribute("font-family", "Verdana");
+            gradZtext.setAttribute("font-size", "10px");
+            gradZtext.setAttribute("fill", "#5E5E5E");
             // Cas où gradZ < 1 : nombres flottants capricieux...
             // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
             gradZtext.textContent = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
@@ -266,6 +275,9 @@ var ProfileElevationPathDOM = {
 
         var axisZLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
         axisZLegend.setAttribute("class", "profile-z-legend");
+        axisZLegend.setAttribute("font-family", "Verdana");
+        axisZLegend.setAttribute("font-size", "11px");
+        axisZLegend.setAttribute("fill", "#5E5E5E");
         axisZLegend.textContent = "Altitude (m)";
 
         axisZLegend.setAttribute("transform", `translate(${zLabelWidth - 8}, ${Math.round(pathHeight / 2)}) rotate(-90)`);
@@ -319,6 +331,9 @@ var ProfileElevationPathDOM = {
         for (let i = 0; i <= numXguides + 1; i++) {
             gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
             gradXtext.setAttribute("class", "profile-x-graduation");
+            gradXtext.setAttribute("font-family", "Verdana");
+            gradXtext.setAttribute("font-size", "10px");
+            gradXtext.setAttribute("fill", "#5E5E5E");
 
             // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
             if (i !== numXguides + 1) {
@@ -367,6 +382,9 @@ var ProfileElevationPathDOM = {
 
         var axisXLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
         axisXLegend.setAttribute("class", "profile-x-legend");
+        axisXLegend.setAttribute("font-family", "Verdana");
+        axisXLegend.setAttribute("font-size", "11px");
+        axisXLegend.setAttribute("fill", "#5E5E5E");
         axisXLegend.textContent = `Distance (${distUnit})`;
 
         axisXLegend.setAttribute("transform", `translate(${zLabelWidth + zGradWidth + pathWidth / 2}, ${pathHeight + xGradHeight + xLabelHeight + 3})`);
@@ -468,7 +486,7 @@ var ProfileElevationPathDOM = {
         const br2 = document.createElement("br");
         const coordsSpan = document.createElement("span");
 
-        tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
+        tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana; z-index:50;");
         tooltipDiv.style.pointerEvents = "none";
         tooltipDiv.style.position = "fixed";
         // tooltipDiv.classList.add("tooltipInit");
@@ -606,12 +624,12 @@ var ProfileElevationPathDOM = {
 
             let toolTipBubbleD;
             if (d.dist > (dist * factor) / 2) {
-                toolTipBubbleD = `M -0.5 -0.5 l -6 6 l 0 16 l -${tooltipTextWidth + 5} 0 l 0 -44 l ${tooltipTextWidth + 5} 0 l 0 16 l 6 6`;
-                tooltipDivLeft -= tooltipTextWidth;
+                toolTipBubbleD = `M -0.5 -0.5 l -6 6 l 0 16 l -${tooltipTextWidth + 10} 0 l 0 -44 l ${tooltipTextWidth + 10} 0 l 0 16 l 6 6`;
+                tooltipDivLeft -= (tooltipTextWidth + 12);
             } else if (d.dist <= (dist * factor) / 2) {
-                toolTipBubbleD = `M -0.5 -0.5 l 6 6 l 0 16 l ${tooltipTextWidth + 5} 0 l 0 -44 l -${tooltipTextWidth + 5} 0 l 0 16 l -6 6`;
+                toolTipBubbleD = `M -0.5 -0.5 l 6 6 l 0 16 l ${tooltipTextWidth + 10} 0 l 0 -44 l -${tooltipTextWidth + 10} 0 l 0 16 l -6 6`;
                 // Largeur de la fleche de la bulle du tooltip
-                tooltipDivLeft += 15;
+                tooltipDivLeft += 12;
             }
 
             tooltipBubble.setAttribute("d", toolTipBubbleD);
@@ -959,18 +977,18 @@ var ProfileElevationPathDOM = {
             }
         }
 
-        for (let i = 0; i < _points.length; i++){
-          var dist = _points[i].dist;
-          var coeffArrond = 100;
-          if (dist > 100) {
-              coeffArrond = 1;
-          } else if (dist > 10) {
-              coeffArrond = 10;
-          }
+        for (let i = 0; i < _points.length; i++) {
+            var dist = _points[i].dist;
+            var coeffArrond = 100;
+            if (dist > 100) {
+                coeffArrond = 1;
+            } else if (dist > 10) {
+                coeffArrond = 10;
+            }
 
-          // Correction arrondi distance totale
-          dist = Math.round(dist * coeffArrond) / coeffArrond;
-          _points[i].dist = dist;
+            // Correction arrondi distance totale
+            dist = Math.round(dist * coeffArrond) / coeffArrond;
+            _points[i].dist = dist;
         }
 
         var settings = {
