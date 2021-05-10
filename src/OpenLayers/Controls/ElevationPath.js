@@ -936,7 +936,7 @@ var ElevationPath = (function (Control) {
             source : this._measureSource,
             type : "LineString",
             style : this._drawStyleStart,
-            stopClick: true
+            stopClick : true
         });
 
         this._measureDraw.setProperties({
@@ -1440,43 +1440,43 @@ var ElevationPath = (function (Control) {
      * @private
      */
     ElevationPath.prototype._updateInfoContainer = function () {
-      logger.trace("ElevationPath::_updateInfoContainer");
+        logger.trace("ElevationPath::_updateInfoContainer");
 
-      // options d'affichage
-      var totalDistance = this.options.displayProfileOptions.totalDistance;
-      var meanSlope = this.options.displayProfileOptions.meanSlope;
-      var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-      var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
-      var descendingElevation = this.options.displayProfileOptions.descendingElevation;
+        // options d'affichage
+        var totalDistance = this.options.displayProfileOptions.totalDistance;
+        var meanSlope = this.options.displayProfileOptions.meanSlope;
+        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
+        var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
+        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
 
-      // clean
-      var div = this._infoContainer;
-      if (div.childElementCount) {
-          while (div.firstChild) {
-              div.removeChild(div.firstChild);
-          }
-      }
+        // clean
+        var div = this._infoContainer;
+        if (div.childElementCount) {
+            while (div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+        }
 
-      // creation des infomations
-      if (totalDistance) {
-          this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance).toLocaleString() + " m");
-      }
+        // creation des infomations
+        if (totalDistance) {
+            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance).toLocaleString() + " m");
+        }
 
-      if (ascendingElevation) {
-          this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
-      }
+        if (ascendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
+        }
 
-      if (descendingElevation) {
-          this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
-      }
+        if (descendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
+        }
 
-      if (meanSlope) {
-          this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
-      }
+        if (meanSlope) {
+            this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
+        }
 
-      if (greaterSlope) {
-          this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
-      }
+        if (greaterSlope) {
+            this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
+        }
   };
 
     // ################################################################### //
