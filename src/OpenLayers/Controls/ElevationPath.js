@@ -1522,7 +1522,6 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
 
-
         var div = this._infoContainer;
 
         // show des informations !
