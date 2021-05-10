@@ -19,18 +19,19 @@ var ProfileElevationPathDOM = {
      *
      * @param {String} text The text to be rendered.
      * @param {String} container The container of the text
+     * @param {String} font The font of the container if known, format: 'weight size familiy'
      * @returns {Number} The width of the text
      *
      * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
      */
-    _getTextWidth : function (text, container, font=null) {
+    _getTextWidth : function (text, container, font = null) {
         // re-use canvas object for better performance
         var canvas = this.canvas || (this.canvas = document.createElement("canvas"));
         var context = canvas.getContext("2d");
         if (font === null) {
-          context.font = `${this._getCssProperty(container, "font-weight")} ${this._getCssProperty(container, "font-size")} ${this._getCssProperty(container, "font-family")}`;
+            context.font = `${this._getCssProperty(container, "font-weight")} ${this._getCssProperty(container, "font-size")} ${this._getCssProperty(container, "font-family")}`;
         } else {
-          context.font = font;
+            context.font = font;
         }
 
         var metrics = context.measureText(text);
@@ -976,18 +977,18 @@ var ProfileElevationPathDOM = {
             }
         }
 
-        for (let i = 0; i < _points.length; i++){
-          var dist = _points[i].dist;
-          var coeffArrond = 100;
-          if (dist > 100) {
-              coeffArrond = 1;
-          } else if (dist > 10) {
-              coeffArrond = 10;
-          }
+        for (let i = 0; i < _points.length; i++) {
+            var dist = _points[i].dist;
+            var coeffArrond = 100;
+            if (dist > 100) {
+                coeffArrond = 1;
+            } else if (dist > 10) {
+                coeffArrond = 10;
+            }
 
-          // Correction arrondi distance totale
-          dist = Math.round(dist * coeffArrond) / coeffArrond;
-          _points[i].dist = dist;
+            // Correction arrondi distance totale
+            dist = Math.round(dist * coeffArrond) / coeffArrond;
+            _points[i].dist = dist;
         }
 
         var settings = {
