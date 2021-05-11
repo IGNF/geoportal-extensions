@@ -13,6 +13,7 @@ Correctifs sur le profil altimétriques
 * [Added]
 
 * [Changed]
+    - Adaptation du style du profil alti par défaut
 
 * [Deprecated]
 
@@ -65,7 +66,7 @@ Reparation du le profil altimétrique
 
 ## Summary
 
-* gestion des loggers : 
+* gestion des loggers :
 > Exposition de la classe statique *Logger* avec les méthodes suivantes :
 `Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
 
