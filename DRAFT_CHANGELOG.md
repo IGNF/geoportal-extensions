@@ -6,6 +6,8 @@
 
 ## Summary
 
+Correctifs sur le profil altimétriques
+
 ## Changelog
 
 * [Added]
@@ -17,6 +19,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Correctif sur les clics multiple en fin de saisie du profil altimétrique (#298)
 
 * [Security]
 
@@ -31,6 +35,8 @@
 
 ## Summary
 
+Reparation du le profil altimétrique
+
 ## Changelog
 
 * [Added]
@@ -42,6 +48,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Correction et réparation du profil altimétrique de Leaflet (#297)
 
 * [Security]
 
