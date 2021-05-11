@@ -70,6 +70,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.0.14](#extension-geoportail-openlayers-version-3014)
   * [Summary](#summary-18)
   * [Changelog](#changelog-15)
+- [Extension Geoportail OpenLayers, version 3.0.16](#extension-geoportail-openlayers-version-3016)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-16)
 
 <!-- tocstop -->
 
@@ -742,6 +745,33 @@ Nouveau widget de profil altimétrique et  correctif sur le SearchEngine
     - fix sur la prise en compte du paramètre ssl=false pour les controles qui interrogent les services (a71811bb85785af93759a77de793be0c9d313fbf)
     - fix sur l'interface des options données au controle SearchEngine (ee5130f376f83702328d55659ad73bd30f561a02)
     - correctif sur l'export de la version en mode module
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.16
+
+**11/05/2021**
+> Release Extension Geoportail openLayers
+
+## Summary
+
+Correctifs sur le profil altimétriques
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+    - Adaptation du style du profil alti par défaut
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correctif sur les clics multiple en fin de saisie du profil altimétrique (#298)
 
 * [Security]
 
