@@ -6,11 +6,14 @@
 
 ## Summary
 
+Correctifs sur le profil altimétriques
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+    - Adaptation du style du profil alti par défaut
 
 * [Deprecated]
 
@@ -18,9 +21,12 @@
 
 * [Fixed]
 
+    - Correctif sur les clics multiple en fin de saisie du profil altimétrique (#298)
+
 * [Security]
 
 ---
+
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -30,9 +36,7 @@
 
 ## Summary
 
-* gestion des loggers : 
-> Exposition de la classe statique *Logger* avec les méthodes suivantes :
-`Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
+Reparation du le profil altimétrique
 
 ## Changelog
 
@@ -40,27 +44,13 @@
 
 * [Changed]
 
-    - mise à jour de la lib. geoportal-access-lib : 2.1.8
-
 * [Deprecated]
 
 * [Removed]
 
-    - la dépendance *request* est supprimée, et remplacée par *node-fetch*
-
 * [Fixed]
 
-    - Possibilité de activer / desactiver les loggers des API lors de l'utilisation des API en module ES6 :
-
-    ```js
-    import { Logger } from "geoportal-extensions-leaflet";
-    Logger.disableAll();
-    ```
-    
-    - corrections des erreurs à partir de DeepScan (#288)
-    - corrections syntaxiques eslint (da275a2 et 306506a)
-    - cf. issue : Erreur compilation par webpack [#294](https://github.com/IGNF/geoportal-extensions/issues/294)
-    - cf. issue : Erreur dépendances à la compilation [#283](https://github.com/IGNF/geoportal-extensions/issues/283)
+    - Correction et réparation du profil altimétrique de Leaflet (#297)
 
 * [Security]
 
@@ -76,7 +66,7 @@
 
 ## Summary
 
-* gestion des loggers : 
+* gestion des loggers :
 > Exposition de la classe statique *Logger* avec les méthodes suivantes :
 `Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
 

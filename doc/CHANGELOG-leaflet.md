@@ -54,6 +54,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.1.8](#extension-geoportail-leaflet-version-218)
   * [Summary](#summary-14)
   * [Changelog](#changelog-11)
+- [Extension Geoportail Leaflet, version 2.1.9](#extension-geoportail-leaflet-version-219)
+  * [Summary](#summary-15)
+  * [Changelog](#changelog-12)
 
 <!-- tocstop -->
 
@@ -445,6 +448,48 @@ Nouveau widget de profil altimétrique par défaut, et correctif mineur
 * [Fixed]
 
         - correctif sur l'export de la version en mode module
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.1.9
+
+**26/04/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+* gestion des loggers : 
+> Exposition de la classe statique *Logger* avec les méthodes suivantes :
+`Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour de la lib. geoportal-access-lib : 2.1.8
+
+* [Deprecated]
+
+* [Removed]
+
+    - la dépendance *request* est supprimée, et remplacée par *node-fetch*
+
+* [Fixed]
+
+    - Possibilité de activer / desactiver les loggers des API lors de l'utilisation des API en module ES6 :
+
+    ```js
+    import { Logger } from "geoportal-extensions-leaflet";
+    Logger.disableAll();
+    ```
+    
+    - corrections des erreurs à partir de DeepScan (#288)
+    - corrections syntaxiques eslint (da275a2 et 306506a)
+    - cf. issue : Erreur compilation par webpack [#294](https://github.com/IGNF/geoportal-extensions/issues/294)
+    - cf. issue : Erreur dépendances à la compilation [#283](https://github.com/IGNF/geoportal-extensions/issues/283)
 
 * [Security]
 
