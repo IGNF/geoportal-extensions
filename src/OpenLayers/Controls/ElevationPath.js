@@ -1234,7 +1234,7 @@ var ElevationPath = (function (Control) {
 
         if (_sampling > 0) {
             Utils.mergeParams(options, {
-                sampling : _sampling || 50
+                sampling : _sampling
             });
         }
 
