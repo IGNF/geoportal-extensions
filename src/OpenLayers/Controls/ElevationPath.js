@@ -1482,7 +1482,7 @@ var ElevationPath = (function (Control) {
         if (greaterSlope) {
             this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
         }
-  };
+    };
 
     // ################################################################### //
     // ####################### handlers events to dom #################### //
@@ -1526,7 +1526,6 @@ var ElevationPath = (function (Control) {
      * @private
      */
     ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
-
         var div = this._infoContainer;
 
         // show des informations !
