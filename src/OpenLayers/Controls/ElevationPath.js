@@ -1220,14 +1220,19 @@ var ElevationPath = (function (Control) {
             var _sampling;
             var _length = this._getLength();
             logger.trace("length", _length);
-            var minSampling = this._getSketchCoords();
-            var p = Math.max(3, minSampling, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
+            var p = Math.max(50, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
             if (p > 200) {
                 _sampling = 200;
             } else {
                 _sampling = Math.floor(p);
             }
+            var pointNumber = this._getSketchCoords().length;
+            if (pointNumber > 100) {
+                _sampling = 0;
+            }
+        }
 
+        if (_sampling > 0) {
             Utils.mergeParams(options, {
                 sampling : _sampling || 50
             });
