@@ -1,7 +1,27 @@
 {
-   "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "module" : "src/OpenLayers/index.js",
+   "bugs" : {},
+   "name" : "geoportal-extensions-openlayers",
    "license" : "CECILL-B",
+   "directories" : {},
+   "version" : "3.1.0",
+   "dependencies" : {
+      "node-fetch" : "^2.6.1",
+      "xmldom" : "^0.1.27",
+      "ol" : "6.3.1",
+      "sortablejs" : "1.8.4",
+      "loglevel" : "1.6.6",
+      "proj4" : "2.7.0",
+      "geoportal-access-lib" : "2.1.8",
+      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
+      "eventbusjs" : "0.2.0",
+      "ol-mapbox-style" : "6.3.2"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "author" : "IGNF",
+   "devDependencies" : {},
+   "date" : "26/04/2021",
+   "peerDependencies" : {},
    "files" : [
       "dist/",
       "src/",
@@ -9,31 +29,6 @@
       "README.md",
       "package.json"
    ],
-   "scripts" : {},
-   "devDependencies" : {},
-   "bugs" : {},
-   "dependencies" : {
-      "node-fetch" : "^2.6.1",
-      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
-      "ol-mapbox-style" : "6.3.2",
-      "ol" : "6.3.1",
-      "eventbusjs" : "0.2.0",
-      "geoportal-access-lib" : "2.1.8",
-      "proj4" : "2.7.0",
-      "loglevel" : "1.6.6",
-      "sortablejs" : "1.8.4",
-      "xmldom" : "^0.1.27"
-   },
-   "date" : "26/04/2021",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "bundleDependencies" : [],
-   "version" : "3.0.15",
-   "name" : "geoportal-extensions-openlayers",
-   "module" : "src/OpenLayers/index.js",
-   "author" : "IGNF",
    "main" : "dist/GpPluginOpenLayers-src.js",
    "keywords" : [
       "geoportail",
@@ -41,6 +36,11 @@
       "javascript",
       "OpenLayers"
    ],
-   "directories" : {},
+   "scripts" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "bundleDependencies" : [],
    "description" : "French Geoportal Extensions for OpenLayers"
 }
