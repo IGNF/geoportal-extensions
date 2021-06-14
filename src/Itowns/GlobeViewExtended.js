@@ -338,16 +338,6 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
     var layer = this.getColorLayerById(layerId);
     layer.visible = visible;
-
-    // sync the vectorTiles layer visibility with its labels
-    if (layer.source.isVectorSource === true) {
-        if (layer.visible === true) {
-            layer.addLabelLayer = true;
-        } else {
-            layer.addLabelLayer = false;
-        }
-    }
-
     this.getGlobeView().notifyChange(layer);
 };
 
