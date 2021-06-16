@@ -58,13 +58,13 @@
                     var vectorTileLayer = new Gp.itownsExtended.layer.VectorTileLayer({
                         layer: "PLAN.IGN",
                         id : "MVT",
-                        url: '../../resources/itowns/planign.json',
+                        url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
                         zoom : {
                             min: 0,
                             max: 13
                         }
                     })
- 
+
                     globeView.addLayer(vectorTileLayer);
 
                     // ajout du control
@@ -101,7 +101,6 @@
             }
 
             Gp.Services.getConfig({
-                serverUrl : "./../../resources/AutoConf_VT.js",
                 callbackSuffix : '',
                 // apiKey: "{{ apikey }}",
                 timeOut: 20000,
