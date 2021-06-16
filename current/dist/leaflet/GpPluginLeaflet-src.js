@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.9
- * @date 26/04/2021
+ * @version 2.1.10
+ * @date 16/06/2021
  *
  */
 
@@ -320,7 +320,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.5\",\"date\":\"26/04/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.9\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.15\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.2\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.8\",\"itowns\":\"2.30.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"2.7.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.124.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.6\",\"date\":\"16/06/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.10\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.17\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.8\",\"itowns\":\"2.33.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"2.7.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.127.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -51225,33 +51225,42 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
       return 2 * 6378137 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     };
 
-    var _data = elevations; // FIXME facteur à 2000 doit il etre une option ?
+    var _data = elevations;
+    var _unit = "m";
+    var _sketchPoints = this._geometry; // section actuelle du sketch sur laquelle on est
 
-    var _limite = 2000; // metres
+    var _currentSection = 0; // longueur cumulée des sections précédentes
 
-    var _unit = "km";
-    var _factor = 1000;
-
-    if (this._distance < _limite) {
-      _factor = 1;
-      _unit = "m";
-    } // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
-
+    var _previousSectionsLength = 0;
+    var _nextSectionBegining = _sketchPoints[1]; // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
 
     _data[0].dist = 0;
     _data[0].slope = 0;
+    _data[0].lat = Math.round(_data[0].lat * 10000) / 10000;
+    _data[0].lon = Math.round(_data[0].lon * 10000) / 10000;
     var _distanceMinus = 0;
     var _distancePlus = 0;
     var _ascendingElevation = 0;
     var _descendingElevation = 0;
     var _distance = 0;
     var _slopes = 0;
+    var distances = [];
 
     for (var i = 1; i < _data.length; i++) {
       var a = [_data[i].lon, _data[i].lat];
-      var b = [_data[i - 1].lon, _data[i - 1].lat];
 
-      var dist = _haversineDistance(a, b);
+      var distanceToStart = _previousSectionsLength + _haversineDistance(a, [_sketchPoints[_currentSection].lon, _sketchPoints[_currentSection].lat]);
+
+      var dist = distanceToStart - _distance; // Changement de section
+
+      if (a[0].toFixed(8) === _nextSectionBegining.lon.toFixed(8) && a[1].toFixed(8) === _nextSectionBegining.lat.toFixed(8)) {
+        _currentSection++;
+        _previousSectionsLength = distanceToStart; // Pas de next section si on est sur le dernier point
+
+        if (i !== _data.length - 1) {
+          _nextSectionBegining = _sketchPoints[_currentSection + 1];
+        }
+      }
 
       var za = _data[i].z;
       var zb = _data[i - 1].z;
@@ -51274,8 +51283,9 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
         _ascendingElevation += slope;
       }
 
-      _distance += dist / _factor;
-      _data[i].dist = _distance;
+      _distance = distanceToStart;
+      _data[i].dist = distanceToStart;
+      distances.push(distanceToStart);
       _slopes += slope ? Math.abs(Math.round(slope / dist * 100)) : 0;
       _data[i].slope = slope ? Math.abs(Math.round(slope / dist * 100)) : 0; // EVOL ?
       // cf. gradiant
@@ -51295,21 +51305,10 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
 
       _data[i].lat = Math.round(_data[i].lat * 10000) / 10000;
       _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
-    } // Valeur du coeff d'arrondi des distances en fonction de la distance totale
+    } // check distance totale
 
 
-    var coeffArrond = 100;
-
-    if (_distance > 100) {
-      coeffArrond = 1;
-    } else if (_distance > 10) {
-      coeffArrond = 10;
-    } // Correction arrondi distance totale
-
-
-    _distance = Math.round(_distance * coeffArrond) / coeffArrond;
-    _distanceMinus = Math.round(_distanceMinus * coeffArrond) / coeffArrond;
-    _distancePlus = Math.round(_distancePlus * coeffArrond) / coeffArrond; // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
+    logger.trace("List Distances", distances); // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
 
     var _altMin = _data[0].z;
     var _altMax = _data[0].z;
@@ -51318,20 +51317,17 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
     for (var ji = 0; ji < _data.length; ji++) {
       var d = _data[ji];
 
-      if (d.z < 0) {
+      if (d.z < -100) {
         d.z = 0;
       }
 
-      if (d.z >= _altMax) {
+      if (d.z > _altMax) {
         _altMax = d.z;
       }
 
-      if (d.z <= _altMin) {
+      if (d.z < _altMin) {
         _altMin = d.z;
       }
-
-      d.dist = Math.round(d.dist * coeffArrond) / coeffArrond; // FIXME erreur avec D3 car cette lib souhaite un numerique !
-      // d.dist = d.dist.toLocaleString();
 
       if (d.slope > _greaterSlope) {
         _greaterSlope = d.slope;
@@ -51343,19 +51339,19 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
       // pente max
       meanSlope: Math.round(_slopes / _data.length),
       // pente moyenne
-      distancePlus: _distancePlus.toLocaleString(),
+      distancePlus: _distancePlus,
       // distance cumulée positive
-      distanceMinus: _distanceMinus.toLocaleString(),
+      distanceMinus: _distanceMinus,
       // distance cumulée négative
       ascendingElevation: _ascendingElevation,
       // dénivelé cumulée positive
       descendingElevation: _descendingElevation,
       // dénivelé cumulée négative
       altMin: _altMin.toLocaleString(),
-      // altitude min
+      // altitude min TODO: inutile ?
       altMax: _altMax.toLocaleString(),
-      // altitude max
-      distance: _distance.toLocaleString(),
+      // altitude max TODO: inutile ?
+      distance: this._distance,
       // distance totale
       unit: _unit,
       // unité des mesures de distance
@@ -51882,15 +51878,23 @@ var ProfileElevationPathDOM = {
    *
    * @param {String} text The text to be rendered.
    * @param {String} container The container of the text
+   * @param {String} font The font of the container if known, format: 'weight size familiy'
    * @returns {Number} The width of the text
    *
    * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
    */
   _getTextWidth: function _getTextWidth(text, container) {
+    var font = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     // re-use canvas object for better performance
     var canvas = this.canvas || (this.canvas = document.createElement("canvas"));
     var context = canvas.getContext("2d");
-    context.font = "".concat(this._getCssProperty(container, "font-weight"), " ").concat(this._getCssProperty(container, "font-size"), " ").concat(this._getCssProperty(container, "font-family"));
+
+    if (font === null) {
+      context.font = "".concat(this._getCssProperty(container, "font-weight"), " ").concat(this._getCssProperty(container, "font-size"), " ").concat(this._getCssProperty(container, "font-family"));
+    } else {
+      context.font = font;
+    }
+
     var metrics = context.measureText(text);
     return metrics.width;
   },
@@ -52009,7 +52013,7 @@ var ProfileElevationPathDOM = {
     var widgetWidth = container.clientWidth - margin.left - margin.right;
     var zLabelWidth = 17;
 
-    var zGradWidth = 8 + this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container);
+    var zGradWidth = this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container, "400 10 Verdana");
 
     var xLabelHeight = 17;
     var xGradHeight = 15;
@@ -52082,7 +52086,10 @@ var ProfileElevationPathDOM = {
 
     for (var i = 0; i <= numZguides; i++) {
       gradZtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      gradZtext.setAttribute("class", "profile-z-graduation"); // Cas où gradZ < 1 : nombres flottants capricieux...
+      gradZtext.setAttribute("class", "profile-z-graduation");
+      gradZtext.setAttribute("font-family", "Verdana");
+      gradZtext.setAttribute("font-size", "10px");
+      gradZtext.setAttribute("fill", "#5E5E5E"); // Cas où gradZ < 1 : nombres flottants capricieux...
       // Le Math.round est pour éviter des ennuis du genre 3 * 0.1 = 0.300000000000004
 
       gradZtext.textContent = (Math.round(100 * (minGraphZ + i * gradZ)) / 100).toLocaleString();
@@ -52120,6 +52127,9 @@ var ProfileElevationPathDOM = {
 
     var axisZLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
     axisZLegend.setAttribute("class", "profile-z-legend");
+    axisZLegend.setAttribute("font-family", "Verdana");
+    axisZLegend.setAttribute("font-size", "11px");
+    axisZLegend.setAttribute("fill", "#5E5E5E");
     axisZLegend.textContent = "Altitude (m)";
     axisZLegend.setAttribute("transform", "translate(".concat(zLabelWidth - 8, ", ").concat(Math.round(pathHeight / 2), ") rotate(-90)"));
     axisZLegend.setAttribute("text-anchor", "middle");
@@ -52165,7 +52175,10 @@ var ProfileElevationPathDOM = {
 
     for (var _i = 0; _i <= numXguides + 1; _i++) {
       gradXtext = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      gradXtext.setAttribute("class", "profile-x-graduation"); // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
+      gradXtext.setAttribute("class", "profile-x-graduation");
+      gradXtext.setAttribute("font-family", "Verdana");
+      gradXtext.setAttribute("font-size", "10px");
+      gradXtext.setAttribute("fill", "#5E5E5E"); // Exclusion du cas de la dernière graduation : correspond à la distance max : pas de texte
 
       if (_i !== numXguides + 1) {
         // Cas où gradX < 1 : nombres flottants capricieux...
@@ -52211,6 +52224,9 @@ var ProfileElevationPathDOM = {
 
     var axisXLegend = document.createElementNS("http://www.w3.org/2000/svg", "text");
     axisXLegend.setAttribute("class", "profile-x-legend");
+    axisXLegend.setAttribute("font-family", "Verdana");
+    axisXLegend.setAttribute("font-size", "11px");
+    axisXLegend.setAttribute("fill", "#5E5E5E");
     axisXLegend.textContent = "Distance (".concat(distUnit, ")");
     axisXLegend.setAttribute("transform", "translate(".concat(zLabelWidth + zGradWidth + pathWidth / 2, ", ").concat(pathHeight + xGradHeight + xLabelHeight + 3, ")"));
     axisXLegend.setAttribute("text-anchor", "middle");
@@ -52300,7 +52316,7 @@ var ProfileElevationPathDOM = {
     var slopeSpan = document.createElement("span");
     var br2 = document.createElement("br");
     var coordsSpan = document.createElement("span");
-    tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana;");
+    tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana; z-index:50;");
     tooltipDiv.style.pointerEvents = "none";
     tooltipDiv.style.position = "fixed"; // tooltipDiv.classList.add("tooltipInit");
     // IE...
@@ -52423,12 +52439,12 @@ var ProfileElevationPathDOM = {
       var toolTipBubbleD;
 
       if (d.dist > dist * factor / 2) {
-        toolTipBubbleD = "M -0.5 -0.5 l -6 6 l 0 16 l -".concat(tooltipTextWidth + 5, " 0 l 0 -44 l ").concat(tooltipTextWidth + 5, " 0 l 0 16 l 6 6");
-        tooltipDivLeft -= tooltipTextWidth;
+        toolTipBubbleD = "M -0.5 -0.5 l -6 6 l 0 16 l -".concat(tooltipTextWidth + 10, " 0 l 0 -44 l ").concat(tooltipTextWidth + 10, " 0 l 0 16 l 6 6");
+        tooltipDivLeft -= tooltipTextWidth + 12;
       } else if (d.dist <= dist * factor / 2) {
-        toolTipBubbleD = "M -0.5 -0.5 l 6 6 l 0 16 l ".concat(tooltipTextWidth + 5, " 0 l 0 -44 l -").concat(tooltipTextWidth + 5, " 0 l 0 16 l -6 6"); // Largeur de la fleche de la bulle du tooltip
+        toolTipBubbleD = "M -0.5 -0.5 l 6 6 l 0 16 l ".concat(tooltipTextWidth + 10, " 0 l 0 -44 l -").concat(tooltipTextWidth + 10, " 0 l 0 16 l -6 6"); // Largeur de la fleche de la bulle du tooltip
 
-        tooltipDivLeft += 15;
+        tooltipDivLeft += 12;
       }
 
       tooltipBubble.setAttribute("d", toolTipBubbleD);
