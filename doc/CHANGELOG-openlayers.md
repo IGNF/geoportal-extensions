@@ -73,6 +73,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.0.16](#extension-geoportail-openlayers-version-3016)
   * [Summary](#summary-19)
   * [Changelog](#changelog-16)
+- [Extension Geoportail OpenLayers, version 3.0.17](#extension-geoportail-openlayers-version-3017)
+  * [Summary](#summary-20)
+  * [Changelog](#changelog-17)
 
 <!-- tocstop -->
 
@@ -772,6 +775,32 @@ Correctifs sur le profil altimétriques
 * [Fixed]
 
     - Correctif sur les clics multiple en fin de saisie du profil altimétrique (#298)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.17
+
+**16/06/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correction sur le profil altimétrique
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - fix sur la saisie à main levée du profil altimetrique (#299)
 
 * [Security]
 
