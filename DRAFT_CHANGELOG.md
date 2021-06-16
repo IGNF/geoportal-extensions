@@ -26,14 +26,13 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail leaflet
 
 ## Summary
-
-Reparation du profil altimétrique
 
 ## Changelog
 
@@ -46,8 +45,6 @@ Reparation du profil altimétrique
 * [Removed]
 
 * [Fixed]
-
-    - Correction et réparation du profil altimétrique de Leaflet (#297)
 
 * [Security]
 
