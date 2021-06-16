@@ -55,6 +55,7 @@ Reparation du le profil altimétrique
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -62,15 +63,11 @@ Reparation du le profil altimétrique
 
 ## Summary
 
-Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - Utilisation d'iTowns 2.33 (#301)
 
 * [Deprecated]
 
