@@ -7,6 +7,8 @@
 
 ## Summary
 
+Correction sur le profil altimétrique
+
 ## Changelog
 
 * [Added]
@@ -18,6 +20,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - fix sur la saisie à main levée du profil altimetrique (#299)
 
 * [Security]
 
@@ -32,7 +36,7 @@
 
 ## Summary
 
-Reparation du le profil altimétrique
+Reparation du profil altimétrique
 
 ## Changelog
 
