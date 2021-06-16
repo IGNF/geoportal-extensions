@@ -1,27 +1,23 @@
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail openLayers
+> Release Extension Geoportail openlayers
 
 ## Summary
-
-Correctifs sur le profil altimétriques
 
 ## Changelog
 
 * [Added]
 
 * [Changed]
-    - Adaptation du style du profil alti par défaut
 
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - Correctif sur les clics multiple en fin de saisie du profil altimétrique (#298)
 
 * [Security]
 
@@ -66,9 +62,7 @@ Reparation du le profil altimétrique
 
 ## Summary
 
-* gestion des loggers :
-> Exposition de la classe statique *Logger* avec les méthodes suivantes :
-`Gp.Logger.disableAll()` et `Gp.Logger.enableAll()`
+Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
 
 ## Changelog
 
@@ -76,17 +70,13 @@ Reparation du le profil altimétrique
 
 * [Changed]
 
+    - Utilisation d'iTowns 2.33 (#301)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - Possibilité de activer / desactiver les loggers des API lors de l'utilisation des API en module ES6 :
-
-    ```js
-    import { Logger } from "geoportal-extensions-itowns";
-    Logger.disableAll();
 
 * [Security]
 
