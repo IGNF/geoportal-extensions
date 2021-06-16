@@ -7,6 +7,8 @@
 
 ## Summary
 
+Correction sur le profil altimétrique
+
 ## Changelog
 
 * [Added]
@@ -18,6 +20,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - fix sur la saisie à main levée du profil altimetrique (#299)
 
 * [Security]
 
@@ -32,7 +36,7 @@
 
 ## Summary
 
-Reparation du le profil altimétrique
+Reparation du profil altimétrique
 
 ## Changelog
 
@@ -55,6 +59,7 @@ Reparation du le profil altimétrique
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -62,15 +67,11 @@ Reparation du le profil altimétrique
 
 ## Summary
 
-Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - Utilisation d'iTowns 2.33 (#301)
 
 * [Deprecated]
 
