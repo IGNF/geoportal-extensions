@@ -50,7 +50,7 @@ describe("-- Test Register --", function () {
             expect(Register.get("TOTO:1091957")).to.be.undefined;
         });
 
-        xit("with good param, return an IGNF definition", function () {
+        it("with good param, return an IGNF definition", function () {
             expect(Register.get("IGNF:AMST63")).not.to.be.undefined;
         });
 
@@ -71,7 +71,7 @@ describe("-- Test Register --", function () {
         it("CRS:84, return a CRS definition", function () {
             expect(Register.CRS[84]).not.to.be.undefined;
         });
-        xit("IGNF:AMST63, return a IGNF definition", function () {
+        it("IGNF:AMST63, return a IGNF definition", function () {
             expect(Register.IGNF.AMST63).not.to.be.undefined;
         });
     });
@@ -89,7 +89,12 @@ describe("-- Test Register --", function () {
             expect(status).to.be.false;
         });
 
-        it("FIXME : add a geocent custom projection defs throw an exception !?", function () {
+        it("load a geocent custom projection defs", function () {
+            var status = Register.loadByName(Proj4, "EPSG:4978");
+            expect(status).to.be.true;
+        });
+
+        it("add a geocent custom projection defs", function () {
             Register.IGNF = {
                 AMST63 : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
             };
@@ -97,11 +102,7 @@ describe("-- Test Register --", function () {
 
             var status = Register.loadByName(Proj4, "IGNF:AMST63");
             expect(status).to.be.true;
-            try {
-                Proj4("IGNF:AMST63");
-            } catch (e) {
-                expect(e).to.be.equal("IGNF:AMST63");
-            }
+            expect(Proj4("IGNF:AMST63").oProj.title).to.be.equal("Amsterdam 1963");
         });
     });
 
@@ -120,7 +121,7 @@ describe("-- Test Register --", function () {
             expect(Proj4.defs('EPSG:310642813')).not.to.be.undefined;
         });
 
-        xit("IGNF:AMST63 is defined", function () {
+        it("IGNF:AMST63 is defined", function () {
             expect(Proj4.defs('IGNF:AMST63')).not.to.be.undefined;
         });
 
