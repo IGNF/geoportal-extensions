@@ -13,7 +13,7 @@ last
 * proj4
 
 last
-└── proj4@2.5.0
+└── proj4@2.7.0
 
 * proj4leaflet
 
@@ -28,22 +28,22 @@ last
 * geoportal-access-lib
 
 last
-└── geoportal-access-lib@2.1.6
+└── geoportal-access-lib@2.1.8
 
 * leaflet
 
-└── leaflet@1.5.1
+└── leaflet@1.7.1
 
 > upgrade to 1.4.0
 
 * leaflet-draw
 
 last
-└── leaflet-draw@1.0.2
+└── leaflet-draw@1.0.4
 
 * "itowns"
 
-└── "itowns@2.19.0"
+└── "itowns@2.33.0"
 
 * loglevel
 

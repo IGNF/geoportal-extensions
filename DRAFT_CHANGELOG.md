@@ -19,6 +19,8 @@
 * [Removed]
 
 * [Fixed]
+  
+  * Gestion des projections geocentriques (ex. EPSG:4978)
 
 * [Security]
 
