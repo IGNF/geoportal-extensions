@@ -479,12 +479,10 @@ var ProfileElevationPathDOM = {
         dynamicsG.appendChild(focusLineY);
 
         // Tooltip
-        const tooltipDiv = document.createElement("div");
-        const altiSpan = document.createElement("span");
-        const br = document.createElement("br");
-        const slopeSpan = document.createElement("span");
-        const br2 = document.createElement("br");
-        const coordsSpan = document.createElement("span");
+        const tooltipDiv = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        const altiSpan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+        const slopeSpan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+        const coordsSpan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
 
         tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana; z-index:50;");
         tooltipDiv.style.pointerEvents = "none";
@@ -492,18 +490,25 @@ var ProfileElevationPathDOM = {
         // tooltipDiv.classList.add("tooltipInit");
         // IE...
         tooltipDiv.setAttribute("class", "tooltipInit");
+        tooltipDiv.setAttribute("text-anchor", "middle");
 
         widgetDiv.appendChild(tooltipDiv);
 
         altiSpan.setAttribute("class", "altiPathValue");
+        altiSpan.setAttribute("x", "0");
+        altiSpan.setAttribute("dy", "-.7em");
+
         slopeSpan.setAttribute("class", "altiPathValue");
+        slopeSpan.setAttribute("x", "0");
+        slopeSpan.setAttribute("dy", "1em");
+
         coordsSpan.setAttribute("class", "altiPathCoords");
+        coordsSpan.setAttribute("x", "0");
+        coordsSpan.setAttribute("dy", "1em");
 
         tooltipDiv.appendChild(altiSpan);
-        tooltipDiv.appendChild(br);
         if (_displayProfileOptions.currentSlope) {
             tooltipDiv.appendChild(slopeSpan);
-            tooltipDiv.appendChild(br2);
         }
         tooltipDiv.appendChild(coordsSpan);
 
@@ -530,6 +535,7 @@ var ProfileElevationPathDOM = {
 
         tooltipG.appendChild(tooltipBubbleShadow);
         tooltipG.appendChild(tooltipBubble);
+        tooltipG.appendChild(tooltipDiv);
 
         // tooltipG.classList.add("tooltipInit");
         // IE... deprecated
@@ -619,17 +625,14 @@ var ProfileElevationPathDOM = {
                 this._getTextWidth(altiSpanTxt, altiSpan)
             );
 
-            let tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.pageXOffset + focusX;
-            const tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.pageYOffset + focusY - 19;
-
             let toolTipBubbleD;
             if (d.dist > (dist * factor) / 2) {
                 toolTipBubbleD = `M -0.5 -0.5 l -6 6 l 0 16 l -${tooltipTextWidth + 10} 0 l 0 -44 l ${tooltipTextWidth + 10} 0 l 0 16 l 6 6`;
-                tooltipDivLeft -= (tooltipTextWidth + 12);
+                tooltipDiv.setAttribute("transform", `translate(${-(tooltipTextWidth / 2 + 12)},0)`); // IE11 !
             } else if (d.dist <= (dist * factor) / 2) {
                 toolTipBubbleD = `M -0.5 -0.5 l 6 6 l 0 16 l ${tooltipTextWidth + 10} 0 l 0 -44 l -${tooltipTextWidth + 10} 0 l 0 16 l -6 6`;
                 // Largeur de la fleche de la bulle du tooltip
-                tooltipDivLeft += 12;
+                tooltipDiv.setAttribute("transform", `translate(${(tooltipTextWidth / 2 + 12)},0)`); // IE11 !
             }
 
             tooltipBubble.setAttribute("d", toolTipBubbleD);
@@ -637,9 +640,6 @@ var ProfileElevationPathDOM = {
 
             tooltipG.setAttribute("transform", `translate(${focusX},${focusY})`); // IE11 !
             tooltipG.style.transform = `translate(${focusX}px,${focusY}px)`;
-
-            tooltipDiv.style.left = `${tooltipDivLeft}px`;
-            tooltipDiv.style.top = `${tooltipDivTop}px`;
         }.bind(this));
 
         dynamicsG.appendChild(pathRectangle);

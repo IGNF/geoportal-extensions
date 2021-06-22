@@ -90,12 +90,12 @@ div[id^=GPelevationPathPanelInfo] {
 
 .altiPathValue {
   font-weight: 700;
-  color: #5E5E5E;
+  fill: #5E5E5E;
 }
 
 .altiPathCoords {
   font-style: italic;
-  color: #5E5E5E;
+  fill: #5E5E5E;
 }
 
 .tooltipInit {

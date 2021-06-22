@@ -8,6 +8,8 @@
 
 ## Summary
 
+Ajout de la gestion de projections geocentriques
+
 ## Changelog
 
 * [Added]
@@ -19,10 +21,14 @@
 * [Removed]
 
 * [Fixed]
+  
+    - Gestion des projections geocentriques (ex. EPSG:4978) (#303)
+    - Correction sur le DOM du profil-alti (#302)
 
 * [Security]
 
 ---
+
 
 
 
@@ -33,8 +39,6 @@
 
 ## Summary
 
-Reparation du profil altimétrique
-
 ## Changelog
 
 * [Added]
@@ -46,8 +50,6 @@ Reparation du profil altimétrique
 * [Removed]
 
 * [Fixed]
-
-    - Correction et réparation du profil altimétrique de Leaflet (#297)
 
 * [Security]
 
