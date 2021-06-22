@@ -8,6 +8,8 @@
 
 ## Summary
 
+Ajout de la gestion de projections geocentriques
+
 ## Changelog
 
 * [Added]
@@ -20,7 +22,8 @@
 
 * [Fixed]
   
-  * Gestion des projections geocentriques (ex. EPSG:4978)
+    - Gestion des projections geocentriques (ex. EPSG:4978) (#303)
+    - Correction sur le DOM du profil-alti (#302)
 
 * [Security]
 
