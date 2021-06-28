@@ -1,32 +1,11 @@
 {
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "module" : "src/OpenLayers/index.js",
-   "peerDependencies" : {},
-   "version" : "3.0.17",
-   "bundleDependencies" : [],
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "bugs" : {},
-   "date" : "16/06/2021",
-   "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "author" : "IGNF",
-   "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "node-fetch" : "^2.6.1",
-      "ol" : "5.3.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
-      "geoportal-access-lib" : "2.1.8",
-      "ol-mapbox-style" : "4.2.1",
-      "eventbusjs" : "0.2.0",
-      "loglevel" : "1.6.6",
-      "proj4" : "2.7.0",
-      "xmldom" : "^0.1.27"
-   },
    "files" : [
       "dist/",
       "src/",
@@ -34,13 +13,34 @@
       "README.md",
       "package.json"
    ],
-   "name" : "geoportal-extensions-openlayers",
+   "date" : "22/06/2021",
    "scripts" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "dependencies" : {
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.0",
+      "ol" : "5.3.0",
+      "geoportal-access-lib" : "2.1.8",
+      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
+      "sortablejs" : "1.8.4",
+      "node-fetch" : "^2.6.1",
+      "ol-mapbox-style" : "4.2.1",
+      "loglevel" : "1.6.6",
+      "eventbusjs" : "0.2.0"
+   },
+   "module" : "src/OpenLayers/index.js",
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-openlayers",
    "directories" : {},
-   "license" : "CECILL-B",
-   "main" : "dist/GpPluginOpenLayers-src.js",
+   "peerDependencies" : {},
+   "author" : "IGNF",
    "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   }
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "license" : "CECILL-B",
+   "bugs" : {},
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "devDependencies" : {},
+   "version" : "3.0.18"
 }
