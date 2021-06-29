@@ -1,6 +1,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -8,7 +9,7 @@
 
 ## Summary
 
-Ajout de la gestion de projections geocentriques
+De nouvelles corrections sur le profil alti
 
 ## Changelog
 
@@ -21,9 +22,8 @@ Ajout de la gestion de projections geocentriques
 * [Removed]
 
 * [Fixed]
-  
-    - Gestion des projections geocentriques (ex. EPSG:4978) (#303)
-    - Correction sur le DOM du profil-alti (#302)
+
+    - fix sur la vignette du profil altimétrique (#305)
 
 * [Security]
 

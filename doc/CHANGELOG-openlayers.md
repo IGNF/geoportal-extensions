@@ -76,6 +76,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.0.17](#extension-geoportail-openlayers-version-3017)
   * [Summary](#summary-20)
   * [Changelog](#changelog-17)
+- [Extension Geoportail OpenLayers, version 3.0.18](#extension-geoportail-openlayers-version-3018)
+  * [Summary](#summary-21)
+  * [Changelog](#changelog-18)
 
 <!-- tocstop -->
 
@@ -801,6 +804,33 @@ Correction sur le profil altimétrique
 * [Fixed]
 
     - fix sur la saisie à main levée du profil altimetrique (#299)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.18
+
+**22/06/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout de la gestion de projections geocentriques
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+  
+    - Gestion des projections geocentriques (ex. EPSG:4978) (#303)
+    - Correction sur le DOM du profil-alti (#302)
 
 * [Security]
 

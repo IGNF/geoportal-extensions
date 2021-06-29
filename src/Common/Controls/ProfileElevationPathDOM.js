@@ -159,7 +159,7 @@ var ProfileElevationPathDOM = {
         const xGradHeight = 15;
 
         const minZguideHeigth = 15;
-        const minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString(), container);
+        const minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString() + ",5", container);
         const minNumXGuides = 1;
 
         const pathHeight = widgetHeigth - xLabelHeight - xGradHeight;
@@ -167,7 +167,10 @@ var ProfileElevationPathDOM = {
 
         const elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         elevationSvg.id = "profileElevationByDefaultSvg";
-        elevationSvg.setAttribute("style", `width: ${widgetWidth}px; height: ${widgetHeigth}px; display: block; margin: auto; overflow: visible;`);
+        elevationSvg.setAttribute("style", "display: block; margin: auto; overflow: visible; position: absolute; left: 10px;");
+        elevationSvg.setAttribute("viewBox", `0 0 ${container.clientWidth} ${container.clientHeight}`);
+        elevationSvg.setAttribute("width", "100%");
+        elevationSvg.setAttribute("height", "100%");
 
         // Détermination des guides en ordonnée :
         const maxNumZguides = Math.floor(pathHeight / minZguideHeigth);
