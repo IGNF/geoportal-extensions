@@ -2,14 +2,13 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail openlayers
 
 ## Summary
-
-De nouvelles corrections sur le profil alti
 
 ## Changelog
 
@@ -22,8 +21,6 @@ De nouvelles corrections sur le profil alti
 * [Removed]
 
 * [Fixed]
-
-    - fix sur la vignette du profil altimétrique (#305)
 
 * [Security]
 
