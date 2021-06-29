@@ -167,7 +167,7 @@ var ProfileElevationPathDOM = {
 
         const elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         elevationSvg.id = "profileElevationByDefaultSvg";
-        elevationSvg.setAttribute("style", "display: block; margin: auto; overflow: visible;");
+        elevationSvg.setAttribute("style", "display: block; margin: auto; overflow: visible; position: absolute; left: 10px;");
         elevationSvg.setAttribute("viewBox", `0 0 ${container.clientWidth} ${container.clientHeight}`);
         elevationSvg.setAttribute("width", "100%");
         elevationSvg.setAttribute("height", "100%");
