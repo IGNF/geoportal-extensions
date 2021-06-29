@@ -9,6 +9,8 @@
 
 ## Summary
 
+De nouvelles corrections sur le profil alti
+
 ## Changelog
 
 * [Added]
@@ -20,6 +22,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - fix sur la vignette du profil altimétrique (#305)
 
 * [Security]
 
