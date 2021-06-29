@@ -159,7 +159,7 @@ var ProfileElevationPathDOM = {
         const xGradHeight = 15;
 
         const minZguideHeigth = 15;
-        const minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString(), container);
+        const minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString() + ",5", container);
         const minNumXGuides = 1;
 
         const pathHeight = widgetHeigth - xLabelHeight - xGradHeight;
