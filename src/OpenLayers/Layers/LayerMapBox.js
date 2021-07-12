@@ -9,7 +9,6 @@ import { applyStyle } from "ol-mapbox-style";
 // import local
 import Utils from "../../Common/Utils";
 import Config from "../../Common/Utils/Config";
-// import local with ol dependencies
 
 /**
  * @classdesc
@@ -66,6 +65,10 @@ var LayerMapBox = (function (VectorTileLayer) {
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         this.protocol = options.ssl === false ? "http://" : "https://";
+
+        // WARNING :
+        // on fait le choix de ne pas utiliser la clef apiKey pour checker les droits sur la ressource
+        // car le service n'est pas securisé...
 
         // Check if configuration is loaded
         if (!Config.isConfigLoaded()) {
@@ -153,7 +156,7 @@ var LayerMapBox = (function (VectorTileLayer) {
         }
 
         if (!this.styleUrl) {
-            throw new Error("ERROR : The style URL not found !?");
+            throw new Error("ERROR : Style URL not found !?");
         }
 
         this.styleUrl.replace(/(http|https):\/\//, this.protocol);
@@ -225,10 +228,12 @@ var LayerMapBox = (function (VectorTileLayer) {
      * @param {*} style - json style
      */
     LayerMapBox.prototype.onStyleMapBoxLoad = function (style) {
-        // si plusieurs sources, on ne peut en prendre qu'une seule...
-        var sourceId = this.sourceId || Object.keys(style.sources)[0];
+        // si on a plusieurs sources, on ne peut en prendre qu'une seule...
+        if (!this.sourceId) {
+            this.sourceId = Object.keys(style.sources)[0];
+        }
 
-        var styleSource = style.sources[sourceId];
+        var styleSource = style.sources[this.sourceId];
         if (!styleSource) {
             this.onStyleMapBoxError({
                 message : "ERROR : Source ID not found !? !"
@@ -238,14 +243,14 @@ var LayerMapBox = (function (VectorTileLayer) {
 
         if (styleSource.type !== "vector") {
             this.onStyleMapBoxError({
-                message : "ERROR : Source type not permitted !"
+                message : "ERROR : Source TYPE not permitted !"
             });
             return;
         }
 
         var source = this.getSource();
 
-        // INFO :
+        // WARNING :
         // la clef renseignée dans les urls n'est pas forcement la bonne
         // car la substitution avec la clef utilisateur n'est pas faite par le service...
         if (styleSource.url) {
@@ -255,9 +260,13 @@ var LayerMapBox = (function (VectorTileLayer) {
             var vectorTileJson = new TileJSONSource({
                 url : styleSource.url
             });
+            var self = this;
             var key = vectorTileJson.on("change", function () {
                 if (vectorTileJson.getState() === "ready") {
                     var doc = vectorTileJson.getTileJSON();
+                    if (doc) {
+                        self.set("mapbox-extensions", doc);
+                    }
                     var tiles = Array.isArray(doc.tiles) ? doc.tiles : [doc.tiles];
                     // protocole : http ou https
                     for (var i = 0; i < styleSource.tiles.length; i++) {
@@ -277,9 +286,10 @@ var LayerMapBox = (function (VectorTileLayer) {
             source.setUrls(styleSource.tiles);
         }
 
-        applyStyle(this, style, sourceId)
+        applyStyle(this, style, this.sourceId)
             .then(() => {
                 source.setState("ready");
+                this.set("mapbox-styles", style);
             })
             .catch((error) => {
                 this.onStyleMapBoxError(error);
@@ -293,7 +303,7 @@ var LayerMapBox = (function (VectorTileLayer) {
     LayerMapBox.prototype.onStyleMapBoxError = function (error) {
         var source = this.getSource();
         source.setState("error");
-        console.error(error.message);
+        console.error(error.message); // eslint warning !
     };
 
     return LayerMapBox;
