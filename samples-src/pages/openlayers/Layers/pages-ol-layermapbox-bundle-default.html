@@ -49,6 +49,8 @@
 
                     var layerSwitcher = new ol.control.LayerSwitcher({});
                     map.addControl(layerSwitcher);
+                    var attribution = new ol.control.GeoportalAttribution({});
+                    map.addControl(attribution);
                 };
            </script>
 {{/content}}
