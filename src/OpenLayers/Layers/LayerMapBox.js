@@ -28,7 +28,7 @@ import Config from "../../Common/Utils/Config";
  * var LayerMapBox = new ol.layer.GeoportalMapBox({
  *      layer  : "PLAN.IGN",
  *      [style  : "classique",]
- *      [source : "plan_ign",] 
+ *      [source : "plan_ign",]
  *      [ssl: true]
  * }, {
  *      opacity
@@ -56,7 +56,7 @@ var LayerMapBox = (function (VectorTileLayer) {
 
         // autres options facultatives
         this.styleName = options.style;
-        this.sourceId  = options.source;
+        this.sourceId = options.source;
 
         // par defaut
         if (typeof options.ssl === "undefined") {
@@ -125,34 +125,34 @@ var LayerMapBox = (function (VectorTileLayer) {
         // }
 
         // récupération des ressources utiles sur l'autoconf
-        var layerId  = this.layerName + "$GEOPORTAIL:GPP:TMS";
+        var layerId = this.layerName + "$GEOPORTAIL:GPP:TMS";
 
         var layerCfg = Config.configuration.layers[layerId];
-        if (! layerCfg) {
+        if (!layerCfg) {
             throw new Error("ERROR : Layer ID not found into the catalogue !?");
         }
 
-        this.styleUrl   = null;
+        this.styleUrl = null;
         this.styleTitle = "";
         for (var i = 0; i < layerCfg.styles.length; i++) {
             var style = layerCfg.styles[i];
             // si le nom du style est en option, on le recherche...
             // sinon, on recherche le style par defaut !
             if (this.styleName && style.name === this.styleName) {
-                this.styleUrl   = style.url;
+                this.styleUrl = style.url;
                 this.styleTitle = style.title;
                 break;
             } else {
                 if (!this.styleName && style.current) {
-                    this.styleName  = style.name;
-                    this.styleUrl   = style.url;
+                    this.styleName = style.name;
+                    this.styleUrl = style.url;
                     this.styleTitle = style.title;
                     break;
                 }
             }
         }
-        
-        if (! this.styleUrl) {
+
+        if (!this.styleUrl) {
             throw new Error("ERROR : The style URL not found !?");
         }
 
@@ -160,8 +160,8 @@ var LayerMapBox = (function (VectorTileLayer) {
 
         // création de la source
         var source = new VectorTileSource({
-            state: "loading", // statut
-            format: new MVT(),
+            state : "loading", // statut
+            format : new MVT()
         });
 
         source._originators = layerCfg.originators;
@@ -173,7 +173,7 @@ var LayerMapBox = (function (VectorTileLayer) {
 
         // options definies sur ol.layer.VectorTile
         var layerVectorTileOptions = {
-            source: source
+            source : source
         };
 
         // récupération des autres paramètres passés par l'utilisateur
@@ -208,28 +208,28 @@ var LayerMapBox = (function (VectorTileLayer) {
         fetch(this.styleUrl, {
             credentials : "same-origin"
         })
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (style) {
-                    self.onStyleMapBoxLoad(style);
-                })
-            }
-        })
-        .catch(function (e) {
-            self.onStyleMapBoxError(e);
-        })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (style) {
+                        self.onStyleMapBoxLoad(style);
+                    });
+                }
+            })
+            .catch(function (e) {
+                self.onStyleMapBoxError(e);
+            });
     };
 
     /**
-     * 
-     * @param {*} style 
+     * Add Style
+     * @param {*} style - json style
      */
     LayerMapBox.prototype.onStyleMapBoxLoad = function (style) {
         // si plusieurs sources, on ne peut en prendre qu'une seule...
         var sourceId = this.sourceId || Object.keys(style.sources)[0];
 
         var styleSource = style.sources[sourceId];
-        if (! styleSource) {
+        if (!styleSource) {
             this.onStyleMapBoxError({
                 message : "ERROR : Source ID not found !? !"
             });
@@ -257,7 +257,7 @@ var LayerMapBox = (function (VectorTileLayer) {
             });
             var key = vectorTileJson.on("change", function () {
                 if (vectorTileJson.getState() === "ready") {
-                    var doc = vectorTileJson.getTileJSON(); 
+                    var doc = vectorTileJson.getTileJSON();
                     var tiles = Array.isArray(doc.tiles) ? doc.tiles : [doc.tiles];
                     // protocole : http ou https
                     for (var i = 0; i < styleSource.tiles.length; i++) {
@@ -276,7 +276,7 @@ var LayerMapBox = (function (VectorTileLayer) {
             }
             source.setUrls(styleSource.tiles);
         }
-    
+
         applyStyle(this, style, sourceId)
             .then(() => {
                 source.setState("ready");
@@ -287,8 +287,8 @@ var LayerMapBox = (function (VectorTileLayer) {
     };
 
     /**
-     * 
-     * @param {*} error 
+     * Error
+     * @param {*} error - message
      */
     LayerMapBox.prototype.onStyleMapBoxError = function (error) {
         var source = this.getSource();
