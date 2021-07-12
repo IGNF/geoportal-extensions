@@ -34,6 +34,9 @@
                             zoom : 6
                         }),
                         layers : [
+                            new ol.layer.GeoportalWMTS({
+                                layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+                            }),
                             new ol.layer.GeoportalMapBox({
                                 layer : "PLAN.IGN",
                                 style : "gris"
@@ -43,6 +46,9 @@
                             })
                         ]
                     });
+
+                    var layerSwitcher = new ol.control.LayerSwitcher({});
+                    map.addControl(layerSwitcher);
                 };
            </script>
 {{/content}}

@@ -63,6 +63,10 @@ var LayerMapBox = (function (VectorTileLayer) {
             options.ssl = true;
         }
 
+        // si ssl = false on fait du http
+        // par défaut, ssl = true, on fait du https
+        this.protocol = options.ssl === false ? "http://" : "https://";
+
         // Check if configuration is loaded
         if (!Config.isConfigLoaded()) {
             throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers.");
@@ -152,18 +156,20 @@ var LayerMapBox = (function (VectorTileLayer) {
             throw new Error("ERROR : The style URL not found !?");
         }
 
+        this.styleUrl.replace(/(http|https):\/\//, this.protocol);
+
         // création de la source
         var source = new VectorTileSource({
             state: "loading", // statut
             format: new MVT(),
         });
 
-        source.originators = layerCfg.originators;
-        source.legends = layerCfg.legends;
-        source.metadata = layerCfg.metadata;
-        source.description = layerCfg.description;
-        source.title = layerCfg.title + " (" + this.styleTitle + ")";
-        source.quicklookUrl = layerCfg.quicklookUrl;
+        source._originators = layerCfg.originators;
+        source._legends = layerCfg.legends;
+        source._metadata = layerCfg.metadata;
+        source._description = layerCfg.description;
+        source._title = layerCfg.title + " (" + this.styleTitle + ")";
+        source._quicklookUrl = layerCfg.quicklookUrl;
 
         // options definies sur ol.layer.VectorTile
         var layerVectorTileOptions = {
@@ -243,6 +249,9 @@ var LayerMapBox = (function (VectorTileLayer) {
         // la clef renseignée dans les urls n'est pas forcement la bonne
         // car la substitution avec la clef utilisateur n'est pas faite par le service...
         if (styleSource.url) {
+            // protocole : http ou https
+            styleSource.url.replace(/(http|https):\/\//, this.protocol);
+
             var vectorTileJson = new TileJSONSource({
                 url : styleSource.url
             });
@@ -250,6 +259,10 @@ var LayerMapBox = (function (VectorTileLayer) {
                 if (vectorTileJson.getState() === "ready") {
                     var doc = vectorTileJson.getTileJSON(); 
                     var tiles = Array.isArray(doc.tiles) ? doc.tiles : [doc.tiles];
+                    // protocole : http ou https
+                    for (var i = 0; i < styleSource.tiles.length; i++) {
+                        tiles[i].replace(/(http|https):\/\//, this.protocol);
+                    }
                     source.setUrls(tiles);
                     observableUnByKey(key);
                 }
@@ -257,6 +270,10 @@ var LayerMapBox = (function (VectorTileLayer) {
         }
 
         if (styleSource.tiles) {
+            // protocole : http ou https
+            for (var j = 0; j < styleSource.tiles.length; j++) {
+                styleSource.tiles[j].replace(/(http|https):\/\//, this.protocol);
+            }
             source.setUrls(styleSource.tiles);
         }
     
