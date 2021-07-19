@@ -13,8 +13,6 @@ import {
     transformExtent as olTransformExtentProj
 } from "ol/proj";
 import MVT from "ol/format/MVT";
-import GeoJSON from "ol/format/GeoJSON";
-import GPX from "ol/format/GPX";
 import WMSCapabilities from "ol/format/WMSCapabilities";
 import WMTSCapabilities from "ol/format/WMTSCapabilities";
 import VectorTileLayer from "ol/layer/VectorTile";
@@ -49,6 +47,8 @@ import ProxyUtils from "../../Common/Utils/ProxyUtils";
 import LayerImportDOM from "../../Common/Controls/LayerImportDOM";
 // import local with ol dependencies
 import KMLExtended from "../Formats/KML";
+import GeoJSONExtended from "../Formats/GeoJSON";
+import GPXExtended from "../Formats/GPX";
 import LayerSwitcher from "./LayerSwitcher";
 
 var logger = Logger.getLogger("layerimport");
@@ -1256,7 +1256,7 @@ var LayerImport = (function (Control) {
                         // - cas avec une url relative ?
                         var _glData = _glSource.data;
 
-                        vectorFormat = new GeoJSON();
+                        vectorFormat = new GeoJSONExtended();
                         vectorSource = new VectorTileSource({
                             attributions : _glSource.attribution,
                             format : vectorFormat,
@@ -1418,24 +1418,28 @@ var LayerImport = (function (Control) {
         } else {
             if (this._currentImportType === "KML") {
                 // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
+                vectorStyle = this.options.vectorStyleOptions.KML.defaultStyle;
                 vectorFormat = new KMLExtended({
                     showPointNames : this.options.vectorStyleOptions.KML.showPointNames,
                     extractStyles : this.options.vectorStyleOptions.KML.extractStyles,
                     defaultStyle : [
-                        this.options.vectorStyleOptions.KML.defaultStyle
+                        vectorStyle
                     ]
                 });
-                vectorStyle = this.options.vectorStyleOptions.KML.defaultStyle;
             } else
             if (this._currentImportType === "GPX") {
                 // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
-                vectorFormat = new GPX();
                 vectorStyle = this.options.vectorStyleOptions.GPX.defaultStyle;
+                vectorFormat = new GPXExtended({
+                    defaultStyle : vectorStyle
+                });
             } else
             if (this._currentImportType === "GeoJSON") {
                 // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
-                vectorFormat = new GeoJSON();
                 vectorStyle = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
+                vectorFormat = new GeoJSONExtended({
+                    defaultStyle : vectorStyle
+                });
             }
 
             // lecture de la géométrie des entités à partir du fichier, pour éventuelle reprojection.
@@ -1527,10 +1531,14 @@ var LayerImport = (function (Control) {
                 });
             } else if (this._currentImportType === "GPX") {
                 // lecture du fichier GPX : création d'un format ol.format.GPX, qui possède une méthode readFeatures (et readProjection)
-                vectorFormat = new GPX();
+                vectorFormat = new GPXExtended({
+                    defaultStyle : this.options.vectorStyleOptions.GPX.defaultStyle
+                });
             } else if (this._currentImportType === "GeoJSON") {
                 // lecture du fichier GeoJSON : création d'un format ol.format.GeoJSON, qui possède une méthode readFeatures (et readProjection)
-                vectorFormat = new GeoJSON();
+                vectorFormat = new GeoJSONExtended({
+                    defaultStyle : this.options.vectorStyleOptions.GeoJSON.defaultStyle
+                });
             }
 
             // création d'une couche vectorielle à partir de ces features

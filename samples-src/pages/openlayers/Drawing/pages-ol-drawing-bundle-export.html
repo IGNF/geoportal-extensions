@@ -1,9 +1,4 @@
-{{#extend "ol-sample-modules-layout"}}
-
-{{#content "vendor"}}
-        <link rel="stylesheet" href="{{ baseurl }}/dist/openlayers/modules/Drawing{{ mode }}.css" />
-        <script src="{{ baseurl }}/dist/openlayers/modules/Drawing{{ mode }}.js"></script>
-{{/content}}
+{{#extend "ol-sample-bundle-layout"}}
 
 {{#content "head"}}
         <title>Sample OpenLayers Drawing</title>
@@ -31,7 +26,7 @@
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                var createMap = function() {
+                window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
@@ -61,7 +56,11 @@
                       }) ;
                       console.log("KML", kml);
 
-                      var oGpx = new ol.format.GPX();
+                      var oGpx = new ol.format.GPX({
+                          // readExtensions : function (ext) {
+                          //    console.warn(ext);
+                          // }
+                      });
                       var gpx  = oGpx.writeFeatures(this.layer.getSource().getFeatures(), {
                               dataProjection : "EPSG:4326",
                               featureProjection : this.getMap().getView().getProjection()
@@ -78,13 +77,6 @@
 
                     map.addControl(drawing);
                 };
-                Gp.Services.getConfig({
-                    serverUrl : "{{ resources }}/AutoConf.js",
-                    callbackSuffix : "",
-                    // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
-                    timeOut : 20000,
-                    onSuccess : createMap
-                });
            </script>
 {{/content}}
 

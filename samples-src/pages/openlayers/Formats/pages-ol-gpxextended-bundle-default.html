@@ -16,7 +16,7 @@
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout d'une couche KML</h2>
+            <h2>Ajout d'une couche GPX</h2>
             <!-- map -->
             <div id="map">
             </div>
@@ -32,14 +32,33 @@
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
-                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/croquis-extendeddata.kml";
+                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/Campomoro-Tizzano-Sartene_3029.gpx";
                     layer = new ol.layer.Vector({
                         source : new ol.source.Vector({
                             url: _url,
-                            format: new ol.format.KMLExtended()
+                            format: new ol.format.GPXExtended({
+                                readExtensions : function (feature, node) {
+                                    console.warn(feature, node);
+                                },
+                                defaultStyle: new ol.style.Style({
+                                    fill: new ol.style.Fill({
+                                        color: [250,250,0,1]
+                                    }),
+                                    stroke: new ol.style.Stroke({
+                                        color: [0,0,255,1],
+                                        width: 5
+                                    }),
+                                    image: new ol.style.Icon({
+                                        src: "data:image/png;base64,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",
+                                        anchor: [17,48],
+                                        anchorOrigin : "top-left",
+                                        anchorXUnits : "pixels",
+                                        anchorYUnits : "pixels"
+                                    })
+                                })
+                            })
                         })
                     });
-
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
@@ -101,19 +120,17 @@
                         console.log("Impossible to export : no features found.");
                         return result;
                     }
-                    var kml = new ol.format.KMLExtended({
-                        writeStyles : true
-                    });
+                    var gpx = new ol.format.GPXExtended({});
 
-                    result = kml.writeFeatures(layer.getSource().getFeatures(), {
+                    result = gpx.writeFeatures(layer.getSource().getFeatures(), {
                         dataProjection : "EPSG:4326",
-                        featureProjection : layer.getSource().getProjection()
+                        featureProjection : "EPSG:3857"// layer.getSource().getProjection()
                     });
 
                     var link = document.createElement("a");
                     var charset = "utf-8";
-                    link.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(result));
-                    link.setAttribute("download", "sample.kml");
+                    link.setAttribute("href", "data:application/gpx+xml;charset=" + charset + "," + encodeURIComponent(result));
+                    link.setAttribute("download", "sample.gpx");
                     link.click();
                 });
            </script>
