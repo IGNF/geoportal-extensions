@@ -52,7 +52,7 @@
                     // surcharge de la fonction d'export : kml to geojson
                     ol.control.Drawing.prototype.onExportFeatureClick = function () {
                       console.log("overload!");
-                      var oKml = new ol.format.KML({
+                      var oKml = new ol.format.KMLExtended({
                           writeStyles : true
                       }) ;
                       var kml = oKml.writeFeatures(this.layer.getSource().getFeatures(), {
@@ -61,14 +61,14 @@
                       }) ;
                       console.log("KML", kml);
 
-                      var oGpx = new ol.format.GPX();
+                      var oGpx = new ol.format.GPXExtended();
                       var gpx  = oGpx.writeFeatures(this.layer.getSource().getFeatures(), {
                               dataProjection : "EPSG:4326",
                               featureProjection : this.getMap().getView().getProjection()
                       })
                       console.log("GPX", gpx);
 
-                      var oGeoJSON = new ol.format.GeoJSON();
+                      var oGeoJSON = new ol.format.GeoJSONExtended();
                       var geojson  = oGeoJSON.writeFeatures(this.layer.getSource().getFeatures(), {
                               dataProjection : "EPSG:4326",
                               featureProjection : this.getMap().getView().getProjection()
