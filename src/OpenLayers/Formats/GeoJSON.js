@@ -33,7 +33,7 @@ var GeoJSON = (function (olGeoJSON) {
 
         this.options = options || {};
 
-         // INFO
+        // INFO
         // defaultStyle est un objet de type Style
         if (this.options.defaultStyle === null || typeof this.options.defaultStyle === "undefined") {
             this.options.defaultStyle = {};
@@ -221,28 +221,30 @@ var GeoJSON = (function (olGeoJSON) {
                                 // FIXME
                                 // comment doit on gerer les label ?
                                 if (this.options.defaultStyle.getImage()) {
-                                    style = new Style({image : this.options.defaultStyle.getImage()});
+                                    style = new Style({
+                                        image : this.options.defaultStyle.getImage()
+                                    });
                                 }
                                 break;
                             case "Polygon":
                             case "MultiPolygon":
-                                var opts_p = {};
+                                var optsp = {};
                                 if (this.options.defaultStyle.getFill()) {
-                                    opts_p.fill = this.options.defaultStyle.getFill();
+                                    optsp.fill = this.options.defaultStyle.getFill();
                                 }
                                 if (this.options.defaultStyle.getStroke()) {
-                                    opts_p.stroke = this.options.defaultStyle.getStroke();
+                                    optsp.stroke = this.options.defaultStyle.getStroke();
                                 }
-                                style = new Style(opts_p);
+                                style = new Style(optsp);
                                 break;
                             case "LineString":
                             case "LinearRing":
                             case "MultiLineString":
-                                var opts_l = {};
+                                var optsl = {};
                                 if (this.options.defaultStyle.getStroke()) {
-                                    opts_l.stroke = this.options.defaultStyle.getStroke();
+                                    optsl.stroke = this.options.defaultStyle.getStroke();
                                 }
-                                style = new Style(opts_l);
+                                style = new Style(optsl);
                                 break;
                         }
                         return [style];

@@ -117,7 +117,9 @@ var GPX = (function (olGPX) {
                 switch (type) {
                     case "Point":
                         if (this.options.defaultStyle.getImage()) {
-                            style = new Style({image : this.options.defaultStyle.getImage()});
+                            style = new Style({
+                                image : this.options.defaultStyle.getImage()
+                            });
                         }
                         break;
                     case "LineString":
@@ -135,7 +137,7 @@ var GPX = (function (olGPX) {
                 return [style];
             };
             var featureStyleFunction = feature.getStyleFunction();
-            if (! featureStyleFunction) {
+            if (!featureStyleFunction) {
                 feature.setStyle(styleFunction);
             }
         });
