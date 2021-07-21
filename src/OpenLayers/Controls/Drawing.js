@@ -1074,7 +1074,7 @@ var Drawing = (function (Control) {
             if (geom instanceof Point || geom instanceof MultiPoint) {
                 // on determine si c'est un marker ou un label.
                 var _label = seEv.selected[0].getProperties().name;
-                if (style.getText() && _label) {
+                if (style && style.getText() && _label) {
                     geomType = "Text";
                     if (style.getText().getStroke() &&
                             style.getText().getStroke().getColor()) {
