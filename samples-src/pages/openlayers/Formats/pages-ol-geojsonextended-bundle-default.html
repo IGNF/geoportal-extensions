@@ -16,7 +16,7 @@
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout d'une couche KML</h2>
+            <h2>Ajout d'une couche GeoJSON</h2>
             <!-- map -->
             <div id="map">
             </div>
@@ -32,18 +32,33 @@
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
-                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/croquis-extendeddata.kml";
+                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/geojson/map.geojson";
+                    
+                    var defaultStyle = new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: [250,250,0,1]
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: [125,125,0,1],
+                            width: 2
+                        })
+                    });
+                    var _styleFunction = function (feature, resolution) {
+                        return [defaultStyle];
+                    };
+
                     layer = new ol.layer.Vector({
                         source : new ol.source.Vector({
                             url: _url,
-                            format: new ol.format.KMLExtended()
-                        })
+                            format: new ol.format.GeoJSONExtended()
+                        }),
+                        style: _styleFunction
                     });
 
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
-                            center : [0,0],
+                            center : [261213, 6250943],
                             zoom : 6
                         }),
                         layers : [
@@ -101,19 +116,17 @@
                         console.log("Impossible to export : no features found.");
                         return result;
                     }
-                    var kml = new ol.format.KMLExtended({
-                        writeStyles : true
-                    });
+                    var json = new ol.format.GeoJSONExtended({});
 
-                    result = kml.writeFeatures(layer.getSource().getFeatures(), {
+                    result = json.writeFeatures(layer.getSource().getFeatures(), {
                         dataProjection : "EPSG:4326",
-                        featureProjection : layer.getSource().getProjection()
+                        featureProjection : "EPSG:3857"// layer.getSource().getProjection()
                     });
 
                     var link = document.createElement("a");
                     var charset = "utf-8";
-                    link.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(result));
-                    link.setAttribute("download", "sample.kml");
+                    link.setAttribute("href", "data:application/geo+json;charset=" + charset + "," + encodeURIComponent(result));
+                    link.setAttribute("download", "sample.geojson");
                     link.click();
                 });
            </script>
