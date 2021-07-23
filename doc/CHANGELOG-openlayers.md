@@ -70,6 +70,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.0.14](#extension-geoportail-openlayers-version-3014)
   * [Summary](#summary-18)
   * [Changelog](#changelog-15)
+- [Extension Geoportail OpenLayers, version 3.0.16](#extension-geoportail-openlayers-version-3016)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-16)
+- [Extension Geoportail OpenLayers, version 3.0.17](#extension-geoportail-openlayers-version-3017)
+  * [Summary](#summary-20)
+  * [Changelog](#changelog-17)
+- [Extension Geoportail OpenLayers, version 3.0.18](#extension-geoportail-openlayers-version-3018)
+  * [Summary](#summary-21)
+  * [Changelog](#changelog-18)
+- [Extension Geoportail OpenLayers, version 3.0.19](#extension-geoportail-openlayers-version-3019)
+  * [Summary](#summary-22)
+  * [Changelog](#changelog-19)
 
 <!-- tocstop -->
 
@@ -742,6 +754,112 @@ Nouveau widget de profil altimétrique et  correctif sur le SearchEngine
     - fix sur la prise en compte du paramètre ssl=false pour les controles qui interrogent les services (a71811bb85785af93759a77de793be0c9d313fbf)
     - fix sur l'interface des options données au controle SearchEngine (ee5130f376f83702328d55659ad73bd30f561a02)
     - correctif sur l'export de la version en mode module
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.16
+
+**11/05/2021**
+> Release Extension Geoportail openLayers
+
+## Summary
+
+Correctifs sur le profil altimétriques
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+    - Adaptation du style du profil alti par défaut
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correctif sur les clics multiple en fin de saisie du profil altimétrique (#298)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.17
+
+**16/06/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correction sur le profil altimétrique
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - fix sur la saisie à main levée du profil altimetrique (#299)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.18
+
+**22/06/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout de la gestion de projections geocentriques
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+  
+    - Gestion des projections geocentriques (ex. EPSG:4978) (#303)
+    - Correction sur le DOM du profil-alti (#302)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.0.19
+
+**29/06/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+De nouvelles corrections sur le profil alti
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - fix sur la vignette du profil altimétrique (#305)
 
 * [Security]
 

@@ -935,7 +935,8 @@ var ElevationPath = (function (Control) {
         this._measureDraw = new DrawInteraction({
             source : this._measureSource,
             type : "LineString",
-            style : this._drawStyleStart
+            style : this._drawStyleStart,
+            stopClick : true
         });
 
         this._measureDraw.setProperties({
@@ -994,6 +995,7 @@ var ElevationPath = (function (Control) {
             }
 
             // set an alti request and display results
+            this._measureDraw.setActive(false);
             this._requestService();
         });
     };
@@ -1190,6 +1192,7 @@ var ElevationPath = (function (Control) {
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
+                self._measureDraw.setActive(true);
             }
         };
 
@@ -1201,6 +1204,7 @@ var ElevationPath = (function (Control) {
             logger.error(error.message);
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
             self._waiting = false;
+            self._measureDraw.setActive(true);
         };
 
         Utils.mergeParams(options, {
@@ -1216,16 +1220,21 @@ var ElevationPath = (function (Control) {
             var _sampling;
             var _length = this._getLength();
             logger.trace("length", _length);
-            var minSampling = this._getSketchCoords();
-            var p = Math.max(3, minSampling, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
+            var p = Math.max(50, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
             if (p > 200) {
                 _sampling = 200;
             } else {
                 _sampling = Math.floor(p);
             }
+            var pointNumber = this._getSketchCoords().length;
+            if (pointNumber > 100) {
+                _sampling = 0;
+            }
+        }
 
+        if (_sampling > 0) {
             Utils.mergeParams(options, {
-                sampling : _sampling || 50
+                sampling : _sampling
             });
         }
 
@@ -1398,6 +1407,8 @@ var ElevationPath = (function (Control) {
         // sauvegarde des données
         var data = this._data = this._computeElevationMeasure(elevations);
 
+        this._updateInfoContainer();
+
         // container
         var container = this.options.displayProfileOptions.target;
         if (container) {
@@ -1425,6 +1436,51 @@ var ElevationPath = (function (Control) {
                 // on affiche les informations
                 element.style.display = "block";
             }
+        }
+    };
+
+    /**
+     * update info container
+     *
+     * @private
+     */
+    ElevationPath.prototype._updateInfoContainer = function () {
+        logger.trace("ElevationPath::_updateInfoContainer");
+
+        // options d'affichage
+        var totalDistance = this.options.displayProfileOptions.totalDistance;
+        var meanSlope = this.options.displayProfileOptions.meanSlope;
+        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
+        var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
+        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
+
+        // clean
+        var div = this._infoContainer;
+        if (div.childElementCount) {
+            while (div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+        }
+
+        // creation des infomations
+        if (totalDistance) {
+            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance).toLocaleString() + " m");
+        }
+
+        if (ascendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
+        }
+
+        if (descendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
+        }
+
+        if (meanSlope) {
+            this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
+        }
+
+        if (greaterSlope) {
+            this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
         }
     };
 
@@ -1470,41 +1526,7 @@ var ElevationPath = (function (Control) {
      * @private
      */
     ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
-        // options d'affichage
-        var totalDistance = this.options.displayProfileOptions.totalDistance;
-        var meanSlope = this.options.displayProfileOptions.meanSlope;
-        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-        var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
-        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-
-        // clean
         var div = this._infoContainer;
-        if (div.childElementCount) {
-            while (div.firstChild) {
-                div.removeChild(div.firstChild);
-            }
-        }
-
-        // creation des infomations
-        if (totalDistance) {
-            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance).toLocaleString() + " m");
-        }
-
-        if (ascendingElevation) {
-            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
-        }
-
-        if (descendingElevation) {
-            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
-        }
-
-        if (meanSlope) {
-            this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
-        }
-
-        if (greaterSlope) {
-            this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
-        }
 
         // show des informations !
         if (div.className === "GPelevationPathInformationsContainerVisible") {

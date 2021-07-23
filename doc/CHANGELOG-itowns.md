@@ -58,6 +58,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.2](#extension-geoportail-itowns-version-232)
   * [Summary](#summary-16)
   * [Changelog](#changelog-15)
+- [Extension Geoportail Itowns, version 2.3.3](#extension-geoportail-itowns-version-233)
+  * [Summary](#summary-17)
+  * [Changelog](#changelog-16)
 
 <!-- tocstop -->
 
@@ -441,6 +444,32 @@ Documentation :
     - corrections syntaxiques eslint (da275a284a07ddd8e32753eda57ad4ef283d34fb et 306506a2255b2f05558ddcb05210dce39135c804)
     - correction de la synchronisation des couches vecteur tuilé avec leurs labels (#290)
 
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.3
+
+**16/06/2021**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Utilisation d'iTowns 2.33 (#301)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 

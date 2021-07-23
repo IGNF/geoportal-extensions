@@ -57,6 +57,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.1.9](#extension-geoportail-leaflet-version-219)
   * [Summary](#summary-15)
   * [Changelog](#changelog-12)
+- [Extension Geoportail Leaflet, version 2.1.10](#extension-geoportail-leaflet-version-2110)
+  * [Summary](#summary-16)
+  * [Changelog](#changelog-13)
 
 <!-- tocstop -->
 
@@ -490,6 +493,32 @@ Nouveau widget de profil altimétrique par défaut, et correctif mineur
     - corrections syntaxiques eslint (da275a2 et 306506a)
     - cf. issue : Erreur compilation par webpack [#294](https://github.com/IGNF/geoportal-extensions/issues/294)
     - cf. issue : Erreur dépendances à la compilation [#283](https://github.com/IGNF/geoportal-extensions/issues/283)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.1.10
+
+**16/06/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Reparation du profil altimétrique
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correction et réparation du profil altimétrique de Leaflet (#297)
 
 * [Security]
 
