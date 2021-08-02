@@ -1,7 +1,3 @@
-
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -9,7 +5,11 @@
 
 ## Summary
 
-De nouvelles corrections sur le profil alti
+Mise à jour de l'extension Géoportail pour OpenLayers 6.3.1
+
+Upgrade des dependances :
+- openLayers@6.3.1
+- ol-mapbox-style@6.3.2
 
 ## Changelog
 
@@ -17,13 +17,13 @@ De nouvelles corrections sur le profil alti
 
 * [Changed]
 
+    - mise à jour de la dépendance openlayers en versio 6.3.1 (#280)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - fix sur la vignette du profil altimétrique (#305)
 
 * [Security]
 

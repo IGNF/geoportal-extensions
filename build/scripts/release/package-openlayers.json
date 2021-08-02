@@ -1,35 +1,21 @@
 {
-   "author" : "IGNF",
-   "files" : [
-      "dist/",
-      "src/",
-      "LICENCE.md",
-      "README.md",
-      "package.json"
-   ],
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "devDependencies" : {},
-   "scripts" : {},
-   "license" : "CECILL-B",
-   "version" : "3.0.18",
-   "name" : "geoportal-extensions-openlayers",
-   "date" : "22/06/2021",
-   "dependencies" : {
-      "geoportal-access-lib" : "2.1.8",
-      "eventbusjs" : "0.2.0",
-      "ol-mapbox-style" : "4.2.1",
-      "proj4" : "2.7.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
-      "xmldom" : "^0.1.27",
-      "loglevel" : "1.6.6",
-      "node-fetch" : "^2.6.1",
-      "sortablejs" : "1.8.4",
-      "ol" : "5.3.0"
-   },
-   "module" : "src/OpenLayers/index.js",
    "directories" : {},
-   "peerDependencies" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
+   "date" : "29/06/2021",
+   "bundleDependencies" : [],
+   "dependencies" : {
+      "ol" : "6.3.1",
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.0",
+      "eventbusjs" : "0.2.0",
+      "loglevel" : "1.6.6",
+      "ol-mapbox-style" : "6.3.2",
+      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
+      "sortablejs" : "1.8.4",
+      "geoportal-access-lib" : "2.1.8",
+      "node-fetch" : "^2.6.1"
+   },
+   "name" : "geoportal-extensions-openlayers",
+   "scripts" : {},
    "bugs" : {},
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
    "keywords" : [
@@ -38,9 +24,23 @@
       "javascript",
       "OpenLayers"
    ],
-   "bundleDependencies" : [],
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "files" : [
+      "dist/",
+      "src/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "author" : "IGNF",
+   "license" : "CECILL-B",
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "peerDependencies" : {},
+   "version" : "3.1.0",
    "repository" : {
       "type" : "git",
       "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   }
+   },
+   "module" : "src/OpenLayers/index.js",
+   "devDependencies" : {}
 }
