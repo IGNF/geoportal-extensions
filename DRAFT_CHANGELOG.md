@@ -1,3 +1,4 @@
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -5,19 +6,11 @@
 
 ## Summary
 
-Mise à jour de l'extension Géoportail pour OpenLayers 6.3.1
-
-Upgrade des dependances :
-- openLayers@6.3.1
-- ol-mapbox-style@6.3.2
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - mise à jour de la dépendance openlayers en versio 6.3.1 (#280)
 
 * [Deprecated]
 
