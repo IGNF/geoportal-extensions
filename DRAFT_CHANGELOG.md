@@ -71,6 +71,8 @@
 
 * [Fixed]
 
+    - import eventDispatcher de THREE (e57a755794957de54f2ef5c5ffdac8687dc59985)
+
 * [Security]
 
 ---
