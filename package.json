@@ -1,8 +1,8 @@
 {
   "name": "geoportal-extensions",
   "description": "French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries",
-  "version": "2.3.8",
-  "date": "29/06/2021",
+  "version": "2.4.0",
+  "date": "02/08/2021",
   "leafletExtName": "French Geoportal Extension for Leaflet",
   "leafletExtVersion": "2.1.10",
   "olExtName": "French Geoportal Extension for OpenLayers",
