@@ -77,11 +77,10 @@ export default {
                 return;
             } else {
                 // si l'autoconfiguration est chargée,
-                // on recupere la clef API, et on en profitera ensuite pour controler
+                // on recupere la/les clef(s) API, et on en profitera ensuite pour controler
                 // les droits sur les ressources.
 
-                // FIXME par defaut, on recupere toujours la première...
-                _key = Object.keys(Config.configuration.generalOptions.apiKeys)[0];
+                _key = Object.keys(Config.configuration.generalOptions.apiKeys);
                 logger.log(_key);
             }
         }
@@ -160,8 +159,8 @@ export default {
                     return;
                 }
 
-                // on ajoute la clef
-                _rightManagement.key = _key;
+                // on ajoute la clef qui correspond à la ressource vérifiée
+                _rightManagement.key = params.key;
 
                 logger.log("right management checked", _rightManagement);
 
