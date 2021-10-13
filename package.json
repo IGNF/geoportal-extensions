@@ -74,7 +74,7 @@
     "markdown-toc": "^1.2.0",
     "ol": "6.3.1",
     "ol-mapbox-style": "6.3.2",
-    "proj4": "2.7.0",
+    "proj4": "2.7.2",
     "proj4leaflet": "1.0.2",
     "sortablejs": "1.8.4",
     "three": "0.127.0",
