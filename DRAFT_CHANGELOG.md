@@ -12,7 +12,7 @@
 
 * [Changed]
 
-    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
 
 * [Deprecated]
 
@@ -40,7 +40,7 @@
 
 * [Changed]
 
-    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
 
 * [Deprecated]
 
