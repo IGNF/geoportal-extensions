@@ -82,6 +82,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.0.19](#extension-geoportail-openlayers-version-3019)
   * [Summary](#summary-22)
   * [Changelog](#changelog-19)
+- [Extension Geoportail OpenLayers, version 3.1.0](#extension-geoportail-openlayers-version-310)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-20)
 
 <!-- tocstop -->
 
@@ -860,6 +863,36 @@ De nouvelles corrections sur le profil alti
 * [Fixed]
 
     - fix sur la vignette du profil altimétrique (#305)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.1.0
+
+**02/08/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'extension Géoportail pour OpenLayers 6.3.1
+
+Upgrade des dependances :
+- openLayers@6.3.1
+- ol-mapbox-style@6.3.2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour de la dépendance openlayers en versio 6.3.1 (#280)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
