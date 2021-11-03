@@ -12,6 +12,8 @@
 
 * [Changed]
 
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1
+
 * [Deprecated]
 
 * [Removed]
@@ -37,6 +39,8 @@
 * [Added]
 
 * [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1
 
 * [Deprecated]
 
