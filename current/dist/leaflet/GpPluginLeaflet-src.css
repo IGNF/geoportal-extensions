@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.10
- * @date 16/06/2021
+ * @version 2.2.0
+ * @date 04/11/2021
  *
  */
 
@@ -421,12 +421,12 @@ div[id^=GPelevationPathPanelInfo] {
 
 .altiPathValue {
   font-weight: 700;
-  color: #5E5E5E;
+  fill: #5E5E5E;
 }
 
 .altiPathCoords {
   font-style: italic;
-  color: #5E5E5E;
+  fill: #5E5E5E;
 }
 
 .tooltipInit {

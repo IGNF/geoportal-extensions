@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.1.10
- * @date 16/06/2021
+ * @version 2.2.0
+ * @date 04/11/2021
  *
  */
 
@@ -205,21 +205,21 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _Common_Styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var _Styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21);
 /* harmony import */ var _Controls_Controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(32);
-/* harmony import */ var _Controls_ElevationPath__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(166);
-/* harmony import */ var _Layers_Layers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(170);
-/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(150);
-/* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(176);
+/* harmony import */ var _Controls_ElevationPath__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(159);
+/* harmony import */ var _Layers_Layers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(163);
+/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(143);
+/* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(169);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(40);
-/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(172);
+/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(165);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LayerUtils", function() { return _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
-/* harmony import */ var _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(177);
+/* harmony import */ var _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(170);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ProxyUtils", function() { return _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
-/* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(178);
+/* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(171);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ColorUtils", function() { return _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
-/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(148);
+/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(141);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MathUtils", function() { return _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(34);
@@ -320,7 +320,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.3.6\",\"date\":\"16/06/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.1.10\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.0.17\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.11.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"2.1.8\",\"itowns\":\"2.33.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"5.3.0\",\"ol-mapbox-style\":\"4.2.1\",\"proj4\":\"2.7.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.127.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.6.0\",\"date\":\"04/11/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.2.0\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.2.0\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.14.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"3.0.1\",\"itowns\":\"2.33.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"6.3.1\",\"ol-mapbox-style\":\"6.3.2\",\"proj4\":\"2.7.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.127.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -598,12 +598,12 @@ if (true) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LayerSwitcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33);
 /* harmony import */ var _Isocurve__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
-/* harmony import */ var _MousePosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(147);
-/* harmony import */ var _ReverseGeocoding__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(158);
-/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(161);
-/* harmony import */ var _SearchEngine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(163);
-/* harmony import */ var _ElevationPath__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(166);
-/* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(169);
+/* harmony import */ var _MousePosition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(140);
+/* harmony import */ var _ReverseGeocoding__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(151);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(154);
+/* harmony import */ var _SearchEngine__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(156);
+/* harmony import */ var _ElevationPath__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(159);
+/* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(162);
 
 
 
@@ -5388,10 +5388,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
-/* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(142);
-/* harmony import */ var _Common_Controls_IsoDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(146);
+/* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(135);
+/* harmony import */ var _Common_Controls_IsoDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(139);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
@@ -5578,9 +5578,9 @@ var Isocurve = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.extend(
    *
    * @private
    */
-  onRemove: function onRemove()
-  /* map */
-  {},
+  onRemove: function
+    /* map */
+  onRemove() {},
   // ################################################################### //
   // ####################### init application ########################## //
   // ################################################################### //
@@ -6543,9 +6543,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Services_Geocode_Response_model_GeocodedLocation__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(109);
 /* harmony import */ var _Services_Geocode_Response_model_DirectGeocodedLocation__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(108);
 /* harmony import */ var _Services_Geocode_Response_model_ReverseGeocodedLocation__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(114);
-/* harmony import */ var _Services_ProcessIsoCurve_Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(139);
-/* harmony import */ var _Services_Route_Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(131);
-/* harmony import */ var _Services_Route_Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(132);
+/* harmony import */ var _Services_ProcessIsoCurve_Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(132);
+/* harmony import */ var _Services_Route_Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(124);
+/* harmony import */ var _Services_Route_Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(125);
 /* harmony import */ var _Protocols_XHR__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(49);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(45);
 /* harmony import */ var _Utils_Helper__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(47);
@@ -6715,7 +6715,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Geocode_ReverseGeocode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(110);
 /* harmony import */ var _AutoComplete_AutoComplete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(115);
 /* harmony import */ var _Route_Route__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(119);
-/* harmony import */ var _ProcessIsoCurve_ProcessIsoCurve__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(134);
+/* harmony import */ var _ProcessIsoCurve_ProcessIsoCurve__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(126);
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "point|circle|bbox" }] */
 
 /**
@@ -6912,16 +6912,20 @@ var Services = {
      *
      * @method route
      * @param {Object} options - Options for function call.
+     * @param {String} options.resource - Resource used to compute the route. Available values are in the GetCapabilities.
      * @param {String} options.apiKey - Access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
-     * @param {String} [options.routePreference = "fastest"] - Indicates the way to compute the route : "fastest" (time optimisation) or "shortest" (distance optimisation).
-     * @param {Gp.Point} options.startPoint - Start point of the route. Expressed in CRS:84 coordinates system (startPoint.x corresponds to longitude, startPoint.y corresponds to latitude).
-     * @param {Gp.Point} options.endPoint - End point of the route. Expressed in CRS:84 coordinates system (endPoint.x corresponds to longitude, endPoint.y corresponds to latitude).
-     * @param {Array.<Gp.Point>} [options.viaPoints] - Ordered via Points of the route. Expressed in CRS:84 coordinates system (viaPoints[i].x corresponds to longitude, viaPoints[i].y corresponds to latitude).
-     * @param {String} [options.graph = "Voiture"] - User profile to use to compute the route : "Voiture" (using a vehicule) or "Pieton" (pedestrian). Has an influence on the kind of roads the route may use and the average speed.
-     * @param {Array.<String>} [options.exclusions] - Indicates if route has to avoid some features ("toll", "bridge" or "tunnel").
+     * @param {String} [options.routePreference = "fastest"] - Indicates the way to compute the route : "fastest" (time optimisation) or "shortest" (distance optimisation). Available values are in the GetCapabilities.
+     * @param {Gp.Point} options.startPoint - Start point of the route. Expressed in CRS:84 coordinates system (startPoint.x corresponds to longitude, startPoint.y corresponds to latitude). Available bbox are in the GetCapabilities.
+     * @param {Gp.Point} options.endPoint - End point of the route. Expressed in CRS:84 coordinates system (endPoint.x corresponds to longitude, endPoint.y corresponds to latitude). Available bbox are in the GetCapabilities.
+     * @param {Array.<Gp.Point>} [options.viaPoints] - Ordered via Points of the route. Expressed in CRS:84 coordinates system (viaPoints[i].x corresponds to longitude, viaPoints[i].y corresponds to latitude). Available bbox are in the GetCapabilities.
+     * @param {String} [options.graph = "Voiture"] - User profile to use to compute the route : "Voiture" (using a vehicule) or "Pieton" (pedestrian). Has an influence on the kind of roads the route may use and the average speed. Available bbox are in the GetCapabilities.
+     * @param {Array.<String>} [options.exclusions] - DEPRECATED: use options.constraints. Indicates if route has to avoid some features ("toll", "bridge" or "tunnel").
      * @param {Boolean} [options.geometryInInstructions = false] - Indicates if route geometry has to be also returned with route instructions.
      * @param {Boolean} [options.provideBoundingBox = true] - Indicates if route instructions has to be localised with a BBOX in the response.
-     * @param {String} [options.distanceUnit = "km"] - The unit used to provide distances in the response ("m" or "km").
+     * @param {String} [options.distanceUnit = "m"] - The unit used to provide distances in the response ("meter" or "kilometer").
+     * @param {String} [options.timeUnit = "second"] - The unit used to provide duration in the response ("standard", "second", "minute", "hour").
+     * @param {Array.<String>} [options.waysAttributes] - Way Attributes to add in the response. Available values are in the GetCapabilities.
+     * @param {Array.<Object>} [options.constraints] - Constraints used ({'constraintType':'banned','key':'ways_type','operator':'=','value':'autoroute'}). Available values are in the GetCapabilities.
      * @param {Function} options.onSuccess - Callback function for getting successful service response. Takes a {@link Gp.Services.RouteResponse} object as a parameter except if "rawResponse" is set to true.
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
@@ -10567,25 +10571,17 @@ var DefaultUrlService = {
      * Routing web service access
      *
      * @member {Object}
-     * @property {Function} url (key) - Returns routing service default urls with or without geoportal access key given as a parameter. The result is a javascript object with different urls given used protocols ("route-json" or "route-xml").
+     * @property {Function} url (key) - Returns routing service default urls with or without geoportal access key given as a parameter. The result is a javascript object with different urls given used protocols.
      */
     Route : {
-        _key : {
-            ols : "/itineraire/ols", // openLS
-            "route-json" : "/itineraire/rest/route.json", // rest (geoconcept)
-            "route-xml" : "/itineraire/rest/route.xml" // rest (geoconcept)
-        },
+        _key : "/geoportail/itineraire/rest/1.0.0/route",
         /**
         * url
         * @param {String} key - key
         * @returns {String} url
         */
         url : function (key) {
-            return {
-                ols : DefaultUrlService.url(key, this._key["ols"]),
-                "route-json" : DefaultUrlService.url(key, this._key["route-json"]),
-                "route-xml" : DefaultUrlService.url(key, this._key["route-xml"])
-            };
+            return DefaultUrlService.url(key, this._key);
         }
     }
 };
@@ -10597,7 +10593,7 @@ var DefaultUrlService = {
 /* 57 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@2.1.8\",\"_id\":\"geoportal-access-lib@2.1.8\",\"_inBundle\":false,\"_integrity\":\"sha512-Z5LFBU5Gh8I3oO22334IPhd/5lqr1ZX6qLPAGGTqnXPxfb/DgUuW/wWP2aGXKLGeQfXz7UYUaYZ9pUxWf4jheQ==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@2.1.8\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"2.1.8\",\"saveSpec\":null,\"fetchSpec\":\"2.1.8\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-2.1.8.tgz\",\"_shasum\":\"7dbb71f23e430f446d6d6df3956e76a895f3c7e0\",\"_spec\":\"geoportal-access-lib@2.1.8\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"14/04/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"2.1.8\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@3.0.1\",\"_id\":\"geoportal-access-lib@3.0.1\",\"_inBundle\":false,\"_integrity\":\"sha512-3FK4S1GQ1wTQzumuOmilrPwb2o++Aa0ri4jRg/pE033xA5FCk+hcOYXQTTQYawVHhkuWp1JDuX4ElF/za2Yy+Q==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@3.0.1\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"3.0.1\",\"saveSpec\":null,\"fetchSpec\":\"3.0.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-3.0.1.tgz\",\"_shasum\":\"d31dcbfd671cfc5507632af2085c803a540ddeea\",\"_spec\":\"geoportal-access-lib@3.0.1\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"02/11/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"3.0.1\"}");
 
 /***/ }),
 /* 58 */
@@ -13253,8 +13249,8 @@ AutoConfResponseReader.VERSION = "1.1.0";
  */
 AutoConfResponseReader.NAMESPACES = {
     xmlns : "http://www.opengis.net/context",
-    gpp : "http://api.ign.fr/geoportail",
-    ows : "http://www.opengis.net/ows/1.1",
+    gpp : "http://api.ign.fr/geoportail", // FIXME remplacer par https://www.geoportail.gouv.fr/gpp
+    ows : "http://www.opengis.net/ows/2.0",
     sld : "http://www.opengis.net/sld",
     wmts : "http://www.opengis.net/wmts/1.0",
     xlink : "http://www.w3.org/1999/xlink",
@@ -20719,7 +20715,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46);
 /* harmony import */ var _DefaultUrlService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
 /* harmony import */ var _Request_RouteRequestFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(120);
-/* harmony import */ var _Response_RouteResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(128);
+/* harmony import */ var _Response_RouteResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(123);
 
 
 
@@ -20741,14 +20737,9 @@ __webpack_require__.r(__webpack_exports__);
  * @extends {Gp.Services.CommonService}
  * @param {Object} options - options spécifiques au service (+ les options heritées)
  *
- * @param {String} [options.api] - Manière d'accéder au service : 'REST' (via l'API REST) ou 'OLS' (via la norme XLS).
- * Par défaut, on utilise l'API REST.
+ * @param {String} options.resource - La ressource utilisée pour le calcul. Ce paramètre devrait être obligatoire car il l'est dans l'appel au service. Mais il ne l'est pas pour des raisons de rétrocompatibilité.
  *
- * @param {String} options.outputFormat - Le format de la réponse du service itineraire : 'xml' ou 'json'.
- *      Ce paramètre déterminera l'extension '.xml' ou '.json' du service dans le cas de l'API REST.
- *      Nécessaire si serverUrl est renseigné, et qu'on souhaite passer par l'API REST,
- *      pour connaître le format dans lequel sera fournie la réponse (pour son traitement).
- *      Non nécessaire pour la norme OLS. Par défaut, ce paramètre vaut 'json'.
+ * @param {String} options.outputFormat - Le format de la réponse du service itineraire : 'json' uniquement et par défaut.
  *
  * @param {String} [options.routePreference = "fastest"] - Mode de calcul à utiliser :
  * - le plus rapide « fastest »
@@ -20770,9 +20761,16 @@ __webpack_require__.r(__webpack_exports__);
  *      Détermine le profil de vitesses utilisé pour le calcul ainsi que les tronçons autorisés ou non.
  *      Par défaut, c'est la valeur "Voiture" qui sera utilisée.
  *
- * @param {String[]} [options.exclusions] - Critères d'exclusions à appliquer pour le calcul. (correspond au paramètre "avoidFeature" d'OpenLS)
+ * @param {String[]} [options.exclusions] - DEPRECATED: Critères d'exclusions à appliquer pour le calcul. (correspond au paramètre "avoidFeature" d'OpenLS)
  *      On précise ici le type de tronçons que l'on ne veut pas que l'itinéraire emprunte
  *      (valeurs possibles : « toll » (éviter les péages), « bridge », « tunnel »).
+ *      Ce paramètre est conservé pour une rétrocompatibilité de l'api. Le nouveau paramètre à utiliser est options.constraints
+ *
+ * @param {Object[]} [options.constraints] - Critères de contraintes à appliquer sur un itinéraire. Les valeurs disponibles dépendent de la ressource utilisée. Il est donc utile de regarder le getCapabilities.
+ * @param {String} [options.constraints.constraintType] - Type de la contrainte. Généralement "banned".
+ * @param {String} [options.constraints.key] - Clé de la contrainte. Généralement "wayType".
+ * @param {String} [options.constraints.operator] - Opérateur de la contrainte. Généralement "=".
+ * @param {String} [options.constraints.value] - Valeur de la contrainte. Généralement "autoroute".
  *
  * @param {Boolean} [options.geometryInInstructions = false] - Indique si la géométrie de l'itinéraire doit être reprise morceau par morceau dans les instructions.
  *      (correspond au paramètre "provideGeometry" d'OpenLS) Par défaut : false.
@@ -20780,18 +20778,23 @@ __webpack_require__.r(__webpack_exports__);
  * @param {Boolean} [options.provideBbox = true] - Indique si les instructions doivent être localisées par une bbox dans la réponse.
  *      Par défaut : true.
  *
- * @param {String} [options.distanceUnit = "km"] - Indique si la distance doit être exprimée en km ou m dans la réponse.
- *      Par défaut : km.
+ * @param {String} [options.distanceUnit = "m"] - Indique si la distance doit être exprimée en km ou m dans la réponse.
+ *      Par défaut : m.
+ * @param {String} [options.timeUnit = "second"] - Indique si la durée doit être exprimée en seconde, minute ou heure dans la réponse. Il peut-être formatté hh:mm::ss avec la valeur standard.
+ *      Les valeurs possibles sont "standard", "second", "minute" ou "hour".
+ *      Par défaut : "standard".
  *
  * @param {String} [options.srs] - Système de coordonnées dans lequel les paramètres géographiques en entrée et la réponse du service sont exprimés.
  *      Pas de valeur par défaut. Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 'EPSG:4326'.
+ *
+ * @param {String[]} [options.waysAttributes] - Nom des attributs des voies. Les valeurs disponibles dépendent de la ressource utilisée. Il est donc utile de regarder le getCapabilities.
  *
  * @example
  *  var options = {
  *      // options communes aux services
  *      apiKey : null,
  *      serverUrl : 'http://localhost/service/',
- *      protocol : 'JSONP', // JSONP|XHR
+ *      protocol : 'XHR',
  *      proxyURL : null,
  *      httpMethod : 'GET', // GET|POST
  *      timeOut : 10000, // ms
@@ -20800,8 +20803,8 @@ __webpack_require__.r(__webpack_exports__);
  *      onSuccess : function (response) {},
  *      onFailure : function (error) {},
  *      // spécifique au service
- *      api : 'OLS',
- *      outputFormat : 'xml',
+ *      resource : 'bdtopo'
+ *      outputFormat : 'json',
  *      startPoint : {
  *          x : 42.1121,
  *          y : 1.5557
@@ -20810,11 +20813,11 @@ __webpack_require__.r(__webpack_exports__);
  *          x : 42.1121,
  *          y : 1.5557
  *      },
- *      provideBbox : false,
+ *      provideBbox : true,
  *      exclusions : ["Bridge", "Tunnel", "Toll"],
  *      distanceUnit : "km",
  *      graph : "Voiture",
- *      geometryInInstructions : false,
+ *      geometryInInstructions : true,
  *      routePreference : "fastest"
  *  };
  *
@@ -20863,73 +20866,96 @@ function Route (options) {
     }
 
     // options par defaut
-    // on passe l'option api en majuscules afin d'éviter des exceptions.
-    this.options.api = (typeof options.api === "string") ? options.api.toUpperCase() : "REST";
 
     // on passe l'option outputFormat en minuscules afin d'éviter des exceptions.
-    this.options.outputFormat = (typeof options.outputFormat === "string") ? options.outputFormat.toLowerCase() : "json";
+    if (options.outputFormat && options.outputFormat !== "json") {
+        this.logger.warn("options.outputFormat could only be json");
+    }
+    this.options.outputFormat = "json";
 
+    this.options.resource = options.resource || "bdtopo-osrm";
     this.options.startPoint = options.startPoint;
     this.options.endPoint = options.endPoint;
-    this.options.viaPoints = options.viaPoints || null; // INFO mapping viaPoints <=> xls:viaPoint
-    this.options.exclusions = options.exclusions || null; // INFO mapping exclusions <=> xls:avoidFeature
+    this.options.viaPoints = options.viaPoints || [];
     this.options.routePreference = options.routePreference || "fastest";
-    this.options.graph = options.graph || "Voiture";
-    this.options.geometryInInstructions = options.geometryInInstructions || false; // INFO mapping geometryInInstructions <=> xls:provideGeometry
-    this.options.provideBbox = options.provideBbox || true; // INFO mapping provideBbox <=> xls:provideBoundingBox
-    this.options.distanceUnit = options.distanceUnit || "km";
+    /** Gestion des anciennes valeurs de graph */
+    if (options.graph) {
+        if (options.graph === "Voiture") {
+            this.options.graph = "car";
+        }
+        if (options.graph === "Pieton") {
+            this.options.graph = "pedestrian";
+        }
+    } else {
+        this.options.graph = "car";
+    }
+    this.options.constraints = [];
+    if (options.constraints) {
+        if (Array.isArray(options.constraints)) {
+            for (var k = 0; k < options.constraints.length; k++) {
+                this.options.constraints.push(options.constraints[k]);
+            }
+        } else {
+            throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_TYPE", "constraints"));
+        }
+    }
+
+    /** Gestion de l'ancien paramètre exclusion */
+    var constraintTunnel = {};
+    var constraintPont = {};
+    var constraintAutoroute = {};
+    if (options.exclusions) {
+        if (options.exclusions.length !== 0) {
+            this.logger.warn("options.exclusions is DEPRECATED !!");
+            for (var c = 0; c < options.exclusions.length; c++) {
+                if (typeof options.exclusions[c] === "string") {
+                    options.exclusions[c] = options.exclusions[c].toLowerCase();
+                } else {
+                    // on ne crée pas une erreur pour rétro-compatibilité avec les anciennes versions
+                    continue;
+                }
+                if (options.exclusions[c] === "toll") {
+                    constraintAutoroute.constraintType = "banned";
+                    constraintAutoroute.key = "wayType";
+                    constraintAutoroute.operator = "=";
+                    constraintAutoroute.value = "autoroute";
+                    this.options.constraints.push(constraintAutoroute);
+                }
+                if (options.exclusions[c] === "tunnel") {
+                    constraintTunnel.constraintType = "banned";
+                    constraintTunnel.key = "wayType";
+                    constraintTunnel.operator = "=";
+                    constraintTunnel.value = "tunnel";
+                    this.options.constraints.push(constraintTunnel);
+                }
+                if (options.exclusions[c] === "bridge") {
+                    constraintPont.constraintType = "banned";
+                    constraintPont.key = "wayType";
+                    constraintPont.operator = "=";
+                    constraintPont.value = "pont";
+                    this.options.constraints.push(constraintPont);
+                }
+            }
+        }
+    }
+
+    this.options.geometryInInstructions = options.geometryInInstructions || false;
+    this.options.provideBbox = options.provideBbox || true;
+    this.options.distanceUnit = options.distanceUnit || "m";
+    this.options.timeUnit = options.timeUnit || "second";
     this.options.expectedStartTime = null; // FIXME not yet implemented !
     this.options.srs = options.srs || "EPSG:4326";
-
-    // FIXME : les readers OLS ne sont pas implémentés. on utilise donc l'API REST.
-    this.options.api = "REST";
-    this.logger.warn("Surcharge option 'api' : REST (readers OLS non implémentés)");
-    if (this.options.protocol === "XHR") {
-        this.options.httpMethod = "GET";
-        this.logger.trace("Surcharge option 'HttpMethod' : " + this.options.httpMethod);
-    }
+    this.options.waysAttributes = options.waysAttributes || [];
 
     // gestion de l'url du service par defaut
     // si l'url n'est pas renseignée, il faut utiliser les urls par defaut
-    // en fonction du type d'api, REST ou OLS
     if (!this.options.serverUrl) {
-        var lstUrlByDefault = _DefaultUrlService__WEBPACK_IMPORTED_MODULE_4__["default"].Route.url(this.options.apiKey);
-        var urlFound = null;
-        switch (this.options.api) {
-            case "OLS":
-                urlFound = lstUrlByDefault.ols;
-                break;
-            case "REST":
-                var key = "route" + "-" + this.options.outputFormat;
-                urlFound = lstUrlByDefault[key];
-                break;
-            default:
-                throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_UNKNOWN", "api"));
-        }
-
-        if (!urlFound) {
+        var UrlByDefault = _DefaultUrlService__WEBPACK_IMPORTED_MODULE_4__["default"].Route.url(this.options.apiKey);
+        if (!UrlByDefault) {
             throw new Error("Url by default not found !");
         }
-        this.options.serverUrl = urlFound;
+        this.options.serverUrl = UrlByDefault;
         this.logger.trace("Serveur URL par defaut : " + this.options.serverUrl);
-    }
-
-    // gestion du type de service
-    // si l'extension de l'url est .json ou .xml, on surcharge le format de sortie (outputFormat)
-    var idx = this.options.serverUrl.lastIndexOf(".");
-    if (idx !== -1) {
-        var extension = this.options.serverUrl.substring(idx + 1);
-        if (extension && extension.length < 5) { // FIXME extension de moins de 4 car. ...
-            this.logger.trace("Serveur Extension URL : " + extension);
-            switch (extension.toLowerCase()) {
-                case "json":
-                case "xml":
-                    this.options.outputFormat = extension.toLowerCase();
-                    break;
-                default:
-                    throw new Error("type of service : unknown or unsupported (json or xml) !");
-            }
-        }
     }
 }
 
@@ -20956,17 +20982,19 @@ Route.prototype.constructor = Route;
 Route.prototype.buildRequest = function (error, success) {
     var options = {
         // spécifique au service
-        api : this.options.api,
+        resource : this.options.resource,
         startPoint : this.options.startPoint,
         endPoint : this.options.endPoint,
         viaPoints : this.options.viaPoints,
         provideBbox : this.options.provideBbox,
-        exclusions : this.options.exclusions,
+        constraints : this.options.constraints,
         distanceUnit : this.options.distanceUnit,
+        timeUnit : this.options.timeUnit,
         graph : this.options.graph,
         geometryInInstructions : this.options.geometryInInstructions,
         routePreference : this.options.routePreference,
-        srs : this.options.srs
+        srs : this.options.srs,
+        waysAttributes : this.options.waysAttributes
     };
 
     this.request = _Request_RouteRequestFactory__WEBPACK_IMPORTED_MODULE_5__["default"].build(options);
@@ -20988,16 +21016,14 @@ Route.prototype.buildRequest = function (error, success) {
  */
 Route.prototype.analyzeResponse = function (error, success) {
     // INFO
-    // Factory pour masquer la complexité du retour du service qui renvoie soit
-    //  - une 'string' qui contient du XML ou JSON natif en mode XHR
-    //  - un objet JSON qui est natif ou encapsulé
+    // Factory pour masquer la complexité du retour du service
 
     if (this.response) {
         var options = {
-            distanceUnit : this.options.distanceUnit, // FIXME ce parametre nous permet de choisir le type d'unité dans la reponse !
+            distanceUnit : this.options.distanceUnit,
+            timeUnit : this.options.timeUnit,
             response : this.response,
             outputFormat : this.options.outputFormat, // utile pour parser la string en mode XHR : JSON ou XML !
-            api : this.options.api, // utile de connaitre le type d'API car la reponse est differente !
             rawResponse : this.options.rawResponse,
             onError : error,
             onSuccess : success,
@@ -21021,17 +21047,15 @@ Route.prototype.analyzeResponse = function (error, success) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
-/* harmony import */ var _RouteRequestOLS__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(121);
-/* harmony import */ var _RouteRequestREST__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
+/* harmony import */ var _RouteRequestREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(121);
 /**
- * Creation d'une requête OpenLS ou REST en mode POST ou GET
+ * Creation d'une requête REST en mode POST ou GET
  * (Factory)
  *
  * @module RouteRequestFactory
  * @alias Gp.Services.Route.Request.RouteRequestFactory
  * @private
  */
-
 
 
 
@@ -21052,7 +21076,6 @@ var RouteRequestFactory = {
      *      onSuccess : function (response) {},
      *      onError : function (error) {},
      *      // spécifique au service
-     *      api : 'OLS',
      *      startPoint : {
      *          x : 42.1121,
      *          y : 1.5557
@@ -21062,7 +21085,7 @@ var RouteRequestFactory = {
      *          y : 1.5557
      *      },
      *      provideBbox : false,
-     *      exclusions : ["Bridge", "Tunnel", "Toll"],
+     *      exclusions : ["bridge", "tunnel", "toll"],
      *      distanceUnit : "km",
      *      graph : "Voiture",
      *      geometryInInstructions : false,
@@ -21093,40 +21116,18 @@ var RouteRequestFactory = {
         var bOnError = !!(options.onError !== null && typeof options.onError === "function");
 
         var message = null;
-        // choix entre les 2 types d'API pour consulter le service
-        switch (options.api) {
-            case "REST":
-                // FIXME les exceptions ne sont pas 'catchées' sur le constructeur !
-                var myReq = new _RouteRequestREST__WEBPACK_IMPORTED_MODULE_3__["default"](settings);
-                if (!myReq.processRequestString()) {
-                    message = "Error process request (rest) !";
-                    if (bOnError) {
-                        options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"](message));
-                        return;
-                    }
-                    throw new Error(message);
-                }
-                request = myReq.requestString;
-                break;
-            case "OLS":
-                request = _RouteRequestOLS__WEBPACK_IMPORTED_MODULE_2__["default"].build(settings);
-                if (!request) {
-                    message = "Error process request (ols) !";
-                    if (bOnError) {
-                        options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"](message));
-                        return;
-                    }
-                    throw new Error(message);
-                }
-                break;
-            default:
-                message = "Type of API is not supported by service (REST or OLS) !";
-                if (bOnError) {
-                    options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"](message));
-                    return;
-                }
-                throw new Error(message);
+
+        // FIXME les exceptions ne sont pas 'catchées' sur le constructeur !
+        var myReq = new _RouteRequestREST__WEBPACK_IMPORTED_MODULE_2__["default"](settings);
+        if (!myReq.processRequestString()) {
+            message = "Error process request (rest) !";
+            if (bOnError) {
+                options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"](message));
+                return;
+            }
+            throw new Error(message);
         }
+        request = myReq.requestString;
 
         return request;
     }
@@ -21142,930 +21143,8 @@ var RouteRequestFactory = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
-/* harmony import */ var _Formats_XLS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(89);
-/* harmony import */ var _Formats_XLS_RouteService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(122);
-/**
- * Creation d'une requête OpenLS en mode POST ou GET
- * (Factory)
- *
- * @module RouteRequestOLS
- * @alias Gp.Services.Route.Request.RouteRequestOLS
- * @private
- */
-
-
-
-
-var RouteRequestOLS = {
-
-    /**
-     * interface unique
-     *
-     * @method build
-     * @static
-     * @param {Object} options - options definies dans le composant Route
-     *
-     * @example
-     *   var options = {
-     *      (...)
-     *   };
-     *
-     * @returns {String} request
-     */
-    build : function (options) {
-        // logger
-        var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("RouteRequestOLS");
-        logger.trace(["RouteRequestOLS::build()"]);
-
-        var request = null;
-
-        // spécifique au service
-        var settings = {
-            startPoint : options.startPoint,
-            endPoint : options.endPoint,
-            viaPoint : options.viaPoints, // mapping OLS et options
-            provideBoundingBox : options.provideBbox, // mapping OLS et options
-            avoidFeature : options.exclusions, // mapping OLS et options
-            expectedStartTime : options.expectedStartTime, // TODO format ?
-            distanceUnit : options.distanceUnit,
-            graph : options.graph,
-            provideGeometry : options.geometryInInstructions, // mapping OLS et options
-            routePreference : options.routePreference
-        };
-
-        // objet RouteService
-        var oRS = new _Formats_XLS_RouteService__WEBPACK_IMPORTED_MODULE_2__["default"](settings);
-
-        // Format XLS
-        var oXLS = new _Formats_XLS__WEBPACK_IMPORTED_MODULE_1__["default"]({
-            srsName : options.srs,
-            maximumResponses : options.maximumResponses
-        });
-        oXLS.namespace = true;
-        oXLS.setService(oRS);
-
-        // request brute !
-        request = oXLS.build();
-
-        // en mode GET, la requête est encodée
-        // et le param. 'qxml' est ajouté
-        if (options.httpMethod === "GET") {
-            var myRequest = "qxml=" +
-                encodeURIComponent(request)
-                    .replace(/-/g, "%2D")
-                    .replace(/_/g, "%5F")
-                    .replace(/\./g, "%2E")
-                    .replace(/!/g, "%21")
-                    .replace(/~/g, "%7E")
-                    .replace(/\*/g, "%2A")
-                    .replace(/'/g, "%27")
-                    .replace(/\(/g, "%28")
-                    .replace(/\)/g, "%29");
-            request = myRequest;
-        }
-
-        return request;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (RouteRequestOLS);
-
-
-/***/ }),
-/* 122 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
-/* harmony import */ var _AbstractService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(92);
-/* harmony import */ var _RouteService_DetermineRouteRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(123);
-/* harmony import */ var _RouteService_RouteRequestExtension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(125);
-/* harmony import */ var _RouteService_RouteRequestExtension__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_RouteService_RouteRequestExtension__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
-
-
-/**
- * @classdesc
- *
- * Requête de type RouteService
- * (Factory)
- *
- * XSD :
- * ----
- * [] => non implementé !
- *
- * ```
- * element name="DetermineRouteRequest"
- *  [attribute name="provideRouteHandle" default="false"]
- *  attribute name="distanceUnit"       default="M"
- *      [element ref="xls:RouteHandle" || element ref="xls:RoutePlan"]
- *      element ref="xls:RoutePlan"
- *      element ref="xls:RouteInstructionsRequest"
- *      [element ref="xls:RouteGeometryRequest"]
- *      [element ref="xls:RouteMapRequest"]
- * ```
- * ```
- * element name="RoutePlan"
- *  [attribute name="useRealTimeTraffic" default="false"]
- *  [attribute name="expectedStartTime"  type="dateTime"]
- *  [attribute name="expectedEndTime"    type="dateTime"]
- *      element ref="xls:RoutePreference"
- *      element ref="xls:WayPointList"
- *      element ref="xls:AvoidList"
- * ```
- * ```
- * element name="RoutePreference" => value = Fastest | Shortest | Pedestrian
- * ```
- * ```
- * element name="WayPointList"
- *      element ref="xls:StartPoint"
- *      element ref="xls:ViaPoint" minOccurs="0"
- *      element ref="xls:EndPoint"
- * ```
- * ```
- * element name="StartPoint"
- *    [element name="GeocodeMatchCode"]
- *      [attribute name="accuracy"]
- *      [attribute name="matchType"] => value = City, Street, Street number, Street enhanced, ...
- *    element name="Position"
- *      element ref="gml:Point"
- * ```
- * ```
- * element name="ViaPoint"
- *    [element name="GeocodeMatchCode"]
- *      [attribute name="accuracy"]
- *      [attribute name="matchType"] => value = City, Street, Street number, Street enhanced, ...
- *    element name="Position"
- *      element ref="gml:Point"
- * ```
- * ```
- * element name="EndPoint"
- *    [element name="GeocodeMatchCode"]
- *      [attribute name="accuracy"]
- *      [attribute name="matchType"] => value = City, Street, Street number, Street enhanced, ...
- *    element name="Position"
- *      element ref="gml:Point"
- * ```
- * ```
- * element name="AvoidList"
- *      [element ref="xls:AOI"]
- *      [element ref="xls:_Location"] (cf. element name="Position")
- *      element ref="xls:AvoidFeature"
- * ```
- * ```
- * [element name="AOI"]
- *      [element ref="gml:CircleByCenterPoint" || element ref="gml:Polygon" || element ref="gml:Envelope"]
- * ```
- * ```
- * element name="AvoidFeature" => value = highway | tollway | tunnel | bridge
- * ```
- * ```
- * [element name="RouteMapRequest"]
- *      [element name="Output"]
- *          attribute name="width"
- *          attribute name="height"
- *          attribute name="format"
- *          attribute name="BGcolor"
- *          attribute name="transparent"
- *          attribute name="style" => value = Overview | Maneuver
- *          element name="BBoxContext" type="gml:EnvelopeType"
- * ```
- * ```
- * element name="RouteInstructionsRequest"
- *  [attribute name="format"]           default="text/plain"
- *  attribute name="provideGeometry"    default="false"
- *  attribute name="provideBoundingBox" default="false"
- * ```
- * ```
- * [element name="RouteGeometryRequest"]
- *  [attribute name="scale"]                  default="1"
- *  [attribute name="provideStartingPortion"] default="false"
- *  [attribute name="maxPoints"]              default="100"
- *      [element name="BoundingBox" type="gml:EnvelopeType" ]
- * ```
- *
- * --------
- * Requête :
- * --------
- * ```
- * <?xml version="1.0" encoding="UTF-8"?>
- * <XLS
- * xmlns:xls="http://www.opengis.net/xls"
- * xmlns:sch="http://www.ascc.net/xml/schematron"
- * xmlns:gml="http://www.opengis.net/gml"
- * xmlns:xlsext="http://www.opengis.net/xlsext"
- * xmlns:xlink="http://www.w3.org/1999/xlink"
- * xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- * xsi:schemaLocation="http://www.opengis.net/xls http://schemas.opengis.net/ols/1.1.0/RouteService.xsd"
- * version="1.1" xls:lang="en">
- * <RequestHeader/>
- * <Request methodName="RouteRequest" requestID="123456789" version="1.1">
- *   <DetermineRouteRequest distanceUnit="KM">
- *     <RoutePlan>
- *       <RoutePreference>Fastest</RoutePreference>
- *       <xlsext:vehicle name="Car" />
- *       <WayPointList>
- *         <StartPoint>
- *           <Position><gml:Point srsName="EPSG:4326"><gml:pos>2.29993 48.87228</gml:pos></gml:Point></Position>
- *         </StartPoint>
- *         <EndPoint>
- *           <Position><gml:Point srsName="EPSG:4326"><gml:pos>-1.53604 47.21548</gml:pos></gml:Point></Position>
- *         </EndPoint>
- *       </WayPointList>
- *     </RoutePlan>
- *     <RouteInstructionsRequest provideGeometry="true"/>
- *     <RouteGeometryRequest/>
- *   </DetermineRouteRequest>
- * </Request>
- * </XLS
- * ```
- * -----------
- * References :
- * -----------
- * - {@link https://geoportail.forge.ign.fr/jira/browse/GPP-CI}
- * - {@link https://geoportail.forge.ign.fr/jira/browse/GPP-CI-1 Specif. ols}
- * - {@link https://geoportail.forge.ign.fr/jira/browse/GPP-CI-9 Extension}
- * - {@link https://github.com/Emergya/openlayers/blob/master/lib/OpenLayers/Format/XLS/v1_2_0.js}
- *
- * @example
- * // encapsule un objet dans une coquille XSL, Factory sur les objets ''
- * rs = new RouteService ();
- * rs.addRequest (req);
- * rs.toString();
- *  ou
- * rs = new RouteService ({
- *      ...
- * });
- * rs.toString();
- *
- * @extends {Gp.Formats.XLS}
- * @constructor
- * @alias Gp.Formats.XLS.RouteService
- * @param {Object} options - options
- * @param {Object}   options.routePreference - « fastest », « shortest » ou « pedestrian »
- * @param {String}   options.startPoint - Point de départ (coordonnées exprimées en WGS84G)
- * @param {String}   options.viaPoint - Liste de points intermédiaires
- * @param {String}   options.endPoint - Point d'arrivée (coordonnées)
- * @param {Object}   options.avoidFeature - « highway », « tollway », « tunnel » ou « bridge »
- * @param {Object}   options.graph - « car »
- * @param {Object}   options.expectedStartTime - Date et heure de départ
- * @param {Object}   options.provideGeometry - true | false
- * @param {Object}   options.provideBoundingBox - true | false
- * @param {Object}   options.distanceUnit - Unité dans lesquelles la distance est exprimée (« m » ou « km »)
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
- *
- * @example
- * var options = {
- *      // spécifique au service
- *      startPoint: {
- *          x: 42.1121,
- *          y: 1.5557
- *      },
- *      endPoint: {
- *          x: 42.1121,
- *          y: 1.5557
- *      },
- *      viaPoint : [
- *          {x: 42.1121,y: 1.5557},
- *          {x: 42.1121,y: 1.5557},
- *          {x: 42.1121,y: 1.5557}
- *      ],
- *      provideBoundingBox : false,
- *      avoidFeature : ["bridge", "tunnel", "tollway"],
- *      expectedStartTime : "2015-12-23", // YYYY-MM-DDThh:mm:ssZ
- *      distanceUnit : "km",
- *      vehicle: "car",
- *      provideGeometry : false,
- *      routePreference : "fastest"
- * };
- *
- * @private
- */
-function RouteService (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur RouteService ()]");
-
-    if (!(this instanceof RouteService)) {
-        throw new TypeError("RouteService constructor cannot be called as a function.");
-    }
-
-    /**
-     * Nom de la classe
-     */
-    this.CLASSNAME = "RouteService";
-
-    /**
-     * Type de classe
-     * RouteRequest par defaut
-     */
-    this.CLASSTYPE = "RouteRequest";
-
-    // appel du constructeur par heritage
-    _AbstractService__WEBPACK_IMPORTED_MODULE_1__["default"].apply(this, arguments);
-}
-
-/**
- * @lends module:RouteService#
- */
-RouteService.prototype = Object.create(_AbstractService__WEBPACK_IMPORTED_MODULE_1__["default"].prototype, {
-    // todo
-    // getter/setter
-});
-
-/**
- * Constructeur (alias)
- */
-RouteService.prototype.constructor = RouteService;
-
-/**
- * (overwrite) Ajout d'un objet de type  : RouteRequest
- *
- * @param {Object} oRequest - RouteRequest
- */
-RouteService.prototype.addRequest = function (oRequest) {
-    // on controle les types acceptés
-    if (oRequest.CLASSNAME === "DetermineRouteRequest") {
-        this.oRequest = oRequest;
-    } else {
-        throw new Error("Ce n'est pas un objet de type 'Route Request' !?");
-    }
-};
-
-/**
- * (overwrite) Ajout d'un objet de type RouteFilterExtension
- *
- * @param {Object} oFilter - RouteFilterExtension
- */
-RouteService.prototype.addFilter = function (oFilter) {
-    // gestion des extensions (vehicle)
-    if (oFilter instanceof _RouteService_RouteRequestExtension__WEBPACK_IMPORTED_MODULE_3___default.a) {
-        this.oFilter = oFilter;
-    }
-};
-
-/**
- * (overwrite) toString
- *
- * @returns {String} requête
- */
-RouteService.prototype.toString = function () {
-    // soit, on a un objet Request déjà instancié
-    // sinon, il faut le construire à partir des options à disposition
-    if (!this.oRequest) {
-        // il nous faut des options
-        if (!this.options) {
-            throw new Error("Les options ne sont pas renseignées, impossible de construire la requête !");
-        }
-
-        if (this.CLASSTYPE === "RouteRequest") {
-            var settings = {
-                distanceUnit : this.options.distanceUnit || null,
-                provideGeometry : this.options.provideGeometry || null,
-                provideBoundingBox : this.options.provideBoundingBox || null,
-                route : {
-                    routePreference : this.options.routePreference || null,
-                    startPoint : this.options.startPoint,
-                    viaPoint : this.options.viaPoint || null,
-                    endPoint : this.options.endPoint,
-                    avoidFeature : this.options.avoidFeature || null,
-                    graph : this.options.graph || null,
-                    expectedStartTime : this.options.expectedStartTime || null
-                }
-            };
-            this.oRequest = new _RouteService_DetermineRouteRequest__WEBPACK_IMPORTED_MODULE_2__["default"](settings);
-            // ajout des filtres spécifiques au service
-            if (this.oFilter) {
-                this.oRequest.addFilter(this.oFilter);
-            }
-        }
-    }
-
-    // objet indefini !?
-    if (!this.oRequest) {
-        throw new Error("Type de requête indefini !");
-    }
-
-    this.strRequest = this.oRequest.toString();
-    return this.strRequest;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (RouteService);
-
-
-/***/ }),
-/* 123 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
-/* harmony import */ var _model_RoutePlan__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(124);
-
-
-
-/**
- * @classdesc
- *
- * Requête de calcul d'itinéraire
- *
- * ----
- * XSD :
- * ----
- * [] => non implementé !
- *
- * ```
- * element name="DetermineRouteRequest"
- *  [attribute name="provideRouteHandle" default="false"]
- *  attribute name="distanceUnit"       default="M"
- *      [element ref="xls:RouteHandle" || element ref="xls:RoutePlan"]
- *      element ref="xls:RoutePlan"
- *      element ref="xls:RouteInstructionsRequest"
- *      [element ref="xls:RouteGeometryRequest"]
- *      [element ref="xls:RouteMapRequest"]
- * ```
- * ```
- * element name="RouteInstructionsRequest"
- *  [attribute name="format"]           default="text/plain"
- *  attribute name="provideGeometry"    default="false"
- *  attribute name="provideBoundingBox" default="false"
- * ```
- * ```
- * element name="RouteGeometryRequest"
- *  [attribute name="scale"]                  default="1"
- *  [attribute name="provideStartingPortion"] default="false"
- *  [attribute name="maxPoints"]              default="100"
- *      [element name="BoundingBox" type="gml:EnvelopeType" ]
- * ```
- * ```
- * [element name="RouteMapRequest"]
- *      [element name="Output"]
- *          [attribute name="width"]
- *          [attribute name="height"]
- *          [attribute name="format"]
- *          [attribute name="BGcolor"]
- *          [attribute name="transparent"]
- *          [attribute name="style"] => value = Overview | Maneuver
- *          [element name="BBoxContext" type="gml:EnvelopeType"]
- * ```
- *
- * --------
- * Requête :
- * --------
- * ```
- *   <DetermineRouteRequest distanceUnit="KM">
- *     <RoutePlan>
- *              <RoutePreference>Fastest</RoutePreference>
- *              <xlsext:vehicle name="Car" />
- *              <WayPointList>
- *                  <StartPoint>
- *                      <Position><gml:Point srsName="EPSG:4326"><gml:pos>2.29993 48.87228</gml:pos></gml:Point></Position>
- *                  </StartPoint>
- *                  <EndPoint>
- *                      <Position><gml:Point srsName="EPSG:4326"><gml:pos>-1.53604 47.21548</gml:pos></gml:Point></Position>
- *                  </EndPoint>
- *              </WayPointList>
- *     </RoutePlan>
- *     <RouteInstructionsRequest provideGeometry="true"/>
- *     <RouteGeometryRequest/>
- *   </DetermineRouteRequest>
- * ```
- *
- * @constructor
- * @alias Gp.Formats.XLS.RouteService.DetermineRouteRequest
- * @param {Object} options - options
- * @param {Object}   options.route.routePreference - « fastest », « shortest » ou « pedestrian »
- * @param {String}   options.route.startPoint - Point de départ (coordonnées exprimées en WGS84G)
- * @param {String}   options.route.viaPoint - Liste de points intermédiaires
- * @param {String}   options.route.endPoint - Point d'arrivée (coordonnées)
- * @param {Object}   options.route.avoidFeature - « highway », « tollway », « tunnel » ou « bridge »
- * @param {Object}   options.route.vehicle - « car »
- * @param {Object}   options.route.expectedStartTime - Date et heure de départ
- * @param {Object}   options.provideGeometry - true | false
- * @param {Object}   options.provideBoundingBox - true | false
- * @param {Object}   options.distanceUnit - Unité dans lesquelles la distance est exprimée (« m » ou « km »)
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
- *
- * @private
- */
-function DetermineRouteRequest (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur DetermineRouteRequest ()]");
-
-    if (!(this instanceof DetermineRouteRequest)) {
-        throw new TypeError("DetermineRouteRequest constructor cannot be called as a function.");
-    }
-
-    // options par defaut
-    this.options = options || {};
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
-    }
-
-    /**
-     * Nom de la classe (heritage)
-     */
-    this.CLASSNAME = "DetermineRouteRequest";
-}
-
-DetermineRouteRequest.prototype = {
-
-    /**
-     * @lends module:DetermineRouteRequest#
-     */
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    strRequest : null,
-
-    /**
-     * RoutePlan
-     * @type {Address}
-     */
-    oRoutePlan : null,
-
-    /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * __DISTANCEUNIT__,
-     * __ROUTEPLAN__, __ROUTEINSTRUCTIONREQUEST__, __ROUTEGEOMETRYREQUEST__, __ROUTEMAPREQUEST__
-     * __PROVIDEGEOMETRY__, __PROVIDEBBOX__
-     */
-    template : {
-        determineRouteRequest : "<DetermineRouteRequest distanceUnit=\"__DISTANCEUNIT__\">" +
-            "__ROUTEPLAN__" +
-            "__ROUTEINSTRUCTIONREQUEST__" +
-            "__ROUTEGEOMETRYREQUEST__" +
-            "__ROUTEMAPREQUEST__" +
-            "</DetermineRouteRequest>",
-        routeInstructionRequest : "<RouteInstructionsRequest " +
-            "provideGeometry=\"__PROVIDEGEOMETRY__\" " +
-            "provideBoundingBox=\"__PROVIDEBBOX__\" />",
-        routeGeometryRequest : "<RouteGeometryRequest />",
-        routeMapRequest : "" // FIXME <RouteMapRequest/> not yet implemented !
-    },
-
-    /**
-     * Ajout d'un objet de type RoutePlan
-     *
-     * @param {Object} oRoutePlan - RoutePlan
-     */
-    addRoute : function (oRoutePlan) {
-        if (oRoutePlan instanceof _model_RoutePlan__WEBPACK_IMPORTED_MODULE_1__["default"]) {
-            this.oRoutePlan = oRoutePlan;
-        }
-    },
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : DetermineRouteRequest,
-
-    /**
-     * toString
-     *
-     * @returns {String} requête
-     */
-    toString : function () {
-        var template = "";
-        template = this.template.determineRouteRequest;
-        template = template.replace(/__DISTANCEUNIT__/g, this.options.distanceUnit || "KM");
-
-        // soit on a déjà un objet RoutePlan instancié,
-        // sinon, on le fabrique via les options
-        if (!this.oRoutePlan) {
-            var settings = this.options.route;
-
-            this.oRoutePlan = new _model_RoutePlan__WEBPACK_IMPORTED_MODULE_1__["default"](settings);
-            if (!this.oRoutePlan) {
-                throw new Error("La construction du calcul d'initineraire n'est pas correctement definie !?");
-            }
-        }
-
-        // routeplan
-        template = template.replace(/__ROUTEPLAN__/g, this.oRoutePlan.toString());
-
-        // instruction
-        var tmplInstruction = this.template.routeInstructionRequest;
-        tmplInstruction = tmplInstruction.replace(/__PROVIDEGEOMETRY__/g, this.options.provideGeometry || false);
-        tmplInstruction = tmplInstruction.replace(/__PROVIDEBBOX__/g, this.options.provideBoundingBox || false);
-        template = template.replace(/__ROUTEINSTRUCTIONREQUEST__/g, tmplInstruction);
-
-        // geometry
-        var tmplGeometry = this.template.routeGeometryRequest;
-        template = template.replace(/__ROUTEGEOMETRYREQUEST__/g, tmplGeometry);
-
-        // map
-        var tmplMap = this.template.routeMapRequest;
-        template = template.replace(/__ROUTEMAPREQUEST__/g, tmplMap);
-
-        this.strRequest = template;
-        return this.strRequest;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (DetermineRouteRequest);
-
-
-/***/ }),
-/* 124 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
-
-
-/**
- * @classdesc
- *  * Élément regroupant l'ensemble des données et paramètres pour le calcul d'itinéraire : points de navigation, configuration.
- *
- * ----
- * XSD :
- * ----
- * [] => non implementé !
- *
- * ```
- * element name="RoutePlan"
- *  [attribute name="useRealTimeTraffic" default="false"]
- *  [attribute name="expectedStartTime"  type="dateTime"]
- *  [attribute name="expectedEndTime"    type="dateTime"]
- *      element ref="xls:RoutePreference"
- *      element ref="xls:WayPointList"
- *      element ref="xls:AvoidList"
- * ```
- * ```
- * element name="RoutePreference"
- *  => value = fastest | shortest | pedestrian
- * ```
- * ```
- * element name="WayPointList"
- *      element ref="xls:StartPoint"
- *      element ref="xls:ViaPoint" minOccurs="0"
- *      element ref="xls:EndPoint"
- * ```
- * ```
- * element name="StartPoint"
- *    [element name="GeocodeMatchCode"]
- *      [attribute name="accuracy"]
- *      [attribute name="matchType"] => value = City, Street, Street number, Street enhanced, ...
- *    element name="Position"
- *      element ref="gml:Point"
- * ```
- * ```
- * element name="ViaPoint"
- *    [element name="GeocodeMatchCode"]
- *      [attribute name="accuracy"]
- *      [attribute name="matchType"] => value = City, Street, Street number, Street enhanced, ...
- *    element name="Position"
- *      element ref="gml:Point"
- * ```
- * ```
- * element name="EndPoint"
- *    [element name="GeocodeMatchCode"]
- *      [attribute name="accuracy"]
- *      [attribute name="matchType"] => value = City, Street, Street number, Street enhanced, ...
- *    element name="Position"
- *      element ref="gml:Point"
- * ```
- * ```
- * element name="AvoidList"
- *      [element ref="xls:AOI"]
- *      [element ref="xls:_Location"] (cf. element name="Position")
- *      element ref="xls:AvoidFeature"
- * ```
- * ```
- * [element name="AOI"]
- *      [element ref="gml:CircleByCenterPoint" || element ref="gml:Polygon" || element ref="gml:Envelope"]
- * ```
- * ```
- * element name="AvoidFeature" => value = highway | tollway | tunnel | bridge
- * ```
- *
- * --------
- * Requête :
- * --------
- * ```
- *     <RoutePlan>
- *       <RoutePreference>Fastest</RoutePreference>
- *       <xlsext:vehicle name="Car" />
- *       <WayPointList>
- *         <StartPoint>
- *           <Position><gml:Point srsName="EPSG:4326"><gml:pos>2.29993 48.87228</gml:pos></gml:Point></Position>
- *         </StartPoint>
- *         <EndPoint>
- *           <Position><gml:Point srsName="EPSG:4326"><gml:pos>-1.53604 47.21548</gml:pos></gml:Point></Position>
- *         </EndPoint>
- *       </WayPointList>
- *       <AvoidList>
- *          <AvoidFeature>highway</AvoidFeature>
- *          <AvoidFeature>tollway</AvoidFeature>
- *          <AvoidFeature>tunnel</AvoidFeature>
- *       </AvoidList>
- *     </RoutePlan>
- * ```
- * @constructor
- * @alias Gp.Formats.XLS.RouteService.RoutePlan
- * @param {Object} options - options
- *
- * @private
- */
-function RoutePlan (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("RoutePlan");
-    this.logger.trace("[Constructeur RoutePlan ()]");
-
-    if (!(this instanceof RoutePlan)) {
-        throw new TypeError("RoutePlan constructor cannot be called as a function.");
-    }
-
-    // param par defaut
-    this.options = options || {};
-
-    // param obligatoire
-    if (!this.options.startPoint) {
-        throw new Error("l'option 'startPoint' n'est pas renseignée !");
-    }
-
-    if (!this.options.endPoint) {
-        throw new Error("l'option 'endPoint' n'est pas renseignée !");
-    }
-}
-
-RoutePlan.prototype = {
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : RoutePlan,
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    requestString : null,
-
-    /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * - __ROUTEPREFERENCE__, __VALUEROUTEPREFERENCE__
-     * - __GRAPH__, __VALUEGRAPH__
-     * - __WAYPOINTLIST__ (lst?), __STARTPOINT__, __VIAPOINT__, __ENDPOINT__, __POINT__, __X__, __Y__
-     * - __AVOIDLIST__ (lst!), __AVOIDFEATURE__, __VALUEAVOIDFEATURE__
-     */
-    template : {
-        routePlan : "<RoutePlan>" +
-            "__ROUTEPREFERENCE__" +
-            "__GRAPH__" +
-            "__WAYPOINTLIST__" +
-            "__AVOIDLIST__" +
-            "</RoutePlan>",
-        routePreference : "<RoutePreference>__VALUEROUTEPREFERENCE__</RoutePreference>",
-        graph : "<xlsext:graphName xmlns:xlsext=\"http://www.opengis.net/xlsext\" name=\"__VALUEGRAPH__\"/>",
-        wayPointList : {
-            container : "<WayPointList>" +
-                "__STARTPOINT__" +
-                "__VIAPOINT__" +
-                "__ENDPOINT__" +
-                "</WayPointList>",
-            point : "<Position><gml:Point xmlns:gml=\"http://www.opengis.net/gml\"><gml:pos>__X__ __Y__</gml:pos></gml:Point></Position>",
-            startPoint : "<StartPoint>" +
-                "__POINT__" +
-                "</StartPoint>",
-            endPoint : "<EndPoint>" +
-                "__POINT__" +
-                "</EndPoint>",
-            viaPoint : "<ViaPoint>" +
-                "__POINT__" +
-                "</ViaPoint>" // implémentation de plusieurs étapes...
-        },
-        avoidList : {
-            container : "<AvoidList>" +
-                "__AVOIDFEATURE__" +
-                "</AvoidList>",
-            avoidFeature : "<AvoidFeature>__VALUEAVOIDFEATURE__</AvoidFeature>"
-        }
-    },
-
-    /**
-     * toString
-     *
-     * @returns {String} requête
-     */
-    toString : function () {
-        var template = "";
-        template = this.template.routePlan;
-
-        // preference
-        if (this.options.routePreference) {
-            var tmplPreference = this.template.routePreference;
-            tmplPreference = tmplPreference.replace(/__VALUEROUTEPREFERENCE__/, this.options.routePreference);
-            template = template.replace(/__ROUTEPREFERENCE__/g, tmplPreference);
-        }
-        // clean preference
-        template = template.replace(/__ROUTEPREFERENCE__/g, "");
-
-        // exclusions
-        if (this.options.avoidFeature) {
-            var tmplAvoidList = this.template.avoidList.container;
-            var avoidFeatures = [];
-            for (var i = 0; i < this.options.avoidFeature.length; i++) {
-                var tmplAvoidFeature = this.template.avoidList.avoidFeature;
-                tmplAvoidFeature = tmplAvoidFeature.replace(/__VALUEAVOIDFEATURE__/, this.options.avoidFeature[i]);
-                avoidFeatures.push(tmplAvoidFeature);
-            }
-            tmplAvoidList = tmplAvoidList.replace(/__AVOIDFEATURE__/, avoidFeatures.join("\n"));
-            template = template.replace(/__AVOIDLIST__/g, tmplAvoidList);
-        }
-        // clean exclusions
-        template = template.replace(/__AVOIDLIST__/g, "");
-
-        // graph
-        if (this.options.graph) {
-            var tmplVehicle = this.template.graph;
-            tmplVehicle = tmplVehicle.replace(/__VALUEGRAPH__/, this.options.graph);
-            template = template.replace(/__GRAPH__/g, tmplVehicle);
-        }
-        // clean vehicle
-        template = template.replace(/__GRAPH__/g, "");
-
-        // points
-        var tmplWayPointList = this.template.wayPointList.container;
-        var tmplPoint = "";
-        // start
-        tmplPoint = this.template.wayPointList.point;
-        tmplPoint = tmplPoint.replace(/__X__/, this.options.startPoint.x);
-        tmplPoint = tmplPoint.replace(/__Y__/, this.options.startPoint.y);
-        tmplWayPointList = tmplWayPointList.replace(/__STARTPOINT__/,
-            this.template.wayPointList.startPoint.replace(/__POINT__/, tmplPoint));
-        // end
-        tmplPoint = this.template.wayPointList.point;
-        tmplPoint = tmplPoint.replace(/__X__/, this.options.endPoint.x);
-        tmplPoint = tmplPoint.replace(/__Y__/, this.options.endPoint.y);
-        tmplWayPointList = tmplWayPointList.replace(/__ENDPOINT__/,
-            this.template.wayPointList.endPoint.replace(/__POINT__/, tmplPoint));
-        // via
-        if (this.options.viaPoint) {
-            var points = [];
-            for (var j = 0; j < this.options.viaPoint.length; j++) {
-                var p = this.options.viaPoint[j];
-                tmplPoint = this.template.wayPointList.point;
-                tmplPoint = tmplPoint.replace(/__X__/, p.x);
-                tmplPoint = tmplPoint.replace(/__Y__/, p.y);
-                points.push(tmplPoint);
-            }
-
-            tmplWayPointList = tmplWayPointList.replace(/__VIAPOINT__/,
-                this.template.wayPointList.viaPoint.replace(/__POINT__/, points.join("\n")));
-        } else {
-            // clean viaPoint
-            tmplWayPointList = tmplWayPointList.replace(/__VIAPOINT__/, "");
-        }
-
-        template = template.replace(/__WAYPOINTLIST__/g, tmplWayPointList);
-
-        this.requestString = template;
-        return this.requestString;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (RoutePlan);
-
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports) {
-
-/**
- * not implemented !
- *
- * Extension de type 'graphName' de l'objet RoutePlan'
- *
- * FIXME L'extension 'graphName' est intégré comme étant du standard OLS.
- *       La balise <xlsext:GraphName> viendrait surcharger le comportement de RoutePreference...
- *
- * ex. <xlsext:graphName name="Voiture" />
- */
-
-
-/***/ }),
-/* 126 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
-/* harmony import */ var _model_RouteParamREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(127);
+/* harmony import */ var _model_RouteParamREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(122);
 
 
 
@@ -22171,7 +21250,7 @@ RouteRequestREST.prototype = {
 
 
 /***/ }),
-/* 127 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22197,7 +21276,6 @@ function RouteParamREST (options) {
 
     this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
     this.logger.trace("[Constructeur RouteParamREST ()]");
-
     /**
      * Options en paramêtres du constructeur.
      */
@@ -22205,67 +21283,41 @@ function RouteParamREST (options) {
 
     // mapping des options avec l'API REST
 
+    /** Ressource utilisée */
+    this.resource = this.options.resource;
+
     /** Coordonnées du point de départ. */
-    this.origin = this.options.startPoint.x + "," + this.options.startPoint.y;
+    this.start = this.options.startPoint.x + "," + this.options.startPoint.y;
 
     /** Coordonnées du point d’arrivée. */
-    this.destination = this.options.endPoint.x + "," + this.options.endPoint.y;
+    this.end = this.options.endPoint.x + "," + this.options.endPoint.y;
 
     /** Coordonnées des étapes point de départ. */
-    this.waypoints = this.options.viaPoints || null;
+    this.intermediates = this.options.viaPoints;
 
-    /** Date et heure de départ */
-    this.startDateTime = this.options.expectedStartTime || null; // TODO format !?
-
-    /** Nom du graphe à utiliser */
-    this.graphName = this.options.graph;
+    /** Nom du profile à utiliser */
+    this.profile = this.options.graph;
 
     /** projection (code EPSG comme epsg:4326 ou wgs84) */
-    this.srs = this.options.srs;
+    this.crs = this.options.srs;
 
-    /** Liste des règles de restrictions à utiliser, séparés pas le caractère , ou ; (Exemple : Toll, Tunnel, Bridge) */
-    this.exclusions = this.options.exclusions;
+    /** Liste des contraintes */
+    this.constraints = this.options.constraints;
 
-    /**
-     * itinéraire le plus court (DISTANCE) ou le plus rapide (TIME)
-     * Par defaut, DISTANCE...
-     * cf. mapping ci dessous
-     */
-    this.method = "TIME";
-
-    // mapping particulier sur l'option 'routePreference'
-    if (this.options.routePreference) {
-        var value = this.options.routePreference;
-        switch (value) {
-            case "fastest":
-                this.method = "TIME";
-                break;
-            case "shortest":
-                this.method = "DISTANCE";
-                break;
-            default:
-                this.logger.warn("Par defaut, on prend l'itinéraire le plus rapide !");
-                this.method = "TIME";
-        }
-    }
+    /** Nom de l'optimisation à utiliser */
+    this.optimization = this.options.routePreference;
 
     /** Format de sortie (résumé de l’itinéraire) */
-    this.format = (this.options.geometryInInstructions) ? "STANDARDEXT" : "STANDARD";
+    this.getSteps = (this.options.geometryInInstructions) ? "true" : "false";
 
-    // y'a t-il d'autres options à ajouter (par defaut) ?
+    /** Unité des distances */
+    this.distanceUnit = this.options.distanceUnit;
 
-    /** Distance de tolérance (en mètre) de simplification de la géométrie. */
-    this.tolerance = 10;
+    /** Unité des durées */
+    this.timeUnit = this.options.timeUnit;
 
-    /** identifiant du véhicule (enregistré dans les profils de véhicule) à utiliser */
-    this.profileId = null;
-
-    /** Profil du véhicule (enregistré dans les profils de véhicule) à utiliser */
-    this.profileName = null;
-
-    // options dont le mapping n'est pas possible :
-    // - distanceUnit
-    // - provideBoundingBox
+    /** Attributs des voies */
+    this.waysAttributes = this.options.waysAttributes;
 }
 
 /**
@@ -22286,27 +21338,75 @@ RouteParamREST.prototype = {
 
     /**
      * Retourne une liste de points
-     * @returns {Array} une liste de points (sep ';')
+     * @returns {String} une liste de points (sep '|')
      */
-    getWaypoints : function () {
-        if (!this.waypoints) {
-            return;
-        }
+    getIntermediates : function () {
         var array = [];
-        for (var i = 0; i < this.waypoints.length; i++) {
-            var obj = this.waypoints[i];
-            array.push(obj.x + "," + obj.y);
+        if (this.intermediates.length !== 0) {
+            for (var i = 0; i < this.intermediates.length; i++) {
+                var obj = this.intermediates[i];
+                array.push(obj.x + "," + obj.y);
+            }
         }
 
-        return array.join(";");
+        return array.join("|");
     },
 
     /**
-     * Retourne la liste des exclusions
-     * @returns {Array} une liste d'exclusions (sep ';')
+     * Retourne une liste d'attributs
+     * @returns {String} une liste d'attributs (sep '|')
      */
-    getExclusions : function () {
-        return this.exclusions.join(";");
+    getWaysAttributes : function () {
+        return this.waysAttributes.join("|");
+    },
+
+    /**
+     * Retourne un profile
+     * @returns {String} profile
+     */
+    getProfile : function () {
+        return this.profile;
+    },
+
+    /**
+     * Retourne un distanceUnit
+     * @returns {String} distanceUnit
+     */
+    getDistanceUnit : function () {
+        if (this.distanceUnit === "m") {
+            return "meter";
+        }
+        if (this.distanceUnit === "km") {
+            return "kilometer";
+        }
+        return "";
+    },
+
+    /**
+     * Retourne une optimisation
+     * @returns {String} optimization
+     */
+    getOptimization : function () {
+        if (this.optimization) {
+            return this.optimization;
+        } else {
+            return "";
+        }
+    },
+
+    /**
+     * Retourne la liste des constraints
+     * @returns {String} une liste des constraints (sep '|')
+     */
+    getConstraints : function () {
+        var constraintArray = [];
+
+        if (this.constraints.length !== 0) {
+            for (var k = 0; k < this.constraints.length; k++) {
+                constraintArray.push(JSON.stringify(this.constraints[k]));
+            }
+        }
+        return constraintArray.join("|");
     }
 };
 
@@ -22319,59 +21419,78 @@ RouteParamREST.prototype.getParams = function () {
     var map = [];
 
     map.push({
-        k : "origin",
-        v : this.origin
+        k : "resource",
+        v : this.resource
     });
 
     map.push({
-        k : "destination",
-        v : this.destination
+        k : "start",
+        v : this.start
     });
 
     map.push({
-        k : "method",
-        v : this.method
+        k : "end",
+        v : this.end
     });
 
-    if (this.waypoints) {
+    map.push({
+        k : "geometryFormat",
+        v : "geojson"
+    });
+
+    if (this.optimization) {
         map.push({
-            k : "waypoints",
-            v : this.getWaypoints()
+            k : "optimization",
+            v : this.getOptimization()
         });
     }
 
-    if (this.startDateTime) {
+    if (this.intermediates) {
         map.push({
-            k : "startDateTime",
-            v : this.startDateTime
+            k : "intermediates",
+            v : this.getIntermediates()
         });
     }
 
-    if (this.graphName) {
+    if (this.profile) {
         map.push({
-            k : "graphName",
-            v : this.graphName
+            k : "profile",
+            v : this.getProfile()
         });
     }
 
-    if (this.exclusions) {
+    if (this.constraints) {
         map.push({
-            k : "exclusions",
-            v : this.getExclusions()
+            k : "constraints",
+            v : this.getConstraints()
         });
     }
 
-    if (this.srs) {
+    if (this.crs) {
         map.push({
-            k : "srs",
-            v : this.srs
+            k : "crs",
+            v : this.crs
         });
     }
 
-    if (this.format) {
+    if (this.distanceUnit) {
         map.push({
-            k : "format",
-            v : this.format
+            k : "distanceUnit",
+            v : this.getDistanceUnit()
+        });
+    }
+
+    if (this.timeUnit) {
+        map.push({
+            k : "timeUnit",
+            v : this.timeUnit
+        });
+    }
+
+    if (this.waysAttributes) {
+        map.push({
+            k : "waysAttributes",
+            v : this.getWaysAttributes()
         });
     }
 
@@ -22382,7 +21501,7 @@ RouteParamREST.prototype.getParams = function () {
 
 
 /***/ }),
-/* 128 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22390,12 +21509,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
-/* harmony import */ var _Formats_XML__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66);
-/* harmony import */ var _Formats_WKT__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(129);
-/* harmony import */ var _Formats_RouteResponseRESTReader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(130);
-/* harmony import */ var _Formats_RouteResponseOLSReader__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(133);
-/* harmony import */ var _model_RouteResponse__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(131);
-/* harmony import */ var _model_RouteInstruction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(132);
+/* harmony import */ var _model_RouteResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(124);
+/* harmony import */ var _model_RouteInstruction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(125);
 /**
  * Factory pour générer une reponse JSON à partir d'un XML ou d'un JSON
  * (Factory)
@@ -22410,10 +21525,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
 var RouteResponseFactory = {
 
     /**
@@ -22421,7 +21532,7 @@ var RouteResponseFactory = {
      *
      * @method build
      * @static
-     * @param {Object} options - options definies dans le composant Alti
+     * @param {Object} options - options definies dans le composant Route
      *
      * @example
      *   var options = {
@@ -22446,224 +21557,193 @@ var RouteResponseFactory = {
                 logger.trace("analyze response : raw");
                 data = options.response;
             } else {
-                switch (options.outputFormat) {
-                    case "xml":
-                        logger.trace("analyze response : xml");
+                logger.trace("analyze response : json");
 
-                        // type de reader en fonction de l'API
-                        var routeReader = options.api === "REST" ? _Formats_RouteResponseRESTReader__WEBPACK_IMPORTED_MODULE_5__["default"] : _Formats_RouteResponseOLSReader__WEBPACK_IMPORTED_MODULE_6__["default"];
+                var JSONResponse;
+                if (typeof options.response === "string") {
+                    JSONResponse = JSON.parse(options.response);
+                } else {
+                    JSONResponse = options.response;
+                }
 
-                        try {
-                            var p = new _Formats_XML__WEBPACK_IMPORTED_MODULE_3__["default"]({
-                                reader : routeReader
-                            });
-
-                            // FIXME : mode XHR ne retourne que des string ? JSONP aussi à ce niveau ?
-                            if (typeof options.response === "string") {
-                                p.setXMLString(options.response);
-                            } else {
-                                p.setXMLDoc(options.response);
-                            }
-
-                            data = p.parse();
-
-                            if (!data) {
-                                throw new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_FORMAT", "xml"));
-                            }
-                        } catch (e) {
-                            options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", options.response)));
-                            return;
-                        }
-
-                        break;
-
-                    case "json":
-                        logger.trace("analyze response : json");
-
-                        var JSONResponse = null;
-                        if (typeof options.response === "string") {
-                            JSONResponse = JSON.parse(options.response);
-                        } else {
-                            JSONResponse = options.response;
-                        }
-
-                        // le service renvoie t il une erreur ?
-                        if (JSONResponse && JSONResponse.message) {
-                            // ex. {"message":"message not null", "status":"ERROR"}
-                            options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION", JSONResponse.message)));
-                            return;
-                        }
-
-                        // construction de l'objet réponse JSON
-                        if (JSONResponse) {
-                            var legs = [];
-                            var legSteps = [];
-                            var steps = [];
-
-                            data = new _model_RouteResponse__WEBPACK_IMPORTED_MODULE_7__["default"]();
-
-                            if (data.hasOwnProperty("totalTime")) {
-                                // info : il y a aussi JSONResponse.duration, qui donne la durée en hh:mm:ss.
-                                data.totalTime = parseFloat(JSONResponse.durationSeconds);
-                            }
-                            if (data.hasOwnProperty("totalDistance")) {
-                                data.totalDistance = (options.distanceUnit === "m") ? JSONResponse.distanceMeters : JSONResponse.distance;
-                            }
-
-                            if (data.hasOwnProperty("bbox")) {
-                                var coords = JSONResponse.bounds.split(/[,;]/);
-                                data.bbox.left = parseFloat(coords[0]);
-                                data.bbox.bottom = parseFloat(coords[1]);
-                                data.bbox.right = parseFloat(coords[2]);
-                                data.bbox.top = parseFloat(coords[3]);
-                            }
-                            /**
-                            * callback success
-                            * @param {Object} json - json
-                            * @private
-                            */
-                            var onWKTSuccess = function (json) {
-                                data.routeGeometry = json;
-                            };
-                            /**
-                            * callback failed
-                            * @param {Object} e - event
-                            * @private
-                            */
-                            var onWKTError = function (e) {
-                                console.log(e);
-                                options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_FORMAT", ["geometryWkt"])));
-                            };
-
-                            if (data.hasOwnProperty("routeGeometry")) {
-                                var geometry = JSONResponse.geometryWkt || JSONResponse.simplifiedWkt;
-                                if (geometry) {
-                                    _Formats_WKT__WEBPACK_IMPORTED_MODULE_4__["default"].toJson(geometry, onWKTSuccess, onWKTError);
-                                    if (!data.routeGeometry) {
-                                        return;
-                                    }
-                                }
-                            }
-
-                            if (data.hasOwnProperty("routeInstructions")) {
-                                var legList = JSONResponse.legs;
-                                var i;
-                                if (Array.isArray(legList) && legList.length) {
-                                    for (i = 0; i < legList.length; i++) {
-                                        legs.push(legList[i]);
-                                    }
-                                }
-                                if (legs.length) {
-                                    for (i = 0; i < legs.length; i++) {
-                                        legSteps.push(legs[i].steps);
-                                    }
-                                }
-                                if (legSteps.length) {
-                                    for (i = 0; i < legSteps.length; i++) {
-                                        steps = steps.concat(legSteps[i]);
-                                    }
-                                }
-
-                                steps.forEach(function (step) {
-                                    data.routeInstructions.push(new _model_RouteInstruction__WEBPACK_IMPORTED_MODULE_8__["default"]());
-                                    data.routeInstructions[data.routeInstructions.length - 1].duration = step.durationSeconds;
-                                    data.routeInstructions[data.routeInstructions.length - 1].distance = (options.distanceUnit === "m") ? step.distanceMeters : step.distance;
-                                    data.routeInstructions[data.routeInstructions.length - 1].code = step.navInstruction;
-                                    // geometrie en geojson
-                                    var points = [];
-                                    for (var i = 0; i < step.points.length; i++) {
-                                        var point = step.points[i].split(",");
-                                        if (point) {
-                                            points.push(point);
-                                        }
-                                    }
-                                    if (points.length !== 0) {
-                                        data.routeInstructions[data.routeInstructions.length - 1].geometry = {
-                                            coordinates : points,
-                                            type : "LineString"
-                                        };
-                                    } else {
-                                        data.routeInstructions[data.routeInstructions.length - 1].geometry = null;
-                                    }
-
-                                    /*
-                                    Traduction du code en instruction
-                                    * - F : tout droit
-                                    * - B : demi-tour
-                                    * - L : tourner à gauche
-                                    * - R : tourner à droite
-                                    * - BL : tourner très à gauche
-                                    * - BR : tourner très à droite
-                                    * - FL : tourner légèrement à gauche
-                                    * - FR : tourner légèrement à droite
-                                    * - round_about_entry : entrée rond-point
-                                    * - round_about_exit : sortie rond-point
-                                    */
-
-                                    // on ne souhaite pas de ce type de valeur...
-                                    if (step.name === "Valeur non renseignée") {
-                                        step.name = "";
-                                    }
-
-                                    switch (step.navInstruction) {
-                                        case "F":
-                                            if (step.name) {
-                                                data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tout droit " + step.name;
-                                            } else {
-                                                data.routeInstructions[data.routeInstructions.length - 1].instruction = "Continuer tout droit ";
-                                            }
-                                            break;
-                                        case "B":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Demi-tour " + step.name;
-                                            break;
-                                        case "L":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tourner à gauche " + step.name;
-                                            break;
-                                        case "R":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tourner à droite " + step.name;
-                                            break;
-                                        case "BL":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tourner très à gauche " + step.name;
-                                            break;
-                                        case "BR":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tourner très à droite " + step.name;
-                                            break;
-                                        case "FL":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tourner légèrement à gauche " + step.name;
-                                            break;
-                                        case "FR":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Tourner légèrement à droite " + step.name;
-                                            break;
-                                        case "round_about_entry":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Entrée rond-point " + step.name;
-                                            break;
-                                        case "round_about_exit":
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Sortie rond-point " + step.name;
-                                            break;
-                                        case null:
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "Prendre tout droit " + step.name;
-                                            break;
-                                        default:
-                                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "?" + step.navInstruction + "? " + step.name;
-                                            break;
-                                    }
-                                });
-                            }
-                        }
-
-                        if (!data) {
-                            options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", "json")));
-                            return;
-                        }
-                        break;
-
-                    default:
-                        options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_FORMAT", "json", "xml")));
+                // construction de l'objet réponse JSON
+                if (JSONResponse) {
+                    // le service renvoie t il une erreur ?
+                    if (JSONResponse.message) {
+                        // ex. {"message":"message not null", "status":"ERROR"}
+                        options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION", JSONResponse.message)));
                         return;
+                    }
+                    var legs = [];
+                    var legSteps = [];
+                    var steps = [];
+
+                    data = new _model_RouteResponse__WEBPACK_IMPORTED_MODULE_3__["default"]();
+
+                    if (data.hasOwnProperty("totalTime")) {
+                        data.totalTime = parseFloat(JSONResponse.duration);
+                    }
+                    if (data.hasOwnProperty("totalDistance")) {
+                        data.totalDistance = parseFloat(JSONResponse.distance);
+                    }
+
+                    if (data.hasOwnProperty("bbox")) {
+                        data.bbox.left = parseFloat(JSONResponse.bbox[0]);
+                        data.bbox.bottom = parseFloat(JSONResponse.bbox[1]);
+                        data.bbox.right = parseFloat(JSONResponse.bbox[2]);
+                        data.bbox.top = parseFloat(JSONResponse.bbox[3]);
+                    }
+
+                    if (data.hasOwnProperty("routeGeometry")) {
+                        data.routeGeometry = JSONResponse.geometry;
+                    }
+
+                    if (data.hasOwnProperty("routeInstructions")) {
+                        var legList = JSONResponse.portions;
+                        var i;
+                        if (Array.isArray(legList) && legList.length) {
+                            for (i = 0; i < legList.length; i++) {
+                                legs.push(legList[i]);
+                            }
+                        }
+                        if (legs.length) {
+                            for (i = 0; i < legs.length; i++) {
+                                legSteps.push(legs[i].steps);
+                            }
+                        }
+                        if (legSteps.length) {
+                            for (i = 0; i < legSteps.length; i++) {
+                                steps = steps.concat(legSteps[i]);
+                            }
+                        }
+
+                        steps.forEach(function (step) {
+                            data.routeInstructions.push(new _model_RouteInstruction__WEBPACK_IMPORTED_MODULE_4__["default"]());
+                            data.routeInstructions[data.routeInstructions.length - 1].duration = step.duration;
+                            data.routeInstructions[data.routeInstructions.length - 1].distance = step.distance;
+                            data.routeInstructions[data.routeInstructions.length - 1].code = "";
+                            data.routeInstructions[data.routeInstructions.length - 1].instruction = "";
+                            data.routeInstructions[data.routeInstructions.length - 1].geometry = step.geometry;
+
+                            // on ne souhaite pas de ce type de valeur...
+                            if (step.name === "Valeur non renseignée") {
+                                step.name = "";
+                            }
+
+                            switch (step.instruction.type) {
+                                case "turn":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Tourner";
+                                    break;
+                                case "new name":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Continuer tout droit";
+                                    break;
+                                case "depart":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Départ";
+                                    break;
+                                case "arrive":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Arrivée";
+                                    break;
+                                case "merge":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Rejoindre";
+                                    break;
+                                case "ramp":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Prendre la bretelle";
+                                    break;
+                                case "on ramp":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Prendre la bretelle";
+                                    break;
+                                case "off ramp":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Prendre la sortie";
+                                    break;
+                                case "fork":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Sur la bifurcation, prendre";
+                                    break;
+                                case "end of road":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "À la fin de la route, prendre";
+                                    break;
+                                case "use lane":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Utiliser la file";
+                                    break;
+                                case "continue":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Continuer";
+                                    break;
+                                case "roundabout":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Au rond-point";
+                                    break;
+                                case "rotary":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Au rond-point";
+                                    break;
+                                case "roundabout turn":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "Au rond point, tourner";
+                                    break;
+                                case "notification":
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "";
+                                    break;
+                                default:
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += "?" + step.instruction.type + "?";
+                                    break;
+                            }
+
+                            if (step.instruction.modifier) {
+                                switch (step.instruction.modifier) {
+                                    case "uturn":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction = "Faire demi-tour";
+                                        break;
+                                    case "sharp right":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " complètement à droite";
+                                        break;
+                                    case "right":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " à droite";
+                                        break;
+                                    case "slight right":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " légèrement à droite";
+                                        break;
+                                    case "straight":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction = "Continuer tout droit";
+                                        break;
+                                    case "slight left":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " lègèrement à gauche";
+                                        break;
+                                    case "left":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " à gauche";
+                                        break;
+                                    case "sharp left":
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " complètement à gauche";
+                                        break;
+                                    default:
+                                        data.routeInstructions[data.routeInstructions.length - 1].instruction += " ?" + step.instruction.modifier + "?";
+                                        break;
+                                }
+                            }
+
+                            if (step.instruction.exit) {
+                                data.routeInstructions[data.routeInstructions.length - 1].instruction += `${step.instruction.exit}e sortie`;
+                            }
+
+                            if (step.attributes.name) {
+                                if (step.attributes.name.nom_1_droite || step.attributes.name.toponyme) {
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += " sur";
+                                }
+
+                                if (step.attributes.name.nom_1_droite) {
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += ` ${step.attributes.name.nom_1_droite}`;
+                                }
+
+                                if (step.attributes.name.toponyme) {
+                                    data.routeInstructions[data.routeInstructions.length - 1].instruction += ` ${step.attributes.name.toponyme}`;
+                                }
+                            }
+                        });
+                    }
+                }
+
+                if (!data) {
+                    options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", "json")));
+                    return;
                 }
 
                 // Si la réponse contenait une exception renvoyée par le service
-                if (data && data.exceptionReport) {
+                if (data.exceptionReport) {
                     options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION_2")));
                     return;
                 }
@@ -22681,479 +21761,7 @@ var RouteResponseFactory = {
 
 
 /***/ }),
-/* 129 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
-
-
-/**
- * Lecture / Ecriture du format WKT
- *
- * Les besoins sont assez simples :
- * 1. lecture des types suivants :
- *  - LINESTRING
- *  - POLYGON
- *  - (TODO)
- * 2. convertir aux formats suivants :
- *  - json
- *  - (TODO)
- *
- *
- * @example
- *  var strWKT = "LINESTRING (2.416907 48.846577, 2.416916 48.846613)";
- *  WKT.toJson (strWKT,
- *      function onSuccess (json) {
- *          // {
- *          //      type : 'LINESTRING',
- *          //      coordinates : [
- *          //          [2.416907, 48.846577],
- *          //          [2.416916, 48.846613]
- *          //      ]
- *          // }
- *      },
- *      function onError (error) {
- *          console.log(error);
- *      }
- *  );
- *
- * @module WKT
- * @alias Gp.Formats.WKT
- * @private
- */
-
-var WKT = {
-
-    /**
-     * Parsing d'une chaine WKT
-     *
-     * @method toJson
-     * @param {String} strWkt - chaine de type WKT
-     * @param {Function} success - fonction callback
-     * @param {Function} error   - fonction callback
-     */
-    toJson : function (strWkt, success, error) {
-        var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-
-        var json = null;
-
-        try {
-            if (!strWkt) {
-                throw new Error("La chaine WKT n'est pas renseignée !");
-            }
-
-            if (!success) {
-                // callback success par defaut
-                success = function (json) {
-                    console.log(json);
-                };
-            }
-
-            if (!error) {
-                // callback error par defaut
-                error = function (e) {
-                    console.log(e);
-                };
-            }
-
-            var regex;
-            var subst;
-
-            // regex coordinates
-            regex = /(-?\d+\.?[0-9]*)\s(-?\d+\.?[0-9]+)/g;
-            subst = "[$1,$2]";
-            strWkt = strWkt.replace(regex, subst);
-
-            // regex type
-            regex = /^(\w+)/;
-            regex.exec(strWkt);
-            if (RegExp.$1 === "POLYGON") {
-                subst = "{\"type\" : \"Polygon\",";
-                strWkt = strWkt.replace(RegExp.$1, subst);
-                // clean
-                // (( --> coordinates : [[
-                regex = /(\({2}?)/;
-                subst = "\"coordinates\" : [[";
-                strWkt = strWkt.replace(regex, subst);
-                // )) --> ]]}
-                regex = /(\){2}?)/;
-                subst = "]]}";
-                strWkt = strWkt.replace(regex, subst);
-                // all ( --> [
-                regex = /(\()/g;
-                subst = "[";
-                strWkt = strWkt.replace(regex, subst);
-                // all ) --> ]
-                regex = /(\))/g;
-                subst = "]";
-                strWkt = strWkt.replace(regex, subst);
-            } else if (RegExp.$1 === "LINESTRING") {
-                subst = "{\"type\" : \"LineString\",";
-                strWkt = strWkt.replace(RegExp.$1, subst);
-                // clean
-                regex = /(\(\(?)/;
-                subst = "\"coordinates\" : [";
-                strWkt = strWkt.replace(regex, subst);
-                regex = /(\)\)?)/;
-                subst = "]}";
-                strWkt = strWkt.replace(regex, subst);
-            }
-
-            logger.trace(strWkt);
-
-            json = JSON.parse(strWkt);
-
-            if (!json) {
-                throw new Error("Le JSON est vide !");
-            }
-
-            if (!json.type) {
-                throw new Error("Le type de geometrie n'est pas connu !");
-            }
-
-            if (!json.coordinates) {
-                throw new Error("La liste des points est vide !");
-            }
-
-            success.call(this, json);
-        } catch (e) {
-            if (e.name === "SyntaxError") {
-                error.call(this, "Erreur de parsing JSON !");
-                return;
-            }
-            error.call(this, e);
-        }
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (WKT);
-
-
-/***/ }),
-/* 130 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
-/* harmony import */ var _Formats_WKT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(129);
-/* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
-/* harmony import */ var _Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(131);
-/* harmony import */ var _Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(132);
-/**
- * Analyse de la reponse REST
- *
- * @module RouteResponseRESTReader
- * @alias Gp.Services.Route.Formats.RouteResponseRESTReader
- * @todo not yet implemented !
- * @private
- */
-
-// import Logger from "../../../Utils/LoggerByDefault";
-
-
-
-
-
-
-/**
- * Objet RouteResponseRestReader
- * @member {Object} RouteResponseRestReader
- *
- * @property {Object} RouteResponseRestReader.READERS - Objet contenant des fonctions de lecture, appelées "readers"
- *      dont chaque clé correspond au nom d'un tag du XML que l'on souhaite lire
- *      et la valeur associée est une fonction (node, data)
- *      où node est un noeud du document DOM
- *      et data est un objet où l'on stocke les informations lues dans le XML.
- *
- * @property {Method} RouteResponseRestReader.read - Méthode permettant de lancer la lecture d'une réponse XML du
- *      service de calcul d'itineraire, à l'aide des readers de la classe.
- *
- */
-
-var RouteResponseRESTReader = {};
-
-RouteResponseRESTReader.READERS = {
-
-    /**
-     * Route response
-     * @param {Object} node - node
-     * @returns {Object} response
-     */
-    routeResult : function (node) {
-        var response = new _Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_3__["default"]();
-
-        // on boucle sur les balises "enfant" de la réponse :
-        // status, distance, duration, distanceMeters, durationSeconds, bounds, geometryWkt, simplifiedWkt, leg
-        __getChildNodes(node, response);
-
-        if (response.status === "error") {
-            var message = _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION",
-                response.message);
-            throw new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"]({
-                message : message,
-                type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"].TYPE_SRVERR
-            });
-        }
-
-        return response;
-    },
-
-    /**
-     * Route status
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    status : function (node, response) {
-        var status = __getChildValue(node);
-        if (status === "ERROR" || status === "error") {
-            if (response) {
-                response.status = "error";
-            }
-        }
-    },
-
-    /**
-     * Route message
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    message : function (node, response) {
-        if (response) {
-            response.message = __getChildValue(node);
-        }
-    },
-
-    /**
-     * Route distance
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    distance : function (node, response) {
-        if (response) {
-            response.totalDistance = __getChildValue(node);
-        }
-    },
-
-    /**
-     * Route duration
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    durationSeconds : function (node, response) {
-        if (response) {
-            response.totalTime = parseFloat(__getChildValue(node));
-        }
-    },
-
-    /**
-     * Route bounds
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    bounds : function (node, response) {
-        // get value et split et parseFloat
-        if (response && response.bbox) {
-            var coords = __getChildValue(node).split(/[,;]/);
-            response.bbox.left = parseFloat(coords[0]);
-            response.bbox.bottom = parseFloat(coords[1]);
-            response.bbox.right = parseFloat(coords[2]);
-            response.bbox.top = parseFloat(coords[3]);
-        }
-    },
-
-    /**
-     * Route geometry
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    geometryWkt : function (node, response) {
-        if (response) {
-            var geomWkt = node.innerHTML;
-
-            var onWKTSuccess = function (json) {
-                response.routeGeometry = json;
-            };
-
-            var onWKTError = function () {
-                var msg = _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("PARAM_FORMAT", ["geometryWkt"]);
-                throw new Error(msg);
-            };
-            // get WKT Geometry from string
-            _Formats_WKT__WEBPACK_IMPORTED_MODULE_1__["default"].toJson(geomWkt, onWKTSuccess, onWKTError);
-        }
-    },
-
-    /**
-     * Route step
-     * @param {Object} node - node
-     * @param {Object} response - response
-     */
-    step : function (node, response) {
-        // création d'une nouvelle instruction
-        var routeInstruction = new _Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_4__["default"]();
-        var name;
-
-        // lecture des informations de l'instruction (balises enfants)
-        if (node.hasChildNodes) {
-            var children = node.childNodes;
-            var child;
-            var childName;
-
-            for (var i = 0; i < children.length; i++) {
-                child = children[i];
-
-                if (child.nodeType === 1) { // 1 === node.ELEMENT_NODE
-                    childName = child.localName || child.baseName || child.nodeName;
-
-                    if (childName === "durationSeconds") {
-                        routeInstruction.duration = __getChildValue(child);
-                    } else if (childName === "distance") {
-                        routeInstruction.distance = __getChildValue(child);
-                    } else if (childName === "navInstruction") {
-                        routeInstruction.code = __getChildValue(child);
-                    } else if (childName === "name") {
-                        name = __getChildValue(child);
-                    }
-                }
-            }
-        }
-
-        // on teste le code de l'instruction pour y ajouter la bonne description
-        if (routeInstruction.code) {
-            switch (routeInstruction.code) {
-                case "F":
-                    if (name !== "Valeur non renseignée") {
-                        routeInstruction.instruction = "Tout droit " + name;
-                    } else {
-                        routeInstruction.instruction = "Continuer tout droit ";
-                    }
-                    break;
-                case "B":
-                    routeInstruction.instruction = "Demi-tour " + name;
-                    break;
-                case "L":
-                    routeInstruction.instruction = "Tourner à gauche " + name;
-                    break;
-                case "R":
-                    routeInstruction.instruction = "Tourner à droite " + name;
-                    break;
-                case "BL":
-                    routeInstruction.instruction = "Tourner très à gauche " + name;
-                    break;
-                case "BR":
-                    routeInstruction.instruction = "Tourner très à droite " + name;
-                    break;
-                case "FL":
-                    routeInstruction.instruction = "Tourner légèrement à gauche " + name;
-                    break;
-                case "FR":
-                    routeInstruction.instruction = "Tourner légèrement à droite " + name;
-                    break;
-                case "round_about_entry":
-                    routeInstruction.instruction = "Entrée rond-point " + name;
-                    break;
-                case "round_about_exit":
-                    routeInstruction.instruction = "Sortie rond-point " + name;
-                    break;
-                case null:
-                    routeInstruction.instruction = "Prendre " + name;
-                    break;
-                default:
-                    routeInstruction.instruction = "?" + routeInstruction.code + "? " + name;
-                    break;
-            }
-        }
-
-        if (Array.isArray(response.routeInstructions)) {
-            response.routeInstructions.push(routeInstruction);
-        }
-    }
-
-};
-
-/**
- * Méthode permettant de lancer la lecture d'une réponse XML du service de calcul d'itineraire,
- * à l'aide des readers de la classe.
- *
- * @method RouteResponseRESTReader.read
- * @param {DOMElement} root - racine de la réponse XML à lire
- * @static
- * @memberof RouteResponseRESTReader
- * @returns {DOMElement} response
- */
-RouteResponseRESTReader.read = function (root) {
-    var response;
-
-    if (root.nodeName === "routeResult") {
-        response = RouteResponseRESTReader.READERS["routeResult"](root);
-        return response;
-    } else {
-        throw new Error("Erreur lors de la lecture de la réponse : elle n'est pas au format attendu.");
-    }
-};
-
-/**
- * Lecture de la valeur du premier child d'un noeud, si elle existe.
- *
- * @private
- * @memberof RouteResponseRESTReader
- * @method __getChildValue
- * @param {DOMElement} node - a DOM node
- * @return {String} value - valeur du firstChild du noeud en entrée, ou chaîne vide.
- */
-function __getChildValue (node) {
-    var textNode;
-    var value = "";
-
-    if (node.hasChildNodes()) {
-        textNode = node.firstChild;
-        if (textNode && textNode.nodeType === 3) { // 3 === node.TEXT_NODE
-            value = textNode.nodeValue;
-        }
-    }
-    return value;
-}
-
-/**
- * Récupération des noeuds enfants à partir d'un noeud donné, pour lecture (readNode).
- *
- * @private
- * @memberof RouteResponseRESTReader
- * @method __getChildNodes
- * @param {DOMElement} node - a DOM node
- * @param {Array|Object} [data] - an object to be filled with node data
- */
-function __getChildNodes (node, data) {
-    if (node.hasChildNodes()) {
-        var children = node.childNodes;
-        var child;
-        var childName;
-
-        for (var i = 0; i < children.length; i++) {
-            child = children[i];
-
-            if (child.nodeType === 1) { // 1 === node.ELEMENT_NODE
-                childName = child.localName || child.baseName || child.nodeName;
-
-                if (RouteResponseRESTReader.READERS[childName]) {
-                    var reader = RouteResponseRESTReader.READERS[childName];
-                    reader(child, data);
-                } else {
-                    __getChildNodes(child, data);
-                }
-            }
-        }
-    }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (RouteResponseRESTReader);
-
-
-/***/ }),
-/* 131 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23201,7 +21809,7 @@ RouteResponse.prototype = {
 
 
 /***/ }),
-/* 132 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23257,90 +21865,7 @@ RouteInstruction.prototype = {
 
 
 /***/ }),
-/* 133 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
-/**
- * Analyse de la reponse OLS
- *
- * @module RouteResponseOLSReader
- * @alias Gp.Services.Route.Formats.RouteResponseOLSReader
- * @todo not yet implemented !
- * @private
- */
-
-
-
-/**
- * Objet RouteResponseOLSReader
- * @member {Object} RouteResponseOLSReader
- *
- * @property {Object} RouteResponseOLSReader.READERS - Objet contenant des fonctions de lecture, appelées "readers"
- *      dont chaque clé correspond au nom d'un tag du XML que l'on souhaite lire
- *      et la valeur associée est une fonction (node, data)
- *      où node est un noeud du document DOM
- *      et data est un objet où l'on stocke les informations lues dans le XML.
- *
- * @property {Method} RouteResponseOLSReader.read -  Méthode permettant de lancer la lecture d'une réponse
- *      XML du service de calcul d'itineraire, à l'aide des readers de la classe.
- */
-var RouteResponseOLSReader = {};
-
-/**
- * Objet contenant des fonctions de lecture, appelées "readers"
- *      dont chaque clé correspond au nom d'un tag du XML que l'on souhaite lire
- *      et la valeur associée est une fonction (node, data)
- *      où node est un noeud du document DOM
- *      et data est un objet où l'on stocke les informations lues dans le XML.
- * @static
- * @memberof RouteResponseOLSReader
- */
-RouteResponseOLSReader.READERS = {
-    /*
-        // INFO
-        // pas de reponse en JSON pour l'API OLS, uniquement du XML !
-
-        // INFO
-        // Exemple d'erreur du service
-        // <?xml version= "1.0" encoding= "UTF-8" standalone= "yes" ?>
-        // <XLS version="1.2" xsi : schemaLocation = "http://www.opengis.net/xls http://schemas.opengis.net/ols/1.2/olsAll.xsd" xmlns : xls = "http://www.opengis.net/xls" xmlns= "http://www.opengis.net/xls" xmlns : xlsext = "http://www.opengis.net/xlsext" xmlns : gml = "http://www.opengis.net/gml" // xmlns : xsi = "http://www.w3.org/2001/XMLSchema-instance" >
-        // <ResponseHeader>
-        //     <ErrorList>
-        //         <Error message="Routing error : Error in smartrouting com.geoconcept.smartrouting.SmartRoutingNativeException : failed to connect waypoint { 48.846577, 2.416907, 0.000000 } failed to connect waypoint { 48.846577, 2.416907, 0.000000 } " errorCode="InternalServerError"/>
-        //     </ErrorList>
-        // </ResponseHeader>
-        // <Response version= "1.2" requestID= "f8358c74-8aee-4203-90b9-2c70db5996a1" />
-        // </XLS>
-
-        // INFO
-        // Exemple d'erreur NGinx
-        // <ExceptionReport><Exception exceptionCode="MissingParameter">Resource parameter not found</Exception></ExceptionReport>
-    */
-};
-
-/**
- * Méthode permettant de lancer la lecture d'une réponse XML du service de calcul d'itineraire,
- * à l'aide des readers de la classe.
- *
- * @method RouteResponseOLSReader.read
- * @param {DOMElement} root - racine de la réponse XML à lire
- * @static
- * @memberof RouteResponseOLSReader
- */
-RouteResponseOLSReader.read = function (root) {
-    // logger
-    var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("RouteResponseOLSReader");
-    logger.error("not yet implemented !");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (RouteResponseOLSReader);
-
-
-/***/ }),
-/* 134 */
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23350,8 +21875,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46);
 /* harmony import */ var _DefaultUrlService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(56);
-/* harmony import */ var _Request_ProcessIsoCurveRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(135);
-/* harmony import */ var _Response_ProcessIsoCurveResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(137);
+/* harmony import */ var _Request_ProcessIsoCurveRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(127);
+/* harmony import */ var _Response_ProcessIsoCurveResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(129);
 
 
 
@@ -23608,14 +22133,14 @@ ProcessIsoCurve.prototype.analyzeResponse = function (onError, onSuccess) {
 
 
 /***/ }),
-/* 135 */
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
-/* harmony import */ var _model_ProcessIsoCurveParam__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(136);
+/* harmony import */ var _model_ProcessIsoCurveParam__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(128);
 
 
 
@@ -23889,7 +22414,7 @@ ProcessIsoCurveRequest.prototype = {
 
 
 /***/ }),
-/* 136 */
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24080,7 +22605,7 @@ ProcessIsoCurveParam.prototype.getParams = function () {
 
 
 /***/ }),
-/* 137 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24089,9 +22614,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
 /* harmony import */ var _Formats_XML__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(66);
-/* harmony import */ var _Formats_WKT__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(129);
-/* harmony import */ var _Formats_ProcessIsoCurveResponseReader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(138);
-/* harmony import */ var _model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(139);
+/* harmony import */ var _Formats_WKT__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(130);
+/* harmony import */ var _Formats_ProcessIsoCurveResponseReader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(131);
+/* harmony import */ var _model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(132);
 /**
  * Factory pour générer une reponse JSON à partir d'un XML ou d'un JSON
  * (Factory)
@@ -24258,15 +22783,166 @@ var ProcessIsoCurveResponseFactory = {
 
 
 /***/ }),
-/* 138 */
+/* 130 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
+
+
+/**
+ * Lecture / Ecriture du format WKT
+ *
+ * Les besoins sont assez simples :
+ * 1. lecture des types suivants :
+ *  - LINESTRING
+ *  - POLYGON
+ *  - (TODO)
+ * 2. convertir aux formats suivants :
+ *  - json
+ *  - (TODO)
+ *
+ *
+ * @example
+ *  var strWKT = "LINESTRING (2.416907 48.846577, 2.416916 48.846613)";
+ *  WKT.toJson (strWKT,
+ *      function onSuccess (json) {
+ *          // {
+ *          //      type : 'LINESTRING',
+ *          //      coordinates : [
+ *          //          [2.416907, 48.846577],
+ *          //          [2.416916, 48.846613]
+ *          //      ]
+ *          // }
+ *      },
+ *      function onError (error) {
+ *          console.log(error);
+ *      }
+ *  );
+ *
+ * @module WKT
+ * @alias Gp.Formats.WKT
+ * @private
+ */
+
+var WKT = {
+
+    /**
+     * Parsing d'une chaine WKT
+     *
+     * @method toJson
+     * @param {String} strWkt - chaine de type WKT
+     * @param {Function} success - fonction callback
+     * @param {Function} error   - fonction callback
+     */
+    toJson : function (strWkt, success, error) {
+        var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
+
+        var json = null;
+
+        try {
+            if (!strWkt) {
+                throw new Error("La chaine WKT n'est pas renseignée !");
+            }
+
+            if (!success) {
+                // callback success par defaut
+                success = function (json) {
+                    console.log(json);
+                };
+            }
+
+            if (!error) {
+                // callback error par defaut
+                error = function (e) {
+                    console.log(e);
+                };
+            }
+
+            var regex;
+            var subst;
+
+            // regex coordinates
+            regex = /(-?\d+\.?[0-9]*)\s(-?\d+\.?[0-9]+)/g;
+            subst = "[$1,$2]";
+            strWkt = strWkt.replace(regex, subst);
+
+            // regex type
+            regex = /^(\w+)/;
+            regex.exec(strWkt);
+            if (RegExp.$1 === "POLYGON") {
+                subst = "{\"type\" : \"Polygon\",";
+                strWkt = strWkt.replace(RegExp.$1, subst);
+                // clean
+                // (( --> coordinates : [[
+                regex = /(\({2}?)/;
+                subst = "\"coordinates\" : [[";
+                strWkt = strWkt.replace(regex, subst);
+                // )) --> ]]}
+                regex = /(\){2}?)/;
+                subst = "]]}";
+                strWkt = strWkt.replace(regex, subst);
+                // all ( --> [
+                regex = /(\()/g;
+                subst = "[";
+                strWkt = strWkt.replace(regex, subst);
+                // all ) --> ]
+                regex = /(\))/g;
+                subst = "]";
+                strWkt = strWkt.replace(regex, subst);
+            } else if (RegExp.$1 === "LINESTRING") {
+                subst = "{\"type\" : \"LineString\",";
+                strWkt = strWkt.replace(RegExp.$1, subst);
+                // clean
+                regex = /(\(\(?)/;
+                subst = "\"coordinates\" : [";
+                strWkt = strWkt.replace(regex, subst);
+                regex = /(\)\)?)/;
+                subst = "]}";
+                strWkt = strWkt.replace(regex, subst);
+            }
+
+            logger.trace(strWkt);
+
+            json = JSON.parse(strWkt);
+
+            if (!json) {
+                throw new Error("Le JSON est vide !");
+            }
+
+            if (!json.type) {
+                throw new Error("Le type de geometrie n'est pas connu !");
+            }
+
+            if (!json.coordinates) {
+                throw new Error("La liste des points est vide !");
+            }
+
+            success.call(this, json);
+        } catch (e) {
+            if (e.name === "SyntaxError") {
+                error.call(this, "Erreur de parsing JSON !");
+                return;
+            }
+            error.call(this, e);
+        }
+    }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (WKT);
+
+
+/***/ }),
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
-/* harmony import */ var _Formats_WKT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(129);
+/* harmony import */ var _Formats_WKT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(130);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45);
-/* harmony import */ var _Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(139);
+/* harmony import */ var _Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(132);
 /**
  * Analyse de la reponse XML
  *
@@ -24554,7 +23230,7 @@ function __getChildValue (node) {
 
 
 /***/ }),
-/* 139 */
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24607,13 +23283,13 @@ ProcessIsoCurveResponse.prototype = {
 
 
 /***/ }),
-/* 140 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(134);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -24760,7 +23436,7 @@ __webpack_require__.r(__webpack_exports__);
 });
 
 /***/ }),
-/* 141 */
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25031,7 +23707,7 @@ var Config = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(52)))
 
 /***/ }),
-/* 142 */
+/* 135 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25040,11 +23716,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
-/* harmony import */ var _Common_Controls_LocationSelectorDOM__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(143);
-/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(144);
-/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(145);
+/* harmony import */ var _Common_Controls_LocationSelectorDOM__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(136);
+/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(137);
+/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(138);
 
 
 
@@ -25197,9 +23873,9 @@ var LocationSelector = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
    * @returns {DOMElement} DOM element
    * @private
    */
-  onAdd: function onAdd()
-  /* map */
-  {
+  onAdd: function
+    /* map */
+  onAdd() {
     // si on ajout ce composant à la carte en tant que objet graphique,
     // un uuid doit être generé automatiquement !
     this._uid = _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__["default"].generate(); // DOM du composant
@@ -25217,9 +23893,9 @@ var LocationSelector = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
    *
    * @private
    */
-  onRemove: function onRemove()
-  /* map */
-  {},
+  onRemove: function
+    /* map */
+  onRemove() {},
   // ################################################################### //
   // ########################## publics methods ######################## //
   // ################################################################### //
@@ -26182,7 +24858,7 @@ var LocationSelector = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
 /* harmony default export */ __webpack_exports__["default"] = (LocationSelector);
 
 /***/ }),
-/* 143 */
+/* 136 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26688,7 +25364,7 @@ var LocationSelectorDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (LocationSelectorDOM);
 
 /***/ }),
-/* 144 */
+/* 137 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26839,7 +25515,7 @@ var PositionFormater = {
 /* harmony default export */ __webpack_exports__["default"] = (PositionFormater);
 
 /***/ }),
-/* 145 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26941,7 +25617,7 @@ var IconDefault = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Icon.Default.ex
 /* harmony default export */ __webpack_exports__["default"] = (IconDefault);
 
 /***/ }),
-/* 146 */
+/* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27743,7 +26419,7 @@ var IsoDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (IsoDOM);
 
 /***/ }),
-/* 147 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27752,12 +26428,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
-/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(148);
-/* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(149);
-/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(144);
-/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(150);
+/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(141);
+/* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(142);
+/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(137);
+/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(143);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
@@ -29271,7 +27947,7 @@ var MousePosition = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
 /* harmony default export */ __webpack_exports__["default"] = (MousePosition);
 
 /***/ }),
-/* 148 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29392,7 +28068,7 @@ var MathUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (MathUtils);
 
 /***/ }),
-/* 149 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30327,19 +29003,19 @@ var MousePositionDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (MousePositionDOM);
 
 /***/ }),
-/* 150 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(151);
+/* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(144);
 /* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(proj4__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var proj4leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(153);
+/* harmony import */ var proj4leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(146);
 /* harmony import */ var proj4leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(proj4leaflet__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(154);
-/* harmony import */ var _EPSG2154__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(155);
-/* harmony import */ var _EPSG27572__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(156);
-/* harmony import */ var _EPSG4326__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(157);
+/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(147);
+/* harmony import */ var _EPSG2154__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(148);
+/* harmony import */ var _EPSG27572__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(149);
+/* harmony import */ var _EPSG4326__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(150);
 
 
 
@@ -30419,14 +29095,14 @@ var CRS = {
 /* harmony default export */ __webpack_exports__["default"] = (CRS);
 
 /***/ }),
-/* 151 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(152);
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["proj4"] = __webpack_require__(145);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(52)))
 
 /***/ }),
-/* 152 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -37514,14 +36190,14 @@ var CRS = {
 
 
 /***/ }),
-/* 153 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (factory) {
 	var L, proj4;
 	if (true) {
 		// AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2), __webpack_require__(151)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2), __webpack_require__(144)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -37785,18 +36461,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 154 */
+/* 147 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-// FIXME
-// - exception lors du register IGNF des projections geocent ?
-// Ex. Transforming EPSG:4978 geocent projection fails?
-// cf. https://github.com/proj4js/proj4js/issues/195
-// - probleme de performance avec le chargement des projections (env. 4s),
-// et ceci bloque le rendu graphique...
-
 /**
  * Register definition for IGNF, and EPSG CRS.
  * @example
@@ -37993,7 +36662,7 @@ var Register = {
   },
   // definitions
   EPSG: {
-    // 4978 : "+proj=geocent +datum=WGS84 +units=m +no_defs ",
+    4978: "+proj=geocent +datum=WGS84 +units=m +no_defs ",
     3857: "+title=WGS 84 / Pseudo-Mercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs",
     3785: "+title=WGS 84 / Pseudo-Mercator (deprecated) +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs",
     4149: "+title=CH1903 +proj=longlat +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +no_defs ",
@@ -38277,39 +36946,39 @@ var Register = {
     84: "+title=WGS 84 longitude-latitude +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
   },
   IGNF: {
-    // AMST63 : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // CROZ63 : "+title=Crozet 1963 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // CSG67 : "+title=Guyane CSG67 +proj=geocent +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // ED50 : "+title=ED50 +proj=geocent +towgs84=-84.0000,-97.0000,-117.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // ETRS89 : "+title=Systeme de reference terrestre Europeen (1989) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // GUAD48 : "+title=Guadeloupe Ste Anne +proj=geocent +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // GUADFM49 : "+title=Guadeloupe Fort Marigot +proj=geocent +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // IGN63 : "+title=IGN 1963 (Hiva Oa, Tahuata, Mohotani) +proj=geocent +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // IGN72 : "+title=IGN 1972 Grande-Terre / Ile des Pins +proj=geocent +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // KERG62CAR : "+title=Kerguelen - K0 +proj=geocent +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // MART38 : "+title=Martinique Fort-Desaix +proj=geocent +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // MAYO50 : "+title=Mayotte Combani +proj=geocent +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // MOOREA87 : "+title=Moorea 1987 +proj=geocent +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // NTF : "+title=Nouvelle Triangulation Francaise +proj=geocent +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +units=m +no_defs",
-    // NUKU72 : "+title=IGN 1972 Nuku Hiva +proj=geocent +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // REUN47 : "+title=Reunion 1947 +proj=geocent +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // RGF93 : "+title=Reseau geodesique francais 1993 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGFG95 : "+title=Reseau geodesique francais de Guyane 1995 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGM04 : "+title=RGM04 (Reseau Geodesique de Mayotte 2004) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGNC : "+title=Reseau Geodesique de Nouvelle-Caledonie +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGPF : "+title=RGPF (Reseau Geodesique de Polynesie Francaise) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGR92 : "+title=Reseau geodesique Reunion 1992 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGSPM06 : "+title=Reseau Geodesique Saint-Pierre-et-Miquelon (2006) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RGTAAF07 : "+title=Reseau Geodesique des TAAF (2007) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // RRAF91 : "+title=RRAF 1991 (Reseau de Reference des Antilles Francaises) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
-    // STPL69 : "+title=Saint-Paul 1969 +proj=geocent +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // STPM50 : "+title=St Pierre et Miquelon 1950 +proj=geocent +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +units=m +no_defs",
-    // TAHAA : "+title=Raiatea - Tahaa 51-54 (Tahaa, Base Terme Est) +proj=geocent +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // TAHI79 : "+title=IGN79 (Tahiti) Iles de la Societe +proj=geocent +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // TERA50 : "+title=Pointe Geologie - Perroud 1950 +proj=geocent +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // WALL78 : "+title=Wallis-Uvea 1978 (MOP78) +proj=geocent +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
-    // WGS72 : "+title=World Geodetic System 1972 +proj=geocent +towgs84=0.0000,12.0000,6.0000 +a=6378135.0000 +rf=298.2600000000000 +units=m +no_defs",
-    // WGS84 : "+title=World Geodetic System 1984 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    AMST63: "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    CROZ63: "+title=Crozet 1963 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    CSG67: "+title=Guyane CSG67 +proj=geocent +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    ED50: "+title=ED50 +proj=geocent +towgs84=-84.0000,-97.0000,-117.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    ETRS89: "+title=Systeme de reference terrestre Europeen (1989) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    GUAD48: "+title=Guadeloupe Ste Anne +proj=geocent +towgs84=-472.2900,-5.6300,-304.1200,0.4362,-0.8374,0.2563,1.898400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    GUADFM49: "+title=Guadeloupe Fort Marigot +proj=geocent +towgs84=136.5960,248.1480,-429.7890 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    IGN63: "+title=IGN 1963 (Hiva Oa, Tahuata, Mohotani) +proj=geocent +towgs84=410.7210,55.0490,80.7460,-2.5779,-2.3514,-0.6664,17.331100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    IGN72: "+title=IGN 1972 Grande-Terre / Ile des Pins +proj=geocent +towgs84=-11.6400,-348.6000,291.6800 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    KERG62CAR: "+title=Kerguelen - K0 +proj=geocent +towgs84=144.8990,-186.7700,100.9230 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    MART38: "+title=Martinique Fort-Desaix +proj=geocent +towgs84=126.9260,547.9390,130.4090,-2.7867,5.1612,-0.8584,13.822650 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    MAYO50: "+title=Mayotte Combani +proj=geocent +towgs84=-599.9280,-275.5520,-195.6650,-0.0835,-0.4715,0.0602,49.281400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    MOOREA87: "+title=Moorea 1987 +proj=geocent +towgs84=215.9820,149.5930,176.2290,3.2624,1.6920,1.1571,10.477300 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    NTF: "+title=Nouvelle Triangulation Francaise +proj=geocent +nadgrids=ntf_r93.gsb,null +wktext +towgs84=-168.0000,-60.0000,320.0000 +a=6378249.2000 +rf=293.4660210000000 +units=m +no_defs",
+    NUKU72: "+title=IGN 1972 Nuku Hiva +proj=geocent +towgs84=165.7320,216.7200,180.5050,-0.6434,-0.4512,-0.0791,7.420400 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    REUN47: "+title=Reunion 1947 +proj=geocent +towgs84=789.5240,-626.4860,-89.9040,0.6006,76.7946,-10.5788,-32.324100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    RGF93: "+title=Reseau geodesique francais 1993 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGFG95: "+title=Reseau geodesique francais de Guyane 1995 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGM04: "+title=RGM04 (Reseau Geodesique de Mayotte 2004) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGNC: "+title=Reseau Geodesique de Nouvelle-Caledonie +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGPF: "+title=RGPF (Reseau Geodesique de Polynesie Francaise) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGR92: "+title=Reseau geodesique Reunion 1992 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGSPM06: "+title=Reseau Geodesique Saint-Pierre-et-Miquelon (2006) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RGTAAF07: "+title=Reseau Geodesique des TAAF (2007) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    RRAF91: "+title=RRAF 1991 (Reseau de Reference des Antilles Francaises) +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
+    STPL69: "+title=Saint-Paul 1969 +proj=geocent +towgs84=225.571,-346.608,-46.567,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    STPM50: "+title=St Pierre et Miquelon 1950 +proj=geocent +towgs84=-95.5930,573.7630,173.4420,-0.9602,1.2510,-1.3918,42.626500 +a=6378206.4000 +rf=294.9786982000000 +units=m +no_defs",
+    TAHAA: "+title=Raiatea - Tahaa 51-54 (Tahaa, Base Terme Est) +proj=geocent +towgs84=72.4380,345.9180,79.4860,-1.6045,-0.8823,-0.5565,1.374600 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    TAHI79: "+title=IGN79 (Tahiti) Iles de la Societe +proj=geocent +towgs84=221.5250,152.9480,176.7680,2.3847,1.3896,0.8770,11.474100 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    TERA50: "+title=Pointe Geologie - Perroud 1950 +proj=geocent +towgs84=324.9120,153.2820,172.0260 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    WALL78: "+title=Wallis-Uvea 1978 (MOP78) +proj=geocent +towgs84=253.0000,-133.0000,-127.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
+    WGS72: "+title=World Geodetic System 1972 +proj=geocent +towgs84=0.0000,12.0000,6.0000 +a=6378135.0000 +rf=298.2600000000000 +units=m +no_defs",
+    WGS84: "+title=World Geodetic System 1984 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137.0000 +rf=298.2572221010000 +units=m +no_defs",
     AMST63GEO: "+title=Amsterdam 1963 +proj=longlat +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
     CROZ63GEO: "+title=Crozet 1963 +proj=longlat +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
     CSG67GEO: "+title=Guyane CSG67 +proj=longlat +towgs84=-193.0660,236.9930,105.4470,0.4814,-0.8074,0.1276,1.564900 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
@@ -38434,15 +37103,15 @@ var Register = {
 /* harmony default export */ __webpack_exports__["default"] = (Register);
 
 /***/ }),
-/* 155 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
-/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(154);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(134);
+/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(147);
 
 
 
@@ -38528,15 +37197,15 @@ var EPSG2154 = {
 /* harmony default export */ __webpack_exports__["default"] = (EPSG2154);
 
 /***/ }),
-/* 156 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
-/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(154);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(134);
+/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(147);
 
 
 
@@ -38635,15 +37304,15 @@ var EPSG27572 = {
 /* harmony default export */ __webpack_exports__["default"] = (EPSG27572);
 
 /***/ }),
-/* 157 */
+/* 150 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
-/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(154);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(134);
+/* harmony import */ var _Common_Utils_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(147);
 
 
  // FIXME prototype
@@ -38742,7 +37411,7 @@ var EPSG4326 = {
 /* harmony default export */ __webpack_exports__["default"] = (EPSG4326);
 
 /***/ }),
-/* 158 */
+/* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38750,13 +37419,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var leaflet_draw__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(159);
+/* harmony import */ var leaflet_draw__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(152);
 /* harmony import */ var leaflet_draw__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(leaflet_draw__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(36);
-/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(145);
-/* harmony import */ var _Common_Controls_ReverseGeocodingDOM__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(160);
+/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(138);
+/* harmony import */ var _Common_Controls_ReverseGeocodingDOM__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(153);
 
 
 
@@ -40045,7 +38714,7 @@ var ReverseGeocoding = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.ex
 /* harmony default export */ __webpack_exports__["default"] = (ReverseGeocoding);
 
 /***/ }),
-/* 159 */
+/* 152 */
 /***/ (function(module, exports) {
 
 /*
@@ -44824,7 +43493,7 @@ L.EditToolbar.Delete = L.Handler.extend({
 //# sourceMappingURL=leaflet.draw-src.map
 
 /***/ }),
-/* 160 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45276,7 +43945,7 @@ var ReverseGeocodingDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (ReverseGeocodingDOM);
 
 /***/ }),
-/* 161 */
+/* 154 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45285,10 +43954,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
-/* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(142);
-/* harmony import */ var _Common_Controls_RouteDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(162);
+/* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(135);
+/* harmony import */ var _Common_Controls_RouteDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(155);
 
 
 
@@ -45463,9 +44132,9 @@ var Route = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend(
    *
    * @private
    */
-  onRemove: function onRemove()
-  /* map */
-  {},
+  onRemove: function
+    /* map */
+  onRemove() {},
   // ################################################################### //
   // ####################### init application ########################## //
   // ################################################################### //
@@ -46755,7 +45424,7 @@ var Route = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend(
 /* harmony default export */ __webpack_exports__["default"] = (Route);
 
 /***/ }),
-/* 162 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47904,7 +46573,7 @@ var RouteDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (RouteDOM);
 
 /***/ }),
-/* 163 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47913,11 +46582,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
-/* harmony import */ var _Common_Utils_SearchEngineUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(164);
-/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(145);
-/* harmony import */ var _Common_Controls_SearchEngineDOM__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(165);
+/* harmony import */ var _Common_Utils_SearchEngineUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(157);
+/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(138);
+/* harmony import */ var _Common_Controls_SearchEngineDOM__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(158);
 /* global KeyboardEvent */
 
 
@@ -48094,9 +46763,9 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
    * @returns {DOMElement} DOM element
    * @private
    */
-  onAdd: function onAdd()
-  /* map */
-  {
+  onAdd: function
+    /* map */
+  onAdd() {
     // TODO initialisation des ressources du geocodage avancé
     this._initAdvancedSearchCodes(); // initialisation des filtres du geocodage avancé
 
@@ -49618,7 +48287,7 @@ var SearchEngine = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.extend
 /* harmony default export */ __webpack_exports__["default"] = (SearchEngine);
 
 /***/ }),
-/* 164 */
+/* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49761,7 +48430,7 @@ var SearchEngineUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (SearchEngineUtils);
 
 /***/ }),
-/* 165 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50473,7 +49142,7 @@ var SearchEngineDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (SearchEngineDOM);
 
 /***/ }),
-/* 166 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50481,15 +49150,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var leaflet_draw__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(159);
+/* harmony import */ var leaflet_draw__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(152);
 /* harmony import */ var leaflet_draw__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(leaflet_draw__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(140);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(133);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(36);
-/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(144);
-/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(145);
-/* harmony import */ var _Common_Controls_ElevationPathDOM__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(167);
-/* harmony import */ var _Common_Controls_ProfileElevationPathDOM__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(168);
+/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(137);
+/* harmony import */ var _Utils_IconDefault__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(138);
+/* harmony import */ var _Common_Controls_ElevationPathDOM__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(160);
+/* harmony import */ var _Common_Controls_ProfileElevationPathDOM__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(161);
 /* globals AmCharts, d3 */
 
 
@@ -50651,9 +49320,9 @@ var ElevationPath = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.Control.exten
    *
    * @private
    */
-  onRemove: function onRemove()
-  /* map */
-  {},
+  onRemove: function
+    /* map */
+  onRemove() {},
   // ################################################################### //
   // ########################## init resources ######################### //
   // ################################################################### //
@@ -51617,7 +50286,7 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context)
 /* harmony default export */ __webpack_exports__["default"] = (ElevationPath);
 
 /***/ }),
-/* 167 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51853,7 +50522,7 @@ var ElevationPathDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (ElevationPathDOM);
 
 /***/ }),
-/* 168 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52019,14 +50688,17 @@ var ProfileElevationPathDOM = {
     var xGradHeight = 15;
     var minZguideHeigth = 15;
 
-    var minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString(), container);
+    var minXguideWidth = this._getTextWidth(Math.round(dist).toLocaleString() + ",5", container);
 
     var minNumXGuides = 1;
     var pathHeight = widgetHeigth - xLabelHeight - xGradHeight;
     var pathWidth = widgetWidth - zLabelWidth - zGradWidth;
     var elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     elevationSvg.id = "profileElevationByDefaultSvg";
-    elevationSvg.setAttribute("style", "width: ".concat(widgetWidth, "px; height: ").concat(widgetHeigth, "px; display: block; margin: auto; overflow: visible;")); // Détermination des guides en ordonnée :
+    elevationSvg.setAttribute("style", "display: block; margin: auto; overflow: visible; position: absolute; left: 10px;");
+    elevationSvg.setAttribute("viewBox", "0 0 ".concat(container.clientWidth, " ").concat(container.clientHeight));
+    elevationSvg.setAttribute("width", "100%");
+    elevationSvg.setAttribute("height", "100%"); // Détermination des guides en ordonnée :
 
     var maxNumZguides = Math.floor(pathHeight / minZguideHeigth);
     var gradZ; // Traitement du cas altitude max = altitude min
@@ -52310,28 +50982,31 @@ var ProfileElevationPathDOM = {
     dynamicsG.appendChild(focusLineX);
     dynamicsG.appendChild(focusLineY); // Tooltip
 
-    var tooltipDiv = document.createElement("div");
-    var altiSpan = document.createElement("span");
-    var br = document.createElement("br");
-    var slopeSpan = document.createElement("span");
-    var br2 = document.createElement("br");
-    var coordsSpan = document.createElement("span");
+    var tooltipDiv = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    var altiSpan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    var slopeSpan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    var coordsSpan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
     tooltipDiv.setAttribute("style", "text-align:center; max-width:220px; font-size:10px; color:#000000; font-family:Verdana; z-index:50;");
     tooltipDiv.style.pointerEvents = "none";
     tooltipDiv.style.position = "fixed"; // tooltipDiv.classList.add("tooltipInit");
     // IE...
 
     tooltipDiv.setAttribute("class", "tooltipInit");
+    tooltipDiv.setAttribute("text-anchor", "middle");
     widgetDiv.appendChild(tooltipDiv);
     altiSpan.setAttribute("class", "altiPathValue");
+    altiSpan.setAttribute("x", "0");
+    altiSpan.setAttribute("dy", "-.7em");
     slopeSpan.setAttribute("class", "altiPathValue");
+    slopeSpan.setAttribute("x", "0");
+    slopeSpan.setAttribute("dy", "1em");
     coordsSpan.setAttribute("class", "altiPathCoords");
+    coordsSpan.setAttribute("x", "0");
+    coordsSpan.setAttribute("dy", "1em");
     tooltipDiv.appendChild(altiSpan);
-    tooltipDiv.appendChild(br);
 
     if (_displayProfileOptions.currentSlope) {
       tooltipDiv.appendChild(slopeSpan);
-      tooltipDiv.appendChild(br2);
     }
 
     tooltipDiv.appendChild(coordsSpan);
@@ -52353,7 +51028,8 @@ var ProfileElevationPathDOM = {
     tooltipBubbleShadow.setAttribute("stroke-opacity", "0.4");
     tooltipBubbleShadow.setAttribute("transform", "translate(1,1)");
     tooltipG.appendChild(tooltipBubbleShadow);
-    tooltipG.appendChild(tooltipBubble); // tooltipG.classList.add("tooltipInit");
+    tooltipG.appendChild(tooltipBubble);
+    tooltipG.appendChild(tooltipDiv); // tooltipG.classList.add("tooltipInit");
     // IE... deprecated
 
     tooltipG.setAttribute("class", "tooltipInit");
@@ -52434,17 +51110,15 @@ var ProfileElevationPathDOM = {
       slopeSpan.innerHTML = slopeSpanTxt;
       coordsSpan.innerHTML = coordsSpanTxt;
       var tooltipTextWidth = Math.max(this._getTextWidth(coordsSpanTxt, coordsSpan), this._getTextWidth(altiSpanTxt, altiSpan));
-      var tooltipDivLeft = elevationSvg.getBoundingClientRect().left + window.pageXOffset + focusX;
-      var tooltipDivTop = elevationSvg.getBoundingClientRect().top + window.pageYOffset + focusY - 19;
       var toolTipBubbleD;
 
       if (d.dist > dist * factor / 2) {
         toolTipBubbleD = "M -0.5 -0.5 l -6 6 l 0 16 l -".concat(tooltipTextWidth + 10, " 0 l 0 -44 l ").concat(tooltipTextWidth + 10, " 0 l 0 16 l 6 6");
-        tooltipDivLeft -= tooltipTextWidth + 12;
+        tooltipDiv.setAttribute("transform", "translate(".concat(-(tooltipTextWidth / 2 + 12), ",0)")); // IE11 !
       } else if (d.dist <= dist * factor / 2) {
         toolTipBubbleD = "M -0.5 -0.5 l 6 6 l 0 16 l ".concat(tooltipTextWidth + 10, " 0 l 0 -44 l -").concat(tooltipTextWidth + 10, " 0 l 0 16 l -6 6"); // Largeur de la fleche de la bulle du tooltip
 
-        tooltipDivLeft += 12;
+        tooltipDiv.setAttribute("transform", "translate(".concat(tooltipTextWidth / 2 + 12, ",0)")); // IE11 !
       }
 
       tooltipBubble.setAttribute("d", toolTipBubbleD);
@@ -52452,8 +51126,6 @@ var ProfileElevationPathDOM = {
       tooltipG.setAttribute("transform", "translate(".concat(focusX, ",").concat(focusY, ")")); // IE11 !
 
       tooltipG.style.transform = "translate(".concat(focusX, "px,").concat(focusY, "px)");
-      tooltipDiv.style.left = "".concat(tooltipDivLeft, "px");
-      tooltipDiv.style.top = "".concat(tooltipDivTop, "px");
     }.bind(this));
     dynamicsG.appendChild(pathRectangle);
     elevationSvg.appendChild(dynamicsG);
@@ -52774,7 +51446,7 @@ var ProfileElevationPathDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (ProfileElevationPathDOM);
 
 /***/ }),
-/* 169 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52840,9 +51512,9 @@ var Logo = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.extend(
    * @returns {DOMElement} DOM element
    * @private
    */
-  onAdd: function onAdd()
-  /* map */
-  {
+  onAdd: function
+    /* map */
+  onAdd() {
     var container = null;
     container = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.DomUtil.create("div", "gp-control-logo", container);
     var bLink = !!(this.options.url || this.options.text);
@@ -52889,7 +51561,7 @@ var Logo = leaflet__WEBPACK_IMPORTED_MODULE_0___default.a.Control.extend(
 /* harmony default export */ __webpack_exports__["default"] = (Logo);
 
 /***/ }),
-/* 170 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52897,9 +51569,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
-/* harmony import */ var _LayerConfig__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(171);
-/* harmony import */ var _WMS__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(173);
-/* harmony import */ var _WMTS__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(175);
+/* harmony import */ var _LayerConfig__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(164);
+/* harmony import */ var _WMS__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(166);
+/* harmony import */ var _WMTS__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(168);
 
 
 
@@ -53183,14 +51855,14 @@ var Layers = {
 /* harmony default export */ __webpack_exports__["default"] = (Layers);
 
 /***/ }),
-/* 171 */
+/* 164 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(141);
-/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(172);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(134);
+/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(165);
 
 
 
@@ -53235,7 +51907,7 @@ var LayerConfig = {
 /* harmony default export */ __webpack_exports__["default"] = (LayerConfig);
 
 /***/ }),
-/* 172 */
+/* 165 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53554,7 +52226,7 @@ var LayerUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (LayerUtils);
 
 /***/ }),
-/* 173 */
+/* 166 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53563,7 +52235,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _LayerEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(174);
+/* harmony import */ var _LayerEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(167);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
 /**
@@ -53793,13 +52465,13 @@ var WMS = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.TileLayer.WMS.extend(
 /* harmony default export */ __webpack_exports__["default"] = (WMS);
 
 /***/ }),
-/* 174 */
+/* 167 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(172);
+/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(165);
 
 
 var logger = _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("layer-event");
@@ -53984,7 +52656,7 @@ var LayerEvent = {
 /* harmony default export */ __webpack_exports__["default"] = (LayerEvent);
 
 /***/ }),
-/* 175 */
+/* 168 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53993,7 +52665,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(34);
-/* harmony import */ var _LayerEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(174);
+/* harmony import */ var _LayerEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(167);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
 /**
@@ -54250,7 +52922,7 @@ var WMTS = leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.TileLayer.extend(
 /* harmony default export */ __webpack_exports__["default"] = (WMTS);
 
 /***/ }),
-/* 176 */
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54317,7 +52989,7 @@ __webpack_require__.r(__webpack_exports__);
 })();
 
 /***/ }),
-/* 177 */
+/* 170 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54371,7 +53043,7 @@ var ProxyUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (ProxyUtils);
 
 /***/ }),
-/* 178 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
