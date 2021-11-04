@@ -33,6 +33,8 @@
 
 ## Summary
 
+ =Mise à jour access-lib pour utilisation de l'itinéraire v2
+
 ## Changelog
 
 * [Added]
