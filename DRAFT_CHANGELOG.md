@@ -7,11 +7,15 @@
 
 ## Summary
 
+Mise à jour access-lib pour utilisation de l'itinéraire v2
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
 
 * [Deprecated]
 
@@ -33,7 +37,7 @@
 
 ## Summary
 
- =Mise à jour access-lib pour utilisation de l'itinéraire v2
+Mise à jour access-lib pour utilisation de l'itinéraire v2
 
 ## Changelog
 
