@@ -88,6 +88,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.0](#extension-geoportail-openlayers-version-320)
   * [Summary](#summary-24)
   * [Changelog](#changelog-21)
+- [Extension Geoportail OpenLayers, version 3.2.1](#extension-geoportail-openlayers-version-321)
+  * [Summary](#summary-25)
+  * [Changelog](#changelog-22)
 
 <!-- tocstop -->
 
@@ -906,6 +909,32 @@ Upgrade des dependances :
 > Release Extension Geoportail openlayers
 
 ## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.1
+
+**08/11/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour access-lib pour utilisation de l'itinéraire v2
 
 ## Changelog
 
