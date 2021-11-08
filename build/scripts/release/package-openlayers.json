@@ -9,7 +9,7 @@
    "directories" : {},
    "bundleDependencies" : [],
    "main" : "dist/GpPluginOpenLayers-src.js",
-   "date" : "02/08/2021",
+   "date" : "08/11/2021",
    "scripts" : {},
    "license" : "CECILL-B",
    "author" : "IGNF",
@@ -31,10 +31,10 @@
       "@mapbox/mapbox-gl-style-spec" : "13.14.0",
       "xmldom" : "^0.1.27",
       "ol-mapbox-style" : "6.3.2",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/new-road/geoportal-access-lib-2.1.8.tgz",
+      "geoportal-access-lib" : "3.0.1",
       "sortablejs" : "1.8.4"
    },
-   "version" : "3.1.0",
+   "version" : "3.2.1",
    "description" : "French Geoportal Extensions for OpenLayers",
    "module" : "src/OpenLayers/index.js",
    "keywords" : [
