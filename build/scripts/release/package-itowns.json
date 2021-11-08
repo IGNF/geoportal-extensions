@@ -23,7 +23,7 @@
       "itowns" : "2.33.0",
       "three" : "0.127.0",
       "proj4" : "2.7.0",
-      "geoportal-access-lib" : "2.1.8",
+      "geoportal-access-lib" : "3.0.1",
       "loglevel" : "1.6.6"
    },
    "main" : "dist/GpPluginItowns-src.js",
