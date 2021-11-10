@@ -9,11 +9,15 @@
 
 ## Summary
 
+Mise à jour de l'access-lib geoportail en version 3.0.3
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - met à jour l'access-lib en version 3.0.3 pour correction géométrie itinéraire
 
 * [Deprecated]
 
