@@ -1,5 +1,6 @@
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -7,7 +8,7 @@
 
 ## Summary
 
-Mise à jour access-lib pour utilisation de l'itinéraire v2
+Mise à jour de l'access-lib geoportail en version 3.0.2
 
 ## Changelog
 
@@ -15,7 +16,7 @@ Mise à jour access-lib pour utilisation de l'itinéraire v2
 
 * [Changed]
 
-    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
 
 * [Deprecated]
 
@@ -30,6 +31,7 @@ Mise à jour access-lib pour utilisation de l'itinéraire v2
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -37,15 +39,13 @@ Mise à jour access-lib pour utilisation de l'itinéraire v2
 
 ## Summary
 
-Mise à jour access-lib pour utilisation de l'itinéraire v2
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
 
 * [Deprecated]
 
@@ -73,6 +73,8 @@ Mise à jour access-lib pour utilisation de l'itinéraire v2
 * [Added]
 
 * [Changed]
+
+    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
 
 * [Deprecated]
 
