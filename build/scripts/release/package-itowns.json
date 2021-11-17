@@ -1,13 +1,34 @@
 {
-   "description" : "French Geoportal Extensions for iTowns",
+   "peerDependencies" : {},
+   "dependencies" : {
+      "three" : "0.127.0",
+      "node-fetch" : "^2.6.1",
+      "xmldom" : "^0.1.27",
+      "itowns" : "2.33.0",
+      "proj4" : "2.7.0",
+      "loglevel" : "1.6.6",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature-multiKeys/geoportal-access-lib-3.0.3.tgz",
+      "sortablejs" : "1.8.4"
+   },
+   "directories" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "bundleDependencies" : [],
-   "directories" : {},
+   "main" : "dist/GpPluginItowns-src.js",
+   "name" : "geoportal-extensions-itowns",
+   "version" : "2.3.3",
+   "license" : "CECILL-B",
+   "date" : "10/11/2021",
+   "devDependencies" : {},
+   "module" : "src/Itowns/index.js",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -15,30 +36,9 @@
       "README.md",
       "package.json"
    ],
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "scripts" : {},
-   "devDependencies" : {},
-   "date" : "10/11/2021",
-   "dependencies" : {
-      "three" : "0.127.0",
-      "loglevel" : "1.6.6",
-      "itowns" : "2.33.0",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "geoportal-access-lib" : "3.0.3",
-      "sortablejs" : "1.8.4",
-      "proj4" : "2.7.0"
-   },
-   "module" : "src/Itowns/index.js",
+   "bundleDependencies" : [],
+   "description" : "French Geoportal Extensions for iTowns",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "main" : "dist/GpPluginItowns-src.js",
-   "version" : "2.3.3",
-   "license" : "CECILL-B",
-   "author" : "IGNF",
    "bugs" : {},
-   "name" : "geoportal-extensions-itowns",
-   "peerDependencies" : {}
+   "author" : "IGNF"
 }
