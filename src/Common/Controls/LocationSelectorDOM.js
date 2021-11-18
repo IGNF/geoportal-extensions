@@ -238,7 +238,7 @@ var LocationSelectorDOM = {
 
         var labelOriginPointer = document.createElement("label");
         labelOriginPointer.id = this._addUID("GPlocationOriginPointerImg_" + id);
-        labelOriginPointer.htmlFor = "GPlocationOriginPointer_" + id;
+        labelOriginPointer.htmlFor = this._addUID("GPlocationOriginPointer_" + id);
         labelOriginPointer.className = "GPlocationOriginPointerImg";
         labelOriginPointer.title = "Pointer un lieu sur la carte";
         labelOriginPointer.addEventListener("click", function (e) {
