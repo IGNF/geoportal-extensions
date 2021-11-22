@@ -58,7 +58,7 @@ var LocationSelectorDOM = {
 
         var labelOrigin = document.createElement("label");
         labelOrigin.id = this._addUID("GPlocationOriginLabel_" + id);
-        labelOrigin.htmlFor = "GPlocationOrigin_" + id;
+        labelOrigin.htmlFor = this._addUID("GPlocationOrigin_" + id);
         labelOrigin.innerHTML = text;
         labelOrigin.addEventListener("click", function (e) {
             var i = ID.index(this.id);
