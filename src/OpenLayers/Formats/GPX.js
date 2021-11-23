@@ -164,6 +164,17 @@ var GPX = (function (olGPX) {
         features.forEach(function (feature) {
             var style = feature.getStyle();
             if (style) {
+                // style ajouté via une fonction, pour les styles par defaut par ex.
+                if (typeof style === "function") {
+                    var styles = style.call(this, feature, 0);
+                    if (styles && styles.length !== 0) {
+                        style = styles[0];
+                    } else {
+                        // au cas où...
+                        return;
+                    }
+                }
+
                 // convertir le style en properties
                 // * stroke
                 // * fill (impossible car pas de polygone sur le GPX !)

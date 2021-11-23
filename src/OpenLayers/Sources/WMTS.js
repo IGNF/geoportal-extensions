@@ -56,7 +56,11 @@ var WMTS = (function (WMTSSource) {
      *     be provided.
      * @return {String|undefined} GetFeatureInfo URL.
      */
-    WMTS.prototype.getGetFeatureInfoUrl = function (coordinate, resolution, projection, params) {
+    WMTS.prototype.getFeatureInfoUrl = function (coordinate, resolution, projection, params) {
+        // INFO
+        // en fonction de la version d'openlayers, la méthode est differente :
+        // - getGetFeatureInfoUrl en v5
+        // - getFeatureInfoUrl en v6
         var pixelRatio = (this.options && this.options.tilePixelRatio) ? this.options.tilePixelRatio : 1;
 
         var tileGrid = this.tileGrid;
@@ -67,7 +71,7 @@ var WMTS = (function (WMTSSource) {
             var tmpTileCoord = [0, 0, 0]; /* Note : [z(zoomLevel),x,y] */
             var tmpExtent = olCreateEmpty();
             var x = tileCoord[1];
-            var y = -tileCoord[2] - 1; // FIXME : v6.0.0, on utilise "var y = tileCoord[2];"
+            var y = tileCoord[2];
             var tileExtent = tileGrid.getTileCoordExtent(tileCoord);
             var extent = projection.getExtent();
 

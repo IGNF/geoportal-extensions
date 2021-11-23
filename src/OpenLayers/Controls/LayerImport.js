@@ -1050,11 +1050,15 @@ var LayerImport = (function (Control) {
             // contexte
             var self = this;
 
+            // style mapbox
             var _glStyle = this._mapBoxObj = JSON.parse(fileContent);
 
+            // liste des sources
             var _glSources = _glStyle.sources;
 
-            // multisources ?
+            // FIXME a t on du multi-sources ? 
+            // mais comment doit on les traiter ?
+            // EXPERIMENTAL !
             var _multiSources = (Object.keys(_glSources).length > 1) ? 1 : 0;
 
             for (var _glSourceId in _glSources) {

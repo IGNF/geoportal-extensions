@@ -73,7 +73,7 @@ var GeoJSON = (function (olGeoJSON) {
             // existe t il déjà une fonction de style ?
             // si oui, on l'applique !
             if (featureStyleFunction) {
-                var styles = featureStyleFunction.call(feature, 0);
+                var styles = featureStyleFunction.call(this, feature, 0);
                 if (styles && styles.length !== 0) {
                     feature.setStyle(styles[0]);
                 }
@@ -272,6 +272,16 @@ var GeoJSON = (function (olGeoJSON) {
         features.forEach(function (feature) {
             var style = feature.getStyle();
             if (style) {
+                // style ajouté via une fonction, pour les styles par defaut par ex.
+                if (typeof style === "function") {
+                    var styles = style.call(this, feature, 0);
+                    if (styles && styles.length !== 0) {
+                        style = styles[0];
+                    } else {
+                        // au cas où...
+                        return;
+                    }
+                }
                 // convertir le style en properties
                 // * stroke
                 // * fill

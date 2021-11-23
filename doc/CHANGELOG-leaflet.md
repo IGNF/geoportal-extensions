@@ -60,6 +60,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.1.10](#extension-geoportail-leaflet-version-2110)
   * [Summary](#summary-16)
   * [Changelog](#changelog-13)
+- [Extension Geoportail Leaflet, version 2.2.0](#extension-geoportail-leaflet-version-220)
+  * [Summary](#summary-17)
+  * [Changelog](#changelog-14)
 
 <!-- tocstop -->
 
@@ -519,6 +522,32 @@ Reparation du profil altimétrique
 * [Fixed]
 
     - Correction et réparation du profil altimétrique de Leaflet (#297)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.0
+
+**04/11/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+ =Mise à jour access-lib pour utilisation de l'itinéraire v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
