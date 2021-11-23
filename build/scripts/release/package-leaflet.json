@@ -1,26 +1,19 @@
 {
-   "license" : "CECILL-B",
-   "peerDependencies" : {},
+   "bundleDependencies" : [],
+   "version" : "2.2.0",
    "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "description" : "French Geoportal Extension for Leaflet",
-   "name" : "geoportal-extensions-leaflet",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "dependencies" : {
-      "leaflet" : "1.7.1",
-      "proj4leaflet" : "1.0.2",
-      "leaflet-draw" : "1.0.4",
-      "loglevel" : "1.6.6",
-      "sortablejs" : "1.8.4",
-      "geoportal-access-lib" : "2.1.8",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "proj4" : "2.7.0"
-   },
-   "module" : "src/Leaflet/index.js",
    "author" : "IGNF",
+   "license" : "CECILL-B",
+   "module" : "src/Leaflet/index.js",
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extension for Leaflet",
+   "directories" : {},
+   "bugs" : {},
+   "name" : "geoportal-extensions-leaflet",
+   "devDependencies" : {},
    "files" : [
       "dist/",
       "src/",
@@ -28,6 +21,20 @@
       "README.md",
       "package.json"
    ],
+   "date" : "10/11/2021",
+   "scripts" : {},
+   "dependencies" : {
+      "proj4leaflet" : "1.0.2",
+      "sortablejs" : "1.8.4",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "3.0.3",
+      "leaflet" : "1.7.1",
+      "loglevel" : "1.6.7",
+      "leaflet-draw" : "1.0.4",
+      "proj4" : "2.7.0",
+      "node-fetch" : "^2.6.1"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -35,12 +42,5 @@
       "leaflet",
       "publish"
    ],
-   "version" : "2.2.0",
-   "bugs" : {},
-   "scripts" : {},
-   "devDependencies" : {},
-   "directories" : {},
-   "main" : "dist/GpPluginLeaflet-src.js",
-   "bundleDependencies" : [],
-   "date" : "10/11/2021"
+   "main" : "dist/GpPluginLeaflet-src.js"
 }
