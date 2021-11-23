@@ -1,9 +1,35 @@
 {
+   "dependencies" : {
+      "proj4" : "2.7.0",
+      "xmldom" : "^0.1.27",
+      "sortablejs" : "1.8.4",
+      "itowns" : "2.33.0",
+      "geoportal-access-lib" : "2.1.8",
+      "loglevel" : "1.6.6",
+      "node-fetch" : "^2.6.1",
+      "three" : "0.127.0"
+   },
    "directories" : {},
-   "license" : "CECILL-B",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "date" : "10/11/2021",
    "module" : "src/Itowns/index.js",
-   "date" : "11/05/2021",
+   "peerDependencies" : {},
+   "devDependencies" : {},
+   "scripts" : {},
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "description" : "French Geoportal Extensions for iTowns",
+   "bugs" : {},
+   "bundleDependencies" : [],
    "author" : "IGNF",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
    "files" : [
       "dist/",
       "src/",
@@ -11,34 +37,8 @@
       "README.md",
       "package.json"
    ],
-   "devDependencies" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "sortablejs" : "1.8.4",
-      "itowns" : "2.33.0",
-      "three" : "0.127.0",
-      "proj4" : "2.7.0",
-      "geoportal-access-lib" : "2.1.8",
-      "loglevel" : "1.6.6"
-   },
-   "main" : "dist/GpPluginItowns-src.js",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "description" : "French Geoportal Extensions for iTowns",
-   "version" : "2.3.2",
-   "bundleDependencies" : [],
-   "bugs" : {},
    "name" : "geoportal-extensions-itowns",
-   "peerDependencies" : {},
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "scripts" : {}
+   "license" : "CECILL-B",
+   "main" : "dist/GpPluginItowns-src.js",
+   "version" : "2.3.3"
 }

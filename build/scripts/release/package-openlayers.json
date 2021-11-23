@@ -1,7 +1,4 @@
 {
-   "bundleDependencies" : [],
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "main" : "dist/GpPluginOpenLayers-src.js",
    "files" : [
       "dist/",
       "src/",
@@ -9,38 +6,41 @@
       "README.md",
       "package.json"
    ],
-   "peerDependencies" : {},
-   "author" : "IGNF",
+   "bugs" : {},
+   "version" : "3.2.3",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "scripts" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "devDependencies" : {},
-   "bugs" : {},
-   "date" : "19/07/2021",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "module" : "src/OpenLayers/index.js",
+   "author" : "IGNF",
    "dependencies" : {
-      "proj4" : "2.7.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.11.0",
       "geoportal-access-lib" : "2.1.8",
-      "node-fetch" : "^2.6.1",
-      "ol-mapbox-style" : "4.2.1",
-      "eventbusjs" : "0.2.0",
       "xmldom" : "^0.1.27",
-      "ol" : "5.3.0",
+      "proj4" : "2.7.0",
       "loglevel" : "1.6.6",
-      "sortablejs" : "1.8.4",
-      "@mapbox/mapbox-gl-style-spec" : "13.11.0"
+      "eventbusjs" : "0.2.0",
+      "ol-mapbox-style" : "4.2.1",
+      "ol" : "6.3.1",
+      "node-fetch" : "^2.6.1",
+      "sortablejs" : "1.8.4"
    },
-   "version" : "3.0.20",
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "license" : "CECILL-B",
+   "module" : "src/OpenLayers/index.js",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "scripts" : {},
+   "bundleDependencies" : [],
+   "peerDependencies" : {},
+   "devDependencies" : {},
+   "date" : "10/11/2021",
    "directories" : {},
-   "license" : "CECILL-B"
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "name" : "geoportal-extensions-openlayers"
 }
