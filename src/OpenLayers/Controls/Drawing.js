@@ -939,17 +939,17 @@ var Drawing = (function (Control) {
             /**
             * Enregistrement de la valeur saisie dans l'input.
             *
+            * @param {String} key - clef de l'attribut.
             * @param {String} value - valeur de l'attribut.
             * @param {Boolean} save - true si on garde le label.
             */
-            var setAttValue = function (value, save) {
+            var setAttValue = function (key, value, save) {
                 context.getMap().removeOverlay(context.popupOvl);
                 context.popupOvl = null;
                 if (save && value && value.trim().length > 0) {
-                    var formated = value.replace(/\n/g, "<br>");
-                    feature.setProperties({
-                        description : formated
-                    });
+                    var obj = {};
+                    obj[key] = value.replace(/\n/g, "<br>");
+                    feature.setProperties(obj);
                 }
             };
 
@@ -990,7 +990,8 @@ var Drawing = (function (Control) {
                     inputId : this._addUID("att-input"),
                     placeholder : "Saisir une description...",
                     measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
-                    geomType : geomType
+                    geomType : geomType,
+                    key : "description"
                 });
             }
             // un peu de menage...
@@ -1333,16 +1334,22 @@ var Drawing = (function (Control) {
                 geomType = "Line";
             } else if (geom instanceof Polygon || geom instanceof MultiPolygon) {
                 geomType = "Polygon";
+            } else {
+                logger.log("Geometry type for styling not supported .");
+                return;
             }
+
             if (!geomType) {
                 logger.log("Unhandled geometry type for styling.");
                 return;
             }
+
             if (geomType === "Text") {
                 // pour les labels on récupère la valeur dans le style
                 _textValue = style.getText().getText();
             } else {
                 // pour les autres, c'est un attribut du feature
+                // choix à faire entre description (KML et GeoJSON) ou desc (GPX)
                 var featProps = seEv.selected[0].getProperties();
                 if (featProps && featProps.hasOwnProperty("description")) {
                     _textValue = featProps["description"];
@@ -1351,18 +1358,21 @@ var Drawing = (function (Control) {
                     _measure = featProps["measure"];
                 }
             }
+
             var context = this;
             /**
              * Enregistrement de la valeur saisie dans l'input.
              *
+             * @param {String} key - clef de l'attribut.
              * @param {String} value - valeur de l'attribut.
              * @param {Boolean} save - true si on garde le label.
              */
-            var setTextValue = function (value, save) {
+            var setTextValue = function (key, value, save) {
                 context.getMap().removeOverlay(popupOvl);
                 if (!save) {
                     return;
                 }
+
                 var feature = seEv.selected[0];
                 if (geomType === "Text") {
                     var style = feature.getStyle();
@@ -1373,25 +1383,29 @@ var Drawing = (function (Control) {
                     feature.setStyle(style);
                     return;
                 }
-                var _formated = value.replace(/\n/g, "<br>");
-                feature.setProperties({
-                    description : _formated
-                });
+
+                var obj = {};
+                obj[key] = value.replace(/\n/g, "<br>");
+                feature.setProperties(obj);
             };
+
             var popupDiv = this._createLabelDiv({
                 applyFunc : setTextValue,
                 inputId : this._addUID("label-input"),
                 placeholder : (geomType === "Text" ? "Saisir un label..." : "Saisir une description..."),
                 text : _textValue,
+                key : "description",
                 measure : (this.options.tools.measure) ? _measure : null,
                 geomType : geomType
             });
+
             popupOvl = new Overlay({
                 element : popupDiv,
                 // FIXME : autres valeurs.
                 positioning : "top-center"
                 // stopEvent : false
             });
+
             this.getMap().addOverlay(popupOvl);
             popupOvl.setPosition(seEv.mapBrowserEvent.coordinate);
             document.getElementById(this._addUID("label-input")).focus();
@@ -1711,10 +1725,11 @@ var Drawing = (function (Control) {
                         /**
                         * Enregistrement de la valeur saisie dans l'input.
                         *
+                        * @param {String} key - clef du label
                         * @param {String} value - valeur du label
                         * @param {Boolean} save - true si on garde le label.
                         */
-                        var setTextValue = function (/* context,feature, */ value, save) {
+                        var setTextValue = function (key, value, save) {
                             context.getMap().removeOverlay(popupOvl);
                             if (!save) {
                                 // removes feature from overlay.
@@ -1722,9 +1737,9 @@ var Drawing = (function (Control) {
                                 return;
                             }
 
-                            deEv.feature.setProperties({
-                                name : value
-                            });
+                            var obj = {};
+                            obj[key] = value;
+                            deEv.feature.setProperties(obj);
 
                             deEv.feature.setStyle(new Style({
                                 image : new Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
@@ -1746,6 +1761,7 @@ var Drawing = (function (Control) {
                             applyFunc : setTextValue,
                             inputId : context._addUID("label-input"),
                             geomType : "Text",
+                            key : "name",
                             placeholder : "Saisir un label..."
                         });
                         popupOvl = new Overlay({

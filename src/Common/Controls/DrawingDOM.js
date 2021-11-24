@@ -561,6 +561,7 @@ var DrawingDOM = {
      * @param {Object} options - options for popup
      * @param {String} options.geomType - gemeotryType selected ("Point", "Line" or "Polygon")
      * @param {String} options.text - text to fill input.
+     * @param {String} options.key - property name called when text is to be saved.
      * @param {String} options.measure - measure to fill input.
      * @param {String} options.placeholder - placeholder for text input.
      * @param {String} options.inputId - text input id.
@@ -593,15 +594,15 @@ var DrawingDOM = {
         popup.appendChild(inputLabel);
         // blur
         inputLabel.onblur = function () {
-            options.applyFunc.call(this, inputLabel.value, true);
+            options.applyFunc.call(this, options.key, inputLabel.value, true);
         };
         // keyup
         inputLabel.onkeyup = function (evtk) {
             if (options.geomType === "Text" && evtk.keyCode === 13) {
-                options.applyFunc.call(this, inputLabel.value, true);
+                options.applyFunc.call(this, options.key, inputLabel.value, true);
             }
             if (evtk.keyCode === 27) {
-                options.applyFunc.call(this, inputLabel.value, false);
+                options.applyFunc.call(this, options.key, inputLabel.value, false);
             }
         };
 
@@ -622,7 +623,7 @@ var DrawingDOM = {
             applyButton.value = this.options.labels.saveDescription;
             /** click sur applyButton */
             applyButton.onclick = function () {
-                options.applyFunc.call(this, inputLabel.value, true);
+                options.applyFunc.call(this, options.key, inputLabel.value, true);
             };
             popup.appendChild(applyButton);
             // cancel Button
@@ -631,7 +632,7 @@ var DrawingDOM = {
             cancelButton.className = "gp-styling-button closer";
             /** click sur cancel Button */
             cancelButton.onclick = function () {
-                options.applyFunc.call(this, inputLabel.value, false);
+                options.applyFunc.call(this, options.key, inputLabel.value, false);
             };
             popup.appendChild(cancelButton);
         }

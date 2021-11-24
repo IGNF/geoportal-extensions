@@ -106,6 +106,13 @@ var GPX = (function (olGPX) {
         // les features avec extensions sont traité au préalable
         // dans la callback des options : readExtensions
         features.forEach(feature => {
+            // HACK : enregistrement de la description de la balise 'desc' du format GPX
+            var value = feature.getProperties().desc;
+            if (value) {
+                feature.setProperties({
+                    description : value
+                });
+            }
             var styleFunction = (feature, resolution) => {
                 var style = null;
 
@@ -162,6 +169,13 @@ var GPX = (function (olGPX) {
 
         // on met à jour les properties de styles
         features.forEach(function (feature) {
+            // HACK : enregistrement de la description dans la balise 'desc' du format GPX
+            var value = feature.getProperties().description;
+            if (value) {
+                feature.setProperties({
+                    desc : value
+                });
+            }
             var style = feature.getStyle();
             if (style) {
                 // style ajouté via une fonction, pour les styles par defaut par ex.

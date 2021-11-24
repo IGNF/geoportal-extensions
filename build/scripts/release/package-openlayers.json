@@ -1,20 +1,29 @@
 {
-   "name" : "geoportal-extensions-openlayers",
-   "date" : "10/11/2021",
-   "bugs" : {},
-   "devDependencies" : {},
-   "bundleDependencies" : [],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "dependencies" : {
+      "loglevel" : "1.6.7",
+      "ol-mapbox-style" : "6.3.2",
+      "proj4" : "2.7.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
+      "ol" : "6.3.1",
+      "sortablejs" : "1.8.4",
+      "eventbusjs" : "0.2.0",
+      "geoportal-access-lib" : "3.0.3",
+      "node-fetch" : "^2.6.1",
+      "xmldom" : "^0.1.27"
+   },
    "license" : "CECILL-B",
+   "date" : "10/11/2021",
+   "name" : "geoportal-extensions-openlayers",
+   "scripts" : {},
+   "main" : "dist/GpPluginOpenLayers-src.js",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "scripts" : {},
-   "directories" : {},
-   "module" : "src/OpenLayers/index.js",
-   "version" : "3.2.3",
+   "bundleDependencies" : [],
    "files" : [
       "dist/",
       "src/",
@@ -22,25 +31,16 @@
       "README.md",
       "package.json"
    ],
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
+   "directories" : {},
+   "version" : "3.2.3",
    "description" : "French Geoportal Extensions for OpenLayers",
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "dependencies" : {
-      "ol-mapbox-style" : "6.3.2",
-      "loglevel" : "1.6.7",
-      "geoportal-access-lib" : "3.0.3",
-      "proj4" : "2.7.0",
-      "eventbusjs" : "0.2.0",
-      "node-fetch" : "^2.6.1",
-      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
-      "xmldom" : "^0.1.27",
-      "ol" : "6.3.1",
-      "sortablejs" : "1.8.4"
+   "bugs" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
    },
    "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "author" : "IGNF"
+   "author" : "IGNF",
+   "module" : "src/OpenLayers/index.js",
+   "devDependencies" : {}
 }

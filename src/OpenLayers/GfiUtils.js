@@ -229,8 +229,8 @@ var GfiUtils = {
                 "marker-size",
                 "geometry", // geometrie
                 "value",
-                "name",
-                "description", // ???
+                "name", // déjà traité
+                "description", // déjà traité
                 "styleUrl",
                 "extensionsNode_" // extensions GPX
             ];
