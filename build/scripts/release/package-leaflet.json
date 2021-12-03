@@ -1,29 +1,5 @@
 {
-   "directories" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "author" : "IGNF",
-   "license" : "CECILL-B",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "description" : "French Geoportal Extension for Leaflet",
-   "date" : "10/11/2021",
    "name" : "geoportal-extensions-leaflet",
-   "module" : "src/Leaflet/index.js",
-   "version" : "2.2.1",
-   "dependencies" : {
-      "loglevel" : "1.6.6",
-      "geoportal-access-lib" : "2.1.8",
-      "leaflet" : "1.7.1",
-      "sortablejs" : "1.8.4",
-      "leaflet-draw" : "1.0.4",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "proj4leaflet" : "1.0.2",
-      "proj4" : "2.7.0"
-   },
-   "bundleDependencies" : [],
    "keywords" : [
       "geoportail",
       "plugin",
@@ -31,8 +7,30 @@
       "leaflet",
       "publish"
    ],
-   "bugs" : {},
+   "bundleDependencies" : [],
+   "main" : "dist/GpPluginLeaflet-src.js",
    "peerDependencies" : {},
+   "bugs" : {},
+   "license" : "CECILL-B",
+   "author" : "IGNF",
+   "description" : "French Geoportal Extension for Leaflet",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "scripts" : {},
+   "dependencies" : {
+      "geoportal-access-lib" : "3.0.5",
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.0",
+      "sortablejs" : "1.8.4",
+      "leaflet-draw" : "1.0.4",
+      "leaflet" : "1.7.1",
+      "proj4leaflet" : "1.0.2",
+      "node-fetch" : "^2.6.1",
+      "loglevel" : "1.6.6"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "files" : [
       "dist/",
       "src/",
@@ -40,7 +38,9 @@
       "README.md",
       "package.json"
    ],
-   "scripts" : {},
-   "main" : "dist/GpPluginLeaflet-src.js",
+   "module" : "src/Leaflet/index.js",
+   "version" : "2.2.1",
+   "date" : "10/11/2021",
+   "directories" : {},
    "devDependencies" : {}
 }
