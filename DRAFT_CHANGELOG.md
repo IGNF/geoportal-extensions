@@ -3,6 +3,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -10,15 +11,11 @@
 
 ## Summary
 
-Utilisation de plusieurs clefs
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
--  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 
