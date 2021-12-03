@@ -10,11 +10,15 @@
 
 ## Summary
 
+Utilisation de plusieurs clefs
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+-  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 
@@ -37,13 +41,15 @@
 
 ## Summary
 
+Utilisation de plusieurs clefs
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
+    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 
@@ -66,21 +72,21 @@
 
 ## Summary
 
+Utilisation de plusieurs clefs
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
+    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - import eventDispatcher de THREE (e57a755794957de54f2ef5c5ffdac8687dc59985)
 
 * [Security]
 

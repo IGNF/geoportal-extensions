@@ -1,0 +1,84 @@
+{{#extend "ol-sample-bundle-multikeys-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers - multikeys</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout de tous les widgets</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+              window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+
+                // Création de la map
+                var map = new ol.Map({
+                  target : "map",
+                  layers : [
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    }),
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR40"
+                    }),
+                    new ol.layer.GeoportalWMTS({
+                      layer : "LIMITES_ADMINISTRATIVES_EXPRESS.LATEST"
+                    })
+                  ],
+                  view : new ol.View({
+                    center : [288074.8449901076, 6247982.515792289],
+                    zoom : 13
+                  })
+                });
+
+                var drawing = new ol.control.Drawing();
+                map.addControl(drawing);
+                var iso = new ol.control.Isocurve();
+                map.addControl(iso);
+                var layerImport = new ol.control.LayerImport();
+                map.addControl(layerImport);
+                var layerSwitcher = new ol.control.LayerSwitcher();
+                map.addControl(layerSwitcher);
+                var mp = new ol.control.GeoportalMousePosition();
+                map.addControl(mp);
+                var route = new ol.control.Route();
+                map.addControl(route);
+                var reverse = new ol.control.ReverseGeocode({});
+                map.addControl(reverse);
+                var search = new ol.control.SearchEngine({});
+                map.addControl(search);
+                var feature =  new ol.control.GetFeatureInfo({});
+                map.addControl(feature);
+
+                var measureLength = new ol.control.MeasureLength();
+                map.addControl(measureLength);
+                var measureArea = new ol.control.MeasureArea();
+                map.addControl(measureArea);
+                var measureAzimuth = new ol.control.MeasureAzimuth();
+                map.addControl(measureAzimuth);
+                var measureProfil = new ol.control.ElevationPath();
+                map.addControl(measureProfil);
+
+                var attributions = new ol.control.GeoportalAttribution();
+                map.addControl(attributions);
+              };
+
+            </script>
+{{/content}}
+{{/extend}}
