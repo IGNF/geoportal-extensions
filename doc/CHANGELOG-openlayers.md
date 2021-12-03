@@ -94,6 +94,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.2](#extension-geoportail-openlayers-version-322)
   * [Summary](#summary-26)
   * [Changelog](#changelog-23)
+- [Extension Geoportail OpenLayers, version 3.2.3](#extension-geoportail-openlayers-version-323)
+  * [Summary](#summary-27)
+  * [Changelog](#changelog-24)
 
 <!-- tocstop -->
 
@@ -972,6 +975,32 @@ Mise à jour de l'access-lib geoportail en version 3.0.2
 * [Changed]
 
     - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.3
+
+**10/11/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'access-lib geoportail en version 3.0.3
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - met à jour l'access-lib en version 3.0.3 pour correction géométrie itinéraire
 
 * [Deprecated]
 
