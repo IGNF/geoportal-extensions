@@ -63,6 +63,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.0](#extension-geoportail-leaflet-version-220)
   * [Summary](#summary-17)
   * [Changelog](#changelog-14)
+- [Extension Geoportail Leaflet, version 2.2.1](#extension-geoportail-leaflet-version-221)
+  * [Summary](#summary-18)
+  * [Changelog](#changelog-15)
 
 <!-- tocstop -->
 
@@ -542,6 +545,32 @@ Reparation du profil altimétrique
 * [Changed]
 
     - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.1
+
+**03/12/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Utilisation de plusieurs clefs
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 

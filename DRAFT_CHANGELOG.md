@@ -3,6 +3,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -30,6 +31,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -43,8 +45,6 @@
 
 * [Changed]
 
-    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
-
 * [Deprecated]
 
 * [Removed]
@@ -54,6 +54,7 @@
 * [Security]
 
 ---
+
 
 
 
@@ -72,15 +73,11 @@
 
 * [Changed]
 
-    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
-
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - import eventDispatcher de THREE (e57a755794957de54f2ef5c5ffdac8687dc59985)
 
 * [Security]
 
