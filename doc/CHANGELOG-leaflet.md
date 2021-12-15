@@ -7,62 +7,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- toc -->
 
-- [Extension Geoportail Leaflet, version 0.8.0](#extension-geoportail-leaflet-version-080)
-  * [Changelog](#changelog)
+- [CHANGELOG EXTENSION GEOPORTAL](#changelog-extension-geoportal)
+  - [Changelog](#changelog)
 - [Extension Geoportail Leaflet, version 0.9.0](#extension-geoportail-leaflet-version-090)
-  * [Summary](#summary)
-  * [New Features :](#new-features-)
-    + [Additional widgets :](#additional-widgets-)
-    + [Others features](#others-features)
-  * [ChangeLog](#changelog)
+  - [Summary](#summary)
+  - [New Features :](#new-features-)
+    - [Additional widgets :](#additional-widgets-)
+    - [Others features](#others-features)
+  - [ChangeLog](#changelog-1)
 - [Extension Geoportail Leaflet, version 0.9.1](#extension-geoportail-leaflet-version-091)
-  * [Summary](#summary-1)
+  - [Summary](#summary-1)
 - [Extension Geoportail Leaflet, version 1.0.0](#extension-geoportail-leaflet-version-100)
-  * [Summary](#summary-2)
-  * [Changelog](#changelog-1)
+  - [Summary](#summary-2)
+  - [Changelog](#changelog-2)
 - [Extension Geoportail Leaflet, version 1.1.0](#extension-geoportail-leaflet-version-110)
-  * [Summary](#summary-3)
-  * [Changelog](#changelog-2)
+  - [Summary](#summary-3)
+  - [Changelog](#changelog-3)
 - [Extension Geoportail Leaflet, version 2.0.1](#extension-geoportail-leaflet-version-201)
-  * [Summary](#summary-4)
+  - [Summary](#summary-4)
 - [Extension Geoportail Leaflet, version 2.0.2](#extension-geoportail-leaflet-version-202)
-  * [Summary](#summary-5)
-  * [Changelog](#changelog-3)
-- [Extension Géoportail pour Leaflet, version 2.0.3](#extension-geoportail-pour-leaflet-version-203)
+  - [Summary](#summary-5)
+  - [Changelog](#changelog-4)
+- [Extension Géoportail pour Leaflet, version 2.0.3](#extension-géoportail-pour-leaflet-version-203)
 - [Summary](#summary-6)
 - [Extension Geoportail Leaflet, version 2.1.1](#extension-geoportail-leaflet-version-211)
-  * [Summary](#summary-7)
-  * [Changelog](#changelog-4)
+  - [Summary](#summary-7)
+  - [Changelog](#changelog-5)
 - [Extension Geoportail Leaflet, version 2.1.2](#extension-geoportail-leaflet-version-212)
-  * [Summary](#summary-8)
-  * [Changelog](#changelog-5)
+  - [Summary](#summary-8)
+  - [Changelog](#changelog-6)
 - [Extension Geoportail Leaflet, version 2.1.3](#extension-geoportail-leaflet-version-213)
-  * [Summary](#summary-9)
-  * [Changelog](#changelog-6)
+  - [Summary](#summary-9)
+  - [Changelog](#changelog-7)
 - [Extension Geoportail Leaflet, version 2.1.4](#extension-geoportail-leaflet-version-214)
-  * [Summary](#summary-10)
-  * [Changelog](#changelog-7)
+  - [Summary](#summary-10)
+  - [Changelog](#changelog-8)
 - [Extension Geoportail Leaflet, version 2.1.5](#extension-geoportail-leaflet-version-215)
-  * [Summary](#summary-11)
-  * [Changelog](#changelog-8)
+  - [Summary](#summary-11)
+  - [Changelog](#changelog-9)
 - [Extension Geoportail Leaflet, version 2.1.6](#extension-geoportail-leaflet-version-216)
-  * [Summary](#summary-12)
-  * [Changelog](#changelog-9)
+  - [Summary](#summary-12)
+  - [Changelog](#changelog-10)
 - [Extension Geoportail Leaflet, version 2.1.7](#extension-geoportail-leaflet-version-217)
-  * [Summary](#summary-13)
-  * [Changelog](#changelog-10)
+  - [Summary](#summary-13)
+  - [Changelog](#changelog-11)
 - [Extension Geoportail Leaflet, version 2.1.8](#extension-geoportail-leaflet-version-218)
-  * [Summary](#summary-14)
-  * [Changelog](#changelog-11)
+  - [Summary](#summary-14)
+  - [Changelog](#changelog-12)
 - [Extension Geoportail Leaflet, version 2.1.9](#extension-geoportail-leaflet-version-219)
-  * [Summary](#summary-15)
-  * [Changelog](#changelog-12)
+  - [Summary](#summary-15)
+  - [Changelog](#changelog-13)
 - [Extension Geoportail Leaflet, version 2.1.10](#extension-geoportail-leaflet-version-2110)
-  * [Summary](#summary-16)
-  * [Changelog](#changelog-13)
+  - [Summary](#summary-16)
+  - [Changelog](#changelog-14)
 - [Extension Geoportail Leaflet, version 2.2.0](#extension-geoportail-leaflet-version-220)
-  * [Summary](#summary-17)
-  * [Changelog](#changelog-14)
+  - [Summary](#summary-17)
+  - [Changelog](#changelog-15)
+- [Extension Geoportail Leaflet, version 2.2.1](#extension-geoportail-leaflet-version-221)
+  - [Summary](#summary-18)
+  - [Changelog](#changelog-16)
 
 <!-- tocstop -->
 
@@ -542,6 +545,32 @@ Reparation du profil altimétrique
 * [Changed]
 
     - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.1
+
+**03/12/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Utilisation de plusieurs clefs
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 

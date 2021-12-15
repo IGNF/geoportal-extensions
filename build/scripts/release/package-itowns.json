@@ -1,38 +1,10 @@
 {
-   "bugs" : {},
-   "main" : "dist/GpPluginItowns-src.js",
-   "peerDependencies" : {},
-   "scripts" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "description" : "French Geoportal Extensions for iTowns",
-   "name" : "geoportal-extensions-itowns",
-   "bundleDependencies" : [],
-   "module" : "src/Itowns/index.js",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "license" : "CECILL-B",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "dependencies" : {
-      "itowns" : "2.33.0",
-      "three" : "0.127.0",
-      "sortablejs" : "1.8.4",
-      "loglevel" : "1.6.7",
-      "geoportal-access-lib" : "3.0.3",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "proj4" : "2.7.0"
-   },
-   "devDependencies" : {},
-   "author" : "IGNF",
-   "date" : "10/11/2021",
-   "version" : "2.3.3",
    "files" : [
       "dist/",
       "src/",
@@ -40,5 +12,33 @@
       "README.md",
       "package.json"
    ],
-   "directories" : {}
+   "peerDependencies" : {},
+   "date" : "03/12/2021",
+   "dependencies" : {
+      "itowns" : "2.33.0",
+      "sortablejs" : "1.8.4",
+      "xmldom" : "^0.1.27",
+      "three" : "0.127.0",
+      "loglevel" : "1.6.6",
+      "proj4" : "2.7.2",
+      "node-fetch" : "^2.6.1",
+      "geoportal-access-lib" : "3.0.5"
+   },
+   "author" : "IGNF",
+   "version" : "2.3.4",
+   "description" : "French Geoportal Extensions for iTowns",
+   "module" : "src/Itowns/index.js",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "license" : "CECILL-B",
+   "name" : "geoportal-extensions-itowns",
+   "devDependencies" : {},
+   "directories" : {},
+   "main" : "dist/GpPluginItowns-src.js",
+   "bundleDependencies" : [],
+   "scripts" : {},
+   "bugs" : {}
 }

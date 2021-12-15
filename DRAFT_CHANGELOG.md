@@ -1,4 +1,5 @@
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -29,9 +30,6 @@
 
 ---
 
-
-
-
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -54,10 +52,6 @@
 * [Security]
 
 ---
-
-
-
-
 
 # Extension Geoportail Itowns, version __VERSION__
 
