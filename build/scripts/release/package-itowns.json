@@ -14,7 +14,7 @@
    "peerDependencies" : {},
    "dependencies" : {
       "xmldom" : "^0.1.27",
-      "proj4" : "2.7.0",
+      "proj4" : "2.7.2",
       "sortablejs" : "1.8.4",
       "three" : "0.127.0",
       "geoportal-access-lib" : "3.0.5",
