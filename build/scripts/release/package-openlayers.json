@@ -1,14 +1,33 @@
 {
-   "peerDependencies" : {},
-   "license" : "CECILL-B",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "version" : "3.2.5",
+   "module" : "src/OpenLayers/index.js",
+   "dependencies" : {
+      "ol-mapbox-style" : "6.7.0",
+      "xmldom" : "^0.1.27",
+      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
+      "geoportal-access-lib" : "3.0.5",
+      "sortablejs" : "1.8.4",
+      "eventbusjs" : "0.2.0",
+      "proj4" : "2.7.2",
+      "ol" : "6.9.0",
+      "node-fetch" : "^2.6.1",
+      "loglevel" : "1.6.6"
+   },
+   "directories" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
    "main" : "dist/GpPluginOpenLayers-src.js",
+   "bugs" : {},
+   "peerDependencies" : {},
+   "date" : "17/12/2021",
+   "devDependencies" : {},
    "name" : "geoportal-extensions-openlayers",
+   "author" : "IGNF",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
    "files" : [
       "dist/",
       "src/",
@@ -16,31 +35,12 @@
       "README.md",
       "package.json"
    ],
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "directories" : {},
-   "date" : "08/12/2021",
-   "bugs" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "bundleDependencies" : [],
-   "dependencies" : {
-      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "geoportal-access-lib" : "3.0.5",
-      "ol-mapbox-style" : "6.7.0",
-      "node-fetch" : "^2.6.1",
-      "loglevel" : "1.6.6",
-      "proj4" : "2.7.2",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "eventbusjs" : "0.2.0",
-      "ol" : "6.9.0"
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "module" : "src/OpenLayers/index.js",
-   "devDependencies" : {},
-   "author" : "IGNF",
-   "scripts" : {}
+   "scripts" : {},
+   "bundleDependencies" : [],
+   "version" : "3.2.5",
+   "license" : "CECILL-B"
 }
