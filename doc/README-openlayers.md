@@ -218,7 +218,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script src="ol.js"></script>
         <!-- Extension Géoportail pour OpenLayers -->
         <link rel="stylesheet" href="GpPluginOpenLayers.css" />
-        <script src="GpPluginOpenLayers.js" data-key="CLEAPI"></script>
+        <script src="GpPluginOpenLayers.js" data-key="VOTRE-CLEF"></script>
     </head>
     <body>
         <script>
@@ -246,9 +246,37 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEAPI',
+                    apiKey: 'VOTRE-CLEF',
                     onSuccess: function (response) {
                         // votre utilisation de l'extension Géoportail pour OpenLayers
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
+```
+
+Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+
+
+``` html
+<html>
+    <head>
+        <!-- Bibliothèque iTowns -->
+        <link rel="stylesheet" href="itowns.css" />
+        <script src="itowns.js"></script>
+        <!-- Extension Géoportail pour iTowns -->
+        <link rel="stylesheet" href="GpPluginItowns.css" />
+        <script src="GpPluginItowns.js"></script>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                Gp.Services.getConfig({
+                    apiKey: 'VOTRE-CLEF-1,VOTRE-CLEF-2,VOTRE-CLEF-3',
+                    onSuccess: function (response) {
+                        // votre utilisation de l'extension Géoportail pour iTowns
                     }
                 });
             }

@@ -169,6 +169,12 @@ Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension a
 <script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginLeaflet.js"></script>
 ```
 
+Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
+
+``` html
+<script data-key="VOTRE-CLEF-1,VOTRE-CLEF-2,VOTRE-CLEF-3" src="chemin/vers/GpPluginLeaflet.js"></script>
+```
+
 Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
@@ -179,7 +185,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script src="leaflet.js"></script>
         <!-- Extension Géoportail pour Leaflet -->
         <link rel="stylesheet" href="GpPluginLeaflet.css" />
-        <script src="GpPluginLeaflet.js" data-key="CLEAPI"></script>
+        <script src="GpPluginLeaflet.js" data-key="VOTRE-CLEF"></script>
     </head>
     <body>
         <script>
@@ -207,7 +213,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEAPI',
+                    apiKey: 'VOTRE-CLEF',
                     onSuccess: function (response) {
                         // votre utilisation de l'extension Géoportail pour Leaflet
                     }
@@ -221,6 +227,9 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 #### Optimisation du chargement : configuration locale
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
+
+Si vous souhaitez une autoconfiguration locale unique avec plusieurs clés, c'est possible. Pour cela, enregistrer le contenu de la requête suivante dans un fichier autoconf.json (en remplacant key1, key2, key3... par vos clés) :
+[autoconf multi-clés : https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback](https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback)
 
 Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
 
