@@ -14,6 +14,7 @@ import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
+import Interactions from "./Utils/Interactions";
 import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -1362,6 +1363,8 @@ var MousePosition = (function (Control) {
         // checked : true - panel close
         // checked : false - panel open
         var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showMousePositionContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser mousePosition.on("change:collapsed", function(e) ) pour s'abonner à cet évènement)

@@ -33,6 +33,7 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 // DOM
@@ -1496,6 +1497,9 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype.onShowReverseGeocodingClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showReverseGeocodingInput.checked;
         // info : on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.ReverseGeocode.on("change:collapsed", function ) pour s'abonner à cet évènement)
