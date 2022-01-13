@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.2.0
- * @date 04/11/2021
+ * @version 2.2.2
+ * @date 13/01/2022
  *
  */
 
@@ -84,7 +84,7 @@
  * @copyright Copyright (c) 2014, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral and Calvin Metcalf
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/proj4js/proj4js/master/LICENSE.md
- * @version   2.7.0
+ * @version   2.7.2
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -320,7 +320,7 @@ leaflet__WEBPACK_IMPORTED_MODULE_1___default.a.geoportalCRS.EPSG4326 = _CRS_CRS_
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.6.0\",\"date\":\"04/11/2021\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.2.0\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.2.0\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.3\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'google-chrome'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'google-chrome'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'google-chrome'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.14.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"3.0.1\",\"itowns\":\"2.33.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"6.3.1\",\"ol-mapbox-style\":\"6.3.2\",\"proj4\":\"2.7.0\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.127.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.6.5\",\"date\":\"13/01/2022\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.2.2\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.2.4\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.4\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open 'chromium'\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open 'chromium'\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open 'chromium'\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.14.0\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"3.0.5\",\"itowns\":\"2.33.0\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"6.3.1\",\"ol-mapbox-style\":\"6.3.2\",\"proj4\":\"2.7.2\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.8.4\",\"three\":\"0.127.0\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -2046,6 +2046,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     function Logger(name, defaultLevel, factory) {
       var self = this;
       var currentLevel;
+      defaultLevel = defaultLevel == null ? "WARN" : defaultLevel;
 
       var storageKey = "loglevel";
       if (typeof name === "string") {
@@ -2101,6 +2102,22 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
           return storedLevel;
       }
 
+      function clearPersistedLevel() {
+          if (typeof window === undefinedType || !storageKey) return;
+
+          // Use localStorage if available
+          try {
+              window.localStorage.removeItem(storageKey);
+              return;
+          } catch (ignore) {}
+
+          // Use session cookie as fallback
+          try {
+              window.document.cookie =
+                encodeURIComponent(storageKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+          } catch (ignore) {}
+      }
+
       /*
        *
        * Public logger API - see https://github.com/pimterry/loglevel for details
@@ -2137,9 +2154,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
       };
 
       self.setDefaultLevel = function (level) {
+          defaultLevel = level;
           if (!getPersistedLevel()) {
               self.setLevel(level, false);
           }
+      };
+
+      self.resetLevel = function () {
+          self.setLevel(defaultLevel, false);
+          clearPersistedLevel();
       };
 
       self.enableAll = function(persist) {
@@ -2153,7 +2176,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
       // Initialize with the right level
       var initialLevel = getPersistedLevel();
       if (initialLevel == null) {
-          initialLevel = defaultLevel == null ? "WARN" : defaultLevel;
+          initialLevel = defaultLevel;
       }
       self.setLevel(initialLevel, false);
     }
@@ -5392,7 +5415,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(36);
 /* harmony import */ var _LocationSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(135);
 /* harmony import */ var _Common_Controls_IsoDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(139);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
 
@@ -10593,7 +10616,7 @@ var DefaultUrlService = {
 /* 57 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@3.0.1\",\"_id\":\"geoportal-access-lib@3.0.1\",\"_inBundle\":false,\"_integrity\":\"sha512-3FK4S1GQ1wTQzumuOmilrPwb2o++Aa0ri4jRg/pE033xA5FCk+hcOYXQTTQYawVHhkuWp1JDuX4ElF/za2Yy+Q==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@3.0.1\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"3.0.1\",\"saveSpec\":null,\"fetchSpec\":\"3.0.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-3.0.1.tgz\",\"_shasum\":\"d31dcbfd671cfc5507632af2085c803a540ddeea\",\"_spec\":\"geoportal-access-lib@3.0.1\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"02/11/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"3.0.1\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@3.0.5\",\"_id\":\"geoportal-access-lib@3.0.5\",\"_inBundle\":false,\"_integrity\":\"sha512-ruj6iXD7XStS1YuwSoTUYyQEsdP5BMLTiz7kS7hLwiB0g42SF4+ALH3aLHpthQOpXcNJb5XsCfS7P8K1BKZOZg==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@3.0.5\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"3.0.5\",\"saveSpec\":null,\"fetchSpec\":\"3.0.5\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-3.0.5.tgz\",\"_shasum\":\"2cde6e6ea689765c25f455fe1109d678a3b5ab2d\",\"_spec\":\"geoportal-access-lib@3.0.5\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"03/12/2021\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"3.0.5\"}");
 
 /***/ }),
 /* 58 */
@@ -12864,6 +12887,11 @@ function AutoConf (options) {
 
     this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("Gp.Services.AutoConf");
     this.logger.trace("[Constructeur AutoConf (options)]");
+
+    // si on a une liste de plusieurs clés en options, on la transforme en tableau (multiKeys)
+    if ((typeof this.options.apiKey === "string" || this.options.apiKey instanceof String) && Array.isArray(this.options.apiKey.split(",")) && this.options.apiKey.split(",").length > 1) {
+        this.options.apiKey = this.options.apiKey.split(",");
+    }
 
     // #####################
     // analyse des options
@@ -21027,7 +21055,8 @@ Route.prototype.analyzeResponse = function (error, success) {
             rawResponse : this.options.rawResponse,
             onError : error,
             onSuccess : success,
-            scope : this
+            scope : this,
+            geometryInInstructions : this.options.geometryInInstructions
         };
 
         _Response_RouteResponseFactory__WEBPACK_IMPORTED_MODULE_6__["default"].build(options);
@@ -21594,11 +21623,11 @@ var RouteResponseFactory = {
                         data.bbox.top = parseFloat(JSONResponse.bbox[3]);
                     }
 
-                    if (data.hasOwnProperty("routeGeometry")) {
+                    if (data.hasOwnProperty("routeGeometry") && !options.geometryInInstructions) {
                         data.routeGeometry = JSONResponse.geometry;
                     }
 
-                    if (data.hasOwnProperty("routeInstructions")) {
+                    if (data.hasOwnProperty("routeInstructions") && options.geometryInInstructions) {
                         var legList = JSONResponse.portions;
                         var i;
                         if (Array.isArray(legList) && legList.length) {
@@ -23358,79 +23387,75 @@ __webpack_require__.r(__webpack_exports__);
         return;
       } else {
         // si l'autoconfiguration est chargée,
-        // on recupere la clef API, et on en profitera ensuite pour controler
+        // on recupere la/les clef(s) API, et on en profitera ensuite pour controler
         // les droits sur les ressources.
-        // FIXME par defaut, on recupere toujours la première...
-        _key = Object.keys(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].configuration.generalOptions.apiKeys)[0];
+        _key = Object.keys(_Config__WEBPACK_IMPORTED_MODULE_1__["default"].configuration.generalOptions.apiKeys);
         logger.log(_key);
       }
-    } // la clef API est renseignée ou recuperée de l'autoconfiguration
+    } // on verifie si l'autoconfiguration est disponible
 
 
-    if (_key) {
-      // on verifie si l'autoconfiguration est disponible
-      if (!_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
-        // si l'autoconfiguration n'est pas chargée,
-        // il est toujours possible de requeter le service avec une clef API,
-        // mais les droits sur les ressources ne sont pas garantis, on risque
-        // d'obtenir des erreurs 403 forbidden...
-        // la responsabilité revient à l'utilisateur (message d'information)...
-        logger.warn("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !"); // les ressouces non controlées
+    if (!_Config__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigLoaded()) {
+      // si l'autoconfiguration n'est pas chargée,
+      // il est toujours possible de requeter le service avec une clef API,
+      // mais les droits sur les ressources ne sont pas garantis, on risque
+      // d'obtenir des erreurs 403 forbidden...
+      // la responsabilité revient à l'utilisateur (message d'information)...
+      logger.warn("WARNING : " + "the contract key configuration has not been loaded, " + "so be carefull !"); // les ressouces non controlées
 
-        var _noRightManagement = {};
+      var _noRightManagement = {};
 
-        for (var i = 0; i < _services.length; i++) {
-          var service = _services[i];
-          _noRightManagement[service] = [];
+      for (var i = 0; i < _services.length; i++) {
+        var service = _services[i];
+        _noRightManagement[service] = [];
 
-          for (var j = 0; j < _resources.length; j++) {
-            var resource = _resources[j];
+        for (var j = 0; j < _resources.length; j++) {
+          var resource = _resources[j];
 
-            _noRightManagement[service].push(resource);
-          }
-        } // on ajoute la clef
-
-
-        _noRightManagement.key = _key;
-        logger.log("right management not checked", _noRightManagement);
-        return _noRightManagement;
-      } else {
-        // si l'autoconf est chargée,
-        // on verifie la correspondance entre la clef et l'autoconfiguration,
-        // on previent l'utilisateur (message d'information) s'il n'a
-        // pas de droits sur certaines ressources ...
-        // doit on ecarter les ressources sans droit ?
-        // oui, si possible avec un message d'information pour l'utilisateur...
-        for (var k = 0; k < _resources.length; k++) {
-          var _resource = _resources[k];
-
-          for (var l = 0; l < _services.length; l++) {
-            var _service = _services[l];
-            var params = _Config__WEBPACK_IMPORTED_MODULE_1__["default"].getServiceParams(_resource, _service, _key);
-
-            if (!params || Object.keys(params).length === 0) {
-              logger.warn("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
-              continue;
-            }
-
-            if (!_rightManagement[_service]) {
-              _rightManagement[_service] = [];
-            }
-
-            _rightManagement[_service].push(_resource);
-          }
+          _noRightManagement[service].push(resource);
         }
-
-        if (Object.keys(_rightManagement).length === 0) {
-          logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
-          return;
-        } // on ajoute la clef
+      } // on ajoute la clef
 
 
-        _rightManagement.key = _key;
-        logger.log("right management checked", _rightManagement);
-        return _rightManagement;
+      _noRightManagement.key = _key;
+      logger.log("right management not checked", _noRightManagement);
+      return _noRightManagement;
+    } else {
+      // si l'autoconf est chargée,
+      // on verifie la correspondance entre la clef et l'autoconfiguration,
+      // on previent l'utilisateur (message d'information) s'il n'a
+      // pas de droits sur certaines ressources ...
+      // doit on ecarter les ressources sans droit ?
+      // oui, si possible avec un message d'information pour l'utilisateur...
+      for (var k = 0; k < _resources.length; k++) {
+        var _resource = _resources[k];
+
+        for (var l = 0; l < _services.length; l++) {
+          var _service = _services[l];
+          var params = _Config__WEBPACK_IMPORTED_MODULE_1__["default"].getServiceParams(_resource, _service, _key);
+
+          if (!params || Object.keys(params).length === 0) {
+            logger.warn("WARNING : " + "The contract key configuration has no rights to load this geoportal " + "resource (" + _resource + ") " + "for this service (" + _service + ") ");
+            continue;
+          }
+
+          if (!_rightManagement[_service]) {
+            _rightManagement[_service] = [];
+          }
+
+          _rightManagement[_service].push(_resource);
+        }
       }
+
+      if (Object.keys(_rightManagement).length === 0) {
+        logger.warn("WARNING : " + "The contract key configuration has been loaded, " + "and the 'apiKey' parameter has been set, " + "but, there is a problem on the mapping between the contract and the key !");
+        return;
+      } // on ajoute la clef qui correspond à la ressource vérifiée
+
+
+      _rightManagement.key = params.key;
+      logger.log("right management checked", _rightManagement);
+      return _rightManagement;
     }
   }
 });
@@ -23605,13 +23630,13 @@ var Config = {
    *
    * @param {String} [resource] - "PositionOfInterest", "StreetAddress", "Voiture", "Pieton", ...
    * @param {String} [service] - Geocode, Itineraire, ...
-   * @param {String} [apiKey]  - Clé de contrat API
+   * @param {Array} [apiKeys]  - Clé(s) de contrat API
    * @returns {Object} params - paramètres de la ressource
    * @returns {String} params. -
    * @returns {String} params. -
    * @returns {String} params. -
    */
-  getServiceParams: function getServiceParams(resource, service, apiKey) {
+  getServiceParams: function getServiceParams(resource, service, apiKeys) {
     var params = {};
 
     if (this.configuration) {
@@ -23620,17 +23645,30 @@ var Config = {
 
       if (layerId) {
         // récupération de l'objet de configuration de la couche
-        var layerConf = this.configuration.layers[layerId]; // controle de la clef
+        var layerConf = this.configuration.layers[layerId]; // controle de la clef (on prend la première clé disponible qui est censée avoir accès à la ressource)
 
         var key = layerConf.apiKeys[0];
 
-        if (apiKey) {
-          if (apiKey !== key) {
+        if (apiKeys) {
+          if (!Array.isArray(apiKeys)) {
+            apiKeys = [apiKeys];
+          }
+
+          for (var i = 0; i < apiKeys.length; i++) {
+            if (apiKeys[i] === key) {
+              var keyIndex = i;
+              break;
+            }
+          } // si aucune clé du tableau apiKeys ne correspond, on retourne rien => pas de droits pour la ressource
+
+
+          if (typeof keyIndex === 'undefined') {
             return;
           }
-        }
+        } // on retourne la première clé qui a effectivement accès à la ressource
 
-        apiKey = apiKey || key;
+
+        var apiKey = apiKeys[keyIndex] || key;
         params.key = apiKey; // récupération des paramètres du service
 
         params.url = layerConf.getServerUrl(apiKey);
@@ -24921,7 +24959,7 @@ var LocationSelectorDOM = {
     var self = this;
     var labelOrigin = document.createElement("label");
     labelOrigin.id = this._addUID("GPlocationOriginLabel_" + id);
-    labelOrigin.htmlFor = "GPlocationOrigin_" + id;
+    labelOrigin.htmlFor = this._addUID("GPlocationOrigin_" + id);
     labelOrigin.innerHTML = text;
     labelOrigin.addEventListener("click", function (e) {
       var i = _Utils_SelectorID__WEBPACK_IMPORTED_MODULE_0__["default"].index(this.id);
@@ -25104,7 +25142,7 @@ var LocationSelectorDOM = {
     var self = this;
     var labelOriginPointer = document.createElement("label");
     labelOriginPointer.id = this._addUID("GPlocationOriginPointerImg_" + id);
-    labelOriginPointer.htmlFor = "GPlocationOriginPointer_" + id;
+    labelOriginPointer.htmlFor = this._addUID("GPlocationOriginPointer_" + id);
     labelOriginPointer.className = "GPlocationOriginPointerImg";
     labelOriginPointer.title = "Pointer un lieu sur la carte";
     labelOriginPointer.addEventListener("click", function (e) {
@@ -26434,7 +26472,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(142);
 /* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(137);
 /* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(143);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
 
@@ -28073,7 +28111,7 @@ var MathUtils = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 var MousePositionDOM = {
   /**
@@ -29232,6 +29270,9 @@ var CRS = {
         },
         alpha: function(v) {
           self.alpha = parseFloat(v) * D2R;
+        },
+        gamma: function(v) {
+          self.rectified_grid_angle = parseFloat(v);
         },
         lonc: function(v) {
           self.longc = v * D2R;
@@ -30706,7 +30747,7 @@ var CRS = {
       if (json.datumCode && json.datumCode !== 'none') {
         var datumDef = match(exports$3, json.datumCode);
         if (datumDef) {
-          json.datum_params = datumDef.towgs84 ? datumDef.towgs84.split(',') : null;
+          json.datum_params = json.datum_params || (datumDef.towgs84 ? datumDef.towgs84.split(',') : null);
           json.ellps = datumDef.ellipse;
           json.datumName = datumDef.datumName ? datumDef.datumName : json.datumCode;
         }
@@ -30714,6 +30755,8 @@ var CRS = {
       json.k0 = json.k0 || 1.0;
       json.axis = json.axis || 'enu';
       json.ellps = json.ellps || 'wgs84';
+      json.lat1 = json.lat1 || json.lat0; // Lambert_Conformal_Conic_1SP, for example, needs this
+
       var sphere_ = sphere(json.a, json.b, json.rf, json.ellps, json.sphere);
       var ecc = eccentricity(sphere_.a, sphere_.b, sphere_.rf, json.R_A);
       var nadgrids = getNadgrids(json.nadgrids);
@@ -33094,166 +33137,234 @@ var CRS = {
       names: names$9
     };
 
+    var TOL = 1e-7;
+
+    function isTypeA(P) {
+      var typeAProjections = ['Hotine_Oblique_Mercator','Hotine_Oblique_Mercator_Azimuth_Natural_Origin'];
+      var projectionName = typeof P.PROJECTION === "object" ? Object.keys(P.PROJECTION)[0] : P.PROJECTION;
+      
+      return 'no_uoff' in P || 'no_off' in P || typeAProjections.indexOf(projectionName) !== -1;
+    }
+
+
     /* Initialize the Oblique Mercator  projection
         ------------------------------------------*/
-    function init$9() {
-      this.no_off = this.no_off || false;
-      this.no_rot = this.no_rot || false;
-
-      if (isNaN(this.k0)) {
-        this.k0 = 1;
-      }
-      var sinlat = Math.sin(this.lat0);
-      var coslat = Math.cos(this.lat0);
-      var con = this.e * sinlat;
-
-      this.bl = Math.sqrt(1 + this.es / (1 - this.es) * Math.pow(coslat, 4));
-      this.al = this.a * this.bl * this.k0 * Math.sqrt(1 - this.es) / (1 - con * con);
-      var t0 = tsfnz(this.e, this.lat0, sinlat);
-      var dl = this.bl / coslat * Math.sqrt((1 - this.es) / (1 - con * con));
-      if (dl * dl < 1) {
-        dl = 1;
-      }
-      var fl;
-      var gl;
-      if (!isNaN(this.longc)) {
-        //Central point and azimuth method
-
-        if (this.lat0 >= 0) {
-          fl = dl + Math.sqrt(dl * dl - 1);
-        }
-        else {
-          fl = dl - Math.sqrt(dl * dl - 1);
-        }
-        this.el = fl * Math.pow(t0, this.bl);
-        gl = 0.5 * (fl - 1 / fl);
-        this.gamma0 = Math.asin(Math.sin(this.alpha) / dl);
-        this.long0 = this.longc - Math.asin(gl * Math.tan(this.gamma0)) / this.bl;
-
-      }
-      else {
-        //2 points method
-        var t1 = tsfnz(this.e, this.lat1, Math.sin(this.lat1));
-        var t2 = tsfnz(this.e, this.lat2, Math.sin(this.lat2));
-        if (this.lat0 >= 0) {
-          this.el = (dl + Math.sqrt(dl * dl - 1)) * Math.pow(t0, this.bl);
-        }
-        else {
-          this.el = (dl - Math.sqrt(dl * dl - 1)) * Math.pow(t0, this.bl);
-        }
-        var hl = Math.pow(t1, this.bl);
-        var ll = Math.pow(t2, this.bl);
-        fl = this.el / hl;
-        gl = 0.5 * (fl - 1 / fl);
-        var jl = (this.el * this.el - ll * hl) / (this.el * this.el + ll * hl);
-        var pl = (ll - hl) / (ll + hl);
-        var dlon12 = adjust_lon(this.long1 - this.long2);
-        this.long0 = 0.5 * (this.long1 + this.long2) - Math.atan(jl * Math.tan(0.5 * this.bl * (dlon12)) / pl) / this.bl;
-        this.long0 = adjust_lon(this.long0);
-        var dlon10 = adjust_lon(this.long1 - this.long0);
-        this.gamma0 = Math.atan(Math.sin(this.bl * (dlon10)) / gl);
-        this.alpha = Math.asin(dl * Math.sin(this.gamma0));
+    function init$9() {  
+      var con, com, cosph0, D, F, H, L, sinph0, p, J, gamma = 0,
+        gamma0, lamc = 0, lam1 = 0, lam2 = 0, phi1 = 0, phi2 = 0, alpha_c = 0;
+      
+      // only Type A uses the no_off or no_uoff property
+      // https://github.com/OSGeo/proj.4/issues/104
+      this.no_off = isTypeA(this);
+      this.no_rot = 'no_rot' in this;
+      
+      var alp = false;
+      if ("alpha" in this) {
+        alp = true;
       }
 
+      var gam = false;
+      if ("rectified_grid_angle" in this) {
+        gam = true;
+      }
+
+      if (alp) {
+        alpha_c = this.alpha;
+      }
+      
+      if (gam) {
+        gamma = (this.rectified_grid_angle * D2R);
+      }
+      
+      if (alp || gam) {
+        lamc = this.longc;
+      } else {
+        lam1 = this.long1;
+        phi1 = this.lat1;
+        lam2 = this.long2;
+        phi2 = this.lat2;
+        
+        if (Math.abs(phi1 - phi2) <= TOL || (con = Math.abs(phi1)) <= TOL ||
+            Math.abs(con - HALF_PI) <= TOL || Math.abs(Math.abs(this.lat0) - HALF_PI) <= TOL ||
+            Math.abs(Math.abs(phi2) - HALF_PI) <= TOL) {
+          throw new Error();
+        }
+      }
+      
+      var one_es = 1.0 - this.es;
+      com = Math.sqrt(one_es);
+      
+      if (Math.abs(this.lat0) > EPSLN) {
+        sinph0 = Math.sin(this.lat0);
+        cosph0 = Math.cos(this.lat0);
+        con = 1 - this.es * sinph0 * sinph0;
+        this.B = cosph0 * cosph0;
+        this.B = Math.sqrt(1 + this.es * this.B * this.B / one_es);
+        this.A = this.B * this.k0 * com / con;
+        D = this.B * com / (cosph0 * Math.sqrt(con));
+        F = D * D -1;
+        
+        if (F <= 0) {
+          F = 0;
+        } else {
+          F = Math.sqrt(F);
+          if (this.lat0 < 0) {
+            F = -F;
+          }
+        }
+        
+        this.E = F += D;
+        this.E *= Math.pow(tsfnz(this.e, this.lat0, sinph0), this.B);
+      } else {
+        this.B = 1 / com;
+        this.A = this.k0;
+        this.E = D = F = 1;
+      }
+      
+      if (alp || gam) {
+        if (alp) {
+          gamma0 = Math.asin(Math.sin(alpha_c) / D);
+          if (!gam) {
+            gamma = alpha_c;
+          }
+        } else {
+          gamma0 = gamma;
+          alpha_c = Math.asin(D * Math.sin(gamma0));
+        }
+        this.lam0 = lamc - Math.asin(0.5 * (F - 1 / F) * Math.tan(gamma0)) / this.B;
+      } else {
+        H = Math.pow(tsfnz(this.e, phi1, Math.sin(phi1)), this.B);
+        L = Math.pow(tsfnz(this.e, phi2, Math.sin(phi2)), this.B);
+        F = this.E / H;
+        p = (L - H) / (L + H);
+        J = this.E * this.E;
+        J = (J - L * H) / (J + L * H);
+        con = lam1 - lam2;
+        
+        if (con < -Math.pi) {
+          lam2 -=TWO_PI;
+        } else if (con > Math.pi) {
+          lam2 += TWO_PI;
+        }
+        
+        this.lam0 = adjust_lon(0.5 * (lam1 + lam2) - Math.atan(J * Math.tan(0.5 * this.B * (lam1 - lam2)) / p) / this.B);
+        gamma0 = Math.atan(2 * Math.sin(this.B * adjust_lon(lam1 - this.lam0)) / (F - 1 / F));
+        gamma = alpha_c = Math.asin(D * Math.sin(gamma0));
+      }
+      
+      this.singam = Math.sin(gamma0);
+      this.cosgam = Math.cos(gamma0);
+      this.sinrot = Math.sin(gamma);
+      this.cosrot = Math.cos(gamma);
+      
+      this.rB = 1 / this.B;
+      this.ArB = this.A * this.rB;
+      this.BrA = 1 / this.ArB;
       if (this.no_off) {
-        this.uc = 0;
+        this.u_0 = 0;
+      } else {
+        this.u_0 = Math.abs(this.ArB * Math.atan(Math.sqrt(D * D - 1) / Math.cos(alpha_c)));
+        
+        if (this.lat0 < 0) {
+          this.u_0 = - this.u_0;
+        }  
       }
-      else {
-        if (this.lat0 >= 0) {
-          this.uc = this.al / this.bl * Math.atan2(Math.sqrt(dl * dl - 1), Math.cos(this.alpha));
-        }
-        else {
-          this.uc = -1 * this.al / this.bl * Math.atan2(Math.sqrt(dl * dl - 1), Math.cos(this.alpha));
-        }
-      }
-
+        
+      F = 0.5 * gamma0;
+      this.v_pole_n = this.ArB * Math.log(Math.tan(FORTPI - F));
+      this.v_pole_s = this.ArB * Math.log(Math.tan(FORTPI + F));
     }
+
 
     /* Oblique Mercator forward equations--mapping lat,long to x,y
         ----------------------------------------------------------*/
     function forward$8(p) {
-      var lon = p.x;
-      var lat = p.y;
-      var dlon = adjust_lon(lon - this.long0);
-      var us, vs;
-      var con;
-      if (Math.abs(Math.abs(lat) - HALF_PI) <= EPSLN) {
-        if (lat > 0) {
-          con = -1;
+      var coords = {};
+      var S, T, U, V, W, temp, u, v;
+      p.x = p.x - this.lam0;
+      
+      if (Math.abs(Math.abs(p.y) - HALF_PI) > EPSLN) {
+        W = this.E / Math.pow(tsfnz(this.e, p.y, Math.sin(p.y)), this.B);
+        
+        temp = 1 / W;
+        S = 0.5 * (W - temp);
+        T = 0.5 * (W + temp);
+        V = Math.sin(this.B * p.x);
+        U = (S * this.singam - V * this.cosgam) / T;
+            
+        if (Math.abs(Math.abs(U) - 1.0) < EPSLN) {
+          throw new Error();
         }
-        else {
-          con = 1;
-        }
-        vs = this.al / this.bl * Math.log(Math.tan(FORTPI + con * this.gamma0 * 0.5));
-        us = -1 * con * HALF_PI * this.al / this.bl;
+        
+        v = 0.5 * this.ArB * Math.log((1 - U)/(1 + U));
+        temp = Math.cos(this.B * p.x);
+        
+        if (Math.abs(temp) < TOL) {
+          u = this.A * p.x;
+        } else {
+          u = this.ArB * Math.atan2((S * this.cosgam + V * this.singam), temp);
+        }    
+      } else {
+        v = p.y > 0 ? this.v_pole_n : this.v_pole_s;
+        u = this.ArB * p.y;
       }
-      else {
-        var t = tsfnz(this.e, lat, Math.sin(lat));
-        var ql = this.el / Math.pow(t, this.bl);
-        var sl = 0.5 * (ql - 1 / ql);
-        var tl = 0.5 * (ql + 1 / ql);
-        var vl = Math.sin(this.bl * (dlon));
-        var ul = (sl * Math.sin(this.gamma0) - vl * Math.cos(this.gamma0)) / tl;
-        if (Math.abs(Math.abs(ul) - 1) <= EPSLN) {
-          vs = Number.POSITIVE_INFINITY;
-        }
-        else {
-          vs = 0.5 * this.al * Math.log((1 - ul) / (1 + ul)) / this.bl;
-        }
-        if (Math.abs(Math.cos(this.bl * (dlon))) <= EPSLN) {
-          us = this.al * this.bl * (dlon);
-        }
-        else {
-          us = this.al * Math.atan2(sl * Math.cos(this.gamma0) + vl * Math.sin(this.gamma0), Math.cos(this.bl * dlon)) / this.bl;
-        }
-      }
-
+         
       if (this.no_rot) {
-        p.x = this.x0 + us;
-        p.y = this.y0 + vs;
+        coords.x = u;
+        coords.y = v;
+      } else {
+        u -= this.u_0;
+        coords.x = v * this.cosrot + u * this.sinrot;
+        coords.y = u * this.cosrot - v * this.sinrot;
       }
-      else {
-
-        us -= this.uc;
-        p.x = this.x0 + vs * Math.cos(this.alpha) + us * Math.sin(this.alpha);
-        p.y = this.y0 + us * Math.cos(this.alpha) - vs * Math.sin(this.alpha);
-      }
-      return p;
+      
+      coords.x = (this.a * coords.x + this.x0);
+      coords.y = (this.a * coords.y + this.y0);
+      
+      return coords;
     }
 
     function inverse$8(p) {
-      var us, vs;
+      var u, v, Qp, Sp, Tp, Vp, Up;
+      var coords = {};
+      
+      p.x = (p.x - this.x0) * (1.0 / this.a);
+      p.y = (p.y - this.y0) * (1.0 / this.a);
+
       if (this.no_rot) {
-        vs = p.y - this.y0;
-        us = p.x - this.x0;
+        v = p.y;
+        u = p.x;
+      } else {
+        v = p.x * this.cosrot - p.y * this.sinrot;
+        u = p.y * this.cosrot + p.x * this.sinrot + this.u_0;
       }
-      else {
-        vs = (p.x - this.x0) * Math.cos(this.alpha) - (p.y - this.y0) * Math.sin(this.alpha);
-        us = (p.y - this.y0) * Math.cos(this.alpha) + (p.x - this.x0) * Math.sin(this.alpha);
-        us += this.uc;
+      
+      Qp = Math.exp(-this.BrA * v);
+      Sp = 0.5 * (Qp - 1 / Qp);
+      Tp = 0.5 * (Qp + 1 / Qp);
+      Vp = Math.sin(this.BrA * u);
+      Up = (Vp * this.cosgam + Sp * this.singam) / Tp;
+      
+      if (Math.abs(Math.abs(Up) - 1) < EPSLN) {
+        coords.x = 0;
+        coords.y = Up < 0 ? -HALF_PI : HALF_PI;
+      } else {
+        coords.y = this.E / Math.sqrt((1 + Up) / (1 - Up));
+        coords.y = phi2z(this.e, Math.pow(coords.y, 1 / this.B));
+        
+        if (coords.y === Infinity) {
+          throw new Error();
+        }
+            
+        coords.x = -this.rB * Math.atan2((Sp * this.cosgam - Vp * this.singam), Math.cos(this.BrA * u));
       }
-      var qp = Math.exp(-1 * this.bl * vs / this.al);
-      var sp = 0.5 * (qp - 1 / qp);
-      var tp = 0.5 * (qp + 1 / qp);
-      var vp = Math.sin(this.bl * us / this.al);
-      var up = (vp * Math.cos(this.gamma0) + sp * Math.sin(this.gamma0)) / tp;
-      var ts = Math.pow(this.el / Math.sqrt((1 + up) / (1 - up)), 1 / this.bl);
-      if (Math.abs(up - 1) < EPSLN) {
-        p.x = this.long0;
-        p.y = HALF_PI;
-      }
-      else if (Math.abs(up + 1) < EPSLN) {
-        p.x = this.long0;
-        p.y = -1 * HALF_PI;
-      }
-      else {
-        p.y = phi2z(this.e, ts);
-        p.x = adjust_lon(this.long0 - Math.atan2(sp * Math.cos(this.gamma0) - vp * Math.sin(this.gamma0), Math.cos(this.bl * us / this.al)) / this.bl);
-      }
-      return p;
+      
+      coords.x += this.lam0;
+      
+      return coords;
     }
 
-    var names$10 = ["Hotine_Oblique_Mercator", "Hotine Oblique Mercator", "Hotine_Oblique_Mercator_Azimuth_Natural_Origin", "Hotine_Oblique_Mercator_Azimuth_Center", "omerc"];
+    var names$10 = ["Hotine_Oblique_Mercator", "Hotine Oblique Mercator", "Hotine_Oblique_Mercator_Azimuth_Natural_Origin", "Hotine_Oblique_Mercator_Two_Point_Natural_Origin", "Hotine_Oblique_Mercator_Azimuth_Center", "Oblique_Mercator", "omerc"];
     var omerc = {
       init: init$9,
       forward: forward$8,
@@ -33387,7 +33498,14 @@ var CRS = {
       return p;
     }
 
-    var names$11 = ["Lambert Tangential Conformal Conic Projection", "Lambert_Conformal_Conic", "Lambert_Conformal_Conic_2SP", "lcc"];
+    var names$11 = [
+      "Lambert Tangential Conformal Conic Projection",
+      "Lambert_Conformal_Conic",
+      "Lambert_Conformal_Conic_1SP",
+      "Lambert_Conformal_Conic_2SP",
+      "lcc"
+    ];
+
     var lcc = {
       init: init$10,
       forward: forward$9,
@@ -36181,7 +36299,7 @@ var CRS = {
     proj4$1.nadgrid = nadgrid;
     proj4$1.transform = transform;
     proj4$1.mgrs = mgrs;
-    proj4$1.version = '2.7.0';
+    proj4$1.version = '2.7.2';
     includedProjections(proj4$1);
 
     return proj4$1;
@@ -46333,9 +46451,12 @@ var RouteDOM = {
     var context = this;
     var div = document.createElement("div");
     div.id = this._addUID("GProuteComputationChoice");
+    var label = document.createElement("label");
+    label.htmlFor = this._addUID("GProuteComputationSelect");
+    label.innerHTML = "Mode de calcul";
     var span = document.createElement("span");
     span.className = "GProuteModeLabel";
-    span.innerHTML = "Mode de calcul";
+    span.appendChild(label);
     div.appendChild(span);
     var select = document.createElement("select");
     select.id = this._addUID("GProuteComputationSelect");
