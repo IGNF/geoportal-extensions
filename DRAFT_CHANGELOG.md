@@ -13,6 +13,10 @@
 
 * [Added]
 
+  * MousePosition : Ajouter un callback au centrage de la carte sur des coordonnées [#315](https://github.com/IGNF/geoportal-extensions/issues/315)
+  
+  * Ajout du mecanisme de desactivation des interactions sur tous les widgets [developpez.com](https://www.developpez.net/forums/d2123362/applications/sig-systeme-d-information-geographique/ign-api-geoportail/utilisation-outils-mesures-gptoolbox-autres-widgets-conflit-fonctionnement/)
+
 * [Changed]
 
 * [Deprecated]
