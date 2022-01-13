@@ -51,6 +51,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Boolean}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
  * @param {Boolean}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
  * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
+ * @param {Function} [options.mapCenterCallback] - callback...
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
  * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -1630,6 +1631,16 @@ var MousePosition = (function (Control) {
             this.locateDMSCoordinates();
         } else {
             this.locateCoordinates();
+        }
+
+        // fonction
+        var mapCenterFunction = this.options.mapCenterCallback;
+
+        // execution...
+        if (typeof mapCenterFunction === "function") {
+            var view = this.getMap().getView();
+            var center = view.getCenter();
+            mapCenterFunction.call(this, center);
         }
     };
 
