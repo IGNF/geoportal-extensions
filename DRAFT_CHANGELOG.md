@@ -11,11 +11,15 @@
 
 ## Summary
 
+Changements mineurs sur les problématiques d'accessibilité
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - merge feature-accessibilite (#313)
 
 * [Deprecated]
 
