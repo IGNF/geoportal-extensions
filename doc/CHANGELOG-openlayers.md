@@ -97,6 +97,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.3](#extension-geoportail-openlayers-version-323)
   * [Summary](#summary-27)
   * [Changelog](#changelog-24)
+- [Extension Geoportail OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
+  * [Summary](#summary-28)
+  * [Changelog](#changelog-25)
 
 <!-- tocstop -->
 
@@ -1001,6 +1004,32 @@ Mise à jour de l'access-lib geoportail en version 3.0.3
 * [Changed]
 
     - met à jour l'access-lib en version 3.0.3 pour correction géométrie itinéraire
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.4
+
+**03/12/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Utilisation de plusieurs clefs
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+-  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 

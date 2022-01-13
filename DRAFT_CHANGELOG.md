@@ -3,6 +3,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -10,15 +11,11 @@
 
 ## Summary
 
-Utilisation de plusieurs clefs
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
--  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 
@@ -29,6 +26,7 @@ Utilisation de plusieurs clefs
 * [Security]
 
 ---
+
 
 
 
@@ -41,7 +39,7 @@ Utilisation de plusieurs clefs
 
 ## Summary
 
-Utilisation de plusieurs clefs
+Changements mineurs sur les problématiques d'accessibilité
 
 ## Changelog
 
@@ -49,7 +47,7 @@ Utilisation de plusieurs clefs
 
 * [Changed]
 
-    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+    - merge feature-accessibilite (#313)
 
 * [Deprecated]
 
@@ -65,6 +63,7 @@ Utilisation de plusieurs clefs
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -72,15 +71,11 @@ Utilisation de plusieurs clefs
 
 ## Summary
 
-Utilisation de plusieurs clefs
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
 
 * [Deprecated]
 
