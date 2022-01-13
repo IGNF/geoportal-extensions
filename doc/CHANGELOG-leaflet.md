@@ -66,6 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.1](#extension-geoportail-leaflet-version-221)
   * [Summary](#summary-18)
   * [Changelog](#changelog-15)
+- [Extension Geoportail Leaflet, version 2.2.2](#extension-geoportail-leaflet-version-222)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-16)
 
 <!-- tocstop -->
 
@@ -571,6 +574,32 @@ Utilisation de plusieurs clefs
 * [Changed]
 
     -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.2
+
+**13/01/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - merge feature-accessibilite (#313)
 
 * [Deprecated]
 
