@@ -11,34 +11,6 @@
 
 ## Summary
 
-## Changelog
-
-* [Added]
-
-* [Changed]
-
-* [Deprecated]
-
-* [Removed]
-
-* [Fixed]
-
-* [Security]
-
----
-
-
-
-
-
-
-# Extension Geoportail Leaflet, version __VERSION__
-
-**__DATE__**
-> Release Extension Geoportail leaflet
-
-## Summary
-
 Changements mineurs sur les problématiques d'accessibilité
 
 ## Changelog
@@ -64,14 +36,13 @@ Changements mineurs sur les problématiques d'accessibilité
 
 
 
-# Extension Geoportail Itowns, version __VERSION__
+
+# Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail itowns
+> Release Extension Geoportail leaflet
 
 ## Summary
-
-Changements mineurs sur les problématiques d'accessibilité
 
 ## Changelog
 
@@ -79,7 +50,34 @@ Changements mineurs sur les problématiques d'accessibilité
 
 * [Changed]
 
-- merge feature-accessibilite (#313)
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+
+
+
+
+
+
+
+# Extension Geoportail Itowns, version __VERSION__
+
+**__DATE__**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 
