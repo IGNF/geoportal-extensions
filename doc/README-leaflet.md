@@ -224,6 +224,35 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+
+Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+
+
+``` html
+<html>
+    <head>
+        <!-- Bibliothèque Leaflet -->
+        <link rel="stylesheet" href="leaflet.css" />
+        <script src="leaflet.js"></script>
+        <!-- Extension Géoportail pour Leaflet -->
+        <link rel="stylesheet" href="GpPluginLeaflet.css" />
+        <script src="GpPluginLeaflet.js"></script>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                Gp.Services.getConfig({
+                    apiKey: 'CLEF-1,CLEF-2,CLEF-3',
+                    onSuccess: function (response) {
+                        // votre utilisation de l'extension Géoportail pour Leaflet 
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
+```
+
 #### Optimisation du chargement : configuration locale
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).

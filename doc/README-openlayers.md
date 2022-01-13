@@ -263,12 +263,12 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 ``` html
 <html>
     <head>
-        <!-- Bibliothèque iTowns -->
-        <link rel="stylesheet" href="itowns.css" />
-        <script src="itowns.js"></script>
-        <!-- Extension Géoportail pour iTowns -->
-        <link rel="stylesheet" href="GpPluginItowns.css" />
-        <script src="GpPluginItowns.js"></script>
+        <!-- Bibliothèque OpenLayers -->
+        <link rel="stylesheet" href="ol.css" />
+        <script src="ol.js"></script>
+        <!-- Extension Géoportail pour OpenLayers -->
+        <link rel="stylesheet" href="GpPluginOpenLayers.css" />
+        <script src="GpPluginOpenLayers.js"></script>
     </head>
     <body>
         <script>
@@ -276,7 +276,7 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
                 Gp.Services.getConfig({
                     apiKey: 'CLEF-1,CLEF-2,CLEF-3',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour iTowns
+                        // votre utilisation de l'extension Géoportail pour OpenLayers
                     }
                 });
             }
