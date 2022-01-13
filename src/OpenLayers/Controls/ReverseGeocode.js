@@ -1504,7 +1504,6 @@ var ReverseGeocode = (function (Control) {
         // info : on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.ReverseGeocode.on("change:collapsed", function ) pour s'abonner à cet évènement)
         this.dispatchEvent("change:collapsed");
-        var map = this.getMap();
 
         if (!this._waiting && !this._reverseGeocodingLocations.length) {
             // Cas 1 : input panel (ni en attente, ni sur le panel des résultats)
