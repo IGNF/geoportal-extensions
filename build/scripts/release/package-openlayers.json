@@ -1,9 +1,4 @@
 {
-   "module" : "src/OpenLayers/index.js",
-   "bugs" : {},
-   "license" : "CECILL-B",
-   "directories" : {},
-   "peerDependencies" : {},
    "files" : [
       "dist/",
       "src/",
@@ -11,20 +6,35 @@
       "README.md",
       "package.json"
    ],
+   "scripts" : {},
    "main" : "dist/GpPluginOpenLayers-src.js",
-   "dependencies" : {
-      "node-fetch" : "^2.6.1",
-      "loglevel" : "1.6.6",
-      "sortablejs" : "1.8.4",
-      "geoportal-access-lib" : "3.0.5",
-      "eventbusjs" : "0.2.0",
-      "proj4" : "2.7.0",
-      "xmldom" : "^0.1.27",
-      "ol" : "6.3.1",
-      "ol-mapbox-style" : "6.3.2",
-      "@mapbox/mapbox-gl-style-spec" : "13.14.0"
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "date" : "03/12/2021",
+   "license" : "CECILL-B",
+   "module" : "src/OpenLayers/index.js",
+   "devDependencies" : {},
+   "version" : "3.2.6",
+   "peerDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "date" : "17/01/2022",
+   "directories" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "dependencies" : {
+      "xmldom" : "^0.1.27",
+      "loglevel" : "1.6.6",
+      "eventbusjs" : "0.2.0",
+      "node-fetch" : "^2.6.1",
+      "proj4" : "2.7.2",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
+      "ol-mapbox-style" : "6.7.0",
+      "geoportal-access-lib" : "3.0.5",
+      "ol" : "6.9.0",
+      "sortablejs" : "1.8.4"
+   },
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-openlayers",
    "author" : "IGNF",
    "keywords" : [
       "geoportail",
@@ -32,15 +42,5 @@
       "javascript",
       "OpenLayers"
    ],
-   "version" : "3.2.4",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "scripts" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "devDependencies" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "bundleDependencies" : []
+   "bugs" : {}
 }
