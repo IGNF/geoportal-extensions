@@ -13,6 +13,8 @@
 
 * [Changed]
 
+    - Mise à jour de la documentation pour l'utilisation de clefs multiples (#318)
+
 * [Deprecated]
 
 * [Removed]
@@ -36,6 +38,8 @@
 
 * [Changed]
 
+    - Mise à jour de la documentation pour l'utilisation de clefs multiples (#318)
+
 * [Deprecated]
 
 * [Removed]
@@ -58,6 +62,8 @@
 * [Added]
 
 * [Changed]
+
+    - Mise à jour de la documentation pour l'utilisation de clefs multiples (#318)
 
 * [Deprecated]
 
