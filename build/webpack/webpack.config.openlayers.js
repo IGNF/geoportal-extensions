@@ -93,33 +93,44 @@ module.exports = (env, argv) => {
                 if (/^ol\/.+$/.test(request)) {
                     // liste des modules ES6 à garder dans le code...
                     if ([
-                        "ol/events/Event",
                         "ol/events/EventType",
+                        "ol/events/EventType.js",
                         "ol/events",
-                        "ol/obj",
-                        "ol/render/canvas",
+                        "ol/events.js",
                         "ol/render/Feature",
-                        "ol/css",
-                        "ol/dom",
-                        "ol/transform",
-                        "ol/asserts",
-                        "ol/AssertionError",
-                        "ol/util",
-                        "ol/render/canvas/LabelCache",
-                        "ol/structs/LRUCache",
-                        "ol/events/Target",
-                        "ol/Disposable",
-                        "ol/functions",
-                        "ol/proj/transforms"
+                        "ol/render/Feature.js",
+                        // "ol/obj",
+                        // "ol/css",
+                        // "ol/dom",
+                        // "ol/transform",
+                        // "ol/asserts",
+                        // "ol/AssertionError",
+                        // "ol/util",
+                        // "ol/render/canvas/LabelCache", <!-- depreciate -->
+                        // "ol/structs/LRUCache",
+                        // "ol/events/Event",
+                        // "ol/events/Target",
+                        // "ol/Disposable",
+                        // "ol/functions",
+                        // "ol/proj/transforms"
                     ].includes(request)) {
-                        // console.log("#### IN : ", request);
+                        if (devMode) {
+                            console.log("#### MODULE ES6 ONLY : " + request + " (" + context + ")");
+                        }
                         return callback();
                     }
-                    // console.log("#### OUT : ", request);
-                    const replacedWith = request.replace(/\//g, '.');
+                    if (devMode) {
+                        console.log("#### OL : " + request + " (" + context + ")");
+                    }
+                    const replacedWith = request.replace(/\.js$/g, '').replace(/\//g, '.');
+                    if (devMode) {
+                        console.log(">>> : ", replacedWith);
+                    }
                     return callback(null, replacedWith);
                 }
-                // console.log("#### NULL : ", request);
+                if (devMode) {
+                    console.log("#### OTHER : " + request + " (" + context + ")");
+                }
                 callback();
             },
             /**
@@ -172,7 +183,7 @@ module.exports = (env, argv) => {
                 warnings : false
             }
         },
-        stats : "verbose", // "none",
+        stats : (devMode) ? "verbose" : "none",
         optimization : {
             /** MINIFICATION */
             minimizer: [

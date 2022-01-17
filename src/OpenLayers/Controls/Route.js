@@ -23,6 +23,7 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LocationSelector from "./LocationSelector";
 import LayerSwitcher from "./LayerSwitcher";
@@ -997,6 +998,9 @@ var Route = (function (Control) {
      * @private
      */
     Route.prototype.onShowRoutePanelClick = function (e) {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         // clean !
         if (!this._geojsonSections && !this._waiting) {
             this._clear();
