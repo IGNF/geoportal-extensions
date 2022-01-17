@@ -1,6 +1,6 @@
 # Extension Géoportail pour OpenLayers
 
-[![release](https://img.shields.io/badge/release%20-ol%203.2.5-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.2.5)
+[![release](https://img.shields.io/badge/release%20-ol%203.2.6-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.2.6)
 
 <!-- toc -->
 
