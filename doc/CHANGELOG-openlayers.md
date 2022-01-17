@@ -103,6 +103,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
   * [Summary](#summary-29)
   * [Changelog](#changelog-26)
+- [Extension Geoportail OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
+  * [Summary](#summary-30)
+  * [Changelog](#changelog-27)
 
 <!-- tocstop -->
 
@@ -1065,6 +1068,37 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.6
+
+**17/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+* upgrade d'OpenLayers : 6.9.0
+* upgrade olms : 6.7.0
+
+## Changelog
+
+* [Added]
+
+  * MousePosition : Ajouter un callback au centrage de la carte sur des coordonnées [#315](https://github.com/IGNF/geoportal-extensions/issues/315)
+  
+  * Ajout du mecanisme de desactivation des interactions sur tous les widgets [developpez.com](https://www.developpez.net/forums/d2123362/applications/sig-systeme-d-information-geographique/ign-api-geoportail/utilisation-outils-mesures-gptoolbox-autres-widgets-conflit-fonctionnement/)
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+  * Fix sur l'affichage des pictogrammes du vecteur tuilé
 
 * [Security]
 
