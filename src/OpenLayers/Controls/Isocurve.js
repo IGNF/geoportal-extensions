@@ -19,6 +19,7 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
@@ -955,6 +956,9 @@ var Isocurve = (function (Control) {
      * @private
      */
     Isocurve.prototype.onShowIsoPanelClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showIsoContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.Isocurve.on("change:collapsed", function ) pour s'abonner à cet évènement)

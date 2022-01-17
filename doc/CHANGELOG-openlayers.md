@@ -100,6 +100,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
   * [Summary](#summary-28)
   * [Changelog](#changelog-25)
+- [Extension Geoportail OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
+  * [Summary](#summary-29)
+  * [Changelog](#changelog-26)
 
 <!-- tocstop -->
 
@@ -1030,6 +1033,32 @@ Utilisation de plusieurs clefs
 * [Changed]
 
 -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.5
+
+**13/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - merge feature-accessibilite (#313)
 
 * [Deprecated]
 

@@ -49,7 +49,10 @@
                 });
 
                 var mouse = new ol.control.GeoportalMousePosition({
-                    editCoordinates : true
+                    editCoordinates : true,
+                    mapCenterCallback : function (e) {
+                      console.log(this.getMap(), e);
+                    }
                 });
                 map.addControl(mouse);
               };

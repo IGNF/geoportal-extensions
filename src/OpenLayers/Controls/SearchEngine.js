@@ -10,6 +10,7 @@ import Gp from "geoportal-access-lib";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
+import Interactions from "./Utils/Interactions";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
@@ -1111,6 +1112,9 @@ var SearchEngine = (function (Control) {
      * @private
      */
     SearchEngine.prototype.onShowSearchEngineClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showSearchEngineInput.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.SearchEngine.on("change:collapsed", function ) pour s'abonner à cet évènement)
