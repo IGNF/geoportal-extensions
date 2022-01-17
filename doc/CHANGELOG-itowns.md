@@ -64,6 +64,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.4](#extension-geoportail-itowns-version-234)
   * [Summary](#summary-18)
   * [Changelog](#changelog-17)
+- [Extension Geoportail Itowns, version 2.3.5](#extension-geoportail-itowns-version-235)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-18)
 
 <!-- tocstop -->
 
@@ -493,6 +496,32 @@ Utilisation de plusieurs clefs
 * [Changed]
 
     -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.5
+
+**13/01/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+- merge feature-accessibilite (#313)
 
 * [Deprecated]
 
