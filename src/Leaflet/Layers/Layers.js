@@ -167,7 +167,7 @@ var Layers = {
         };
 
         // merge des autres options natives de leaflet
-        L.Util.extend(paramsNative, this.settings);
+        L.Util.extend(paramsWms, this.settings);
 
         return new WMS(
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
@@ -275,7 +275,7 @@ var Layers = {
         };
 
         // merge des autres options natives de leaflet
-        L.Util.extend(paramsNative, this.settings);
+        L.Util.extend(paramsWmts, this.settings);
 
         return new WMTS(
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
