@@ -21,6 +21,8 @@
 
 * [Fixed]
 
+    - hot fix sur le drag&drop cassé sur Chrome v 97 (138aecced48a3f91503b6d3ec33e917d4cb16e04)
+
 * [Security]
 
 ---
@@ -45,6 +47,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Correction des paramètres passés aux couches WMTS/WMS (#319) 
 
 * [Security]
 
