@@ -106,6 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
   * [Summary](#summary-30)
   * [Changelog](#changelog-27)
+- [Extension Geoportail OpenLayers, version 3.2.7](#extension-geoportail-openlayers-version-327)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-28)
 
 <!-- tocstop -->
 
@@ -1099,6 +1102,34 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Fixed]
 
   * Fix sur l'affichage des pictogrammes du vecteur tuilé
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.7
+
+**28/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Evolution de la documentation et correction du layerswitcher
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Mise à jour de la documentation pour l'utilisation de clefs multiples (#318)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correction du drag&drop sur le LayerSwitcher sous Chrome 97 (138aecced48a3f91503b6d3ec33e917d4cb16e04)
 
 * [Security]
 
