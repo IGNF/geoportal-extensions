@@ -7,6 +7,8 @@
 
 ## Summary
 
+Evolution de la documentation et correction du layerswitcher
+
 ## Changelog
 
 * [Added]
@@ -20,6 +22,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Correction du drag&drop sur le LayerSwitcher sous Chrome 97 (138aecced48a3f91503b6d3ec33e917d4cb16e04)
 
 * [Security]
 
