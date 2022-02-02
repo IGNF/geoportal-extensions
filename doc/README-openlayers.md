@@ -729,7 +729,7 @@ var map = new ol.Map({
         osmLyr,
         // couche Géoportail
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
         })
     ],
     view: new ol.View({
@@ -781,7 +781,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -826,7 +826,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -870,7 +870,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -915,7 +915,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -965,7 +965,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1009,7 +1009,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1053,7 +1053,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1099,7 +1099,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1145,7 +1145,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1190,7 +1190,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
