@@ -57,6 +57,7 @@ var logger = Logger.getLogger("route");
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @fires route:drawstart
  * @fires route:drawend
+ * @fires route:compute
  * @example
  *  var route = ol.control.Route({
  *      "collapsed" : true
@@ -197,6 +198,15 @@ var Route = (function (Control) {
 
         // on appelle la méthode setMap originale d'OpenLayers
         Control.prototype.setMap.call(this, map);
+    };
+
+    /**
+     * Get route informations
+     *
+     * @returns {Object} data - route informations
+     */
+    Route.prototype.getData = function () {
+        return this._currentRouteInformations;
     };
 
     // ################################################################### //
@@ -883,6 +893,10 @@ var Route = (function (Control) {
             _timeout = 15000;
         }
 
+        // gestion des callback
+        var bOnFailure = !!(routeOptions.onFailure !== null && typeof routeOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(routeOptions.onSuccess !== null && typeof routeOptions.onSuccess === "function");
+
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         this._requestRouting({
@@ -902,12 +916,18 @@ var Route = (function (Control) {
                 if (results) {
                     context._fillRouteResultsDetails(results);
                 }
+                if (bOnSuccess) {
+                    routeOptions.onSuccess.call(context, results);
+                }
             },
             // callback onFailure
             onFailure : function (error) {
                 context._hideWaitingContainer();
                 context._clearRouteResultsDetails();
                 logger.log(error.message);
+                if (bOnFailure) {
+                    routeOptions.onFailure.call(context, error);
+                }
             }
         });
     };
@@ -1338,6 +1358,16 @@ var Route = (function (Control) {
 
         // sauvegarde de l'etat des resultats
         this._currentRouteInformations = results;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event route:compute
+         * @type Object
+         */
+        this.dispatchEvent({
+            type : "route:compute"
+        });
 
         // mise à jour du controle !
         this._formRouteContainer.className = "GProuteComponentHidden";

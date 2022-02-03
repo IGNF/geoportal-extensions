@@ -60,6 +60,7 @@ var logger = Logger.getLogger("reversegeocoding");
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Saisie (recherche inverse)"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
+ * @fires reversegeocode:compute
  * @example
  *  var iso = ol.control.ReverseGeocode({
  *      "collapsed" : false,
@@ -190,6 +191,15 @@ var ReverseGeocode = (function (Control) {
 
         // on appelle la méthode setMap originale d'OpenLayers
         Control.prototype.setMap.call(this, map);
+    };
+
+    /**
+     * Get locations data
+     *
+     * @returns {Object} data - locations
+     */
+    ReverseGeocode.prototype.getData = function () {
+        return this._reverseGeocodingLocations;
     };
 
     // ################################################################### //
@@ -1055,6 +1065,10 @@ var ReverseGeocode = (function (Control) {
         if (typeof this.options.ssl !== "boolean") {
             this.options.ssl = true;
         }
+        // gestion des callback
+        var bOnFailure = !!(reverseGeocodeOptions.onFailure !== null && typeof reverseGeocodeOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(reverseGeocodeOptions.onSuccess !== null && typeof reverseGeocodeOptions.onSuccess === "function");
+
         var requestOptions = {
             apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
             ssl : this.options.ssl,
@@ -1073,6 +1087,9 @@ var ReverseGeocode = (function (Control) {
                     logger.log("reverseGeocode results : ", response.locations);
                     context._displayGeocodedLocations(response.locations);
                 }
+                if (bOnSuccess) {
+                    reverseGeocodeOptions.onSuccess.call(context, response.locations);
+                }
             },
             // callback onFailure
             onFailure : function (error) {
@@ -1089,6 +1106,10 @@ var ReverseGeocode = (function (Control) {
                 // et on réactive l'interaction sur la map
                 context._activateMapInteraction(map);
                 logger.log(error.message);
+
+                if (bOnFailure) {
+                    reverseGeocodeOptions.onFailure.call(context, error);
+                }
             }
         };
 
@@ -1120,6 +1141,16 @@ var ReverseGeocode = (function (Control) {
         // 1. on vide les résultats précédents
         this._clearResults();
         this._reverseGeocodingLocations = locations;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event reversegeocode:compute
+         * @type Object
+         */
+        this.dispatchEvent({
+            type : "reversegeocode:compute"
+        });
 
         // 2. cache de la patience et du formulaire
         this._formContainer.className = "GPreverseGeocodingComponentHidden";
