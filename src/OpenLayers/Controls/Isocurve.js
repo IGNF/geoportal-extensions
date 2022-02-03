@@ -1228,7 +1228,13 @@ var Isocurve = (function (Control) {
          * event triggered when the compute is finished
          *
          * @event isocurve:compute
-         * @type Object
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance Isocurve
+         * @example
+         * Isocurve.on("isocurve:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
          */
         this.dispatchEvent({
             type : "isocurve:compute"

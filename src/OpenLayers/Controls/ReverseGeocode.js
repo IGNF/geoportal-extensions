@@ -1146,7 +1146,12 @@ var ReverseGeocode = (function (Control) {
          * event triggered when the compute is finished
          *
          * @event reversegeocode:compute
-         * @type Object
+         * @property {Object} type - event
+         * @property {Object} target - instance ReverseGeocode
+         * @example
+         * ReverseGeocode.on("reversegeocode:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
          */
         this.dispatchEvent({
             type : "reversegeocode:compute"

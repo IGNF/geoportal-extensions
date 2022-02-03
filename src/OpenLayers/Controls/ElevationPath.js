@@ -1476,7 +1476,13 @@ var ElevationPath = (function (Control) {
          * event triggered when the compute is finished
          *
          * @event elevationpath:compute
-         * @type Object
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance ElevationPath
+         * @example
+         * ElevationPath.on("elevationpath:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
          */
         this.dispatchEvent({
             type : "elevationpath:compute"

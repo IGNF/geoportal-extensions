@@ -1363,7 +1363,12 @@ var Route = (function (Control) {
          * event triggered when the compute is finished
          *
          * @event route:compute
-         * @type Object
+         * @property {Object} type - event
+         * @property {Object} target - instance Route
+         * @example
+         * Route.on("route:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
          */
         this.dispatchEvent({
             type : "route:compute"
