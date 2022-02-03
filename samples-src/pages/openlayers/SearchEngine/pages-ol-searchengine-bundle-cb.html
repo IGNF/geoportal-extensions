@@ -50,7 +50,18 @@
                     });
 
 					// 2. Appel du SearchEngine
-                    var search = new ol.control.SearchEngine();
+                    var search = new ol.control.SearchEngine({
+                        geocodeOptions : {
+                            serviceOptions : {
+                                onSuccess : function(e) {
+                                    console.warn(e);
+                                },
+                                onFailure : function(e) {
+                                    console.warn(e);
+                                }
+                            }
+                        }
+                    });
                     search.on("searchengine:compute", function (e) {
                         console.warn(e.target.getData());
                     });

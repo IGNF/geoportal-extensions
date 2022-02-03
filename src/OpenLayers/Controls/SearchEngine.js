@@ -834,6 +834,24 @@ var SearchEngine = (function (Control) {
         Utils.assign(options, this.options.geocodeOptions.serviceOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
+        // on redefinie les callbacks si les callbacks de service existent
+        var self = this;
+        var bOnFailure = !!(this.options.geocodeOptions.serviceOptions.onFailure !== null && typeof this.options.geocodeOptions.serviceOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(this.options.geocodeOptions.serviceOptions.onSuccess !== null && typeof this.options.geocodeOptions.serviceOptions.onSuccess === "function");
+        if (bOnSuccess) {
+            var cbOnSuccess = function (e) {
+                settings.onSuccess.call(self, e);
+                self.options.geocodeOptions.serviceOptions.onSuccess.call(self, e);
+            };
+            options.onSuccess = cbOnSuccess;
+        }
+        if (bOnFailure) {
+            var cbOnFailure = function (e) {
+                settings.onFailure.call(self, e);
+                self.options.geocodeOptions.serviceOptions.onFailure.call(self, e);
+            };
+            options.onFailure = cbOnFailure;
+        }
 
         // on ajoute le paramètre filterOptions.type spécifiant les ressources.
         var resources = this.options.resources.geocode;
