@@ -57,6 +57,7 @@ var logger = Logger.getLogger("searchengine");
  * @param {Object}  [options.autocompleteOptions.serviceOptions] - overload other options : options of autocomplete service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete})
  * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
+ * @fires searchengine:compute
  * @example
  *  var SearchEngine = ol.control.SearchEngine({
  *      apiKey : "CLEAPI",
@@ -167,6 +168,14 @@ var SearchEngine = (function (Control) {
         this.collapsed = collapsed;
     };
 
+    /**
+     * Get locations data from geocode service
+     *
+     * @returns {Object} data - locations
+     */
+    SearchEngine.prototype.getData = function () {
+        return this._geocodedLocations;
+    };
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -890,6 +899,21 @@ var SearchEngine = (function (Control) {
 
         // sauvegarde de l'etat des locations
         this._geocodedLocations = locations;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event searchengine:compute
+         * @property {Object} type - event
+         * @property {Object} target - instance SearchEngine
+         * @example
+         * ReverseGeocode.on("searchengine:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "searchengine:compute"
+        });
     };
 
     // ################################################################### //

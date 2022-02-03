@@ -12,7 +12,7 @@
 
 * [Added]
 
-    - ajoute d'evenements et de callback de fin de traitement pour les widgets ElevationPath, Route, IsoCurve et ReverseGeocode.
+    - ajoute d'evenements et de callback de fin de traitement pour les widgets ElevationPath, Route, IsoCurve, SearchEngine et ReverseGeocode.
     ```js
     // Exemple
     var iso = new ol.control.Isocurve({
