@@ -629,7 +629,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -666,7 +666,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -703,7 +703,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -740,7 +740,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -777,7 +777,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -820,7 +820,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 

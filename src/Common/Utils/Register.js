@@ -1,4 +1,6 @@
 /**
+ * @private
+ * @description
  * Register definition for IGNF, and EPSG CRS.
  * @example
  * Gp.Register.IGNF.AMST63
