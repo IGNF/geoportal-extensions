@@ -41,7 +41,6 @@
         console.warn(e.target.getData());
     });
     ```
-
 * [Changed]
 
 * [Deprecated]
@@ -72,6 +71,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Correction des paramètres passés aux couches WMTS/WMS (#319) 
 
 * [Security]
 
