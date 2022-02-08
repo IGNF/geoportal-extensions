@@ -786,7 +786,7 @@ var KML = (function (olKML) {
             if (featureStyleFunction) {
                 var _styles = featureStyleFunction(feature, 0);
                 if (_styles && !Array.isArray(_styles)) {
-                  _styles = [_styles];
+                    _styles = [_styles];
                 }
                 if (_styles && _styles.length !== 0) {
                     var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];

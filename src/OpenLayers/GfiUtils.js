@@ -414,6 +414,7 @@ var GfiUtils = {
                     // - getGetFeatureInfoUrl en v5
                     // - getFeatureInfoUrl en v6
                     if (format === "wmts") {
+                        // eslint-disable-next-line no-useless-call
                         _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
@@ -422,6 +423,7 @@ var GfiUtils = {
                             }
                         );
                     } else {
+                        // eslint-disable-next-line no-useless-call
                         _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
