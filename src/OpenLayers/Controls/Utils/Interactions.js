@@ -12,7 +12,8 @@ import Utils from "../../../Common/Utils";
 var logger = Logger.getLogger("interactions");
 
 /**
- * HOWTO
+ * @private
+ * @description
  * Pourquoi et comment l'utiliser ?
  * Cette classe permet de gérer les interactions entre chaque extension.
  * Une extension qui active une interaction avec la carte, doit desactiver

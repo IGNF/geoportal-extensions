@@ -1,33 +1,5 @@
 {
-   "scripts" : {},
-   "date" : "03/12/2021",
-   "peerDependencies" : {},
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "loglevel" : "1.6.6",
-      "ol-mapbox-style" : "6.3.2",
-      "ol" : "6.3.1",
-      "node-fetch" : "^2.6.1",
-      "sortablejs" : "1.8.4",
-      "@mapbox/mapbox-gl-style-spec" : "13.14.0",
-      "proj4" : "2.7.2",
-      "eventbusjs" : "0.2.0",
-      "geoportal-access-lib" : "3.0.5"
-   },
-   "name" : "geoportal-extensions-openlayers",
-   "version" : "3.2.5",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "directories" : {},
-   "bundleDependencies" : [],
+   "main" : "dist/GpPluginOpenLayers-src.js",
    "bugs" : {},
    "files" : [
       "dist/",
@@ -36,11 +8,39 @@
       "README.md",
       "package.json"
    ],
-   "main" : "dist/GpPluginOpenLayers-src.js",
+   "directories" : {},
+   "date" : "28/01/2022",
    "license" : "CECILL-B",
-   "description" : "French Geoportal Extensions for OpenLayers",
+   "module" : "src/OpenLayers/index.js",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "name" : "geoportal-extensions-openlayers",
    "author" : "IGNF",
-   "devDependencies" : {},
+   "dependencies" : {
+      "geoportal-access-lib" : "3.0.5",
+      "proj4" : "2.7.2",
+      "xmldom" : "^0.1.27",
+      "sortablejs" : "1.8.4",
+      "node-fetch" : "^2.6.1",
+      "ol-mapbox-style" : "6.7.0",
+      "eventbusjs" : "0.2.0",
+      "ol" : "6.9.0",
+      "loglevel" : "1.6.6",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1"
+   },
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "scripts" : {},
+   "bundleDependencies" : [],
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "module" : "src/OpenLayers/index.js"
+   "peerDependencies" : {},
+   "version" : "3.2.8",
+   "devDependencies" : {}
 }

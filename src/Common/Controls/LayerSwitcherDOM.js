@@ -14,6 +14,7 @@ var LayerSwitcherDOM = {
             draggable : ".draggable-layer",
             ghostClass : "GPghostLayer",
             animation : 200,
+            forceFallback : true,
             // Call event function on drag and drop
             onEnd : function (e) {
                 // FIXME pas terrrible, mais il faut bien passer ce contexte...

@@ -10,6 +10,7 @@ import Gp from "geoportal-access-lib";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
+import Interactions from "./Utils/Interactions";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
@@ -56,6 +57,7 @@ var logger = Logger.getLogger("searchengine");
  * @param {Object}  [options.autocompleteOptions.serviceOptions] - overload other options : options of autocomplete service from the access-lib API (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete})
  * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
+ * @fires searchengine:compute
  * @example
  *  var SearchEngine = ol.control.SearchEngine({
  *      apiKey : "CLEAPI",
@@ -166,6 +168,14 @@ var SearchEngine = (function (Control) {
         this.collapsed = collapsed;
     };
 
+    /**
+     * Get locations data from geocode service
+     *
+     * @returns {Object} data - locations
+     */
+    SearchEngine.prototype.getData = function () {
+        return this._geocodedLocations;
+    };
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -824,6 +834,24 @@ var SearchEngine = (function (Control) {
         Utils.assign(options, this.options.geocodeOptions.serviceOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
+        // on redefinie les callbacks si les callbacks de service existent
+        var self = this;
+        var bOnFailure = !!(this.options.geocodeOptions.serviceOptions.onFailure !== null && typeof this.options.geocodeOptions.serviceOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(this.options.geocodeOptions.serviceOptions.onSuccess !== null && typeof this.options.geocodeOptions.serviceOptions.onSuccess === "function");
+        if (bOnSuccess) {
+            var cbOnSuccess = function (e) {
+                settings.onSuccess.call(self, e);
+                self.options.geocodeOptions.serviceOptions.onSuccess.call(self, e);
+            };
+            options.onSuccess = cbOnSuccess;
+        }
+        if (bOnFailure) {
+            var cbOnFailure = function (e) {
+                settings.onFailure.call(self, e);
+                self.options.geocodeOptions.serviceOptions.onFailure.call(self, e);
+            };
+            options.onFailure = cbOnFailure;
+        }
 
         // on ajoute le paramètre filterOptions.type spécifiant les ressources.
         var resources = this.options.resources.geocode;
@@ -889,6 +917,21 @@ var SearchEngine = (function (Control) {
 
         // sauvegarde de l'etat des locations
         this._geocodedLocations = locations;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event searchengine:compute
+         * @property {Object} type - event
+         * @property {Object} target - instance SearchEngine
+         * @example
+         * ReverseGeocode.on("searchengine:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "searchengine:compute"
+        });
     };
 
     // ################################################################### //
@@ -1111,6 +1154,9 @@ var SearchEngine = (function (Control) {
      * @private
      */
     SearchEngine.prototype.onShowSearchEngineClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showSearchEngineInput.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.SearchEngine.on("change:collapsed", function ) pour s'abonner à cet évènement)
@@ -1312,7 +1358,7 @@ var SearchEngine = (function (Control) {
                     }
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function () {
                 // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
                 if (context._suggestedLocations && context._suggestedLocations[i]) {

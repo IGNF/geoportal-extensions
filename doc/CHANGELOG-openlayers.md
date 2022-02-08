@@ -100,6 +100,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
   - [Summary](#summary-28)
   - [Changelog](#changelog-26)
+- [Extension Geoportail OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
+  - [Summary](#summary-29)
+  - [Changelog](#changelog-27)
+- [Extension Geoportail OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
+  - [Summary](#summary-30)
+  - [Changelog](#changelog-28)
+- [Extension Geoportail OpenLayers, version 3.2.7](#extension-geoportail-openlayers-version-327)
+  - [Summary](#summary-31)
+  - [Changelog](#changelog-29)
 
 <!-- tocstop -->
 
@@ -1036,6 +1045,91 @@ Utilisation de plusieurs clefs
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.5
+
+**13/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - merge feature-accessibilite (#313)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.6
+
+**17/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+* upgrade d'OpenLayers : 6.9.0
+* upgrade olms : 6.7.0
+
+## Changelog
+
+* [Added]
+
+  * MousePosition : Ajouter un callback au centrage de la carte sur des coordonnées [#315](https://github.com/IGNF/geoportal-extensions/issues/315)
+  
+  * Ajout du mecanisme de desactivation des interactions sur tous les widgets [developpez.com](https://www.developpez.net/forums/d2123362/applications/sig-systeme-d-information-geographique/ign-api-geoportail/utilisation-outils-mesures-gptoolbox-autres-widgets-conflit-fonctionnement/)
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+  * Fix sur l'affichage des pictogrammes du vecteur tuilé
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.7
+
+**28/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Evolution de la documentation et correction du layerswitcher
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Mise à jour de la documentation pour l'utilisation de clefs multiples (#318)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correction du drag&drop sur le LayerSwitcher sous Chrome 97 (138aecced48a3f91503b6d3ec33e917d4cb16e04)
 
 * [Security]
 

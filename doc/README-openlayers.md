@@ -1,71 +1,72 @@
 # Extension Géoportail pour OpenLayers
 
-[![release](https://img.shields.io/badge/release%20-ol%203.0.15-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.0.15)
+[![release](https://img.shields.io/badge/release%20-ol%203.2.6-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.2.6)
 
 <!-- toc -->
 
-- [Mise en oeuvre](#mise-en-oeuvre)
-  * [Téléchargement](#téléchargement)
-    + [Téléchargement direct](#téléchargement-direct)
-    + [Récupération avec NPM](#récupération-avec-npm)
-    + [Accès direct](#accès-direct)
-  * [Intégration dans une page web](#intégration-dans-une-page-web)
-  * [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
-    + [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
-  * [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
-- [Compatibilités](#compatibilités)
-  * [Versions de OpenLayers supportées](#versions-de-openlayers-supportées)
-  * [Navigateurs supportés](#navigateurs-supportés)
-- [Fonctionnalités](#fonctionnalités)
-  * [Systèmes de coordonnées](#systèmes-de-coordonnées)
-  * [Affichage des couches WMTS Géoportail](#affichage-des-couche-wmts-géoportail)
-    + [Utilisation d'un layer WMTS Géoportail](#utilisation-dun-layer-wmts-géoportail)
-      - [Exemple d'utilisation](#exemple-dutilisation)
-      - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154)
-    + [Utilisation d'une source WMTS Géoportail](#utilisation-dune-source-wmts-géoportail)
-      - [Exemple d'utilisation](#exemple-dutilisation-1)
-      - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154-1)
-  * [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
-    + [Utilisation d'un layer WMS Géoportail](#utilisation-dun-layer-wms-géoportail)
-      - [Exemple d'utilisation](#exemple-dutilisation-2)
-    + [Utilisation d'une source WMS Géoportail](#utilisation-dune-source-wms-géoportail)
-      - [Exemple d'utilisation](#exemple-dutilisation-3)
-  * [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
-    + [Exemples d'utilisation](#exemples-dutilisation)
-      - [Utilisation simple](#utilisation-simple)
-  * [Barre de recherche](#barre-de-recherche)
-    + [Exemples d'utilisation](#exemples-dutilisation-1)
-      - [Utilisation simple](#utilisation-simple-1)
-  * [Calculs d'itinéraires](#calculs-ditinéraires)
-    + [Exemples d'utilisation](#exemples-dutilisation-2)
-      - [Utilisation simple](#utilisation-simple-2)
-  * [Calculs d'isochrones / isodistances](#calculs-disochrones--isodistances)
-    + [Exemples d'utilisation](#exemples-dutilisation-3)
-      - [Utilisation simple](#utilisation-simple-3)
-  * [Coordonnées et altitude en un point de la carte](#coordonnées-et-altitude-en-un-point-de-la-carte)
-    + [Exemples d'utilisation](#exemples-dutilisation-4)
-      - [Utilisation simple](#utilisation-simple-4)
-  * [Affichage dynamique des attributions](#affichage-dynamique-des-attributions)
-    + [Exemples d'utilisation](#exemples-dutilisation-5)
-      - [Utilisation simple](#utilisation-simple-5)
-  * [Adresse ou lieu en un point de la carte](#adresse-ou-lieu-en-un-point-de-la-carte)
-    + [Exemples d'utilisation](#exemples-dutilisation-6)
-      - [Utilisation simple](#utilisation-simple-6)
-  * [Outils de croquis](#outils-de-croquis)
-    + [Exemples d'utilisation](#exemples-dutilisation-7)
-      - [Utilisation simple](#utilisation-simple-7)
-  * [Widget d'import de couches](#widget-dimport-de-couches)
-    + [Exemples d'utilisation](#exemples-dutilisation-8)
-      - [Utilisation simple](#utilisation-simple-8)
-  * [Profil altimétrique le long d'un traçé](#profil-altimétrique-le-long-dun-traçé)
-    + [Exemples d'utilisation](#exemples-dutilisation-9)
-      - [Utilisation simple](#utilisation-simple-9)
-  * [Outils de mesures](#outils-de-mesures)
-    + [Exemples d'utilisation](#exemples-dutilisation-10)
-      - [Utilisation simple](#utilisation-simple-10)
-  * [Accès aux informations attributaires des couches](#accès-aux-informations-attributaires-des-couches)
-    + [Exemples d'utilisation](#exemples-dutilisation-11)
-      - [Utilisation simple pour une seule couche](#utilisation-simple-pour-une-seule-couche)
+- [Extension Géoportail pour OpenLayers](#extension-géoportail-pour-openlayers)
+  - [Mise en oeuvre](#mise-en-oeuvre)
+    - [Téléchargement](#téléchargement)
+      - [Téléchargement direct](#téléchargement-direct)
+      - [Récupération avec NPM](#récupération-avec-npm)
+      - [Accès direct](#accès-direct)
+    - [Intégration dans une page web](#intégration-dans-une-page-web)
+    - [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
+      - [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
+    - [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
+  - [Compatibilités](#compatibilités)
+    - [Versions de OpenLayers supportées](#versions-de-openlayers-supportées)
+    - [Navigateurs supportés](#navigateurs-supportés)
+  - [Fonctionnalités](#fonctionnalités)
+    - [Systèmes de coordonnées](#systèmes-de-coordonnées)
+    - [Affichage des couches WMTS Géoportail](#affichage-des-couches-wmts-géoportail)
+      - [Utilisation d'un layer WMTS Géoportail](#utilisation-dun-layer-wmts-géoportail)
+        - [Exemple d'utilisation](#exemple-dutilisation)
+        - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154)
+      - [Utilisation d'une source WMTS Géoportail](#utilisation-dune-source-wmts-géoportail)
+        - [Exemple d'utilisation](#exemple-dutilisation-1)
+        - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154-1)
+    - [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
+      - [Utilisation d'un layer WMS Géoportail](#utilisation-dun-layer-wms-géoportail)
+        - [Exemple d'utilisation](#exemple-dutilisation-2)
+      - [Utilisation d'une source WMS Géoportail](#utilisation-dune-source-wms-géoportail)
+        - [Exemple d'utilisation](#exemple-dutilisation-3)
+    - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
+      - [Exemples d'utilisation](#exemples-dutilisation)
+        - [Utilisation simple](#utilisation-simple)
+    - [Barre de recherche](#barre-de-recherche)
+      - [Exemples d'utilisation](#exemples-dutilisation-1)
+        - [Utilisation simple](#utilisation-simple-1)
+    - [Calculs d'itinéraires](#calculs-ditinéraires)
+      - [Exemples d'utilisation](#exemples-dutilisation-2)
+        - [Utilisation simple](#utilisation-simple-2)
+    - [Calculs d'isochrones / isodistances](#calculs-disochrones--isodistances)
+      - [Exemples d'utilisation](#exemples-dutilisation-3)
+        - [Utilisation simple](#utilisation-simple-3)
+    - [Coordonnées et altitude en un point de la carte](#coordonnées-et-altitude-en-un-point-de-la-carte)
+      - [Exemples d'utilisation](#exemples-dutilisation-4)
+        - [Utilisation simple](#utilisation-simple-4)
+    - [Affichage dynamique des attributions](#affichage-dynamique-des-attributions)
+      - [Exemples d'utilisation](#exemples-dutilisation-5)
+        - [Utilisation simple](#utilisation-simple-5)
+    - [Adresse ou lieu en un point de la carte](#adresse-ou-lieu-en-un-point-de-la-carte)
+      - [Exemples d'utilisation](#exemples-dutilisation-6)
+        - [Utilisation simple](#utilisation-simple-6)
+    - [Outils de croquis](#outils-de-croquis)
+      - [Exemples d'utilisation](#exemples-dutilisation-7)
+        - [Utilisation simple](#utilisation-simple-7)
+    - [Widget d'import de couches](#widget-dimport-de-couches)
+      - [Exemples d'utilisation](#exemples-dutilisation-8)
+        - [Utilisation simple](#utilisation-simple-8)
+    - [Profil altimétrique le long d'un traçé](#profil-altimétrique-le-long-dun-traçé)
+      - [Exemples d'utilisation](#exemples-dutilisation-9)
+        - [Utilisation simple](#utilisation-simple-9)
+    - [Outils de mesures](#outils-de-mesures)
+      - [Exemples d'utilisation](#exemples-dutilisation-10)
+        - [Utilisation simple](#utilisation-simple-10)
+    - [Accès aux informations attributaires des couches](#accès-aux-informations-attributaires-des-couches)
+      - [Exemples d'utilisation](#exemples-dutilisation-11)
+        - [Utilisation simple pour une seule couche](#utilisation-simple-pour-une-seule-couche)
 
 <!-- tocstop -->
 
@@ -192,20 +193,20 @@ Intégrez l'extension géoportail pour OpenLayers dans votre page web classiquem
 
 ### Configuration de l'accès à la plateforme Géoportail
 
-L'extension Géoportail pour OpenLayers exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'obtention d'une **clef d'accès** obtenue sur le site [professionnels.ign.fr](http://professionnels.ign.fr/ign/contrats) ayant les droits sur les ressources que vous souhaitez exploiter.
+L'extension Géoportail pour OpenLayers exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'utilisation d'une ou de plusieurs **clef d'accès** gratuites disponibles sur le site [geoservices.ign.fr](https://geoservices.ign.fr/services-web) ayant les droits sur les ressources que vous souhaitez exploiter.
 
-Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension avec cette clef de deux manières possibles :
+Vous pouvez ensuite paramétrer l'utilisation de l'extension avec la ou les clefs qui correspondent à vos besoins de deux manières possibles :
 
 **Méthode 1** : Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
 ``` html
-<script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginOpenLayers.js"></script>
+<script data-key="CLEF" src="chemin/vers/GpPluginOpenLayers.js"></script>
 ```
 
 Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
 
 ``` html
-<script data-key="VOTRE-CLEF-1,VOTRE-CLEF-2,VOTRE-CLEF-3" src="chemin/vers/GpPluginOpenLayers.js"></script>
+<script data-key="CLEF-1,CLEF-2,CLEF-3" src="chemin/vers/GpPluginOpenLayers.js"></script>
 ```
 
 Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
@@ -218,7 +219,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script src="ol.js"></script>
         <!-- Extension Géoportail pour OpenLayers -->
         <link rel="stylesheet" href="GpPluginOpenLayers.css" />
-        <script src="GpPluginOpenLayers.js" data-key="CLEAPI"></script>
+        <script src="GpPluginOpenLayers.js" data-key="CLEF"></script>
     </head>
     <body>
         <script>
@@ -246,7 +247,35 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEAPI',
+                    apiKey: 'CLEF',
+                    onSuccess: function (response) {
+                        // votre utilisation de l'extension Géoportail pour OpenLayers
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
+```
+
+Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+
+
+``` html
+<html>
+    <head>
+        <!-- Bibliothèque OpenLayers -->
+        <link rel="stylesheet" href="ol.css" />
+        <script src="ol.js"></script>
+        <!-- Extension Géoportail pour OpenLayers -->
+        <link rel="stylesheet" href="GpPluginOpenLayers.css" />
+        <script src="GpPluginOpenLayers.js"></script>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                Gp.Services.getConfig({
+                    apiKey: 'CLEF-1,CLEF-2,CLEF-3',
                     onSuccess: function (response) {
                         // votre utilisation de l'extension Géoportail pour OpenLayers
                     }
@@ -261,7 +290,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
 
-Si vous souhaitez une autoconfiguration locale unique avec plusieurs clés, c'est possible. Pour cela, enregistrer le contenu de la requête suivante dans un fichier autoconf.json (en remplacant key1, key2, key3... par vos clés) :
+Si vous souhaitez une autoconfiguration locale unique avec plusieurs clés, c'est possible. Pour cela, enregistrez le contenu de la requête suivante dans un fichier autoconf.json (en remplacant key1, key2, key3... par les clefs génériques que vous souhaitez utiliser) :
 [autoconf multi-clés : https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback](https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback)
 
 Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
@@ -355,7 +384,9 @@ Gp.Services.getConfig(...)
 
 ### Versions de OpenLayers supportées
 
-Les dernières **versions 3.0.z de l'extension Géoportail pour OpenLayers** peut s'utiliser avec les **versions 5.0.3 et supérieures** d'OpenLayers.
+Les **versions 3.1.z et supérieures de l'extension Géoportail pour OpenLayers** peuvent s'utiliser avec la **version 6.3.1** d'OpenLayers.
+
+Les **versions 3.0.z de l'extension Géoportail pour OpenLayers** peuvent s'utiliser avec les **versions 5.0.3 et supérieures** d'OpenLayers.
 
 La compatibilité avec les **versions 4.0.z** n'est assurée que par les **versions 2.1.2 et antérieures de l'extension Géoportail pour OpenLayers**.
 
@@ -698,7 +729,7 @@ var map = new ol.Map({
         osmLyr,
         // couche Géoportail
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
         })
     ],
     view: new ol.View({
@@ -750,7 +781,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -795,7 +826,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -839,7 +870,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -884,7 +915,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -934,7 +965,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -978,7 +1009,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1022,7 +1053,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1068,7 +1099,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1114,7 +1145,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({
@@ -1159,7 +1190,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.GeoportalWMTS({
-            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
         })
     ],
     view: new ol.View({

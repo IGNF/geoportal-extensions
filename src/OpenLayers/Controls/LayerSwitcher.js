@@ -1019,7 +1019,6 @@ var LayerSwitcher = (function (Control) {
     /**
      * Check if map view is out of layer range (in terms of extent and zoom)
      *
-     * @method isInRange
      * @param {Object} layer - the ol.layer object
      * @param {Object} map   - the ol.Map object
      * @returns {Boolean} outOfRange - false if map view is out of layer range
@@ -1047,7 +1046,6 @@ var LayerSwitcher = (function (Control) {
     /**
      * Get layer informations : title, description, quicklookurl, legends, metadata
      *
-     * @method getLayerInfo
      * @param {Object} layer - the ol.layer object
      * @returns {Object} layerInfo - layer informations
      */

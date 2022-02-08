@@ -40,6 +40,7 @@ import Gp from "geoportal-access-lib";
 import Editor from "./Editor";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -759,6 +760,9 @@ var LayerImport = (function (Control) {
      * @private
      */
     LayerImport.prototype._onShowImportClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         // on affiche les resultats d'une couche MapBox
         if (this._mapBoxObj) {
             this._mapBoxPanel.style.display = "block";
@@ -1056,7 +1060,7 @@ var LayerImport = (function (Control) {
             // liste des sources
             var _glSources = _glStyle.sources;
 
-            // FIXME a t on du multi-sources ? 
+            // FIXME a t on du multi-sources ?
             // mais comment doit on les traiter ?
             // EXPERIMENTAL !
             var _multiSources = (Object.keys(_glSources).length > 1) ? 1 : 0;
