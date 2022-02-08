@@ -337,7 +337,23 @@ var GPX = (function (olGPX) {
      * @param {*} node - ...
      */
     GPX.prototype.readExtensions = function (feature, node) {
+        var _node = node;
+        // recherche de la properties de type Node ou Element
+        // si le node n'est pas renseigné...
         if (!node) {
+            var props = feature.getProperties();
+            for (const key in props) {
+                if (Object.hasOwnProperty.call(props, key)) {
+                    const element = props[key];
+                    if (element instanceof Node) {
+                        _node = element;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!_node) {
             return;
         }
 
@@ -347,8 +363,8 @@ var GPX = (function (olGPX) {
         //     <marker-symbol></marker-symbol>
         //     <marker-color>#ffffff</marker-color>
         // </extensions>
-        for (var index = 0; index < node.childNodes.length; index++) {
-            var element = node.childNodes[index];
+        for (var index = 0; index < _node.childNodes.length; index++) {
+            var element = _node.childNodes[index];
             if (element.nodeType === 1) {
                 feature.set(element.nodeName, element.textContent);
             }
