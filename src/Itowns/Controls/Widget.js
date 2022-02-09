@@ -39,7 +39,7 @@ function Widget (options) {
 /*
  * @lends module:Attributions
  */
-Widget.prototype = Object.create( /*THREE*/ EventDispatcher.prototype, {});
+Widget.prototype = Object.create(/* THREE */ EventDispatcher.prototype, {});
 
 /**
  * Constructor (alias)

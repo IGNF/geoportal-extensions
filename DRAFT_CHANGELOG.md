@@ -1,6 +1,5 @@
 
 
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -8,10 +7,17 @@
 
 ## Summary
 
+* fonctionnalités sur l'outil de dessins
+* gestion des styles sur les formats GPX et GeoJSON
+* gestion des evenements de fin de traitements sur les widgets
+
 ## Changelog
 
 * [Added]
 
+    - gestion des geometries de type *Multi* dans l'outil de dessins
+    - ajout de l'export au format GPX et GeoJSON dans l'outil de dessins
+    - gestion des styles au format GPX et GeoJSON (specification MapBox)
     - ajoute d'evenements et de callback de fin de traitement pour les widgets ElevationPath, Route, IsoCurve, SearchEngine et ReverseGeocode.
     ```js
     // Exemple
@@ -41,6 +47,7 @@
         console.warn(e.target.getData());
     });
     ```
+
 * [Changed]
 
 * [Deprecated]

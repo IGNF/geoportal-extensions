@@ -216,12 +216,29 @@ var GfiUtils = {
             var oDiv = null;
             var ul = null;
             var li = null;
+            // Liste des properties à retirer de la visualisation :
+            var listForbidden = [
+                // styles
+                "fill",
+                "fill-opacity",
+                "stroke",
+                "stroke-opacity",
+                "stroke-width",
+                "marker-symbol",
+                "marker-color",
+                "marker-size",
+                "geometry", // geometrie
+                "value",
+                "name", // déjà traité
+                "description", // déjà traité
+                "styleUrl",
+                "extensionsNode_" // extensions GPX
+            ];
             for (p in props) {
-                if (p === "geometry" || p === "value" || p === "name" || p === "description" || p === "styleUrl") {
+                if (props[p] === undefined) {
                     continue;
                 }
-                // FIXME La lecture des extensions GPX n'est pas gérée !
-                if (p === "extensionsNode_" && props[p] === undefined) {
+                if (listForbidden.indexOf(p) !== -1) {
                     continue;
                 }
                 if (!others) {
@@ -397,6 +414,7 @@ var GfiUtils = {
                     // - getGetFeatureInfoUrl en v5
                     // - getFeatureInfoUrl en v6
                     if (format === "wmts") {
+                        // eslint-disable-next-line no-useless-call
                         _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
@@ -405,6 +423,7 @@ var GfiUtils = {
                             }
                         );
                     } else {
+                        // eslint-disable-next-line no-useless-call
                         _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
