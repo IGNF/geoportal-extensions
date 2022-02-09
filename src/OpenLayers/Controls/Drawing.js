@@ -1069,7 +1069,7 @@ var Drawing = (function (Control) {
             var initValues = {};
 
             // FIXME
-            // l'appel feature.getStyle() est parfois nul pour des gemetries Point
+            // l'appel feature.getStyle() est parfois nul pour des geometries Point
             // avec un style par defaut !
 
             var geom = seEv.selected[0].getGeometry();
@@ -1122,12 +1122,10 @@ var Drawing = (function (Control) {
                         valuesColor = style.getStroke().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.strokeColor = hexColor.hex;
-                            initValues.fillOpacity = hexColor.opacity;
-                        } else {
-                            initValues.strokeColor = valuesColor;
                         }
+                        hexColor = Color.rgbaToHex(valuesColor);
+                        initValues.strokeColor = hexColor.hex;
+                        initValues.fillOpacity = hexColor.opacity;
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.strokeWidth;
@@ -1142,12 +1140,10 @@ var Drawing = (function (Control) {
                         valuesColor = style.getStroke().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.strokeColor = hexColor.hex;
-                            initValues.strokeOpacity = hexColor.opacity;
-                        } else {
-                            initValues.strokeColor = valuesColor;
                         }
+                        hexColor = Color.rgbaToHex(valuesColor);
+                        initValues.strokeColor = hexColor.hex;
+                        initValues.strokeOpacity = hexColor.opacity;
                     }
                 }
                 if (style && style.getFill()) {
