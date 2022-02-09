@@ -1082,25 +1082,31 @@ var Drawing = (function (Control) {
                     if (style.getText().getStroke() &&
                             style.getText().getStroke().getColor()) {
                         valuesColor = style.getText().getStroke().getColor();
-                        if (Array.isArray(valuesColor)) {
+                        if (Array.isArray(valuesColor)) { // FIXME Array !?
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.strokeColor = hexColor.hex;
-                            initValues.strokeOpacity = hexColor.opacity;
                         } else {
                             initValues.strokeColor = valuesColor;
                         }
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
+                        initValues.strokeColor = hexColor.hex;
+                        initValues.strokeOpacity = hexColor.opacity;
                     }
                     if (style.getText().getFill() && style.getText().getFill().getColor()) {
                         valuesColor = style.getText().getFill().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.fillColor = hexColor.hex;
-                            initValues.fillOpacity = hexColor.opacity;
                         } else {
                             initValues.fillColor = valuesColor;
                         }
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
+                        initValues.fillColor = hexColor.hex;
+                        initValues.fillOpacity = hexColor.opacity;
                     }
                     initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor;
                     initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor;
@@ -1122,10 +1128,15 @@ var Drawing = (function (Control) {
                         valuesColor = style.getStroke().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
+                        } else {
+                            initValues.strokeColor = valuesColor;
                         }
-                        hexColor = Color.rgbaToHex(valuesColor);
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
                         initValues.strokeColor = hexColor.hex;
-                        initValues.fillOpacity = hexColor.opacity;
+                        initValues.strokeOpacity = hexColor.opacity;
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.strokeWidth;
@@ -1140,8 +1151,13 @@ var Drawing = (function (Control) {
                         valuesColor = style.getStroke().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
+                        } else {
+                            initValues.strokeColor = valuesColor;
                         }
-                        hexColor = Color.rgbaToHex(valuesColor);
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
                         initValues.strokeColor = hexColor.hex;
                         initValues.strokeOpacity = hexColor.opacity;
                     }
@@ -1151,8 +1167,13 @@ var Drawing = (function (Control) {
                         valuesColor = style.getFill().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
+                        } else {
+                            initValues.fillColor = valuesColor;
                         }
-                        hexColor = Color.rgbaToHex(valuesColor);
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
                         initValues.fillColor = hexColor.hex;
                         initValues.fillOpacity = hexColor.opacity;
                     }
