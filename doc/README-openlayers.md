@@ -1,6 +1,6 @@
 # Extension Géoportail pour OpenLayers
 
-[![release](https://img.shields.io/badge/release%20-ol%203.2.6-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.2.6)
+[![release](https://img.shields.io/badge/release%20-ol%203.2.8-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.2.8)
 
 <!-- toc -->
 
@@ -70,7 +70,7 @@
 
 <!-- tocstop -->
 
-L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers dans ses versions 3 et supérieures](http://openlayers.org/) :
+L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers dans ses versions 3 et supérieures](https://openlayers.org/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
 
@@ -133,7 +133,7 @@ L'extension Géoportail pour OpenLayers comprend l'arborescence de fichiers suiv
             (version non minifiée des css pour une utilisation en développement)
 ```
 
-Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLayers](http://openlayers.org/download/).
+Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLayers](https://openlayers.org/download/).
 
 
 <a id="download-direct"/>
@@ -411,7 +411,7 @@ Safari     | Versions récentes (6.1+)
 
 ### Systèmes de coordonnées
 
-OpenLayers utilise par défaut les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) comme expliqué [ici](http://openlayers.org/en/latest/apidoc/ol.proj.html).
+OpenLayers utilise par défaut les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) comme expliqué [ici](https://openlayers.org/en/latest/apidoc/module-ol_proj.html).
 
 L'extension Géoportail pour OpenLayers embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
 Il est possible d'utiliser ces projections :
@@ -694,7 +694,7 @@ var map = new ol.Map({
 
 Ce widget permet à l'utilisateur de gérer l'empilement des couches composant la carte ol.Map et, pour chacune d'elles, d'agir sur la visibilité, l'opacité et d'afficher des informations qui lui sont associées (titre, description, métadonnées, légende).
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.LayerSwitcher ](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.LayerSwitcher.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.LayerSwitcher ](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.LayerSwitcher.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var layerSwitcher = new ol.control.LayerSwitcher(opts) ;
@@ -762,7 +762,7 @@ La barre de recherche permet de positionner la carte à partir de la saisie d'un
 
 La saisie de localisants peut s'accompagner d'un mode d'autocomplétion s'appuyant sur le service d'autocomplétion de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la calsse [ol.control.SearchEngine](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.SearchEngine.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la calsse [ol.control.SearchEngine](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.SearchEngine.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var search = new ol.control.SearchEngine(opts) ;
@@ -807,7 +807,7 @@ map.addControl(searchControl);
 
 Le widget de calcul d'itinéraires permet d'intéragir avec une carte OpenLayers pour effectuer des calculs d'itinéraires utilisant le service dédié de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle instance de la classe [ol.control.Route](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Route.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle instance de la classe [ol.control.Route](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Route.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var route = new ol.control.Route(opts) ;
@@ -851,7 +851,7 @@ map.addControl(routeControl);
 
 Ce widget permet d'intéragir avec une carte OpenLayers pour effectuer des calculs d'isochrones / isodistances utilisant le service dédié de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.Isocurve()](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Isocurve.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.Isocurve()](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Isocurve.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var iso = new ol.control.Isocurve(opts);
@@ -896,7 +896,7 @@ map.addControl(isoControl);
 Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte OpenLayers dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
 Un mode "édition" permet de localiser des coordonnées sur la carte en éditant les coordonnées affichées dans le widget.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalMousePosition](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GeoportalMousePosition.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalMousePosition](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GeoportalMousePosition.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var mp = new ol.control.GeoportalMousePosition(opts);
@@ -942,11 +942,11 @@ map.addControl(mpControl);
 
 ### Affichage dynamique des attributions
 
-Ce widget a pour but d'afficher les attributions (de type [ol.Attribution](http://openlayers.org/en/latest/apidoc/ol.Attribution.html)) associées aux couches visibles sur la carte. Il étend les fonctionnalités du contrôle natif d'OpenLayers ([ol.control.Attribution](http://openlayers.org/en/latest/apidoc/ol.control.Attribution.html)) dont il hérite en permettant l'affichage des attributions en fonction du positionnement de la carte (centre, zoom) pour les couches ayant des originators multiples.
+Ce widget a pour but d'afficher les attributions associées aux couches visibles sur la carte. Il étend les fonctionnalités du contrôle natif d'OpenLayers ([ol.control.Attribution](https://openlayers.org/en/latest/apidoc/module-ol_control_Attribution-Attribution.html)) dont il hérite en permettant l'affichage des attributions en fonction du positionnement de la carte (centre, zoom) pour les couches ayant des originators multiples.
 
 Les couches Géoportail (de type [WMS](#WMS) ou [WMTS](#WMTS)) possèdent nativement cette propriété. Pour les autres, le paramétrage dynamique des originators se fait par l'adjonction à l'objet source de la couche de la propriété "\_originators", tableau de [Gp.Services.Config.Originator](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.Config.Originator.html).
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalAttribution](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GeoportalAttribution.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalAttribution](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GeoportalAttribution.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var att = new ol.control.GeoportalAttribution(opts);
@@ -990,7 +990,7 @@ map.addControl(attControl);
 
 Ce widget permet d'obtenir un ensemble de localisants Géographiques (adresses, toponymes ou parcelles cadastrales) en un point ou une zone (cercle ou emprise rectangulaire) saisie interactivement par l'internaute sur une carte OpenLayers.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ReverseGeocode](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.ReverseGeocode.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ReverseGeocode](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.ReverseGeocode.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var reverse = new ol.control.ReverseGeocode(opts);
@@ -1034,7 +1034,7 @@ map.addControl(rvControl);
 
 Ce widget propose un ensemble d'outils de croquis permettant de dessiner sur une carte OpenLayers : poser des markers, dessiner des lignes, polygones ou faire des écritures dans des styles choisis par l'internaute.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.Drawing](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Drawing.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.Drawing](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Drawing.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var drawing = new ol.control.Drawing(opts);
@@ -1079,7 +1079,7 @@ map.addControl(drawControl);
 
 Ce widget permet à un internaute d'importer ses propres données géographiques dans des formats standards en superposition des données d'une carte OpenLayers.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.LayerImport](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.LayerImport.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.LayerImport](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.LayerImport.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 
 ``` javascript
@@ -1125,7 +1125,7 @@ map.addControl(lyrImport);
 
 Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte OpenLayers. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ElevationPath](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.ElevationPath.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ElevationPath](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.ElevationPath.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 
 ``` javascript
@@ -1170,7 +1170,7 @@ map.addControl(ep);
 
 Trois widgets sont proposés permettant à un internaute d'effectuer des mesures sur une carte OpenLayers : mesures de distance, de surface et d'azimuth.
 
-Leur utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.MeasureLength](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.MeasureLength.html), pour les distances ; [ol.control.MeasureArea](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.MeasureArea.html), pour les surfaces ou [ol.control.MeasureAzimuth](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.MeasureAzimuth.html) pour les mesures d'azimuth que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Leur utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.MeasureLength](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.MeasureLength.html), pour les distances ; [ol.control.MeasureArea](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.MeasureArea.html), pour les surfaces ou [ol.control.MeasureAzimuth](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.MeasureAzimuth.html) pour les mesures d'azimuth que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 
 ``` javascript
@@ -1219,7 +1219,7 @@ Dans le cas des couches vecteur, ces informations correspondent aux informations
 Dans le cas des couches raster (WMS et WMTS), c'est le contenu de la réponse d'une requête GetFeatureInfo sur la première couche qui est affiché.
 Lorsque le contrôle est activé pour plusieurs couches, les informations affichées seront celles de la première couche visible rencontrée dans la carte (en partant du haut de la pile des couches).
 
-Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GetFeatureInfo](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GetFeatureInfo.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](http://openlayers.org/en/latest/apidoc/ol.Map.html#addControl), de la manière suivante :
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GetFeatureInfo](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GetFeatureInfo.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
 ``` javascript
 var getFeatureInfo = new ol.control.GetFeatureInfo(opts);

@@ -37,7 +37,7 @@ var logger = Logger.getLogger("getfeatureinfo");
  * @param {String} [options.options.proxyUrl] - Proxy URL to avoid cross-domain problems.
  * @param {Array.<String>} [options.options.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
  * @param {Boolean} [options.options.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
- * @param {olx.OverlayPanOptions} [options.options.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+ * @param {Object} [options.options.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
  * @param {Number} [options.options.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
  */
 var GetFeatureInfo = (function (Control) {
