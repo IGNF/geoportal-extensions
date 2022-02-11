@@ -19,7 +19,10 @@ import {
 import {
     LineString,
     Point,
-    Polygon
+    Polygon,
+    MultiLineString,
+    MultiPoint,
+    MultiPolygon
 } from "ol/geom";
 // FIXME not include into ol/geom !?
 import LinearRing from "ol/geom/LinearRing";
@@ -46,6 +49,8 @@ import Color from "../../Common/Utils/ColorUtils";
 import DrawingDOM from "../../Common/Controls/DrawingDOM";
 // import local with ol dependencies
 import KMLExtended from "../Formats/KML";
+import GeoJSONExtended from "../Formats/GeoJSON";
+import GPXExtended from "../Formats/GPX";
 import LayerSwitcher from "./LayerSwitcher";
 
 var logger = Logger.getLogger("Drawing");
@@ -342,9 +347,9 @@ var Drawing = (function (Control) {
     };
 
     /**
-     * Export features of current drawing layer in KML.
+     * Export features of current drawing layer (KML by default).
      *
-     * @returns {String} a KML representation of drawn features or null if not possible.
+     * @returns {String} a representation of drawn features (KML, GPX or GeoJSON) or null if not possible.
      */
     Drawing.prototype.exportFeatures = function () {
         var result = null;
@@ -362,14 +367,35 @@ var Drawing = (function (Control) {
             logger.log("Impossible to export : no features found.");
             return result;
         }
+
+        var ClassName = null;
+        switch (this.getExportFormat()) {
+            case "KML":
+                ClassName = new KMLExtended({
+                    writeStyles : true
+                });
+                break;
+            case "GPX":
+                ClassName = new GPXExtended({
+                    // readExtensions : function (ext) {/* only extensions nodes from wpt, rte and trk can be processed */ }
+                });
+                break;
+            case "GEOJSON":
+                ClassName = new GeoJSONExtended({});
+                break;
+            default:
+                break;
+        }
+
+        if (!ClassName) {
+            logger.log("Impossible to export : format unknown !?");
+            return result;
+        }
+
         var featProj = this.layer.getSource().getProjection();
         featProj = featProj || this.getMap().getView().getProjection();
 
-        var kmlFormat = new KMLExtended({
-            writeStyles : true
-        });
-
-        result = kmlFormat.writeFeatures(this.layer.getSource().getFeatures(), {
+        result = ClassName.writeFeatures(this.layer.getSource().getFeatures(), {
             dataProjection : "EPSG:4326",
             featureProjection : featProj
         });
@@ -415,6 +441,42 @@ var Drawing = (function (Control) {
      */
     Drawing.prototype.getExportName = function () {
         return this._exportName;
+    };
+
+    /**
+     * Setter for Export format (KML, GPX or GeoJSON).
+     *
+     * @param {String} format - Export format. By default, "KML".
+     */
+    Drawing.prototype.setExportFormat = function (format) {
+        this._exportFormat = (format) ? format.toUpperCase() : "KML";
+        switch (format.toUpperCase()) {
+            case "KML":
+                this._exportExt = ".kml";
+                this._exportMimeType = "application/vnd.google-earth.kml+xml";
+                break;
+            case "GPX":
+                this._exportExt = ".gpx";
+                this._exportMimeType = "application/gpx+xml";
+                break;
+            case "GEOJSON":
+                this._exportExt = ".geojson";
+                this._exportMimeType = "application/geo+json";
+                break;
+            default:
+                // redefine format by default !
+                this._exportFormat = "KML";
+                break;
+        }
+    };
+
+    /**
+     * getter for Export format.
+     *
+     * @returns {String} export format
+     */
+    Drawing.prototype.getExportFormat = function () {
+        return this._exportFormat;
     };
 
     // ################################################################### //
@@ -477,7 +539,9 @@ var Drawing = (function (Control) {
 
         // export name / format / ...
         this._exportName = "Croquis";
-        this._exportFormat = ".kml";
+        this._exportFormat = "KML";
+        this._exportMimeType = "application/vnd.google-earth.kml+xml";
+        this._exportExt = ".kml";
 
         options = options || {};
         // Set default options
@@ -875,17 +939,17 @@ var Drawing = (function (Control) {
             /**
             * Enregistrement de la valeur saisie dans l'input.
             *
+            * @param {String} key - clef de l'attribut.
             * @param {String} value - valeur de l'attribut.
             * @param {Boolean} save - true si on garde le label.
             */
-            var setAttValue = function (value, save) {
+            var setAttValue = function (key, value, save) {
                 context.getMap().removeOverlay(context.popupOvl);
                 context.popupOvl = null;
                 if (save && value && value.trim().length > 0) {
-                    var formated = value.replace(/\n/g, "<br>");
-                    feature.setProperties({
-                        description : formated
-                    });
+                    var obj = {};
+                    obj[key] = value.replace(/\n/g, "<br>");
+                    feature.setProperties(obj);
                 }
             };
 
@@ -926,7 +990,8 @@ var Drawing = (function (Control) {
                     inputId : this._addUID("att-input"),
                     placeholder : "Saisir une description...",
                     measure : (this.options.tools.measure) ? feature.getProperties().measure : null,
-                    geomType : geomType
+                    geomType : geomType,
+                    key : "description"
                 });
             }
             // un peu de menage...
@@ -1002,94 +1067,113 @@ var Drawing = (function (Control) {
             var popupOvl = null;
             var geomType = null;
             var initValues = {};
-            if (seEv.selected[0].getGeometry() instanceof Point) {
+
+            // FIXME
+            // l'appel feature.getStyle() est parfois nul pour des geometries Point
+            // avec un style par defaut !
+
+            var geom = seEv.selected[0].getGeometry();
+            var style = seEv.selected[0].getStyle();
+            if (geom instanceof Point || geom instanceof MultiPoint) {
                 // on determine si c'est un marker ou un label.
                 var _label = seEv.selected[0].getProperties().name;
-                if (seEv.selected[0].getStyle().getText() && _label) {
+                if (style && style.getText() && _label) {
                     geomType = "Text";
-                    if (seEv.selected[0].getStyle().getText().getStroke() &&
-                            seEv.selected[0].getStyle().getText().getStroke().getColor()) {
-                        valuesColor = seEv.selected[0].getStyle().getText().getStroke().getColor();
-                        if (Array.isArray(valuesColor)) {
+                    if (style.getText().getStroke() &&
+                            style.getText().getStroke().getColor()) {
+                        valuesColor = style.getText().getStroke().getColor();
+                        if (Array.isArray(valuesColor)) { // FIXME Array !?
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.strokeColor = hexColor.hex;
-                            initValues.strokeOpacity = hexColor.opacity;
                         } else {
                             initValues.strokeColor = valuesColor;
                         }
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
+                        initValues.strokeColor = hexColor.hex;
+                        initValues.strokeOpacity = hexColor.opacity;
                     }
-                    if (seEv.selected[0].getStyle().getText().getFill() &&
-                            seEv.selected[0].getStyle().getText().getFill().getColor()) {
-                        valuesColor = seEv.selected[0].getStyle().getText().getFill().getColor();
+                    if (style.getText().getFill() && style.getText().getFill().getColor()) {
+                        valuesColor = style.getText().getFill().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.fillColor = hexColor.hex;
-                            initValues.fillOpacity = hexColor.opacity;
                         } else {
                             initValues.fillColor = valuesColor;
                         }
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
+                        initValues.fillColor = hexColor.hex;
+                        initValues.fillOpacity = hexColor.opacity;
                     }
                     initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor;
                     initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor;
-                } else if (seEv.selected[0].getStyle() &&
-                        seEv.selected[0].getStyle().getImage()) {
+                } else if (style && style.getImage()) {
                     geomType = "Point";
-                    if (seEv.selected[0].getStyle().getImage().getSrc()) {
-                        initValues.markerSrc = seEv.selected[0].getStyle().getImage().getSrc();
+                    if (style.getImage().getSrc()) {
+                        initValues.markerSrc = style.getImage().getSrc();
                     } else {
                         initValues.markerSrc = this.options.markersList[0].src;
                     }
                 }
-            } else if (seEv.selected[0].getGeometry() instanceof LineString) {
+            } else if (geom instanceof LineString || geom instanceof MultiLineString) {
                 geomType = "Line";
-                if (seEv.selected[0].getStyle() &&
-                        seEv.selected[0].getStyle().getStroke()) {
-                    if (seEv.selected[0].getStyle().getStroke().getWidth()) {
-                        initValues.strokeWidth = seEv.selected[0].getStyle().getStroke().getWidth();
+                if (style && style.getStroke()) {
+                    if (style.getStroke().getWidth()) {
+                        initValues.strokeWidth = style.getStroke().getWidth();
                     }
-                    if (seEv.selected[0].getStyle().getStroke().getColor()) {
-                        valuesColor = seEv.selected[0].getStyle().getStroke().getColor();
+                    if (style.getStroke().getColor()) {
+                        valuesColor = style.getStroke().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.strokeColor = hexColor.hex;
-                            initValues.fillOpacity = hexColor.opacity;
                         } else {
                             initValues.strokeColor = valuesColor;
                         }
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
+                        initValues.strokeColor = hexColor.hex;
+                        initValues.strokeOpacity = hexColor.opacity;
                     }
                 }
                 initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.strokeWidth;
                 initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.strokeColor;
-            } else if (seEv.selected[0].getGeometry() instanceof Polygon) {
+            } else if (geom instanceof Polygon || geom instanceof MultiPolygon) {
                 geomType = "Polygon";
-                if (seEv.selected[0].getStyle() &&
-                        seEv.selected[0].getStyle().getStroke()) {
-                    if (seEv.selected[0].getStyle().getStroke().getWidth()) {
-                        initValues.strokeWidth = seEv.selected[0].getStyle().getStroke().getWidth();
+                if (style && style.getStroke()) {
+                    if (style.getStroke().getWidth()) {
+                        initValues.strokeWidth = style.getStroke().getWidth();
                     }
-                    if (seEv.selected[0].getStyle().getStroke().getColor()) {
-                        valuesColor = seEv.selected[0].getStyle().getStroke().getColor();
+                    if (style.getStroke().getColor()) {
+                        valuesColor = style.getStroke().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
-                            hexColor = Color.rgbaToHex(valuesColor);
-                            initValues.strokeColor = hexColor.hex;
-                            initValues.strokeOpacity = hexColor.opacity;
                         } else {
                             initValues.strokeColor = valuesColor;
                         }
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
+                        initValues.strokeColor = hexColor.hex;
+                        initValues.strokeOpacity = hexColor.opacity;
                     }
                 }
-                if (seEv.selected[0].getStyle() &&
-                        seEv.selected[0].getStyle().getFill()) {
-                    if (seEv.selected[0].getStyle().getFill().getColor()) {
-                        valuesColor = seEv.selected[0].getStyle().getFill().getColor();
+                if (style && style.getFill()) {
+                    if (style.getFill().getColor()) {
+                        valuesColor = style.getFill().getColor();
                         if (Array.isArray(valuesColor)) {
                             valuesColor = "rgba(" + valuesColor.join() + ")";
+                        } else {
+                            initValues.fillColor = valuesColor;
                         }
-                        hexColor = Color.rgbaToHex(valuesColor);
+                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                            hex : valuesColor,
+                            opacity : 1
+                        };
                         initValues.fillColor = hexColor.hex;
                         initValues.fillOpacity = hexColor.opacity;
                     }
@@ -1130,7 +1214,7 @@ var Drawing = (function (Control) {
                                 text : new Text({
                                     font : "16px sans",
                                     textAlign : "left",
-                                    text : seEv.selected[0].getStyle().getText().getText(),
+                                    text : style.getText().getText(),
                                     fill : new Fill({
                                         color : fillColorElem.value
                                     }),
@@ -1252,30 +1336,37 @@ var Drawing = (function (Control) {
             var geomType = null;
             var _textValue = null;
             var _measure = null;
-            if (seEv.selected[0].getGeometry() instanceof Point) {
+
+            var geom = seEv.selected[0].getGeometry();
+            var style = seEv.selected[0].getStyle();
+            if (geom instanceof Point || geom instanceof MultiPoint) {
                 // on determine si c'est un marker ou un label.
                 var _label = seEv.selected[0].getProperties().name;
-                if (seEv.selected[0].getStyle() &&
-                        seEv.selected[0].getStyle().getText() && _label) {
+                if (style && style.getText() && _label) {
                     geomType = "Text";
-                } else if (seEv.selected[0].getStyle() &&
-                        seEv.selected[0].getStyle().getImage()) {
+                } else if (style && style.getImage()) {
                     geomType = "Point";
                 }
-            } else if (seEv.selected[0].getGeometry() instanceof LineString) {
+            } else if (geom instanceof LineString || geom instanceof MultiLineString) {
                 geomType = "Line";
-            } else if (seEv.selected[0].getGeometry() instanceof Polygon) {
+            } else if (geom instanceof Polygon || geom instanceof MultiPolygon) {
                 geomType = "Polygon";
+            } else {
+                logger.log("Geometry type for styling not supported .");
+                return;
             }
+
             if (!geomType) {
                 logger.log("Unhandled geometry type for styling.");
                 return;
             }
+
             if (geomType === "Text") {
                 // pour les labels on récupère la valeur dans le style
-                _textValue = seEv.selected[0].getStyle().getText().getText();
+                _textValue = style.getText().getText();
             } else {
                 // pour les autres, c'est un attribut du feature
+                // choix à faire entre description (KML et GeoJSON) ou desc (GPX)
                 var featProps = seEv.selected[0].getProperties();
                 if (featProps && featProps.hasOwnProperty("description")) {
                     _textValue = featProps["description"];
@@ -1284,18 +1375,21 @@ var Drawing = (function (Control) {
                     _measure = featProps["measure"];
                 }
             }
+
             var context = this;
             /**
-                 * Enregistrement de la valeur saisie dans l'input.
-                 *
-                 * @param {String} value - valeur de l'attribut.
-                 * @param {Boolean} save - true si on garde le label.
-                 */
-            var setTextValue = function (value, save) {
+             * Enregistrement de la valeur saisie dans l'input.
+             *
+             * @param {String} key - clef de l'attribut.
+             * @param {String} value - valeur de l'attribut.
+             * @param {Boolean} save - true si on garde le label.
+             */
+            var setTextValue = function (key, value, save) {
                 context.getMap().removeOverlay(popupOvl);
                 if (!save) {
                     return;
                 }
+
                 var feature = seEv.selected[0];
                 if (geomType === "Text") {
                     var style = feature.getStyle();
@@ -1306,25 +1400,29 @@ var Drawing = (function (Control) {
                     feature.setStyle(style);
                     return;
                 }
-                var _formated = value.replace(/\n/g, "<br>");
-                feature.setProperties({
-                    description : _formated
-                });
+
+                var obj = {};
+                obj[key] = value.replace(/\n/g, "<br>");
+                feature.setProperties(obj);
             };
+
             var popupDiv = this._createLabelDiv({
                 applyFunc : setTextValue,
                 inputId : this._addUID("label-input"),
                 placeholder : (geomType === "Text" ? "Saisir un label..." : "Saisir une description..."),
                 text : _textValue,
+                key : "description",
                 measure : (this.options.tools.measure) ? _measure : null,
                 geomType : geomType
             });
+
             popupOvl = new Overlay({
                 element : popupDiv,
                 // FIXME : autres valeurs.
                 positioning : "top-center"
                 // stopEvent : false
             });
+
             this.getMap().addOverlay(popupOvl);
             popupOvl.setPosition(seEv.mapBrowserEvent.coordinate);
             document.getElementById(this._addUID("label-input")).focus();
@@ -1460,7 +1558,8 @@ var Drawing = (function (Control) {
                 if (context.dtOptions["points"].active) {
                     context.interactionCurrent = new DrawInteraction({
                         stopClick : true,
-                        features : context.layer.getSource().getFeaturesCollection(),
+                        // features : context.layer.getSource().getFeaturesCollection(),
+                        source : context.layer.getSource(),
                         style : new Style({
                             image : new Icon(this._getIconStyleOptions(this.options.markersList[0]))
                         }),
@@ -1477,7 +1576,8 @@ var Drawing = (function (Control) {
                 if (context.dtOptions["lines"].active) {
                     context.interactionCurrent = new DrawInteraction({
                         stopClick : true,
-                        features : context.layer.getSource().getFeaturesCollection(),
+                        // features : context.layer.getSource().getFeaturesCollection(),
+                        source : context.layer.getSource(),
                         style : new Style({
                             image : new Circle({
                                 radius : this.options.cursorStyle.radius,
@@ -1507,7 +1607,8 @@ var Drawing = (function (Control) {
                 if (context.dtOptions["polygons"].active) {
                     context.interactionCurrent = new DrawInteraction({
                         stopClick : true,
-                        features : context.layer.getSource().getFeaturesCollection(),
+                        // features : context.layer.getSource().getFeaturesCollection(),
+                        source : context.layer.getSource(),
                         style : new Style({
                             image : new Circle({
                                 radius : this.options.cursorStyle.radius,
@@ -1619,7 +1720,8 @@ var Drawing = (function (Control) {
                 if (context.dtOptions["text"].active) {
                     context.interactionCurrent = new DrawInteraction({
                         stopClick : true,
-                        features : context.layer.getSource().getFeaturesCollection(),
+                        // features : context.layer.getSource().getFeaturesCollection(),
+                        source : context.layer.getSource(),
                         style : new Style({
                             image : new Circle({
                                 radius : this.options.cursorStyle.radius,
@@ -1640,10 +1742,11 @@ var Drawing = (function (Control) {
                         /**
                         * Enregistrement de la valeur saisie dans l'input.
                         *
+                        * @param {String} key - clef du label
                         * @param {String} value - valeur du label
                         * @param {Boolean} save - true si on garde le label.
                         */
-                        var setTextValue = function (/* context,feature, */ value, save) {
+                        var setTextValue = function (key, value, save) {
                             context.getMap().removeOverlay(popupOvl);
                             if (!save) {
                                 // removes feature from overlay.
@@ -1651,9 +1754,9 @@ var Drawing = (function (Control) {
                                 return;
                             }
 
-                            deEv.feature.setProperties({
-                                name : value
-                            });
+                            var obj = {};
+                            obj[key] = value;
+                            deEv.feature.setProperties(obj);
 
                             deEv.feature.setStyle(new Style({
                                 image : new Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
@@ -1675,6 +1778,7 @@ var Drawing = (function (Control) {
                             applyFunc : setTextValue,
                             inputId : context._addUID("label-input"),
                             geomType : "Text",
+                            key : "name",
                             placeholder : "Saisir un label..."
                         });
                         popupOvl = new Overlay({
@@ -1799,7 +1903,6 @@ var Drawing = (function (Control) {
      * @private
      */
     Drawing.prototype.onExportFeatureClick = function () {
-        // TODO
         var content = this.exportFeatures();
         if (!content) {
             return;
@@ -1807,8 +1910,8 @@ var Drawing = (function (Control) {
         var link = document.createElement("a");
         // FIXME : determiner le bon charset !
         var charset = "utf-8";
-        link.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(content));
-        link.setAttribute("download", this.getExportName() + ".kml");
+        link.setAttribute("href", "data:" + this._exportMimeType + ";charset=" + charset + "," + encodeURIComponent(content));
+        link.setAttribute("download", this.getExportName() + this._exportExt);
         if (document.createEvent) {
             var event = document.createEvent("MouseEvents");
             event.initEvent("click", true, true);

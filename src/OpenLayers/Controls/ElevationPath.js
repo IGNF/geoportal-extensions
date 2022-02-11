@@ -53,11 +53,11 @@ var logger = Logger.getLogger("elevationpath");
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
  * @param {Object} [options.stylesOptions] - styles management
- * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
+ * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Image-ImageStyle.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
- * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
- * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
- * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
+ * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Image-ImageStyle.html ol.style.Image} subclass object.
+ * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Stroke-Stroke.html ol.style.Stroke} object.
+ * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Stroke-Stroke.html ol.style.Stroke} object.
  * @param {Object} [options.displayProfileOptions = {}] - profile options.
  * @param {Boolean} [options.displayProfileOptions.totalDistance = true] - display the total distance of the path
  * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
@@ -69,6 +69,7 @@ var logger = Logger.getLogger("elevationpath");
  * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
  * @fires elevationpath:drawstart
  * @fires elevationpath:drawend
+ * @fires elevationpath:compute
  * @example
  *
  * var measure = new ol.control.ElevationPath({
@@ -542,6 +543,29 @@ var ElevationPath = (function (Control) {
     ElevationPath.prototype.setActive = function (active) {
         logger.trace("ElevationPath::setActive");
         this.options.active = active;
+    };
+
+    /**
+     * Get elevation data
+     *
+     * @returns {Object} data - elevations
+     * @example
+     * {
+     *        greaterSlope // pente max
+     *        meanSlope  // pente moyenne
+     *        distancePlus // distance cumulée positive
+     *        distanceMinus // distance cumulée négative
+     *        ascendingElevation // dénivelé cumulée positive
+     *        descendingElevation // dénivelé cumulée négative
+     *        altMin // altitude min
+     *        altMax // altitude max
+     *        distance // distance totale
+     *        unit : // unité des mesures de distance
+     *        points : // elevations
+     *   }
+     */
+    ElevationPath.prototype.getData = function () {
+        return this._data;
     };
 
     /**
@@ -1183,6 +1207,10 @@ var ElevationPath = (function (Control) {
         // les callbacks
         var self = this;
 
+        // gestion des callback
+        var bOnFailure = !!(this.options.elevationOptions.onFailure !== null && typeof this.options.elevationOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(this.options.elevationOptions.onSuccess !== null && typeof this.options.elevationOptions.onSuccess === "function");
+
         // callback _requestServiceOnSuccess
         var _requestServiceOnSuccess = function (result) {
             logger.trace(result);
@@ -1193,6 +1221,9 @@ var ElevationPath = (function (Control) {
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
                 self._measureDraw.setActive(true);
+            }
+            if (bOnSuccess) {
+                self.options.elevationOptions.onSuccess.call(self, self.getData());
             }
         };
 
@@ -1205,11 +1236,14 @@ var ElevationPath = (function (Control) {
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
             self._waiting = false;
             self._measureDraw.setActive(true);
+            if (bOnFailure) {
+                self.options.elevationOptions.onFailure.call(self, error);
+            }
         };
 
         Utils.mergeParams(options, {
-            onSuccess : this.options.elevationOptions.onSuccess || _requestServiceOnSuccess,
-            onFailure : this.options.elevationOptions.onFailure || _requestServiceOnFailure
+            onSuccess : _requestServiceOnSuccess,
+            onFailure : _requestServiceOnFailure
         });
 
         // le sampling est soit defini par l'utilisateur (opts),
@@ -1437,6 +1471,22 @@ var ElevationPath = (function (Control) {
                 element.style.display = "block";
             }
         }
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event elevationpath:compute
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance ElevationPath
+         * @example
+         * ElevationPath.on("elevationpath:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "elevationpath:compute"
+        });
     };
 
     /**

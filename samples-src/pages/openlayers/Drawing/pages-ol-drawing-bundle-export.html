@@ -1,0 +1,94 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample OpenLayers Drawing</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+                background-image:url("{{ resources }}/geoportail-waiting.gif");
+                background-position:center center;
+                background-repeat:no-repeat;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout des outils de dessin (simulation export)</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+
+                    //Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        layers : [new ol.layer.GeoportalWMTS({
+                            layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+                        })],
+                        view : new ol.View({
+                            center : [288074.8449901076, 6247982.515792289],
+                            zoom : 8
+                        })
+                    });
+
+                    var drawing = new ol.control.Drawing();
+
+                    // surcharge de la fonction d'export : kml to geojson
+                    ol.control.Drawing.prototype.onExportFeatureClick = function () {
+                      console.log("overload!");
+                      if (!this.layer) {
+                        console.log("Impossible to export : no layer is hosting features.");
+                        return;
+                      }
+                      if (!this.layer.getSource() ||
+                            !this.layer.getSource().getFeatures() ||
+                            !this.layer.getSource().getFeatures().length) {
+                            console.log("Impossible to export : no features found.");
+                            return;
+                      }
+                      
+                      var oKml = new ol.format.KMLExtended({
+                          writeStyles : true
+                      }) ;
+                      var kml = oKml.writeFeatures(this.layer.getSource().getFeatures(), {
+                          dataProjection : "EPSG:4326",
+                          featureProjection : this.getMap().getView().getProjection()
+                      }) ;
+                      console.log("KML", kml);
+
+                      var oGpx = new ol.format.GPXExtended({
+                          // readExtensions : function (ext) {
+                          //    console.warn(ext);
+                          // }
+                      });
+                      var gpx  = oGpx.writeFeatures(this.layer.getSource().getFeatures(), {
+                              dataProjection : "EPSG:4326",
+                              featureProjection : this.getMap().getView().getProjection()
+                      })
+                      console.log("GPX", gpx);
+
+                      var oGeoJSON = new ol.format.GeoJSONExtended();
+                      var geojson  = oGeoJSON.writeFeatures(this.layer.getSource().getFeatures(), {
+                              dataProjection : "EPSG:4326",
+                              featureProjection : this.getMap().getView().getProjection()
+                      })
+                      console.log("GeoJSON", geojson);
+                    };
+
+                    map.addControl(drawing);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}

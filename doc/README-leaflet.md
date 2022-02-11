@@ -1,6 +1,6 @@
 # Extension Géoportail pour Leaflet
 
-[![release](https://img.shields.io/badge/release%20-leaflet%202.2.1-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.2.1)
+[![release](https://img.shields.io/badge/release%20-leaflet%202.2.2-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.2.2)
 
 <!-- toc -->
 
@@ -629,7 +629,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -666,7 +666,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -703,7 +703,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -740,7 +740,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -777,7 +777,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 
@@ -820,7 +820,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS",
+    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
 });
 map.addLayer(lyrMaps) ;
 

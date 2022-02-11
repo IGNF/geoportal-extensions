@@ -686,7 +686,6 @@ var MousePositionDOM = {
     },
 
     /**
-     * @method _resetCoordinateElements
      * @param {Boolean} editCoordinates - edit coordinates option
      * @param {String} currentProjectionType - current projection type
      * @param {String} currentProjectionUnits - current projection unit
@@ -731,7 +730,6 @@ var MousePositionDOM = {
     /**
      * Set/unset editing mode
      *
-     * @method _setEditMode
      * @param {Boolean} editing - active edit coordinates mode
      */
     _setEditMode : function (editing) {
