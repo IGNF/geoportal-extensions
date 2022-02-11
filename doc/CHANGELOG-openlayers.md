@@ -7,108 +7,111 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- toc -->
 
-- [CHANGELOG EXTENSION GEOPORTAL](#changelog-extension-geoportal)
 - [Extension Geoportail OpenLayers3, version 0.10.0](#extension-geoportail-openlayers3-version-0100)
-  - [Changelog](#changelog)
+  * [Changelog](#changelog)
 - [Extension Geoportail OpenLayers3, version 0.11.0](#extension-geoportail-openlayers3-version-0110)
-  - [Summary](#summary)
-  - [New Features :](#new-features-)
-    - [Additional widgets :](#additional-widgets-)
-    - [Others features](#others-features)
-  - [ChangeLog](#changelog-1)
+  * [Summary](#summary)
+  * [New Features :](#new-features-)
+    + [Additional widgets :](#additional-widgets-)
+    + [Others features](#others-features)
+  * [ChangeLog](#changelog)
 - [Extension Geoportail OpenLayers3, version 0.12.0](#extension-geoportail-openlayers3-version-0120)
-  - [Summary](#summary-1)
-  - [New Features :](#new-features--1)
-    - [Additional widgets :](#additional-widgets--1)
-    - [Others features](#others-features-1)
-    - [Breaking changes](#breaking-changes)
+  * [Summary](#summary-1)
+  * [New Features :](#new-features--1)
+    + [Additional widgets :](#additional-widgets--1)
+    + [Others features](#others-features-1)
+    + [Breaking changes](#breaking-changes)
 - [Extension Geoportail OpenLayers, version 1.0.0](#extension-geoportail-openlayers-version-100)
-  - [Summary](#summary-2)
-  - [Changelog](#changelog-2)
+  * [Summary](#summary-2)
+  * [Changelog](#changelog-1)
 - [Extension Geoportail OpenLayers, version 1.1.0](#extension-geoportail-openlayers-version-110)
-  - [Summary](#summary-3)
-  - [Changelog](#changelog-3)
+  * [Summary](#summary-3)
+  * [Changelog](#changelog-2)
 - [Extension Geoportail OpenLayers, version 2.0.0](#extension-geoportail-openlayers-version-200)
-  - [Summary](#summary-4)
+  * [Summary](#summary-4)
 - [Extension Geoportail OpenLayers, version 2.1.0](#extension-geoportail-openlayers-version-210)
-  - [Summary](#summary-5)
-  - [Changelog](#changelog-4)
-  - [Summary](#summary-6)
+  * [Summary](#summary-5)
+  * [Changelog](#changelog-3)
+- [Extension Géoportail OpenLayers, version 2.1.2](#extension-geoportail-openlayers-version-212)
+  * [Summary](#summary-6)
 - [Extension Geoportail OpenLayers, version 3.0.1](#extension-geoportail-openlayers-version-301)
-  - [Summary](#summary-7)
-  - [Changelog](#changelog-5)
+  * [Summary](#summary-7)
+  * [Changelog](#changelog-4)
 - [Extension Geoportail OpenLayers, version 3.0.2](#extension-geoportail-openlayers-version-302)
-  - [Summary](#summary-8)
-  - [Changelog](#changelog-6)
+  * [Summary](#summary-8)
+  * [Changelog](#changelog-5)
 - [Extension Geoportail OpenLayers, version 3.0.3](#extension-geoportail-openlayers-version-303)
-  - [Summary](#summary-9)
-  - [Changelog](#changelog-7)
+  * [Summary](#summary-9)
+  * [Changelog](#changelog-6)
 - [Extension Geoportail OpenLayers, version 3.0.4](#extension-geoportail-openlayers-version-304)
-  - [Summary](#summary-10)
-  - [Changelog](#changelog-8)
+  * [Summary](#summary-10)
+  * [Changelog](#changelog-7)
 - [Extension Geoportail OpenLayers, version 3.0.5](#extension-geoportail-openlayers-version-305)
-  - [Summary](#summary-11)
-  - [Changelog](#changelog-9)
+  * [Summary](#summary-11)
+  * [Changelog](#changelog-8)
 - [Extension Geoportail OpenLayers, version 3.0.6](#extension-geoportail-openlayers-version-306)
-  - [Summary](#summary-12)
-  - [Changelog](#changelog-10)
+  * [Summary](#summary-12)
+  * [Changelog](#changelog-9)
 - [Extension Geoportail OpenLayers, version 3.0.7](#extension-geoportail-openlayers-version-307)
-  - [Summary](#summary-13)
-  - [Changelog](#changelog-11)
+  * [Summary](#summary-13)
+  * [Changelog](#changelog-10)
 - [Extension Geoportail OpenLayers, version 3.0.8](#extension-geoportail-openlayers-version-308)
-  - [Summary](#summary-14)
-  - [Changelog](#changelog-12)
+  * [Summary](#summary-14)
+  * [Changelog](#changelog-11)
 - [Extension Geoportail OpenLayers, version 3.0.9](#extension-geoportail-openlayers-version-309)
-  - [Summary](#summary-15)
-  - [Changelog](#changelog-13)
+  * [Summary](#summary-15)
+  * [Changelog](#changelog-12)
 - [Extension Geoportail OpenLayers, version 3.0.10](#extension-geoportail-openlayers-version-3010)
-  - [Summary](#summary-16)
-  - [Changelog](#changelog-14)
+  * [Summary](#summary-16)
+  * [Changelog](#changelog-13)
 - [Extension Geoportail OpenLayers, version 3.0.11](#extension-geoportail-openlayers-version-3011)
-  - [Summary](#summary-17)
-  - [Changelog](#changelog-15)
+  * [Summary](#summary-17)
+  * [Changelog](#changelog-14)
 - [Extension Geoportail OpenLayers, version 3.0.14](#extension-geoportail-openlayers-version-3014)
-  - [Summary](#summary-18)
-  - [Changelog](#changelog-16)
+  * [Summary](#summary-18)
+  * [Changelog](#changelog-15)
 - [Extension Geoportail OpenLayers, version 3.0.16](#extension-geoportail-openlayers-version-3016)
-  - [Summary](#summary-19)
-  - [Changelog](#changelog-17)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-16)
 - [Extension Geoportail OpenLayers, version 3.0.17](#extension-geoportail-openlayers-version-3017)
-  - [Summary](#summary-20)
-  - [Changelog](#changelog-18)
+  * [Summary](#summary-20)
+  * [Changelog](#changelog-17)
 - [Extension Geoportail OpenLayers, version 3.0.18](#extension-geoportail-openlayers-version-3018)
-  - [Summary](#summary-21)
-  - [Changelog](#changelog-19)
+  * [Summary](#summary-21)
+  * [Changelog](#changelog-18)
 - [Extension Geoportail OpenLayers, version 3.0.19](#extension-geoportail-openlayers-version-3019)
-  - [Summary](#summary-22)
-  - [Changelog](#changelog-20)
+  * [Summary](#summary-22)
+  * [Changelog](#changelog-19)
 - [Extension Geoportail OpenLayers, version 3.1.0](#extension-geoportail-openlayers-version-310)
-  - [Summary](#summary-23)
-  - [Changelog](#changelog-21)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-20)
 - [Extension Geoportail OpenLayers, version 3.2.0](#extension-geoportail-openlayers-version-320)
-  - [Summary](#summary-24)
-  - [Changelog](#changelog-22)
+  * [Summary](#summary-24)
+  * [Changelog](#changelog-21)
 - [Extension Geoportail OpenLayers, version 3.2.1](#extension-geoportail-openlayers-version-321)
-  - [Summary](#summary-25)
-  - [Changelog](#changelog-23)
+  * [Summary](#summary-25)
+  * [Changelog](#changelog-22)
 - [Extension Geoportail OpenLayers, version 3.2.2](#extension-geoportail-openlayers-version-322)
-  - [Summary](#summary-26)
-  - [Changelog](#changelog-24)
+  * [Summary](#summary-26)
+  * [Changelog](#changelog-23)
 - [Extension Geoportail OpenLayers, version 3.2.3](#extension-geoportail-openlayers-version-323)
-  - [Summary](#summary-27)
-  - [Changelog](#changelog-25)
+  * [Summary](#summary-27)
+  * [Changelog](#changelog-24)
 - [Extension Geoportail OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
-  - [Summary](#summary-28)
-  - [Changelog](#changelog-26)
+  * [Summary](#summary-28)
+  * [Changelog](#changelog-25)
 - [Extension Geoportail OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
-  - [Summary](#summary-29)
-  - [Changelog](#changelog-27)
+  * [Summary](#summary-29)
+  * [Changelog](#changelog-26)
 - [Extension Geoportail OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
-  - [Summary](#summary-30)
-  - [Changelog](#changelog-28)
+  * [Summary](#summary-30)
+  * [Changelog](#changelog-27)
 - [Extension Geoportail OpenLayers, version 3.2.7](#extension-geoportail-openlayers-version-327)
-  - [Summary](#summary-31)
-  - [Changelog](#changelog-29)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-28)
+- [Extension Geoportail OpenLayers, version 3.2.8](#extension-geoportail-openlayers-version-328)
+  * [Summary](#summary-32)
+  * [Changelog](#changelog-29)
 
 <!-- tocstop -->
 
@@ -1130,6 +1133,67 @@ Evolution de la documentation et correction du layerswitcher
 * [Fixed]
 
     - Correction du drag&drop sur le LayerSwitcher sous Chrome 97 (138aecced48a3f91503b6d3ec33e917d4cb16e04)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.8
+
+**11/02/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+* fonctionnalités sur l'outil de dessins
+* gestion des styles sur les formats GPX et GeoJSON
+* gestion des evenements de fin de traitements sur les widgets
+
+## Changelog
+
+* [Added]
+
+    - gestion des geometries de type *Multi* dans l'outil de dessins
+    - ajout de l'export au format GPX et GeoJSON dans l'outil de dessins
+    - gestion des styles au format GPX et GeoJSON (specification MapBox)
+    - ajoute d'evenements et de callback de fin de traitement pour les widgets ElevationPath, Route, IsoCurve, SearchEngine et ReverseGeocode.
+    ```js
+    // Exemple
+    var iso = new ol.control.Isocurve({
+        isocurveOptions : {
+            // utilisation de la callback du service
+            onSuccess : function(e) {
+                console.warn("Resultat du calcul", e);
+                // {
+                //     distance: null
+                //     geometry: {type: 'Polygon', coordinates: Array(1)}
+                //     id: null
+                //     location: {x: '2.8926909677185058', y: '48.76818760957548'}
+                //     message: null
+                //     srs: "EPSG:4326"
+                //     time: "3600"
+                // }
+            },
+            onFailure : function(e) {
+                console.warn(e);
+            }
+        }
+    });
+    // ou utilisation de l'evenement du widget
+    iso.on("isocurve:compute", function (e) {
+        // interface : getData()
+        console.warn(e.target.getData());
+    });
+    ```
+
+* [Changed]
+
+    - Retrait de la limitation d'affichage des reponses de l'autocompletion sur le Widget *SearchEngine* (cf. <https://www.developpez.net/forums/d2125691/applications/sig-systeme-d-information-geographique/ign-api-geoportail/geoportal-extension-searchengine-autocomplete-maximum-5-reponses/#post11811536>)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
