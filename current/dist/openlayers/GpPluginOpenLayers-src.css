@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.2.7
- * @date 28/01/2022
+ * @version 3.2.8
+ * @date 11/02/2022
  *
  */
 
@@ -4771,6 +4771,7 @@ input[id^=GProuteResultsShowDetails] + label + label:hover {
 [id^="GPgeocodeResultsList"] {
   margin-left: 33px;
   box-shadow: 0 0 6px #000;
+  overflow-y: auto;
 }
 
 [id^="GPgeocodeResultsList"] {
