@@ -76,7 +76,7 @@
     "ol-mapbox-style": "6.7.0",
     "proj4": "2.7.2",
     "proj4leaflet": "1.0.2",
-    "sortablejs": "1.8.4",
+    "sortablejs": "1.14.0",
     "three": "0.127.0",
     "whatwg-fetch": "3.0.0"
   },
