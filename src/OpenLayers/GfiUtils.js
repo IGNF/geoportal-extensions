@@ -70,8 +70,8 @@ var GfiUtils = {
      * @param {String} content - content to display
      * @param {String} [contentType='text/html'] - content mime-type
      * @param {Object} autoPanOptions - Auto-pan pop-up options
-     * @param {Boolean} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Boolean|Object} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas (See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanIntoViewOptions PanIntoViewOptions})
+     * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      * @return {Boolean} displayed - indicates if something has been displayed
      */
@@ -216,12 +216,29 @@ var GfiUtils = {
             var oDiv = null;
             var ul = null;
             var li = null;
+            // Liste des properties à retirer de la visualisation :
+            var listForbidden = [
+                // styles
+                "fill",
+                "fill-opacity",
+                "stroke",
+                "stroke-opacity",
+                "stroke-width",
+                "marker-symbol",
+                "marker-color",
+                "marker-size",
+                "geometry", // geometrie
+                "value",
+                "name", // déjà traité
+                "description", // déjà traité
+                "styleUrl",
+                "extensionsNode_" // extensions GPX
+            ];
             for (p in props) {
-                if (p === "geometry" || p === "value" || p === "name" || p === "description" || p === "styleUrl") {
+                if (props[p] === undefined) {
                     continue;
                 }
-                // FIXME La lecture des extensions GPX n'est pas gérée !
-                if (p === "extensionsNode_" && props[p] === undefined) {
+                if (listForbidden.indexOf(p) !== -1) {
                     continue;
                 }
                 if (!others) {
@@ -329,7 +346,7 @@ var GfiUtils = {
      * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
      * @param {Object} [autoPanOptions] - Auto-pan pop-up options
      * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      *
      */
@@ -397,6 +414,7 @@ var GfiUtils = {
                     // - getGetFeatureInfoUrl en v5
                     // - getFeatureInfoUrl en v6
                     if (format === "wmts") {
+                        // eslint-disable-next-line no-useless-call
                         _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
@@ -405,6 +423,7 @@ var GfiUtils = {
                             }
                         );
                     } else {
+                        // eslint-disable-next-line no-useless-call
                         _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,

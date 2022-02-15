@@ -56,6 +56,7 @@ var logger = Logger.getLogger("isocurve");
  * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @fires isocurve:drawstart
  * @fires isocurve:drawend
+ * @fires isocurve:compute
  * @example
  *  var iso = ol.control.Isocurve({
  *      "collapsed" : false,
@@ -189,6 +190,15 @@ var Isocurve = (function (Control) {
 
         // on appelle la méthode setMap originale d'OpenLayers
         Control.prototype.setMap.call(this, map);
+    };
+
+    /**
+     * Get isocurve data
+     *
+     * @returns {Object} data - process results
+     */
+    Isocurve.prototype.getData = function () {
+        return this._currentIsoResults;
     };
 
     /**
@@ -911,6 +921,10 @@ var Isocurve = (function (Control) {
             _timeout = 15000;
         }
 
+        // gestion des callback
+        var bOnFailure = !!(options.onFailure !== null && typeof options.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(options.onSuccess !== null && typeof options.onSuccess === "function");
+
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         var isoRequestOptions = {
@@ -927,12 +941,18 @@ var Isocurve = (function (Control) {
                 if (results) {
                     context._drawIsoResults(results);
                 }
+                if (bOnSuccess) {
+                    options.onSuccess.call(context, results);
+                }
             },
             // callback onFailure
             onFailure : function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
                 context._hideWaitingContainer();
                 logger.log(error.message);
+                if (bOnFailure) {
+                    options.onFailure.call(context, error);
+                }
             }
         };
         if ((this._currentDirection.toLowerCase() === "arrival") || (options.reverse)) {
@@ -1203,6 +1223,22 @@ var Isocurve = (function (Control) {
         }
         // ajout à la carte
         map.addLayer(this._geojsonLayer);
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event isocurve:compute
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance Isocurve
+         * @example
+         * Isocurve.on("isocurve:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "isocurve:compute"
+        });
 
         // 3. Zoom sur l'emprise de la geometry
         if (features[0] && features[0].getGeometry() && features[0].getGeometry().getExtent()) {

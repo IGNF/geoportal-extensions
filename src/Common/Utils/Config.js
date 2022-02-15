@@ -183,7 +183,7 @@ var Config = {
                 var key = layerConf.apiKeys[0];
                 if (apiKeys) {
                     if (!Array.isArray(apiKeys)) {
-                       apiKeys = [apiKeys]; 
+                        apiKeys = [apiKeys];
                     }
                     for (var i = 0; i < apiKeys.length; i++) {
                         if (apiKeys[i] === key) {
@@ -192,9 +192,9 @@ var Config = {
                         }
                     }
                     // si aucune clé du tableau apiKeys ne correspond, on retourne rien => pas de droits pour la ressource
-                    if (typeof keyIndex === 'undefined') {
+                    if (typeof keyIndex === "undefined") {
                         return;
-                    } 
+                    }
                 }
 
                 // on retourne la première clé qui a effectivement accès à la ressource

@@ -47,6 +47,7 @@
 [id^="GPgeocodeResultsList"] {
   margin-left: 33px;
   box-shadow: 0 0 6px #000;
+  overflow-y: auto;
 }
 
 [id^="GPgeocodeResultsList"] {

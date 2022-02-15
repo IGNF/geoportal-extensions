@@ -61,7 +61,7 @@ var WMTS = (function (WMTSSource) {
         // en fonction de la version d'openlayers, la méthode est differente :
         // - getGetFeatureInfoUrl en v5
         // - getFeatureInfoUrl en v6
-        var pixelRatio = (this.option && this.options.tilePixelRatio) ? this.options.tilePixelRatio : 1;
+        var pixelRatio = (this.options && this.options.tilePixelRatio) ? this.options.tilePixelRatio : 1;
 
         var tileGrid = this.tileGrid;
         var tileCoord = this.tileGrid.getTileCoordForCoordAndResolution(coordinate, resolution);
