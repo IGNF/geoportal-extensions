@@ -8,19 +8,36 @@ var LayerSwitcherDOM = {
      * @param {Object} elementDraggable - Element HTML (DOM) Container
      * @param {Object} context - this
      */
-    _createDraggableElement : function (elementDraggable, context) {
-        Sortable.create(elementDraggable, {
-            handle : ".GPlayerName",
-            draggable : ".draggable-layer",
-            ghostClass : "GPghostLayer",
-            animation : 200,
-            forceFallback : true,
-            // Call event function on drag and drop
-            onEnd : function (e) {
-                // FIXME pas terrrible, mais il faut bien passer ce contexte...
-                context._onDragAndDropLayerClick(e);
-            }
-        });
+     _createDraggableElement : function (elementDraggable, context) {
+        // FIXME retirer cette détection user-agent pour solution propre
+        // option forcefallback pour réparer sortable sous Chrome 97
+        // option forcefallback casse le layerswitcher du portail sous firefox
+        if (navigator.userAgent.match(/chrome|chromium|crios/i)) {
+            Sortable.create(elementDraggable, {
+                handle : ".GPlayerName",
+                draggable : ".draggable-layer",
+                ghostClass : "GPghostLayer",
+                animation : 200,
+                forceFallback : true,
+                // Call event function on drag and drop
+                onEnd : function (e) {
+                    // FIXME pas terrrible, mais il faut bien passer ce contexte...
+                    context._onDragAndDropLayerClick(e);
+                }
+            });
+        } else {
+            Sortable.create(elementDraggable, {
+                handle : ".GPlayerName",
+                draggable : ".draggable-layer",
+                ghostClass : "GPghostLayer",
+                animation : 200,
+                // Call event function on drag and drop
+                onEnd : function (e) {
+                    // FIXME pas terrrible, mais il faut bien passer ce contexte...
+                    context._onDragAndDropLayerClick(e);
+                }
+            });
+        }
     },
 
     // ################################################################### //
