@@ -1,29 +1,32 @@
 {
-   "dependencies" : {
-      "itowns" : "2.37.0",
-      "xmldom" : "^0.1.27",
-      "loglevel" : "1.6.7",
-      "node-fetch" : "^2.6.1",
-      "proj4" : "2.7.5",
-      "three" : "0.135.0",
-      "geoportal-access-lib" : "3.0.5",
-      "sortablejs" : "1.8.4"
-   },
    "scripts" : {},
-   "license" : "CECILL-B",
-   "description" : "French Geoportal Extensions for iTowns",
-   "version" : "2.3.5",
-   "author" : "IGNF",
-   "name" : "geoportal-extensions-itowns",
-   "main" : "dist/GpPluginItowns-src.js",
+   "bundleDependencies" : [],
    "devDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
+   "main" : "dist/GpPluginItowns-src.js",
+   "name" : "geoportal-extensions-itowns",
+   "date" : "15/02/2022",
+   "version" : "2.3.5",
+   "dependencies" : {
+      "loglevel" : "1.6.7",
+      "geoportal-access-lib" : "3.0.5",
+      "three" : "0.135.0",
+      "node-fetch" : "^2.6.1",
+      "itowns" : "2.37.0",
+      "sortablejs" : "1.14.0",
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.5"
+   },
+   "peerDependencies" : {},
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
+   "author" : "IGNF",
+   "directories" : {},
+   "bugs" : {},
+   "module" : "src/Itowns/index.js",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
    "files" : [
       "dist/",
       "src/",
@@ -31,14 +34,11 @@
       "README.md",
       "package.json"
    ],
-   "peerDependencies" : {},
-   "directories" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "bundleDependencies" : [],
-   "module" : "src/Itowns/index.js",
-   "date" : "15/02/2022",
-   "bugs" : {}
+   "license" : "CECILL-B",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ]
 }
