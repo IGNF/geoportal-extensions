@@ -70,8 +70,8 @@ var GfiUtils = {
      * @param {String} content - content to display
      * @param {String} [contentType='text/html'] - content mime-type
      * @param {Object} autoPanOptions - Auto-pan pop-up options
-     * @param {Boolean} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Boolean|Object} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas (See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanIntoViewOptions PanIntoViewOptions})
+     * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      * @return {Boolean} displayed - indicates if something has been displayed
      */
@@ -346,7 +346,7 @@ var GfiUtils = {
      * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
      * @param {Object} [autoPanOptions] - Auto-pan pop-up options
      * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      *
      */

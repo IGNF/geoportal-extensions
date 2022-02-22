@@ -222,13 +222,13 @@ Les "gros" bug fixes ou refacto sont à considérer comme des features: c'est à
 
 ~~~
 git checkout develop
-git checkout -b release-X.Y.Z
-git push origin release-X.Y.Z
+git checkout -b release-[ol|leaflet|itowns]-X.Y.Z
+git push origin release-[ol|leaflet|itowns]-X.Y.Z
 ~~~
 
-2 - Sur cette branche, modifier le package.json pour incrémenter numéro de version et la date
+2 - Sur cette branche, modifier le *package.json* pour incrémenter numéro de version et la date
 
-3 - Réaliser sur cette branche release les tests habituels liés à la publication d'une release (npm run test, npm run sample:serve)
+3 - Réaliser sur cette branche release les tests habituels liés à la publication d'une release (`npm run test`, `npm run sample:serve`)
 
 4 - Si on trouve des bugs, on les corrige directement sur cette branche release (plusieurs membres de l'équipe peuvent réaliser les verifications/corrections en parrallèle sur la branche release)
 
@@ -240,31 +240,31 @@ git commit --> "fix(scope) : corrige le probleme"
 
 ~~~
 git checkout develop
-git merge release-X.Y.Z
+git merge release-[ol|leaflet|itowns]-X.Y.Z
 ~~~
 
 6 - On recommence autant de fois que necessaire les etapes 4 et 5
 
 7 - Quand on estime que tout est ok, on prépare la future publication npm en construisant les binaires :
 * vérifier date et version dans les package.json
-* vérifier que le DRAFT_CHANGELOG est à jour
+* vérifier que le `DRAFT_CHANGELOG` est à jour
 * pousser la branch
 
-8 - Quand on estime que la release est OK, on merge la branche sans fast-forward sur **develop**
+8 - Quand on estime que la release est OK, on merge la branche *sans fast-forward* sur **develop**
 
 ~~~
 git checkout develop
-git merge release-X.Y.Z --no-ff
+git merge release-[ol|leaflet|itowns]-X.Y.Z --no-ff
 ~~~
 
-9 - Quand on estime que la release est OK, on merge la branche sans fast-forward sur **master** et on tag la version sur master
+9 - Quand on estime que la release est OK, on merge la branche *sans fast-forward* sur **master** et on tag la version sur master
 
 ~~~
 git checkout master
-git merge release-X.Y.Z --no-ff
+git merge release-[ol|leaflet|itowns]-X.Y.Z --no-ff
 ~~~
 
-**Renommer le commit "release sdk-X.Y.Z" ou "release ext-ol-X.Y.Z"**
+> **Renommer le commit "release sdk-X.Y.Z" ou "release ext-ol-X.Y.Z"**
 
 10 - On supprime la branche release ainsi mergée
 
@@ -285,7 +285,7 @@ git push origin ol-X.Y.Z
 * vérifier page de publication de la release npm
 * vérifier que la jsdoc (gh-pages) est à jour
 * vérifier que le projet exemples a été mis à jour avec la nouvelle release (par ex. https://github.com/IGNF/geoportal-access-lib-samples)
-* vérifier que le DRAFT_CHANGELOG a été vidé et que le CHANGELOG a été mis à jour
+* vérifier que le `DRAFT_CHANGELOG` a été vidé et que le CHANGELOG a été mis à jour
 
 
 ## Realisation d'un hotfix

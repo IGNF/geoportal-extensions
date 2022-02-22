@@ -1,5 +1,7 @@
 
 
+
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -42,7 +44,7 @@
 
 * [Fixed]
 
-    - Correction des paramètres passés aux couches WMTS/WMS (#319) 
+    - Correction des paramètres passés aux couches WMTS/WMS (#319)
 
 * [Security]
 

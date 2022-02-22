@@ -1,6 +1,6 @@
 # Geoportal Extension for OpenLayers API Reference
 
-The Geoportal Extension for OpenLayers provides additionnal javascript functionalities (Sources, Layers and Controls) making access to french geoportal webservices easier when using <a href="http://openlayers.org/">OpenLayers</a> javascript library.
+The Geoportal Extension for OpenLayers provides additionnal javascript functionalities (Sources, Layers and Controls) making access to french geoportal webservices easier when using <a href="https://openlayers.org/">OpenLayers</a> javascript library.
 
 This extension is not standalone and has to be used **together with OpenLayers** library. In a web page, you thus have to include both OpenLayers and Geoportal Extension resources. For instance :
 
@@ -22,7 +22,7 @@ NB : to have complete access to this extension functionnalities, you need to pro
 
 ## Geoportal Sources
 
-Sources provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.source.html">OpenLayers Sources</a> that give simple access to Geoportal data that can then be used to feed <a href="http://openlayers.org/en/latest/apidoc/ol.layer.html">OpenLayers layers</a>.
+Sources provided by the Geoportal Extension are additionnal <a href="https://openlayers.org/en/latest/apidoc/module-ol_source_Source-Source.html">OpenLayers Sources</a> that give simple access to Geoportal data that can then be used to feed <a href="https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html">OpenLayers layers</a>.
 
 
 | Geoportal Source | Description |
@@ -33,7 +33,7 @@ Sources provided by the Geoportal Extension are additionnal <a href="http://open
 
 ## Geoportal Layers
 
-Layers provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.layer.html">OpenLayers layers</a> already connected to previous [Geoportal Extension sources](#sources) that can be added to an <a href="http://openlayers.org/en/latest/apidoc/ol.Map.html">OpenLayers Map</a> like any other OpenLayers layer.
+Layers provided by the Geoportal Extension are additionnal <a href="https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html">OpenLayers layers</a> already connected to previous [Geoportal Extension sources](#sources) that can be added to an <a href="https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html">OpenLayers Map</a> like any other OpenLayers layer.
 
 | Geoportal Layer | Description |
 | - | - |
@@ -43,13 +43,13 @@ Layers provided by the Geoportal Extension are additionnal <a href="http://openl
 
 ## Geoportal Controls
 
-Controls provided by the Geoportal Extension are additionnal <a href="http://openlayers.org/en/latest/apidoc/ol.control.html">OpenLayers controls</a> that, when added to an <a href="http://openlayers.org/en/latest/apidoc/ol.Map.html">OpenLayers Map</a>, allows user to interact with it.
+Controls provided by the Geoportal Extension are additionnal <a href="https://openlayers.org/en/latest/apidoc/module-ol_control_Control-Control.html">OpenLayers controls</a> that, when added to an <a href="https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html">OpenLayers Map</a>, allows user to interact with it.
 
 | Geoportal Control | Description |
 | - | - |
-| {@link ol.control.GeoportalAttribution ol.control.GeoportalAttribution} | Is a substitute for <a href="http://openlayers.org/en/latest/apidoc/ol.control.Attribution.html">built in ol.control.Attribution</a>. It has the additionnal capability of handling geoportal dynamic attributions depending on zoom level and positionning of the map. |
+| {@link ol.control.GeoportalAttribution ol.control.GeoportalAttribution} | Is a substitute for <a href="https://openlayers.org/en/latest/apidoc/module-ol_control_Attribution-Attribution.html">built in ol.control.Attribution</a>. It has the additionnal capability of handling geoportal dynamic attributions depending on zoom level and positionning of the map. |
 | {@link ol.control.LayerSwitcher ol.control.LayerSwitcher} | Allows users to manage layer organisation of the map |
-| {@link ol.control.GeoportalMousePosition ol.control.GeoportalMousePosition} | Is a substitute for <a href="http://openlayers.org/en/latest/apidoc/ol.control.MousePosition.html">built in ol.control.MousePosition</a>. It has the additionnal capability of displaying elevation of Mouse Position based on <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html">elevation service of the Geoportal Platform</a>. |
+| {@link ol.control.GeoportalMousePosition ol.control.GeoportalMousePosition} | Is a substitute for <a href="https://openlayers.org/en/latest/apidoc/module-ol_control_MousePosition-MousePosition.html">built in ol.control.MousePosition</a>. It has the additionnal capability of displaying elevation of Mouse Position based on <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html">elevation service of the Geoportal Platform</a>. |
 | {@link ol.control.SearchEngine ol.control.SearchEngine} | Allows users to search and display locations on a map using <a href="https://geoservices.ign.fr/documentation/geoservices/autocompletion.html">autocompletion service</a> and <a href="https://geoservices.ign.fr/documentation/geoservices/geocodage.html">geocoding service</a> of the Geoportal Platform. |
 | {@link ol.control.ReverseGeocode ol.control.ReverseGeocode} | Allows users to find locations by clicking on a map using <a href="https://geoservices.ign.fr/documentation/geoservices/geocodage-inverse.html">geocoding service</a> of the Geoportal Platform. |
 | {@link ol.control.Route ol.control.Route} | Allows users to compute and display routes on a Map using  <a href="https://geoservices.ign.fr/documentation/geoservices/itineraires.html">routing service</a> of the Geoportal Platform. |
