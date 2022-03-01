@@ -63,9 +63,8 @@
             globeView.addLayer(layer);
         };
 
-        // itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/OrthosCRS.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
         itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
-        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/ScanEX.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+        itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/PlanIgnV2.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
 
         itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
         itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_SRTM.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);

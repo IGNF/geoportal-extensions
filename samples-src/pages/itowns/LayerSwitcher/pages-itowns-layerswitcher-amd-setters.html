@@ -76,11 +76,11 @@
 
         const urlImageryLayers = [];
         urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Ortho.json');
-        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/ScanEX.json');
+        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/PlanIgnV2.json');
 
         const layersId = [];
         layersId.push("Ortho");
-        layersId.push("ScanEX");
+        layersId.push("PlanIGN");
 
         var addLayer = function (i) {
             itownsGlobal.Fetcher.json(urlImageryLayers[i]).then(config => {
