@@ -667,7 +667,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 globeViewExtended.forgetByKey(eventKey);
                 done();
             });
-            layerManager.remove("ScanEX");
+            layerManager.remove("PlanIGN");
         });
 
         it('should correctly launch layer order changed event', function (done) {
