@@ -50,6 +50,7 @@
 
 ---
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -57,15 +58,11 @@
 
 ## Summary
 
-iTowns version 2.37 et mise à jour des dépendances threejs et proj4
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - Mise à jour d'iTowns en version 2.37
 
 * [Deprecated]
 
