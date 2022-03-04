@@ -32,6 +32,8 @@
 
 ## Summary
 
+Corrections sur l'interface d'ajout des couches WMS/WMTS
+
 ## Changelog
 
 * [Added]
