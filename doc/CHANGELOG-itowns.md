@@ -67,6 +67,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.5](#extension-geoportail-itowns-version-235)
   * [Summary](#summary-19)
   * [Changelog](#changelog-18)
+- [Extension Geoportail Itowns, version 2.3.6](#extension-geoportail-itowns-version-236)
+  * [Summary](#summary-20)
+  * [Changelog](#changelog-19)
 
 <!-- tocstop -->
 
@@ -522,6 +525,32 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Changed]
 
 - merge feature-accessibilite (#313)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.6
+
+**04/03/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+iTowns version 2.37 et mise à jour des dépendances threejs et proj4
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Mise à jour d'iTowns en version 2.37
 
 * [Deprecated]
 
