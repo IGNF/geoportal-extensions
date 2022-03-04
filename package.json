@@ -4,7 +4,7 @@
   "version": "2.6.10",
   "date": "04/03/2022",
   "leafletExtName": "French Geoportal Extension for Leaflet",
-  "leafletExtVersion": "2.2.2",
+  "leafletExtVersion": "2.2.3",
   "olExtName": "French Geoportal Extension for OpenLayers",
   "olExtVersion": "3.2.9",
   "itownsExtName": "French Geoportal Extension for Itowns",
