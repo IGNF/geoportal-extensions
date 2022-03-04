@@ -63,6 +63,8 @@
 
 * [Changed]
 
+    - Mise à jour d'iTowns en version 2.37
+
 * [Deprecated]
 
 * [Removed]
