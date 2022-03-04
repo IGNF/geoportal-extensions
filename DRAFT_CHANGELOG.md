@@ -57,6 +57,8 @@
 
 ## Summary
 
+iTowns version 2.37 et mise à jour des dépendances threejs et proj4
+
 ## Changelog
 
 * [Added]
