@@ -25,14 +25,13 @@
 
 ---
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail leaflet
 
 ## Summary
-
-Corrections sur l'interface d'ajout des couches WMS/WMTS
 
 ## Changelog
 
@@ -45,8 +44,6 @@ Corrections sur l'interface d'ajout des couches WMS/WMTS
 * [Removed]
 
 * [Fixed]
-
-    - Correction des paramètres passés aux couches WMTS/WMS (#319)
 
 * [Security]
 
