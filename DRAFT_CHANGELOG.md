@@ -1,7 +1,5 @@
 
 
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -22,6 +20,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Fix sur le rendu vecteur des formats GPX et GeoJSON
 
 * [Security]
 

@@ -22,7 +22,7 @@
     "sample:serve": "npm run sample:ol:serve",
     "sample:itowns:serve": "webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open",
     "sample:leaflet:serve": "webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open",
-    "sample:ol:serve": "webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open --info-verbosity verbose",
+    "sample:ol:serve": "webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open",
     "doc": "npm run doc:serve",
     "doc:serve": "npm run doc:ol:serve",
     "doc:itowns:serve": "webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open",
