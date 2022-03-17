@@ -317,6 +317,15 @@ var LayerImport = (function (Control) {
         return this.contentService;
     };
 
+    /**
+     * Returns layer name
+     *
+     * @returns {String} name - layer name
+     */
+    LayerImport.prototype.getName = function () {
+        return this._name;
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -491,6 +500,7 @@ var LayerImport = (function (Control) {
         this.contentStatic = null;
         this._url = null;
         this._file = null;
+        this._name = null;
     };
 
     /**
@@ -927,6 +937,9 @@ var LayerImport = (function (Control) {
             layerName = this._url.substring(this._url.lastIndexOf("/") + 1, this._url.lastIndexOf("."));
         }
 
+        // sauvegarde
+        this._name = layerName;
+
         // 2. récupération proxy
         if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
             logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
@@ -979,6 +992,9 @@ var LayerImport = (function (Control) {
         if (!layerName) {
             layerName = this._file.name.substring(this._file.name.lastIndexOf("/") + 1, this._file.name.lastIndexOf("."));
         }
+
+        // sauvegarde
+        this._name = layerName;
 
         // Création d'un objet FileReader qui permet de lire le contenu du fichier chargé
         var fReader = new FileReader();
