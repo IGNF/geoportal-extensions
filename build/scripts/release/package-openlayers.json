@@ -1,39 +1,26 @@
 {
-   "date" : "04/03/2022",
-   "version" : "3.2.9",
-   "bugs" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "bundleDependencies" : [],
    "peerDependencies" : {},
-   "module" : "src/OpenLayers/index.js",
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "dependencies" : {
-      "node-fetch" : "^2.6.1",
-      "ol-mapbox-style" : "6.7.0",
-      "ol" : "6.9.0",
-      "proj4" : "2.7.5",
-      "geoportal-access-lib" : "3.0.5",
-      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "eventbusjs" : "0.2.0",
-      "sortablejs" : "1.14.0",
-      "loglevel" : "1.6.6",
-      "xmldom" : "^0.1.27"
-   },
-   "scripts" : {},
-   "license" : "CECILL-B",
+   "directories" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+   "bugs" : {},
+   "date" : "04/03/2022",
+   "dependencies" : {
+      "ol" : "6.9.0",
+      "proj4" : "2.7.5",
+      "loglevel" : "1.6.6",
+      "xmldom" : "^0.1.27",
+      "sortablejs" : "1.14.0",
+      "node-fetch" : "^2.6.1",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
+      "ol-mapbox-style" : "6.7.0",
+      "eventbusjs" : "0.2.0",
+      "geoportal-access-lib" : "3.0.5"
    },
-   "directories" : {},
-   "author" : "IGNF",
    "files" : [
       "dist/",
       "src/",
@@ -41,6 +28,19 @@
       "README.md",
       "package.json"
    ],
+   "license" : "CECILL-B",
+   "bundleDependencies" : [],
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "module" : "src/OpenLayers/index.js",
+   "name" : "geoportal-extensions-openlayers",
+   "devDependencies" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "author" : "IGNF",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "scripts" : {},
    "main" : "dist/GpPluginOpenLayers-src.js",
-   "devDependencies" : {}
+   "version" : "3.2.9"
 }
