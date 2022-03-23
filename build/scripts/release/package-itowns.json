@@ -1,32 +1,6 @@
 {
    "scripts" : {},
-   "bundleDependencies" : [],
-   "devDependencies" : {},
-   "description" : "French Geoportal Extensions for iTowns",
-   "main" : "dist/GpPluginItowns-src.js",
-   "name" : "geoportal-extensions-itowns",
-   "date" : "15/02/2022",
-   "version" : "2.3.5",
-   "dependencies" : {
-      "loglevel" : "1.6.7",
-      "geoportal-access-lib" : "3.0.5",
-      "three" : "0.135.0",
-      "node-fetch" : "^2.6.1",
-      "itowns" : "2.37.0",
-      "sortablejs" : "1.14.0",
-      "xmldom" : "^0.1.27",
-      "proj4" : "2.7.5"
-   },
-   "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "author" : "IGNF",
-   "directories" : {},
-   "bugs" : {},
-   "module" : "src/Itowns/index.js",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
    "files" : [
       "dist/",
       "src/",
@@ -34,11 +8,37 @@
       "README.md",
       "package.json"
    ],
+   "dependencies" : {
+      "sortablejs" : "1.14.0",
+      "three" : "0.135.0",
+      "proj4" : "2.7.5",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/new-iso/geoportal-access-lib-3.0.6.tgz",
+      "xmldom" : "^0.1.27",
+      "loglevel" : "1.6.7",
+      "itowns" : "2.37.0",
+      "node-fetch" : "^2.6.1"
+   },
+   "devDependencies" : {},
+   "version" : "2.3.6",
+   "directories" : {},
+   "date" : "04/03/2022",
    "license" : "CECILL-B",
+   "bugs" : {},
+   "name" : "geoportal-extensions-itowns",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "bundleDependencies" : [],
+   "main" : "dist/GpPluginItowns-src.js",
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
-   ]
+   ],
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "module" : "src/Itowns/index.js"
 }
