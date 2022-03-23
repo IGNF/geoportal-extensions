@@ -1,7 +1,7 @@
 /* global module, __dirname */
 
 // -- modules
-var fs = require("fs-extra");
+var fs = require("fs");
 var path = require("path");
 var webpack = require("webpack");
 var header = require("string-template");
@@ -482,15 +482,14 @@ module.exports = (env, argv) => {
                 }
             ),
             /* RESOURCES COPY FOR SAMPLES */
-            new CopyWebpackPlugin({
-                patterns: [
+            new CopyWebpackPlugin([
                 {
                     from : path.join(ROOT, "samples-src", "resources", "**/*"),
-                    to : path.join(ROOT, "samples", "resources"),
-                    context : path.join(ROOT, "samples-src", "resources"),
-                    force: true
+                    to : path.join(ROOT, "samples", "resources")
+                    // context : path.join(ROOT, "samples-src", "resources"),
+                    // force: true
                 }
-            ]}),
+            ]),
             // FIXME les ressources exemples ne sont pas prises en compte dans le mode watch !?
             // {
             //     apply: (compiler) => {
