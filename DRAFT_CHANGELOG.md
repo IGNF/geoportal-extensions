@@ -27,6 +27,7 @@
 ---
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -39,8 +40,6 @@
 * [Added]
 
 * [Changed]
-
-    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
 
 * [Deprecated]
 
