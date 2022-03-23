@@ -4,7 +4,7 @@
       "node-fetch" : "^2.6.1",
       "proj4leaflet" : "1.0.2",
       "loglevel" : "1.6.6",
-      "geoportal-access-lib" : "3.0.5",
+      "geoportal-access-lib" : "3.1.0",
       "sortablejs" : "1.8.4",
       "xmldom" : "^0.1.27",
       "leaflet-draw" : "1.0.4",
@@ -39,7 +39,7 @@
       "type" : "git",
       "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "date" : "28/01/2022",
-   "version" : "2.2.2",
+   "date" : "23/03/2022",
+   "version" : "2.2.4",
    "license" : "CECILL-B"
 }
