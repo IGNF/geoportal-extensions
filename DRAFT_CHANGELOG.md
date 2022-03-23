@@ -16,6 +16,7 @@
 * [Changed]
 
     - DOM widget d'import : "Tuiles vectorielles" au lieu de "Vecteur tuilé"
+    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
 
 * [Deprecated]
 
@@ -40,6 +41,8 @@
 * [Added]
 
 * [Changed]
+
+    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
 
 * [Deprecated]
 
