@@ -21,6 +21,13 @@
             <!-- map -->
             <div id="map"></div>
             <button id="btn-associate-layer" class="">Association de la couche</button>
+            <label for="formats-select">Format d'export:</label>
+            <select name="formats" id="formats-select">
+                <option value="">--Choix du format--</option>
+                <option value="kml">KML</option>
+                <option value="gpx">GPX</option>
+                <option value="geojson">GEOJSON</option>
+            </select>
 {{/content}}
 
 {{#content "js"}}
@@ -79,6 +86,10 @@
 
                     document.getElementById('btn-associate-layer').addEventListener("click", function() {
                         m_drawing.setLayer(m_vector);
+                    });
+
+                    document.getElementById('formats-select').addEventListener("change", function(e) {
+                        m_drawing.setExportFormat(e.target.value);
                     });
 
                 };
