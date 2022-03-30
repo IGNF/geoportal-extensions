@@ -414,8 +414,8 @@ var DrawingDOM = {
      *
      * @param {Object} options - toolId selected
      * @param {String} options.geomType - gemeotryType selected ("Point", "Line" or "Polygon")
+     * @param {Object} options.labels - values to title
      * @param {Object} options.initValues - values to init fields
-     * @param {String} options.initValues.markerSrc - marker URL for Points
      * @param {Function} options.applyFunc - function called when apply is selected
      * @returns {DOMElement} DOM element created
      */
@@ -435,6 +435,28 @@ var DrawingDOM = {
                     defaultValue : options.initValues.markerSrc
                 });
                 ul.appendChild(li);
+                li = this._createStylingElement({
+                    type : "range",
+                    className : "gp-styling-option",
+                    label : this.options.labels.markerSize,
+                    title : "petit, moyen ou grand",
+                    id : this._addUID("markerSize"),
+                    min : 5,
+                    max : 15,
+                    step : 5,
+                    defaultValue : options.initValues.markerSize * 10
+                });
+                ul.appendChild(li);
+                if (options.initValues.markerCustom) {
+                    li = this._createStylingElement({
+                        type : "color",
+                        className : "gp-styling-option",
+                        label : this.options.labels.markerColor,
+                        id : this._addUID("markerColor"),
+                        defaultValue : options.initValues.markerColor
+                    });
+                    ul.appendChild(li);
+                }
                 break;
             case "text":
                 li = this._createStylingElement({

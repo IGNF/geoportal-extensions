@@ -169,11 +169,15 @@ module.exports = (env, argv) => {
             host : "localhost",
             https: true,
             port : 9001,
+            headers: {
+                'Cache-Control': 'no-store'
+            },
             hot : true,
             contentBase : path.join(__dirname),
             // publicPath : "/dist/openlayers/",
             // openPage : "/samples/index-openlayers-map.html",
             open : "google-chrome",
+            watchContentBase: true,
             watchOptions : {
                 watch : true,
                 poll : true
@@ -481,10 +485,32 @@ module.exports = (env, argv) => {
             new CopyWebpackPlugin([
                 {
                     from : path.join(ROOT, "samples-src", "resources", "**/*"),
-                    to : path.join(ROOT, "samples", "resources"),
-                    context : path.join(ROOT, "samples-src", "resources")
+                    to : path.join(ROOT, "samples", "resources")
+                    // context : path.join(ROOT, "samples-src", "resources"),
+                    // force: true
                 }
-            ])
+            ]),
+            // FIXME les ressources exemples ne sont pas prises en compte dans le mode watch !?
+            // {
+            //     apply: (compiler) => {
+            //       compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+            //         // Debugging
+            //         console.log("########-------------->>>>> Finished Copy Compile <<<<<------------#######");
+              
+            //         let source = path.join(ROOT, "samples-src", "resources");
+            //         let destination = path.join(ROOT, "samples", "resources");
+              
+            //         let options = {
+            //           overwrite: true
+            //         };
+            //         fs.copy(source, destination, options, err => {
+            //           if (err) return console.error(err); {
+            //               console.log('Copy resources success!');
+            //           }
+            //         })
+            //       });
+            //     }
+            //   }
         ]
             /** AJOUT DES LICENCES */
             .concat([

@@ -87,9 +87,9 @@ var GeoJSON = (function (olGeoJSON) {
                 var options = {};
 
                 // properties :
-                // "marker-size" -> icon
-                // "marker-symbol" -> icon ->
-                // "marker-color" -> icon
+                // "marker-size" -> icon / label
+                // "marker-symbol" -> icon / label
+                // "marker-color" -> icon / label
                 var marker = null;
                 if (feature.get("marker-color") ||
                     feature.get("marker-size") ||
@@ -160,12 +160,7 @@ var GeoJSON = (function (olGeoJSON) {
                 switch (type) {
                     case "Point":
                     case "MultiPoint":
-                        if (marker) {
-                            options["image"] = new IconStyle(marker);
-                        }
-                        break;
-
-                    case "Circle":
+                        // Cercle
                         var optionsCircle = {};
                         if (stroke) {
                             optionsCircle["stroke"] = new StrokeStyle(stroke);
@@ -176,6 +171,10 @@ var GeoJSON = (function (olGeoJSON) {
                         if (Object.keys(optionsCircle).length !== 0) {
                             optionsCircle["radius"] = 6; // param fixe
                             options["image"] = new CircleStyle(optionsCircle);
+                        }
+                        // Ponctuel ou label
+                        if (marker) {
+                            options["image"] = new IconStyle(marker);
                         }
                         break;
 
@@ -218,8 +217,6 @@ var GeoJSON = (function (olGeoJSON) {
                             case "Point":
                             case "MultiPoint":
                             case "Circle":
-                                // FIXME
-                                // comment doit on gerer les label ?
                                 if (this.options.defaultStyle.getImage()) {
                                     style = new Style({
                                         image : this.options.defaultStyle.getImage()
@@ -286,34 +283,46 @@ var GeoJSON = (function (olGeoJSON) {
                 // * stroke
                 // * fill
                 // * image :
-                //      * un marker
+                //      * un marker ou un label
                 //      * un cercle si fill et/ou stroke est present !
-
-                // FIXME
-                // comment gere t on les labels ?
-
                 var fill = style.getFill();
                 if (fill) {
-                    var colorFill = null;
-                    if (Color.isRGB(fill.getColor())) {
-                        colorFill = Color.rgbaToHex(fill.getColor());
-                        feature.set("fill", colorFill.hex);
-                        feature.set("fill-opacity", colorFill.opacity);
+                    var colorFill = fill.getColor();
+                    // array
+                    if (Array.isArray(colorFill)) {
+                        var cf = "rgba(";
+                        cf += colorFill[0] + ",";
+                        cf += colorFill[1] + ",";
+                        cf += colorFill[2] + ",";
+                        cf += colorFill[3] + ")";
+                        colorFill = cf;
+                    }
+                    if (Color.isRGB(colorFill)) {
+                        var oColorFill = Color.rgbaToHex(colorFill);
+                        feature.set("fill", oColorFill.hex);
+                        feature.set("fill-opacity", oColorFill.opacity);
                     } else {
-                        colorFill = fill.getColor();
                         feature.set("fill", colorFill);
                         feature.set("fill-opacity", 1);
                     }
                 }
                 var stroke = style.getStroke();
                 if (stroke) {
-                    var colorStroke = null;
-                    if (Color.isRGB(stroke.getColor())) {
-                        colorStroke = Color.rgbaToHex(stroke.getColor());
-                        feature.set("stroke", colorStroke.hex);
-                        feature.set("stroke-opacity", colorStroke.opacity);
+                    var colorStroke = stroke.getColor();
+                    // array
+                    if (Array.isArray(colorStroke)) {
+                        var cs = "rgba(";
+                        cs += colorStroke[0] + ",";
+                        cs += colorStroke[1] + ",";
+                        cs += colorStroke[2] + ",";
+                        cs += colorStroke[3] + ")";
+                        colorStroke = cs;
+                    }
+                    if (Color.isRGB(colorStroke)) {
+                        var oColorStroke = Color.rgbaToHex(colorStroke);
+                        feature.set("stroke", oColorStroke.hex);
+                        feature.set("stroke-opacity", oColorStroke.opacity);
                     } else {
-                        colorStroke = stroke.getColor();
                         feature.set("stroke", colorStroke);
                         feature.set("stroke-opacity", 1);
                     }
@@ -362,26 +371,42 @@ var GeoJSON = (function (olGeoJSON) {
                     } else {
                         var fillImg = image.getFill();
                         if (fillImg) {
-                            var colorFillImg = null;
-                            if (Color.isRGB(fillImg.getColor())) {
-                                colorFillImg = Color.rgbaToHex(fillImg.getColor());
-                                feature.set("fill", colorFillImg.hex);
-                                feature.set("fill-opacity", colorFillImg.opacity);
+                            var colorFillImg = fillImg.getColor();
+                            // array
+                            if (Array.isArray(colorFillImg)) {
+                                var cfi = "rgba(";
+                                cfi += colorFill[0] + ",";
+                                cfi += colorFill[1] + ",";
+                                cfi += colorFill[2] + ",";
+                                cfi += colorFill[3] + ")";
+                                colorFillImg = cfi;
+                            }
+                            if (Color.isRGB(colorFillImg)) {
+                                var oColorFillImg = Color.rgbaToHex(colorFillImg);
+                                feature.set("fill", oColorFillImg.hex);
+                                feature.set("fill-opacity", oColorFillImg.opacity);
                             } else {
-                                colorFillImg = fillImg.getColor();
                                 feature.set("fill", colorFillImg);
                                 feature.set("fill-opacity", 1);
                             }
                         }
                         var strokeImg = image.getStroke();
                         if (strokeImg) {
-                            var colorStrokeImg = null;
-                            if (Color.isRGB(strokeImg.getColor())) {
-                                colorStrokeImg = Color.rgbaToHex(strokeImg.getColor());
-                                feature.set("stroke", colorStrokeImg.hex);
-                                feature.set("stroke-opacity", colorStrokeImg.opacity);
+                            var colorStrokeImg = strokeImg.getColor();
+                            // array
+                            if (Array.isArray(colorStrokeImg)) {
+                                var csi = "rgba(";
+                                csi += colorFill[0] + ",";
+                                csi += colorFill[1] + ",";
+                                csi += colorFill[2] + ",";
+                                csi += colorFill[3] + ")";
+                                colorStrokeImg = csi;
+                            }
+                            if (Color.isRGB(colorStrokeImg)) {
+                                var oColorStrokeImg = Color.rgbaToHex(colorStrokeImg);
+                                feature.set("stroke", oColorStrokeImg.hex);
+                                feature.set("stroke-opacity", oColorStrokeImg.opacity);
                             } else {
-                                colorStrokeImg = strokeImg.getColor();
                                 feature.set("stroke", colorStrokeImg);
                                 feature.set("stroke-opacity", 1);
                             }

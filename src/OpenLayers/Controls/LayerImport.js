@@ -317,6 +317,15 @@ var LayerImport = (function (Control) {
         return this.contentService;
     };
 
+    /**
+     * Returns layer name
+     *
+     * @returns {String} name - layer name
+     */
+    LayerImport.prototype.getName = function () {
+        return this._name;
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -491,6 +500,7 @@ var LayerImport = (function (Control) {
         this.contentStatic = null;
         this._url = null;
         this._file = null;
+        this._name = null;
     };
 
     /**
@@ -907,8 +917,6 @@ var LayerImport = (function (Control) {
      * @private
      */
     LayerImport.prototype._importStaticLayerFromUrl = function (layerName) {
-        layerName = layerName || "";
-
         // 1. Récupération de l'url
         var url = this._staticUrlImportInput.value;
         logger.log("url : ", url);
@@ -923,6 +931,14 @@ var LayerImport = (function (Control) {
 
         // sauvegarde
         this._url = url;
+
+        // si le nom n'est pas renseigné, on extrait le nom du fichier
+        if (!layerName) {
+            layerName = this._url.substring(this._url.lastIndexOf("/") + 1, this._url.lastIndexOf("."));
+        }
+
+        // sauvegarde
+        this._name = layerName;
 
         // 2. récupération proxy
         if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
@@ -971,6 +987,14 @@ var LayerImport = (function (Control) {
 
         // sauvegarde
         this._file = file;
+
+        // si le nom n'est pas renseigné, on extrait le nom du fichier
+        if (!layerName) {
+            layerName = this._file.name.substring(this._file.name.lastIndexOf("/") + 1, this._file.name.lastIndexOf("."));
+        }
+
+        // sauvegarde
+        this._name = layerName;
 
         // Création d'un objet FileReader qui permet de lire le contenu du fichier chargé
         var fReader = new FileReader();
@@ -1475,16 +1499,7 @@ var LayerImport = (function (Control) {
             logger.trace(vectorSource);
 
             // ajout des informations pour le layerSwitcher (titre, description)
-            if (layerName) {
-                vectorSource._title = vectorSource._description = layerName;
-            } else {
-                if (vectorFormat.readName && vectorFormat.readName(fileContent)) {
-                    vectorSource._title = vectorSource._description = vectorFormat.readName(fileContent);
-                } else {
-                    vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
-                    logger.log("[ol.control.LayerImport] set default name \"Import " + this._currentImportType + "\"");
-                }
-            }
+            vectorSource._title = vectorSource._description = layerName;
 
             vectorLayer = new VectorLayer({
                 source : vectorSource,
@@ -1583,11 +1598,7 @@ var LayerImport = (function (Control) {
             }
 
             // ajout des informations pour le layerSwitcher (titre, description)
-            if (layerName) {
-                vectorSource._title = vectorSource._description = layerName;
-            } else {
-                vectorSource._title = vectorSource._description = "Import " + this._currentImportType;
-            }
+            vectorSource._title = vectorSource._description = layerName;
 
             vectorLayer = new VectorLayer({
                 source : vectorSource
