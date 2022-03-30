@@ -115,6 +115,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.9](#extension-geoportail-openlayers-version-329)
   * [Summary](#summary-33)
   * [Changelog](#changelog-30)
+- [Extension Geoportail OpenLayers, version 3.2.10](#extension-geoportail-openlayers-version-3210)
+  * [Summary](#summary-34)
+  * [Changelog](#changelog-31)
 
 <!-- tocstop -->
 
@@ -1252,6 +1255,31 @@ Evolution de la documentation et correction du layerswitcher
 * [Changed]
 
     - Retrait de la limitation d'affichage des reponses de l'autocompletion sur le Widget *SearchEngine* (cf. <https://www.developpez.net/forums/d2125691/applications/sig-systeme-d-information-geographique/ign-api-geoportail/geoportal-extension-searchengine-autocomplete-maximum-5-reponses/#post11811536>)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.10
+
+**23/03/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - DOM widget d'import : "Tuiles vectorielles" au lieu de "Vecteur tuilé"
+    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
 
 * [Deprecated]
 

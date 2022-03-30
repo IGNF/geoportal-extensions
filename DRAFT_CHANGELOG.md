@@ -13,8 +13,6 @@
 
 * [Changed]
 
-    - DOM widget d'import : "Tuiles vectorielles" au lieu de "Vecteur tuilé"
-
 * [Deprecated]
 
 * [Removed]
@@ -26,6 +24,7 @@
 * [Security]
 
 ---
+
 
 
 # Extension Geoportail Leaflet, version __VERSION__
