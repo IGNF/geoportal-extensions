@@ -1,6 +1,6 @@
 # Extension Géoportail pour iTowns
 
-[![release](https://img.shields.io/badge/release%20-itowns%202.3.5-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.3.5)
+[![release](https://img.shields.io/badge/release%20-itowns%202.3.6-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.3.6)
 
 <!-- toc -->
 
@@ -50,9 +50,10 @@
     - [Affichage d'une échelle graphique](#affichage-dune-échelle-graphique)
       - [Exemples d'utilisation](#exemples-dutilisation-4)
         - [Utilisation simple](#utilisation-simple-4)
-    - [Widget d'exageration du relief](#widget-exageration-relief)
+    - [Widget d'éxagération du relief](#widget-déxagération-du-relief)
       - [Exemples d'utilisation](#exemples-dutilisation-5)
         - [Utilisation simple](#utilisation-simple-5)
+        - [Utilisation avancée](#utilisation-avancée)
 <!-- tocstop -->
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :

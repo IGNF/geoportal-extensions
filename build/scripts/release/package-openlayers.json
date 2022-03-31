@@ -1,26 +1,31 @@
 {
+   "module" : "src/OpenLayers/index.js",
    "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
    "author" : "IGNF",
-   "date" : "23/03/2022",
-   "module" : "src/OpenLayers/index.js",
-   "bundleDependencies" : [],
-   "directories" : {},
-   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for OpenLayers",
    "dependencies" : {
-      "xmldom" : "^0.1.27",
       "node-fetch" : "^2.6.1",
-      "proj4" : "2.7.2",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
+      "sortablejs" : "1.14.0",
+      "loglevel" : "1.6.6",
       "ol-mapbox-style" : "6.7.0",
       "ol" : "6.9.0",
-      "loglevel" : "1.6.6",
+      "proj4" : "2.7.5",
+      "xmldom" : "^0.1.27",
       "geoportal-access-lib" : "3.1.0",
-      "eventbusjs" : "0.2.0",
-      "sortablejs" : "1.14.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.20.1"
+      "eventbusjs" : "0.2.0"
    },
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
    "files" : [
       "dist/",
       "src/",
@@ -28,19 +33,14 @@
       "README.md",
       "package.json"
    ],
+   "bundleDependencies" : [],
+   "date" : "31/03/2022",
    "devDependencies" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "description" : "French Geoportal Extensions for OpenLayers",
-   "scripts" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "main" : "dist/GpPluginOpenLayers-src.js",
    "bugs" : {},
-   "version" : "3.2.10",
+   "peerDependencies" : {},
+   "directories" : {},
+   "name" : "geoportal-extensions-openlayers",
+   "scripts" : {},
+   "version" : "3.2.11",
    "license" : "CECILL-B"
 }

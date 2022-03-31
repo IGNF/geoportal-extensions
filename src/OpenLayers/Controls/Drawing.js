@@ -105,6 +105,7 @@ var logger = Logger.getLogger("Drawing");
  * @param {String} [options.labels.strokeWidth] - Label for stroke width.
  * @param {String} [options.labels.fillColor] - Label for fill color.
  * @param {String} [options.labels.fillOpacity] - Label for fillOpacity.
+ * @param {String} [options.labels.markerSize] - Label for markerSize.
  * @param {Array.<Object>} [options.markersList = [{"src" : "data:image/png;base64,xxxx", "anchor" : [0.5,1]}]] - List of markers src to be used for points with their anchor offsets See {@link http://openlayers.org/en/latest/apidoc/ol.style.Icon.html OpenLayers params} for anchor offset options.
  * @param {Object} options.defaultStyles - Default styles applying to geometries (labels, lines and polygons).
  * @param {String} [options.defaultStyles.textFillColor = "#000000"] - Text fill color for labels (RGB hex value).
@@ -230,7 +231,9 @@ var Drawing = (function (Control) {
         strokeColor : "Couleur du trait : ",
         strokeWidth : "Epaisseur du trait : ",
         fillColor : "Couleur de remplissage : ",
-        fillOpacity : "Opacité du remplissage : "
+        fillOpacity : "Opacité du remplissage : ",
+        markerSize : "Taille du pictogramme : ",
+        markerColor : "Couleur du pictogramme : "
     };
 
     /**
@@ -251,7 +254,9 @@ var Drawing = (function (Control) {
         polyStrokeColor : "#ffcc33",
         polyStrokeWidth : 4,
         strokeColor : "#ffcc33",
-        strokeWidth : 4
+        strokeWidth : 4,
+        markerSize : 1,
+        markerColor : "#ffcc33"
     };
 
     /**
@@ -493,7 +498,7 @@ var Drawing = (function (Control) {
     Drawing.prototype._getsMarkersOptionsFromSrc = function (src) {
         var markerOptions = null;
         for (var i = 0; i < this.options.markersList.length; i++) {
-            if (this.options.markersList[i].src === src) {
+            if (src && this.options.markersList[i].src === src) {
                 markerOptions = this.options.markersList[i];
                 return markerOptions;
             }
@@ -514,6 +519,8 @@ var Drawing = (function (Control) {
             switch (key) {
                 case "src":
                 case "size":
+                case "scale":
+                case "color":
                 case "anchor":
                 case "anchorOrigin":
                 case "anchorXUnits":
@@ -696,6 +703,15 @@ var Drawing = (function (Control) {
                     return;
                 }
                 this.options.defaultStyles[key] = intValue;
+            }
+            if (key === "markerSize") {
+                var floatValue = parseFloat(options.defaultStyles[key]);
+                if (isNaN(floatValue) || floatValue < 0) {
+                    logger.log("Wrong value (" + options.defaultStyles[key] + ") for defaultStyles.markerSize. Must be a positive value.");
+                    this.options.defaultStyles[key] = Drawing.DefaultStyles[key];
+                    return;
+                }
+                this.options.defaultStyles[key] = floatValue;
             }
         });
 
@@ -1114,9 +1130,31 @@ var Drawing = (function (Control) {
                     geomType = "Point";
                     if (style.getImage().getSrc()) {
                         initValues.markerSrc = style.getImage().getSrc();
+                        initValues.markerSize = style.getImage().getScale() || 1;
+                        initValues.markerAnchor = style.getImage().getAnchor();
+                        if (style.getImage().getColor()) {
+                            valuesColor = style.getImage().getColor();
+                            if (Array.isArray(valuesColor)) { // FIXME Array !?
+                                valuesColor = "rgba(" + valuesColor.join() + ")";
+                            } else {
+                                initValues.markerColor = valuesColor;
+                            }
+                            hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                                hex : valuesColor,
+                                opacity : 1
+                            };
+                            initValues.markerColor = hexColor.hex;
+                            initValues.markerOpacity = hexColor.opacity;
+                        } else {
+                            initValues.markerColor = this.options.markersList[0].color || "#ffffff";
+                        }
                     } else {
                         initValues.markerSrc = this.options.markersList[0].src;
+                        initValues.markerSize = this.options.markersList[0].scale || 1;
+                        initValues.markerColor = this.options.markersList[0].color || "#ffffff";
+                        initValues.markerAnchor = this.options.markersList[0].anchor;
                     }
+                    initValues.markerCustom = !(this._getsMarkersOptionsFromSrc(initValues.markerSrc));
                 }
             } else if (geom instanceof LineString || geom instanceof MultiLineString) {
                 geomType = "Line";
@@ -1204,6 +1242,8 @@ var Drawing = (function (Control) {
                 var fillOpacityElem = document.getElementById(dtObj._addUID("fillOpacity"));
                 var strokeColorElem = document.getElementById(dtObj._addUID("strokeColor"));
                 var strokeWidthElem = document.getElementById(dtObj._addUID("strokeWidth"));
+                var markerSizeElem = document.getElementById(dtObj._addUID("markerSize"));
+                var markerColorElem = document.getElementById(dtObj._addUID("markerColor"));
                 switch (geomType.toLowerCase()) {
                     case "text":
                         if (setDefault) {
@@ -1227,8 +1267,18 @@ var Drawing = (function (Control) {
                         }
                         break;
                     case "point":
-                        var markerSelected = dtObj._getsMarkersOptionsFromSrc(document.querySelector("input[name='marker']:checked").value);
+                        // FIXME cas où le marker n'est pas dans la liste ?
+                        // si le marker n'existe pas dans le liste, on ne souhaite donc que changer la couleur du
+                        // pictogramme ou la taille..., on garde donc le picto initial.
+                        var markerSelected = null;
+                        var scale = parseInt(markerSizeElem.value, 10) / 10;
+                        var markerChecked = document.querySelector("input[name='marker']:checked");
+                        if (markerChecked) {
+                            markerSelected = dtObj._getsMarkersOptionsFromSrc(markerChecked.value);
+                            markerSelected.scale = scale;
+                        }
                         if (setDefault) {
+                            dtObj.options.defaultStyles.markerSize = scale;
                             if (dtObj.options.markersList.length > 1) {
                                 // index du marker dans la liste des markers
                                 var idxMarker = dtObj.options.markersList.findIndex(function (mrk) {
@@ -1245,9 +1295,24 @@ var Drawing = (function (Control) {
                                 }
                             }
                         } else {
-                            seEv.selected[0].setStyle(new Style({
-                                image : new Icon(dtObj._getIconStyleOptions(markerSelected))
-                            }));
+                            if (markerSelected) {
+                                seEv.selected[0].setStyle(new Style({
+                                    image : new Icon(dtObj._getIconStyleOptions(markerSelected))
+                                }));
+                            } else {
+                                // FIXME anchor !?
+                                seEv.selected[0].setStyle(new Style({
+                                    image : new Icon({
+                                        src : initValues.markerSrc, // on garde le pictogramme initial !
+                                        color : markerColorElem.value, // on recupère la couleur !
+                                        anchor : initValues.markerAnchor, // on garde la position initial !
+                                        anchorOrigin : "top-left",
+                                        anchorXUnits : "pixels",
+                                        anchorYUnits : "pixels",
+                                        scale : scale
+                                    })
+                                }));
+                            }
                         }
                         break;
                     case "line":

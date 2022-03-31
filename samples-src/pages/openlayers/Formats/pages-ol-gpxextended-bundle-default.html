@@ -95,9 +95,14 @@
                             var coord = evt.coordinate;
                             var props = feature.getProperties();
                             var contents = "";
+                            var length = "30";
                             for (var key in props) {
                                 if (props.hasOwnProperty(key)) {
-                                    contents += key + " / " + props[key];
+                                    var value = props[key];
+                                    if (typeof value === "string") {
+                                        value = props[key].substring(0, length);
+                                    }
+                                    contents += key + " / " + value;
                                     contents += "<br>";
                                 }
                             }

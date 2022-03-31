@@ -1,7 +1,5 @@
 
 
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -13,10 +11,9 @@
 
 * [Added]
 
-* [Changed]
+    - Ajout du menu des couleurs et de la taille des pictogramme dans l'outil de dessin
 
-    - DOM widget d'import : "Tuiles vectorielles" au lieu de "Vecteur tuilé"
-    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
+* [Changed]
 
 * [Deprecated]
 
@@ -24,9 +21,13 @@
 
 * [Fixed]
 
+    - Amélioration du rendu vecteur des formats GPX et GeoJSON
+    - Gestion du nom d'une couche importée dans le gestionnaire et dans l'outil de dessin
+
 * [Security]
 
 ---
+
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -41,8 +42,6 @@
 * [Added]
 
 * [Changed]
-
-    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
 
 * [Deprecated]
 

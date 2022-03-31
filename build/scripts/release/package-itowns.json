@@ -1,6 +1,6 @@
 {
-   "scripts" : {},
-   "author" : "IGNF",
+   "peerDependencies" : {},
+   "name" : "geoportal-extensions-itowns",
    "files" : [
       "dist/",
       "src/",
@@ -8,37 +8,37 @@
       "README.md",
       "package.json"
    ],
-   "dependencies" : {
-      "sortablejs" : "1.14.0",
-      "three" : "0.135.0",
-      "proj4" : "2.7.5",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/new-iso/geoportal-access-lib-3.0.6.tgz",
-      "xmldom" : "^0.1.27",
-      "loglevel" : "1.6.7",
-      "itowns" : "2.37.0",
-      "node-fetch" : "^2.6.1"
-   },
-   "devDependencies" : {},
-   "version" : "2.3.6",
    "directories" : {},
-   "date" : "04/03/2022",
-   "license" : "CECILL-B",
-   "bugs" : {},
-   "name" : "geoportal-extensions-itowns",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "bundleDependencies" : [],
-   "main" : "dist/GpPluginItowns-src.js",
-   "peerDependencies" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "dependencies" : {
+      "loglevel" : "1.6.7",
+      "three" : "0.135.0",
+      "node-fetch" : "^2.6.1",
+      "proj4" : "2.7.5",
+      "itowns" : "2.37.0",
+      "sortablejs" : "1.14.0",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "3.1.0"
+   },
+   "module" : "src/Itowns/index.js",
    "description" : "French Geoportal Extensions for iTowns",
+   "bundleDependencies" : [],
+   "scripts" : {},
+   "main" : "dist/GpPluginItowns-src.js",
+   "date" : "23/03/2022",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "module" : "src/Itowns/index.js"
+   "author" : "IGNF",
+   "bugs" : {},
+   "version" : "2.3.6",
+   "devDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "license" : "CECILL-B"
 }
