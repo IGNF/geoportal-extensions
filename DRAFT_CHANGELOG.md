@@ -11,6 +11,8 @@
 
 * [Added]
 
+    - Ajout du menu des couleurs et de la taille des pictogramme dans l'outil de dessin
+
 * [Changed]
 
 * [Deprecated]
@@ -19,7 +21,8 @@
 
 * [Fixed]
 
-    - Fix sur le rendu vecteur des formats GPX et GeoJSON
+    - Amélioration du rendu vecteur des formats GPX et GeoJSON
+    - Gestion du nom d'une couche importée dans le gestionnaire et dans l'outil de dessin
 
 * [Security]
 
