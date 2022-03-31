@@ -118,6 +118,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.10](#extension-geoportail-openlayers-version-3210)
   * [Summary](#summary-34)
   * [Changelog](#changelog-31)
+- [Extension Geoportail OpenLayers, version 3.2.11](#extension-geoportail-openlayers-version-3211)
+  * [Summary](#summary-35)
+  * [Changelog](#changelog-32)
 
 <!-- tocstop -->
 
@@ -1286,6 +1289,33 @@ Evolution de la documentation et correction du layerswitcher
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.11
+
+**31/03/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+    - Ajout du menu des couleurs et de la taille des pictogramme dans l'outil de dessin
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Amélioration du rendu vecteur des formats GPX et GeoJSON
+    - Gestion du nom d'une couche importée dans le gestionnaire et dans l'outil de dessin
 
 * [Security]
 

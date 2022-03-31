@@ -1,5 +1,6 @@
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -11,8 +12,6 @@
 
 * [Added]
 
-    - Ajout du menu des couleurs et de la taille des pictogramme dans l'outil de dessin
-
 * [Changed]
 
 * [Deprecated]
@@ -20,9 +19,6 @@
 * [Removed]
 
 * [Fixed]
-
-    - Amélioration du rendu vecteur des formats GPX et GeoJSON
-    - Gestion du nom d'une couche importée dans le gestionnaire et dans l'outil de dessin
 
 * [Security]
 
