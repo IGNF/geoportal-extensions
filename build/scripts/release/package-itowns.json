@@ -1,23 +1,35 @@
 {
-   "main" : "dist/GpPluginItowns-src.js",
-   "directories" : {},
-   "bugs" : {},
-   "bundleDependencies" : [],
-   "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "scripts" : {},
+   "author" : "IGNF",
+   "files" : [
+      "dist/",
+      "src/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
    "dependencies" : {
-      "itowns" : "2.33.0",
+      "sortablejs" : "1.14.0",
+      "three" : "0.135.0",
+      "proj4" : "2.7.5",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/new-iso/geoportal-access-lib-3.0.6.tgz",
       "xmldom" : "^0.1.27",
-      "loglevel" : "1.6.6",
-      "three" : "0.127.0",
-      "proj4" : "2.7.2",
-      "node-fetch" : "^2.6.1",
-      "geoportal-access-lib" : "3.0.5",
-      "sortablejs" : "1.8.4"
+      "loglevel" : "1.6.7",
+      "itowns" : "2.37.0",
+      "node-fetch" : "^2.6.1"
    },
    "devDependencies" : {},
-   "scripts" : {},
-   "version" : "2.3.5",
+   "version" : "2.3.6",
+   "directories" : {},
+   "date" : "04/03/2022",
+   "license" : "CECILL-B",
+   "bugs" : {},
+   "name" : "geoportal-extensions-itowns",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "bundleDependencies" : [],
+   "main" : "dist/GpPluginItowns-src.js",
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extensions for iTowns",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -28,17 +40,5 @@
       "type" : "git",
       "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "author" : "IGNF",
-   "files" : [
-      "dist/",
-      "src/",
-      "LICENCE.md",
-      "README.md",
-      "package.json"
-   ],
-   "date" : "28/01/2022",
-   "module" : "src/Itowns/index.js",
-   "description" : "French Geoportal Extensions for iTowns",
-   "name" : "geoportal-extensions-itowns",
-   "license" : "CECILL-B"
+   "module" : "src/Itowns/index.js"
 }

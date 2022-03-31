@@ -265,7 +265,7 @@ var LayerImportDOM = {
         for (var i = 0; i < importTypes.length; i++) {
             option = document.createElement("option");
             option.value = importTypes[i];
-            option.text = (importTypes[i] === "MAPBOX") ? "Vecteur tuilé" : importTypes[i];
+            option.text = (importTypes[i] === "MAPBOX") ? "Tuiles vectorielles" : importTypes[i];
             select.appendChild(option);
         }
 

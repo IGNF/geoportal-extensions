@@ -151,7 +151,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
     }
     const colorLayer = {
         id: `GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD$GEOPORTAIL:OGC:WMTS`,
-        url: `spec/itowns/resources/JSONLayers/ScanEX.json`
+        url: `spec/itowns/resources/JSONLayers/PlanIgnV2.json`
     }
     const zoomScale = {
         zoom: 9,
@@ -531,21 +531,21 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
     describe('#layers management', function () {
         it('should correctly add a layer', (done) => {
             var nbLayers = globeViewExtended.getColorLayers().length;
-            window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/ScanEX.json').then(layerManager.createWMTSSourceFromConfig).then(function(result){
+            window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/PlanIgnV2.json').then(layerManager.createWMTSSourceFromConfig).then(function(result){
                     layerManager.addColorLayerFromConfig(result);
                 }.bind(this)).then(() => {
                 assert.equal(globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length);
-                var layer = globeViewExtended.getLayerById("ScanEX");
+                var layer = globeViewExtended.getLayerById("PlanIGN");
                 assert(layer, 'layer not found');
             }).then(() => done()).catch(e => done(e));
         });
 
         it('should correctly remove a layer', () => {
-            layerManager.remove("ScanEX");
+            layerManager.remove("PlanIGN");
 
             assert.equal(globeViewExtended.getColorLayers().length, layerManager.getColorLayers().length);
 
-            var layer = globeViewExtended.getLayerById("ScanEX");
+            var layer = globeViewExtended.getLayerById("PlanIGN");
             assert(!layer, 'removed layer found');
         });
     });
@@ -650,7 +650,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
         });
 
         it('should correctly launch layer added event', function (done) {
-            window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/ScanEX.json').then(layerManager.createWMTSSourceFromConfig).then(function(result){
+            window.itowns.Fetcher.json('spec/itowns/resources/JSONLayers/PlanIgnV2.json').then(layerManager.createWMTSSourceFromConfig).then(function(result){
                 layerManager.addColorLayerFromConfig(result);
             }.bind(this));
 
@@ -667,7 +667,7 @@ describe("-- [Itowns] Test GlobeViewExtended API --", function () {
                 globeViewExtended.forgetByKey(eventKey);
                 done();
             });
-            layerManager.remove("ScanEX");
+            layerManager.remove("PlanIGN");
         });
 
         it('should correctly launch layer order changed event', function (done) {

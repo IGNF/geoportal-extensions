@@ -50,7 +50,9 @@
     - [Affichage d'une échelle graphique](#affichage-dune-échelle-graphique)
       - [Exemples d'utilisation](#exemples-dutilisation-4)
         - [Utilisation simple](#utilisation-simple-4)
-
+    - [Widget d'exageration du relief](#widget-exageration-relief)
+      - [Exemples d'utilisation](#exemples-dutilisation-5)
+        - [Utilisation simple](#utilisation-simple-5)
 <!-- tocstop -->
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
@@ -71,6 +73,7 @@ L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de propos
 
 * [affichage d'une echelle graphique](#scalebar)
 
+* [widget d'exagération du relief](#boostrelief)
 
 ## Mise en oeuvre
 
@@ -362,7 +365,7 @@ Gp.Services.getConfig(...)
 
 ### Versions d'iTowns supportées
 
-La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.33.0** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.33.0 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
+La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.37.0** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.37.0 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
 
 
 ### Navigateurs supportés
@@ -1012,3 +1015,89 @@ globeView.addWidget( scalebar );
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xwodbsfp/embedded/result,js,html,css/)
+
+
+-----------------------------------------
+
+<a id="boostrelief"/>
+
+### Widget d'éxagération du relief
+
+Ce widget permet d'appliquer des coéfficients d'éxagération du relief, afin de mettre en valeur et de visualiser de manière plus marquée la topographie d'un territoire.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.BoostRelief que l'on peut ensuite ajouter au globe de la manière suivante :
+
+``` javascript
+var boostRelief = new itowns.control.BoostRelief(opts);
+globeView.addWidget( boostrelief );
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+// Ajout de MNT
+var mntLayer = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+});
+
+var mntLayerWorld = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE.SRTM3"
+});
+
+globeView.addLayer(mntLayer);
+globeView.addLayer(mntLayerWorld);
+
+var boostrelief = new itowns.control.BoostRelief({});
+
+globeView.addWidget( boostrelief );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1no0hyp2/embedded/result,js,html,css/)
+
+
+##### Utilisation avancée
+
+Ajout du widget en paramétrant des coéfficients minimum et maximum, et un pas spécifique pour le slider d'éxagération
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+// Ajout de MNT
+var mntLayer = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+});
+
+var mntLayerWorld = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE.SRTM3"
+});
+
+globeView.addLayer(mntLayer);
+globeView.addLayer(mntLayerWorld);
+
+// Coefficients entre x5 et x60, avec un pas de 60
+var boostrelief = new itowns.control.BoostRelief({
+	scale : {
+	    min : 5,
+	    max : 60,
+	    step : 5
+	}
+});
+
+globeView.addWidget( boostrelief );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/szj1n62k/embedded/result,js,html,css/)
