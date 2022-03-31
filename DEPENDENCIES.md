@@ -1,4 +1,4 @@
-# DEPENDENCIES (08/12/2021)
+# DEPENDENCIES (31/03/2022)
 
 * openlayers
 
@@ -23,12 +23,12 @@ last
 * Sortable
 
 last
-└── sortablejs@1.8.4
+└── sortablejs@1.14.0
 
 * geoportal-access-lib
 
 last
-└── geoportal-access-lib@3.0.5
+└── geoportal-access-lib@3.1.0
 
 * leaflet
 
