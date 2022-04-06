@@ -328,17 +328,11 @@ Legend.prototype._initContainer = function () {
 */
 Legend.prototype._getValues = function (type, value) {
     logger.trace("_getValues():", type, value);
-    // objets
-    var pColor = null;
-    var pStroke = null;
-    var pWidth = null;
-    var pOpacity = null;
 
-    // par defaut...
-    var _color = this.legendRender.values.color; // couleur remplissage
-    var _stroke = this.legendRender.values.stroke; // couleur trait
-    var _width = this.legendRender.values.width; // epaisseur
-    var _opacity = this.legendRender.values.opacity; // opacité
+    var _color = null; // couleur remplissage
+    var _stroke = null; // couleur trait
+    var _width = null; // epaisseur
+    var _opacity = null; // opacité
     var _icon = null;
 
     // cas particulier : determiner pour un symbole complexe
@@ -358,25 +352,13 @@ Legend.prototype._getValues = function (type, value) {
 
     switch (type) {
         case "line":
-            pColor = value["line-color"];
-            if (Array.isArray(pColor) || typeof pColor === "object") {
-                _color = null;
-                break;
-            }
-            _color = pColor || _color;
-            pWidth = value["line-width"];
-            _width = (Array.isArray(pWidth) || typeof pWidth === "object") ? _width : pWidth || _width;
-            pOpacity = value["line-opacity"];
-            _opacity = (Array.isArray(pOpacity) || typeof pOpacity === "object") ? _opacity : pOpacity || _opacity;
+            _color = this._extract(value["line-color"]);
+            _width = this._extract(value["line-width"]);
+            _opacity = this._extract(value["line-opacity"]);
             break;
         case "text":
-            pColor = value["text-color"];
-            if (Array.isArray(pColor) || typeof pColor === "object") {
-                _color = null;
-                break;
-            }
             // FIXME c'est plus complexe !?
-            _color = pColor || _color;
+            _color = this._extract(value["text-color"]);
             break;
         case "icon":
             var bfound = false;
@@ -388,46 +370,22 @@ Legend.prototype._getValues = function (type, value) {
             if (bfound) {
                 _icon = value["icon-image"];
             } else {
-                pColor = value["icon-color"];
-                if (Array.isArray(pColor) || typeof pColor === "object") {
-                    _color = null;
-                    break;
-                }
                 // FIXME  c'est plus complexe !?
-                _color = pColor || _color;
+                _color = this._extract(value["icon-color"]);
             }
             break;
         case "circle":
-            pColor = value["circle-color"];
-            if (Array.isArray(pColor) || typeof pColor === "object") {
-                _color = null;
-                break;
-            }
-            _color = pColor || _color;
-            pStroke = value["circle-stroke-color"];
-            _stroke = (Array.isArray(pStroke) || typeof pStroke === "object") ? _stroke : pStroke || _stroke;
-            pOpacity = value["circle-opacity"];
-            _opacity = (Array.isArray(pOpacity) || typeof pOpacity === "object") ? _opacity : pOpacity || _opacity;
-            pWidth = value["circle-stroke-width"];
-            _width = (Array.isArray(pWidth) || typeof pWidth === "object") ? _width : pWidth || _width;
+            _color = this._extract(value["circle-color"]);
+            _stroke = this._extract(value["circle-stroke-color"]);
+            _opacity = this._extract(value["circle-opacity"]);
+            _width = this._extract(value["circle-stroke-width"]);
             break;
         case "background":
-            pColor = value["background-color"];
-            if (Array.isArray(pColor) || typeof pColor === "object") {
-                _color = null;
-                break;
-            }
-            _color = pColor || _color;
+            _color = this._extract(value["background-color"]);
             break;
         case "fill":
-            pColor = value["fill-color"];
-            if (Array.isArray(pColor) || typeof pColor === "object") {
-                _color = null;
-                break;
-            }
-            _color = pColor || _color;
-            pOpacity = value["fill-opacity"];
-            _opacity = (Array.isArray(pOpacity) || typeof pOpacity === "object") ? _opacity : pOpacity || _opacity;
+            _color = this._extract(value["fill-color"]);
+            _opacity = this._extract(value["fill-opacity"]);
             break;
         default:
             // return false;
@@ -437,10 +395,10 @@ Legend.prototype._getValues = function (type, value) {
     this.legendRender = {
         type : type,
         values : {
-            color : _color,
-            stroke : _stroke,
-            width : _width,
-            opacity : _opacity,
+            color : _color || this.legendRender.values.color,
+            stroke : _stroke || this.legendRender.values.stroke,
+            width : _width || this.legendRender.values.width,
+            opacity : _opacity || this.legendRender.values.opacity,
             icon : _icon
         }
     };
@@ -478,7 +436,7 @@ Legend.prototype._setValues = function (type, values) {
     // SVG
     var svg = null;
     // facteur grossissement (x10) pour le trait
-    var factor = 10;
+    var factor = 3;
 
     // en fonction du type, on y ajoute le style
     switch (type) {
@@ -553,6 +511,30 @@ Legend.prototype._setValues = function (type, values) {
     };
 
     return true;
+};
+
+/**
+ * ...
+ *
+ * @param {*} value - value
+ * @returns {String} extract value
+ */
+Legend.prototype._extract = function (value) {
+    var result = null;
+    if (typeof value === "string") {
+        result = value;
+    }
+    if (Array.isArray(value)) {
+        result = null;
+    }
+    if (typeof value === "object") {
+        result = null;
+        if ("stops" in value) {
+            var lastStopsValue = value.stops.slice(-1);
+            result = lastStopsValue[0][1];
+        }
+    }
+    return result;
 };
 
 /**

@@ -167,6 +167,29 @@
             });
             legend4.add();
 
+            var legend41 = new ol.style.editor.Legend({
+                target: document.getElementById("legend"),
+                obj: {
+                    "title" : "test fill (stops), not yet implemented...",
+                    "paint": {
+                        "fill-color": {
+                            "base": 1,
+                            "stops": [
+                                [
+                                    15.5,
+                                    "#f2eae2"
+                                ],
+                                [
+                                    16,
+                                    "#dfdbd7"
+                                ]
+                            ]
+                        }
+                    }
+                },
+            });
+            legend41.add();
+
             var legend5 = new ol.style.editor.Legend({
                 position : 5,
                 obj: {

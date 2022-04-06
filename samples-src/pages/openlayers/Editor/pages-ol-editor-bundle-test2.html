@@ -22,7 +22,7 @@
 
             var editor = new ol.style.Editor({
                 target: document.getElementById("editor"),
-                style: "{{ resources }}/data/mapbox/styles/qwant.json",
+                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
                 events : {
                     "editor:onloaded" : function (editor) {
                         if (editor.target.id === this.getID()) {

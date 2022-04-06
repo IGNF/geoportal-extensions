@@ -223,23 +223,24 @@ var LayerImport = (function (Control) {
             // var center = this._loadingContainer = this._createLoadingElement();
             // map.getViewport().appendChild(center);
 
+            var self = this;
             map.getLayers().on(
                 "remove",
                 function (e) {
                     // import de type layerimport:MapBox ?
-                    if (e.element.gpResultLayerId === "layerimport:MapBox") {
-                        // layer ayant le bon ID ?
-                        if (this._mapBoxLayerId && this._mapBoxLayerId === e.element.id) {
+                    if (e.element.gpResultLayerId === "layerimport:MAPBOX") {
+                        // layer ayant un editor ID associé ?
+                        if (e.element.gpEditorId) {
                             // le panneau des résultats existe t il ?
-                            if (this._mapBoxPanel && this._mapBoxPanel.style.display) {
-                                this.cleanMapBoxResultsList();
-                                this._mapBoxPanel.style.display = "none";
-                                this._importPanel.style.display = "";
+                            if (self._mapBoxPanel && self._importPanel) {
+                                self.cleanMapBoxResults(e.element.gpEditorId);
+                                self._mapBoxPanel.style.display = "none";
+                                self._importPanel.style.display = "";
                             }
                         }
                     }
                 },
-                this
+                self
             );
 
             // mode "draggable"
@@ -491,9 +492,7 @@ var LayerImport = (function (Control) {
 
         // ################################################################## //
         // ########################### MapBox ############################### //
-        this.editor = null;
-        this._mapBoxObj = null;
-        this._mapBoxLayerId = null;
+        this._mapBoxObj = null; // FIXME inutile !?
 
         // ################################################################## //
         // ########################### file or url ########################## //
@@ -1079,10 +1078,10 @@ var LayerImport = (function (Control) {
             var self = this;
 
             // style mapbox
-            var _glStyle = this._mapBoxObj = JSON.parse(fileContent);
+            var _glStyles = this._mapBoxObj = JSON.parse(fileContent);
 
             // liste des sources
-            var _glSources = _glStyle.sources;
+            var _glSources = _glStyles.sources;
 
             // FIXME a t on du multi-sources ?
             // mais comment doit on les traiter ?
@@ -1102,34 +1101,34 @@ var LayerImport = (function (Control) {
                     // ex. metadata : {
                     //    geoportail:[title | description | quicklookUrl | legends | originators | metadata]
                     // }
-                    if (_glStyle.metadata) {
-                        for (var ns in _glStyle.metadata) {
-                            if (_glStyle.metadata.hasOwnProperty(ns)) {
+                    if (_glStyles.metadata) {
+                        for (var ns in _glStyles.metadata) {
+                            if (_glStyles.metadata.hasOwnProperty(ns)) {
                                 var _keys = ns.split(":");
                                 if (_keys[0] === "geoportail") {
                                     var key = _keys[1];
                                     if (key === "title") {
-                                        _title = _glStyle.metadata[ns];
+                                        _title = _glStyles.metadata[ns];
                                         continue;
                                     }
                                     if (key === "description") {
-                                        _description = _glStyle.metadata[ns];
+                                        _description = _glStyles.metadata[ns];
                                         continue;
                                     }
                                     if (key === "quicklookUrl") {
-                                        _quicklookUrl = _glStyle.metadata[ns];
+                                        _quicklookUrl = _glStyles.metadata[ns];
                                         continue;
                                     }
                                     if (key === "legends") {
-                                        _legends = _glStyle.metadata[ns];
+                                        _legends = _glStyles.metadata[ns];
                                         continue;
                                     }
                                     if (key === "metadata") {
-                                        _metadata = _glStyle.metadata[ns];
+                                        _metadata = _glStyles.metadata[ns];
                                         continue;
                                     }
                                     if (key === "originators") {
-                                        _originators = _glStyle.metadata[ns];
+                                        _originators = _glStyles.metadata[ns];
                                         continue;
                                     }
                                 }
@@ -1160,7 +1159,7 @@ var LayerImport = (function (Control) {
                         // url du service tuilé
                         var _glTiles = _glSource.tiles;
                         // sprites
-                        var _glSprite = _glStyle.sprite;
+                        var _glSprite = _glStyles.sprite;
 
                         // FIXME si on a un import par fichier local (this._file),
                         // - comment passe t on la clef / le token ?
@@ -1179,7 +1178,7 @@ var LayerImport = (function (Control) {
                                 // conversion des sprites sur un autre scheme que "mapbox://"
                                 if (_glSprite.indexOf("mapbox://") === 0) {
                                     var s = _urlService.split("?"); // FIXME si fichier local !?
-                                    _glStyle.sprite = s[0] + "/sprite" + "?" + s[1];
+                                    _glStyles.sprite = s[0] + "/sprite" + "?" + s[1];
                                 }
                             } else {
                                 logger.warn("Not yet implemented, can't use the local import scheme with a 'mapbox://' in the file.!");
@@ -1222,7 +1221,7 @@ var LayerImport = (function (Control) {
                                 // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
                                 declutter : true // TODO utile ?
                             });
-                            this._mapBoxLayerId = vectorLayer.id = _glSourceId;
+                            vectorLayer.id = _glSourceId;
                             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                         } else if (_glUrl) {
                             // service avec un tilejson
@@ -1232,7 +1231,7 @@ var LayerImport = (function (Control) {
                                 // zIndex : 0
                                 declutter : true
                             });
-                            this._mapBoxLayerId = vectorLayer.id = _glSourceId;
+                            vectorLayer.id = _glSourceId;
                             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                             var vectorTileJson = new TileJSONSource({
                                 url : _glUrl
@@ -1306,11 +1305,34 @@ var LayerImport = (function (Control) {
                             // zIndex: 0, // FIXME gerer l'ordre sur des multisources ?
                             declutter : true // TODO utile ?
                         });
-                        this._mapBoxLayerId = vectorLayer.id = _glSourceId;
+                        vectorLayer.id = _glSourceId;
                         vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                     } else {
                         logger.warn("Type MapBox format unknown !");
                         return;
+                    }
+
+                    // clone
+                    var _glStyle = JSON.parse(JSON.stringify(_glStyles));
+                    // cas du multi source
+                    if (_multiSources) {
+                        // on supprime les layers inutiles
+                        var _glLayers = _glStyle.layers;
+                        for (var ii = 0; ii < _glLayers.length; ii++) {
+                            var _glLayer = _glLayers[ii];
+                            if (_glLayer.source !== _glSourceId) {
+                                _glLayers.splice(ii, 1);
+                                continue;
+                            }
+                        }
+                        // on supprime les sources inutiles
+                        for (var keySource in _glStyle.sources) {
+                            if (_glStyle.sources.hasOwnProperty(keySource)) {
+                                if (keySource !== _glSourceId) {
+                                    delete _glStyle.sources[keySource];
+                                }
+                            }
+                        }
                     }
 
                     // parametre à transmettre à la fonction auto-invoquée
@@ -1360,7 +1382,36 @@ var LayerImport = (function (Control) {
                                         }
                                     }
                                 })
-                                .then(function () {})
+                                .then(function () {
+                                    // affichage du panneau des couches accessibles à l'edition
+                                    self._importPanel.style.display = "none";
+                                    self._mapBoxPanel.style.display = "block";
+
+                                    // editeur de styles
+                                    var editor = new Editor({
+                                        target : self._mapBoxResultsListContainer,
+                                        style : p.styles,
+                                        scope : self,
+                                        events : {
+                                            "editor:layer:onclickvisibility" : self._onChangeVisibilitySourceMapBox,
+                                            "editor:style:scale:onchangemin" : self._onChangeScaleMinSourceMapBox,
+                                            "editor:style:scale:onchangemax" : self._onChangeScaleMaxSourceMapBox,
+                                            "editor:legend:onchangevalue" : self._onChangeLegendValueSourceMapBox
+                                        },
+                                        tools : {
+                                            themes : false,
+                                            layers : true,
+                                            style : self.options.vectorStyleOptions.MapBox.tools.style,
+                                            filter : self.options.vectorStyleOptions.MapBox.tools.filter,
+                                            legend : true,
+                                            group : false
+                                        }
+                                    });
+                                    editor.createElement();
+
+                                    // association entre le layer et l'editeur via l'id
+                                    p.layer.gpEditorId = editor.getID();
+                                })
                                 .catch(function (e) {
                                     logger.error(e);
                                 });
@@ -1379,16 +1430,7 @@ var LayerImport = (function (Control) {
                         // ajout des differents styles de la couche
                         // pour une utilisation eventuelle (ex. editeur)
                         // > layer.set("mapbox-styles")
-                        var _styles = [];
-                        var _glLayers = p.styles.layers;
-                        for (var ii = 0; ii < _glLayers.length; ii++) {
-                            var _glLayer = _glLayers[ii];
-                            if (_glLayer.source === p.id) {
-                                _styles.push(_glLayer);
-                                continue;
-                            }
-                        }
-                        p.layer.set("mapbox-styles", _styles);
+                        p.layer.set("mapbox-styles", p.styles.layers);
 
                         // ajout du layer sur la carte
                         map.addLayer(p.layer);
@@ -1415,38 +1457,11 @@ var LayerImport = (function (Control) {
                 }
             }
 
-            // affichage du panneau des couches accessibles à l'edition
-            this._importPanel.style.display = "none";
-            this._mapBoxPanel.style.display = "block";
-
-            // editeur de styles
-            this.editor = new Editor({
-                target : this._mapBoxResultsListContainer,
-                style : this._mapBoxObj,
-                scope : this,
-                events : {
-                    "editor:layer:onclickvisibility" : this._onChangeVisibilitySourceMapBox,
-                    "editor:style:scale:onchangemin" : this._onChangeScaleMinSourceMapBox,
-                    "editor:style:scale:onchangemax" : this._onChangeScaleMaxSourceMapBox,
-                    "editor:legend:onchangevalue" : this._onChangeLegendValueSourceMapBox
-                },
-                tools : {
-                    themes : false,
-                    layers : true,
-                    style : this.options.vectorStyleOptions.MapBox.tools.style,
-                    filter : this.options.vectorStyleOptions.MapBox.tools.filter,
-                    legend : true,
-                    group : false
-                }
-            });
-            this.editor.createElement();
-
             // TODO style par defaut au cas où l'application du style échoue !
+            // TODO au niveau de la couche : minResolution et maxResolution
             // FIXME bug avec le geojson, très bizarre !?
             //      Si on desactive l'editeur, OK
             //      Sinon NOK !?
-            // FIXME event sur la suppression de la couche afin de fermer le panneau !
-            // TODO au niveau de la couche : minResolution et maxResolution
         } else {
             if (this._currentImportType === "KML") {
                 // lecture du fichier KML : création d'un format ol.format.KML, qui possède une méthode readFeatures (et readProjection)
@@ -1635,7 +1650,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source) {
+            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param : layout.visibility : "visible" or "none"...
                 var layers = this._mapBoxObj.layers;
                 for (var i = 0; i < layers.length; i++) {
@@ -1674,7 +1689,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source) {
+            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param : minZoom = ...
                 var layers = this._mapBoxObj.layers;
                 for (var i = 0; i < layers.length; i++) {
@@ -1707,7 +1722,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source) {
+            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param : minZoom = ...
                 var layers = this._mapBoxObj.layers;
                 for (var i = 0; i < layers.length; i++) {
@@ -1740,7 +1755,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source) {
+            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param :
                 var layers = this._mapBoxObj.layers;
                 for (var i = 0; i < layers.length; i++) {
@@ -2829,7 +2844,6 @@ var LayerImport = (function (Control) {
      * @private
      */
     LayerImport.prototype.cleanMapBoxResultsList = function () {
-        this.editor = null;
         this._mapBoxObj = null;
         if (this._mapBoxResultsListContainer) {
             while (this._mapBoxResultsListContainer.firstChild) {
@@ -2837,6 +2851,26 @@ var LayerImport = (function (Control) {
             }
         }
     };
+
+    /**
+     * this method empties MapBox results list (DOM element)
+     *
+     * @param {*} id - DOM id
+     * @private
+     */
+    LayerImport.prototype.cleanMapBoxResults = function (id) {
+        this._mapBoxObj = null;
+        if (this._mapBoxResultsListContainer) {
+            var nodes = this._mapBoxResultsListContainer.childNodes;
+            for (let index = 0; index < nodes.length; index++) {
+                const element = nodes[index];
+                if (element.id === "GPEditorMapBoxContainer_ID_" + id) {
+                    element.remove();
+                }
+            }
+        }
+    };
+
 
     return LayerImport;
 }(Control));
