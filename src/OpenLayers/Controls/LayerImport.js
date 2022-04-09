@@ -254,13 +254,13 @@ var LayerImport = (function (Control) {
                 // panneau draggable pour les resultats ?
                 Draggable.dragElement(
                     this._getCapPanel,
-                    null,
+                    this._getCapPanelHeader,
                     map.getTargetElement()
 
                 );
                 Draggable.dragElement(
                     this._mapBoxPanel,
-                    null,
+                    this._mapBoxPanelHeader,
                     map.getTargetElement()
                 );
             }
@@ -474,8 +474,10 @@ var LayerImport = (function (Control) {
         this._staticUrlImportInput = null;
         this._serviceUrlImportInput = null;
         this._getCapPanel = null;
+        this._getCapPanelHeader = null;
         this._getCapResultsListContainer = null;
         this._mapBoxPanel = null;
+        this._mapBoxPanelHeader = null;
         this._mapBoxResultsListContainer = null;
 
         this._waitingContainer = null;
@@ -492,7 +494,7 @@ var LayerImport = (function (Control) {
 
         // ################################################################## //
         // ########################### MapBox ############################### //
-        this._mapBoxObj = null; // FIXME inutile !?
+        this._hasMapBoxResults = false;
 
         // ################################################################## //
         // ########################### file or url ########################## //
@@ -656,7 +658,7 @@ var LayerImport = (function (Control) {
 
         // results (dans le panel)
         var getCapPanel = this._getCapPanel = this._createImportGetCapPanelElement();
-        var getCapPanelHeader = this._createImportGetCapPanelHeaderElement();
+        var getCapPanelHeader = this._getCapPanelHeader = this._createImportGetCapPanelHeaderElement();
         getCapPanel.appendChild(getCapPanelHeader);
         var importGetCapResultsList = this._getCapResultsListContainer = this._createImportGetCapResultsContainer();
         getCapPanel.appendChild(importGetCapResultsList);
@@ -665,7 +667,7 @@ var LayerImport = (function (Control) {
 
         // mapbox panel results
         var mapBoxPanel = this._mapBoxPanel = this._createImportMapBoxPanelElement();
-        var mapBoxPanelHeader = this._createImportMapBoxPanelHeaderElement();
+        var mapBoxPanelHeader = this._mapBoxPanelHeader = this._createImportMapBoxPanelHeaderElement();
         mapBoxPanel.appendChild(mapBoxPanelHeader);
         var importMapBoxResultsList = this._mapBoxResultsListContainer = this._createImportMapBoxResultsContainer();
         mapBoxPanel.appendChild(importMapBoxResultsList);
@@ -773,7 +775,7 @@ var LayerImport = (function (Control) {
         // on supprime toutes les interactions
         Interactions.unset(map);
         // on affiche les resultats d'une couche MapBox
-        if (this._mapBoxObj) {
+        if (this._hasMapBoxResults) {
             this._mapBoxPanel.style.display = "block";
         }
         // info : on génère nous même l'evenement OpenLayers de changement de propriété
@@ -1068,17 +1070,17 @@ var LayerImport = (function (Control) {
         this.contentStatic = fileContent;
 
         if (this._currentImportType === "MAPBOX") {
-            // FIXME
+            // INFO
             // on ne nettoie pas délibérément la liste de résultats de type MapBox
             // car on souhaite pouvoir interagir sur les couches (editeur).
             // du coup, à chaque import, on empile les éditeurs.
-            // this.cleanMapBoxResultsList();
+            this._hasMapBoxResults = true;
 
             // contexte
             var self = this;
 
             // style mapbox
-            var _glStyles = this._mapBoxObj = JSON.parse(fileContent);
+            var _glStyles = JSON.parse(fileContent);
 
             // liste des sources
             var _glSources = _glStyles.sources;
@@ -1399,6 +1401,8 @@ var LayerImport = (function (Control) {
                                             "editor:legend:onchangevalue" : self._onChangeLegendValueSourceMapBox
                                         },
                                         tools : {
+                                            title : true,
+                                            collapse : false,
                                             themes : false,
                                             layers : true,
                                             style : self.options.vectorStyleOptions.MapBox.tools.style,
@@ -1423,6 +1427,7 @@ var LayerImport = (function (Control) {
                         // ajout des styles dans la carte pour une utilisation
                         // eventuelle (ex. editeur)
                         // > map.set("mapbox-styles")
+                        // FIXME : id unique !?
                         var _allStyles = map.get("mapbox-styles") || {};
                         _allStyles[p.id] = p.styles;
                         map.set("mapbox-styles", _allStyles);
@@ -1430,7 +1435,7 @@ var LayerImport = (function (Control) {
                         // ajout des differents styles de la couche
                         // pour une utilisation eventuelle (ex. editeur)
                         // > layer.set("mapbox-styles")
-                        p.layer.set("mapbox-styles", p.styles.layers);
+                        p.layer.set("mapbox-styles", p.styles);
 
                         // ajout du layer sur la carte
                         map.addLayer(p.layer);
@@ -1652,7 +1657,8 @@ var LayerImport = (function (Control) {
             // logger.trace(layer);
             if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param : layout.visibility : "visible" or "none"...
-                var layers = this._mapBoxObj.layers;
+                var styles = layer.get("mapbox-styles");
+                var layers = styles.layers;
                 for (var i = 0; i < layers.length; i++) {
                     if (layers[i].id === data.id) {
                         var layout = layers[i].layout;
@@ -1666,7 +1672,7 @@ var LayerImport = (function (Control) {
                         break;
                     }
                 }
-                applyStyleOlms(layer, this._mapBoxObj, data.source)
+                applyStyleOlms(layer, styles, data.source)
                     .then(function () {})
                     .catch(function (error) {
                         logger.error(error);
@@ -1691,7 +1697,8 @@ var LayerImport = (function (Control) {
             // logger.trace(layer);
             if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param : minZoom = ...
-                var layers = this._mapBoxObj.layers;
+                var styles = layer.get("mapbox-styles");
+                var layers = styles.layers;
                 for (var i = 0; i < layers.length; i++) {
                     if (layers[i].id === data.id) {
                         layers[i].minzoom = target.value;
@@ -1699,7 +1706,7 @@ var LayerImport = (function (Control) {
                         break;
                     }
                 }
-                applyStyleOlms(layer, this._mapBoxObj, data.source)
+                applyStyleOlms(layer, styles, data.source)
                     .then(function () {})
                     .catch(function (error) {
                         logger.error(error);
@@ -1724,7 +1731,8 @@ var LayerImport = (function (Control) {
             // logger.trace(layer);
             if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param : minZoom = ...
-                var layers = this._mapBoxObj.layers;
+                var styles = layer.get("mapbox-styles");
+                var layers = styles.layers;
                 for (var i = 0; i < layers.length; i++) {
                     if (layers[i].id === data.id) {
                         layers[i].maxzoom = target.value;
@@ -1732,7 +1740,7 @@ var LayerImport = (function (Control) {
                         break;
                     }
                 }
-                applyStyleOlms(layer, this._mapBoxObj, data.source)
+                applyStyleOlms(layer, styles, data.source)
                     .then(function () {})
                     .catch(function (error) {
                         logger.error(error);
@@ -1757,7 +1765,8 @@ var LayerImport = (function (Control) {
             // logger.trace(layer);
             if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
                 // reload style with new param :
-                var layers = this._mapBoxObj.layers;
+                var styles = layer.get("mapbox-styles");
+                var layers = styles.layers;
                 for (var i = 0; i < layers.length; i++) {
                     if (layers[i].id === data.id) {
                         var paint = layers[i].paint;
@@ -1767,7 +1776,7 @@ var LayerImport = (function (Control) {
                         break;
                     }
                 }
-                applyStyleOlms(layer, this._mapBoxObj, data.source)
+                applyStyleOlms(layer, styles, data.source)
                     .then(function () {})
                     .catch(function (error) {
                         logger.error(error);
@@ -2844,7 +2853,7 @@ var LayerImport = (function (Control) {
      * @private
      */
     LayerImport.prototype.cleanMapBoxResultsList = function () {
-        this._mapBoxObj = null;
+        this._hasMapBoxResults = false;
         if (this._mapBoxResultsListContainer) {
             while (this._mapBoxResultsListContainer.firstChild) {
                 this._mapBoxResultsListContainer.removeChild(this._mapBoxResultsListContainer.firstChild);
@@ -2859,7 +2868,7 @@ var LayerImport = (function (Control) {
      * @private
      */
     LayerImport.prototype.cleanMapBoxResults = function (id) {
-        this._mapBoxObj = null;
+        this._hasMapBoxResults = false;
         if (this._mapBoxResultsListContainer) {
             var nodes = this._mapBoxResultsListContainer.childNodes;
             for (let index = 0; index < nodes.length; index++) {

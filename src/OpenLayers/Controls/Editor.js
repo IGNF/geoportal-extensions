@@ -86,6 +86,7 @@ var logger = Logger.getLogger("editor");
  *          group : true | false,      // grouper les couches (layers)
  *          sort : true | false,       // trier les couches (layers)
  *          title : true | false       // afficher les titres des rubriques,
+ *          collapse : true | false | undefined // afficher et/ou plier les couches,
  *          type : true | false,       // afficher le type de geometrie (layers)
  *          pin : true | false,        // afficher la puce pour chaque couche (layers)
  *          visibility : true | false, // afficher l'icone de visibilité (layers),
@@ -167,6 +168,7 @@ Editor.prototype._initialize = function () {
         group : false,
         sort : true,
         title : true,
+        collapse : undefined,
         type : true,
         pin : true,
         visibility : true,
@@ -434,8 +436,20 @@ Editor.prototype._initContainer = function () {
             divLayers.className = this.name.containerLayers;
             div.appendChild(divLayers);
 
+            if (this.options.tools.collapse !== undefined) {
+                var details = document.createElement("details");
+                details.className = "";
+                details.open = !this.options.tools.collapse;
+                divLayers.appendChild(details);
+
+                var summary = document.createElement("summary");
+                summary.className = "";
+                summary.innerHTML = "";
+                details.appendChild(summary);
+            }
+
             // container courant (cf. groupe) pour l'ajout des elements
-            var target = divLayers;
+            var target = (this.options.tools.collapse !== undefined) ? details : divLayers;
 
             // Ex. Layers, Styles, Groups et Filtres
             //  "id": "ocs - vegetation",
@@ -479,7 +493,7 @@ Editor.prototype._initContainer = function () {
                                     // creation du groupe
                                     var oGroup = new Group({
                                         id : this.id,
-                                        target : divLayers,
+                                        target : details, // divLayers,
                                         title : grp,
                                         collapse : true
                                     });
@@ -489,15 +503,15 @@ Editor.prototype._initContainer = function () {
                                 } else if (_groups[grp] === 1) {
                                     // l'element est seul, donc pas d'ajout dans le
                                     // groupe en cours
-                                    target = divLayers;
+                                    target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                                 } else {
                                     // on ajoute l'element dans le groupe courant...
                                 }
                             } else {
-                                target = divLayers;
+                                target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                             }
                         } else {
-                            target = divLayers;
+                            target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                         }
                     }
                     // Layers
