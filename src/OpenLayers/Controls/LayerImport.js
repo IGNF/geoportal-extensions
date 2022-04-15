@@ -80,9 +80,7 @@ var logger = Logger.getLogger("layerimport");
  * @param {Object} [options.vectorStyleOptions.GeoJSON.defaultStyle] - default style to be applied to GeoJSON imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.vectorStyleOptions.MapBox] - Options for MapBox layer styling
  * @param {Object} [options.vectorStyleOptions.MapBox.defaultStyle] - default style to be applied to MapBox imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
- * @param {Object} [options.vectorStyleOptions.MapBox.tools] - options for style editor
- * @param {Boolean} [options.vectorStyleOptions.MapBox.tools.style] - display edit style menu for every layers. By default, no display.
- * @param {Boolean} [options.vectorStyleOptions.MapBox.tools.filter] - display edit filter menu for every layers By default, no display.
+ * @param {Object} [options.vectorStyleOptions.MapBox.editor] - options for tools editor
  * @example
  *  var LayerImport = new ol.control.LayerImport({
  *      "collapsed" : false,
@@ -363,11 +361,8 @@ var LayerImport = (function (Control) {
                     defaultStyle : {}
                 },
                 MapBox : {
-                    defaultStyle : {}, // TODO
-                    tools : {
-                        filter : false, // TODO edition des filtres de styles
-                        style : false // TODO edition des styles
-                    }
+                    defaultStyle : {},
+                    editor : {}
                 }
             }
         };
@@ -418,6 +413,7 @@ var LayerImport = (function (Control) {
                 fill : LayerImport.DefaultStyles.fill
             });
         }
+        // FIXME tester les styles par defaut sur une couche vecteur tuilé sans style !
         if (options.vectorStyleOptions && options.vectorStyleOptions.MapBox && options.vectorStyleOptions.MapBox.defaultStyle) {
             // get from options if specified
             this.options.vectorStyleOptions.MapBox.defaultStyle = options.vectorStyleOptions.MapBox.defaultStyle;
@@ -429,6 +425,22 @@ var LayerImport = (function (Control) {
                 fill : LayerImport.DefaultStyles.fill,
                 text : LayerImport.DefaultStyles.text
             });
+        }
+
+        if (options.vectorStyleOptions && options.vectorStyleOptions.MapBox && options.vectorStyleOptions.MapBox.editor) {
+            // get from options if specified
+            this.options.vectorStyleOptions.MapBox.editor = options.vectorStyleOptions.MapBox.editor;
+        } else {
+            this.options.vectorStyleOptions.MapBox.editor = {
+                title : true,
+                collapse : false,
+                themes : false,
+                layers : true,
+                style : true,
+                filter : false,
+                legend : true,
+                group : false
+            };
         }
 
         // merge layer types
@@ -1385,9 +1397,8 @@ var LayerImport = (function (Control) {
                                     }
                                 })
                                 .then(function () {
-                                    // affichage du panneau des couches accessibles à l'edition
+                                    // on cache le panneau des imports
                                     self._importPanel.style.display = "none";
-                                    self._mapBoxPanel.style.display = "block";
 
                                     // editeur de styles
                                     var editor = new Editor({
@@ -1395,26 +1406,26 @@ var LayerImport = (function (Control) {
                                         style : p.styles,
                                         scope : self,
                                         events : {
+                                            "editor:onloaded" : self._onLoadedMapBox, // utile ?
                                             "editor:layer:onclickvisibility" : self._onChangeVisibilitySourceMapBox,
                                             "editor:style:scale:onchangemin" : self._onChangeScaleMinSourceMapBox,
                                             "editor:style:scale:onchangemax" : self._onChangeScaleMaxSourceMapBox,
                                             "editor:legend:onchangevalue" : self._onChangeLegendValueSourceMapBox
                                         },
-                                        tools : {
-                                            title : true,
-                                            collapse : false,
-                                            themes : false,
-                                            layers : true,
-                                            style : self.options.vectorStyleOptions.MapBox.tools.style,
-                                            filter : self.options.vectorStyleOptions.MapBox.tools.filter,
-                                            legend : true,
-                                            group : false
-                                        }
+                                        tools : self.options.vectorStyleOptions.MapBox.editor
                                     });
-                                    editor.createElement();
+                                    editor.createElement().then(function () {
+                                        // affichage du panneau des couches accessibles à l'edition
+                                        self._mapBoxPanel.style.display = "block";
+                                        // envoi d'un evenement !
+                                        map.dispatchEvent({
+                                            type : "editor:loaded",
+                                            layer : p.layer
+                                        });
+                                    });
 
                                     // association entre le layer et l'editeur via l'id
-                                    p.layer.gpEditorId = editor.getID();
+                                    p.layer.set("mapbox-editor", editor.getID());
                                 })
                                 .catch(function (e) {
                                     logger.error(e);
@@ -1427,10 +1438,10 @@ var LayerImport = (function (Control) {
                         // ajout des styles dans la carte pour une utilisation
                         // eventuelle (ex. editeur)
                         // > map.set("mapbox-styles")
-                        // FIXME : id unique !?
-                        var _allStyles = map.get("mapbox-styles") || {};
-                        _allStyles[p.id] = p.styles;
-                        map.set("mapbox-styles", _allStyles);
+                        var styles = map.get("mapbox-styles") || {};
+                        var id = p.id; // FIXME : construction d'un id unique
+                        styles[id] = p.styles;
+                        map.set("mapbox-styles", styles);
 
                         // ajout des differents styles de la couche
                         // pour une utilisation eventuelle (ex. editeur)
@@ -1642,6 +1653,21 @@ var LayerImport = (function (Control) {
     // Events MapBox DOM
 
     /**
+     * this method is called when the editor is loaded
+     *
+     * @param {Object} e - editor
+     */
+    LayerImport.prototype._onLoadedMapBox = function (e) {
+        var map = this.getMap();
+        map.getLayers().forEach((layer) => {
+            // logger.trace(layer);
+            if (layer.get("mapbox-editor") === e.target.id) {
+                // some stuff...
+            }
+        });
+    };
+
+    /**
      * this method is called on '_addImportMapBoxVisibilitySource' input click
      * and change visibility source to map
      *
@@ -1655,7 +1681,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
+            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
                 // reload style with new param : layout.visibility : "visible" or "none"...
                 var styles = layer.get("mapbox-styles");
                 var layers = styles.layers;
@@ -1695,7 +1721,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
+            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
                 // reload style with new param : minZoom = ...
                 var styles = layer.get("mapbox-styles");
                 var layers = styles.layers;
@@ -1729,7 +1755,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
+            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
                 // reload style with new param : minZoom = ...
                 var styles = layer.get("mapbox-styles");
                 var layers = styles.layers;
@@ -1763,7 +1789,7 @@ var LayerImport = (function (Control) {
         var map = this.getMap();
         map.getLayers().forEach((layer) => {
             // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.gpEditorId === e.target.editorID) {
+            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
                 // reload style with new param :
                 var styles = layer.get("mapbox-styles");
                 var layers = styles.layers;
@@ -2879,7 +2905,6 @@ var LayerImport = (function (Control) {
             }
         }
     };
-
 
     return LayerImport;
 }(Control));

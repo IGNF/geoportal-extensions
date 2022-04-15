@@ -13,6 +13,8 @@ import Legend from "./Editor/Legend";
 import Layer from "./Editor/Layer";
 import Group from "./Editor/Group";
 import Event from "./Editor/Event";
+import Search from "./Editor/Search";
+
 // DOM
 import EditorDOM from "../../Common/Controls/Editor/EditorDOM";
 
@@ -80,6 +82,7 @@ var logger = Logger.getLogger("editor");
  *              },
  *          },
  *          layers : true | false,     // afficher les couches (layers)
+ *          search : true | false,     // afficher l'outil de recheche de couches
  *          style : true | false,      // afficher les styles (sous menu layers)
  *          filter : true | false,     // afficher les filtres (sous menu layers)
  *          legend : true | false,     // afficher les legendes (layers)
@@ -162,6 +165,7 @@ Editor.prototype._initialize = function () {
     var _toolsDefault = {
         themes : false,
         layers : true,
+        search : false,
         style : false,
         filter : false,
         legend : false,
@@ -322,6 +326,17 @@ Editor.prototype._initContainer = function () {
         themes.add();
     }
 
+    // TODO : Recheche / filtre de couches
+    if (this.options.tools.search) {
+        var search = new Search({
+            id : this.id,
+            target : div,
+            tools : {},
+            obj : this.mapbox.layers // liste des objets layers
+        });
+        search.add();
+    }
+
     for (var source in this.mapbox.sources) {
         if (this.mapbox.sources.hasOwnProperty(source)) {
             if (this.options.tools.layers) {
@@ -436,8 +451,9 @@ Editor.prototype._initContainer = function () {
             divLayers.className = this.name.containerLayers;
             div.appendChild(divLayers);
 
+            var details;
             if (this.options.tools.collapse !== undefined) {
-                var details = document.createElement("details");
+                details = document.createElement("details");
                 details.className = "";
                 details.open = !this.options.tools.collapse;
                 divLayers.appendChild(details);
@@ -493,7 +509,7 @@ Editor.prototype._initContainer = function () {
                                     // creation du groupe
                                     var oGroup = new Group({
                                         id : this.id,
-                                        target : details, // divLayers,
+                                        target : (this.options.tools.collapse !== undefined) ? details : divLayers,
                                         title : grp,
                                         collapse : true
                                     });

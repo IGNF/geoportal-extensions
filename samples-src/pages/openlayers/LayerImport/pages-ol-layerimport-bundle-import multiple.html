@@ -74,7 +74,9 @@
                   collapsed : true
                 });
                 m_map.addControl(m_layerSwitcher);
-
+                m_map.on("editor:loaded", function (e) {
+                  console.log("editor:loaded", e);
+                });
                 document.getElementById('layers-select').addEventListener("change", function(e) {
                   var div = document.querySelector("input[id^=GPimportChoiceAltUrl-");
                   div.click();
@@ -84,7 +86,6 @@
                   submit.click();
                   var option = e.target.options[e.target.selectedIndex];
                   option.disabled = true;
-                  
                 });
               };
 
