@@ -20,6 +20,8 @@
 
 * [Fixed]
 
+    - Correctif du style des elements en cours d'édition lors de l'export / enregistrement des croquis sur l'outil de dessin
+
 * [Security]
 
 ---
