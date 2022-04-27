@@ -52,7 +52,6 @@ import KMLExtended from "../Formats/KML";
 import GeoJSONExtended from "../Formats/GeoJSON";
 import GPXExtended from "../Formats/GPX";
 import LayerSwitcher from "./LayerSwitcher";
-import { textHeights } from "ol/render/canvas";
 
 var logger = Logger.getLogger("Drawing");
 
