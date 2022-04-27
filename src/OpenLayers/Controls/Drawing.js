@@ -373,6 +373,9 @@ var Drawing = (function (Control) {
             return result;
         }
 
+        // on invalide les features...
+        this.featuresCollectionSelected.clear();
+
         var ClassName = null;
         switch (this.getExportFormat()) {
             case "KML":
@@ -717,6 +720,7 @@ var Drawing = (function (Control) {
 
         this.interactionCurrent = null;
         this.interactionSelectEdit = null;
+        this.featuresCollectionSelected = null;
 
         this.stylingOvl = null;
         this.popupOvl = null;
@@ -1860,11 +1864,15 @@ var Drawing = (function (Control) {
                 break;
             case this._addUID("drawing-tool-edit"):
                 if (context.dtOptions["edit"].active) {
+                    this.featuresCollectionSelected = new Collection();
                     context.interactionSelectEdit = new SelectInteraction({
                         condition : eventSingleClick,
-                        layers : [this.layer]
+                        layers : [this.layer],
+                        features : this.featuresCollectionSelected
                     });
-
+                    context.interactionSelectEdit.on("select", (e) => {
+                        // ...
+                    });
                     context.interactionSelectEdit.setProperties({
                         name : "Drawing",
                         source : context
