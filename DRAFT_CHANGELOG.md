@@ -20,6 +20,8 @@
 
 * [Fixed]
 
+    - Permettre la saisie sous la tooltip sur les outils de mesures
+
 * [Security]
 
 ---
