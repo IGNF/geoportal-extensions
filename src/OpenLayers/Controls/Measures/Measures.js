@@ -339,6 +339,7 @@ var Measures = {
 
         this.measureTooltip = new Overlay({
             element : this.measureTooltipElement,
+            stopEvent : false,
             offset : [0, -15],
             positioning : "bottom-center"
         });
@@ -362,6 +363,7 @@ var Measures = {
 
         this.helpTooltip = new Overlay({
             element : this.helpTooltipElement,
+            stopEvent : false,
             offset : [15, 0],
             positioning : "center-left"
         });
