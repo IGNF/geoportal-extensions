@@ -23,6 +23,7 @@
     - Permettre la saisie sous la tooltip sur les outils de mesures
     - Correctif du style des elements en cours d'édition lors de l'export / enregistrement des croquis sur l'outil de dessin
     - Desactivation des interactions à la fermeture de l'outil de dessin [#323](https://github.com/IGNF/geoportal-extensions/issues/323)
+    - Nettoyage des tooltips des outils de mesures
 
 * [Security]
 

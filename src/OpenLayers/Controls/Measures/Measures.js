@@ -278,7 +278,7 @@ var Measures = {
 
         var mapContainer = map.getTargetElement();
         // au cas où il y'aurait plusieurs container de carte !
-        var overlays = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
+        var overlays = mapContainer.getElementsByClassName("ol-overlaycontainer");
         for (var k = 0; k < overlays.length; k++) {
             var nodes = overlays[k];
             var len = nodes.children.length;
