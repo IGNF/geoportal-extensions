@@ -112,6 +112,8 @@ var Interactions = {
                             }
                         }
                     }
+                } else {
+                    interactions[i].setActive(false);
                 }
             }
         }
