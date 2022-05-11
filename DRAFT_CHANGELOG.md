@@ -1,12 +1,15 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail openlayers
 
 ## Summary
+
+Fix sur l'outil de dessin
 
 ## Changelog
 
@@ -20,10 +23,7 @@
 
 * [Fixed]
 
-    - Permettre la saisie sous la tooltip sur les outils de mesures
-    - Correctif du style des elements en cours d'édition lors de l'export / enregistrement des croquis sur l'outil de dessin
-    - Desactivation des interactions à la fermeture de l'outil de dessin [#323](https://github.com/IGNF/geoportal-extensions/issues/323)
-    - Nettoyage des tooltips des outils de mesures
+    - Exception sur l'export des features en cours d'édition sur l'outil de dessin
 
 * [Security]
 
@@ -67,8 +67,6 @@
 * [Added]
 
 * [Changed]
-
-    - ajout de documentation sur le readme-itowns pour BoostRelief et vecteur tuilé (c75a6d4fa5f676f1c43f59d3b8874a26021081cf)
 
 * [Deprecated]
 
