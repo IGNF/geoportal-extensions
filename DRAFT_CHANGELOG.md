@@ -2,14 +2,13 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail openlayers
 
 ## Summary
-
-Fix sur l'outil de dessin
 
 ## Changelog
 
@@ -22,8 +21,6 @@ Fix sur l'outil de dessin
 * [Removed]
 
 * [Fixed]
-
-    - Exception sur l'export des features en cours d'édition sur l'outil de dessin
 
 * [Security]
 
