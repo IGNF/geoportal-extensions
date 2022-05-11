@@ -374,7 +374,9 @@ var Drawing = (function (Control) {
         }
 
         // on invalide les features...
-        this.featuresCollectionSelected.clear();
+        if (this.featuresCollectionSelected) {
+            this.featuresCollectionSelected.clear();
+        }
 
         var ClassName = null;
         switch (this.getExportFormat()) {
