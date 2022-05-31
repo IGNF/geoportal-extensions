@@ -58,12 +58,12 @@
         <input type="button" onclick="moveLayerUp(2)" value ="Up 3"/>
         <input type="button" onclick="moveLayerDown(2)" value ="Down 3"/>
 
-        <input type="button" onclick="addLayer(3)" value ="Add layer 4"/>
+        <!-- <input type="button" onclick="addLayer(3)" value ="Add layer 4"/>
         <input type="button" onclick="removeLayer(3)" value ="Remove layer 4"/>
         <input type="button" onclick="setOpacity(3)" value ="Change opacity 4"/>
         <input type="button" onclick="setVisibity(3)" value ="Change visibility 4"/>
         <input type="button" onclick="moveLayerUp(3)" value ="Up 4"/>
-        <input type="button" onclick="moveLayerDown(3)" value ="Down 4"/>
+        <input type="button" onclick="moveLayerDown(3)" value ="Down 4"/> -->
 
         <input type="button" onclick="addLayer2()" value ="Add layer 5"/>
     </div>
@@ -75,20 +75,37 @@
         var itownsGlobal = null;
 
         const urlImageryLayers = [];
-        // urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/OrthosCRS.json');
         urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Ortho.json');
-        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/ScanEX.json');
-        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/Region.json');
+        urlImageryLayers.push('{{ resources }}/itowns/JSONLayers/PlanIgnV2.json');
 
-        const layersId = ["OrthoCRS","Ortho","ScanEX","Region"];
+        const layersId = [];
+        layersId.push("Ortho");
+        layersId.push("PlanIGN");
 
         var addLayer = function (i) {
-            itownsGlobal.Fetcher.json(urlImageryLayers[i]).then(result => { globeView.addLayer(result) });
+            itownsGlobal.Fetcher.json(urlImageryLayers[i]).then(config => {
+                if (config.source.protocol === 'wms') {
+                    config.source = new itownsGlobal.WMSSource(config.source);
+                } else if (config.source.protocol === 'wmts') {
+                    config.source = new itownsGlobal.WMTSSource(config.source);
+                }
+                return config;
+            }).then(config => {
+                var layer = new itownsGlobal.ColorLayer(config.id, config);
+                globeView.addLayer(layer);
+            });
         }
 
         var addLayer2 = function () {
-            layerOrtho.id = layerOrtho.id+"e";
-            globeView.addLayer(layerOrtho);
+            var config = layerOrtho;
+            config.id = config.id+"e";
+            if (config.source.protocol === 'wms') {
+                config.source = new itownsGlobal.WMSSource(config.source);
+            } else if (config.source.protocol === 'wmts') {
+                config.source = new itownsGlobal.WMTSSource(config.source);
+            }
+            var layer = new itownsGlobal.ColorLayer(config.id, config);
+            globeView.addLayer(layer);
         }
 
         var removeLayer = function (i) {
@@ -152,14 +169,25 @@
                     globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
                     itownsGlobal = itowns;
 
+                    function createWMTSSourceFromConfig(config) {
+                        config.source = new itowns.WMTSSource(config.source);
+                        return config;
+                    };
+
+                    function addElevationLayerFromConfig(config) {
+                        var layer = new itowns.ElevationLayer(config.id, config);
+                        globeView.addLayer(layer);
+                    };
+
                     globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
                         // ajout des couches
                         var promises = [];
                         
-                        promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(result => globeView.addLayer(result)) );
-                        promises.push( itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(result => globeView.addLayer(result)) );
+                        promises.push( itowns.Fetcher.json("../../resources/itowns/JSONLayers/IGN_MNT.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig));
+                        promises.push( itowns.Fetcher.json("../../resources/itowns/JSONLayers/IGN_MNT_HIGHRES.json").then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig));
+
                         for ( var i = 0 ; i < urlImageryLayers.length ; ++i ) {
-                            promises.push( itowns.Fetcher.json(urlImageryLayers[i]).then(result => globeView.addLayer(result) ) );
+                            promises.push(addLayer(i));
                         }
 
                         Promise.all(promises).then( () => {

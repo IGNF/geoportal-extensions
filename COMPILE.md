@@ -30,7 +30,7 @@
 
 ## Prérequis (outils)
 
-* nodeJS (https://nodejs.org/en/download/)
+* nodeJS (https://nodejs.org/en/download/) en version 10 minimum
 * git (https://git-scm.com/downloads)
 * git gui (*facultatif*)
 * tortoiseGit (*facultatif*)

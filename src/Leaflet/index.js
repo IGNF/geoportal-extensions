@@ -14,6 +14,7 @@
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+* > Logger: (...)
 *
 * > LExtended: (...)
 *
@@ -91,7 +92,7 @@ export {
 
 // Rajout des propriétés de l'extension dans le namespace
 /** Version */
-export const leafletExtVersion = Pkg.leafletExtVersion;
+export const leafletExtVersion = Pkg.leafletExtVersion || Pkg.version;
 /** Publication date */
 export const leafletExtDate = Pkg.date;
 
@@ -100,6 +101,7 @@ export { default as LayerUtils } from "../Common/Utils/LayerUtils";
 export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
+export { default as Logger } from "../Common/Utils/LoggerByDefault";
 
 // creation du namespace pour les extensions leaflet
 L.geoportalLayer = Layers; // WMS et WMTS

@@ -1,7 +1,10 @@
 /**
+ * @private
+ * @description
  * formalisme d'un tag ID :
  * -> NAME(_ORDER)-1460636385836
  *
+ * @example
  * Ex.
  *   GProutePoints-1460636385836
  *   GProutePoint_10-1460636385836

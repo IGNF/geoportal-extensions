@@ -55,7 +55,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @alias MousePosition
      * @extends {L.Control}
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
@@ -886,7 +886,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         }
         coordinate = format(this._project(oLatLng, oSrs));
 
-        if (!coordinate || Object.keys(coordinate).lenght === 0) {
+        if (!coordinate || Object.keys(coordinate).length === 0) {
             return;
         }
 
@@ -1027,7 +1027,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
-                if (results && Object.keys(results)) {
+                if (results && Object.keys(results).length) {
                     // var context = this.options.scope;
                     // context._setAltidude(results.elevations[0].z);
                     callback.call(this, results.elevations[0].z);

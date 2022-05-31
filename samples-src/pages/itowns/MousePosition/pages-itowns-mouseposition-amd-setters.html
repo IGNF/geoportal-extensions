@@ -152,6 +152,9 @@
                                 displayAltitude: true
                             });
                             globeView.addWidget( mousePosition );
+
+                            var attribution = new Gp.itownsExtended.control.Attributions({});
+                            globeView.addWidget(attribution);
                         });
 
                     }

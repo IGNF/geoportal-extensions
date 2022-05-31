@@ -947,9 +947,12 @@ var RouteDOM = {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteComputationChoice");
 
+        var label = document.createElement("label");
+        label.htmlFor = this._addUID("GProuteComputationSelect");
+        label.innerHTML = "Mode de calcul";
         var span = document.createElement("span");
         span.className = "GProuteModeLabel";
-        span.innerHTML = "Mode de calcul";
+        span.appendChild(label);
         div.appendChild(span);
 
         var select = document.createElement("select");

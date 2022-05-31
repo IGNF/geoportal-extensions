@@ -3,6 +3,7 @@ div[id^=GPAttribution-] {
     bottom: 8px;
     right: 8px;
     width: calc(90% - 1.3em);
+    z-index: 1;
 }
 
 div[id^=GPAttributionsListContainer-] {
@@ -24,7 +25,7 @@ div[id^=GPAttributionsListContainer-] ul {
 
 label[id^=GPshowAttributionsListPicto-] {
     display: flex;
-    z-index: 1;
+    z-index: auto;
     position: relative;
     margin-left: auto;
 }

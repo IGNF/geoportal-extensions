@@ -26,6 +26,19 @@ var smp = new SpeedMeasurePlugin();
 // -- variables
 var ROOT = path.join(__dirname, "../..");
 var pkg = require(path.join(ROOT, "package.json"));
+var pkgIt = require(path.join(ROOT, "node_modules", "itowns", "package.json"));
+
+var regex = /[~^]/gm;
+var version_three_it = pkgIt.devDependencies["three"].replace(regex, "");
+var version_three = pkg.dependencies["three"].replace(regex, "");
+
+console.log("THREE version into Itowns :", pkgIt.devDependencies["three"]);
+console.log("THREE version :", pkg.dependencies["three"]);
+
+if (version_three_it !== version_three) {
+    console.error("THREE dependencies isn't conforme !");
+    process.exit(1);
+}
 
 module.exports = (env, argv) => {
     // environnement d'execution
@@ -56,7 +69,8 @@ module.exports = (env, argv) => {
             filename : "[name]" + suffix + ".js",
             library : "Gp",
             libraryTarget : "umd",
-            umdNamedDefine : true
+            umdNamedDefine : true,
+            globalObject: 'this'
         },
         resolve : {
             alias : {
@@ -98,9 +112,9 @@ module.exports = (env, argv) => {
                     amd : "itowns",
                     root : "itowns"
                 },
-                request : {
-                    commonjs2 : "request",
-                    commonjs : "request",
+                "node-fetch" : {
+                    commonjs2 : "node-fetch",
+                    commonjs : "node-fetch",
                     amd : "require"
                 },
                 xmldom : {
@@ -119,14 +133,14 @@ module.exports = (env, argv) => {
             //      }
             // },
             stats : "errors-only",
-            // host : "localhost",
-            // https: true,
-            // port : 9001,
-            // hot : true,
-            // contentBase : path.join(__dirname),
+            host : "localhost",
+            https: true,
+            port : 9001,
+            hot : true,
+            contentBase : path.join(__dirname),
             // publicPath : "/dist/itowns/",
             // openPage : "/samples/index-itowns-map.html",
-            // open : "google-chrome",
+            open : "google-chrome",
             watchOptions : {
                 watch : true,
                 poll : true
@@ -136,7 +150,7 @@ module.exports = (env, argv) => {
                 warnings : false
             }
         },
-        // stats : "none",
+        stats : "verbose", // "none",
         optimization : {
             /** MINIFICATION */
             minimizer: [
@@ -328,8 +342,7 @@ module.exports = (env, argv) => {
             new CopyWebpackPlugin([
                 {
                     from : path.join(ROOT, "samples-src", "resources", "**/*"),
-                    to : path.join(ROOT, "samples", "resources"),
-                    context : path.join(ROOT, "samples-src", "resources")
+                    to : path.join(ROOT, "samples", "resources")
                 }
             ])
         ]

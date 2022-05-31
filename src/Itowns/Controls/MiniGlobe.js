@@ -24,7 +24,7 @@ function MiniGlobe (options) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (options && typeof options !== "object") {
+    if (typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 

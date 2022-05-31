@@ -19,6 +19,7 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
@@ -40,19 +41,22 @@ var logger = Logger.getLogger("isocurve");
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
- * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
+ * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
  * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
  * @param {Array}   [options.directions = ["departure", "arrival"]] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default. Possible values are "departure" and "arrival".
  *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
+ * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve()} to know all isocurve options.
+ * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
  * @param {Object} [options.markerOpts] - options to use your own marker. Default is a lightOrange marker.
  * @param {String} [options.markerOpts.url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
  * @param {Array} [options.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
- * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve()} to know all isocurve options.
- * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Isochrone/Isodistance"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
+ * @fires isocurve:drawstart
+ * @fires isocurve:drawend
+ * @fires isocurve:compute
  * @example
  *  var iso = ol.control.Isocurve({
  *      "collapsed" : false,
@@ -73,7 +77,7 @@ var logger = Logger.getLogger("isocurve");
  *  });
  */
 var Isocurve = (function (Control) {
-    function Isocurve (options) {
+    function Isocurve(options) {
         options = options || {};
 
         if (!(this instanceof Isocurve)) {
@@ -97,9 +101,9 @@ var Isocurve = (function (Control) {
 
         // call ol.control.Control constructor
         Control.call(this, {
-            element : this._containerElement || this._container,
-            target : options.target,
-            render : options.render
+            element: this._containerElement || this._container,
+            target: options.target,
+            render: options.render
         });
     };
 
@@ -189,6 +193,15 @@ var Isocurve = (function (Control) {
     };
 
     /**
+     * Get isocurve data
+     *
+     * @returns {Object} data - process results
+     */
+    Isocurve.prototype.getData = function () {
+        return this._currentIsoResults;
+    };
+
+    /**
      * This method is public.
      * It allows to control the execution of a traitment.
      *
@@ -210,10 +223,10 @@ var Isocurve = (function (Control) {
 
         // Les options par defauts
         var settings = {
-            direction : "departure",
-            method : "time",
-            transport : "Voiture",
-            exclusions : []
+            direction: "departure",
+            method: "time",
+            transport: "Voiture",
+            exclusions: []
         };
 
         // On recupere les options
@@ -270,25 +283,25 @@ var Isocurve = (function (Control) {
 
         // set default options
         this.options = {
-            collapsed : true,
-            draggable : false,
-            methods : ["time", "distance"],
-            graphs : ["Voiture", "Pieton"],
-            exclusions : {
-                toll : false,
-                tunnel : false,
-                bridge : false
+            collapsed: true,
+            draggable: false,
+            methods: ["time", "distance"],
+            graphs: ["Voiture", "Pieton"],
+            exclusions: {
+                toll: false,
+                tunnel: false,
+                bridge: false
             },
-            directions : ["departure", "arrival"],
-            markerOpts : {
-                url : Markers["lightOrange"],
-                offset : Markers.defaultOffset
+            directions: ["departure", "arrival"],
+            markerOpts: {
+                url: Markers["lightOrange"],
+                offset: Markers.defaultOffset
             },
-            isocurveOptions : {},
-            autocompleteOptions : {},
-            layerDescription : {
-                title : "Isochrone/Isodistance",
-                description : "isochrones/isodistance basé sur un graphe"
+            isocurveOptions: {},
+            autocompleteOptions: {},
+            layerDescription: {
+                title: "Isochrone/Isodistance",
+                description: "isochrones/isodistance basé sur un graphe"
             }
         };
 
@@ -342,8 +355,8 @@ var Isocurve = (function (Control) {
 
         // styles pour les sélections des features
         this._defaultFeatureStyle = new Style({
-            fill : new Fill({
-                color : "rgba(0, 183, 152, 0.7)"
+            fill: new Fill({
+                color: "rgba(0, 183, 152, 0.7)"
             })
         });
 
@@ -567,9 +580,9 @@ var Isocurve = (function (Control) {
         var exclusion = this.options.exclusions;
         if (!exclusion || (typeof exclusion === "object" && Object.keys(exclusion).length === 0)) {
             this.options.exclusions = {
-                toll : false,
-                tunnel : false,
-                bridge : false
+                toll: false,
+                tunnel: false,
+                bridge: false
             };
         }
 
@@ -610,9 +623,9 @@ var Isocurve = (function (Control) {
         }
 
         var rightManagementIsocurve = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["Isochrone"]
+            key: _key || this.options.apiKey,
+            resources: _res,
+            services: ["Isochrone"]
         });
         logger.log("rightManagementIsocurve", rightManagementIsocurve);
 
@@ -628,9 +641,9 @@ var Isocurve = (function (Control) {
         }
 
         var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["AutoCompletion"]
+            key: _key || this.options.apiKey,
+            resources: _res,
+            services: ["AutoCompletion"]
         });
         logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
 
@@ -764,15 +777,15 @@ var Isocurve = (function (Control) {
      */
     Isocurve.prototype._createIsoPanelFormPointElement = function (map) {
         this._originPoint = new LocationSelector({
-            apiKey : this.options.apiKey || null,
-            tag : {
-                id : 1,
-                groupId : this._uid,
-                markerOpts : this.options.markerOpts,
-                label : "Départ",
-                display : true
+            apiKey: this.options.apiKey || null,
+            tag: {
+                id: 1,
+                groupId: this._uid,
+                markerOpts: this.options.markerOpts,
+                label: "Départ",
+                display: true
             },
-            autocompleteOptions : this.options.autocompleteOptions || null
+            autocompleteOptions: this.options.autocompleteOptions || null
         });
         this._originPoint.setMap(map);
         // a la sélection d'un nouveau point, on réinitialise aussi le tracé
@@ -789,6 +802,7 @@ var Isocurve = (function (Control) {
                     "click",
                     () => {
                         self._formContainer.className = "";
+                        self.dispatchEvent("isocurve:drawend");
                     }
                 );
             } else {
@@ -798,6 +812,12 @@ var Isocurve = (function (Control) {
                 // map.un("click", () => { self._formContainer.className = ""; });
                 olObservableUnByKey(this.listenerKey);
             }
+            /**
+            * event triggered at the start of drawing input
+            *
+            * @event isocurve:drawstart
+            */
+            self.dispatchEvent("isocurve:drawstart");
         };
         /** click sur le label */
         document.getElementById("GPlocationOriginLabel_1-" + this._uid).onclick = function () {
@@ -810,10 +830,17 @@ var Isocurve = (function (Control) {
                     self._formContainer.className = "";
                 }
             );
+            self.dispatchEvent("isocurve:drawend");
         };
         /** click sur la zone de saisie */
         document.getElementById("GPlocationOrigin_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
+            /**
+            * event triggered at the end of drawing input
+            *
+            * @event isocurve:drawend
+            */
+            self.dispatchEvent("isocurve:drawend");
         };
         return this._originPoint._container;
     };
@@ -839,8 +866,8 @@ var Isocurve = (function (Control) {
         // récupération de l'origine
         var positionCoordinates = this._originPoint.getCoordinate();
         var position = {
-            x : positionCoordinates[0],
-            y : positionCoordinates[1]
+            x: positionCoordinates[0],
+            y: positionCoordinates[1]
         };
         logger.log("origin : ", position);
 
@@ -894,28 +921,38 @@ var Isocurve = (function (Control) {
             _timeout = 15000;
         }
 
+        // gestion des callback
+        var bOnFailure = !!(options.onFailure !== null && typeof options.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(options.onSuccess !== null && typeof options.onSuccess === "function");
+
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         var isoRequestOptions = {
-            position : position,
-            graph : options.graph || this._currentTransport,
-            exclusions : options.exclusions || this._currentExclusions,
-            method : options.method || this._currentComputation,
-            smoothing : options.smoothing || true,
-            timeOut : _timeout,
-            protocol : _protocol,
+            position: position,
+            graph: options.graph || this._currentTransport,
+            exclusions: options.exclusions || this._currentExclusions,
+            method: options.method || this._currentComputation,
+            smoothing: options.smoothing || true,
+            timeOut: _timeout,
+            protocol: _protocol,
             // callback onSuccess
-            onSuccess : function (results) {
+            onSuccess: function (results) {
                 logger.log(results);
                 if (results) {
                     context._drawIsoResults(results);
                 }
+                if (bOnSuccess) {
+                    options.onSuccess.call(context, results);
+                }
             },
             // callback onFailure
-            onFailure : function (error) {
+            onFailure: function (error) {
                 // FIXME mise à jour du controle mais le service ne repond pas en 200 !?
                 context._hideWaitingContainer();
                 logger.log(error.message);
+                if (bOnFailure) {
+                    options.onFailure.call(context, error);
+                }
             }
         };
         if ((this._currentDirection.toLowerCase() === "arrival") || (options.reverse)) {
@@ -939,6 +976,9 @@ var Isocurve = (function (Control) {
      * @private
      */
     Isocurve.prototype.onShowIsoPanelClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showIsoContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.Isocurve.on("change:collapsed", function ) pour s'abonner à cet évènement)
@@ -1023,14 +1063,14 @@ var Isocurve = (function (Control) {
         var bFound = false;
         var iFound = null;
         for (var i = 0; i < this._currentExclusions.length; i++) {
-            if (this._currentExclusions[i] === value) {
+            if (deepEqual(this._currentExclusions[i], value.toLowerCase())) {
                 iFound = i;
                 bFound = true;
             }
         }
         // on l'ajoute si la valeur n'existe pas et est selectionnée
         if (!bFound && !checked) {
-            this._currentExclusions.push(value);
+            this._currentExclusions.push(value.toLowerCase());
         }
         // on la retire si la valeur existe et est deselectionnée
         if (bFound && checked) {
@@ -1103,7 +1143,13 @@ var Isocurve = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        options.ssl = options.ssl || this.options.ssl || true;
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
 
         logger.log(options);
 
@@ -1138,33 +1184,33 @@ var Isocurve = (function (Control) {
 
         // 1. création de l'objet geoJSON
         var geojsonObject = {
-            type : "Feature",
-            crs : {
-                type : "name",
-                properties : {
-                    name : "EPSG:4326"
+            type: "Feature",
+            crs: {
+                type: "name",
+                properties: {
+                    name: "EPSG:4326"
                 }
             },
-            geometry : results.geometry
+            geometry: results.geometry
         };
         var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+            defaultDataProjection: "EPSG:4326"
         });
         var mapProj = map.getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(
             geojsonObject, {
-                dataProjection : "EPSG:4326",
-                featureProjection : mapProj
-            }
+            dataProjection: "EPSG:4326",
+            featureProjection: mapProj
+        }
         );
 
         // 2. ajout de la géométrie comme nouvelle couche vecteur à la carte
         this._geojsonLayer = new VectorLayer({
-            source : new VectorSource({
-                features : features
+            source: new VectorSource({
+                features: features
             }),
-            style : this._defaultFeatureStyle,
-            opacity : 0.9
+            style: this._defaultFeatureStyle,
+            opacity: 0.9
         });
         // ajout d'un identifiant à la couche
         var graph;
@@ -1177,6 +1223,22 @@ var Isocurve = (function (Control) {
         }
         // ajout à la carte
         map.addLayer(this._geojsonLayer);
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event isocurve:compute
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance Isocurve
+         * @example
+         * Isocurve.on("isocurve:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type: "isocurve:compute"
+        });
 
         // 3. Zoom sur l'emprise de la geometry
         if (features[0] && features[0].getGeometry() && features[0].getGeometry().getExtent()) {
@@ -1195,9 +1257,9 @@ var Isocurve = (function (Control) {
                     if (control._layers[layerId].title === layerId) {
                         control.addLayer(
                             this._geojsonLayer, {
-                                title : this.options.layerDescription.title + " (" + method + "/" + graph + ")",
-                                description : this.options.layerDescription.description
-                            }
+                            title: this.options.layerDescription.title + " (" + method + "/" + graph + ")",
+                            description: this.options.layerDescription.description
+                        }
                         );
                     }
                 }
@@ -1330,7 +1392,7 @@ var Isocurve = (function (Control) {
         }
         var bridgeInput = document.getElementById("GPisoExclusionsBridge-" + this._uid);
         if (bridgeInput) {
-            if (this._currentExclusions.indexOf("bridge") !== -1 && bridgeInput) {
+            if (this._currentExclusions.indexOf("bridge") !== -1) {
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;
@@ -1427,3 +1489,26 @@ export default Isocurve;
 if (window.ol && window.ol.control) {
     window.ol.control.Isocurve = Isocurve;
 }
+
+const deepEqual = function (x, y) {
+    if (x === y) {
+        return true;
+    } else if ((typeof x == "object" && x != null) && (typeof y == "object" && y != null)) {
+        if (Object.keys(x).length != Object.keys(y).length) {
+            return false;
+        }
+
+        for (var prop in x) {
+            if (y.hasOwnProperty(prop)) {
+                if (!deepEqual(x[prop], y[prop])) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+};

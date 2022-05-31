@@ -162,13 +162,13 @@ var Config = {
      *
      * @param {String} [resource] - "PositionOfInterest", "StreetAddress", "Voiture", "Pieton", ...
      * @param {String} [service] - Geocode, Itineraire, ...
-     * @param {String} [apiKey]  - Clé de contrat API
+     * @param {Array} [apiKeys]  - Clé(s) de contrat API
      * @returns {Object} params - paramètres de la ressource
      * @returns {String} params. -
      * @returns {String} params. -
      * @returns {String} params. -
      */
-    getServiceParams : function (resource, service, apiKey) {
+    getServiceParams : function (resource, service, apiKeys) {
         var params = {};
 
         if (this.configuration) {
@@ -179,15 +179,26 @@ var Config = {
                 // récupération de l'objet de configuration de la couche
                 var layerConf = this.configuration.layers[layerId];
 
-                // controle de la clef
+                // controle de la clef (on prend la première clé disponible qui est censée avoir accès à la ressource)
                 var key = layerConf.apiKeys[0];
-                if (apiKey) {
-                    if (apiKey !== key) {
+                if (apiKeys) {
+                    if (!Array.isArray(apiKeys)) {
+                        apiKeys = [apiKeys];
+                    }
+                    for (var i = 0; i < apiKeys.length; i++) {
+                        if (apiKeys[i] === key) {
+                            var keyIndex = i;
+                            break;
+                        }
+                    }
+                    // si aucune clé du tableau apiKeys ne correspond, on retourne rien => pas de droits pour la ressource
+                    if (typeof keyIndex === "undefined") {
                         return;
                     }
                 }
 
-                apiKey = apiKey || key;
+                // on retourne la première clé qui a effectivement accès à la ressource
+                var apiKey = apiKeys[keyIndex] || key;
                 params.key = apiKey;
                 // récupération des paramètres du service
                 params.url = layerConf.getServerUrl(apiKey);

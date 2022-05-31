@@ -68,7 +68,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {String} [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.displayInfo] - get informations on popup marker
-     * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+     * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
      *       Value possible : auto or zoom level.
      *       Possible to overload it with a function :
      *       zoomTo : function (info) {

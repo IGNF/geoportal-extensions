@@ -70,7 +70,7 @@ var Controls = {
      * @static
      * @alias L.geoportalControl.Isocurve
      * @param {Object} options - Isocurve control options
-     * @param {Sting}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -108,7 +108,7 @@ var Controls = {
      * @static
      * @alias L.geoportalControl.MousePosition
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -206,7 +206,7 @@ var Controls = {
      * @alias L.geoportalControl.Route
      * @extends {L.Control}
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -251,7 +251,7 @@ var Controls = {
      * @param {Boolean} [options.displayMarker = true] - set a marker on search result
      * @param {String|Object}  [options.markerStyle = "blue"] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon })
      * @param {Boolean} [options.displayInfo = true] - get informations on popup marker
-     * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
+     * @param {String|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
      *       possible values : "auto", any fixed zoom level or a function retruning a zoom :
      *
      *       ```
@@ -266,7 +266,7 @@ var Controls = {
      *           fields : { // fields of service response }
      *       }
      *       ```
-     * @param {Sting}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
      * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
      * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)
@@ -305,7 +305,7 @@ var Controls = {
      * @static
      * @alias L.geoportalControl.ElevationPath
      * @param {Object} options - options for function call.
-     * @param {Sting}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
+     * @param {String}   [options.apiKey] - API key for elevation service call, mandatory if configuration service has not been loaded in advance. See {@link https://github.com/IGNF/geoportal-extensions/blob/master/README-leaflet.md#user-content-config "Configuration de l'accès à la plateforme Géoportail" documentation chapter} for more information.
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.

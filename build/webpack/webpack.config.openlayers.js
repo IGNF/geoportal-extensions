@@ -59,8 +59,9 @@ module.exports = (env, argv) => {
             path : path.join(ROOT, "dist", "openlayers"),
             filename : "[name]" + suffix + ".js",
             library : "Gp",
-            // libraryTarget : "umd", // FIXME on abandonne le mode umd !?
-            // umdNamedDefine : true // mode umd !
+            // libraryTarget : "umd", 
+            // umdNamedDefine : true,
+            // globalObject: 'this'
         },
         resolve : {
             alias : {
@@ -92,32 +93,44 @@ module.exports = (env, argv) => {
                 if (/^ol\/.+$/.test(request)) {
                     // liste des modules ES6 à garder dans le code...
                     if ([
-                        "ol/events/Event",
                         "ol/events/EventType",
+                        "ol/events/EventType.js",
                         "ol/events",
-                        "ol/obj",
-                        "ol/render/canvas",
-                        "ol/css",
-                        "ol/dom",
-                        "ol/transform",
-                        "ol/asserts",
-                        "ol/AssertionError",
-                        "ol/util",
-                        "ol/render/canvas/LabelCache",
-                        "ol/structs/LRUCache",
-                        "ol/events/Target",
-                        "ol/Disposable",
-                        "ol/functions",
-                        "ol/proj/transforms"
+                        "ol/events.js",
+                        "ol/render/Feature",
+                        "ol/render/Feature.js",
+                        // "ol/obj",
+                        // "ol/css",
+                        // "ol/dom",
+                        // "ol/transform",
+                        // "ol/asserts",
+                        // "ol/AssertionError",
+                        // "ol/util",
+                        // "ol/render/canvas/LabelCache", <!-- depreciate -->
+                        // "ol/structs/LRUCache",
+                        // "ol/events/Event",
+                        // "ol/events/Target",
+                        // "ol/Disposable",
+                        // "ol/functions",
+                        // "ol/proj/transforms"
                     ].includes(request)) {
-                        // console.log("#### IN : ", request);
+                        if (devMode) {
+                            console.log("#### MODULE ES6 ONLY : " + request + " (" + context + ")");
+                        }
                         return callback();
                     }
-                    // console.log("#### OUT : ", request);
-                    const replacedWith = request.replace(/\//g, '.');
+                    if (devMode) {
+                        console.log("#### OL : " + request + " (" + context + ")");
+                    }
+                    const replacedWith = request.replace(/\.js$/g, '').replace(/\//g, '.');
+                    if (devMode) {
+                        console.log(">>> : ", replacedWith);
+                    }
                     return callback(null, replacedWith);
                 }
-                // console.log("#### NULL : ", request);
+                if (devMode) {
+                    console.log("#### OTHER : " + request + " (" + context + ")");
+                }
                 callback();
             },
             /**
@@ -132,9 +145,9 @@ module.exports = (env, argv) => {
                     amd : "ol",
                     root : "ol"
                 },
-                request : {
-                    commonjs2 : "request",
-                    commonjs : "request",
+                "node-fetch" : {
+                    commonjs2 : "node-fetch",
+                    commonjs : "node-fetch",
                     amd : "require"
                 },
                 xmldom : {
@@ -153,14 +166,18 @@ module.exports = (env, argv) => {
             //      }
             // },
             stats : "errors-only",
-            // host : "localhost",
-            // https: true,
-            // port : 9001,
-            // hot : true,
-            // contentBase : path.join(__dirname),
+            host : "localhost",
+            https: true,
+            port : 9001,
+            headers: {
+                'Cache-Control': 'no-store'
+            },
+            hot : true,
+            contentBase : path.join(__dirname),
             // publicPath : "/dist/openlayers/",
             // openPage : "/samples/index-openlayers-map.html",
-            // open : "google-chrome",
+            open : "google-chrome",
+            watchContentBase: true,
             watchOptions : {
                 watch : true,
                 poll : true
@@ -170,7 +187,7 @@ module.exports = (env, argv) => {
                 warnings : false
             }
         },
-        stats : "verbose", // "none",
+        stats : (devMode) ? "verbose" : "none",
         optimization : {
             /** MINIFICATION */
             minimizer: [
@@ -468,10 +485,32 @@ module.exports = (env, argv) => {
             new CopyWebpackPlugin([
                 {
                     from : path.join(ROOT, "samples-src", "resources", "**/*"),
-                    to : path.join(ROOT, "samples", "resources"),
-                    context : path.join(ROOT, "samples-src", "resources")
+                    to : path.join(ROOT, "samples", "resources")
+                    // context : path.join(ROOT, "samples-src", "resources"),
+                    // force: true
                 }
-            ])
+            ]),
+            // FIXME les ressources exemples ne sont pas prises en compte dans le mode watch !?
+            // {
+            //     apply: (compiler) => {
+            //       compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+            //         // Debugging
+            //         console.log("########-------------->>>>> Finished Copy Compile <<<<<------------#######");
+              
+            //         let source = path.join(ROOT, "samples-src", "resources");
+            //         let destination = path.join(ROOT, "samples", "resources");
+              
+            //         let options = {
+            //           overwrite: true
+            //         };
+            //         fs.copy(source, destination, options, err => {
+            //           if (err) return console.error(err); {
+            //               console.log('Copy resources success!');
+            //           }
+            //         })
+            //       });
+            //     }
+            //   }
         ]
             /** AJOUT DES LICENCES */
             .concat([

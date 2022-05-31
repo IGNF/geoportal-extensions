@@ -23,6 +23,7 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LocationSelector from "./LocationSelector";
 import LayerSwitcher from "./LayerSwitcher";
@@ -44,16 +45,19 @@ var logger = Logger.getLogger("route");
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
- * @param {Object}  [options.exclusions = {toll : false, tunnel : false, bridge : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
+ * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
- * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
- * @param {String} [options.markersOpts[property].url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
- * @param {Array} [options.markersOpts[property].offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
  * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete()} to know all autocomplete options
+ * @param {Object} [options.markersOpts] - options to use your own markers. Object properties can be "departure", "stages" or "arrival". Corresponding value is an object with following properties :
+ * @param {String} [options.markersOpts.url] - marker base64 encoded url (ex "data:image/png;base64,...""). Mandatory for a custom marker
+ * @param {Array} [options.markersOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Itinéraire"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
+ * @fires route:drawstart
+ * @fires route:drawend
+ * @fires route:compute
  * @example
  *  var route = ol.control.Route({
  *      "collapsed" : true
@@ -194,6 +198,15 @@ var Route = (function (Control) {
 
         // on appelle la méthode setMap originale d'OpenLayers
         Control.prototype.setMap.call(this, map);
+    };
+
+    /**
+     * Get route informations
+     *
+     * @returns {Object} data - route informations
+     */
+    Route.prototype.getData = function () {
+        return this._currentRouteInformations;
     };
 
     // ################################################################### //
@@ -351,23 +364,19 @@ var Route = (function (Control) {
         // vérification des options
         // mode de transport
         if (options.graphs) {
-            if (Array.isArray(options.graphs)) {
-                // on ne permet pas de passer un tableau vide : on spécifie au moins un graph
-                if (options.graphs.length === 0) {
-                    options.graphs = null;
-                } else {
-                    for (var i = 0; i < options.graphs.length; i++) {
-                        if (typeof options.graphs[i] !== "string") {
-                            logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
-                            options.graphs = null;
-                        } else {
-                            if (options.graphs[i].toLowerCase() === "pieton") {
-                                options.graphs[i] = "Pieton";
-                            }
-                            if (options.graphs[i].toLowerCase() === "voiture") {
-                                options.graphs[i] = "Voiture";
-                            }
+            // on ne permet pas de passer un tableau vide : on spécifie au moins un graph
+            if (Array.isArray(options.graphs) && options.graphs.length) {
+                for (var i = 0; i < options.graphs.length; i++) {
+                    if (typeof options.graphs[i] === "string") {
+                        if (options.graphs[i].toLowerCase() === "pieton") {
+                            options.graphs[i] = "Pieton";
                         }
+                        if (options.graphs[i].toLowerCase() === "voiture") {
+                            options.graphs[i] = "Voiture";
+                        }
+                    } else {
+                        logger.log("[ol.control.Route] ERROR : parameter 'graphs' elements should be of type 'string'");
+                        options.graphs[i] = null;
                     }
                 }
             } else {
@@ -884,6 +893,10 @@ var Route = (function (Control) {
             _timeout = 15000;
         }
 
+        // gestion des callback
+        var bOnFailure = !!(routeOptions.onFailure !== null && typeof routeOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(routeOptions.onSuccess !== null && typeof routeOptions.onSuccess === "function");
+
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         this._requestRouting({
@@ -903,12 +916,18 @@ var Route = (function (Control) {
                 if (results) {
                     context._fillRouteResultsDetails(results);
                 }
+                if (bOnSuccess) {
+                    routeOptions.onSuccess.call(context, results);
+                }
             },
             // callback onFailure
             onFailure : function (error) {
                 context._hideWaitingContainer();
                 context._clearRouteResultsDetails();
                 logger.log(error.message);
+                if (bOnFailure) {
+                    routeOptions.onFailure.call(context, error);
+                }
             }
         });
     };
@@ -933,6 +952,7 @@ var Route = (function (Control) {
         //     }
         // );
         olObservableUnByKey(this.listenerKey);
+        this.dispatchEvent("route:drawend");
     };
 
     /**
@@ -956,8 +976,21 @@ var Route = (function (Control) {
                     if (this._formRouteContainer.className === "GProuteFormMini") {
                         this._formRouteContainer.className = "";
                     }
+                    olObservableUnByKey(this.listenerKey);
+                    /**
+                    * event triggered at the end of drawing input
+                    *
+                    * @event route:drawend
+                    */
+                    this.dispatchEvent("route:drawend");
                 }
             );
+            /**
+            * event triggered at the start of drawing input
+            *
+            * @event route:drawstart
+            */
+            this.dispatchEvent("route:drawstart");
         } else {
             // si on déselectionne le pointer, on rétablit le formulaire en mode normal
             this._formRouteContainer.className = "";
@@ -972,6 +1005,7 @@ var Route = (function (Control) {
             //     }
             // );
             olObservableUnByKey(this.listenerKey);
+            this.dispatchEvent("route:drawend");
         }
     };
 
@@ -984,6 +1018,9 @@ var Route = (function (Control) {
      * @private
      */
     Route.prototype.onShowRoutePanelClick = function (e) {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         // clean !
         if (!this._geojsonSections && !this._waiting) {
             this._clear();
@@ -1257,8 +1294,13 @@ var Route = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        options.ssl = options.ssl || this.options.ssl || true;
-
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
         logger.log(options);
 
         // mise en place de la patience
@@ -1316,6 +1358,21 @@ var Route = (function (Control) {
 
         // sauvegarde de l'etat des resultats
         this._currentRouteInformations = results;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event route:compute
+         * @property {Object} type - event
+         * @property {Object} target - instance Route
+         * @example
+         * Route.on("route:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "route:compute"
+        });
 
         // mise à jour du controle !
         this._formRouteContainer.className = "GProuteComponentHidden";
@@ -1664,7 +1721,7 @@ var Route = (function (Control) {
 
         var bridgeInput = document.getElementById("GProuteExclusionsBridge-" + this._uid);
         if (bridgeInput) {
-            if (this._currentExclusions.indexOf("bridge") !== -1 && bridgeInput) {
+            if (this._currentExclusions.indexOf("bridge") !== -1) {
                 bridgeInput.checked = false;
             } else {
                 bridgeInput.checked = true;

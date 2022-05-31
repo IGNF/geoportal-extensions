@@ -7,6 +7,8 @@
 * @example
 * rgbaToHex();
 * hexToRgba();
+* isHex();
+* isRGB();
 */
 var ColorUtils = {
     /**
@@ -69,6 +71,43 @@ var ColorUtils = {
         } : null;
         var result = rgb ? "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", " + opacity + ")" : null;
         return result;
+    },
+
+    /**
+     * Determine if value is a correct hexa color.
+     * @param {*} value - hex color (#FFFFFF)
+     * @returns {Boolean} True if value is a hexa color
+     */
+    isHex : function (value) {
+        if (!value) {
+            return false;
+        }
+        if (value.charAt(0) !== "#") {
+            return false;
+        }
+        var regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
+        var parsed = regex.exec(value);
+        if (!parsed) {
+            return false;
+        }
+        return true;
+    },
+
+    /**
+     * Determine if value is a correct rgba color.
+     * @param {*} value - rgba color (rgba(125,125,125,1))
+     * @returns {Boolean} True if value is a rgba color
+     */
+    isRGB : function (value) {
+        if (!value) {
+            return false;
+        }
+        var regex = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(0?.?\d+)\s*)?\)/;
+        var parsed = regex.exec(value);
+        if (!parsed) {
+            return false;
+        }
+        return true;
     }
 };
 

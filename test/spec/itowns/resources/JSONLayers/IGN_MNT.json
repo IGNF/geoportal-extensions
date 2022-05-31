@@ -4,7 +4,7 @@
 	"noDataValue" : -99999,
 	"source": {
 		"protocol":   "wmts",
-		"url":        "https://wxs.ign.fr/ptlp78g6fvz9daz5mg2fztvr/geoportail/wmts",
+		"url":        "https://wxs.ign.fr/altimetrie/geoportail/wmts",
 		"updateStrategy": {
 			"type": 1,
 			"options": {
@@ -24,7 +24,7 @@
             }]
         }],
 		"format": "image/x-bil;bits=32",
-		"projection" : "EPSG:4326",
+		"crs" : "EPSG:4326",
 		"tileMatrixSet": "WGS84G",
 		"tileMatrixSetLimits": {
 			"3": {

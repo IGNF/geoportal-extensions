@@ -14,6 +14,7 @@
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+* > Logger: (...)
 *
 * > olExtended: (...)
 * > olUtils: (...)
@@ -67,7 +68,11 @@ import "../Common/Styles";
 import "./Styles";
 
 import GfiUtils from "./GfiUtils";
+
 import KML from "./Formats/KML";
+import GPX from "./Formats/GPX";
+import GeoJSON from "./Formats/GeoJSON";
+
 import WMTS from "./Sources/WMTS";
 import SourceWMTS from "./Layers/SourceWMTS";
 import SourceWMS from "./Layers/SourceWMS";
@@ -145,7 +150,7 @@ export {
 };
 
 /** Version */
-export const olExtVersion = Pkg.olExtVersion;
+export const olExtVersion = Pkg.olExtVersion || Pkg.version;
 /** Publication date */
 export const olExtDate = Pkg.date;
 
@@ -159,6 +164,8 @@ export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 /** cf. Gp.MathUtils */
 export { default as MathUtils } from "../Common/Utils/MathUtils";
+/** cf. Gp.Logger */
+export { default as Logger } from "../Common/Utils/LoggerByDefault";
 
 function deepCopy (source, target) {
     // Implementing Tail Call Elimination
@@ -199,13 +206,18 @@ Ol.style.editor.Themes = Themes;
 // Rajout des propriétés dans le namespace Ol
 Ol.format = Ol.format || {};
 Ol.format.KMLExtended = KML;
+Ol.format.GPXExtended = GPX;
+Ol.format.GeoJSONExtended = GeoJSON;
+
 Ol.source = Ol.source || {};
 Ol.source.WMTSExtended = WMTS;
 Ol.source.GeoportalWMTS = SourceWMTS;
 Ol.source.GeoportalWMS = SourceWMS;
+
 Ol.layer = Ol.layer || {};
 Ol.layer.GeoportalWMTS = LayerWMTS;
 Ol.layer.GeoportalWMS = LayerWMS;
+
 Ol.control = Ol.control || {};
 Ol.control.LayerSwitcher = LayerSwitcher;
 Ol.control.GeoportalAttribution = GeoportalAttribution;

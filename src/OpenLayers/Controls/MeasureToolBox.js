@@ -54,6 +54,7 @@ var MeasureToolBox = {
         var mapId = mapContainer.id;
 
         if (!this._toolbox || Object.keys(this._toolbox).length === 0) {
+            this._toolbox = {};
             this._toolbox[mapId] = ID.generate();
         } else {
             if (!this._toolbox[mapId]) {
@@ -66,6 +67,7 @@ var MeasureToolBox = {
             logger.trace("create toolbox !");
             // creation et ajout de la toolbox sur la map
             var toolboxContainer = this._createToolBoxContainerElement(uid);
+            toolboxContainer.style.pointerEvents = "auto"; // ajout pour ol6
             var overlaysContainer = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
             overlaysContainer[0].appendChild(toolboxContainer);
             // mapContainer.appendChild(toolboxContainer);

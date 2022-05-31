@@ -2,6 +2,8 @@
 
 {{#content "head"}}
         <title>Sample openlayers</title>
+        <script src="https://unpkg.com/ol-popup@3.0.0"></script>
+        <link rel="stylesheet" href="https://unpkg.com/ol-popup@3.0.0/src/ol-popup.css" />
 {{/content}}
 
 {{#content "style"}}
@@ -18,28 +20,102 @@
             <!-- map -->
             <div id="map">
             </div>
+            <!-- export -->
+            <button id="export">Exporter</button>
 {{/content}}
 
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
+                var layer;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
+                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/croquis-extendeddata.kml";
+                    layer = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: _url,
+                            format: new ol.format.KMLExtended()
+                        })
+                    });
+
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
-                            center : [288074.8449901076, 6247982.515792289],
+                            center : [0,0],
                             zoom : 6
                         }),
                         layers : [
                             new ol.layer.GeoportalWMS({
                                 layer : "ORTHOIMAGERY.ORTHOPHOTOS"
-                            })
+                            }),
+                            layer
                         ]
                     });
+
+                    var layerSwitcher = new ol.control.LayerSwitcher({});
+                    map.addControl(layerSwitcher);
+
+                    var popup = new ol.Overlay.Popup();
+                    map.addOverlay(popup);
+
+                    // cf. http://astuntechnology.github.io/osgis-openlayers-leaflet/openlayers/03-GEOJSON-INFO.html
+                    map.on("click", function(evt) {
+
+                        popup.hide();
+                        popup.setOffset([0, 0]);
+
+                        // Attempt to find a feature in one of the visible vector layers
+                        var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+                            return feature;
+                        });
+
+                        if (feature) {
+
+                            var coord = evt.coordinate;
+                            var props = feature.getProperties();
+                            var contents = "";
+                            for (var key in props) {
+                                if (props.hasOwnProperty(key)) {
+                                    contents += key + " / " + props[key];
+                                    contents += "<br>";
+                                }
+                            }
+                            // Offset the popup so it points at the middle of the marker not the tip
+                            popup.setOffset([0, -22]);
+                            popup.show(coord, contents);
+
+                        }
+                    });
                 };
+                document.getElementById("export").addEventListener("click", function () {
+                    var result = null;
+                    if (!layer) {
+                        console.log("Impossible to export : no layer is hosting features.");
+                        return result;
+                    }
+                    if (!layer.getSource() ||
+                        !layer.getSource().getFeatures() ||
+                        !layer.getSource().getFeatures().length) {
+                        console.log("Impossible to export : no features found.");
+                        return result;
+                    }
+                    var kml = new ol.format.KMLExtended({
+                        writeStyles : true
+                    });
+
+                    result = kml.writeFeatures(layer.getSource().getFeatures(), {
+                        dataProjection : "EPSG:4326",
+                        featureProjection : layer.getSource().getProjection()
+                    });
+
+                    var link = document.createElement("a");
+                    var charset = "utf-8";
+                    link.setAttribute("href", "data:application/vnd.google-earth.kml+xml;charset=" + charset + "," + encodeURIComponent(result));
+                    link.setAttribute("download", "sample.kml");
+                    link.click();
+                });
            </script>
 {{/content}}
 

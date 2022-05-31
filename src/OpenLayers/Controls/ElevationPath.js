@@ -45,19 +45,21 @@ var logger = Logger.getLogger("elevationpath");
  * @alias ol.control.ElevationPath
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
+ * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
- * @param {Object} [options.stylesOptions = DEFAULT_STYLES] - styles management
- * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object
+ * @param {Object} [options.stylesOptions] - styles management
+ * @param {Object} [options.stylesOptions.marker = {}] - styles management of marker displayed on map when the user follows the elevation path. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Image-ImageStyle.html ol.style.Image} subclass object
  * @param {Object} [options.stylesOptions.draw = {}] - styles used when drawing. Specified with following properties.
- * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Image.html ol.style.Image} subclass object.
- * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
- * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html ol.style.Stroke} object.
- * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
+ * @param {Object} [options.stylesOptions.draw.pointer = {}] - Style for mouse pointer when drawing the line. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Image-ImageStyle.html ol.style.Image} subclass object.
+ * @param {Object} [options.stylesOptions.draw.start = {}] - Line Style when drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Stroke-Stroke.html ol.style.Stroke} object.
+ * @param {Object} [options.stylesOptions.draw.finish = {}] - Line Style when finished drawing. Specified with an {@link https://openlayers.org/en/latest/apidoc/module-ol_style_Stroke-Stroke.html ol.style.Stroke} object.
  * @param {Object} [options.displayProfileOptions = {}] - profile options.
+ * @param {Boolean} [options.displayProfileOptions.totalDistance = true] - display the total distance of the path
  * @param {Boolean} [options.displayProfileOptions.greaterSlope = true] - display the greater slope into the graph
  * @param {Boolean} [options.displayProfileOptions.meanSlope = true] -  display the mean slope into the graph
  * @param {Boolean} [options.displayProfileOptions.ascendingElevation = true] -  display the ascending elevation into the graph
@@ -65,6 +67,9 @@ var logger = Logger.getLogger("elevationpath");
  * @param {Boolean} [options.displayProfileOptions.currentSlope = true] -  display current slope value on profile mouseover
  * @param {Function} [options.displayProfileOptions.apply] - function to display profile if you want to cutomise it. By default, ([DISPLAY_PROFILE_BY_DEFAULT()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_BY_DEFAULT)) is used. Helper functions to use with D3 ([DISPLAY_PROFILE_LIB_D3()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_D3)) or AmCharts ([DISPLAY_PROFILE_LIB_AMCHARTS()](./ol.control.ElevationPath.html#.DISPLAY_PROFILE_LIB_AMCHARTS)) frameworks are also provided. You may also provide your own function.
  * @param {Object} [options.displayProfileOptions.target] - DOM container to use to display the profile.
+ * @fires elevationpath:drawstart
+ * @fires elevationpath:drawend
+ * @fires elevationpath:compute
  * @example
  *
  * var measure = new ol.control.ElevationPath({
@@ -205,6 +210,11 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.__createProfileMarker = function (context, d) {
         var self = context;
+        // suppression de l'ancien marker
+        if (self._marker) {
+            self._measureSource.removeFeature(self._marker);
+            self._marker = null;
+        }
         var map = self.getMap();
         var proj = map.getView().getProjection();
 
@@ -536,6 +546,29 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Get elevation data
+     *
+     * @returns {Object} data - elevations
+     * @example
+     * {
+     *        greaterSlope // pente max
+     *        meanSlope  // pente moyenne
+     *        distancePlus // distance cumulée positive
+     *        distanceMinus // distance cumulée négative
+     *        ascendingElevation // dénivelé cumulée positive
+     *        descendingElevation // dénivelé cumulée négative
+     *        altMin // altitude min
+     *        altMax // altitude max
+     *        distance // distance totale
+     *        unit : // unité des mesures de distance
+     *        points : // elevations
+     *   }
+     */
+    ElevationPath.prototype.getData = function () {
+        return this._data;
+    };
+
+    /**
      * clean
      */
     ElevationPath.prototype.clean = function () {
@@ -621,6 +654,7 @@ var ElevationPath = (function (Control) {
                 description : "Mon profil altimétrique"
             },
             displayProfileOptions : {
+                totalDistance : true,
                 greaterSlope : true,
                 meanSlope : true,
                 ascendingElevation : true,
@@ -925,7 +959,8 @@ var ElevationPath = (function (Control) {
         this._measureDraw = new DrawInteraction({
             source : this._measureSource,
             type : "LineString",
-            style : this._drawStyleStart
+            style : this._drawStyleStart,
+            stopClick : true
         });
 
         this._measureDraw.setProperties({
@@ -957,24 +992,34 @@ var ElevationPath = (function (Control) {
             for (var i = 0; i < _features.length; i++) {
                 this._measureSource.removeFeature(_features[i]);
             }
+            /**
+            * event triggered at the start of drawing input
+            * @event elevationpath:drawstart
+            */
+            this.dispatchEvent("elevationpath:drawstart");
         });
 
         // Event end
         this._measureDraw.on("drawend", (evt) => {
             logger.trace("drawend", evt);
+            /**
+            * event triggered at the end of drawing input
+            * @event elevationpath:drawend
+            */
+            this.dispatchEvent("elevationpath:drawend");
 
             // set feature
             this._lastSketch = this._currentSketch;
 
-            // set an alti request and display results
-
-            // FIXME à revoir...
             // Si il n'y a pas de surcharge utilisateur de la fonction de recuperation des
             // resultats, on realise l'affichage du panneau
             if (typeof this.options.elevationOptions.onSuccess === "undefined" && this.options.displayProfileOptions.target === null) {
                 this._panelContainer.style.display = "block";
                 // self._panelContainer.style.visibility = "visible";
             }
+
+            // set an alti request and display results
+            this._measureDraw.setActive(false);
             this._requestService();
         });
     };
@@ -1040,8 +1085,8 @@ var ElevationPath = (function (Control) {
                 ll = olTransformProj(xy, projSrc, projDest);
             }
             geometry.push({
-                lon : ll[0],
-                lat : ll[1]
+                lon : Math.round(ll[0] * 1e8) / 1e8,
+                lat : Math.round(ll[1] * 1e8) / 1e8
             });
         }
 
@@ -1071,10 +1116,44 @@ var ElevationPath = (function (Control) {
         for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
             var c1 = olTransformProj(coordinates[i], projSrc, projDest);
             var c2 = olTransformProj(coordinates[i + 1], projSrc, projDest);
+            c1[0] = Math.round(c1[0] * 1e8) / 1e8;
+            c1[1] = Math.round(c1[1] * 1e8) / 1e8;
+            c2[0] = Math.round(c2[0] * 1e8) / 1e8;
+            c2[1] = Math.round(c2[1] * 1e8) / 1e8;
             length += olGetDistanceSphere(c1, c2);
         }
 
         return length;
+    };
+
+    /**
+     * get geometry feature point coords in EPSG:4326 [lon, lat]
+     *
+     * @returns {Array} point coords in EPSG:4326 [lon, lat]
+     *
+     * @private
+     */
+    ElevationPath.prototype._getSketchCoords = function () {
+        if (this._currentSketch === null) {
+            logger.warn("Current Feature undefined !?");
+            return;
+        }
+
+        var map = this.getMap();
+        var projSrc = map.getView().getProjection();
+        var projDest = "EPSG:4326";
+
+        var pointCoords = [];
+
+        var coordinates = this._currentSketch.getGeometry().getCoordinates();
+        for (var i = 0; i < coordinates.length; i++) {
+            var c1 = olTransformProj(coordinates[i], projSrc, projDest);
+            c1[0] = Math.round(c1[0] * 1e8) / 1e8;
+            c1[1] = Math.round(c1[1] * 1e8) / 1e8;
+            pointCoords.push(c1);
+        }
+
+        return pointCoords;
     };
 
     /**
@@ -1113,12 +1192,24 @@ var ElevationPath = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
+
         Utils.mergeParams(options, {
-            ssl : options.ssl || this.options.ssl || true
+            ssl : options.ssl
         });
 
         // les callbacks
         var self = this;
+
+        // gestion des callback
+        var bOnFailure = !!(this.options.elevationOptions.onFailure !== null && typeof this.options.elevationOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(this.options.elevationOptions.onSuccess !== null && typeof this.options.elevationOptions.onSuccess === "function");
 
         // callback _requestServiceOnSuccess
         var _requestServiceOnSuccess = function (result) {
@@ -1129,6 +1220,10 @@ var ElevationPath = (function (Control) {
                 self._displayProfile(result.elevations);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
+                self._measureDraw.setActive(true);
+            }
+            if (bOnSuccess) {
+                self.options.elevationOptions.onSuccess.call(self, self.getData());
             }
         };
 
@@ -1140,11 +1235,15 @@ var ElevationPath = (function (Control) {
             logger.error(error.message);
             self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
             self._waiting = false;
+            self._measureDraw.setActive(true);
+            if (bOnFailure) {
+                self.options.elevationOptions.onFailure.call(self, error);
+            }
         };
 
         Utils.mergeParams(options, {
-            onSuccess : this.options.elevationOptions.onSuccess || _requestServiceOnSuccess,
-            onFailure : this.options.elevationOptions.onFailure || _requestServiceOnFailure
+            onSuccess : _requestServiceOnSuccess,
+            onFailure : _requestServiceOnFailure
         });
 
         // le sampling est soit defini par l'utilisateur (opts),
@@ -1152,18 +1251,24 @@ var ElevationPath = (function (Control) {
         var sampling = options.sampling;
         if (!sampling) {
             // computing sampling
-            var _sampling = 50;
+            var _sampling;
             var _length = this._getLength();
             logger.trace("length", _length);
-            var p = Math.floor(_length) / 5; // en mètre sur un pas moyen de 5m !
-            if (p >= 200) {
+            var p = Math.max(50, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
+            if (p > 200) {
                 _sampling = 200;
             } else {
                 _sampling = Math.floor(p);
             }
+            var pointNumber = this._getSketchCoords().length;
+            if (pointNumber > 100) {
+                _sampling = 0;
+            }
+        }
 
+        if (_sampling > 0) {
             Utils.mergeParams(options, {
-                sampling : _sampling || 50
+                sampling : _sampling
             });
         }
 
@@ -1197,19 +1302,20 @@ var ElevationPath = (function (Control) {
 
         var _data = elevations;
 
-        // FIXME facteur à 2000 doit il etre une option ?
-        var _limite = 2000; // metres
-        var _unit = "km";
-        var _factor = 1000;
-        var _length = this._getLength();
-        if (_length < _limite) {
-            _factor = 1;
-            _unit = "m";
-        }
+        var _unit = "m";
+
+        var _sketchPoints = this._getSketchCoords();
+        // section actuelle du sketch sur laquelle on est
+        var _currentSection = 0;
+        // longueur cumulée des sections précédentes
+        var _previousSectionsLength = 0;
+        var _nextSectionBegining = _sketchPoints[1];
 
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
         _data[0].dist = 0;
         _data[0].slope = 0;
+        _data[0].lat = Math.round(_data[0].lat * 10000) / 10000;
+        _data[0].lon = Math.round(_data[0].lon * 10000) / 10000;
 
         var _distanceMinus = 0;
         var _distancePlus = 0;
@@ -1218,10 +1324,22 @@ var ElevationPath = (function (Control) {
         var _distance = 0;
         var _slopes = 0;
 
+        var distances = [];
+
         for (var i = 1; i < _data.length; i++) {
             var a = [_data[i].lon, _data[i].lat];
-            var b = [_data[i - 1].lon, _data[i - 1].lat];
-            var dist = olGetDistanceSphere(a, b);
+            var distanceToStart = _previousSectionsLength + olGetDistanceSphere(a, _sketchPoints[_currentSection]);
+            var dist = distanceToStart - _distance;
+
+            // Changement de section
+            if (a[0] === _nextSectionBegining[0] && a[1] === _nextSectionBegining[1]) {
+                _currentSection++;
+                _previousSectionsLength = distanceToStart;
+                // Pas de next section si on est sur le dernier point
+                if (i !== _data.length - 1) {
+                    _nextSectionBegining = _sketchPoints[_currentSection + 1];
+                }
+            }
 
             var za = _data[i].z;
             var zb = _data[i - 1].z;
@@ -1239,8 +1357,10 @@ var ElevationPath = (function (Control) {
                 _distancePlus += dist;
                 _ascendingElevation += slope;
             }
-            _distance += dist / _factor;
-            _data[i].dist = _distance;
+            _distance = distanceToStart;
+            _data[i].dist = distanceToStart;
+
+            distances.push(distanceToStart);
 
             _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
             _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
@@ -1263,18 +1383,8 @@ var ElevationPath = (function (Control) {
             _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
         }
 
-        // Valeur du coeff d'arrondi des distances en fonction de la distance totale
-        var coeffArrond = 100;
-        if (_distance > 100) {
-            coeffArrond = 1;
-        } else if (_distance > 10) {
-            coeffArrond = 10;
-        }
-
-        // Correction arrondi distance totale
-        _distance = Math.round(_distance * coeffArrond) / coeffArrond;
-        _distanceMinus = Math.round(_distanceMinus * coeffArrond) / coeffArrond;
-        _distancePlus = Math.round(_distancePlus * coeffArrond) / coeffArrond;
+        // check distance totale
+        logger.trace("List Distances", distances);
 
         // Correction des altitudes aberrantes + arrondi des calculs de distance + ...
         var _altMin = _data[0].z;
@@ -1283,19 +1393,15 @@ var ElevationPath = (function (Control) {
 
         for (var ji = 0; ji < _data.length; ji++) {
             var d = _data[ji];
-            if (d.z < 0) {
+            if (d.z < -100) {
                 d.z = 0;
             }
-            if (d.z >= _altMax) {
+            if (d.z > _altMax) {
                 _altMax = d.z;
             }
-            if (d.z <= _altMin) {
+            if (d.z < _altMin) {
                 _altMin = d.z;
             }
-
-            d.dist = Math.round(d.dist * coeffArrond) / coeffArrond;
-            // FIXME erreur avec D3 car cette lib souhaite un numerique !
-            // d.dist = d.dist.toLocaleString();
 
             if (d.slope > _greaterSlope) {
                 _greaterSlope = d.slope;
@@ -1305,13 +1411,13 @@ var ElevationPath = (function (Control) {
         return {
             greaterSlope : _greaterSlope, // pente max
             meanSlope : Math.round(_slopes / _data.length), // pente moyenne
-            distancePlus : _distancePlus.toLocaleString(), // distance cumulée positive
-            distanceMinus : _distanceMinus.toLocaleString(), // distance cumulée négative
+            distancePlus : _distancePlus, // distance cumulée positive
+            distanceMinus : _distanceMinus, // distance cumulée négative
             ascendingElevation : _ascendingElevation, // dénivelé cumulée positive
             descendingElevation : _descendingElevation, // dénivelé cumulée négative
-            altMin : _altMin.toLocaleString(), // altitude min
-            altMax : _altMax.toLocaleString(), // altitude max
-            distance : _distance.toLocaleString(), // distance totale
+            altMin : _altMin.toLocaleString(), // altitude min TODO: inutile ?
+            altMax : _altMax.toLocaleString(), // altitude max TODO: inutile ?
+            distance : this._getLength(), // distance totale
             unit : _unit, // unité des mesures de distance
             points : _data
         };
@@ -1335,6 +1441,8 @@ var ElevationPath = (function (Control) {
         // sauvegarde des données
         var data = this._data = this._computeElevationMeasure(elevations);
 
+        this._updateInfoContainer();
+
         // container
         var container = this.options.displayProfileOptions.target;
         if (container) {
@@ -1354,13 +1462,75 @@ var ElevationPath = (function (Control) {
         var opts = this.options.displayProfileOptions;
         var element = document.getElementById("GPelevationPathPanelInfo-" + this._uid);
         if (element) {
-            if (opts.greaterSlope ||
+            if (opts.totalDistance ||
+                opts.greaterSlope ||
                 opts.meanSlope ||
                 opts.ascendingElevation ||
                 opts.descendingElevation) {
                 // on affiche les informations
                 element.style.display = "block";
             }
+        }
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event elevationpath:compute
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance ElevationPath
+         * @example
+         * ElevationPath.on("elevationpath:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "elevationpath:compute"
+        });
+    };
+
+    /**
+     * update info container
+     *
+     * @private
+     */
+    ElevationPath.prototype._updateInfoContainer = function () {
+        logger.trace("ElevationPath::_updateInfoContainer");
+
+        // options d'affichage
+        var totalDistance = this.options.displayProfileOptions.totalDistance;
+        var meanSlope = this.options.displayProfileOptions.meanSlope;
+        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
+        var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
+        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
+
+        // clean
+        var div = this._infoContainer;
+        if (div.childElementCount) {
+            while (div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
+        }
+
+        // creation des infomations
+        if (totalDistance) {
+            this._addElevationPathInformationsItem("Distance totale : " + Math.round(this._data.distance).toLocaleString() + " m");
+        }
+
+        if (ascendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
+        }
+
+        if (descendingElevation) {
+            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
+        }
+
+        if (meanSlope) {
+            this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
+        }
+
+        if (greaterSlope) {
+            this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
         }
     };
 
@@ -1406,37 +1576,7 @@ var ElevationPath = (function (Control) {
      * @private
      */
     ElevationPath.prototype.onOpenElevationPathInfoClick = function () {
-        // options d'affichage
-        var meanSlope = this.options.displayProfileOptions.meanSlope;
-        var greaterSlope = this.options.displayProfileOptions.greaterSlope;
-        var ascendingElevation = this.options.displayProfileOptions.ascendingElevation;
-        var descendingElevation = this.options.displayProfileOptions.descendingElevation;
-
-        // clean
         var div = this._infoContainer;
-        if (div.childElementCount) {
-            while (div.firstChild) {
-                div.removeChild(div.firstChild);
-            }
-        }
-
-        // creation des infomations
-
-        if (ascendingElevation) {
-            this._addElevationPathInformationsItem("Dénivelé positif : " + this._data.ascendingElevation.toLocaleString() + " m");
-        }
-
-        if (descendingElevation) {
-            this._addElevationPathInformationsItem("Dénivelé négatif : " + this._data.descendingElevation.toLocaleString() + " m");
-        }
-
-        if (meanSlope) {
-            this._addElevationPathInformationsItem("Pente moyenne : " + this._data.meanSlope.toLocaleString() + " %");
-        }
-
-        if (greaterSlope) {
-            this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
-        }
 
         // show des informations !
         if (div.className === "GPelevationPathInformationsContainerVisible") {

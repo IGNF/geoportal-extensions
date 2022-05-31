@@ -37,7 +37,7 @@ function BoostRelief (brOptions) {
         throw new TypeError("ERROR CLASS_CONSTRUCTOR");
     }
 
-    if (options && typeof options !== "object") {
+    if (typeof options !== "object") {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
@@ -196,8 +196,8 @@ BoostRelief.prototype._initContainer = function (brOptions) {
  * @param {Object} e - HTML event
  * @private
  */
-BoostRelief.prototype._onChangeLayerRelief = function (e) {
 
+BoostRelief.prototype._onChangeLayerRelief = function (e) {
     var reliefValue = parseInt(e.target.value);
     var reliefId = document.getElementById(this._addUID("GPreliefValue"));
 
@@ -227,7 +227,6 @@ BoostRelief.prototype._updateLayersRelief = function (reliefValue) {
     for (var i = 0; i < elevationLayers.length; i++) {
         updateScale(elevationLayers[i], reliefValue);
     }
-
 };
 
 /**
@@ -236,6 +235,7 @@ BoostRelief.prototype._updateLayersRelief = function (reliefValue) {
  * @method changeBoost
  * @param {Number} reliefValue - relief value
  */
+
 BoostRelief.prototype.changeBoost = function (reliefValue) {
     var layerReliefInput = document.getElementById(this._addUID("GPreliefValueDiv"));
 

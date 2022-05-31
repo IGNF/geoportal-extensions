@@ -9,6 +9,7 @@ import {
 } from "ol/style";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
+import Parser from "../../Common/Utils/Parser";
 import Utils from "../../Common/Utils";
 // import $__xmldom from "xmldom";
 
@@ -90,117 +91,6 @@ var KML = (function (olKML) {
      *
      */
     KML.prototype.constructor = KML;
-
-    /**
-     * Fonction d'indentation d'une chaine de caractères KML ou XML
-     * cf. https://stackoverflow.com/questions/376373/pretty-printing-xml-with-javascript/
-     *
-     * @param {String} xml - xml
-     *
-     * @returns {String} kml string
-     */
-    function _kmlFormattedToString (xml) {
-        var reg = /(>)\s*(<)(\/*)/g; // updated Mar 30, 2015
-        var wsexp = / *(.*) +\n/g;
-        var contexp = /(<.+>)(.+\n)/g;
-        xml = xml.replace(reg, "$1\n$2$3").replace(wsexp, "$1\n").replace(contexp, "$1\n$2");
-        var formatted = "";
-        var lines = xml.split("\n");
-        var indent = 0;
-        var lastType = "other";
-        // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions
-        var transitions = {
-            "single->single" : 0,
-            "single->closing" : -1,
-            "single->opening" : 0,
-            "single->other" : 0,
-            "closing->single" : 0,
-            "closing->closing" : -1,
-            "closing->opening" : 0,
-            "closing->other" : 0,
-            "opening->single" : 1,
-            "opening->closing" : 0,
-            "opening->opening" : 1,
-            "opening->other" : 1,
-            "other->single" : 0,
-            "other->closing" : -1,
-            "other->opening" : 0,
-            "other->other" : 0
-        };
-
-        for (var i = 0; i < lines.length; i++) {
-            var ln = lines[i];
-            var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
-            var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
-            var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
-            var type = single ? "single" : closing ? "closing" : opening ? "opening" : "other";
-            var fromTo = lastType + "->" + type;
-            lastType = type;
-            var padding = "";
-
-            indent += transitions[fromTo];
-            for (var j = 0; j < indent; j++) {
-                padding += "\t";
-            }
-            if (fromTo === "opening->closing") {
-                formatted = formatted.substr(0, formatted.length - 1) + ln + "\n"; // substr removes line break (\n) from prev loop
-            } else {
-                formatted += padding + ln + "\n";
-            }
-        }
-
-        logger.trace(formatted);
-        return formatted;
-    };
-
-    /**
-     * Fonction de parsing d'une chaine de caractères KML
-     *
-     * @param {String} kmlString - kml string
-     *
-     * @returns {DOMElement} kml document
-     */
-    function _kmlParse (kmlString) {
-        var kmlDoc = null;
-        var parser = null;
-        var scope = typeof window !== "undefined" ? window : null;
-
-        if (typeof exports === "object" && window === null) {
-            // code for nodejs
-            var DOMParser = require("xmldom").DOMParser;
-            parser = new DOMParser();
-            kmlDoc = parser.parseFromString(kmlString, "text/xml");
-        } else if (scope.DOMParser) {
-            // code for modern browsers
-            parser = new scope.DOMParser();
-            kmlDoc = parser.parseFromString(kmlString, "text/xml");
-        } else if (scope.ActiveXObject) {
-            // code for old IE browsers
-            kmlDoc = new scope.ActiveXObject("Microsoft.XMLDOM");
-            kmlDoc.async = false;
-            kmlDoc.loadXML(kmlString);
-        } else {
-            logger.log("Incompatible environment for DOM Parser !");
-        }
-
-        logger.trace(kmlDoc);
-        return kmlDoc;
-    };
-
-    /**
-     * Fonction de convertion en chaine de caractères.
-     *
-     * @param {DOMElement} kmlDoc - kml document
-     *
-     * @returns {String} kml string
-     */
-    function _kmlToString (kmlDoc) {
-        var oSerializer = new XMLSerializer();
-        var kmlStringExtended = oSerializer.serializeToString(kmlDoc);
-
-        logger.trace(kmlStringExtended);
-        return kmlStringExtended;
-    };
 
     /**
      * Fonction de lecture du KML avec fonction de traitement en fonction du type
@@ -400,9 +290,7 @@ var KML = (function (olKML) {
     KML.prototype._writeExtendStylesFeatures = function (features, options) {
         var kmlString = olKML.prototype.writeFeatures.call(this, features, options);
 
-        // On met en place un Parser sur le KML
-        // (Dommage que le parser XML des services ne soit pas disponible !)
-        var kmlDoc = _kmlParse(kmlString);
+        var kmlDoc = Parser.parse(kmlString);
 
         if (kmlDoc === null) {
             // au cas où...
@@ -517,9 +405,9 @@ var KML = (function (olKML) {
                     x = anchor[0];
                     y = anchor[1];
                     if (yunits === "fraction") {
-                        y = (anchor[1] === 1) ? 0 : 1 - anchor[1]; // cf. fixme contribution à faire !
+                        y = (y === 1) ? 0 : 1 - y; // cf. fixme contribution à faire !
                     } else {
-                        y = (yunits === "pixels" && anchor[1] === size[1]) ? 0 : size[1] - anchor[1]; // cf. fixme contribution à faire !
+                        y = (yunits === "pixels" && y === size[1]) ? 0 : size[1] - y; // cf. fixme contribution à faire !
                     }
                 }
 
@@ -567,18 +455,18 @@ var KML = (function (olKML) {
         });
 
         // On convertit le DOM en String...
-        var kmlStringExtended = _kmlToString(kmlDoc);
+        var kmlStringExtended = Parser.toString(kmlDoc);
 
         // au cas où...
-        if (kmlStringExtended === null) {
+        if (!kmlStringExtended) {
             kmlStringExtended = kmlString;
         }
 
         // On realise un formattage du KML
-        var kmlStringFormatted = _kmlFormattedToString(kmlStringExtended);
+        var kmlStringFormatted = Parser.format(kmlStringExtended);
 
         // au cas où...
-        if (kmlStringFormatted === null) {
+        if (kmlStringFormatted === "") {
             kmlStringFormatted = kmlString;
         }
 
@@ -643,7 +531,7 @@ var KML = (function (olKML) {
         kmlString = kmlString.replace(/(>)\s*(<)/g, "$1$2");
 
         // On met en place un Parser sur le KML
-        kmlDoc = _kmlParse(kmlString);
+        kmlDoc = Parser.parse(kmlString);
 
         if (kmlDoc === null) {
             // au cas où...
@@ -897,6 +785,9 @@ var KML = (function (olKML) {
             var featureStyleFunction = feature.getStyleFunction();
             if (featureStyleFunction) {
                 var _styles = featureStyleFunction(feature, 0);
+                if (_styles && !Array.isArray(_styles)) {
+                    _styles = [_styles];
+                }
                 if (_styles && _styles.length !== 0) {
                     var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];
                     // on écrase l'icone magic du label !

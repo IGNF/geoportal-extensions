@@ -10,6 +10,7 @@ import Gp from "geoportal-access-lib";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
+import Interactions from "./Utils/Interactions";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
@@ -28,8 +29,19 @@ var logger = Logger.getLogger("searchengine");
  * @alias ol.control.SearchEngine
  * @param {Object}  options - control options
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
- * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
+ *       Value possible : auto or zoom level.
+ *       Possible to overload it with a function :
+ *       zoomTo : function (info) {
+ *           // do some stuff...
+ *           return zoom;
+ *       }
+ * @param {String}  [options.placeholder] - Placeholder in search bar. Default is "Rechercher un lieu, une adresse".
+ * @param {Boolean} [options.displayMarker = true] - set a marker on search result, defaults to true.
+ * @param {String}  [options.markerStyle = "lightOrange"] - Marker style. Currently possible values are "lightOrange" (default value), "darkOrange", "red" and "turquoiseBlue".
+ * @param {Boolean} [options.displayAdvancedSearch = true] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
+ * @param {Object}  [options.advancedSearch] - advanced search options for geocoding (filters). Properties can be found among geocode options.filterOptions (see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~geocode Gp.Services.geocode})
  * @param {Object}   [options.resources] - resources to be used by geocode and autocompletion services :
  * @param {String}   [options.resources.geocode] - resources geocoding, by default : "location"
  * @param {Array}   [options.resources.autocomplete] - resources autocompletion, by default : ["PositionOfInterest", "StreetAddress"]
@@ -41,15 +53,7 @@ var logger = Logger.getLogger("searchengine");
  * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
  * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
- *       Value possible : auto or zoom level.
- *       Possible to overload it with a function :
- *       zoomTo : function (info) {
- *           // do some stuff...
- *           return zoom;
- *       }
- * @param {String}  [options.placeholder] - Placeholder in search bar. Default is "Rechercher un lieu, une adresse".
- * @param {Boolean}  [options.displayMarker = true] - set a marker on search result, defaults to true.
- * @param {String}  [options.markerStyle = "lightOrange"] - Marker style. Currently possible values are "lightOrange" (default value), "darkOrange", "red" and "turquoiseBlue".
+ * @fires searchengine:compute
  * @example
  *  var SearchEngine = ol.control.SearchEngine({
  *      apiKey : "CLEAPI",
@@ -155,14 +159,19 @@ var SearchEngine = (function (Control) {
         if ((collapsed && this.collapsed) || (!collapsed && !this.collapsed)) {
             return;
         }
-        if (collapsed) {
-            this._showSearchEngineInput.click();
-        } else {
-            this._showSearchEngineInput.click();
-        }
+
+        this._showSearchEngineInput.click();
         this.collapsed = collapsed;
     };
 
+    /**
+     * Get locations data from geocode service
+     *
+     * @returns {Object} data - locations
+     */
+    SearchEngine.prototype.getData = function () {
+        return this._geocodedLocations;
+    };
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -186,7 +195,9 @@ var SearchEngine = (function (Control) {
             },
             displayAdvancedSearch : true,
             advancedSearch : {},
-            geocodeOptions : {},
+            geocodeOptions : {
+                serviceOptions : {}
+            },
             autocompleteOptions : {
                 serviceOptions : {},
                 triggerGeocode : false,
@@ -297,17 +308,18 @@ var SearchEngine = (function (Control) {
                 var geocodeResources = options.resources.geocode;
                 if (geocodeResources) {
                     // on vérifie que la liste des ressources de geocodage est bien un tableau
-                    if (!Array.isArray(geocodeResources)) {
+                    if (Array.isArray(geocodeResources)) {
+                        var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+                        for (i = 0; i < geocodeResources.length; i++) {
+                            if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
+                                // si la resource n'est pas référencée, on l'enlève
+                                // geocodeResources.splice(i, 1);
+                                logger.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
+                            }
+                        }
+                    } else {
                         logger.log("[SearchEngine] 'options.resources.geocode' parameter should be an array");
                         geocodeResources = null;
-                    }
-                    var geocodeResourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel"];
-                    for (i = 0; i < geocodeResources.length; i++) {
-                        if (geocodeResourcesList.indexOf(geocodeResources[i]) === -1) {
-                            // si la resource n'est pas référencée, on l'enlève
-                            // geocodeResources.splice(i, 1);
-                            logger.log("[SearchEngine] options.resources.geocode : " + geocodeResources[i] + " is not a resource for geocode");
-                        }
                     }
                 }
 
@@ -315,17 +327,18 @@ var SearchEngine = (function (Control) {
                 var autocompleteResources = options.resources.autocomplete;
                 if (autocompleteResources) {
                     // on vérifie que la liste des ressources d'autocompletion est bien un tableau
-                    if (!Array.isArray(autocompleteResources)) {
+                    if (Array.isArray(autocompleteResources)) {
+                        var autocompleteResourcesList = ["StreetAddress", "PositionOfInterest"];
+                        for (i = 0; i < autocompleteResources.length; i++) {
+                            if (autocompleteResourcesList.indexOf(autocompleteResources[i]) === -1) {
+                                // si la resource n'est pas référencée, on l'enlève
+                                // autocompleteResources.splice(i, 1);
+                                logger.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
+                            }
+                        }
+                    } else {
                         logger.log("[SearchEngine] 'options.resources.autocomplete' parameter should be an array");
                         autocompleteResources = null;
-                    }
-                    var autocompleteResourcesList = ["StreetAddress", "PositionOfInterest"];
-                    for (i = 0; i < autocompleteResources.length; i++) {
-                        if (autocompleteResourcesList.indexOf(autocompleteResources[i]) === -1) {
-                            // si la resource n'est pas référencée, on l'enlève
-                            // autocompleteResources.splice(i, 1);
-                            logger.log("[SearchEngine] options.resources.autocomplete : " + autocompleteResources[i] + " is not a resource for autocomplete");
-                        }
                     }
                 }
             } else {
@@ -752,8 +765,13 @@ var SearchEngine = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        options.ssl = options.ssl || this.options.ssl || true;
-
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
         logger.log(options);
 
         Gp.Services.autoComplete(options);
@@ -812,9 +830,27 @@ var SearchEngine = (function (Control) {
 
         var options = {};
         // on recupere les options du service
-        Utils.assign(options, this.options.geocodeOptions);
+        Utils.assign(options, this.options.geocodeOptions.serviceOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
+        // on redefinie les callbacks si les callbacks de service existent
+        var self = this;
+        var bOnFailure = !!(this.options.geocodeOptions.serviceOptions.onFailure !== null && typeof this.options.geocodeOptions.serviceOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(this.options.geocodeOptions.serviceOptions.onSuccess !== null && typeof this.options.geocodeOptions.serviceOptions.onSuccess === "function");
+        if (bOnSuccess) {
+            var cbOnSuccess = function (e) {
+                settings.onSuccess.call(self, e);
+                self.options.geocodeOptions.serviceOptions.onSuccess.call(self, e);
+            };
+            options.onSuccess = cbOnSuccess;
+        }
+        if (bOnFailure) {
+            var cbOnFailure = function (e) {
+                settings.onFailure.call(self, e);
+                self.options.geocodeOptions.serviceOptions.onFailure.call(self, e);
+            };
+            options.onFailure = cbOnFailure;
+        }
 
         // on ajoute le paramètre index spécifiant les ressources.
         var resources = this.options.resources.geocode;
@@ -832,7 +868,13 @@ var SearchEngine = (function (Control) {
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
-        options.ssl = options.ssl || this.options.ssl || true;
+        if (typeof options.ssl !== "boolean") {
+            if (typeof this.options.ssl === "boolean") {
+                options.ssl = this.options.ssl;
+            } else {
+                options.ssl = true;
+            }
+        }
 
         logger.log(options);
 
@@ -871,6 +913,21 @@ var SearchEngine = (function (Control) {
 
         // sauvegarde de l'etat des locations
         this._geocodedLocations = locations;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event searchengine:compute
+         * @property {Object} type - event
+         * @property {Object} target - instance SearchEngine
+         * @example
+         * ReverseGeocode.on("searchengine:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "searchengine:compute"
+        });
     };
 
     // ################################################################### //
@@ -1097,6 +1154,9 @@ var SearchEngine = (function (Control) {
      * @private
      */
     SearchEngine.prototype.onShowSearchEngineClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showSearchEngineInput.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.SearchEngine.on("change:collapsed", function ) pour s'abonner à cet évènement)
@@ -1296,7 +1356,7 @@ var SearchEngine = (function (Control) {
                     }
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function () {
                 // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
                 if (context._suggestedLocations && context._suggestedLocations[i]) {

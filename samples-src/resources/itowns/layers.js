@@ -1,78 +1,104 @@
 
 var layerOrtho = {
     "type": "color",
-    "protocol":   "wmts",
-    "id":         "Ortho",
-    "url":        "http://wxs.ign.fr/"+apiKey+"/geoportail/wmts",
-    "format": "image/jpeg",
-    "updateStrategy": {
-        "type": "0",
-        "options": {}
-    },
-    "networkOptions" : {
-        "crossOrigin" : "omit"
-    },
-    "options": {
-        "originators" :  [{
-            "name" : "IGN GE",
-            "attribution" : "IGN Grandes Echelles",
-            "url" : "http://www.ign.fr",
-            "constraints" : [{
-                "crs":"EPSG:4326"
-            }]
+    "id": "Ortho",
+    "source" : {
+        "protocol":   "wmts",
+        "url":        "http://wxs.ign.fr/"+apiKey+"/geoportail/wmts",
+        "crs" : "EPSG:3857",
+        "updateStrategy": {
+            "type": "0",
+            "options": {}
         },
-        {
-            "name" : "IGN PE",
-            "url" : "http://www.ign.fr",
-            "constraints" : [{
-                "crs":"EPSG:4326",
-                "bbox":{
-                    "left":-173.154,
-                    "right":173.837,
-                    "top":90,
-                    "bottom":-90
-                },
-                "maxScaleDenominator":559082264,
-                "minScaleDenominator":272990
-            }]
+        "networkOptions" : {
+            "crossOrigin" : "omit"
         },
-                {
-            "name" : "OSM NE",
-            "url" : "http://www.openstreetmap.org/",
-            "constraints" : [{
-                "crs":"EPSG:4326",
-                "bbox":{"left":2.3,"right":10,"top":51.093,"bottom":48.8}
-            }]
-                },
-                {
-              "name" : "OSM NW",
-              "url" : "http://www.openstreetmap.org/",
-              "constraints" : [{
-                  "crs":"EPSG:4326",
-                  "bbox":{"left":-10,"right":2.3,"top":51.093,"bottom":48.8}
-              }]
-        },
-                {
-              "name" : "OSM SW",
-              "url" : "http://www.openstreetmap.org/",
-              "constraints" : [{
-                  "crs":"EPSG:4326",
-                  "bbox":{"left":-10,"right":2.3,"top":48.8,"bottom":-21.39}
-              }]
-        },
-                {
-                         "name" : "OSM SE",
-                         "url" : "http://www.openstreetmap.org/",
-                         "constraints" : [{
-                                 "crs":"EPSG:4326",
-                                 "bbox":{"left":2.3,"right":55.837,"top":48.8,"bottom":-21.39}
-                         }]
-                }],
-        "attribution" : {
-            "name":"IGN",
-            "url":"http://www.ign.fr/"
-        },
+        "attribution": [
+            {
+                "name" : "IGN GE",
+                "attribution" : "IGN Grandes Echelles",
+                "url" : "http://www.ign.fr",
+                "constraints" : [{
+                    "crs":"EPSG:4326"
+                }]
+            },
+            {
+                "name" : "IGN PE",
+                "url" : "http://www.ign.fr",
+                "constraints" : [{
+                    "crs":"EPSG:4326",
+                    "bbox":{
+                        "left":-173.154,
+                        "right":173.837,
+                        "top":90,
+                        "bottom":-90
+                    },
+                    "maxScaleDenominator":559082264,
+                    "minScaleDenominator":272990
+                }]
+            },
+            {
+                "name" : "OSM NE",
+                "url" : "http://www.openstreetmap.org/",
+                "constraints" : [{
+                    "crs":"EPSG:4326",
+                    "bbox":{"left":2.3,"right":10,"top":51.093,"bottom":48.8}
+                }]
+            },
+            {
+                "name" : "OSM NW",
+                "url" : "http://www.openstreetmap.org/",
+                "constraints" : [{
+                    "crs":"EPSG:4326",
+                    "bbox":{"left":-10,"right":2.3,"top":51.093,"bottom":48.8}
+                }]
+            },
+            {
+                "name" : "OSM SW",
+                "url" : "http://www.openstreetmap.org/",
+                "constraints" : [{
+                    "crs":"EPSG:4326",
+                    "bbox":{"left":-10,"right":2.3,"top":48.8,"bottom":-21.39}
+                }]
+            },
+            {
+                "name" : "OSM SE",
+                "url" : "http://www.openstreetmap.org/",
+                "constraints" : [{
+                        "crs":"EPSG:4326",
+                        "bbox":{"left":2.3,"right":55.837,"top":48.8,"bottom":-21.39}
+                }]
+            },
+            {
+                "name" : "IGN PE",
+                "url" : "http://www.ign.fr",
+                "constraints" : [{
+                    "crs":"EPSG:4326",
+                    "bbox":{
+                        "left":-173.154,
+                        "right":173.837,
+                        "top":90,
+                        "bottom":-90
+                    },
+                    "maxScaleDenominator":559082264,
+                    "minScaleDenominator":272990
+                }]
+            },
+            {
+                "name" : "OSM NE",
+                "url" : "http://www.openstreetmap.org/",
+                "constraints" : [{
+                    "crs":"EPSG:4326",
+                    "bbox":{"left":2.3,"right":10,"top":51.093,"bottom":48.8}
+                }]
+            },
+            {
+                "name":"IGN",
+                "url":"http://www.ign.fr/"
+            }
+        ],
         "name": "ORTHOIMAGERY.ORTHOPHOTOS",
+        "format": "image/jpeg",
         "tileMatrixSet": "PM",
         "tileMatrixSetLimits": {
             "2": {

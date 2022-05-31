@@ -3,6 +3,7 @@
 div[id^=GPmousePosition-] {
   bottom: 8px;
   left: 10px;
+  z-index: 2; /* > z-index attribution*/
 }
 
 /* Showing/hiding mouse position panel */

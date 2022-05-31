@@ -60,7 +60,7 @@ var Logo = L.Control.extend(/** @lends Logo.prototype */ {
         var container = null;
         container = L.DomUtil.create("div", "gp-control-logo", container);
 
-        var bLink = !!((this.options.url || this.options.text));
+        var bLink = !!(this.options.url || this.options.text);
         var link = null;
 
         if (bLink) {

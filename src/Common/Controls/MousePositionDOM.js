@@ -686,7 +686,6 @@ var MousePositionDOM = {
     },
 
     /**
-     * @method _resetCoordinateElements
      * @param {Boolean} editCoordinates - edit coordinates option
      * @param {String} currentProjectionType - current projection type
      * @param {String} currentProjectionUnits - current projection unit
@@ -731,7 +730,6 @@ var MousePositionDOM = {
     /**
      * Set/unset editing mode
      *
-     * @method _setEditMode
      * @param {Boolean} editing - active edit coordinates mode
      */
     _setEditMode : function (editing) {
@@ -831,7 +829,7 @@ var MousePositionDOM = {
      */
     GPdisplayCoords : function (coordinate) {
         // Compute coords in case of cursor position (desktop)
-        if (coordinate && coordinate != null) {
+        if (coordinate) {
             var labelLon = document.getElementById(this._addUID("GPmousePositionLonLabel"));
             var labelLat = document.getElementById(this._addUID("GPmousePositionLatLabel"));
 
@@ -911,7 +909,7 @@ var MousePositionDOM = {
         var minThreshold = noDataValue - noDataValueTolerance;
 
         // Compute coords in case of cursor position (desktop)
-        if (coordinate && coordinate != null) {
+        if (coordinate) {
             // If no altitude panel, don't call altitude request
             if (document.getElementById(this._addUID("GPmousePositionAltitude"))) {
                 altitudeTimeout = setTimeout(function () {

@@ -14,6 +14,7 @@
 * > LayerUtils: (...)
 * > MathUtils: (...)
 * > ProxyUtils: (...)
+* > Logger: (...)
 *
 * > itownsExtended: (...)
 *
@@ -98,6 +99,7 @@ export { default as LayerUtils } from "../Common/Utils/LayerUtils";
 export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
+export { default as Logger } from "../Common/Utils/LoggerByDefault";
 
 function deepCopy (source, target) {
     // Implementing Tail Call Elimination
@@ -117,7 +119,7 @@ function deepCopy (source, target) {
 
 // Adds extensions properties in the namespace
 /** Version */
-export const itownsExtVersion = Pkg.itownsExtVersion;
+export const itownsExtVersion = Pkg.itownsExtVersion || Pkg.version;
 /** Publication date */
 export const itownsExtDate = Pkg.date;
 
