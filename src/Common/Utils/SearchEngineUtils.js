@@ -5,7 +5,7 @@ var SearchEngineUtils = {
     advancedSearchFiltersByDefault : {
         PositionOfInterest : [
             {
-                name : "type",
+                name : "category",
                 title : "Type",
                 value : [
                     "cimetière",
@@ -28,10 +28,10 @@ var SearchEngineUtils = {
                     "lieu-dit non habité"
                 ]
             }, {
-                name : "postalCode",
+                name : "postcode",
                 title : "Code postal"
             }, {
-                name : "inseeCode",
+                name : "citycode",
                 title : "Code INSEE"
             }
         ],
@@ -40,32 +40,32 @@ var SearchEngineUtils = {
                 name : "city",
                 title : "Ville"
             }, {
-                name : "postalCode",
+                name : "postcode",
                 title : "Code postal"
             }, {
-                name : "inseeCode",
+                name : "citycode",
                 title : "Code INSEE"
             }
         ],
         CadastralParcel : [
             {
-                name : "codeDepartement",
+                name : "departmentcode",
                 title : "Code département (INSEE)",
                 description : "Code INSEE du département (ex: 01, 94)"
             }, {
-                name : "codeCommune",
+                name : "municipalitycode",
                 title : "Code commune (INSEE)",
                 description : "Code INSEE de la commune : 3 chiffres (ex: 067)"
             }, {
-                name : "nomCommune",
+                name : "city",
                 title : "Nom commune",
                 description : "Nom de la commune"
             }, {
-                name : "codeCommuneAbs",
+                name : "oldmunicipalitycode",
                 title : "Commune absorbée",
                 description : "Commune absorbée : 3 chiffres (ex: 000, 001)"
             }, {
-                name : "codeArrondissement",
+                name : "districtcode",
                 title : "Arrondissement",
                 description : "Arrondissement : 3 chiffres (ex: 004, 012)"
             }, {
@@ -73,11 +73,11 @@ var SearchEngineUtils = {
                 title : "Section",
                 description : "Section Cadastrale : 2 caractères (chiffre et/ou lettre)"
             }, {
-                name : "numero",
+                name : "number",
                 title : "Numéro",
                 description : "Numéro de la parcelle : 4 chiffres (ex: 0041, 0250)"
             }, {
-                name : "feuille",
+                name : "sheet",
                 title : "Feuille",
                 description : "Numéro de la feuille cadastrale"
             }

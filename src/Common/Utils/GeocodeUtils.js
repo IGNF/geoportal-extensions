@@ -7,14 +7,14 @@ var GeocodeUtils = {
      */
     getGeocodedLocationFreeform : function (geocodedLocation) {
         var attributes = geocodedLocation.placeAttributes;
-        if (attributes.freeform) {
-            return attributes.freeform;
+        if (attributes.label) {
+            return attributes.label;
         } else if (geocodedLocation.type === "PositionOfInterest") {
-            return attributes.postalCode + " " + attributes.toponyme;
+            return attributes.postcode + " " + attributes.toponym;
         } else if (geocodedLocation.type === "StreetAddress") {
-            return (attributes.number ? attributes.number + " " : "") + attributes.street + " " + (attributes.postalCode ? attributes.postalCode + ", " : "") + attributes.city;
+            return (attributes.housenumber ? attributes.housenumber + " " : "") + attributes.street + " " + (attributes.postcode ? attributes.postcode + ", " : "") + attributes.city;
         } else if (geocodedLocation.type === "CadastralParcel") {
-            return attributes.identifiant;
+            return attributes.id;
         } else {
             return "...";
         }
