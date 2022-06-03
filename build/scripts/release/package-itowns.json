@@ -1,22 +1,4 @@
 {
-   "author" : "IGNF",
-   "peerDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "license" : "CECILL-B",
-   "module" : "src/Itowns/index.js",
-   "description" : "French Geoportal Extensions for iTowns",
-   "main" : "dist/GpPluginItowns-src.js",
-   "name" : "geoportal-extensions-itowns",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
    "date" : "11/05/2022",
    "files" : [
       "dist/",
@@ -25,20 +7,38 @@
       "README.md",
       "package.json"
    ],
-   "devDependencies" : {},
-   "version" : "2.3.6",
-   "scripts" : {},
-   "bundleDependencies" : [],
    "directories" : {},
+   "license" : "CECILL-B",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "description" : "French Geoportal Extensions for iTowns",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "bugs" : {},
+   "devDependencies" : {},
+   "peerDependencies" : {},
+   "author" : "IGNF",
+   "name" : "geoportal-extensions-itowns",
+   "main" : "dist/GpPluginItowns-src.js",
+   "version" : "2.3.6",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "bundleDependencies" : [],
+   "module" : "src/Itowns/index.js",
    "dependencies" : {
-      "proj4" : "2.7.5",
-      "loglevel" : "1.6.7",
-      "node-fetch" : "^2.6.1",
       "itowns" : "2.37.0",
+      "node-fetch" : "^2.6.1",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature-new_geocode/geoportal-access-lib-3.1.0.tgz",
+      "three" : "0.135.0",
+      "loglevel" : "1.6.7",
       "xmldom" : "^0.1.27",
       "sortablejs" : "1.14.0",
-      "three" : "0.135.0",
-      "geoportal-access-lib" : "3.1.0"
+      "proj4" : "2.7.5"
    },
-   "bugs" : {}
+   "scripts" : {}
 }
