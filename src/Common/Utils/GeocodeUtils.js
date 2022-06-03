@@ -28,9 +28,6 @@ var GeocodeUtils = {
      */
     getSuggestedLocationFreeform : function (suggestedLocation) {
         if (suggestedLocation.fullText) {
-            if (suggestedLocation.type === "PositionOfInterest") {
-                return suggestedLocation.fullText + (suggestedLocation.postalCode ? " " + suggestedLocation.postalCode : "");
-            }
             return suggestedLocation.fullText;
         } else {
             var values = [];
