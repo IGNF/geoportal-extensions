@@ -823,27 +823,27 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         switch (location.type) {
             case "StreetAddress":
                 if (attr.street) {
-                    locationDescription += attr.number ? attr.number + " " : "";
+                    locationDescription += attr.housenumber ? attr.housenumber + " " : "";
                     locationDescription += attr.street + ", ";
                 }
-                locationDescription += attr.postalCode + " " + attr.city;
+                locationDescription += attr.postcode + " " + attr.city;
                 break;
 
             case "PositionOfInterest":
-                locationDescription += attr.toponyme;
+                locationDescription += attr.toponym;
                 if (attr.postalCode.length === 1) {
-                    locationDescription += ", " + attr.postalCode[0];
+                    locationDescription += ", " + attr.postcode[0];
                 }
-                locationDescription += " (" + attr.type.join(",") + ")";
+                locationDescription += " (" + attr.category.join(",") + ")";
                 break;
 
             case "CadastralParcel":
-                locationDescription += attr.identifiant;
-                locationDescription += attr.nomCommune ? " (" + attr.nomCommune + ")" : "";
+                locationDescription += attr.id;
+                locationDescription += attr.city ? " (" + attr.city + ")" : "";
                 break;
 
             default:
-                locationDescription += attr.municipality ? attr.municipality : "";
+                locationDescription += attr.city ? attr.city : "";
                 break;
         };
 
