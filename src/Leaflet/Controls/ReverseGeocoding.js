@@ -831,7 +831,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 
             case "PositionOfInterest":
                 locationDescription += attr.toponym;
-                if (attr.postalCode.length === 1) {
+                if (attr.postcode.length === 1) {
                     locationDescription += ", " + attr.postcode[0];
                 }
                 locationDescription += " (" + attr.category.join(",") + ")";
