@@ -641,7 +641,7 @@ var SearchEngine = (function (Control) {
         // les ressources du service d'autocompletion
         _key = this.options.autocompleteOptions.apiKey;
         // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
-        _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
+        _resources = (this.options.autocompleteOptions.type) ? this.options.autocompleteOptions.type : [];
         // soit dans options.resources.autocomplete
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources.autocomplete;
@@ -668,7 +668,7 @@ var SearchEngine = (function (Control) {
             _resources = this.options.resources.geocode;
         }
         // ou celles par défaut sinon.
-        if (!_resources || _resources === "") {
+        if (!_resources) {
             _resources = "location";
         }
 

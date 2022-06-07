@@ -201,7 +201,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             _resources = this.options.resources;
         }
         // ou celles par défaut sinon.
-        if (!_resources || _resources === "") {
+        if (!_resources) {
             _resources = "location";
         }
 

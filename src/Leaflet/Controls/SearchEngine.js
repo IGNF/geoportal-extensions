@@ -294,7 +294,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         // on prend celles des options du services en priorité
         _key = this.options.autocompleteOptions.apiKey;
         // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
-        _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
+        _resources = (this.options.autocompleteOptions.type) ? this.options.autocompleteOptions.type : [];
         // soit dans options.resources.autocomplete
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources.autocomplete;
@@ -612,7 +612,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         // au cas où les options du services ne sont pas renseignées, on y ajoute
         // les tables de ressources
-        if (resources && L.Util.isArray(resources)) {
+        if (L.Util.isArray(resources)) {
             options.type = resources;
         }
 

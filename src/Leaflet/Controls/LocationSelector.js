@@ -311,7 +311,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         // les ressources du service d'autocompletion
         _key = this.options.autocompleteOptions.apiKey;
-        _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
+        _resources = (this.options.autocompleteOptions.type) ? this.options.autocompleteOptions.type : [];
         // ou celles par défaut sinon.
         if (!_resources || _resources.length === 0) {
             _resources = [
@@ -753,8 +753,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         this._setLabel(label);
 
         var info = {
-            service: "GeocodedLocation",
-            location: oLocation,
+            service : "GeocodedLocation",
+            location : oLocation
         };
 
         // on met en place le marker
