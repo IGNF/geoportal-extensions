@@ -109,7 +109,8 @@ var WMTS = (function (WMTSSource) {
             TILEMATRIX : tileMatrix,
             TILEMATRIXSET : this.getMatrixSet(),
             FORMAT : this.getFormat() || "image/png",
-            STYLE : this.getStyle() || "normal"
+            STYLE : this.getStyle() || "normal",
+            TOKEN : "monTokendeOUf"
         };
 
         Utils.assign(baseParams, params);

@@ -1,0 +1,40 @@
+/* BOOST RELIEF */
+
+  div[id^=GPbuildings-] {
+    font-size: 11px;
+    width: 150px;
+    height: 28px;
+  }
+  
+  div[id^=GPbuildings-] label {
+    display: block;
+  }
+
+  /* Showing/hiding boost relief panel */
+
+  label[id^=GPshowBuildingsPicto] {
+    display: inline-block;
+  }
+
+  input[id^=GPshowBuildings-] + label {
+    display: block;
+  }
+
+  input[id^=GPshowBuildings-]:checked + label {
+    display: none;
+  }
+
+  input[id^=GPshowBuildings-] + label + div {
+    display: none;
+  }
+
+  input[id^=GPshowBuildings-]:checked + label + div {
+    display: block;
+  }
+
+  /* Showing layer advanced tools */
+
+  div[id^=GPbuildings-] {
+    max-height: 28px;
+    opacity: 1;
+  }

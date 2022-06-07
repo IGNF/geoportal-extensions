@@ -485,6 +485,19 @@ GlobeViewExtended.prototype.getVectorLayers = function () {
 };
 
 /**
+ * Get featureGeometry layers
+ *
+ * @return {Array} imagery layers
+ */
+ GlobeViewExtended.prototype.getFeatureGeometryLayers = function () {
+    return this.getGlobeView().getLayers(function (layer) {
+        if (layer.isFeatureGeometryLayer) {
+            return layer;
+        }
+    });
+};
+
+/**
  * Get elevation layers
  *
  * @return {Array} elevation layers
