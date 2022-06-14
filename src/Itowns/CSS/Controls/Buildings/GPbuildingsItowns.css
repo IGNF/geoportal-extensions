@@ -4,8 +4,6 @@ div[id^=GPbuildings-]  {
   top: 8px;
   right: 8px;
   z-index: 1;
-  width: 32px;
-  height: 32px;
   padding: 3px;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 4px;

@@ -336,7 +336,7 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
  * @param {Boolean} visible - New visibility of the layer
  */
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
-    var layer = this.getColorLayerById(layerId);
+    var layer = this.getLayerById(layerId);
     layer.visible = visible;
     this.getGlobeView().notifyChange(layer);
 };
