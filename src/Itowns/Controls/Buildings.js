@@ -261,10 +261,15 @@ Buildings.prototype.addBuildings = function (options) {
     var layerId = 'VTBuilding';
     // Defines if the buildings must be displayed on the MNT or at the zero level
     var baseAltitude;
+    var extrusionHeight;
+    // To extend the extrusion on the ground when altitude is not accurate, we add a delta parameter
+    var delta = 10;
     if (options.buildingsOnGround) {
         baseAltitude = 0;
+        extrusionHeight = (p) => p.hauteur || 0;
     } else {
-        baseAltitude = (p) => p.alti_sol || 0;
+        baseAltitude = (p) => p.alti_sol - delta || 0;
+        extrusionHeight = (p) => p.hauteur + delta || 0;
     }
 
     var defaultVisibility;
@@ -281,8 +286,12 @@ Buildings.prototype.addBuildings = function (options) {
     const buildingsSource = new itowns.VectorTilesSource({
         style: vectorStyle,
         // We only want to display buildings related data.
+        // We remove some buildings without alti_sol property (it causes graphical)
         filter: (layer) => {
-            return layer['source-layer'].includes('bati_surf')
+            return layer['source-layer'].includes('bati_surf') && !layer['filter'].includes('CIMETIERE_SURF') 
+                && !layer['filter'].includes('FOOT_SURF')
+                && !layer['filter'].includes('TENNIS_SURF')
+                && !layer['filter'].includes('MULTI_SPORT_SURF')
                 && layer.paint["fill-color"];
         },
     });
@@ -297,7 +306,7 @@ Buildings.prototype.addBuildings = function (options) {
         style: new itowns.Style({
             fill: {
                 base_altitude: baseAltitude,
-                extrusion_height: (p) => p.hauteur || 0,
+                extrusion_height: extrusionHeight
             }
         })
     });
@@ -319,23 +328,6 @@ Buildings.prototype.setBuildingsVisibility = function (layerId) {
     } else {
         this.getGlobe().setLayerVisibility(layerId, true);
     }
-};
-
-// ################################################################### //
-// ######################### DOM events ############################## //
-// ################################################################### //
-
-/**
- * Gets layer id from div id
- *
- * @method _resolveLayerId
- * @param {String} divId - HTML div id
- * @returns {String} layer id
- * @private
- */
-Buildings.prototype._resolveLayerId = function (divId) {
-    var divName = SelectorID.name(divId); // ex GPvisibilityPicto_ID_26
-    return divName.substring(divName.indexOf("_ID_") + 4); // ex. 26
 };
 
 export default Buildings;
