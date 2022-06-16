@@ -1,11 +1,7 @@
-import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import BuildingsDOM from "../../Common/Controls/BuildingsDOM";
 import Widget from "./Widget";
-import { GlobeView } from "itowns";
-
-var logger = Logger.getLogger("Buildings");
 
 /**
  * @classdesc
