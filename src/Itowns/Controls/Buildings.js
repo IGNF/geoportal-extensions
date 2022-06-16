@@ -15,7 +15,7 @@ var logger = Logger.getLogger("Buildings");
  * @extends {itowns.control.Widget}
  * @alias itowns.control.Buildings
  * @param {Object} buildingsOptions - control options
- * @param {String} [buildingsOptions.key] - key to use to adds the MNT – “altimetrie” by default  
+ * @param {String} [buildingsOptions.key = "essentiels"] - key to use to adds the buildings layer – “essentiels” by default  
  * @param {Boolean} [buildingsOptions.MNT = true] - Adds and displays the MNT
  * @param {Boolean} [buildingsOptions.buildingsOnGround = false] - Display the buildings at their elevation or on the ground
  * @param {Boolean} [buildingsOptions.defaultVisibility = true] - Visibility of the Buildings Layer at the initialisation
