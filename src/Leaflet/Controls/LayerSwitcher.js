@@ -238,6 +238,18 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
     },
 
     /**
+     * this method is called when the control is removed from the map
+     * and removes events on map.
+     * @param {Object} map - the map
+     *
+     * @private
+     */
+    onRemove : function (map) {
+        map.off("layeradd", this._onLayerChange, this);
+        map.off("layerremove", this._onLayerChange, this);
+    },
+
+    /**
      * Method '_addLayer'
      * (overwritten : L.Control.Layers)
      * Methode creation of a useful structure for the interface with the DOM
