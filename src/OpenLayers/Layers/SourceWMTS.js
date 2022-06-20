@@ -74,7 +74,7 @@ var SourceWMTS = (function (WMTSExtended) {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
                 url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version,
+                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
                 }, false),
                 version : wmtsParams.version,
                 style : wmtsParams.styles,
