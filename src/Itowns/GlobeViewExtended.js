@@ -530,6 +530,12 @@ GlobeViewExtended.prototype.addWidget = function (widget) {
         widget.setTarget(this._viewerDiv, widget.getPosition() ? widget.getPosition() : "absolute");
     }
     widget.setGlobe(this);
+
+    // calls the widget code that is needed to be used after the globe is associated to the control (ex. Buildings wdget)
+    if (typeof widget.onWidgetAdded === "function") { 
+        widget.onWidgetAdded(widget);
+    }
+
     this._widgets.push(widget);
 };
 

@@ -34,7 +34,8 @@ function Buildings(buildingsOptions) {
         throw new Error("ERROR WRONG_TYPE : options should be an object");
     }
 
-    this._initialize();
+    options = this.setOptions(options);
+    this._initialize(options);
 
     var container = this._initContainer(options);
     var targetDiv = document.getElementById(options.target) || null;
@@ -44,20 +45,10 @@ function Buildings(buildingsOptions) {
         name: "Buildings",
         element: container,
         target: targetDiv
-    }
+        }
     );
 
-    this.setGlobe(globeView);
 
-    if (options.MNT !== false) {
-        this.addMNT();
-    }
-
-    this.addBuildings(options);
-
-    container.onclick = function () {
-        this.setBuildingsVisibility('VTBuilding');
-    }.bind(this);
 }
 
 /*
@@ -104,12 +95,12 @@ Buildings.prototype.setGlobe = function (globe) {
  *
  * @private
  */
-Buildings.prototype._initialize = function () {
+Buildings.prototype._initialize = function (options) {
     // id of the control ; used to suffix the CSS id (handles cases with severel controls on the same page)
     this._uid = SelectorID.generate();
 
     // {Object} control layers list. Each key is a layer id, and its value is an object of layers options (layer, id, relief, visibility, title, description...)
-    this._layers = {};
+    this._options = options;
 
     // callbacks
     this._callbacks = {};
@@ -251,32 +242,8 @@ Buildings.prototype.addMNT = function () {
  */
 
 Buildings.prototype.addBuildings = function (options) {
-
-    var apiKey = options.key || "essentiels";
-    var vectorStyle = 'https://wxs.ign.fr/' + apiKey + '/static/vectorTiles/styles/PLAN.IGN/standard.json';
+    var vectorStyle = 'https://wxs.ign.fr/' + options.apiKey + '/static/vectorTiles/styles/PLAN.IGN/standard.json';
     var layerId = 'VTBuilding';
-    // Defines if the buildings must be displayed on the MNT or at the zero level
-    var baseAltitude;
-    var extrusionHeight;
-    // To extend the extrusion on the ground when altitude is not accurate, we add a delta parameter
-    var delta = 10;
-    if (options.buildingsOnGround) {
-        baseAltitude = 0;
-        extrusionHeight = (p) => p.hauteur || 0;
-    } else {
-        baseAltitude = (p) => p.alti_sol - delta || 0;
-        extrusionHeight = (p) => p.hauteur + delta || 0;
-    }
-
-    var defaultVisibility;
-    if (options.defaultVisibility === false) {
-        defaultVisibility = false;
-    } else {
-        defaultVisibility = true;
-    }
-
-    var minZoom = options.minZoom || 15;
-
     // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
     // Define the source of the building data : those are vector tiled data from the geoportail.
     const buildingsSource = new itowns.VectorTilesSource({
@@ -292,11 +259,24 @@ Buildings.prototype.addBuildings = function (options) {
         },
     });
 
+    // Defines if the buildings must be displayed on the MNT or at the zero level
+    var baseAltitude;
+    var extrusionHeight;
+    // To extend the extrusion on the ground when altitude is not accurate, we add a delta parameter
+    var delta = 10;
+    if (options.buildingsOnGround) {
+        baseAltitude = 0;
+        extrusionHeight = (p) => p.hauteur || 0;
+    } else {
+        baseAltitude = (p) => p.alti_sol - delta || 0;
+        extrusionHeight = (p) => p.hauteur + delta || 0;
+    }
+
     // Create a FeatureGeometryLayer to support building data.
     var buildingsLayer = new itowns.FeatureGeometryLayer(layerId, {
         source: buildingsSource,
         zoom: {
-            min : minZoom
+            min : options.minZoom
         },
         accurate: false,
         style: new itowns.Style({
@@ -309,7 +289,7 @@ Buildings.prototype.addBuildings = function (options) {
 
     this.getGlobe().addLayer(buildingsLayer);
 
-    this.getGlobe().setLayerVisibility(layerId, defaultVisibility);
+    this.getGlobe().setLayerVisibility(layerId, options.defaultVisibility);
 };
 
 /**
@@ -325,5 +305,42 @@ Buildings.prototype.setBuildingsVisibility = function (layerId) {
         this.getGlobe().setLayerVisibility(layerId, true);
     }
 };
+
+/**
+ * onWidgetAdded : function called when globeVewExtended.addwidget is called  
+ *
+ * @private
+ */
+ Buildings.prototype.onWidgetAdded = function(widget) {
+     var widgetOptions = widget.getOptions();
+     if (widgetOptions.MNT !== false) {
+        this.addMNT();
+    }
+
+    this.addBuildings(widgetOptions);
+
+    this.getElement().onclick = function () {
+         this.setBuildingsVisibility('VTBuilding');
+    }.bind(this);
+ }
+
+/**
+ * setOptions : set the options of the widget 
+ *
+ * @param {Object} buildingsOptions - control options
+ * 
+ * @private
+ */
+ Buildings.prototype.setOptions = function(options) {
+    var buildingsOptions = {}
+    buildingsOptions.apiKey = options.key || "essentiels";
+    buildingsOptions.MNT = options.MNT === false ? false : true;
+    buildingsOptions.buildingsOnGround = options.buildingsOnGround || false;
+    buildingsOptions.defaultVisibility = options.defaultVisibility === false ? false : true;
+    buildingsOptions.minZoom = options.minZoom || 15;
+
+    return buildingsOptions;
+}
+
 
 export default Buildings;

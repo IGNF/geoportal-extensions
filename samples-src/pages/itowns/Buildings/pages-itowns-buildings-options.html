@@ -28,7 +28,7 @@
 {{/content}}
 
 {{#content "body"}}
-    <h2>Ajout d'un contrôle d'affichage des bâtiments boites à chaussures'</h2>
+    <h2>Ajout d'un contrôle d'affichage des bâtiments 'boites à chaussures' avec options</h2>
     <!-- map -->
     <div id="viewerDiv"></div>
 {{/content}}
@@ -72,7 +72,7 @@
             var myElevationLayer = globeView.getLayerById("IGN_MNT");
             var myElevationLayerWorld = globeView.getLayerById("IGN_MNT_SRTM");
 
-            var buildings = new itowns.control.Buildings({
+            var buildings = new Gp.itownsExtended.control.Buildings({
                 MNT: false,
                 buildingsOnGround: true,
                 defaultVisibility: false,
