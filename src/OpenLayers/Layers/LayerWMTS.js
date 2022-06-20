@@ -58,7 +58,6 @@ var LayerWMTS = (function (TileLayer) {
             layer : options.layer,
             ssl : options.ssl,
             apiKey : options.apiKey,
-            token : options.token,
             olParams : olSourceParams
         });
 

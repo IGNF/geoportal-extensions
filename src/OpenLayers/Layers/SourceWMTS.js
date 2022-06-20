@@ -75,7 +75,6 @@ var SourceWMTS = (function (WMTSExtended) {
                 // FIXME : gp-ext version en mode AMD
                 url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
                     "gp-ol-ext" : Pkg.olExtVersion || Pkg.version,
-                    "token" : options.token
                 }, false),
                 version : wmtsParams.version,
                 style : wmtsParams.styles,
