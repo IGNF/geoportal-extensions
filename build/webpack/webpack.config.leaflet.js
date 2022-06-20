@@ -314,7 +314,9 @@ module.exports = (env, argv) => {
             new CopyWebpackPlugin([
                 {
                     from : path.join(ROOT, "samples-src", "resources", "**/*"),
-                    to : path.join(ROOT, "samples", "resources")
+                    to : path.join(ROOT, "samples", "resources"),
+                    context : path.join(ROOT, "samples-src", "resources"),
+                    force: true
                 }
             ])
         ]
