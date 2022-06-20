@@ -130,7 +130,7 @@ Buildings.prototype._initContainer = function (options) {
  * @method addMNT
  */
 
-Buildings.prototype.addMNT = function () {
+Buildings.prototype.addMNT = function (globe) {
 
     var MNT_layer = {
         "type": "elevation",
@@ -219,18 +219,18 @@ Buildings.prototype.addMNT = function () {
         }
     }
 
-    function createWMTSSourceFromConfig(config) {
+    function createWMTSSourceFromConfig(config,) {
         config.source = new itowns.WMTSSource(config.source);
         return config;
     };
 
-    function addElevationLayerFromConfig(config) {
+    function addElevationLayerFromConfig(config, globe) {
         var layer = new itowns.ElevationLayer(config.id, config);
-        globeView.addLayer(layer);
+        globe.addLayer(layer);
     };
 
     var MNT_config = createWMTSSourceFromConfig(MNT_layer);
-    addElevationLayerFromConfig(MNT_config);
+    addElevationLayerFromConfig(MNT_config, globe);
 };
 
 
@@ -314,7 +314,7 @@ Buildings.prototype.setBuildingsVisibility = function (layerId) {
  Buildings.prototype.onWidgetAdded = function(widget) {
      var widgetOptions = widget.getOptions();
      if (widgetOptions.MNT !== false) {
-        this.addMNT();
+        this.addMNT(widget.getGlobe());
     }
 
     this.addBuildings(widgetOptions);
