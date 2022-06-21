@@ -2,6 +2,13 @@ import Utils from "../../Common/Utils";
 import SelectorID from "../../Common/Utils/SelectorID";
 import BuildingsDOM from "../../Common/Controls/BuildingsDOM";
 import Widget from "./Widget";
+import {
+    VectorTilesSource as ItVectorTilesSource,
+    FeatureGeometryLayer as ItFeatureGeometryLayer,
+    Style as ItStyle,
+    WMTSSource as ItWMTSSource,
+    ElevationLayer as ItElevationLayer
+} from "itowns";
 
 /**
  * @classdesc
@@ -11,7 +18,7 @@ import Widget from "./Widget";
  * @extends {itowns.control.Widget}
  * @alias itowns.control.Buildings
  * @param {Object} buildingsOptions - control options
- * @param {String} [buildingsOptions.key = "essentiels"] - key to use to adds the buildings layer – “essentiels” by default  
+ * @param {String} [buildingsOptions.key = "essentiels"] - key to use to adds the buildings layer – “essentiels” by default
  * @param {Boolean} [buildingsOptions.MNT = true] - Adds and displays the MNT
  * @param {Boolean} [buildingsOptions.buildingsOnGround = false] - Display the buildings at their elevation or on the ground
  * @param {Boolean} [buildingsOptions.defaultVisibility = true] - Visibility of the Buildings Layer at the initialisation
@@ -23,7 +30,7 @@ import Widget from "./Widget";
  *      target : “controlDiv”
  * })
  */
-function Buildings(buildingsOptions) {
+function Buildings (buildingsOptions) {
     var options = buildingsOptions || {};
 
     if (!(this instanceof Buildings)) {
@@ -42,13 +49,11 @@ function Buildings(buildingsOptions) {
 
     Widget.call(
         this, {
-        name: "Buildings",
-        element: container,
-        target: targetDiv
+            name : "Buildings",
+            element : container,
+            target : targetDiv
         }
     );
-
-
 }
 
 /*
@@ -93,6 +98,8 @@ Buildings.prototype.setGlobe = function (globe) {
 /**
  * Initialize Buildings control (called by constructor)
  *
+ * @param {Object} options - control options
+ *
  * @private
  */
 Buildings.prototype._initialize = function (options) {
@@ -128,111 +135,110 @@ Buildings.prototype._initContainer = function (options) {
  * Adds the default french ELEVATION.ELEVATIONGRIDCOVERAGE MNT to the globe
  *
  * @method addMNT
+ * @param {Object} globe - globeView
+ * @private
  */
-
 Buildings.prototype.addMNT = function (globe) {
-
-    var MNT_layer = {
-        "type": "elevation",
-        "id": "IGN_MNT_HIGHRES",
-        "noDataValue" : -99999,
-        "source": {
-            "protocol":   "wmts",
-            "url":        "https://wxs.ign.fr/altimetrie/geoportail/wmts",
-            "name": "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
-            "attribution" :  [{
-                "name" : "IGN",
-                "attribution" : "IGN Grandes Echelles",
-                "url" : "http://www.ign.fr",
-                "constraints" : [{
-                    "crs":"EPSG:4326"
+    var mntLayer = {
+        type : "elevation",
+        id : "IGN_MNT_HIGHRES",
+        noDataValue : -99999,
+        source : {
+            protocol : "wmts",
+            url : "https://wxs.ign.fr/altimetrie/geoportail/wmts",
+            name : "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
+            attribution : [{
+                name : "IGN",
+                attribution : "IGN Grandes Echelles",
+                url : "http://www.ign.fr",
+                constraints : [{
+                    crs : "EPSG:4326"
                 }]
             }],
-            "updateStrategy": {
-                "type": 1,
-                "options": {
-                    "groups": [3, 7, 11, 14]
+            updateStrategy : {
+                type : 1,
+                options : {
+                    groups : [3, 7, 11, 14]
                 }
             },
-            "networkOptions" : {
-                "crossOrigin" : "omit"
+            networkOptions : {
+                crossOrigin : "omit"
             },
-            "format": "image/x-bil;bits=32",
-            "crs" : "EPSG:4326",
-            "tileMatrixSet": "WGS84G",
-            "tileMatrixSetLimits": {
-                "6": {
-                    "minTileRow": 13,
-                    "maxTileRow": 36,
-                    "minTileCol": 62,
-                    "maxTileCol": 80
+            format : "image/x-bil;bits=32",
+            crs : "EPSG:4326",
+            tileMatrixSet : "WGS84G",
+            tileMatrixSetLimits : {
+                6 : {
+                    minTileRow : 13,
+                    maxTileRow : 36,
+                    minTileCol : 62,
+                    maxTileCol : 80
                 },
-                "7": {
-                    "minTileRow": 27,
-                    "maxTileRow": 73,
-                    "minTileCol": 124,
-                    "maxTileCol": 160
+                7 : {
+                    minTileRow : 27,
+                    maxTileRow : 73,
+                    minTileCol : 124,
+                    maxTileCol : 160
                 },
-                "8": {
-                    "minTileRow": 55,
-                    "maxTileRow": 146,
-                    "minTileCol": 248,
-                    "maxTileCol": 320
+                8 : {
+                    minTileRow : 55,
+                    maxTileRow : 146,
+                    minTileCol : 248,
+                    maxTileCol : 320
                 },
-                "9": {
-                    "minTileRow": 110,
-                    "maxTileRow": 292,
-                    "minTileCol": 497,
-                    "maxTileCol": 640
+                9 : {
+                    minTileRow : 110,
+                    maxTileRow : 292,
+                    minTileCol : 497,
+                    maxTileCol : 640
                 },
-                "10": {
-                    "minTileRow": 221,
-                    "maxTileRow": 585,
-                    "minTileCol": 994,
-                    "maxTileCol": 1281
+                10 : {
+                    minTileRow : 221,
+                    maxTileRow : 585,
+                    minTileCol : 994,
+                    maxTileCol : 1281
                 },
-                "11": {
-                    "minTileRow": 442,
-                    "maxTileRow": 1171,
-                    "minTileCol": 1989,
-                    "maxTileCol": 2563
+                11 : {
+                    minTileRow : 442,
+                    maxTileRow : 1171,
+                    minTileCol : 1989,
+                    maxTileCol : 2563
                 },
-                "12": {
-                    "minTileRow": 885,
-                    "maxTileRow": 2343,
-                    "minTileCol": 3978,
-                    "maxTileCol": 5126
+                12 : {
+                    minTileRow : 885,
+                    maxTileRow : 2343,
+                    minTileCol : 3978,
+                    maxTileCol : 5126
                 },
-                "13": {
-                    "minTileRow": 1770,
-                    "maxTileRow": 4687,
-                    "minTileCol": 7957,
-                    "maxTileCol": 10253
+                13 : {
+                    minTileRow : 1770,
+                    maxTileRow : 4687,
+                    minTileCol : 7957,
+                    maxTileCol : 10253
                 },
-                "14": {
-                    "minTileRow": 3540,
-                    "maxTileRow": 9375,
-                    "minTileCol": 15914,
-                    "maxTileCol": 20507
+                14 : {
+                    minTileRow : 3540,
+                    maxTileRow : 9375,
+                    minTileCol : 15914,
+                    maxTileCol : 20507
                 }
             }
         }
-    }
+    };
 
-    function createWMTSSourceFromConfig(config,) {
-        config.source = new itowns.WMTSSource(config.source);
+    function createWMTSSourceFromConfig (config) {
+        config.source = new ItWMTSSource(config.source);
         return config;
     };
 
-    function addElevationLayerFromConfig(config, globe) {
-        var layer = new itowns.ElevationLayer(config.id, config);
+    function addElevationLayerFromConfig (config, globe) {
+        var layer = new ItElevationLayer(config.id, config);
         globe.addLayer(layer);
     };
 
-    var MNT_config = createWMTSSourceFromConfig(MNT_layer);
-    addElevationLayerFromConfig(MNT_config, globe);
+    var mntConfig = createWMTSSourceFromConfig(mntLayer);
+    addElevationLayerFromConfig(mntConfig, globe);
 };
-
 
 /**
  * Adds or removes the buildings layer on click
@@ -240,23 +246,22 @@ Buildings.prototype.addMNT = function (globe) {
  * @method addBuildings
  * @param {options} options for the buildings control
  */
-
 Buildings.prototype.addBuildings = function (options) {
-    var vectorStyle = 'https://wxs.ign.fr/' + options.apiKey + '/static/vectorTiles/styles/PLAN.IGN/standard.json';
-    var layerId = 'VTBuilding';
+    var vectorStyle = "https://wxs.ign.fr/" + options.apiKey + "/static/vectorTiles/styles/PLAN.IGN/standard.json";
+    var layerId = "VTBuilding";
     // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
     // Define the source of the building data : those are vector tiled data from the geoportail.
-    const buildingsSource = new itowns.VectorTilesSource({
-        style: vectorStyle,
+    const buildingsSource = new ItVectorTilesSource({
+        style : vectorStyle,
         // We only want to display buildings related data.
         // We remove some buildings without alti_sol property (it causes graphical)
-        filter: (layer) => {
-            return layer['source-layer'].includes('bati_surf') && !layer['filter'].includes('CIMETIERE_SURF') 
-                && !layer['filter'].includes('FOOT_SURF')
-                && !layer['filter'].includes('TENNIS_SURF')
-                && !layer['filter'].includes('MULTI_SPORT_SURF')
-                && layer.paint["fill-color"];
-        },
+        filter : (layer) => {
+            return layer["source-layer"].includes("bati_surf") && !layer["filter"].includes("CIMETIERE_SURF") &&
+                !layer["filter"].includes("FOOT_SURF") &&
+                !layer["filter"].includes("TENNIS_SURF") &&
+                !layer["filter"].includes("MULTI_SPORT_SURF") &&
+                layer.paint["fill-color"];
+        }
     });
 
     // Defines if the buildings must be displayed on the MNT or at the zero level
@@ -273,16 +278,16 @@ Buildings.prototype.addBuildings = function (options) {
     }
 
     // Create a FeatureGeometryLayer to support building data.
-    var buildingsLayer = new itowns.FeatureGeometryLayer(layerId, {
-        source: buildingsSource,
-        zoom: {
+    var buildingsLayer = new ItFeatureGeometryLayer(layerId, {
+        source : buildingsSource,
+        zoom : {
             min : options.minZoom
         },
-        accurate: false,
-        style: new itowns.Style({
-            fill: {
-                base_altitude: baseAltitude,
-                extrusion_height: extrusionHeight
+        accurate : false,
+        style : new ItStyle({
+            fill : {
+                base_altitude : baseAltitude,
+                extrusion_height : extrusionHeight
             }
         })
     });
@@ -307,40 +312,41 @@ Buildings.prototype.setBuildingsVisibility = function (layerId) {
 };
 
 /**
- * onWidgetAdded : function called when globeVewExtended.addwidget is called  
+ * onWidgetAdded : function called when globeVewExtended.addwidget is called
+ *
+ * @param {Object} widget - buildings widget
  *
  * @private
  */
- Buildings.prototype.onWidgetAdded = function(widget) {
-     var widgetOptions = widget.getOptions();
-     if (widgetOptions.MNT !== false) {
+Buildings.prototype.onWidgetAdded = function (widget) {
+    var widgetOptions = widget.getOptions();
+    if (widgetOptions.MNT !== false) {
         this.addMNT(widget.getGlobe());
     }
 
     this.addBuildings(widgetOptions);
 
     this.getElement().onclick = function () {
-         this.setBuildingsVisibility('VTBuilding');
+        this.setBuildingsVisibility("VTBuilding");
     }.bind(this);
- }
+};
 
 /**
- * setOptions : set the options of the widget 
+ * setOptions : set the options of the widget
  *
- * @param {Object} buildingsOptions - control options
- * 
+ * @param {Object} options - options to set
+ * @returns {Object} buildingOptions - widget options
  * @private
  */
- Buildings.prototype.setOptions = function(options) {
-    var buildingsOptions = {}
+Buildings.prototype.setOptions = function (options) {
+    var buildingsOptions = {};
     buildingsOptions.apiKey = options.key || "essentiels";
-    buildingsOptions.MNT = options.MNT === false ? false : true;
+    buildingsOptions.MNT = options.MNT !== false;
     buildingsOptions.buildingsOnGround = options.buildingsOnGround || false;
-    buildingsOptions.defaultVisibility = options.defaultVisibility === false ? false : true;
+    buildingsOptions.defaultVisibility = options.defaultVisibility !== false;
     buildingsOptions.minZoom = options.minZoom || 15;
 
     return buildingsOptions;
-}
-
+};
 
 export default Buildings;

@@ -58,19 +58,12 @@
             globeView.addLayer(layer);
         };
     
-        function addElevationLayerFromConfig(config) {
-            var layer = new itowns.ElevationLayer(config.id, config);
-            globeView.addLayer(layer);
-        };
-
         itowns.Fetcher.json('../../resources/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
         itowns.Fetcher.json('../../resources/itowns/JSONLayers/PlanIgnV2.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
 
         globeView.listen(itowns.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
             // eslint-disable-next-line no-console
             console.info('Globe initialized');
-            var myElevationLayer = globeView.getLayerById("IGN_MNT");
-            var myElevationLayerWorld = globeView.getLayerById("IGN_MNT_SRTM");
 
             var buildings = new Gp.itownsExtended.control.Buildings({
                 MNT: false,

@@ -489,7 +489,7 @@ GlobeViewExtended.prototype.getVectorLayers = function () {
  *
  * @return {Array} imagery layers
  */
- GlobeViewExtended.prototype.getFeatureGeometryLayers = function () {
+GlobeViewExtended.prototype.getFeatureGeometryLayers = function () {
     return this.getGlobeView().getLayers(function (layer) {
         if (layer.isFeatureGeometryLayer) {
             return layer;
@@ -532,7 +532,7 @@ GlobeViewExtended.prototype.addWidget = function (widget) {
     widget.setGlobe(this);
 
     // calls the widget code that is needed to be used after the globe is associated to the control (ex. Buildings wdget)
-    if (typeof widget.onWidgetAdded === "function") { 
+    if (typeof widget.onWidgetAdded === "function") {
         widget.onWidgetAdded(widget);
     }
 

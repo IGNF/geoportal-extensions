@@ -92,7 +92,7 @@ Widget.prototype.getTarget = function getTarget () {
  * @method
  * @return {HTMLElement} widget's element div.
  */
- Widget.prototype.getElement = function getElement () {
+Widget.prototype.getElement = function getElement () {
     return this._element;
 };
 
@@ -132,7 +132,7 @@ Widget.prototype.setGlobe = function setGlobe (globe) {
  * @method
  * @return {Object} options
  */
- Widget.prototype.getOptions = function getOptions () {
+Widget.prototype.getOptions = function getOptions () {
     return this._options;
 };
 
