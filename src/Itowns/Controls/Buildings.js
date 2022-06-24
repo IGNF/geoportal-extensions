@@ -345,6 +345,11 @@ Buildings.prototype.setOptions = function (options) {
     buildingsOptions.buildingsOnGround = options.buildingsOnGround || false;
     buildingsOptions.defaultVisibility = options.defaultVisibility !== false;
     buildingsOptions.minZoom = options.minZoom || 15;
+    // common widget options
+    buildingsOptions.target = options.target;
+    buildingsOptions.name = options.name;
+    buildingsOptions.element = options.element;
+    buildingsOptions.position = options.position;
 
     return buildingsOptions;
 };
