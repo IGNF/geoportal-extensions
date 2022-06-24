@@ -22,6 +22,9 @@
 
 * [Fixed]
 
+    - Fix sur la gestion des imports de type MapBox
+    - Fix sur les legendes MapBox
+
 * [Security]
 
 ---

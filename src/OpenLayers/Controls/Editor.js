@@ -13,6 +13,8 @@ import Legend from "./Editor/Legend";
 import Layer from "./Editor/Layer";
 import Group from "./Editor/Group";
 import Event from "./Editor/Event";
+import Search from "./Editor/Search";
+
 // DOM
 import EditorDOM from "../../Common/Controls/Editor/EditorDOM";
 
@@ -80,12 +82,14 @@ var logger = Logger.getLogger("editor");
  *              },
  *          },
  *          layers : true | false,     // afficher les couches (layers)
+ *          search : true | false,     // afficher l'outil de recheche de couches
  *          style : true | false,      // afficher les styles (sous menu layers)
  *          filter : true | false,     // afficher les filtres (sous menu layers)
  *          legend : true | false,     // afficher les legendes (layers)
  *          group : true | false,      // grouper les couches (layers)
  *          sort : true | false,       // trier les couches (layers)
  *          title : true | false       // afficher les titres des rubriques,
+ *          collapse : true | false | undefined // afficher et/ou plier les couches,
  *          type : true | false,       // afficher le type de geometrie (layers)
  *          pin : true | false,        // afficher la puce pour chaque couche (layers)
  *          visibility : true | false, // afficher l'icone de visibilité (layers),
@@ -161,12 +165,14 @@ Editor.prototype._initialize = function () {
     var _toolsDefault = {
         themes : false,
         layers : true,
+        search : false,
         style : false,
         filter : false,
         legend : false,
         group : false,
         sort : true,
         title : true,
+        collapse : undefined,
         type : true,
         pin : true,
         visibility : true,
@@ -320,6 +326,17 @@ Editor.prototype._initContainer = function () {
         themes.add();
     }
 
+    // TODO : Recheche / filtre de couches
+    if (this.options.tools.search) {
+        var search = new Search({
+            id : this.id,
+            target : div,
+            tools : {},
+            obj : this.mapbox.layers // liste des objets layers
+        });
+        search.add();
+    }
+
     for (var source in this.mapbox.sources) {
         if (this.mapbox.sources.hasOwnProperty(source)) {
             if (this.options.tools.layers) {
@@ -434,8 +451,21 @@ Editor.prototype._initContainer = function () {
             divLayers.className = this.name.containerLayers;
             div.appendChild(divLayers);
 
+            var details;
+            if (this.options.tools.collapse !== undefined) {
+                details = document.createElement("details");
+                details.className = "";
+                details.open = !this.options.tools.collapse;
+                divLayers.appendChild(details);
+
+                var summary = document.createElement("summary");
+                summary.className = "";
+                summary.innerHTML = "";
+                details.appendChild(summary);
+            }
+
             // container courant (cf. groupe) pour l'ajout des elements
-            var target = divLayers;
+            var target = (this.options.tools.collapse !== undefined) ? details : divLayers;
 
             // Ex. Layers, Styles, Groups et Filtres
             //  "id": "ocs - vegetation",
@@ -479,7 +509,7 @@ Editor.prototype._initContainer = function () {
                                     // creation du groupe
                                     var oGroup = new Group({
                                         id : this.id,
-                                        target : divLayers,
+                                        target : (this.options.tools.collapse !== undefined) ? details : divLayers,
                                         title : grp,
                                         collapse : true
                                     });
@@ -489,15 +519,15 @@ Editor.prototype._initContainer = function () {
                                 } else if (_groups[grp] === 1) {
                                     // l'element est seul, donc pas d'ajout dans le
                                     // groupe en cours
-                                    target = divLayers;
+                                    target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                                 } else {
                                     // on ajoute l'element dans le groupe courant...
                                 }
                             } else {
-                                target = divLayers;
+                                target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                             }
                         } else {
-                            target = divLayers;
+                            target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                         }
                     }
                     // Layers
