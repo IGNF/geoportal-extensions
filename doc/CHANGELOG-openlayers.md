@@ -121,6 +121,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.11](#extension-geoportail-openlayers-version-3211)
   * [Summary](#summary-35)
   * [Changelog](#changelog-32)
+- [Extension Geoportail OpenLayers, version 3.2.12](#extension-geoportail-openlayers-version-3212)
+  * [Summary](#summary-36)
+  * [Changelog](#changelog-33)
+- [Extension Geoportail OpenLayers, version 3.2.13](#extension-geoportail-openlayers-version-3213)
+  * [Summary](#summary-37)
+  * [Changelog](#changelog-34)
 
 <!-- tocstop -->
 
@@ -1316,6 +1322,59 @@ Evolution de la documentation et correction du layerswitcher
 
     - Amélioration du rendu vecteur des formats GPX et GeoJSON
     - Gestion du nom d'une couche importée dans le gestionnaire et dans l'outil de dessin
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.12
+
+**29/04/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Permettre la saisie sous la tooltip sur les outils de mesures
+    - Correctif du style des elements en cours d'édition lors de l'export / enregistrement des croquis sur l'outil de dessin
+    - Desactivation des interactions à la fermeture de l'outil de dessin [#323](https://github.com/IGNF/geoportal-extensions/issues/323)
+    - Nettoyage des tooltips des outils de mesures
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.13
+
+**11/05/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Fix sur l'outil de dessin
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Exception sur l'export des features en cours d'édition sur l'outil de dessin
 
 * [Security]
 
