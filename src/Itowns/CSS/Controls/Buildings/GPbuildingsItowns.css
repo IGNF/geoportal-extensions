@@ -17,9 +17,16 @@ label[id^=GPshowBuildingsPicto-] {
   z-index: 1;
   position: relative;
   margin-left: auto;
-  background-image: url("img/GPbuildingsOpen.png");
   width: 26px;
   height: 26px;
   background-color: rgba(0,60,136,0.5);
   border-radius: 2px;
+}
+
+label[id^=GPshowBuildingsPicto-].buildingsOn {
+  background-image: url("img/GPbuildingsOpen.png");
+}
+
+label[id^=GPshowBuildingsPicto-].buildingsOff {
+  background-image: url("img/GPbuildingsClose.png");
 }

@@ -36,7 +36,6 @@ var BuildingsDOM = {
     _createMainPictoElement : function () {
         var label = document.createElement("label");
         label.id = this._addUID("GPshowBuildingsPicto");
-
         return label;
     }
 };

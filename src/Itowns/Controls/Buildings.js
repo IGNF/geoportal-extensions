@@ -294,26 +294,54 @@ Buildings.prototype.addBuildings = function (options) {
 
     this.getGlobe().addLayer(buildingsLayer);
 
+    // initial settings for buildings visibility and button
     this.getGlobe().setLayerVisibility(layerId, options.defaultVisibility);
+    if (options.defaultVisibility === true) {
+        this._toggleBuildingsButton(this.getElement(), "off");
+    } else {
+        this._toggleBuildingsButton(this.getElement(), "on");
+    }
 };
 
 /**
  * Set the buildings visibility on click
  *
  * @method setBuildingsVisibility
+ * @param {Tring} layerId - layer id for the building layer
  */
-
 Buildings.prototype.setBuildingsVisibility = function (layerId) {
     if (this.getGlobe().getFeatureGeometryLayers()[0].visible === true) {
         this.getGlobe().setLayerVisibility(layerId, false);
+        this._toggleBuildingsButton(this.getElement(), "on");
     } else {
         this.getGlobe().setLayerVisibility(layerId, true);
+        this._toggleBuildingsButton(this.getElement(), "off");
+    }
+};
+
+/**
+ * Set the button picture on click
+ *
+ * @method _toggleBuildingsButton
+ * @param {DOM} element - DOM element of the buildings Widget
+ * @param {String} mode - "on" or "off" to display the deactivated or activated buildings image
+ *
+ * @private
+ */
+Buildings.prototype._toggleBuildingsButton = function (element, mode) {
+    if (mode === "on") {
+        element.lastChild.classList.remove("buildingsOff");
+        element.lastChild.classList.add("buildingsOn");
+    } else {
+        element.lastChild.classList.remove("buildingsOn");
+        element.lastChild.classList.add("buildingsOff");
     }
 };
 
 /**
  * onWidgetAdded : function called when globeVewExtended.addwidget is called
  *
+ * @method onWidgetAdded
  * @param {Object} widget - buildings widget
  *
  * @private
@@ -326,7 +354,18 @@ Buildings.prototype.onWidgetAdded = function (widget) {
 
     this.addBuildings(widgetOptions);
 
-    this.getElement().onclick = function () {
+    this.addListener(this.getElement());
+};
+
+/**
+ * addListener : adds the clic listener to handle buildings visibility on the given element
+ *
+ * @param {DOM} element - DOM element where the listener has to be added
+ *
+ * @private
+ */
+Buildings.prototype.addListener = function (element) {
+    element.onclick = function () {
         this.setBuildingsVisibility("VTBuilding");
     }.bind(this);
 };
