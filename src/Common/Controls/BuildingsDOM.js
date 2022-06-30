@@ -36,6 +36,7 @@ var BuildingsDOM = {
     _createMainPictoElement : function () {
         var label = document.createElement("label");
         label.id = this._addUID("GPshowBuildingsPicto");
+        label.title = "Afficher/Masquer les bâtiments 3D";
         return label;
     }
 };
