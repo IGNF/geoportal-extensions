@@ -13,7 +13,17 @@
             <h2>Ajout du widget d'édition des themes MapBox</h2>
             <button id="displayFalse">Hidden</button>
             <button id="displayTrue">Show</button>
-            <div id="editor">
+            <h3>editor-0:</h3><br>
+            <div id="editor-0">
+            </div>
+            <h3>editor-1:</h3><br>
+            <div id="editor-1">
+            </div>
+            <h3>editor-2:</h3><br>
+            <div id="editor-2">
+            </div>
+            <h3>editor-3:</h3><br>
+            <div id="editor-2">
             </div>
 {{/content}}
 
@@ -21,7 +31,7 @@
             <script type="text/javascript">
 
             var editor0 = new ol.style.Editor({
-                target: document.getElementById("editor"),
+                target: document.getElementById("editor-0"),
                 style: "{{ resources }}/data/mapbox/styles/enseignements.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
@@ -53,9 +63,9 @@
             editor0.createElement();
 
             var editor1 = new ol.style.Editor({
-                target: document.getElementById("editor"),
+                target: document.getElementById("editor-1"),
                 id : "999-000000000000",
-                style: "{{ resources }}/data/mapbox/styles/osm.json",
+                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
                 events : { // TODO...
                     "editor:layer:onclickvisibility" : function (e) {console.log(e);},
                     "editor:layer:onclickremove" : function (e) {console.log(e);},
@@ -118,8 +128,8 @@
             editor1.createElement();
 
             var editor2 = new ol.style.Editor({
-                target: document.getElementById("editor"),
-                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
+                target: document.getElementById("editor-2"),
+                style: "{{ resources }}/data/mapbox/styles/planign/gris.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
                         if (this.getID() === e.target.editorID) {
@@ -138,8 +148,8 @@
                     filter : false,
                     style : false,
                     legend : true,
-                    sort : false,
-                    group : true,
+                    sort : true,
+                    group : false,
                     editable : false
                 }
             });
@@ -147,8 +157,8 @@
             editor2.createElement();
 
             var editor3 = new ol.style.Editor({
-                target: document.getElementById("editor"),
-                style: "{{ resources }}/data/mapbox/styles/qwant.json",
+                target: document.getElementById("editor-3"),
+                style: "{{ resources }}/data/mapbox/styles/planign/accentue.json",
                 events : {
                     "editor:themes:onclicktitle" : function (e) {
                         if (this.getID() === e.target.editorID) {

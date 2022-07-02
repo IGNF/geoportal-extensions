@@ -82,7 +82,7 @@ var logger = Logger.getLogger("editor");
  *              },
  *          },
  *          layers : true | false,     // afficher les couches (layers)
- *          search : true | false,     // afficher l'outil de recheche de couches
+ *          search : true | false,     // TODO : afficher l'outil de recheche de couches
  *          style : true | false,      // afficher les styles (sous menu layers)
  *          filter : true | false,     // afficher les filtres (sous menu layers)
  *          legend : true | false,     // afficher les legendes (layers)
@@ -381,7 +381,7 @@ Editor.prototype._initContainer = function () {
             if (this.options.tools.sort) {
                 _layers.sort(function (a, b) {
                     // FIXME si on utilise les groupements utilisateurs, ils doivent
-                    // tous renseignés sinon...
+                    // tous être renseignés sinon...
                     var cmpA = null;
                     var cmpB = null;
                     if (a["metadata"] &&
@@ -394,13 +394,7 @@ Editor.prototype._initContainer = function () {
                         cmpA = a.id;
                         cmpB = b.id;
                     }
-                    if (cmpA < cmpB) {
-                        return -1;
-                    }
-                    if (cmpA > cmpB) {
-                        return 1;
-                    }
-                    return 0;
+                    return cmpA.localeCompare(cmpB);
                 });
             }
 

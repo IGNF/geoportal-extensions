@@ -442,7 +442,7 @@ Legend.prototype._setValues = function (type, values) {
     switch (type) {
         case "text":
             _style = "font-size: 5em;font-weight: bold;";
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><text x='50' y='50' fill='%color%' fill-opacity='%opacity%'  text-anchor='middle' alignment-baseline='central' style='%style%'> T </text></svg>\")";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><text x='50' y='50' fill='%color%' fill-opacity='%opacity%'  text-anchor='middle' dominant-baseline='central' style='%style%'> T </text></svg>\")";
             div.style["background"] = svg
                 .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
                 .replace("%opacity%", _opacity)
