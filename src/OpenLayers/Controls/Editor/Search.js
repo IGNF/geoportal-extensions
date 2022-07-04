@@ -8,11 +8,12 @@ var logger = Logger.getLogger("editor-search");
 /**
  * @classdesc
  *
- * MapBox search management
+ * TODO MapBox search management
  *
  * @constructor
  * @alias ol.style.editor.Search
  * @param {Object} options - options for function call.
+ * @todo
  * @example
  *   var Search = new Search ({
  *      target : ...,
@@ -212,7 +213,7 @@ Search.prototype.onSubmitSearchLayersMapBox = function (e) {
  * @private
  * @fires Search#editor:search:onautocomplete
  */
- Search.prototype.onAutocompleteSearchLayersMapBox = function (e) {
+Search.prototype.onAutocompleteSearchLayersMapBox = function (e) {
     logger.trace("onAutocompleteSearchLayersMapBox", e);
     e.editorID = this.id;
     e.data = this.options;

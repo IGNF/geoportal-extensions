@@ -1,46 +1,46 @@
 {
-   "scripts" : {},
-   "license" : "CECILL-B",
-   "version" : "3.2.13",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "author" : "IGNF",
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "date" : "11/05/2022",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "bundleDependencies" : [],
    "module" : "src/OpenLayers/index.js",
+   "scripts" : {},
+   "directories" : {},
    "dependencies" : {
+      "node-fetch" : "^2.6.1",
+      "loglevel" : "1.6.6",
+      "eventbusjs" : "0.2.0",
+      "geoportal-access-lib" : "3.1.0",
+      "sortablejs" : "1.14.0",
+      "proj4" : "2.7.5",
+      "ol-mapbox-style" : "6.7.0",
       "xmldom" : "^0.1.27",
       "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "sortablejs" : "1.14.0",
-      "eventbusjs" : "0.2.0",
-      "ol-mapbox-style" : "6.7.0",
-      "node-fetch" : "^2.6.1",
-      "ol" : "6.9.0",
-      "geoportal-access-lib" : "3.1.0",
-      "proj4" : "2.7.5",
-      "loglevel" : "1.6.6"
+      "ol" : "6.9.0"
    },
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "peerDependencies" : {},
-   "description" : "French Geoportal Extensions for OpenLayers",
+   "author" : "IGNF",
+   "version" : "3.2.13",
    "bugs" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "date" : "11/05/2022",
-   "directories" : {},
    "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "bundleDependencies" : [],
-   "main" : "dist/GpPluginOpenLayers-src.js",
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "peerDependencies" : {},
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
+   ],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "license" : "CECILL-B",
+   "name" : "geoportal-extensions-openlayers",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
    ]
 }

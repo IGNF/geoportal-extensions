@@ -86,10 +86,13 @@ var logger = Logger.getLogger("editor");
  *          style : true | false,      // afficher les styles (sous menu layers)
  *          filter : true | false,     // afficher les filtres (sous menu layers)
  *          legend : true | false,     // afficher les legendes (layers)
- *          group : true | false,      // grouper les couches (layers)
+ *          group : true | false,      // grouper les couches, l'option 'sort' doit être activée (layers)
+ *          groupAuto : true | false,  // definir la construction automatiques des groupes
  *          sort : true | false,       // trier les couches (layers)
+ *          sortBy : "id|class|geom",  // definir le type de tri (layers)
+ *          sortOrder : "asc, desc",   // definir l'ordre de tri (layers)
  *          title : true | false       // afficher les titres des rubriques,
- *          collapse : true | false | undefined // afficher et/ou plier les couches,
+ *          collapse : true | false | undefined // afficher et/ou plier les couches ou ne pas afficher l'option,
  *          type : true | false,       // afficher le type de geometrie (layers)
  *          pin : true | false,        // afficher la puce pour chaque couche (layers)
  *          visibility : true | false, // afficher l'icone de visibilité (layers),
@@ -100,6 +103,30 @@ var logger = Logger.getLogger("editor");
  *          editable : true | false    // active l'edition de la legende (legendes)
  *      }
  *   });
+ *   // options par defaut
+ *   {
+ *      themes : false,
+ *      layers : true,
+ *      search : false,
+ *      style : false,
+ *      filter : false,
+ *      legend : false,
+ *      group : false,
+ *      groupAuto : false,
+ *      sort : true,
+ *      sortBy : "id",
+ *      sortOrder : "asc",
+ *      title : true,
+ *      collapse : undefined,
+ *      type : true,
+ *      pin : true,
+ *      visibility : true,
+ *      icon : {
+ *          image : true,
+ *          anchor : "end"
+ *      },
+ *      editable : true
+ *   }
  *   // create DOM
  *   editor.createElement()
  *     .then(() => {
@@ -170,7 +197,10 @@ Editor.prototype._initialize = function () {
         filter : false,
         legend : false,
         group : false,
+        groupAuto : false,
         sort : true,
+        sortBy : "id",
+        sortOrder : "asc",
         title : true,
         collapse : undefined,
         type : true,
@@ -357,9 +387,8 @@ Editor.prototype._initContainer = function () {
                 }
             }
 
-            // clone
-            var _layers = this.mapbox.layers.slice();
             // gestion de l'ordre avant tri avec la metadata 'order'
+            var _layers = this.mapbox.layers.slice(); // clone
             // une fois les layers triés, la metadata:geoportail:order permet
             // de savoir l'emplacement du layers dans le fichier de style.
             _layers.forEach(function (layer, order) {
@@ -379,29 +408,50 @@ Editor.prototype._initContainer = function () {
             });
             // tri des layers
             if (this.options.tools.sort) {
-                _layers.sort(function (a, b) {
-                    // FIXME si on utilise les groupements utilisateurs, ils doivent
-                    // tous être renseignés sinon...
-                    var cmpA = null;
-                    var cmpB = null;
+                var sortBy = this.options.tools.sortBy;
+                var sortOrder = this.options.tools.sortOrder;
+                var sortFct = function (a, b) {
+                    // si on utilise les groupements utilisateurs, ils doivent
+                    // tous être renseignés sinon..., ça va coincer !
+                    var result = 0;
                     if (a["metadata"] &&
                         a["metadata"]["geoportail:group"] &&
                         b["metadata"] &&
                         b["metadata"]["geoportail:group"]) {
+                        var cmpA = null;
+                        var cmpB = null;
                         cmpA = a["metadata"]["geoportail:group"];
                         cmpB = b["metadata"]["geoportail:group"];
+                        result = cmpA.localeCompare(cmpB);
                     } else {
-                        cmpA = a.id;
-                        cmpB = b.id;
+                        switch (sortBy) {
+                            case "geom":
+                                result = sortOrder === "asc" ? a.type.localeCompare(b.type) || a.id.localeCompare(b.id)
+                                    : b.type.localeCompare(a.type) || b.id.localeCompare(a.id);
+                                break;
+                            case "class":
+                                result = sortOrder === "asc" ? a["source-layer"].localeCompare(b["source-layer"]) || a.id.localeCompare(b.id)
+                                    : b["source-layer"].localeCompare(a["source-layer"]) || b.id.localeCompare(a.id);
+                                break;
+                            case "id":
+                            default:
+                                // tri sur l'id par defaut
+                                result = sortOrder === "asc" ? a.id.localeCompare(b.id) : b.id.localeCompare(a.id);
+                                break;
+                        }
                     }
-                    return cmpA.localeCompare(cmpB);
-                });
+                    return result;
+                };
+
+                _layers.sort(sortFct);
             }
 
             logger.trace("Layers : ", _layers);
 
             // gestion des groupes avec la metadata de groupe
-            var _groups = {}; // liste et comptage des layers dans les groupes
+            var groupBy = this.options.tools.sortBy; // le même type de tri que les couches !
+            var groupAuto = this.options.tools.groupAuto;
+            var _groups = {}; // liste et comptage des layers dans chaque groupes
             _layers.forEach(function (layer) {
                 // on écarte les layers sans source: ex. "background"
                 // if (!layer.source) {
@@ -416,13 +466,28 @@ Editor.prototype._initContainer = function () {
                     _groups[_groupName] = (_groups[_groupName])
                         ? _groups[_groupName] + 1 : 1;
                 } else {
-                    var _title = layer.id;
-                    // separateur
-                    var _regex = /_|-|:|=/; // TODO à definir via une option !
-                    // index
-                    // y'a t il un separateur ?
-                    var _idx = _title.search(_regex);
-                    var _newGroupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
+                    var _field = null;
+                    switch (groupBy) {
+                        case "class":
+                            _field = layer["source-layer"];
+                            break;
+                        case "geom":
+                            _field = layer.type;
+                            break;
+                        case "id":
+                        default:
+                            _field = layer.id;
+                            break;
+                    }
+                    var _newGroupName = _field;
+                    if (groupAuto) {
+                        // separateur
+                        var _regex = /_|-|:|=/; // TODO à definir via une option !
+                        // index
+                        var _idx = _field.search(_regex);
+                        // y'a t il un separateur ?
+                        _newGroupName = (_idx !== -1) ? _field.substring(0, _idx).trim() : _field;
+                    }
                     // on compte le nombre d'entrée dans un groupe
                     _groups[_newGroupName] = (_groups[_newGroupName])
                         ? _groups[_newGroupName] + 1 : 1;
@@ -487,9 +552,11 @@ Editor.prototype._initContainer = function () {
 
                 // traitement dans l'ordre des sources
                 if (data.source === source) {
-                    // FIXME la gestion des groupes est à revoir...
                     // Groups
-                    if (this.options.tools.group) {
+                    // INFO la gestion des groupes est basée sur la balise metadata::geoportail:group
+                    // ainsi que sur l'ordre des couches.
+                    // il n'y a pas de regroupement sans tri des couches !
+                    if (this.options.tools.group && this.options.tools.sort) {
                         var mtd = data.metadata;
                         // creation du container de groupe
                         // si le tag metadata existe
@@ -740,7 +807,7 @@ Editor.prototype._getSprites = function (sprites) {
 };
 
 // ################################################################### //
-// ##################### public methods ############################## //
+// ########################## INTERFACE ############################## //
 // ################################################################### //
 /**
  * Create Editor
@@ -819,6 +886,10 @@ Editor.prototype.createElement = function () {
 Editor.prototype.display = function (display) {
     this.container.style.display = (display) ? "block" : "none";
 };
+
+// ################################################################### //
+// ##################### public methods ############################## //
+// ################################################################### //
 
 /**
  * Get id editor

@@ -16,6 +16,8 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 
 * [Added]
 
+    - Ajout d'options de tri dans l'editeur de style MapBox
+
 * [Changed]
 
 * [Deprecated]
