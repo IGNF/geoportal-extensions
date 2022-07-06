@@ -290,7 +290,9 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
  */
 Attributions.prototype._updateAttributionListContainer = function (attributions) {
     var element = document.getElementById(this._addUID("GPAttributionsList"));
-    document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
+    if (document.getElementById(this._addUID("GPAttributionsList"))) {
+        document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
+    }
 
     var ul = this._createAttributionsList();
     attributions.forEach(function (a) {
