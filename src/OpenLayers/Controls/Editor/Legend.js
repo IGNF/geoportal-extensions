@@ -692,6 +692,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputLineColor.title = "Selectionner une couleur de trait";
         inputLineColor.type = "color";
         inputLineColor.value = params.values.color;
+        inputLineColor.setAttribute("data-id", "line-color");
         if (inputLineColor.addEventListener) {
             inputLineColor.addEventListener("change", function (e) {
                 self._setValues(params.type, {
@@ -727,6 +728,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputLineWidth.max = "10";
         inputLineWidth.step = "1";
         inputLineWidth.defaultValue = params.values.width;
+        inputLineWidth.setAttribute("data-id", "line-width");
         if (inputLineWidth.addEventListener) {
             inputLineWidth.addEventListener("change", function (e) {
                 logger.trace(e);
@@ -766,6 +768,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputLineOpacity.max = "1";
         inputLineOpacity.step = "0.1";
         inputLineOpacity.defaultValue = params.values.opacity;
+        inputLineOpacity.setAttribute("data-id", "line-opacity");
         if (inputLineOpacity.addEventListener) {
             inputLineOpacity.addEventListener("change", function (e) {
                 logger.trace(e);
@@ -804,6 +807,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputFillColor.title = "Selectionner une couleur de remplissage";
         inputFillColor.type = "color";
         inputFillColor.value = params.values.color;
+        inputFillColor.setAttribute("data-id", "fill-color");
         if (inputFillColor.addEventListener) {
             inputFillColor.addEventListener("change", function (e) {
                 self._setValues(params.type, {
@@ -839,6 +843,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputFillOpacity.max = "1";
         inputFillOpacity.step = "0.1";
         inputFillOpacity.defaultValue = params.values.opacity;
+        inputFillOpacity.setAttribute("data-id", "fill-opacity");
         if (inputFillOpacity.addEventListener) {
             inputFillOpacity.addEventListener("change", function (e) {
                 e.target.title = e.target.value;

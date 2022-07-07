@@ -1797,7 +1797,7 @@ var LayerImport = (function (Control) {
                     if (layers[i].id === data.id) {
                         var paint = layers[i].paint;
                         if (paint) {
-                            paint[target.id] = target.value;
+                            paint[target.dataset.id] = target.value;
                         }
                         break;
                     }
