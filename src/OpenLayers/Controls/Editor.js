@@ -737,14 +737,14 @@ Editor.prototype._getSprites = function (sprites) {
     // si le protocole est mapbox://
     if (sprites && sprites.startsWith("mapbox://")) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            logger.info("Protocole mapbox:// non géré !");
+            logger.error("Protocole mapbox:// non géré !");
             resolve(self);
         });
     }
     // si pas de sprites
     if (!sprites) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            logger.info("Auncun sprites disponibles !");
+            logger.error("Auncun sprites disponibles !");
             resolve(self);
         });
     }
@@ -772,10 +772,16 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch image sprites exception :", error);
                         });
+                } else {
+                    var err = new Error("HTTP status code: " + response.status);
+                    throw err;
                 }
             })
             .catch(error => {
-                logger.warn("fetch sprites exception :", error);
+                return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+                    logger.error("fetch image sprites exception :", error);
+                    reject(error);
+                });
             });
     };
     var fetchSpritesJson = function () {
@@ -792,10 +798,16 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch json sprites exception :", error);
                         });
+                } else {
+                    var err = new Error("HTTP status code: " + response.status);
+                    throw err;
                 }
             })
             .catch(error => {
-                logger.warn("fetch sprites exception :", error);
+                return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+                    logger.error("fetch json sprites exception :", error);
+                    reject(error);
+                });
             });
     };
 

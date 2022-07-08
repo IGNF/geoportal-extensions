@@ -1418,10 +1418,13 @@ var LayerImport = (function (Control) {
                                         // affichage du panneau des couches accessibles à l'edition
                                         self._mapBoxPanel.style.display = "block";
                                         // envoi d'un evenement !
-                                        map.dispatchEvent({
-                                            type : "editor:loaded",
-                                            layer : p.layer
-                                        });
+                                        // un peu en décalé...
+                                        setTimeout(function () {
+                                            map.dispatchEvent({
+                                                type : "editor:loaded",
+                                                layer : p.layer
+                                            });
+                                        }, 100);
                                     });
 
                                     // association entre le layer et l'editeur via l'id
