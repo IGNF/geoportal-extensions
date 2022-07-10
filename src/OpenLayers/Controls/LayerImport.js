@@ -1404,16 +1404,19 @@ var LayerImport = (function (Control) {
                                     var editor = new Editor({
                                         target : self._mapBoxResultsListContainer,
                                         style : p.styles,
-                                        scope : self,
+                                        scope : this,
                                         events : {
                                             "editor:onloaded" : self._onLoadedMapBox, // utile ?
                                             "editor:layer:onclickvisibility" : self._onChangeVisibilitySourceMapBox,
                                             "editor:style:scale:onchangemin" : self._onChangeScaleMinSourceMapBox,
                                             "editor:style:scale:onchangemax" : self._onChangeScaleMaxSourceMapBox,
-                                            "editor:legend:onchangevalue" : self._onChangeLegendValueSourceMapBox
+                                            "editor:legend:onchangevalue" : self._onChangeLegendValueSourceMapBox,
+                                            "editor:legend:onclickedition" : self._onDisplayLayerSourceMapBox
                                         },
                                         tools : self.options.vectorStyleOptions.MapBox.editor
                                     });
+                                    editor.setContext("map", map);
+                                    editor.setContext("layer", p.layer);
                                     editor.createElement().then(function () {
                                         // affichage du panneau des couches accessibles à l'edition
                                         self._mapBoxPanel.style.display = "block";
@@ -1661,13 +1664,11 @@ var LayerImport = (function (Control) {
      * @param {Object} e - editor
      */
     LayerImport.prototype._onLoadedMapBox = function (e) {
-        var map = this.getMap();
-        map.getLayers().forEach((layer) => {
-            // logger.trace(layer);
-            if (layer.get("mapbox-editor") === e.target.id) {
-                // some stuff...
-            }
-        });
+        var data = e.target.data.obj;
+        var layer = this.getContext("layer");
+        if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
+            // some stuff..
+        }
     };
 
     /**
@@ -1680,34 +1681,32 @@ var LayerImport = (function (Control) {
     LayerImport.prototype._onChangeVisibilitySourceMapBox = function (e) {
         var data = e.target.data.obj;
         var target = e.target.srcElement;
+        var layer = this.getContext("layer");
 
-        var map = this.getMap();
-        map.getLayers().forEach((layer) => {
-            // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
-                // reload style with new param : layout.visibility : "visible" or "none"...
-                var styles = layer.get("mapbox-styles");
-                var layers = styles.layers;
-                for (var i = 0; i < layers.length; i++) {
-                    if (layers[i].id === data.id) {
-                        var layout = layers[i].layout;
-                        if (layout) {
-                            layout.visibility = (target.checked) ? "visible" : "none";
-                        } else {
-                            layers[i].layout = {
-                                visibility : (target.checked) ? "visible" : "none"
-                            };
-                        }
-                        break;
+        // logger.trace(layer);
+        if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
+            // reload style with new param : layout.visibility : "visible" or "none"...
+            var styles = layer.get("mapbox-styles");
+            var layers = styles.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === data.id) {
+                    var layout = layers[i].layout;
+                    if (layout) {
+                        layout.visibility = (target.checked) ? "visible" : "none";
+                    } else {
+                        layers[i].layout = {
+                            visibility : (target.checked) ? "visible" : "none"
+                        };
                     }
+                    break;
                 }
-                applyStyleOlms(layer, styles, data.source)
-                    .then(function () {})
-                    .catch(function (error) {
-                        logger.error(error);
-                    });
             }
-        });
+            applyStyleOlms(layer, styles, data.source)
+                .then(function () {})
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
     };
 
     /**
@@ -1720,28 +1719,25 @@ var LayerImport = (function (Control) {
     LayerImport.prototype._onChangeScaleMinSourceMapBox = function (e) {
         var data = e.target.data.obj;
         var target = e.target.srcElement;
+        var layer = this.getContext("layer");
 
-        var map = this.getMap();
-        map.getLayers().forEach((layer) => {
-            // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
-                // reload style with new param : minZoom = ...
-                var styles = layer.get("mapbox-styles");
-                var layers = styles.layers;
-                for (var i = 0; i < layers.length; i++) {
-                    if (layers[i].id === data.id) {
-                        layers[i].minzoom = target.value;
-                        target.title = target.value;
-                        break;
-                    }
+        if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
+            // reload style with new param : minZoom = ...
+            var styles = layer.get("mapbox-styles");
+            var layers = styles.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === data.id) {
+                    layers[i].minzoom = target.value;
+                    target.title = target.value;
+                    break;
                 }
-                applyStyleOlms(layer, styles, data.source)
-                    .then(function () {})
-                    .catch(function (error) {
-                        logger.error(error);
-                    });
             }
-        });
+            applyStyleOlms(layer, styles, data.source)
+                .then(function () {})
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
     };
 
     /**
@@ -1754,28 +1750,26 @@ var LayerImport = (function (Control) {
     LayerImport.prototype._onChangeScaleMaxSourceMapBox = function (e) {
         var data = e.target.data.obj;
         var target = e.target.srcElement;
+        var layer = this.getContext("layer");
 
-        var map = this.getMap();
-        map.getLayers().forEach((layer) => {
-            // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
-                // reload style with new param : minZoom = ...
-                var styles = layer.get("mapbox-styles");
-                var layers = styles.layers;
-                for (var i = 0; i < layers.length; i++) {
-                    if (layers[i].id === data.id) {
-                        layers[i].maxzoom = target.value;
-                        target.title = target.value;
-                        break;
-                    }
+        // logger.trace(layer);
+        if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
+            // reload style with new param : minZoom = ...
+            var styles = layer.get("mapbox-styles");
+            var layers = styles.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === data.id) {
+                    layers[i].maxzoom = target.value;
+                    target.title = target.value;
+                    break;
                 }
-                applyStyleOlms(layer, styles, data.source)
-                    .then(function () {})
-                    .catch(function (error) {
-                        logger.error(error);
-                    });
             }
-        });
+            applyStyleOlms(layer, styles, data.source)
+                .then(function () {})
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
     };
 
     /**
@@ -1788,30 +1782,47 @@ var LayerImport = (function (Control) {
     LayerImport.prototype._onChangeLegendValueSourceMapBox = function (e) {
         var data = e.target.data.obj;
         var target = e.target.srcElement;
+        var layer = this.getContext("layer");
 
-        var map = this.getMap();
-        map.getLayers().forEach((layer) => {
-            // logger.trace(layer);
-            if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
-                // reload style with new param :
-                var styles = layer.get("mapbox-styles");
-                var layers = styles.layers;
-                for (var i = 0; i < layers.length; i++) {
-                    if (layers[i].id === data.id) {
-                        var paint = layers[i].paint;
-                        if (paint) {
-                            paint[target.dataset.id] = target.value;
-                        }
-                        break;
+        // logger.trace(layer);
+        if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
+            // reload style with new param :
+            var styles = layer.get("mapbox-styles");
+            var layers = styles.layers;
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].id === data.id) {
+                    var paint = layers[i].paint;
+                    if (paint) {
+                        paint[target.dataset.id] = target.value;
                     }
+                    break;
                 }
-                applyStyleOlms(layer, styles, data.source)
-                    .then(function () {})
-                    .catch(function (error) {
-                        logger.error(error);
-                    });
             }
-        });
+            applyStyleOlms(layer, styles, data.source)
+                .then(function () {})
+                .catch(function (error) {
+                    logger.error(error);
+                });
+        }
+    };
+
+    /**
+     * this method is called on ''
+     * and change zoom source to map
+     *
+     * @param {Object} e - HTMLElement
+     * @private
+     */
+    LayerImport.prototype._onDisplayLayerSourceMapBox = function (e) {
+        var data = e.target.data.obj;
+        var layer = this.getContext("layer");
+
+        if (layer.get("mapbox-source") === data.source && layer.get("mapbox-editor") === e.target.editorID) {
+            var idDOM = e.target.currentTarget.parentNode.id;
+            var id = idDOM.substring(idDOM.indexOf("-") + 1, idDOM.indexOf("_"));
+            var l = this.getLayer(id);
+            l.collapse();
+        }
     };
 
     // ################################################################### //

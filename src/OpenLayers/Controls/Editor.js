@@ -127,10 +127,15 @@ var logger = Logger.getLogger("editor");
  *      },
  *      editable : true
  *   }
+ *   // Context
+ *   editor.setContext("map", map);
+ *   editor.setContext("layer", layer);
  *   // create DOM
  *   editor.createElement()
  *     .then(() => {
  *       console.warn(editor.getID());
+ *       console.log(this.getContext("map"));
+ *       console.log(this.getContext("layer"));
  *     })
  *     .catch(error => {});
  *   // possibility to add listeners with globale variable : eventbus
@@ -223,11 +228,13 @@ Editor.prototype._initialize = function () {
     // id unique
     this.id = this.options.id || ID.generate();
 
+    // context
+    this.context = {};
     // property layers
     this.layers = [];
-    // property container
+    // dom container
     this.container = null;
-    // property name
+    // dom name
     this.name = {
         target : "GPEditorMapBoxTarget",
         container : "GPEditorMapBoxContainer",
@@ -239,9 +246,10 @@ Editor.prototype._initialize = function () {
         titleThemesID : "GPEditorMapBoxThemesTitle_ID_",
         sep : "GPEditorMapBoxSep"
     };
-    // property mapbox
+    // style json
     this.mapbox = {};
-    // property sprites :
+    // INFO
+    // sprites :
     // {
     //     url : null,
     //     size : {
@@ -899,6 +907,13 @@ Editor.prototype.display = function (display) {
     this.container.style.display = (display) ? "block" : "none";
 };
 
+Editor.prototype.setContext = function (key, value) {
+    this.context[key] = value;
+};
+
+Editor.prototype.getContext = function (key) {
+    return this.context[key];
+};
 // ################################################################### //
 // ##################### public methods ############################## //
 // ################################################################### //
