@@ -20,6 +20,8 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 
 * [Changed]
 
+    - Passage en mode Feature (vs FeatureRender) pour l'import du vecteur tuilé
+
 * [Deprecated]
 
 * [Removed]
