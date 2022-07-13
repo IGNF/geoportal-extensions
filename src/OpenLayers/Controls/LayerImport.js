@@ -4,7 +4,7 @@ import "../CSS/Controls/LayerImport/GPimportOpenLayers.css";
 import Control from "ol/control/Control";
 import { unByKey as olObservableUnByKey } from "ol/Observable";
 import Collection from "ol/Collection";
-// import RenderFeature from "ol/render/Feature"; // FIXME RenderFeature n'est pas dispo dans le bundle !?
+import Feature from "ol/Feature";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
 import { createXYZ as olCreateXYZTileGrid } from "ol/tilegrid"; // FIXME olCreateXYZTileGrid !?
 import {
@@ -1201,7 +1201,9 @@ var LayerImport = (function (Control) {
 
                         if (_glTiles) {
                             // service tuilé et/ou mapbox
-                            vectorFormat = new MVT(/* { featureClass : RenderFeature } */);
+                            vectorFormat = new MVT({
+                                featureClass : Feature
+                            });
                             vectorSource = new VectorTileSource({
                                 attributions : _glSource.attribution,
                                 format : vectorFormat,
@@ -1239,7 +1241,9 @@ var LayerImport = (function (Control) {
                             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
                         } else if (_glUrl) {
                             // service avec un tilejson
-                            vectorFormat = new MVT(/* { featureClass : RenderFeature } */);
+                            vectorFormat = new MVT({
+                                featureClass : Feature
+                            });
                             vectorLayer = new VectorTileLayer({
                                 visible : false,
                                 // zIndex : 0
