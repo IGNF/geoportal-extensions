@@ -373,7 +373,6 @@ Navigateur | version
 -----------|--------
 Chrome     | Versions récentes (21+)
 Firefox    | Versions récentes (28+)
-IE         | IE10, IE11
 Edge       | 12+
 Safari     | Versions récentes (6.1+)
 
@@ -414,7 +413,7 @@ NB :
 
 * Le site [epsg.io](http://epsg.io/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
 
-* Les définitions des systèmes de coordonnées du registre IGNF peuvent être trouvées [ici](https://github.com/OSGeo/proj.4/blob/master/nad/IGNF).
+* Les définitions des systèmes de coordonnées du registre IGNF peuvent être trouvées [ici](https://geodesie.ign.fr/contenu/fichiers/IGNF.xml).
 
 
 
@@ -479,7 +478,7 @@ var map = L.map('divmap', {
 
 // Création de la couche
 var lyr = L.geoportalLayer.WMTS({
-    layer  : "CADASTRALPARCELS.PARCELS.L93"
+    layer  : "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2.L93"
 }) ;
 
 lyr.addTo(map); // ou map.addLayer(lyr);
@@ -777,7 +776,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
+    layer: "ORTHOIMAGERY.ORTHOPHOTOS",
 });
 map.addLayer(lyrMaps) ;
 
@@ -820,7 +819,7 @@ map = L.map("map").setView([47, 2.424], 12);
 
 // ajout d'une couche
 var lyrMaps = L.geoportalLayer.WMTS({
-    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
+    layer: "ORTHOIMAGERY.ORTHOPHOTOS",
 });
 map.addLayer(lyrMaps) ;
 
