@@ -1,0 +1,123 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Group & Sort Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            #form {
+                display: grid;
+            }
+            div#patience {
+                width: 50px;
+                height: 50px;
+                background-image:url("{{ resources }}/geoportail-waiting.gif");
+                background-position:center center;
+                background-repeat:no-repeat;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition de la donnée PLAN IGN</h2>
+            <form id="form">
+                <label for="sort">Tri</label>
+                <select id="sort">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+                <label for="sorttype">Type de tri</label>
+                <select id="sorttype">
+                    <option value="id">id</option>
+                    <option value="class">class</option>
+                    <option value="geom">geom</option>
+                </select>
+                <label for="sortorder">Ordre de tri</label>
+                <select id="sortorder">
+                    <option value="asc">asc</option>
+                    <option value="desc">desc</option>
+                </select>
+                <label for="group">Categorie</label>
+                <select id="group">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+                <label for="groupauto">Categorie automatique</label>
+                <select id="groupauto">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                </select>
+                <button id="submit" type=""submit">Submit</button>
+            </form>
+            <div id="patience"></div>
+            <div id="editor"></div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            // on cache l'image de chargement du Géoportail.
+            document.getElementById('patience').style.display = 'none';
+
+            var sort = document.getElementById("sort");
+            var group = document.getElementById("group");
+            var groupauto = document.getElementById("groupauto");
+
+            document.getElementById("form").addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                document.getElementById('patience').style.display = "block";
+
+                var ctrl = document.getElementById('editor');
+                while (ctrl.firstChild) {
+                    ctrl.removeChild(ctrl.firstChild);
+                }
+
+                var editor = new ol.style.Editor({
+                    target: document.getElementById("editor"),
+                    style: "{{ resources }}/data/mapbox/styles/planign/standard.json",
+                    events : {
+                        "editor:themes:onclicktitle" : function (e) {
+                            if (this.getID() === e.target.editorID) {
+                                console.log("editor:themes:onclicktitle", this.getID(), e);
+                            }
+                        }
+                    },
+                    tools : {
+                        themes : false,
+                        layers : true,
+                        style : true,
+                        filter : true,
+                        legend : true,
+                        group : (group.value === 'true'),
+                        groupAuto : (groupauto.value === 'true'),
+                        sort : (sort.value === 'true'),
+                        sortBy : sorttype.value,
+                        sortOrder : sortorder.value
+                    }
+                });
+
+                // create DOM
+                editor.createElement()
+                .then(() => {
+                    console.warn({
+                        "this": editor,
+                        "id": editor.getID(),
+                        "container": editor.getContainer(),
+                        "style": editor.getStyle(),
+                        "layers": editor.getLayers(),
+                        "style layer 0": editor.getStyleLayer(0),
+                        "layer 0 from style": editor.getLayerFromStyle(0),
+                        "layer 0": editor.getLayer(0)
+                    });
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('patience').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            });
+            </script>
+{{/content}}
+{{/extend}}

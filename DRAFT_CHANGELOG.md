@@ -10,17 +10,28 @@
 
 ## Summary
 
+Correctifs sur l'editeur de styles MapBox et le controle d'import des données MapBox
+
 ## Changelog
 
 * [Added]
 
+    - Ajout d'options de tri dans l'editeur de style MapBox
+
 * [Changed]
+
+    - Passage en mode Feature (vs FeatureRender) pour l'import du vecteur tuilé
 
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+    - Fix sur la gestion des imports de type MapBox
+    - Fix sur les legendes MapBox
+    - Fix sur le rendu sous FireFox des legendes MapBox
+    - Fix sur le tri alpha des couches MapBox
 
 * [Security]
 

@@ -21,6 +21,7 @@
             <script type="text/javascript">
 
             var editor = new ol.style.Editor({
+                id: 666,
                 target: document.getElementById("editor"),
                 style: {
                     "version": 8,
@@ -101,6 +102,16 @@
             })
             .catch(error => {
                 console.error(error);
+            });
+
+            eventbus.addEventListener("editor:legend:onclickedition", function (e) {
+                console.log("Add a listener on event 'editor:legend:onclickedition' : switch active !", e);
+                if (e.target.editorID === 666) {
+                    var idDOM = e.target.currentTarget.parentNode.id;
+                    var id = idDOM.substring(idDOM.indexOf("-") + 1, idDOM.indexOf("_"));
+                    var layer = editor.getLayer(id);
+                    layer.collapse();
+                }
             });
 
             document.getElementById("displayTrue").addEventListener("click", function () {
