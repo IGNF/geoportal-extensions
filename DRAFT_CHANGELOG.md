@@ -21,6 +21,7 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 * [Changed]
 
     - Passage en mode Feature (vs FeatureRender) pour l'import du vecteur tuilé
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
 
 * [Deprecated]
 
@@ -52,6 +53,8 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 
 * [Changed]
 
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
+
 * [Deprecated]
 
 * [Removed]
@@ -81,6 +84,7 @@ Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation d
 * [Changed]
 
     - mise à jour d'iTowns en version 2.28.2 (#336)
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
 
 * [Deprecated]
 
