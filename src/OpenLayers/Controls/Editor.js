@@ -13,6 +13,8 @@ import Legend from "./Editor/Legend";
 import Layer from "./Editor/Layer";
 import Group from "./Editor/Group";
 import Event from "./Editor/Event";
+import Search from "./Editor/Search";
+
 // DOM
 import EditorDOM from "../../Common/Controls/Editor/EditorDOM";
 
@@ -80,12 +82,17 @@ var logger = Logger.getLogger("editor");
  *              },
  *          },
  *          layers : true | false,     // afficher les couches (layers)
+ *          search : true | false,     // TODO : afficher l'outil de recheche de couches
  *          style : true | false,      // afficher les styles (sous menu layers)
  *          filter : true | false,     // afficher les filtres (sous menu layers)
  *          legend : true | false,     // afficher les legendes (layers)
- *          group : true | false,      // grouper les couches (layers)
+ *          group : true | false,      // grouper les couches, l'option 'sort' doit être activée (layers)
+ *          groupAuto : true | false,  // definir la construction automatiques des groupes
  *          sort : true | false,       // trier les couches (layers)
+ *          sortBy : "id|class|geom",  // definir le type de tri (layers)
+ *          sortOrder : "asc, desc",   // definir l'ordre de tri (layers)
  *          title : true | false       // afficher les titres des rubriques,
+ *          collapse : true | false | undefined // afficher et/ou plier les couches ou ne pas afficher l'option,
  *          type : true | false,       // afficher le type de geometrie (layers)
  *          pin : true | false,        // afficher la puce pour chaque couche (layers)
  *          visibility : true | false, // afficher l'icone de visibilité (layers),
@@ -96,10 +103,39 @@ var logger = Logger.getLogger("editor");
  *          editable : true | false    // active l'edition de la legende (legendes)
  *      }
  *   });
+ *   // options par defaut
+ *   {
+ *      themes : false,
+ *      layers : true,
+ *      search : false,
+ *      style : false,
+ *      filter : false,
+ *      legend : false,
+ *      group : false,
+ *      groupAuto : false,
+ *      sort : true,
+ *      sortBy : "id",
+ *      sortOrder : "asc",
+ *      title : true,
+ *      collapse : undefined,
+ *      type : true,
+ *      pin : true,
+ *      visibility : true,
+ *      icon : {
+ *          image : true,
+ *          anchor : "end"
+ *      },
+ *      editable : true
+ *   }
+ *   // Context
+ *   editor.setContext("map", map);
+ *   editor.setContext("layer", layer);
  *   // create DOM
  *   editor.createElement()
  *     .then(() => {
  *       console.warn(editor.getID());
+ *       console.log(this.getContext("map"));
+ *       console.log(this.getContext("layer"));
  *     })
  *     .catch(error => {});
  *   // possibility to add listeners with globale variable : eventbus
@@ -161,12 +197,17 @@ Editor.prototype._initialize = function () {
     var _toolsDefault = {
         themes : false,
         layers : true,
+        search : false,
         style : false,
         filter : false,
         legend : false,
         group : false,
+        groupAuto : false,
         sort : true,
+        sortBy : "id",
+        sortOrder : "asc",
         title : true,
+        collapse : undefined,
         type : true,
         pin : true,
         visibility : true,
@@ -187,11 +228,13 @@ Editor.prototype._initialize = function () {
     // id unique
     this.id = this.options.id || ID.generate();
 
+    // context
+    this.context = {};
     // property layers
     this.layers = [];
-    // property container
+    // dom container
     this.container = null;
-    // property name
+    // dom name
     this.name = {
         target : "GPEditorMapBoxTarget",
         container : "GPEditorMapBoxContainer",
@@ -203,9 +246,10 @@ Editor.prototype._initialize = function () {
         titleThemesID : "GPEditorMapBoxThemesTitle_ID_",
         sep : "GPEditorMapBoxSep"
     };
-    // property mapbox
+    // style json
     this.mapbox = {};
-    // property sprites :
+    // INFO
+    // sprites :
     // {
     //     url : null,
     //     size : {
@@ -320,6 +364,17 @@ Editor.prototype._initContainer = function () {
         themes.add();
     }
 
+    // TODO : Recheche / filtre de couches
+    if (this.options.tools.search) {
+        var search = new Search({
+            id : this.id,
+            target : div,
+            tools : {},
+            obj : this.mapbox.layers // liste des objets layers
+        });
+        search.add();
+    }
+
     for (var source in this.mapbox.sources) {
         if (this.mapbox.sources.hasOwnProperty(source)) {
             if (this.options.tools.layers) {
@@ -340,9 +395,8 @@ Editor.prototype._initContainer = function () {
                 }
             }
 
-            // clone
-            var _layers = this.mapbox.layers.slice();
             // gestion de l'ordre avant tri avec la metadata 'order'
+            var _layers = this.mapbox.layers.slice(); // clone
             // une fois les layers triés, la metadata:geoportail:order permet
             // de savoir l'emplacement du layers dans le fichier de style.
             _layers.forEach(function (layer, order) {
@@ -362,35 +416,50 @@ Editor.prototype._initContainer = function () {
             });
             // tri des layers
             if (this.options.tools.sort) {
-                _layers.sort(function (a, b) {
-                    // FIXME si on utilise les groupements utilisateurs, ils doivent
-                    // tous renseignés sinon...
-                    var cmpA = null;
-                    var cmpB = null;
+                var sortBy = this.options.tools.sortBy;
+                var sortOrder = this.options.tools.sortOrder;
+                var sortFct = function (a, b) {
+                    // si on utilise les groupements utilisateurs, ils doivent
+                    // tous être renseignés sinon..., ça va coincer !
+                    var result = 0;
                     if (a["metadata"] &&
                         a["metadata"]["geoportail:group"] &&
                         b["metadata"] &&
                         b["metadata"]["geoportail:group"]) {
+                        var cmpA = null;
+                        var cmpB = null;
                         cmpA = a["metadata"]["geoportail:group"];
                         cmpB = b["metadata"]["geoportail:group"];
+                        result = cmpA.localeCompare(cmpB);
                     } else {
-                        cmpA = a.id;
-                        cmpB = b.id;
+                        switch (sortBy) {
+                            case "geom":
+                                result = sortOrder === "asc" ? a.type.localeCompare(b.type) || a.id.localeCompare(b.id)
+                                    : b.type.localeCompare(a.type) || b.id.localeCompare(a.id);
+                                break;
+                            case "class":
+                                result = sortOrder === "asc" ? a["source-layer"].localeCompare(b["source-layer"]) || a.id.localeCompare(b.id)
+                                    : b["source-layer"].localeCompare(a["source-layer"]) || b.id.localeCompare(a.id);
+                                break;
+                            case "id":
+                            default:
+                                // tri sur l'id par defaut
+                                result = sortOrder === "asc" ? a.id.localeCompare(b.id) : b.id.localeCompare(a.id);
+                                break;
+                        }
                     }
-                    if (cmpA < cmpB) {
-                        return -1;
-                    }
-                    if (cmpA > cmpB) {
-                        return 1;
-                    }
-                    return 0;
-                });
+                    return result;
+                };
+
+                _layers.sort(sortFct);
             }
 
             logger.trace("Layers : ", _layers);
 
             // gestion des groupes avec la metadata de groupe
-            var _groups = {}; // liste et comptage des layers dans les groupes
+            var groupBy = this.options.tools.sortBy; // le même type de tri que les couches !
+            var groupAuto = this.options.tools.groupAuto;
+            var _groups = {}; // liste et comptage des layers dans chaque groupes
             _layers.forEach(function (layer) {
                 // on écarte les layers sans source: ex. "background"
                 // if (!layer.source) {
@@ -405,13 +474,28 @@ Editor.prototype._initContainer = function () {
                     _groups[_groupName] = (_groups[_groupName])
                         ? _groups[_groupName] + 1 : 1;
                 } else {
-                    var _title = layer.id;
-                    // separateur
-                    var _regex = /_|-|:|=/; // TODO à definir via une option !
-                    // index
-                    // y'a t il un separateur ?
-                    var _idx = _title.search(_regex);
-                    var _newGroupName = (_idx !== -1) ? _title.substring(0, _idx).trim() : _title;
+                    var _field = null;
+                    switch (groupBy) {
+                        case "class":
+                            _field = layer["source-layer"];
+                            break;
+                        case "geom":
+                            _field = layer.type;
+                            break;
+                        case "id":
+                        default:
+                            _field = layer.id;
+                            break;
+                    }
+                    var _newGroupName = _field;
+                    if (groupAuto) {
+                        // separateur
+                        var _regex = /_|-|:|=/; // TODO à definir via une option !
+                        // index
+                        var _idx = _field.search(_regex);
+                        // y'a t il un separateur ?
+                        _newGroupName = (_idx !== -1) ? _field.substring(0, _idx).trim() : _field;
+                    }
                     // on compte le nombre d'entrée dans un groupe
                     _groups[_newGroupName] = (_groups[_newGroupName])
                         ? _groups[_newGroupName] + 1 : 1;
@@ -434,8 +518,21 @@ Editor.prototype._initContainer = function () {
             divLayers.className = this.name.containerLayers;
             div.appendChild(divLayers);
 
+            var details;
+            if (this.options.tools.collapse !== undefined) {
+                details = document.createElement("details");
+                details.className = "";
+                details.open = !this.options.tools.collapse;
+                divLayers.appendChild(details);
+
+                var summary = document.createElement("summary");
+                summary.className = "";
+                summary.innerHTML = "";
+                details.appendChild(summary);
+            }
+
             // container courant (cf. groupe) pour l'ajout des elements
-            var target = divLayers;
+            var target = (this.options.tools.collapse !== undefined) ? details : divLayers;
 
             // Ex. Layers, Styles, Groups et Filtres
             //  "id": "ocs - vegetation",
@@ -463,9 +560,11 @@ Editor.prototype._initContainer = function () {
 
                 // traitement dans l'ordre des sources
                 if (data.source === source) {
-                    // FIXME la gestion des groupes est à revoir...
                     // Groups
-                    if (this.options.tools.group) {
+                    // INFO la gestion des groupes est basée sur la balise metadata::geoportail:group
+                    // ainsi que sur l'ordre des couches.
+                    // il n'y a pas de regroupement sans tri des couches !
+                    if (this.options.tools.group && this.options.tools.sort) {
                         var mtd = data.metadata;
                         // creation du container de groupe
                         // si le tag metadata existe
@@ -479,7 +578,7 @@ Editor.prototype._initContainer = function () {
                                     // creation du groupe
                                     var oGroup = new Group({
                                         id : this.id,
-                                        target : divLayers,
+                                        target : (this.options.tools.collapse !== undefined) ? details : divLayers,
                                         title : grp,
                                         collapse : true
                                     });
@@ -489,15 +588,15 @@ Editor.prototype._initContainer = function () {
                                 } else if (_groups[grp] === 1) {
                                     // l'element est seul, donc pas d'ajout dans le
                                     // groupe en cours
-                                    target = divLayers;
+                                    target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                                 } else {
                                     // on ajoute l'element dans le groupe courant...
                                 }
                             } else {
-                                target = divLayers;
+                                target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                             }
                         } else {
-                            target = divLayers;
+                            target = (this.options.tools.collapse !== undefined) ? details : divLayers;
                         }
                     }
                     // Layers
@@ -646,14 +745,14 @@ Editor.prototype._getSprites = function (sprites) {
     // si le protocole est mapbox://
     if (sprites && sprites.startsWith("mapbox://")) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            logger.info("Protocole mapbox:// non géré !");
+            logger.error("Protocole mapbox:// non géré !");
             resolve(self);
         });
     }
     // si pas de sprites
     if (!sprites) {
         return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
-            logger.info("Auncun sprites disponibles !");
+            logger.error("Auncun sprites disponibles !");
             resolve(self);
         });
     }
@@ -681,10 +780,16 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch image sprites exception :", error);
                         });
+                } else {
+                    var err = new Error("HTTP status code: " + response.status);
+                    throw err;
                 }
             })
             .catch(error => {
-                logger.warn("fetch sprites exception :", error);
+                return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+                    logger.error("fetch image sprites exception :", error);
+                    reject(error);
+                });
             });
     };
     var fetchSpritesJson = function () {
@@ -701,10 +806,16 @@ Editor.prototype._getSprites = function (sprites) {
                         .catch(error => {
                             logger.warn("fetch json sprites exception :", error);
                         });
+                } else {
+                    var err = new Error("HTTP status code: " + response.status);
+                    throw err;
                 }
             })
             .catch(error => {
-                logger.warn("fetch sprites exception :", error);
+                return new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
+                    logger.error("fetch json sprites exception :", error);
+                    reject(error);
+                });
             });
     };
 
@@ -716,7 +827,7 @@ Editor.prototype._getSprites = function (sprites) {
 };
 
 // ################################################################### //
-// ##################### public methods ############################## //
+// ########################## INTERFACE ############################## //
 // ################################################################### //
 /**
  * Create Editor
@@ -795,6 +906,17 @@ Editor.prototype.createElement = function () {
 Editor.prototype.display = function (display) {
     this.container.style.display = (display) ? "block" : "none";
 };
+
+Editor.prototype.setContext = function (key, value) {
+    this.context[key] = value;
+};
+
+Editor.prototype.getContext = function (key) {
+    return this.context[key];
+};
+// ################################################################### //
+// ##################### public methods ############################## //
+// ################################################################### //
 
 /**
  * Get id editor

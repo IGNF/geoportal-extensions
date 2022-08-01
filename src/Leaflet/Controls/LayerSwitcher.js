@@ -47,7 +47,7 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
      * @extends {L.Control}
      * @param {Object} options - options of component
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
      * @param {Array} [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
      * @param {Object} [options.layers.layer] - layer object
      * @param {Boolean} [options.layers.display] - display layer in widget layer list
@@ -235,6 +235,18 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         });
 
         return this._container;
+    },
+
+    /**
+     * this method is called when the control is removed from the map
+     * and removes events on map.
+     * @param {Object} map - the map
+     *
+     * @private
+     */
+    onRemove : function (map) {
+        map.off("layeradd", this._onLayerChange, this);
+        map.off("layerremove", this._onLayerChange, this);
     },
 
     /**

@@ -1,6 +1,30 @@
 {
+   "author" : "IGNF",
+   "bugs" : {},
+   "dependencies" : {
+      "proj4" : "2.7.5",
+      "loglevel" : "1.6.6",
+      "sortablejs" : "1.14.0",
+      "three" : "0.137.5",
+      "geoportal-access-lib" : "3.1.0",
+      "xmldom" : "^0.1.27",
+      "itowns" : "2.38.2",
+      "node-fetch" : "^2.6.1"
+   },
    "peerDependencies" : {},
-   "name" : "geoportal-extensions-itowns",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "bundleDependencies" : [],
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "devDependencies" : {},
    "files" : [
       "dist/",
       "src/",
@@ -8,37 +32,13 @@
       "README.md",
       "package.json"
    ],
-   "directories" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "dependencies" : {
-      "loglevel" : "1.6.7",
-      "three" : "0.135.0",
-      "node-fetch" : "^2.6.1",
-      "proj4" : "2.7.5",
-      "itowns" : "2.37.0",
-      "sortablejs" : "1.14.0",
-      "xmldom" : "^0.1.27",
-      "geoportal-access-lib" : "3.1.0"
-   },
-   "module" : "src/Itowns/index.js",
-   "description" : "French Geoportal Extensions for iTowns",
-   "bundleDependencies" : [],
-   "scripts" : {},
    "main" : "dist/GpPluginItowns-src.js",
-   "date" : "23/03/2022",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "author" : "IGNF",
-   "bugs" : {},
+   "description" : "French Geoportal Extensions for iTowns",
+   "license" : "CECILL-B",
+   "directories" : {},
+   "module" : "src/Itowns/index.js",
+   "scripts" : {},
    "version" : "2.3.6",
-   "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "license" : "CECILL-B"
+   "date" : "11/05/2022",
+   "name" : "geoportal-extensions-itowns"
 }

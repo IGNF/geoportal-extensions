@@ -8,7 +8,7 @@ var logger = Logger.getLogger("BoostRelief");
 
 /**
  * @classdesc
- * Control to manage globe layers : their order, visibility and relief, and display their informations (title, description, legends, metadata...)
+ * Control to exagerate the elevation
  *
  * @constructor
  * @extends {itowns.control.Widget}

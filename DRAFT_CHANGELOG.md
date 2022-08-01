@@ -2,6 +2,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -9,13 +10,18 @@
 
 ## Summary
 
-Fix sur l'outil de dessin
+Correctifs sur l'editeur de styles MapBox et le controle d'import des données MapBox
 
 ## Changelog
 
 * [Added]
 
+    - Ajout d'options de tri dans l'editeur de style MapBox
+
 * [Changed]
+
+    - Passage en mode Feature (vs FeatureRender) pour l'import du vecteur tuilé
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
 
 * [Deprecated]
 
@@ -23,7 +29,10 @@ Fix sur l'outil de dessin
 
 * [Fixed]
 
-    - Exception sur l'export des features en cours d'édition sur l'outil de dessin
+    - Fix sur la gestion des imports de type MapBox
+    - Fix sur les legendes MapBox
+    - Fix sur le rendu sous FireFox des legendes MapBox
+    - Fix sur le tri alpha des couches MapBox
 
 * [Security]
 
@@ -44,6 +53,8 @@ Fix sur l'outil de dessin
 
 * [Changed]
 
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
+
 * [Deprecated]
 
 * [Removed]
@@ -62,11 +73,18 @@ Fix sur l'outil de dessin
 
 ## Summary
 
+Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation des bâtiments en 3D.
+
 ## Changelog
 
 * [Added]
 
+    - ajout d'un control de visualisation des bâtiments en boite à chaussures (#336)
+
 * [Changed]
+
+    - mise à jour d'iTowns en version 2.28.2 (#336)
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
 
 * [Deprecated]
 
