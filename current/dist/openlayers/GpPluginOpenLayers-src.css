@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.2.13
- * @date 11/05/2022
+ * @version 3.2.14
+ * @date 01/08/2022
  *
  */
 
@@ -275,6 +275,22 @@
   .GPlayerRelief input[type="range"]::-ms-tooltip {
     display: none;
   }
+/* BUILDINGS */
+
+  div[id^=GPbuildings-] {
+    font-size: 11px;
+  }
+  
+  div[id^=GPbuildings-] label {
+    display: block;
+  }
+  
+  label[id^=GPshowBuildingsPicto] {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+
 /* MOUSE POSITION */
 
 /* Showing/hiding drawing panel */
@@ -3851,8 +3867,11 @@ LEGEND
 }
 
 .legend-background {}
-.legend-fill {}
-.legend-line {}
+.legend-fill ,
+.legend-line {
+    margin: auto;
+    padding: 5px;
+}
 .legend-icon {}
 .legend-text {}
 .legend-circle {}
