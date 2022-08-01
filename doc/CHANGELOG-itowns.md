@@ -70,6 +70,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.6](#extension-geoportail-itowns-version-236)
   * [Summary](#summary-20)
   * [Changelog](#changelog-19)
+- [Extension Geoportail Itowns, version 2.3.7](#extension-geoportail-itowns-version-237)
+  * [Summary](#summary-21)
+  * [Changelog](#changelog-20)
 
 <!-- tocstop -->
 
@@ -551,6 +554,35 @@ iTowns version 2.37 et mise à jour des dépendances threejs et proj4
 * [Changed]
 
     - Mise à jour d'iTowns en version 2.37
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.7
+
+**01/08/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation des bâtiments en 3D.
+
+## Changelog
+
+* [Added]
+
+    - ajout d'un control de visualisation des bâtiments en boite à chaussures (#336)
+
+* [Changed]
+
+    - mise à jour d'iTowns en version 2.28.2 (#336)
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
 
 * [Deprecated]
 
