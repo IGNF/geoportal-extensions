@@ -66,6 +66,7 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 ---
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -73,18 +74,11 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 
 ## Summary
 
-Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation des bâtiments en 3D.
-
 ## Changelog
 
 * [Added]
 
-    - ajout d'un control de visualisation des bâtiments en boite à chaussures (#336)
-
 * [Changed]
-
-    - mise à jour d'iTowns en version 2.28.2 (#336)
-    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
 
 * [Deprecated]
 
