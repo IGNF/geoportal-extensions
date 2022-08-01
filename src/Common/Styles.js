@@ -1,4 +1,5 @@
 import "./CSS/GPboostRelief.css";
+import "./CSS/GPbuildings.css";
 import "./CSS/GPdrawing.css";
 import "./CSS/GPelevationPath.css";
 import "./CSS/GPgeneralWidget.css";

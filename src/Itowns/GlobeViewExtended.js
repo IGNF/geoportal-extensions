@@ -336,7 +336,7 @@ GlobeViewExtended.prototype.setLayerOpacity = function (layerId, opacityValue) {
  * @param {Boolean} visible - New visibility of the layer
  */
 GlobeViewExtended.prototype.setLayerVisibility = function (layerId, visible) {
-    var layer = this.getColorLayerById(layerId);
+    var layer = this.getLayerById(layerId);
     layer.visible = visible;
     this.getGlobeView().notifyChange(layer);
 };
@@ -485,6 +485,19 @@ GlobeViewExtended.prototype.getVectorLayers = function () {
 };
 
 /**
+ * Get featureGeometry layers
+ *
+ * @return {Array} imagery layers
+ */
+GlobeViewExtended.prototype.getFeatureGeometryLayers = function () {
+    return this.getGlobeView().getLayers(function (layer) {
+        if (layer.isFeatureGeometryLayer) {
+            return layer;
+        }
+    });
+};
+
+/**
  * Get elevation layers
  *
  * @return {Array} elevation layers
@@ -517,6 +530,12 @@ GlobeViewExtended.prototype.addWidget = function (widget) {
         widget.setTarget(this._viewerDiv, widget.getPosition() ? widget.getPosition() : "absolute");
     }
     widget.setGlobe(this);
+
+    // calls the widget code that is needed to be used after the globe is associated to the control (ex. Buildings wdget)
+    if (typeof widget.onWidgetAdded === "function") {
+        widget.onWidgetAdded(widget);
+    }
+
     this._widgets.push(widget);
 };
 

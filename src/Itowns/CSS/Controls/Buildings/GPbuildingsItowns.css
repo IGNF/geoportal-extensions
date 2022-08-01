@@ -1,0 +1,32 @@
+/* BUILDINGS ITOWNS */
+
+div[id^=GPbuildings-]  {
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  padding: 3px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}
+
+/* Showing/hiding buildings panel */
+label[id^=GPshowBuildingsPicto-] {
+  display: flex;
+  height: 28px;
+  width: 28px;
+  z-index: 1;
+  position: relative;
+  margin-left: auto;
+  width: 26px;
+  height: 26px;
+  background-color: rgba(0,60,136,0.5);
+  border-radius: 2px;
+}
+
+label[id^=GPshowBuildingsPicto-].buildingsOn {
+  background-image: url("img/GPbuildingsOpen.png");
+}
+
+label[id^=GPshowBuildingsPicto-].buildingsOff {
+  background-image: url("img/GPbuildingsClose.png");
+}

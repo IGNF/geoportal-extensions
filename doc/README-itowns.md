@@ -54,6 +54,10 @@
       - [Exemples d'utilisation](#exemples-dutilisation-5)
         - [Utilisation simple](#utilisation-simple-5)
         - [Utilisation avancée](#utilisation-avancée)
+    - [Widget d'affichage des bâtiments en 3D](#widget-daffichage-des-bâtiments)
+      - [Exemples d'utilisation](#exemples-dutilisation-6)
+        - [Utilisation simple](#utilisation-simple-6)
+        - [Utilisation avancée](#utilisation-avancée-1)
 <!-- tocstop -->
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
@@ -1102,3 +1106,64 @@ globeView.addWidget( boostrelief );
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/szj1n62k/embedded/result,js,html,css/)
+
+-----------------------------------------
+
+<a id="buildings"/>
+
+### Widget d'affichage des bâtiments 
+
+Ce widget permet d'afficher en 3D sous forme de boîtes à chaussures en vecteur tuilé les bâtiments issus de la BDTOPO.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.Buildings que l'on peut ensuite ajouter au globe de la manière suivante :
+
+``` javascript
+var buildings = new itowns.control.Buildings(opts);
+globeView.addWidget( buildings );
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+var buildings = new itowns.control.Buildings({});
+
+globeView.addWidget( buildings );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/5yer3df1/embedded/result,js,html,css/)
+
+Par défaut, le MNT "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES" sera ajouté au globe avec la clé "altimetrie" tandis que les bâtiments de la couche vecteur tuilé PLAN.IGN seront affichés à l'initialisation du globe à partir du niveau de zoom 15. Ils seront ajoutés avec la clé "essentiels", et positionnés à leur altitude définie dans la BDTOPO.
+
+##### Utilisation avancée
+
+Ajout du widget en paramétrant le widget pour placer les bâtiments à une altitude de 0, ne pas ajouter de MNT, utiliser la clé "cartes" pour ajouter la couche des bâtiments, et ne pas afficher les bâtiments à l'initialisation du globe. Les bâtiments dans cet exemple ne sont visibles qu'à partir du niveau de zoom 17.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+var buildings = new itowns.control.Buildings({
+    MNT: false,
+    buildingsOnGround: true,
+    key: "cartes",
+    defaultVisibility: false,
+    minZoom: 17
+});
+
+globeView.addWidget( buildings );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/2vLfh0rq/embedded/result,js,html,css/)
