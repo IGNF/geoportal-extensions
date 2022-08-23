@@ -8,7 +8,7 @@ var LayerSwitcherDOM = {
      * @param {Object} elementDraggable - Element HTML (DOM) Container
      * @param {Object} context - this
      */
-     _createDraggableElement : function (elementDraggable, context) {
+    _createDraggableElement : function (elementDraggable, context) {
         // FIXME retirer cette détection user-agent pour solution propre
         // option forcefallback pour réparer sortable sous Chrome 97
         // option forcefallback casse le layerswitcher du portail sous firefox

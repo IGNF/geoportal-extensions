@@ -197,67 +197,75 @@ var GfiUtils = {
         var content = document.createElement("div");
         features.forEach(function (f) {
             var props = f.getProperties();
-            if (props.hasOwnProperty("name")) {
-                var nameDiv = document.createElement("div");
-                nameDiv.className = "gp-att-name-div";
-                // nameDiv.appendChild(document.createTextNode(props["name"])) ;
-                nameDiv.insertAdjacentHTML("afterbegin", props["name"]);
-                content.appendChild(nameDiv);
-            }
-            if (props.hasOwnProperty("description")) {
-                var descDiv = document.createElement("div");
-                descDiv.className = "gp-att-description-div";
-                // descDiv.appendChild(document.createTextNode(props["description"])) ;
-                descDiv.insertAdjacentHTML("afterbegin", props["description"]);
-                content.appendChild(descDiv);
-            }
-            var p = null;
-            var others = false;
-            var oDiv = null;
-            var ul = null;
-            var li = null;
-            // Liste des properties à retirer de la visualisation :
-            var listForbidden = [
-                // styles
-                "fill",
-                "fill-opacity",
-                "stroke",
-                "stroke-opacity",
-                "stroke-width",
-                "marker-symbol",
-                "marker-color",
-                "marker-size",
-                "geometry", // geometrie
-                "value",
-                "name", // déjà traité
-                "description", // déjà traité
-                "styleUrl",
-                "extensionsNode_" // extensions GPX
-            ];
-            for (p in props) {
-                if (props[p] === undefined) {
-                    continue;
+            // si la properties 'render' est presente,
+            // on ajoute directement le rendu HTML dans la balise principale
+            if (props.hasOwnProperty("render")) {
+                // content.innerHTML = props["render"].trim();
+                // content.appendChild(props["render"]);
+                content.insertAdjacentHTML("beforeend", props["render"]);
+            } else {
+                if (props.hasOwnProperty("name")) {
+                    var nameDiv = document.createElement("div");
+                    nameDiv.className = "gp-att-name-div";
+                    // nameDiv.appendChild(document.createTextNode(props["name"])) ;
+                    nameDiv.insertAdjacentHTML("afterbegin", props["name"]);
+                    content.appendChild(nameDiv);
                 }
-                if (listForbidden.indexOf(p) !== -1) {
-                    continue;
+                if (props.hasOwnProperty("description")) {
+                    var descDiv = document.createElement("div");
+                    descDiv.className = "gp-att-description-div";
+                    // descDiv.appendChild(document.createTextNode(props["description"])) ;
+                    descDiv.insertAdjacentHTML("afterbegin", props["description"]);
+                    content.appendChild(descDiv);
                 }
-                if (!others) {
-                    oDiv = document.createElement("div");
-                    oDiv.className = "gp-att-others-div";
-                    ul = document.createElement("ul");
-                    others = true;
+                var p = null;
+                var others = false;
+                var oDiv = null;
+                var ul = null;
+                var li = null;
+                // Liste des properties à retirer de la visualisation :
+                var listForbidden = [
+                    // styles
+                    "fill",
+                    "fill-opacity",
+                    "stroke",
+                    "stroke-opacity",
+                    "stroke-width",
+                    "marker-symbol",
+                    "marker-color",
+                    "marker-size",
+                    "geometry", // geometrie
+                    "value",
+                    "name", // déjà traité
+                    "description", // déjà traité
+                    "styleUrl",
+                    "extensionsNode_" // extensions GPX
+                ];
+                for (p in props) {
+                    if (props[p] === undefined) {
+                        continue;
+                    }
+                    if (listForbidden.indexOf(p) !== -1) {
+                        continue;
+                    }
+                    if (!others) {
+                        oDiv = document.createElement("div");
+                        oDiv.className = "gp-att-others-div";
+                        ul = document.createElement("ul");
+                        others = true;
+                    }
+                    li = document.createElement("li");
+                    var span = document.createElement("span");
+                    span.className = "gp-attname-others-span";
+                    span.appendChild(document.createTextNode(p + " : "));
+                    li.appendChild(span);
+                    li.appendChild(document.createTextNode(props[p]));
+                    ul.appendChild(li);
                 }
-                li = document.createElement("li");
-                var span = document.createElement("span");
-                span.className = "gp-attname-others-span";
-                span.appendChild(document.createTextNode(p + " : "));
-                li.appendChild(span);
-                li.appendChild(document.createTextNode(props[p]));
-                ul.appendChild(li);
-            }
-            if (ul) {
-                oDiv.appendChild(ul);
-                content.appendChild(oDiv);
+                if (ul) {
+                    oDiv.appendChild(ul);
+                    content.appendChild(oDiv);
+                }
             }
         }, map);
 

@@ -49,13 +49,13 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * @param {Object} options - options for function call.
      * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
-     * @param {String}  [options.position] - position of component into the map, 'topleft' by default
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
-     * @param {Object}  [options.exclusions] - list of exclusions with status
-     * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected
+     * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default
+     * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
+     * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status
+     * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-     * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
-     * @param {Object}  [options.routeOptions] - options of route service
+     * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service
+     * @param {Object}  [options.routeOptions = {}] - options of route service
      * @example
      *  var route = L.geoportalControl.Route({
      *      position : "topright",

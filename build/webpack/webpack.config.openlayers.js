@@ -485,9 +485,9 @@ module.exports = (env, argv) => {
             new CopyWebpackPlugin([
                 {
                     from : path.join(ROOT, "samples-src", "resources", "**/*"),
-                    to : path.join(ROOT, "samples", "resources")
-                    // context : path.join(ROOT, "samples-src", "resources"),
-                    // force: true
+                    to : path.join(ROOT, "samples", "resources"),
+                    context : path.join(ROOT, "samples-src", "resources"),
+                    force: true
                 }
             ]),
             // FIXME les ressources exemples ne sont pas prises en compte dans le mode watch !?
