@@ -2325,22 +2325,32 @@ var LayerImport = (function (Control) {
         // si on trouve une projection qui est connue par ol.proj : Openlayers gère la reprojection
         var CRSList = layerInfo.CRS;
         if (Array.isArray(CRSList)) {
-            for (var i = 0; i < CRSList.length; i++) {
-                var layerCRS = CRSList[i];
+            var layerCRS, i;
+            // si on a un tableau de projections issues du getCap, on check pour chacune
+            // si elle correspond à la projection de la carte
+            for (i = 0; i < CRSList.length; i++) {
+                layerCRS = CRSList[i];
                 if (layerCRS === mapProjCode) {
                     projection = layerCRS;
+                    // on renvoie la projection qui correspond à celle de la carte
                     return projection;
                 }
             }
-            for (var i = 0; i < CRSList.length; i++) {
+            // si aucune projection du getCap pour la couche n'est égale à celle de la carte
+            // on retourne la première projection listée dans le getCap gérée par openLayers
+            for (i = 0; i < CRSList.length; i++) {
+                layerCRS = CRSList[i];
                 if (layerCRS && typeof layerCRS === "string") {
                     if (olGetProj(layerCRS) || olGetProj(layerCRS.toUpperCase())) {
                         projection = layerCRS;
+                        // on renvoie la première projection gérée par openLayers
                         return projection;
                     }
                 }
             }
         }
+        // si la liste des projections n'est pas un tableau ou si aucune projection n'est égale à celle de la carte ou si aucune n'est géré par openLayers
+        // on return undefined (comportement d'origine de la fonction)
         return projection;
     };
 
