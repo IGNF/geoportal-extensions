@@ -11,6 +11,8 @@
 
 ## Summary
 
+Correction sur la gestion des projections pour les imports WMS
+
 ## Changelog
 
 * [Added]
@@ -22,6 +24,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Pour une couche WMS issue d'un import, on prend en priorité la projection de la carte si elle est gérée par le serveur WMS (#338) 
 
 * [Security]
 
