@@ -130,6 +130,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.14](#extension-geoportail-openlayers-version-3214)
   * [Summary](#summary-38)
   * [Changelog](#changelog-35)
+- [Extension Geoportail OpenLayers, version 3.2.15](#extension-geoportail-openlayers-version-3215)
+  * [Summary](#summary-39)
+  * [Changelog](#changelog-36)
 
 <!-- tocstop -->
 
@@ -1412,6 +1415,32 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
     - Fix sur les legendes MapBox (#328)
     - Fix sur le rendu sous FireFox des legendes MapBox (a9eada8fcfc020a603909ee6d0da8d4af2aa4248)
     - Fix sur le tri alpha des couches MapBox (a9eada8fcfc020a603909ee6d0da8d4af2aa4248)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.15
+
+**27/09/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correction sur la gestion des projections pour les imports WMS
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Pour une couche WMS issue d'un import, on prend en priorité la projection de la carte si elle est gérée par le serveur WMS (#338) 
 
 * [Security]
 
