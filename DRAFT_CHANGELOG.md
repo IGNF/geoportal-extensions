@@ -57,6 +57,7 @@
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -64,15 +65,11 @@
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Geoportail
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - access-lib geoportal 3.2.0
 
 * [Deprecated]
 

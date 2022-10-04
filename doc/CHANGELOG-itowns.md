@@ -73,6 +73,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.7](#extension-geoportail-itowns-version-237)
   * [Summary](#summary-21)
   * [Changelog](#changelog-20)
+- [Extension Geoportail Itowns, version 2.3.8](#extension-geoportail-itowns-version-238)
+  * [Summary](#summary-22)
+  * [Changelog](#changelog-21)
 
 <!-- tocstop -->
 
@@ -583,6 +586,32 @@ Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation d
 
     - mise à jour d'iTowns en version 2.28.2 (#336)
     - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.8
+
+**04/10/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Geoportail
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib geoportal 3.2.0
 
 * [Deprecated]
 
