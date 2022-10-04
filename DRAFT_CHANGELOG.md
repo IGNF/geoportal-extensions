@@ -4,6 +4,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -11,7 +12,7 @@
 
 ## Summary
 
-Correction sur la gestion des projections pour les imports WMS
+Utilisation du Geocodage v2
 
 ## Changelog
 
@@ -19,13 +20,13 @@ Correction sur la gestion des projections pour les imports WMS
 
 * [Changed]
 
+    - mise à jour  pour utilisation du service de Geocodage v2 (#279)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - Pour une couche WMS issue d'un import, on prend en priorité la projection de la carte si elle est gérée par le serveur WMS (#338) 
 
 * [Security]
 

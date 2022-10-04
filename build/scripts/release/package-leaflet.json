@@ -1,22 +1,32 @@
 {
-   "main" : "dist/GpPluginLeaflet-src.js",
    "license" : "CECILL-B",
-   "version" : "2.2.4",
-   "bugs" : {},
-   "scripts" : {},
-   "module" : "src/Leaflet/index.js",
+   "bundleDependencies" : [],
+   "description" : "French Geoportal Extension for Leaflet",
    "peerDependencies" : {},
    "dependencies" : {
       "proj4" : "2.7.5",
-      "leaflet" : "1.7.1",
-      "sortablejs" : "1.8.4",
       "leaflet-draw" : "1.0.4",
-      "proj4leaflet" : "1.0.2",
-      "node-fetch" : "^2.6.1",
       "loglevel" : "1.6.6",
-      "geoportal-access-lib" : "3.1.0",
-      "xmldom" : "^0.1.27"
+      "sortablejs" : "1.8.4",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature-new_geocode/geoportal-access-lib-3.1.0.tgz",
+      "xmldom" : "^0.1.27",
+      "leaflet" : "1.7.1",
+      "proj4leaflet" : "1.0.2",
+      "node-fetch" : "^2.6.1"
    },
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "bugs" : {},
+   "name" : "geoportal-extensions-leaflet",
+   "module" : "src/Leaflet/index.js",
+   "date" : "01/08/2022",
+   "scripts" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "devDependencies" : {},
+   "version" : "2.2.4",
+   "main" : "dist/GpPluginLeaflet-src.js",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -24,10 +34,6 @@
       "leaflet",
       "publish"
    ],
-   "directories" : {},
-   "bundleDependencies" : [],
-   "devDependencies" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "files" : [
       "dist/",
       "src/",
@@ -35,11 +41,5 @@
       "README.md",
       "package.json"
    ],
-   "date" : "11/05/2022",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "description" : "French Geoportal Extension for Leaflet",
-   "name" : "geoportal-extensions-leaflet"
+   "directories" : {}
 }
