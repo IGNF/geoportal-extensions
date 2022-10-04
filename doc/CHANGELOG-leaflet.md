@@ -75,6 +75,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.4](#extension-geoportail-leaflet-version-224)
   * [Summary](#summary-21)
   * [Changelog](#changelog-18)
+- [Extension Geoportail Leaflet, version 2.2.5](#extension-geoportail-leaflet-version-225)
+  * [Summary](#summary-22)
+  * [Changelog](#changelog-19)
 
 <!-- tocstop -->
 
@@ -656,6 +659,33 @@ Corrections sur l'interface d'ajout des couches WMS/WMTS
 * [Changed]
 
     - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.5
+
+**04/10/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Utilisation du Geocodage v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33) 
+    - mise à jour pour utilisation du service de Geocodage v2 (#279)
 
 * [Deprecated]
 

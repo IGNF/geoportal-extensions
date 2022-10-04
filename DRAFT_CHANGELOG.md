@@ -31,6 +31,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -38,16 +39,11 @@
 
 ## Summary
 
-Utilisation du Geocodage v2
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33) 
-    - mise à jour pour utilisation du service de Geocodage v2 (#279)
 
 * [Deprecated]
 
@@ -68,11 +64,15 @@ Utilisation du Geocodage v2
 
 ## Summary
 
+Mise à jour de la bibliothèque d'accès aux services Geoportail
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - access-lib geoportal 3.2.0
 
 * [Deprecated]
 
