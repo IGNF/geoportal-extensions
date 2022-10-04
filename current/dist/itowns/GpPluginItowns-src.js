@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 2.3.7
- * @date 01/08/2022
+ * @version 2.3.8
+ * @date 04/10/2022
  *
  */
 
@@ -80,7 +80,7 @@
 		exports["Gp"] = factory(require("node-fetch"), require("xmldom"), require("itowns"));
 	else
 		root["Gp"] = factory(root[undefined], root[undefined], root["itowns"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE__48__, __WEBPACK_EXTERNAL_MODULE__49__, __WEBPACK_EXTERNAL_MODULE__127__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE__48__, __WEBPACK_EXTERNAL_MODULE__49__, __WEBPACK_EXTERNAL_MODULE__108__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -187,30 +187,30 @@ var _package_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpac
 /* harmony import */ var _Common_Styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var _Styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
 /* harmony import */ var _Controls_MousePosition__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
-/* harmony import */ var _Controls_LayerSwitcher__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(137);
-/* harmony import */ var _Controls_BoostRelief__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(140);
-/* harmony import */ var _Controls_Buildings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(142);
-/* harmony import */ var _Controls_Attributions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(144);
-/* harmony import */ var _Controls_Scale__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(147);
-/* harmony import */ var _Controls_MiniGlobe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(149);
-/* harmony import */ var _Layer_LayerWMTS__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(151);
-/* harmony import */ var _Layer_LayerWMS__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(152);
-/* harmony import */ var _Layer_LayerElevation__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(153);
-/* harmony import */ var _Layer_VectorTileLayer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(154);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(126);
-/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(136);
-/* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(155);
+/* harmony import */ var _Controls_LayerSwitcher__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(118);
+/* harmony import */ var _Controls_BoostRelief__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(121);
+/* harmony import */ var _Controls_Buildings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(123);
+/* harmony import */ var _Controls_Attributions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(125);
+/* harmony import */ var _Controls_Scale__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(128);
+/* harmony import */ var _Controls_MiniGlobe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(130);
+/* harmony import */ var _Layer_LayerWMTS__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(132);
+/* harmony import */ var _Layer_LayerWMS__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(133);
+/* harmony import */ var _Layer_LayerElevation__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(134);
+/* harmony import */ var _Layer_VectorTileLayer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(135);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(107);
+/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(117);
+/* harmony import */ var _Common_Utils_AutoLoadConfig__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(136);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(36);
-/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(145);
+/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(126);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LayerUtils", function() { return _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
-/* harmony import */ var _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(156);
+/* harmony import */ var _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(137);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ProxyUtils", function() { return _Common_Utils_ProxyUtils__WEBPACK_IMPORTED_MODULE_19__["default"]; });
 
-/* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(157);
+/* harmony import */ var _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(138);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ColorUtils", function() { return _Common_Utils_ColorUtils__WEBPACK_IMPORTED_MODULE_20__["default"]; });
 
-/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(158);
+/* harmony import */ var _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(139);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MathUtils", function() { return _Common_Utils_MathUtils__WEBPACK_IMPORTED_MODULE_21__["default"]; });
 
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(34);
@@ -341,7 +341,7 @@ if (window.itowns) {
 /* 1 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.6.15\",\"date\":\"01/08/2022\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.2.4\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.2.13\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.7\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.20.1\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"3.1.0\",\"itowns\":\"2.38.2\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"6.9.0\",\"ol-mapbox-style\":\"6.7.0\",\"proj4\":\"2.7.5\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.14.0\",\"three\":\"0.137.5\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
+module.exports = JSON.parse("{\"name\":\"geoportal-extensions\",\"description\":\"French Geoportal Extensions for OpenLayers, Leaflet and iTowns libraries\",\"version\":\"2.7.0\",\"date\":\"04/10/2022\",\"leafletExtName\":\"French Geoportal Extension for Leaflet\",\"leafletExtVersion\":\"2.2.5\",\"olExtName\":\"French Geoportal Extension for OpenLayers\",\"olExtVersion\":\"3.2.16\",\"itownsExtName\":\"French Geoportal Extension for Itowns\",\"itownsExtVersion\":\"2.3.8\",\"main\":\"dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js\",\"module\":\"src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js\",\"directories\":{},\"scripts\":{\"setup\":\"npm install\",\"clean\":\"echo \\\"Warning: target not yet implemented!\\\" && exit 0\",\"eslint\":\"eslint src/\",\"test\":\"npm run test:serve\",\"test:serve\":\"cd test && webpack-dev-server --hot --config webpack.test.serve.js\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"npm run sample:ol:serve\",\"sample:itowns:serve\":\"webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open\",\"sample:leaflet:serve\":\"webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open\",\"sample:ol:serve\":\"webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"npm run doc:ol:serve\",\"doc:itowns:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open\",\"doc:leaflet:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.leaflet --content-base jsdoc/leaflet --port 9001 --open\",\"doc:ol:serve\":\"webpack-dev-server --hot  --config build/webpack/webpack.config.openlayers --content-base jsdoc/openlayers --port 9001 --open\",\"build:dev\":\"npm-run-all --print-label --print-name build:*:dev\",\"build:prod\":\"npm-run-all --print-label --print-name build:*:prod\",\"build:src\":\"npm-run-all --print-label --print-name build:*:src\",\"build\":\"npm-run-all --print-label --print-name build:*:*\",\"build:itowns\":\"npm-run-all --print-label --print-name build:itowns:*\",\"build:itowns:dev\":\"webpack --config build/webpack/webpack.config.itowns --mode=development\",\"build:itowns:prod\":\"webpack --config build/webpack/webpack.config.itowns --mode=production\",\"build:itowns:src\":\"webpack --config build/webpack/webpack.config.itowns --mode=none\",\"build:ol\":\"npm-run-all --print-label --print-name build:ol:*\",\"build:ol:dev\":\"webpack --config build/webpack/webpack.config.openlayers --mode=development\",\"build:ol:prod\":\"webpack --config build/webpack/webpack.config.openlayers --mode=production\",\"build:ol:src\":\"webpack --config build/webpack/webpack.config.openlayers --mode=none\",\"build:leaflet\":\"npm-run-all --print-label --print-name build:leaflet:*\",\"build:leaflet:dev\":\"webpack --config build/webpack/webpack.config.leaflet --mode=development\",\"build:leaflet:prod\":\"webpack --config build/webpack/webpack.config.leaflet --mode=production\",\"build:leaflet:src\":\"webpack --config build/webpack/webpack.config.leaflet --mode=none\"},\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/IGNF/geoportal-extensions.git\"},\"author\":\"IGNF\",\"keywords\":[\"geoportail\",\"javascript\",\"OpenLayers\",\"Leaflet\",\"Itowns\",\"3D\"],\"license\":\"CECILL-B\",\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-extensions/issues\"},\"homepage\":\"https://github.com/IGNF/geoportal-extensions#readme\",\"dependencies\":{\"@mapbox/mapbox-gl-style-spec\":\"13.20.1\",\"eventbusjs\":\"0.2.0\",\"geoportal-access-lib\":\"3.2.0\",\"itowns\":\"2.38.2\",\"leaflet\":\"1.7.1\",\"leaflet-draw\":\"1.0.4\",\"loglevel\":\"^1.6.7\",\"markdown-toc\":\"^1.2.0\",\"ol\":\"6.9.0\",\"ol-mapbox-style\":\"6.7.0\",\"proj4\":\"2.7.5\",\"proj4leaflet\":\"1.0.2\",\"sortablejs\":\"1.14.0\",\"three\":\"0.137.5\",\"whatwg-fetch\":\"3.0.0\"},\"devDependencies\":{\"@babel/core\":\"^7.4.4\",\"@babel/plugin-transform-template-literals\":\"^7.7.4\",\"@babel/preset-env\":\"^7.4.4\",\"babel-loader\":\"^8.0.5\",\"chai\":\"^4.2.0\",\"chalk\":\"^4.0.0\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.0.3\",\"core-js\":\"^3.6.4\",\"css-loader\":\"^3.4.2\",\"eslint\":\"^6.8.0\",\"eslint-config-standard\":\"^14.1.1\",\"eslint-loader\":\"^4.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.1.1\",\"eslint-plugin-standard\":\"^4.0.0\",\"exports-loader\":\"^0.7.0\",\"expose-loader\":\"^0.7.5\",\"fs-extra\":\"^9.0.0\",\"handlebars\":\"^4.7.5\",\"handlebars-layouts\":\"^3.1.4\",\"html-webpack-plugin\":\"^4.0.4\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"mini-css-extract-plugin\":\"^0.9.0\",\"mocha\":\"^7.1.1\",\"mocha-loader\":\"^5.0.0\",\"npm-run-all\":\"^4.1.5\",\"optimize-css-assets-webpack-plugin\":\"^5.0.1\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"requirejs\":\"^2.3.6\",\"responsive-loader\":\"^1.2.0\",\"speed-measure-webpack-plugin\":\"^1.3.0\",\"string-template\":\"^1.0.0\",\"style-loader\":\"^1.1.3\",\"terser-webpack-plugin\":\"^2.0.0\",\"url-loader\":\"^4.0.0\",\"webpack\":\"^4.30.0\",\"webpack-cli\":\"^3.3.1\",\"webpack-dev-server\":\"^3.3.1\",\"webpack-node-externals\":\"^1.7.2\"}}");
 
 /***/ }),
 /* 2 */
@@ -601,14 +601,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var proj4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(proj4__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(126);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(129);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(131);
-/* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(132);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(133);
-/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(135);
-/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(136);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(107);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_CheckRightManagement__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(110);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(112);
+/* harmony import */ var _Common_Controls_MousePositionDOM__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(113);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(114);
+/* harmony import */ var _Utils_PositionFormater__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(116);
+/* harmony import */ var _CRS_CRS__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(117);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
@@ -9529,8 +9529,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Services_DefaultUrlService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51);
 /* harmony import */ var _Services_Alti_Response_model_AltiResponse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63);
 /* harmony import */ var _Services_Alti_Response_model_Elevation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(64);
-/* harmony import */ var _Services_AutoComplete_Response_model_AutoCompleteResponse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(112);
-/* harmony import */ var _Services_AutoComplete_Response_model_SuggestedLocation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(113);
+/* harmony import */ var _Services_AutoComplete_Response_model_AutoCompleteResponse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(93);
+/* harmony import */ var _Services_AutoComplete_Response_model_SuggestedLocation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(94);
 /* harmony import */ var _Services_AutoConf_Response_model_AutoConfResponse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(68);
 /* harmony import */ var _Services_AutoConf_Response_model_Constraint__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(69);
 /* harmony import */ var _Services_AutoConf_Response_model_Format__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(70);
@@ -9545,18 +9545,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Services_AutoConf_Response_model_TileMatrix__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(80);
 /* harmony import */ var _Services_AutoConf_Response_model_TileMatrixLimit__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(81);
 /* harmony import */ var _Services_AutoConf_Response_model_TileMatrixSet__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(79);
-/* harmony import */ var _Services_Geocode_Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(102);
-/* harmony import */ var _Services_Geocode_Response_model_GeocodedLocation__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(104);
-/* harmony import */ var _Services_Geocode_Response_model_DirectGeocodedLocation__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(103);
-/* harmony import */ var _Services_Geocode_Response_model_ReverseGeocodedLocation__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(109);
-/* harmony import */ var _Services_ProcessIsoCurve_Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(125);
-/* harmony import */ var _Services_Route_Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(119);
-/* harmony import */ var _Services_Route_Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(120);
-/* harmony import */ var _Protocols_XHR__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(45);
-/* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(41);
-/* harmony import */ var _Utils_Helper__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(43);
-/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(52);
-var _package_json__WEBPACK_IMPORTED_MODULE_30___namespace = /*#__PURE__*/__webpack_require__.t(52, 1);
+/* harmony import */ var _Services_ProcessIsoCurve_Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(106);
+/* harmony import */ var _Services_Route_Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(100);
+/* harmony import */ var _Services_Route_Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(101);
+/* harmony import */ var _Protocols_XHR__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(45);
+/* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(41);
+/* harmony import */ var _Utils_Helper__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(43);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(52);
+var _package_json__WEBPACK_IMPORTED_MODULE_26___namespace = /*#__PURE__*/__webpack_require__.t(52, 1);
 /**
 * Global variable Gp.
 *
@@ -9589,10 +9585,6 @@ var _package_json__WEBPACK_IMPORTED_MODULE_30___namespace = /*#__PURE__*/__webpa
 *     - {@link Gp.Services.AutoCompleteResponse .AutoCompleteResponse()}
 *     - {@link Gp.Services.Config .Config()}
 *     - {@link Gp.Services.DefaultUrl .DefaultUrl()}
-*     - .Geocode
-*         - {@link Gp.Services.Geocode.GeocodedLocation .GeocodedLocation()}
-*         - {@link Gp.Services.Geocode.ReverseGeocodedLocation .ReverseGeocodedLocation()}
-*         - {@link Gp.Services.Geocode.DirectGeocodedLocation .DirectGeocodedLocation()}
 *     - {@link Gp.Services.GeocodeResponse .GeocodeResponse()}
 *     - {@link Gp.Services.GetConfigResponse .GetConfigResponse()}
 *     - {@link Gp.Services.IsoCurveResponse .IsoCurveResponse()}
@@ -9644,14 +9636,10 @@ var _package_json__WEBPACK_IMPORTED_MODULE_30___namespace = /*#__PURE__*/__webpa
 
 
 
-
-
-
-
 /** Version */
-const servicesVersion = _package_json__WEBPACK_IMPORTED_MODULE_30__.version;
+const servicesVersion = _package_json__WEBPACK_IMPORTED_MODULE_26__.version;
 /** Publication date */
-const servicesDate = _package_json__WEBPACK_IMPORTED_MODULE_30__.date;
+const servicesDate = _package_json__WEBPACK_IMPORTED_MODULE_26__.date;
 
 // on declare les ns dans root global
 var Gp = {};
@@ -9661,7 +9649,7 @@ Gp.servicesDate = servicesDate;
 
 // Export Protocols
 Gp.Protocols = {};
-Gp.Protocols.XHR = _Protocols_XHR__WEBPACK_IMPORTED_MODULE_27__["default"];
+Gp.Protocols.XHR = _Protocols_XHR__WEBPACK_IMPORTED_MODULE_23__["default"];
 // Export services
 Gp.Services = _Services_Services__WEBPACK_IMPORTED_MODULE_0__["default"];
 // Export DefaultUrls
@@ -9690,21 +9678,15 @@ Gp.Services.Config.Thematic = _Services_AutoConf_Response_model_Thematic__WEBPAC
 Gp.Services.Config.TileMatrix = _Services_AutoConf_Response_model_TileMatrix__WEBPACK_IMPORTED_MODULE_17__["default"];
 Gp.Services.Config.TileMatrixLimit = _Services_AutoConf_Response_model_TileMatrixLimit__WEBPACK_IMPORTED_MODULE_18__["default"];
 Gp.Services.Config.TileMatrixSet = _Services_AutoConf_Response_model_TileMatrixSet__WEBPACK_IMPORTED_MODULE_19__["default"];
-// Export Geocode
-Gp.Services.GeocodeResponse = _Services_Geocode_Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_20__["default"];
-Gp.Services.Geocode = {};
-Gp.Services.Geocode.GeocodedLocation = _Services_Geocode_Response_model_GeocodedLocation__WEBPACK_IMPORTED_MODULE_21__["default"];
-Gp.Services.Geocode.DirectGeocodedLocation = _Services_Geocode_Response_model_DirectGeocodedLocation__WEBPACK_IMPORTED_MODULE_22__["default"];
-Gp.Services.Geocode.ReverseGeocodedLocation = _Services_Geocode_Response_model_ReverseGeocodedLocation__WEBPACK_IMPORTED_MODULE_23__["default"];
 // Export IsoCurve
-Gp.Services.IsoCurveResponse = _Services_ProcessIsoCurve_Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_24__["default"];
+Gp.Services.IsoCurveResponse = _Services_ProcessIsoCurve_Response_model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_20__["default"];
 // Export Route
-Gp.Services.RouteResponse = _Services_Route_Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_25__["default"];
+Gp.Services.RouteResponse = _Services_Route_Response_model_RouteResponse__WEBPACK_IMPORTED_MODULE_21__["default"];
 Gp.Services.Route = {};
-Gp.Services.Route.RouteInstruction = _Services_Route_Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_26__["default"];
+Gp.Services.Route.RouteInstruction = _Services_Route_Response_model_RouteInstruction__WEBPACK_IMPORTED_MODULE_22__["default"];
 // Export Erreurs et Outils
-Gp.Error = _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_28__["default"];
-Gp.Helper = _Utils_Helper__WEBPACK_IMPORTED_MODULE_29__["default"];
+Gp.Error = _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_24__["default"];
+Gp.Helper = _Utils_Helper__WEBPACK_IMPORTED_MODULE_25__["default"];
 
 /* harmony default export */ __webpack_exports__["default"] = (Gp);
 
@@ -9718,10 +9700,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Alti_Alti__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38);
 /* harmony import */ var _AutoConf_AutoConf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65);
 /* harmony import */ var _Geocode_Geocode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(82);
-/* harmony import */ var _Geocode_ReverseGeocode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(105);
-/* harmony import */ var _AutoComplete_AutoComplete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(110);
-/* harmony import */ var _Route_Route__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(114);
-/* harmony import */ var _ProcessIsoCurve_ProcessIsoCurve__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(121);
+/* harmony import */ var _Geocode_ReverseGeocode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90);
+/* harmony import */ var _AutoComplete_AutoComplete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(91);
+/* harmony import */ var _Route_Route__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(95);
+/* harmony import */ var _ProcessIsoCurve_ProcessIsoCurve__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(102);
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "point|circle|bbox" }] */
 
 /**
@@ -9812,41 +9794,28 @@ var Services = {
      * @method geocode
      * @param {Object} options - Options for function call.
      * @param {String} options.apiKey - Access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
-     * @param {String|Object} options.location - Geographic identifier to locate. May be provided as a single String or a structured Object for an address search. In this last case, the following properties are availaibles.
-     *      @param {Number} [options.location.number] - Street number.
-     *      @param {String} [options.location.street] - Street name.
-     *      @param {String} [options.location.city] - City name.
-     *      @param {Number} [options.location.postalCode] - Postal Code
-     * @param {Object} [options.filterOptions] - Additional filters to apply to search. The following properties may be given.
-     *      @param {Gp.BBox} [options.filterOptions.bbox] - Bounding box where to perform the search. Properties expressed in options.srs coordinates system.
-     *      @param {Array.<String>} [options.filterOptions.type] - Geographical identifier types to search. Values currently availables are : "PositionOfInterest" for place names, "StreetAddress" for address search, "CadastralParcel" for Cadastral parcels search. Default is "StreetAddress".
-     *
-     *      @param {String} [options.filterOptions.[prop]] - Additionnal properties to filter search. Properties depends on options.filterOptions.type, and values type should be "String".
-     *      <br/><br/>
-     *      Common Properties availables for all search types :<br/>
-     *      "municipality", "insee", "department".
+     * @param {String} [options.index="StreetAddress"] - Geographical identifier type to search. Values currently availables are : "PositionOfInterest" for place names, "StreetAddress" for address search, "CadastralParcel" for Cadastral parcels search, "location" for a multi-index search on "StreetAddress" and "PositionOfInterest". Default is "StreetAddress".
+     * @param {String} options.query - Geographic identifier to locate.
+     * @param {Object} [options.filters] - Additional filters to apply to search. The following properties may be given.
+     *      @param {String} [options.filters.[prop]] - Additionnal properties to filter search. Properties depends on options.index, and values type should be "String".
      *      <br/><br/>
      *      Properties availables for address search :<br/>
-     *      "quality", "ID", "ID_TR" and "territory".
+     *      "postalCode", "inseeCode" and "city".
      *      <br/><br/>
      *      Properties availables for place names search :<br/>
-     *      "importance", "nature" and "territory".
+     *      "postalCode", "inseeCode" and "type".
      *      <br/><br/>
      *      Properties availables for cadastral parcels search :<br/>
-     *      "sheet", "section", and "absorbedcity".
-     * @param {Number} [options.maximumResponses = 25] - Maximum number of responses. Default underlying service value applies (25) if not provided.
-     * @param {Boolean} [options.returnFreeForm = false] - Set this parameter to true if you wish to have an address returned in a single String (unstructured). If unset, default underlying service value (false) applies.
-     * @param {String} [options.srs = EPSG:4326] - Coordinates System used to expres coordinates for parameters and responses. Default underlying service value (EPSG:4326) applies.
+     *      "codeDepartement", "codeCommune", "nomCommune", "codeCommuneAbs", "codeArrondissement", "section", "numero", "feuille".
+     * @param {Number} [options.maximumResponses=20] - Maximum number of responses. Default underlying service value applies (20) if not provided.
+     * @param {Boolean} [options.returnTrueGeometry=false] - Set this parameter to true if you wish to have the true geometrie returned.
      * @param {Function} options.onSuccess - Callback function for getting successful service response. Takes a {@link Gp.Services.GeocodeResponse} object as a parameter except if "rawResponse" is set to true.
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/geoportail/ols] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
      * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
-     * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
-     * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
-     * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
      * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
@@ -9860,25 +9829,33 @@ var Services = {
      * @method reverseGeocode
      * @param {Object} options - Options for function call.
      * @param {String} options.apiKey - Access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
-     * @param {Gp.Point} options.position - Reference position where to search geographical identifiers. Its coordinates are expressed in the coordinates system given with options.srs parameter. (default is CRS:84, that means position.x is the longitude and position.y the latitude)
-     * @param {Object} [options.filterOptions] - Additional filters to apply to search. The following properties may be given.
-     *      @param {Array.<String>} [options.filterOptions.type] - Geographical identifier types to search. Values currently availables are : "PositionOfInterest" for place names, "StreetAddress" for address search, "CadastralParcel" for Cadastral parcels search. Default is "StreetAddress".
-     *      @param {Gp.BBox} [options.filterOptions.bbox] - Bounding box where to perform the search. Expressed in options.srs coordinates system.
-     *      @param {Gp.Circle} [options.filterOptions.circle] - Circle where to perform the search. Expressed in options.srs coordinates system.
-     * @param {Array.<Gp.Point>} [options.filterOptions.polygon] - Polygon where to perform the search. Expressed in options.srs coordinates system.
-     * @param {Number} [options.maximumResponses] - Maximum number of responses. Default underlying service value applies (25) if not provided.
-     * @param {Boolean} [options.returnFreeForm = false] - Set this parameter to true if you wish to have an address returned in a single String (unstructured). If unset, default underlying service value (false) applies.
-     * @param {String} [options.srs = CRS:84] - Coordinates System used to express coordinates for parameters and responses. Only WGS 84 geographical positioning is supported. Therefore, two values are allowed : "CRS:84" (position.x is the longitude and position.y the latitude) and "EPSG:4326" (position.x is the latitude and position.y the longitude) . Default is CRS:84.
+     * @param {String} [options.index="StreetAddress"] - Geographical identifier type to search. Values currently availables are : "PositionOfInterest" for place names, "StreetAddress" for address search, "CadastralParcel" for Cadastral parcels search, "location" for a multi-index search on "StreetAddress" and "PositionOfInterest". Default is "StreetAddress".
+     * @param {Object} options.position - Reference position where to search geographical identifiers.
+     *      @param {Float} options.position.lon - Longitude
+     *      @param {Float} options.position.lat - Latitude
+     * @param {Object} [options.filters] - Additional filters to apply to search. The following properties may be given.
+     *      @param {String} [options.filters.[prop]] - Additionnal properties to filter search. Properties depends on options.index, and values type should be "String".
+     *      <br/><br/>
+     *      Properties availables for address search :<br/>
+     *      "postalCode", "inseeCode" and "city".
+     *      <br/><br/>
+     *      Properties availables for place names search :<br/>
+     *      "postalCode", "inseeCode" and "type".
+     *      <br/><br/>
+     *      Properties availables for cadastral parcels search :<br/>
+     *      "codeDepartement", "codeCommune", "nomCommune", "codeCommuneAbs", "codeArrondissement", "section", "numero", "feuille".
+     * @param {Object} [options.searchGeometry] - Location where to perform the search.
+     *      @param {String} options.searchGeometry.type - Geometry type (Point|Circle|Linestring|Polygon)
+     *      @param {Array.<Float>|Array.Array.<Float>} options.searchGeometry.coordinates - Coordinates
+     *      @param {Float} [options.searchGeometry.radius] - Radius (only for type 'Circle')
+     * @param {Number} [options.maximumResponses=20] - Maximum number of responses. Default underlying service value applies (20) if not provided.
      * @param {Function} options.onSuccess - Callback function for getting successful service response. Takes a {@link Gp.Services.GeocodeResponse} object as a parameter except if "rawResponse" is set to true.
      * @param {Function} [options.onFailure] - Callback function for handling unsuccessful service responses (timeOut, missing rights, ...). Takes a {@link Gp.Error} object as parameter.
      * @param {Number} [options.timeOut=0] - Number of milliseconds above which a timeOut response will be returned with onFailure callback (see above). Default value is 0 which means timeOut will not be handled.
      * @param {String} [options.serverUrl=http (s)://wxs.ign.fr/APIKEY/geoportail/ols] - Web service URL. If used, options.apiKey parameter is ignored. Only use if you know what you're doing.
      * @param {Boolean} [options.ssl = true] - Use of HTTPS or HTTP protocol to request the services. HTTPS by default (ssl=true).
-     * @param {String} [options.protocol=XHR] - Protocol used to handle dialog with web service. Possible values are 'JSONP' ({@link https://en.wikipedia.org/wiki/JSONP}) and 'XHR' ({@link https://en.wikipedia.org/wiki/XMLHttpRequest}). Only XHR protocol is supported in a NodeJS environment. Only use if you know what you're doing.
      * @param {String} [options.proxyURL] - Proxy URL to use when requesting underlying web service. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you're doing.
      * @param {String} [options.callbackSuffix] - Callback function name suffix to use in case of a JSONP protocol use (see above), to set your own suffix instead of auto-increment. Ignored when options.protocol is set to 'XHR' value. Only use if you know what you're doing.
-     * @param {String} [options.httpMethod=GET] - HTTP method to use when requesting underlying web service in case of a XHR protocol use (see above). Possible values are 'GET' and 'POST'. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
-     * @param {String} [options.contentType="application/xml"] - Content-Type to use when requesting underlying web service in case of a XHR protocol use (see above) and if method HTTP is POST. Ignored when options.protocol is set to 'JSONP' value. Only use if you know what you are doing.
      * @param {Boolean} [options.rawResponse=false] - Setting this parameter to true implies you want to handle the service response by yourself : it will be returned as an unparsed String in onSuccess callback parameter. Only use if you know what you are doing.
      * @param {Function} [options.onBeforeParse] - Callback function for handling service response before parsing (as an unparsed String). Takes a String as a parameter (the raw service response). Returns a String that will be parsed as the service response. Only use if you know what you are doing.
      */
@@ -10860,9 +10837,11 @@ CommonService.prototype = {
 
         // rajout de l'option gpbibaccess
         // INFO : acces au numero de version de package.conf aprés compilation !
-        this.options.serverUrl = _Utils_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].normalyzeUrl(this.options.serverUrl, {
-            "gp-access-lib" : _package_json__WEBPACK_IMPORTED_MODULE_6__.version
-        }, false);
+        if (this.CLASSNAME !== "Geocode" && this.CLASSNAME !== "ReverseGeocode" && this.CLASSNAME !== "AutoComplete") {
+            this.options.serverUrl = _Utils_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].normalyzeUrl(this.options.serverUrl, {
+                "gp-access-lib" : _package_json__WEBPACK_IMPORTED_MODULE_6__.version
+            }, false);
+        }
 
         // si le proxy est renseigné, on proxifie l'url du service
         if (bUrlProxified) {
@@ -11424,7 +11403,11 @@ var XHR = {
 
                 // seulement si options.data n'est pas vide (peut être un objet ou une chaine de caractères)
                 if (options.data && ((typeof options.data === "object" && Object.keys(options.data).length) || (typeof options.data === "string" && options.data.length)) && !corps) {
-                    options.url = _Utils_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].normalyzeUrl(options.url, options.data);
+                    if (options.scope.CLASSNAME === "Geocode" || options.scope.CLASSNAME === "ReverseGeocode") {
+                        options.url = options.url + options.data;
+                    } else {
+                        options.url = _Utils_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].normalyzeUrl(options.url, options.data);
+                    }
                 }
 
                 logger.trace("URL = ", options.url);
@@ -11549,7 +11532,7 @@ var XHR = {
                                     window.clearTimeout(onTimeOutTrigger);
                                     resolve(hXHR.response);
                                 } else {
-                                    var message = "Errors Occured on Http Request (status : '" + e.target.statusText + "' | url : '" + e.target.responseURL + "')";
+                                    var message = "Errors Occured on Http Request (status : '" + e.target.statusText + "' | url : '" + e.target.responseURL + "' | response : '" + e.target.response + "')";
                                     var status = e.target.status;
                                     reject({
                                         message : message,
@@ -13571,7 +13554,7 @@ var DefaultUrlService = {
 /* 52 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@3.1.0\",\"_id\":\"geoportal-access-lib@3.1.0\",\"_inBundle\":false,\"_integrity\":\"sha512-2G24zh3wkfF43++KbCCfG1x4t3QseaiV1x75urlKRhVgFHXTzC8D9MWnaPUeVVyBbgskhr9rV/ZzFFwGPdTBrQ==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@3.1.0\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"3.1.0\",\"saveSpec\":null,\"fetchSpec\":\"3.1.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-3.1.0.tgz\",\"_shasum\":\"8b53fab5865e73917dc16b43dc1ec8889d45235d\",\"_spec\":\"geoportal-access-lib@3.1.0\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"23/03/2022\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"3.1.0\"}");
+module.exports = JSON.parse("{\"_from\":\"geoportal-access-lib@3.2.0\",\"_id\":\"geoportal-access-lib@3.2.0\",\"_inBundle\":false,\"_integrity\":\"sha512-914Yk0C3mnYI+X56Y40t4OJwBiZ1nEbW8D9Dse4WcS54Au8ZpkZ9Ep1efNYMxC5618zqn7r4VvzF58Xa+BqzEQ==\",\"_location\":\"/geoportal-access-lib\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"geoportal-access-lib@3.2.0\",\"name\":\"geoportal-access-lib\",\"escapedName\":\"geoportal-access-lib\",\"rawSpec\":\"3.2.0\",\"saveSpec\":null,\"fetchSpec\":\"3.2.0\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/geoportal-access-lib/-/geoportal-access-lib-3.2.0.tgz\",\"_shasum\":\"7a707b75743f01b5465cc72d1316f13f8b87df7a\",\"_spec\":\"geoportal-access-lib@3.2.0\",\"_where\":\"/home/runner/work/geoportal-extensions/geoportal-extensions\",\"author\":{\"name\":\"IGNF\"},\"bugs\":{\"url\":\"https://github.com/IGNF/geoportal-access-lib/issues\"},\"bundleDependencies\":false,\"date\":\"04/10/2022\",\"dependencies\":{\"es6-promise\":\"^4.2.4\",\"node-fetch\":\"^2.6.1\",\"xmldom\":\"^0.1.27\"},\"deprecated\":false,\"description\":\"French Geoportal resources access library\",\"devDependencies\":{\"@babel/core\":\"^7.12.10\",\"@babel/plugin-transform-template-literals\":\"^7.12.1\",\"@babel/preset-env\":\"^7.12.11\",\"babel-loader\":\"^8.2.2\",\"chai\":\"^4.1.2\",\"clean-webpack-plugin\":\"^3.0.0\",\"copy-webpack-plugin\":\"^5.1.2\",\"eslint\":\"^7.18.0\",\"eslint-config-standard\":\"^16.0.2\",\"eslint-loader\":\"^4.0.2\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^11.1.0\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-standard\":\"^5.0.0\",\"glob\":\"^7.1.2\",\"handlebars-layouts\":\"^3.1.4\",\"handlebars-webpack-plugin\":\"^1.4.1\",\"html-webpack-plugin\":\"^4.5.1\",\"istanbul-instrumenter-loader\":\"^3.0.1\",\"jsdoc-webpack-plugin\":\"^0.3.0\",\"loglevel\":\"^1.6.1\",\"mocha\":\"^7.2.0\",\"mocha-loader\":\"^5.1.5\",\"mocha-webpack\":\"^2.0.0-beta.0\",\"mochawesome\":\"^6.2.1\",\"nyc\":\"^15.1.0\",\"path\":\"^0.12.7\",\"replace-bundle-webpack-plugin\":\"^1.0.0\",\"sinon\":\"^9.2.4\",\"sinon-es6\":\"0.0.3\",\"speed-measure-webpack-plugin\":\"^1.4.2\",\"string-template\":\"^1.0.0\",\"terser-webpack-plugin\":\"^2.3.8\",\"webpack\":\"^4.46.0\",\"webpack-cli\":\"^3.3.12\",\"webpack-dev-server\":\"^3.11.2\",\"webpack-node-externals\":\"^2.5.2\",\"webpack-shell-plugin\":\"^0.5.0\"},\"homepage\":\"https://github.com/IGNF/geoportal-access-lib#readme\",\"keywords\":[\"geoportail\",\"webservice\",\"javascript\",\"es6\"],\"license\":\"CECILL-B\",\"main\":\"dist/GpServices-src.js\",\"module\":\"src/Gp.js\",\"name\":\"geoportal-access-lib\",\"nyc\":{\"include\":[\"src/**/*.js\"],\"instrument\":false,\"sourceMap\":false},\"optionalDependencies\":{},\"peerDependencies\":{},\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/IGNF/geoportal-access-lib.git\"},\"scripts\":{\"build\":\"webpack --mode=none\",\"build:dev\":\"webpack --mode=development\",\"build:prod\":\"webpack --mode=production\",\"clean\":\"echo \\\"Warning: no yet implemented!\\\" && exit 0\",\"cover\":\"nyc --reporter=lcov --reporter=text npm run test\",\"doc\":\"npm run doc:serve\",\"doc:serve\":\"webpack-dev-server --content-base jsdoc --port 9001 --open\",\"eslint\":\"eslint src/\",\"sample\":\"npm run sample:serve\",\"sample:serve\":\"webpack-dev-server --mode=none --open-page samples/index-src.html --https --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:dev\":\"webpack-dev-server --mode=development --open-page samples/index-map.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"sample:serve:prod\":\"webpack-dev-server --mode=production --open-page samples/index-prod.html --content-base . --output-public-path '/dist/' --port 9001 --open\",\"setup\":\"npm install\",\"test\":\"mocha-webpack --reporter mochawesome --reporter-options reportDir=test-report,reportFilename=index --webpack-config ./test/webpack/webpack.test.js --glob \\\"test_*.js\\\" test/spec/\",\"test:end-to-end:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.js\",\"test:end-to-end:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.end-to-end.serve.docker.js\",\"test:serve\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.js\",\"test:serve:docker\":\"webpack-dev-server --hot --config ./test/webpack/webpack.test.serve.docker.js\"},\"version\":\"3.2.0\"}");
 
 /***/ }),
 /* 53 */
@@ -18538,9 +18521,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(42);
-/* harmony import */ var _Request_DirectGeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(83);
-/* harmony import */ var _Response_DirectGeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(100);
-
+/* harmony import */ var _Request_GeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(83);
+/* harmony import */ var _Response_GeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(86);
 
 
 
@@ -18562,73 +18544,56 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @param {Object} options - options spécifiques au service (+ les options heritées)
  *
- * @param {String|Object} options.location - Nom de l'adresse, du toponyme, de l'unité administrative ou de la parcelle cadastrale recherchée.
- *      Sous forme de String, la propriété permet de faire une recherche déstructurée.
- *      Sous forme d'objet, la propriété permet de structurer la recherche.
- *      Dans ce cas, les propriétés possibles de cet objet sont décrites ci-après.
- *      @param {Number} [options.location.number] - Numéro du bâtiment de l'adresse recherchée, dans le cas d'une recherche structurée
- *      (si options.location est un objet Javascript).
- *      @param {String} [options.location.street] - Nom de la rue de l'adresse recherchée, dans le cas d'une recherche structurée
- *      (si options.location est un objet Javascript).
- *      @param {String} [options.location.city] - Nom de la ville de l'adresse recherchée, dans le cas d'une recherche structurée
- *      (si options.location est un objet Javascript).
- *      @param {Number} [options.location.postalCode] - Numéro du code postal de l'adresse recherchée, dans le cas d'une recherche structurée
- *      (si options.location est un objet Javascript).
+ * @param {String|Object} options.query - Nom de l'adresse, du toponyme, de l'unité administrative ou de la parcelle cadastrale recherchée.
  *
- * @param {Object} [options.filterOptions] - Les propriétés possibles de cet objet sont décrites ci-après.
- * @param {Object} [options.filterOptions.bbox] - Emprise dans laquelle on souhaite effectuer la recherche.
- *      Les propriétés possibles de cet objet sont décrites ci-après.
- *      @param {Float} options.filterOptions.bbox.left - Abscisse du côté gauche de la BBOX
- *      @param {Float} options.filterOptions.bbox.right - Abscisse du côté droit de la BBOX
- *      @param {Float} options.filterOptions.bbox.top - Ordonnée supérieure de la BBOX
- *      @param {Float} options.filterOptions.bbox.bottom - Ordonnée inférieure de la BBOX
- *
- * @param {Array.<String>} [options.filterOptions.type = "StreetAddress"] - Type de l'objet recherché.
- *      Le service de géocodage du Géoportail permet de rechercher des 'PostionOfInterest' pour des toponymes, des 'StreetAddress'
- *      pour des adresses postales, et/ou des 'CadastralParcel' pour des parcelles cadastrales.
- *      D'autres types pourront être rajoutés selon l'évolution du service.
- *      Par défaut, type = ['StreetAddress'].
- *
- * @param {String} [options.filterOptions.[proprietes du filtre]] - Critère supplémentaire pour filtrer la recherche sous la forme
+ * @param {Object} [options.filters] - Les propriétés possibles de cet objet sont décrites ci-après.
+ * @param {String} [options.filters.[prop]] - Critère supplémentaire pour filtrer la recherche sous la forme
  *      d'un couple clé/valeur à définir selon les possibilités du serveur ajouté à la requête.
- *      Le service de géocodage du Géoportail permet de filtrer tous les résultats avec les propriétés :
- *          "municipality", "insee", et "department".
- *      Il permet aussi de filtrer les adresses postales avec les propriétés :
- *          "quality", "ID", "ID_TR" et "territory".
- *      Il permet de filtrer les toponymes avec les propriétés :
- *          "importance", "nature" et "territory".
+ *      Le service de géocodage du Géoportail permet de filtrer les adresses postales avec les propriétés :
+ *          "postalCode", "inseeCode", "city".
+ *      Il permet également de filtrer les toponymes avec les propriétés :
+ *          "postalCode", "inseeCode", "type".
  *      Enfin, il permet de filtrer les parcelles cadastrales avec les propriétés :
- *          "sheet", "section", et "absorbedcity". Pas de valeur par défaut.
+ *          "codeDepartement", "codeCommune", "nomCommune", "codeCommuneAbs", "codeArrondissement", "section", "numero", "feuille".
+ *
+ * @param {String} [options.index = "StreetAddress"] - Type de l'objet recherché.
+ *      Le service de géocodage du Géoportail permet de rechercher des 'PositionOfInterest' pour des toponymes, des 'StreetAddress'
+ *      pour des adresses postales ou des 'CadastralParcel' pour des parcelles cadastrales.
+ *      L'index 'location' regroupe les indexes 'StreetAddress' et 'PositionOfInterest'.
+ *      D'autres types pourront être rajoutés selon l'évolution du service.
+ *      Par défaut, index = 'StreetAddress'.
+ *
+ * @param {Object} options.position - Position du point de référence pour le calcul de proximité exprimée dans le système de référence spécifié par le srs.
+ *      @param {Float} options.position.lon - Longitude du point de référence pour le calcul de proximité.
+ *      @param {Float} options.position.lat - Latitude du point de référence pour le calcul de proximité.
  *
  * @param {Number} [options.maximumResponses] - Nombre de réponses maximal que l'on souhaite recevoir.
  *      Pas de valeur par défaut.
- *      Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 25.
+ *      Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 20.
  *
- * @param {Boolean} [options.returnFreeForm] - Indique si l'on souhaite en réponse un localisant concaténée plutôt que structuré.
- *      Pas de valeur par défaut. Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 'false'.
+ * @param {Boolean} [options.returnTrueGeometry = false] - Booléen indiquant si l'on souhaite récupérer la géométrie vraie des objects géolocalisés.
+ *      false par défaut.
  *
- * @param {String} [options.srs] - Système de coordonnées dans lequel les paramètres géographiques en entrée et la réponse du service sont exprimés.
- *      Pas de valeur par défaut. Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 'EPSG:4326'.
  *
  * @example
  *   var options = {
  *      apiKey : null,
  *      serverUrl : 'http://localhost/service/',
- *      protocol : 'JSONP', // JSONP|XHR
  *      proxyURL : null,
- *      httpMethod : 'GET', // GET|POST
  *      timeOut : 10000, // ms
  *      rawResponse : false, // true|false
  *      scope : null, // this
  *      onSuccess : function (response) {},
  *      onFailure : function (error) {},
  *      // spécifique au service
- *      positions : [{lon:, lat:}, {lon:, lat:}],
+ *      position : {lon:, lat:},
+ *      index : 'StreetAddress',
+ *      query : '10 rue du pont Machin-ville'
  *      (...)
  *   };
  * @private
  */
-function Geocode (options) {
+function Geocode (options_) {
     if (!(this instanceof Geocode)) {
         throw new TypeError(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("CLASS_CONSTRUCTOR", "Geocode"));
     }
@@ -18639,67 +18604,44 @@ function Geocode (options) {
      */
     this.CLASSNAME = "Geocode";
 
-    // appel du constructeur par heritage
-    _CommonService__WEBPACK_IMPORTED_MODULE_3__["default"].apply(this, arguments);
-
     this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("Gp.Services.Geocode");
     this.logger.trace("[Constructeur Geocode (options)]");
 
-    if (!options.location) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_MISSING", "location"));
-    }
+    var options = this.patchOptionConvertor(options_);
+    options.serverUrl = options.serverUrl || "https://wxs.ign.fr/calcul/geoportail/geocodage/rest/0.1/search";
 
-    // FIXME ECMAScript 5 support
-    if (typeof options.location === "object" && Object.keys(options.location).length === 0) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_EMPTY", "location"));
-    } else if (typeof options.location === "string" && options.location.length === 0) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_EMPTY", "location"));
+    // appel du constructeur par heritage
+    _CommonService__WEBPACK_IMPORTED_MODULE_3__["default"].apply(this, [options]);
+
+    if (!options.hasOwnProperty("query")) {
+        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_MISSING", "query"));
     }
 
     // ajout des options spécifiques au service
-    this.options.location = options.location;
+    this.options.query = options.query;
 
-    // on definit des filtres apr defaut
-    if (!options.filterOptions || typeof options.filterOptions !== "object") {
-        this.options.filterOptions = options.filterOptions = {
-            type : ["StreetAddress"]
-        };
+    // on definit l'index par defaut
+    if (!options.index) {
+        this.options.index = options.index = "StreetAddress";
     }
 
-    // FIXME ECMAScript 5 support (valable pour un objet uniquement !)
-    // ceci permet de tester le cas où 'options.filterOptions' : {}
-    if (Object.keys(options.filterOptions).length === 0) {
-        this.options.filterOptions = {
-            type : ["StreetAddress"]
-        };
-    }
-
-    var filter = Object.keys(options.filterOptions);
-    for (var i = 0; i < filter.length; i++) {
-        var key = filter[i];
-        // on transforme certains filtres qui pourraient être numériques en string
-        var filtersCouldBeNumberList = ["department", "number", "postalCode", "insee", "importance", "ID", "IDTR", "absorbedCity", "sheet", "section", "inseeRegion", "inseeDepartment"];
-        if (filtersCouldBeNumberList.indexOf(key) !== -1 && typeof options.filterOptions[key] !== "string") {
-            options.filterOptions[key] = options.filterOptions[key].toString();
-        }
-        // on supprime les filtres vides
-        if (!options.filterOptions[key]) {
-            delete this.options.filterOptions[key];
+    if (options.filters) {
+        var filter = Object.keys(options.filters);
+        for (var i = 0; i < filter.length; i++) {
+            var key = filter[i];
+            // on supprime les filtres vides
+            if (typeof options.filters[key] === "undefined" ||
+                (typeof options.filters[key] === "object" && Object.keys(options.filters[key]).length === 0) ||
+                (typeof options.filters[key] === "string" && options.filters[key].length === 0) ||
+                (Array.isArray(options.filters[key]) && options.filters[key].length === 0)
+            ) {
+                delete this.options.filters[key];
+            }
         }
     }
 
-    this.options.filterOptions.type = options.filterOptions.type || ["StreetAddress"];
-    this.options.maximumResponses = options.maximumResponses || 25;
-    this.options.returnFreeForm = options.returnFreeForm || false;
-    this.options.srs = options.srs || "EPSG:4326";
-
-    // attributs d'instances
-
-    /**
-     * Format forcé de la réponse du service : "xml"
-     * sauf si l'on souhaite une reponse brute (options.rawResponse)
-     */
-    this.options.outputFormat = (this.options.rawResponse) ? "" : "xml";
+    this.options.index = options.index || "StreetAddress";
+    this.options.maximumResponses = options.maximumResponses || 20;
 }
 
 /**
@@ -18716,6 +18658,83 @@ Geocode.prototype = Object.create(_CommonService__WEBPACK_IMPORTED_MODULE_3__["d
 Geocode.prototype.constructor = Geocode;
 
 /**
+ * Patch pour la convertion des options vers le nouveau formalisme.
+ *
+ * @param {Object} options_ - options du service
+ * @return {Object} - options
+ */
+Geocode.prototype.patchOptionConvertor = function (options_) {
+    const options = options_;
+
+    if (options.hasOwnProperty("location")) {
+        this.logger.warn("The parameter 'location' is deprecated");
+
+        if (!options.query) {
+            options.query = options.location;
+        }
+        delete options.location;
+    }
+
+    if (options.filterOptions) {
+        this.logger.warn("The parameter 'filterOptions' is deprecated");
+
+        if (!options.filters) {
+            options.filters = options.filterOptions;
+
+            if (options.filters.type) {
+                this.logger.warn("The parameter 'filterOptions.type' is deprecated");
+                if (!options.index) {
+                    if (Array.isArray(options.filters.type) && options.filters.type.length > 0) {
+                        options.index = options.filters.type[0];
+                    } else {
+                        options.index = options.filters.type;
+                    }
+                }
+                delete options.filters.type;
+            }
+
+            if (options.filters.bbox) {
+                this.logger.warn("The parameter 'filterOptions.bbox' is deprecated");
+                delete options.filters.bbox;
+            }
+        }
+        delete options.filterOptions;
+    }
+
+    if (options.position) {
+        if (options.position.x) {
+            this.logger.warn("The parameter 'position.x' is deprecated");
+
+            if (!options.position.lon) {
+                options.position.lon = options.position.x;
+            }
+            delete options.position.x;
+        }
+
+        if (options.position.y) {
+            this.logger.warn("The parameter 'position.y' is deprecated");
+
+            if (!options.position.lat) {
+                options.position.lat = options.position.y;
+            }
+            delete options.position.y;
+        }
+    }
+
+    if (options.returnFreeForm) {
+        this.logger.warn("The parameter 'returnFreeForm' is deprecated");
+        delete options.returnFreeForm;
+    }
+
+    if (options.srs) {
+        this.logger.warn("The parameter 'srs' is deprecated");
+        delete options.srs;
+    }
+
+    return options;
+};
+
+/**
  * Création de la requête (overwrite)
  *
  * @param {Function} error   - callback des erreurs
@@ -18725,14 +18744,16 @@ Geocode.prototype.buildRequest = function (error, success) {
     var options = {
         httpMethod : this.options.httpMethod,
         // options specifiques du service
-        location : this.options.location,
-        returnFreeForm : this.options.returnFreeForm,
-        filterOptions : this.options.filterOptions,
-        srs : this.options.srs,
-        maximumResponses : this.options.maximumResponses
+        geocodeMethod : "search",
+        query : this.options.query,
+        index : this.options.index,
+        returnTrueGeometry : this.options.returnTrueGeometry,
+        position : this.options.position,
+        maxResp : this.options.maximumResponses,
+        filters : this.options.filters
     };
 
-    this.request = _Request_DirectGeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__["default"].build(options);
+    this.request = _Request_GeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__["default"].build(options);
 
     // on teste si la requete a bien été construite !
     (!this.request)
@@ -18748,22 +18769,17 @@ Geocode.prototype.buildRequest = function (error, success) {
  */
 Geocode.prototype.analyzeResponse = function (error, success) {
     /* INFO :
-         Etape 1 : Création de la requête
-            -> Appel du format OpenLS pour créer une requête à partir des paramètres (par exemple)
-              (soit directement une URL si GET, soit une requête XML si POST)
-            /!\ tester si apiKey && serverUrl => on ne garde que serverUrl
+         Etape 1 : Création de la requête (URL)
             -> stockage de la requête dans this.request
-         Etape 2 : Envoi de la requête selon le bon protocole
-            -> appel du protocol JSONP ou XHR, et envoi (par ex send ()) (this.protocol)
-            -> récupération de la réponse xml dans la fonction onSuccess () (this.response)
+         Etape 2 : Envoi de la requête
+            -> appel du protocol XHR, et envoi (par ex send ())
+            -> récupération de la réponse JSON dans la fonction onSuccess () (this.response)
             -> si code HTTP 200 et pas de message d'erreur : etape 3
             -> si code HTTP != 200 : lancement de la fonction de callback onFailure avec le message d'erreur
-         Etape 3 : Analyse de la réponse xml et construction du JSON (si rawResponse === false )
-            -> appel du parser pour récupérer le xmlDocument
-            -> appel du reader OpenLS pour lire les éléments et récupérer l'objet JSON
-               correspondant au type de géocodage (défini dans les specs)
+         Etape 3 : Analyse de la réponse JSON (si rawResponse === false )
+            -> appel du parser pour récupérer le document
          Etape 4 : Lancement de la fonction de callback onSuccess avec la réponse :
-            -> xmlResponse (si rawResponse === true)
+            -> JSON (si rawResponse === true)
             -> ou geocodedLocations
     */
 
@@ -18776,7 +18792,7 @@ Geocode.prototype.analyzeResponse = function (error, success) {
             scope : this
         };
 
-        _Response_DirectGeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__["default"].build(options);
+        _Response_GeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__["default"].build(options);
     } else {
         error.call(this, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EMPTY")));
     }
@@ -18792,31 +18808,19 @@ Geocode.prototype.analyzeResponse = function (error, success) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* harmony import */ var _Formats_XLS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(84);
-/* harmony import */ var _Formats_XLS_LocationUtilityService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(88);
-/* harmony import */ var _Formats_XLS_LocationUtilityService_GeocodeFilterExtension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(91);
-/* harmony import */ var _Request_model_StreetAddress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(95);
-/* harmony import */ var _Request_model_PositionOfInterest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(97);
-/* harmony import */ var _Request_model_CadastralParcel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(98);
-/* harmony import */ var _Request_model_Administratif__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(99);
+/* harmony import */ var _GeocodeRequestREST__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(84);
 /**
- * Creation d'une requête OpenLS en mode POST ou GET
+ * Creation d'une requête
  * (Factory)
  *
- * @module DirectGeocodeRequestFactory
- * @alias Gp.Services.Geocode.Request.DirectGeocodeRequestFactory
+ * @module GeocodeRequestFactory
+ * @alias Gp.Services.Geocode.Request.GeocodeRequestFactory
  * @private
  */
 
 
 
-
-
-
-
-
-
-var DirectGeocodeRequestFactory = {
+var GeocodeRequestFactory = {
 
     /**
      * interface unique
@@ -18827,15 +18831,13 @@ var DirectGeocodeRequestFactory = {
      *
      * @example
      *   var options = {
-     *      httpMethod:
      *      // options specifiques du service
-     *      location:
-     *      returnFreeForm:
-     *      filterOptions:
-     *      srs:
+     *      geocodeMethod:
+     *      query:
+     *      filters:
      *      maximumResponses:
      *   };
-     *   var result = DirectGeocodeRequestFactory.build(options);
+     *   var result = GeocodeRequestFactory.build(options);
      *   if (!result) {
      *       // error...
      *   }
@@ -18843,55 +18845,16 @@ var DirectGeocodeRequestFactory = {
      */
     build : function (options) {
         // logger
-        var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("DirectGeocodeRequestFactory");
-        logger.trace(["DirectGeocodeRequestFactory::build()"]);
+        var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("GeocodeRequestFactory");
+        logger.trace(["GeocodeRequestFactory::build()"]);
 
-        var request = null;
+        var settings = options || {};
 
-        // gestion des filtres (table de geocodage) !
-        // par defaut, on les ajoute toute ...
-        var oFilter = new _Formats_XLS_LocationUtilityService_GeocodeFilterExtension__WEBPACK_IMPORTED_MODULE_3__["default"]();
-        oFilter.addFilterExtensions(new _Request_model_Administratif__WEBPACK_IMPORTED_MODULE_7__["default"]());
-        oFilter.addFilterExtensions(new _Request_model_StreetAddress__WEBPACK_IMPORTED_MODULE_4__["default"]());
-        oFilter.addFilterExtensions(new _Request_model_PositionOfInterest__WEBPACK_IMPORTED_MODULE_5__["default"]());
-        oFilter.addFilterExtensions(new _Request_model_CadastralParcel__WEBPACK_IMPORTED_MODULE_6__["default"]());
-
-        // objet LUS
-        // on peut aussi par un objet XLS::GeocodeRequest
-        var oLUS = new _Formats_XLS_LocationUtilityService__WEBPACK_IMPORTED_MODULE_2__["default"]({
-            location : options.location,
-            returnFreeForm : options.returnFreeForm,
-            filterOptions : options.filterOptions
-        });
-        oLUS.addFilter(oFilter);
-
-        // Format XLS
-        var oXLS = new _Formats_XLS__WEBPACK_IMPORTED_MODULE_1__["default"]({
-            srsName : options.srs,
-            maximumResponses : options.maximumResponses
-        });
-        oXLS.namespace = true;
-        oXLS.setService(oLUS);
-
-        // request brute !
-        request = oXLS.build();
-
-        // en mode GET, la requête est encodée
-        // et le param. 'qxml' est ajouté
-        if (options.httpMethod === "GET") {
-            var myRequest = "qxml=" +
-                encodeURIComponent(request)
-                    .replace(/-/g, "%2D")
-                    .replace(/_/g, "%5F")
-                    .replace(/\./g, "%2E")
-                    .replace(/!/g, "%21")
-                    .replace(/~/g, "%7E")
-                    .replace(/\*/g, "%2A")
-                    .replace(/'/g, "%27")
-                    .replace(/\(/g, "%28")
-                    .replace(/\)/g, "%29");
-            request = myRequest;
+        var myReq = new _GeocodeRequestREST__WEBPACK_IMPORTED_MODULE_1__["default"](settings);
+        if (!myReq.processRequestString()) {
+            throw new Error("Error process request (rest) !");
         }
+        var request = myReq.requestString;
 
         logger.trace(request);
 
@@ -18899,7 +18862,7 @@ var DirectGeocodeRequestFactory = {
     }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (DirectGeocodeRequestFactory);
+/* harmony default export */ __webpack_exports__["default"] = (GeocodeRequestFactory);
 
 
 /***/ }),
@@ -18909,9 +18872,8 @@ var DirectGeocodeRequestFactory = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* harmony import */ var _XLS_RequestHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85);
-/* harmony import */ var _XLS_Request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86);
-/* harmony import */ var _XLS_AbstractService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87);
+/* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
+/* harmony import */ var _model_GeocodeParamREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(85);
 
 
 
@@ -18919,481 +18881,86 @@ __webpack_require__.r(__webpack_exports__);
 
 /**
  * @classdesc
- *
- * standard OpenLS
- * standard XLS
- * (version 1.2)
- *
- * Réfs :
- *     - {@link http://schemas.opengis.net/ols/1.2/}
- *     - {@link http://www.opengeospatial.org/standards/ols}
- *     - {@link http://wxs.ign.fr/schemas/}
- *
- *
- * Création du template XLS (avec gestion des namespaces)
- * ------------------------
- * ```
- *   balise xsd : element name="XLS" attribute name="version" [(attribute ref="lang")]
- * ```
- *
- * Exemple :
- * ```
- * <XLS xmlns="http://www.opengis.net/xls" version="1.2">
- *   < (ref. OLS) />
- * </XLS>
- * ```
- * ```
- * <xls:XLS xmlns:xls="http://www.opengis.net/xls" version="1.2">
- *   <xls: (ref. OLS) />
- * </xls:XLS>
- * ```
- *
- * Création des templates OLS pour LocationUtilityService
- * ------------------------------------------------------
- *
- * Exemple :
- *
- * ```
- * <RequestHeader srsName="epsg:4326"/>
- * <Request maximumResponses="26" methodName="GeocodeRequest" requestID="uid1349081498314_388" version="1.2">
- *      <GeocodeRequest>
- *          <Address countryCode="PositionOfInterest">
- *              <freeFormAddress>saint mandé</freeFormAddress>
- *          </Address>
- *      </GeocodeRequest>
- *  </Request>
- * ```
- * ```
- * <RequestHeader sessionID="" />
- * <Request methodName="ReverseGeocodeRequest" version="1.2" requestID="" maximumResponses="10">
- *   <ReverseGeocodeRequest>
- *     <Position>
- *       <gml:Point xmlns:gml="http://www.opengis.net/gml">
- *           <gml:pos>50.347775 3.205098</gml:pos>
- *       </gml:Point>
- *     </Position>
- *     <ReverseGeocodePreference>StreetAddress</ReverseGeocodePreference>
- *  </ReverseGeocodeRequest>
- * </Request>
- * ```
- * ```
- * Geocodage direct (balise xsd) :
- *   element ref="RequestHeader" [ (attribute name="clientName" attribute name="clientPassword" attribute name="sessionID" attribute name="srsName" attribute name="MSID") ]
- *     element name="Request" attribute name="methodName" attribute name="version" attribute name="requestID" [ attribute name="maximumResponses" ]
- *       element name="GeocodeRequest" attribute name="returnFreeForm"
- *         element ref="xls:Address"
- * ```
- * ```
- * Geocodage inverse (balise xsd) :
- *   element ref="RequestHeader" [ (attribute name="clientName" attribute name="clientPassword" attribute name="sessionID" attribute name="srsName" attribute name="MSID") ]
- *     element name="Request" attribute name="methodName" attribute name="version" attribute name="requestID" [ attribute name="maximumResponses" ]
- *       element name="ReverseGeocodeRequest"
- *         element ref="xls:Position"
- *         element name="ReverseGeocodePreference" (enumeration)
- * ```
- *
- * Il existe 3 sous ensembles d'objets :
- *     - RequestHeader
- *     - Request
- *     - ReverseGeocodeRequest, GeocodeRequest
- *
- * GeocodeRequest est composé d'un objet {@link Gp.Services.Geocode.Response.GeocodeLocation}.
- * ReverseGeocodeRequest est composé d'un objet {@link Gp.Services.ReverseGeocode.Response.ReverseGeocodeLocation}.
- *
- * Les locations font appels aux objets suivants qui possèdent des attributs spécifiques
- * en fonction du type de table de geocodage interrogé :
- *     - StreetAddress
- *     - CadastralParcel
- *     - PositionOfInterest
- *     - Administratif
- *
- *
- * et des élements sous jacents tels que :
- *     - ReverseGeocodePreference -> tables de geocodages :
- *         - StreetAddress
- *         - CadastralParcel
- *         - PositionOfInterest
- *         - Administratif (une balise par table)
- *     - Position -> standard GML 3.2.1
- *     - Address  -> cf. ci-dessous
- *
- * ```
- * Position (balise xsd) :
- *   ex. <Position><gml:Point xmlns:gml="http://www.opengis.net/gml"><gml:pos>50.347775 3.205098</gml:pos></gml:Point></Position>
- *   ex. <Position><gml:CircleByCenterPoint xmlns:gml="http://www.opengis.net/gml"><gml:pos>48.85978570614691 2.2913572761128878</gml:pos><gml:radius>1000</gml:radius></gml:CircleByCenterPoint></Position>
- *   (au choix)
- *   element ref="gml:Point"
- *   element ref="gml:CircleByCenterPoint"
- *   element ref="gml:Polygon"
- *   element ref="gml:MultiPolygon"
- *   les autres elemennts ne sont pas implémentés (QoP, Speed, Direction, Time, ...)
- *
- * Address (balise xsd) :
- *   ex. <Address countryCode="StreetAddress"><freeFormAddress>1 r de paris saint denis</freeFormAddress></Address>
- *   attribute name="countryCode"
- *     element name="freeFormAddress"
- *     element ref="xls:Place"
- *     element ref="gml:Envelope"
- *  ou
- *   ex. <Address countryCode="StreetAddress"><StreetAddress><Street>1 rue Marconi</Street></StreetAddress><Place type="Municipality">Metz</Place><PostalCode>57000</PostalCode></Address>
- *   attribute name="countryCode"
- *     element ref="xls:StreetAddress"
- *     element ref="xls:PostalCode"
- *     element ref="xls:Place"
- *     element ref="gml:Envelope"
- *
- * Place  (balise xsd) :
- *  ex. <Place type="Municipality">Metz</Place>
- *  attribute name="type"
- *   enumeration value="CountrySubdivision"
- *   enumeration value="CountrySecondarySubdivision"
- *   enumeration value="Municipality"
- *   enumeration value="MunicipalitySubdivision"
- *   enumeration value="choume-banchi-go"
- *   enumeration value="Qualite"
- *   enumeration value="Departement"
- *   enumeration value="Bbox"
- *   enumeration value="Commune"
- *   enumeration value="Territoire"
- *   enumeration value="Importance"
- *   enumeration value="Nature"
- *   (la liste n'est pas exhaustives...)
- *
- * StreetAddress (balise xsd) :
- *   ex. <StreetAddress><Street>1 rue Marconi</Street></StreetAddress>
- *   attribute name="locator"
- *    element name="xls:Building"
- *    element ref="xls:Street"
- *
- * Street (balise xsd) :
- *   ex. <Street>1 rue Marconi</Street>
- *   attribute name="officialName" (...)
- *
- * Building (balise xsd) :
- *   ex. <Building number="800"/>
- *   attribute name="number" attribute name="subdivision" attribute name="buildingName"
- *
- * PostalCode (balise xsd) :
- *   ex. <PostalCode>77182</PostalCode>
- *
- * ```
- *
- * Requête
- * -------
- *
- * 2 modes de requête sur les services : GET ou POST.
- *
- * Le mode GET n'est que l'encodage du XML en param (qxml) de la requête (donc pas d'implementation particulière ?)
- *
- * Modèle de classes
- * -----------------
- *
- * ```
- *                 ________  XLS ____________
- *               /            |               \
- *   RequestHeader      AbstractService    Request
- *                            ^
- *                      ______|________________________
- *           (extends) /                               \ (extends)
- *          LocationUtilityService                    RouteService
- *                    |                                    |
- *         ___________|___________                       (...)
- *       /                        \
- * GeocodeRequest          ReverseGeocodeRequest
- *      |                          |
- *      |                     _____|______
- *      |                    /            \
- *   Address              Preference  Position
- *      |
- *    /   \
- * Place   StreetAddress
- *               |
- *             /   \
- *       Street   Building
- * ```
- *
- * @example
- * // encapsule un objet 'LocationUtilityService'
- * // dans une coquille XSL (avec/sans namespace)
- * xsl = new XSL ();
- * xsl.namespace = false;
- * xsl.srsName = "epsg:4326";
- * xsl.maximumResponses = 26;
- * //   methodName fournit par l'objet 'lus'
- * //   requestID est calculé
- * xsl.setService (lus);
- * xsl.build ();
- * // out ->
- * // <XLS xmlns="http://www.opengis.net/xls" version="1.2">
- * // <RequestHeader srsName="epsg:4326"/>
- * // <Request maximumResponses="26" methodName="GeocodeRequest" requestID="uid1349081498314_388" version="1.2">
- * //   < (ref. LocationUtilityService ou vide) />
- * //  </Request>
- * // </XLS>
- *
+ * Classe de gestion des requêtes de type REST sur le service de calcul d'itineraire
+ * (uniquement en GET)
  *
  * @constructor
- * @alias Gp.Formats.XLS
- * @param {Object} options - options du constructeur
- * @param {Object} options.srsName - identifiant du Systeme de Coordonnees
- * @param {String}   options.maximumResponses - nombre de reponses max d'une requete
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
+ * @alias Gp.Services.Geocode.Request.GeocodeRequestREST
+ * @param {Object} options - options definies dans le composant Route
+ *
+ * @example
+ * var options = {
+ *      (...)
+ * };
  *
  * @private
  */
-function XLS (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur XLS()]");
+function GeocodeRequestREST (options) {
+    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("GeocodeRequestREST");
+    this.logger.trace("[Constructeur GeocodeRequestREST ()]");
 
-    if (!(this instanceof XLS)) {
-        throw new TypeError("XLS constructor cannot be called as a function.");
+    if (!(this instanceof GeocodeRequestREST)) {
+        throw new TypeError("GeocodeRequestREST constructor cannot be called as a function.");
     }
 
-    // options par defaut
-    this.options = {
-        srsName : "EPSG:4326",
-        maximumResponses : 25
-    };
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            if (options[opt]) {
-                this.options[opt] = options[opt];
-            }
-        }
+    // existance des options
+    if (!options) {
+        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_EMPTY", "options"));
     }
+
+    /** liste des options */
+    this.settings = options;
 }
 
-/**
- * Version
- */
-XLS.VERSION = "1.2";
-
-XLS.prototype = {
+GeocodeRequestREST.prototype = {
 
     /**
-     * @lends module:XLS#
+     * @lends module:GeocodeRequestREST#
      */
 
     /**
-     * request (out)
+     * request
      * @type {String}
      */
     requestString : null,
 
     /**
-     * namespace
-     * Surcharge les balises XLS d'un prefixe.
-     * Par defaut, false
-     * @type {Boolean}
-     */
-    namespace : false,
-
-    /**
-     * Objet Service
-     * LocationUtilityService ou RouteService
-     * @type {AbstractService}
-     */
-    oService : null,
-
-    /**
      * Constructeur (alias)
      */
-    constructor : XLS,
+    constructor : GeocodeRequestREST,
 
     /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * __VERSION__, __NAMESPACE__, __SCHEMALOCATION__
-     * __REQUESTHEADER__, __REQUEST__
-     */
-    template : "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-        "<XLS version=\"__VERSION__\"\n" +
-        "__NAMESPACE__ \n" +
-        "__SCHEMALOCATION__>\n" +
-        "__REQUESTHEADER__\n" +
-        "__REQUEST__\n" +
-        "</XLS>\n",
-
-    /**
-     * Namespace par defaut.
+     * Construction de la requête.
      *
-     * @returns {String} namespace
+     * @returns {String} request
      */
-    namespaceByDefault : function () {
-        var ns = [
-            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"",
-            "xmlns:xls=\"http://www.opengis.net/xls\"",
-            "xmlns:gml=\"http://www.opengis.net/gml\""
-        ];
+    processRequestString : function () {
+        var request = "";
 
-        return ns.join(" ");
-    },
+        // Mapping des options avec le service de l'API REST
+        const oParams = new _model_GeocodeParamREST__WEBPACK_IMPORTED_MODULE_2__["default"](this.settings);
 
-    /**
-     * Schemalocation par defaut
-     *
-     * @returns {String} schemaLocation
-     */
-    schemaLocationByDefault : function () {
-        return "xsi:schemaLocation=\"http://www.opengis.net/xls http://schemas.opengis.net/ols/1.2/olsAll.xsd\"";
-    },
-
-    /**
-     * Setter Service
-     * Ajout d'un objet de type LocationUtilityService (LUS) ou RouteService
-     *
-     * @param {Object} oService - GeoceodeRequest / ReverseGeocodeRequest ou RouteRequest
-     */
-    setService : function (oService) {
-        if (!oService) {
-            this.logger.trace("L'objet de type Service XSL n'est pas encore defini !?");
-            return;
+        const params = oParams.getParams();
+        for (var i = 0; i < params.length; i++) {
+            var o = params[i];
+            if (request) {
+                request += "&";
+            }
+            request += o.k + "=" + o.v;
         }
 
-        if (oService instanceof _XLS_AbstractService__WEBPACK_IMPORTED_MODULE_3__["default"]) {
-            this.oService = oService;
-        } else {
-            this.logger.error("L'objet n'est pas du type 'LocationUtilityService' ou 'RouteService' !?");
+        if (!this.settings.geocodeMethod || (this.settings.geocodeMethod !== "search" && this.settings.geocodeMethod !== "reverse")) {
+            throw new Error("Error geocodeMethod not valid");
         }
-    },
 
-    /**
-     * Getter Service
-     * Retourne un objet de type LocationUtilityService (LUS) ou RouteService
-     * ex. GeoceodeRequest / ReverseGeocodeRequest ou RouteRequest
-     *
-     * @returns {Object} service (LocationUtilityService|RouteService)
-     */
-    getService : function () {
-        return this.oService;
+        this.requestString = "?" + request;
+        this.logger.trace(this.requestString);
+
+        return this.requestString;
     }
 };
 
-/**
- * Ajout d'un prefixe de namespace
- *
- * @todo impl. l'ajout de namespace
- * @param {Object} ns - ex. {key:xls, url:http://www.opengis.net/xls}
- * @param {String} request - requête
- * @returns {String} requête
- */
-XLS.prototype.addNamespace = function (ns, request) {
-    // INFO
-    // on recherche la clef dans les namespaces par defaut.
-    // si la clef n'existe pas dans les namespaceByDefault (), on l'ajoute.
-    // on surcharge toutes les balises, ex. XLS -> xls:XLS
-    // sauf celles qui sont déjà prefixées !
-
-    var keyNS = ns.key;
-    // var urlNS = ns.url; // TODO not yet implemented !
-
-    // recherche la clef dans les namespaces par defaut
-    var bFound = false;
-    var allNS = this.namespaceByDefault().split(" ");
-    for (var index = 0; index < allNS.length; index++) {
-        var element = allNS[index];
-        var map = element.split("=");
-        var key = map[0];
-        // var url = map[1]; // TODO not yet implemented !
-
-        if (key === "xmlns:" + keyNS) {
-            bFound = true;
-            break;
-        }
-    }
-
-    // TODO
-    // si on a une nouvelle clef, on l'ajoute...
-    if (!bFound) {
-        this.logger.warn("L'ajout d'un nouvel namespace n'est pas encore implémenté !");
-        return request;
-    }
-
-    // surcharge toutes les balises
-    var regex;
-    var subst;
-
-    // regex balise ouvrante
-    regex = /<(\w+[\s>])/g;
-    subst = "<" + keyNS + ":$1";
-    request = request.replace(regex, subst);
-
-    // regex balise fermante
-    regex = /<\/(\w+[\s>])/g;
-    subst = "</" + keyNS + ":$1";
-    request = request.replace(regex, subst);
-
-    this.logger.trace("namespace", request);
-
-    return request;
-};
-
-/**
- * Construction de la requête
- * @returns {String} requête
- */
-XLS.prototype.build = function () {
-    // out ->
-    // <XLS xmlns="http://www.opengis.net/xls" version="1.2">
-    // <RequestHeader srsName="epsg:4326"/>
-    // <Request maximumResponses="26" methodName="GeocodeRequest" requestID="uid1349081498314_388" version="1.2">
-    //   < (ref. LocationUtilityService ou vide) />
-    //  </Request>
-    // </XLS>
-
-    // as t on un objet de type Service XLS à disposition ?
-    var bService = !!this.getService();
-
-    var template = "";
-    template = this.template;
-    template = template.replace(/__VERSION__/g, XLS.VERSION);
-    template = template.replace(/__NAMESPACE__/g, this.namespaceByDefault);
-    template = template.replace(/__SCHEMALOCATION__/g, this.schemaLocationByDefault);
-
-    // header
-    var oHeader = new _XLS_RequestHeader__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        srsName : this.options.srsName
-    });
-    template = template.replace(/__REQUESTHEADER__/g, oHeader.toString());
-
-    // request
-    var oRequest = new _XLS_Request__WEBPACK_IMPORTED_MODULE_2__["default"]({
-        maximumResponses : this.options.maximumResponses,
-        version : XLS.VERSION, // FIXME même version ?
-        methodName : bService ? this.getService().CLASSTYPE : null
-    });
-    template = template.replace(/__REQUEST__/g, oRequest.toString());
-
-    // objet lus ou route
-    if (bService) { // INFO : clef __REQUESTSERVICE__ dispo dans l'objet 'Request'
-        template = template.replace(/<!-- __REQUESTSERVICE__ -->/g, this.getService().toString());
-    }
-
-    if (!template) {
-        this.logger.warn("traduction tmpl : empty request !?");
-        return;
-    }
-
-    // ajout d'un namespace
-    if (this.namespace) {
-        // ajout de xls par defaut
-        template = this.addNamespace({
-            key : "xls",
-            url : "http://www.opengis.net/xls"
-        }, template);
-    }
-
-    this.requestString = template;
-    this.logger.trace("traduction tmpl", template);
-
-    // on retourne qqchose !
-    return this.requestString;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (XLS);
+/* harmony default export */ __webpack_exports__["default"] = (GeocodeRequestREST);
 
 
 /***/ }),
@@ -19405,87 +18972,179 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 
 
+
 /**
  * @classdesc
- *
- * Entête de la requête XSL
- *
- * @example
- * // header XSL
- * header = new RequestHeader ();
- * header.srsName = "epsg:4326";
- * header.toString();
- * // out ->
- * // <RequestHeader srsName="epsg:4326"/>
- *
+ * Classe de gestion des param. des requêtes du service de calcul d'itineraire (REST).
+ *      Permet le mapping avec les options du service.
  * @constructor
- * @alias Gp.Formats.XLS.RequestHeader
+ * @alias Gp.Services.Route.Request.RouteParamREST
  * @param {Object} options - options
- * @param {Object}   options.srsName - projection
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
  *
  * @private
  */
-function RequestHeader (options) {
+function GeocodeParamREST (options) {
+    if (!(this instanceof GeocodeParamREST)) {
+        throw new TypeError("GeocodeParamREST constructor cannot be called as a function.");
+    }
+
     this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur RequestHeader ()]");
+    this.logger.trace("[Constructeur GeocodeParamREST ()]");
 
-    if (!(this instanceof RequestHeader)) {
-        throw new TypeError("RequestHeader constructor cannot be called as a function.");
+    /**
+     * Options en paramêtres du constructeur.
+     */
+    this.options = options || {};
+
+    // methode de geocodage
+    if (!this.options.geocodeMethod || (this.options.geocodeMethod !== "search" && this.options.geocodeMethod !== "reverse")) {
+        throw new Error("Error geocodeMethod not valid");
     }
+    this.geocodeMethod = this.options.geocodeMethod;
 
-    // options par defaut
-    this.options = options || {
-        srsName : "EPSG:4326"
-    };
+    // mapping des options avec l'API REST
+    this.query = (typeof this.options !== "undefined") ? this.options.query : null;
 
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
-    }
+    this.searchGeometry = this.options.searchGeometry || null;
+
+    this.index = this.options.index || null;
+
+    this.lon = this.options.position && this.options.position.lon ? this.options.position.lon : null;
+
+    this.lat = this.options.position && this.options.position.lat ? this.options.position.lat : null;
+
+    this.maxResp = this.options.maxResp || null;
+
+    this.returnTrueGeometry = this.options.returnTrueGeometry || null;
+
+    this.filters = this.options.filters || {};
 }
 
-RequestHeader.prototype = {
+/**
+ * CLASSNAME
+ */
+GeocodeParamREST.CLASSNAME = "GeocodeParamREST";
+
+GeocodeParamREST.prototype = {
 
     /**
-     * @lends module:RequestHeader#
+     * @lends module:GeocodeParamREST#
      */
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    requestString : null,
-
-    /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * __SRSNAME__
-     */
-    template : "<RequestHeader srsName=\"__SRSNAME__\"/>",
 
     /**
      * Constructeur (alias)
      */
-    constructor : RequestHeader,
+    constructor : GeocodeParamREST,
 
     /**
-     * toString
-     * @returns {String} requête
+     * Retourne les filtres
+     * @returns {String} les filtres
      */
-    toString : function () {
-        var template = null;
-        template = this.template;
-        template = template.replace(/__SRSNAME__/g, this.options.srsName);
-        this.requestString = template;
-        return this.requestString;
+    getFilters : function () {
+        var filters = {};
+        for (var prop in this.filters) {
+            if (this.filters.hasOwnProperty(prop)) {
+                filters[prop] = this.filters[prop];
+            }
+        }
+        return filters;
+    },
+
+    /**
+     * Retourne l'index
+     * @returns {String} l'index
+     */
+    getIndex : function () {
+        if (this.index === undefined) {
+            return null;
+        }
+        if (this.index === "StreetAddress") {
+            return "address";
+        } else if (this.index === "CadastralParcel") {
+            return "parcel";
+        } else if (this.index === "PositionOfInterest") {
+            return "poi";
+        } else if (this.index === "location") {
+            return "location";
+        }
+        return this.index;
+    },
+
+    /**
+     * Retourne la géométrie de recherche
+     * @returns {String} la géométrie de recherche au format json
+     */
+    getSearchGeometry : function () {
+        return JSON.stringify(this.searchGeometry);
     }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (RequestHeader);
+/**
+ * Tableau de clefs/valeurs pour param.
+ *
+ * @returns {Array} liste de paramêtres
+ */
+GeocodeParamREST.prototype.getParams = function () {
+    var map = [];
+
+    if (this.geocodeMethod === "search") {
+        map.push({
+            k : "q",
+            v : this.query
+        });
+    }
+
+    if (this.index) {
+        map.push({
+            k : "index",
+            v : this.getIndex()
+        });
+    }
+
+    if (this.geocodeMethod === "reverse") {
+        map.push({
+            k : "searchgeom",
+            v : this.getSearchGeometry()
+        });
+    }
+
+    if (this.lon && this.lat) {
+        map.push({
+            k : "lon",
+            v : this.lon
+        });
+        map.push({
+            k : "lat",
+            v : this.lat
+        });
+    }
+
+    if (this.maxResp) {
+        map.push({
+            k : "limit",
+            v : this.maxResp
+        });
+    }
+
+    if (this.returnTrueGeometry) {
+        map.push({
+            k : "returntruegeometry",
+            v : this.returnTrueGeometry
+        });
+    }
+
+    const filters = this.getFilters();
+    for (var key in filters) {
+        map.push({
+            k : key,
+            v : filters[key]
+        });
+    }
+
+    return map;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (GeocodeParamREST);
 
 
 /***/ }),
@@ -19494,1947 +19153,15 @@ RequestHeader.prototype = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* jshint bitwise: false */
-
-
-/**
- * @classdesc
- *
- * Requête XLS
- *
- * @example
- * // request XSL
- * request = new Request ();
- * request.maximumResponses = 26;
- * request.methodName = "GeocodeRequest";
- * request.version = "1.2";
- * request.toString();
- * // out ->
- * // <Request maximumResponses="26" methodName="GeocodeRequest" requestID="uid1349081498314_388" version="1.2">
- * //   <!-- __LUS__ -->
- * //  </Request>
- *
- * @constructor
- * @alias Gp.Formats.XLS.Request
- * @param {Object} options - options
- * @param {Object}   options.maximumResponses - 25
- * @param {String}   options.methodName - nom de l'objet LUS, "GeocodeRequest" | "ReverseGeocodeRequest"
- * @param {String}   options.version - '1.2'
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
- *
- * @private
- */
-function Request (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur Request ()]");
-
-    if (!(this instanceof Request)) {
-        throw new TypeError("Request constructor cannot be called as a function.");
-    }
-
-    // options par defaut
-    this.options = options || {
-        maximumResponses : 25,
-        methodName : null,
-        version : "1.2"
-    };
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
-    }
-}
-
-Request.prototype = {
-
-    /**
-     * @lends module:Request#
-     */
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    requestString : null,
-
-    /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * __MAXRESPONSES__, __METHODNAME__, __UUID__, __VERSION__
-     * __REQUESTSERVICE__
-     */
-    template : "<Request maximumResponses=\"__MAXRESPONSES__\" methodName=\"__METHODNAME__\" requestID=\"__UUID__\" version=\"__VERSION__\">" +
-        "<!-- __REQUESTSERVICE__ -->" +
-        "</Request>",
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : Request,
-
-    /**
-     * an rfc4122 version 4 compliant guid
-     * @returns {String} guid
-     */
-    guid : function () {
-        // INFO
-        // cf. http://byronsalau.com/blog/how-to-create-a-guid-uuid-in-javascript/
-        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0;
-            var v = c === "x" ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    },
-
-    /**
-     * toString
-     * @returns {String} requête
-     */
-    toString : function () {
-        var template = null;
-        template = this.template;
-        template = template.replace(/__MAXRESPONSES__/g, this.options.maximumResponses);
-        template = template.replace(/__METHODNAME__/g, this.options.methodName);
-        template = template.replace(/__UUID__/g, this.guid());
-        template = template.replace(/__VERSION__/g, this.options.version);
-
-        this.requestString = template;
-        return this.requestString;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Request);
-
-
-/***/ }),
-/* 87 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-
-
-/**
- * @classdesc
- * @private
- *
- * @constructor
- * @alias Gp.Formats.XLS.AbstractService
- *
- * @param {Object} [options] - options
- */
-function AbstractService (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur AbstractService ()]");
-
-    if (!(this instanceof AbstractService)) {
-        throw new TypeError("AbstractService constructor cannot be called as a function.");
-    }
-
-    // options par defaut
-    this.options = options || {};
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
-    }
-}
-
-/**
- * @lends module:AbstractService#
- */
-AbstractService.prototype = {
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    strRequest : null,
-
-    /**
-     * objet Request
-     * @type {Request}
-     */
-    oRequest : null,
-
-    /**
-     * Filter
-     * @type {FilterExtension}
-     */
-    oFilter : null,
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : AbstractService,
-
-    /**
-     * Ajout d'un objet de type Request : GeocodeRequest / ReverseGeocodeRequest / RouteRequest
-     *
-     * @param {Object} oRequest - GeocodeRequest / ReverseGeocodeRequest / RouteRequest
-     */
-    addRequest : function (oRequest) {
-        this.logger.error("overwritten method !");
-    },
-
-    /**
-     * Ajout d'un objet de type FilterExtension : GeocodeFilterExtension ou RouteRequestExtension
-     *
-     * @param {Object} oFilter - GeocodeFilterExtension ou RouteRequestExtension
-     */
-    addFilter : function (oFilter) {
-        this.logger.error("overwritten method !");
-    },
-
-    /**
-     * toString
-     */
-    toString : function () {
-        this.logger.error("overwritten method !");
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (AbstractService);
-
-
-/***/ }),
-/* 88 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* harmony import */ var _AbstractService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87);
-/* harmony import */ var _LocationUtilityService_GeocodeRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(89);
-/* harmony import */ var _LocationUtilityService_ReverseGeocodeRequest__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(92);
-/* harmony import */ var _LocationUtilityService_GeocodeFilterExtension__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(91);
-
-
-
-
-
-
-/**
- * @classdesc
- *
- * Requête de type LocationUtilityService (LUS)
- * (Factory)
- *
- * @example
- * // encapsule un objet dans une coquille XSL, Factory sur les objets Geocode/ReverseGeocode
- * lus = new LocationUtilityService ();
- * lus.addRequest (req);
- * lus.toString();
- *  ou
- * lus = new LocationUtilityService ({
- *      location : "saint mandé",
- *      returnFreeForm : true,
- *      filterOptions : {
- *          type :  ['PositionOfInterest']
- *      }
- * });
- * lus.toString();
- *
- * // out ->
- * // <GeocodeRequest>
- * //   <Address countryCode="PositionOfInterest">
- * //     <freeFormAddress>saint mandé</freeFormAddress>
- * //   </Address>
- * // </GeocodeRequest>
- *
- * // creation de l'objet Geocode
- * req = new GeocodeRequest ();
- * req.addAddress (new Address (/*todo/*));
- * req.toString();
- * // out ->
- * // <GeocodeRequest>
- * //   <Address countryCode="PositionOfInterest">
- * //     <freeFormAddress>saint mandé</freeFormAddress>
- * //   </Address>
- * // </GeocodeRequest>
- *
- * // creation de l'objet ReverseGeocode
- * req = new ReverseGeocodeRequest ();
- * req.addPosition (new Position (position:{x: , y: }));
- * req.addPreference (['StreetAddress']);
- * req.toString();
- * // out ->
- * // <ReverseGeocodeRequest>
- * //     <Position>
- * //       <gml:Point xmlns:gml="http://www.opengis.net/gml">
- * //           <gml:pos>50.347775 3.205098</gml:pos>
- * //       </gml:Point>
- * //     </Position>
- * //     <ReverseGeocodePreference>StreetAddress</ReverseGeocodePreference>
- * //  </ReverseGeocodeRequest>
- *
- * @constructor
- * @alias Gp.Formats.XLS.LocationUtilityService
- * @param {Object} options - options
- * @param {Object}   options.location - location
- * @param {String}   options.position - position : {x : "", y : ""}
- * @param {String}   options.returnFreeForm - true|false
- * @param {Object}   options.filterOptions - filtres
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
- *
- * @private
- */
-function LocationUtilityService (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur LocationUtilityService ()]");
-
-    if (!(this instanceof LocationUtilityService)) {
-        throw new TypeError("LocationUtilityService constructor cannot be called as a function.");
-    }
-
-    /**
-     * Nom de la classe
-     */
-    this.CLASSNAME = "LocationUtilityService";
-
-    /**
-     * Type de classe de geocodage
-     * ex. GeocodeRequest ou ReverseGeocodeRequest
-     */
-    this.CLASSTYPE = null;
-
-    // appel du constructeur par heritage
-    _AbstractService__WEBPACK_IMPORTED_MODULE_1__["default"].apply(this, arguments);
-
-    // on determine le type de geocodage si les options sont renseignées
-    if (this.options) {
-        this.CLASSTYPE = (this.options.location) ? "GeocodeRequest" : (this.options.position) ? "ReverseGeocodeRequest" : null;
-    }
-}
-
-/**
- * @lends module:LocationUtilityService#
- */
-LocationUtilityService.prototype = Object.create(_AbstractService__WEBPACK_IMPORTED_MODULE_1__["default"].prototype, {
-    // todo
-    // getter/setter
-});
-
-/**
- * Constructeur (alias)
- */
-LocationUtilityService.prototype.constructor = LocationUtilityService;
-
-/**
- * (overwrite) Ajout d'un objet de type LUS : GeocodeRequest ou ReverseGeocodeRequest
- *
- * @param {Object} oLUSRequest - objet de type LUS
- */
-LocationUtilityService.prototype.addRequest = function (oLUSRequest) {
-    // on determine le type de geocodage
-    this.CLASSTYPE = oLUSRequest.CLASSNAME;
-
-    // on controle les types acceptés
-    switch (this.CLASSTYPE) {
-        case "GeocodeRequest":
-        case "ReverseGeocodeRequest":
-            this.oRequest = oLUSRequest;
-            break;
-        default:
-            throw new Error("Ce n'est pas un objet de type 'LUS Request' !?");
-    }
-};
-
-/**
- * (overwrite) Ajout d'un objet de type GeocodeFilterExtension
- *
- * @param {Object} oFilter - objet de type Filtre
- */
-LocationUtilityService.prototype.addFilter = function (oFilter) {
-    // FIXME gestion des filtres à partir des tables de geocodages
-    if (oFilter instanceof _LocationUtilityService_GeocodeFilterExtension__WEBPACK_IMPORTED_MODULE_4__["default"]) {
-        this.oFilter = oFilter;
-    }
-};
-
-/**
- * (overwrite) toString
- *
- * @returns {String} requête
- */
-LocationUtilityService.prototype.toString = function () {
-    // soit, on a un objet LUS Request déjà instancié
-    // sinon, il faut le construire à partir des options à disposition
-    if (!this.oRequest) {
-        // il nous faut des options
-        if (!this.options) {
-            throw new Error("Les options ne sont pas renseignées, impossible de construire la requête !");
-        }
-
-        // si les options 'location' et 'position' sont renseignées,
-        // on prendra par defaut le choix du geocodage direct
-        if (this.CLASSTYPE === "GeocodeRequest") {
-            var settingsDirect = {
-                location : this.options.location,
-                returnFreeForm : this.options.returnFreeForm,
-                filterOptions : this.options.filterOptions || {}
-            };
-            this.oRequest = new _LocationUtilityService_GeocodeRequest__WEBPACK_IMPORTED_MODULE_2__["default"](settingsDirect);
-            // ajout des filtres spécifiques au service du geocodage direct de l'IGN
-            if (this.oFilter) {
-                this.oRequest.addFilter(this.oFilter);
-            }
-        } else if (this.CLASSTYPE === "ReverseGeocodeRequest") {
-            var settingsInv = {
-                position : this.options.position,
-                returnFreeForm : this.options.returnFreeForm,
-                filterOptions : this.options.filterOptions || {}
-            };
-            this.oRequest = new _LocationUtilityService_ReverseGeocodeRequest__WEBPACK_IMPORTED_MODULE_3__["default"](settingsInv);
-        } else {
-            this.logger.error("impossible de determiner le type de geocodage : Direct ou Inverse !?");
-        }
-    }
-
-    // objet indefini !?
-    if (!this.oRequest) {
-        throw new Error("Type de Geocodage indefini !");
-    }
-
-    this.strRequest = this.oRequest.toString();
-    return this.strRequest;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (LocationUtilityService);
-
-
-/***/ }),
-/* 89 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* harmony import */ var _model_Address__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(90);
-/* harmony import */ var _GeocodeFilterExtension__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(91);
-
-
-
-
-/**
- * @classdesc
- * Requête de geocodage direct
- *
- * ```
- * XSD
- * Geocodage direct (balise xsd) :
- *   element ref="RequestHeader" [ (attribute name="clientName" attribute name="clientPassword" attribute name="sessionID" attribute name="srsName" attribute name="MSID") ]
- *     element name="Request" attribute name="methodName" attribute name="version" attribute name="requestID" [ attribute name="maximumResponses" ]
- *       element name="GeocodeRequest" attribute name="returnFreeForm"
- *         element ref="xls:Address"
- * ```
- *
- * @example
- * // creation de l'objet Geocode an ajoutant un objet Address
- * req = new GeocodeRequest ();
- * req.returnFreeForm = true; // TODO !
- * req.addAddress (new Address ({
- *      location : "saint mandé",
- *      type : ['PositionOfInterest'],
- *      filter : {
- *          (...)
- *      }
- * }));
- * req.toString();
- * // out ->
- * // <GeocodeRequest>
- * //   <Address countryCode="PositionOfInterest">
- * //     <freeFormAddress>saint mandé</freeFormAddress>
- * //   </Address>
- * // </GeocodeRequest>
- *
- * // creation de l'objet Geocode avec les options uniquement
- * req = new GeocodeRequest ({
- *      location : "saint mandé",
- *      returnFreeForm : true,
- *      filterOptions : {
- *          type : ['PositionOfInterest'],
- *          (...)
- *      }
- * });
- * req.toString();
- * // out ->
- * // <GeocodeRequest>
- * //   <Address countryCode="PositionOfInterest">
- * //     <freeFormAddress>saint mandé</freeFormAddress>
- * //   </Address>
- * // </GeocodeRequest>
- * @constructor
- *
- * @alias Gp.Formats.XLS.LocationUtilityService.GeocodeRequest
- * @param {Object} options - options
- * @param {Object}   options.location - location
- * @param {String}   options.returnFreeForm - returnFreeForm
- * @param {String}   options.filterOptions - filtres
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
- *
- * @private
- */
-function GeocodeRequest (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur GeocodeRequest ()]");
-
-    if (!(this instanceof GeocodeRequest)) {
-        throw new TypeError("GeocodeRequest constructor cannot be called as a function.");
-    }
-
-    // options par defaut
-    this.options = options || {};
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
-    }
-
-    // TODO
-    // gestion de l'option 'returnFreeForm' si elle n'est pas renseignée dans les options !
-
-    /**
-     * Nom de la classe (heritage)
-     */
-    this.CLASSNAME = "GeocodeRequest";
-}
-
-GeocodeRequest.prototype = {
-
-    /**
-     * @lends module:GeocodeRequest#
-     */
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    strRequest : null,
-
-    /**
-     * Addresse
-     * @type {Address}
-     */
-    oAddress : null,
-
-    /**
-     * Filter
-     * @type {GeocodeFilterExtension}
-     */
-    oFilter : null,
-
-    /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * __ADDRESS__, __RETURNFREEFORM__
-     */
-    template : "<GeocodeRequest returnFreeForm=\"__RETURNFREEFORM__\">" +
-        "__ADDRESS__" +
-        "</GeocodeRequest>",
-
-    /**
-     * Ajout d'un objet de type Adresse
-     *
-     * @param {Object} oAddress - Adresse
-     */
-    addAddress : function (oAddress) {
-        if (oAddress instanceof _model_Address__WEBPACK_IMPORTED_MODULE_1__["default"]) {
-            this.oAddress = oAddress;
-        }
-    },
-
-    /**
-     * Ajout d'un objet de type GeocodeFilterExtension
-     *
-     * @param {Object} oFilter - GeocodeFilterExtension
-     */
-    addFilter : function (oFilter) {
-        // FIXME gestion des filtres à partir des tables de geocodages
-        if (oFilter instanceof _GeocodeFilterExtension__WEBPACK_IMPORTED_MODULE_2__["default"]) {
-            this.oFilter = oFilter;
-        }
-    },
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : GeocodeRequest,
-
-    /**
-     * toString
-     *
-     * @returns {String} requête
-     */
-    toString : function () {
-        var template = "";
-        template = this.template;
-
-        // soit on a déjà un objet Address instancié,
-        // sinon, on le fabrique via les options
-        if (!this.oAddress) {
-            var settings = {};
-            settings.location = this.options.location;
-            settings.type = this.options.filterOptions.type || ["StreetAddress"];
-            settings.filter = this.options.filterOptions;
-            delete settings.filter.type; // on ne met pas le 'type' dans les filtres...
-
-            // gestion des filtres
-            if (this.oFilter) {
-                // on reconstruit les filtres
-                settings.filter = {};
-
-                // on determine la liste des filtres possibles
-                // pour chaque table de geocodage en param
-                for (var idx in settings.type) {
-                    var filter = settings.type[idx];
-                    var oFilter = this.oFilter.getFilter(filter);
-
-                    if (!oFilter) {
-                        this.logger.warn("Le filtre '" + filter + "' n'existe pas !?");
-                        continue;
-                    }
-
-                    var mFilter = this.options.filterOptions;
-
-                    // correspondances des attributs de filtres possibles avec ceux qui sont en options
-                    var attributs = oFilter.attributesList;
-                    for (var idxe = 0; idxe < attributs.length; idxe++) {
-                        var key = attributs[idxe];
-                        if (mFilter[key]) {
-                            var matchingKey = oFilter.serviceAttributes[idxe];
-                            oFilter.placeAttributes[matchingKey] = mFilter[key];
-                            this.logger.trace("Selection du filtre '" + key + "' sur le type '" + filter + "'.");
-                        }
-                    }
-
-                    // ajout des valeurs des filtres
-                    var places = oFilter.placeAttributes;
-                    for (var kplace in places) {
-                        if (places.hasOwnProperty(kplace)) {
-                            settings.filter[kplace] = places[kplace];
-                        }
-                    }
-                }
-            }
-
-            this.oAddress = new _model_Address__WEBPACK_IMPORTED_MODULE_1__["default"](settings);
-            if (!this.oAddress) {
-                throw new Error("La construction de l'adresse n'est pas correctement definie !?");
-            }
-        }
-
-        // FIXME gestion des filtres pour un objet Address déjà instancié ?
-
-        template = template.replace(/__ADDRESS__/g, this.oAddress.toString());
-        template = template.replace(/__RETURNFREEFORM__/g, (this.options.returnFreeForm) ? "true" : "false");
-
-        this.strRequest = template;
-        return this.strRequest;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (GeocodeRequest);
-
-
-/***/ }),
-/* 90 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-
-
-
-/**
- * @classdesc
- *
- * Location type "Address".
- *
- * Modèles de classes :
- * ------------------
- * ```
- *
- *                Address
- *            (est composé de)
- *           ______ | _________ _________________
- *          /       |          \                 \
- *      Place (StreetAddress ou FreeFormAddress) PostalCode
- *       (*)       _|_
- *                /   \
- *           Street   Building
- * ```
- * ```
- * XSD
- * Address (balise xsd) :
- *   ex. <Address countryCode="StreetAddress"><freeFormAddress>1 r de paris saint denis</freeFormAddress></Address>
- *   attribute name="countryCode"
- *     element name="freeFormAddress"
- *     element ref="xls:Place"
- *     element ref="gml:Envelope"
- *  ou
- *   ex. <Address countryCode="StreetAddress"><StreetAddress><Street>1 rue Marconi</Street></StreetAddress><Place type="Municipality">Metz</Place><PostalCode>57000</PostalCode></Address>
- *   attribute name="countryCode"
- *     element ref="xls:StreetAddress"
- *     element ref="xls:PostalCode"
- *     element ref="xls:Place"
- *     element ref="gml:Envelope"
- * ```
- *
- * @example
- * // simple
- * adr = new Address ({
- *    location : "2 av pasteur, Saint-Mandée",
- *    type : ["StreetAddress"],
- *    filter : {}
- * });
- * adr.toString();
- * // -> out
- * // <Address countryCode="StreetAddress">
- * //   <freeFormAddress>2 av pasteur, Saint-Mandée</freeFormAddress>
- * // </Address>
- *
- * // avec filtre
- * adr = new Address ({
- *    location : {
- *      number : 2,
- *      street : "av pasteur",
- *      city : "Saint-Mandée", // FIXME filter Place "commune" ou "municipality" ?
- *      postalCode : "94166"   // FIXME filter Place ou balise PostalCode ?
- *    },
- *    type : ["StreetAddress"],
- *    filter : {
- *      territory : "FR",
- *      department : "94"
- *    }
- * });
- * adr.toString();
- * // -> out
- * // <Address countryCode="StreetAddress">
- * //   <StreetAddress>
- * //   <Building number="2"/>
- * //   <Street>2 av pasteur</Street>
- * // </StreetAddress>
- * // <Place type="municipality">Saint-Mandée</Place>
- * // <Place type="departement">94</Place>
- * // <Place type="territoire">FR</Place>
- * // <PostalCode>94166</PostalCode>
- * // </Address>
- *
- * // avec bbox
- * adr = new Address ({
- *    location : "2 av pasteur, Saint-Mandée",
- *    type : ["StreetAddress"],
- *    filter : {
- *      bbox : {left:1, right:2, top:2, bottom:0}
- *    }
- * });
- * adr.toString();
- * // -> out
- * // <Address countryCode="StreetAddress">
- * //   <freeFormAddress>2 av pasteur, Saint-Mandée</freeFormAddress>
- * //   <gml:Envelope>
- * //     <gml:lowerCorner>1 0</gml:lowerCorner>
- * //     <gml:upperCorner>2 2</gml:upperCorner>
- * //   </gl:Envelope>
- * // </Address>
- *
- * @constructor
- * @alias Gp.Formats.XLS.LocationUtilityService.Address
- * @param {Object} options - options
- * @param {Object} options.location - location
- * @param {String} options.type - type
- * @param {String} options.filter - filtres
- * @param {String} options.filter.* - Filtré en fonction des tables de geocodage interrogées
- *
- * @private
- */
-function Address (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("Address");
-    this.logger.trace("[Constructeur Address ()]");
-
-    if (!(this instanceof Address)) {
-        throw new TypeError("Address constructor cannot be called as a function.");
-    }
-
-    // param par defaut
-    this.options = options || {
-        location : {},
-        type : ["StreetAddress"],
-        filter : {}
-    };
-
-    // param obligatoire
-    if (!this.options.location || Object.keys(this.options.location).length === 0) {
-        throw new Error("l'option 'location' n'est pas renseignée !");
-    }
-}
-
-/**
- * @lends module:Address#
- */
-Address.prototype = {
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : Address,
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    requestString : null,
-
-    /**
-     * Template de la requête.
-     *
-     * substitution des valeurs suivantes :
-     * - address :  __COUNTRYCODE__, __LOCATION__, __PLACE__, __POSTALCODE__, __ENVELOPE__
-     * - freeFormAddress : __FREEFORMADDRESSVALUE__
-     * - streetAddress : __STREET__, __BUILDING__
-     * - street : __STREETVALUE__
-     * - building : __BUILDINGVALUE__
-     * - place : __PLACEATYPE__, __PLACEVALUE__
-     * - postalCode : __POSTALCODEVALUE__
-     * - gml:envelope : __LEFT__ __BOTTOM__ __RIGHT__ __TOP__
-     *
-     * @todo gestion de l"indentation
-     */
-    template : {
-        address : "<Address countryCode=\"__COUNTRYCODE__\">" +
-            "__LOCATION__" +
-            "__PLACE__" +
-            "__POSTALCODE__" +
-            "__ENVELOPE__" +
-            "</Address>",
-        location : {
-            freeFormAddress : "<freeFormAddress>__FREEFORMADDRESSVALUE__</freeFormAddress>",
-            streetAddress : {
-                container : "<StreetAddress>" +
-                    "__STREET__" +
-                    "__BUILDING__" +
-                    "</StreetAddress>",
-                building : "<Building number=\"__BUILDINGVALUE__\"/>",
-                street : "<Street>__STREETVALUE__</Street>"
-            }
-        },
-        place : "<Place type=\"__PLACETYPE__\">__PLACEVALUE__</Place>",
-        postalCode : "<PostalCode>__POSTALCODEVALUE__</PostalCode>",
-        envelope : "<gml:Envelope>" +
-            "<gml:lowerCorner>__LEFT__ __BOTTOM__</gml:lowerCorner>" +
-            "<gml:upperCorner>__RIGHT__ __TOP__</gml:upperCorner>" +
-            "</gml:Envelope>"
-    }
-
-};
-
-/**
- * toString
- *
- * @returns {String} requête
- */
-Address.prototype.toString = function () {
-    var template = null;
-    template = this.template.address;
-    template = template.replace(/__COUNTRYCODE__/g, this.options.type);
-
-    // on a une adresse structurée ou libre ?
-    if (typeof this.options.location === "string") {
-        // balise freeFormeAddress
-        var tmplFreeFormAddress = this.template.location.freeFormAddress;
-        tmplFreeFormAddress = tmplFreeFormAddress.replace(/__FREEFORMADDRESSVALUE__/g, this.options.location);
-        template = template.replace(/__LOCATION__/g, tmplFreeFormAddress);
-    } else {
-        // balises Street et Building
-        var tmplBuilding = "";
-        var tmplStreet = "";
-
-        if (this.options.location.number) {
-            tmplBuilding = this.template.location.streetAddress.building;
-            tmplBuilding = tmplBuilding.replace(/__BUILDINGVALUE__/g, this.options.location.number);
-        }
-
-        if (this.options.location.street) {
-            tmplStreet = this.template.location.streetAddress.street;
-            tmplStreet = tmplStreet.replace(/__STREETVALUE__/g, this.options.location.street);
-        }
-
-        // balise streetAddress
-        var tmplStreetAddress = this.template.location.streetAddress.container;
-        tmplStreetAddress = tmplStreetAddress.replace(/__STREET__/g, tmplStreet);
-        tmplStreetAddress = tmplStreetAddress.replace(/__BUILDING__/g, tmplBuilding);
-        template = template.replace(/__LOCATION__/g, tmplStreetAddress);
-    }
-
-    // a t on un filtre de type PostalCode ?
-    var tmplPostalCode = "";
-    if (this.options.location.postalCode) {
-        tmplPostalCode = this.template.postalCode;
-        tmplPostalCode = tmplPostalCode.replace(/__POSTALCODEVALUE__/g, this.options.location.postalCode);
-    }
-
-    // a t on un filtre de type GML::Envelope ?
-    var tmplEnvelope = "";
-    if (this.options.filter) {
-        var bbox = this.options.filter.bbox;
-        if (bbox) {
-            tmplEnvelope = this.template.envelope;
-            tmplEnvelope = tmplEnvelope.replace(/__LEFT__/g, bbox.left);
-            tmplEnvelope = tmplEnvelope.replace(/__BOTTOM__/g, bbox.bottom);
-            tmplEnvelope = tmplEnvelope.replace(/__RIGHT__/g, bbox.right);
-            tmplEnvelope = tmplEnvelope.replace(/__TOP__/g, bbox.top);
-        }
-    }
-
-    // liste des filtres Place
-    var Places = [];
-
-    // a t on des filtres de type Place ?
-    var tmplPlace = "";
-    if (this.options.filter) {
-        var filters = this.options.filter;
-        for (var filter in filters) {
-            if (filter === "bbox") {
-                continue;
-            }
-            // FIXME gestion des filtres spécifiques IGN ?
-            tmplPlace = this.template.place;
-            tmplPlace = tmplPlace.replace(/__PLACETYPE__/g, filter);
-            tmplPlace = tmplPlace.replace(/__PLACEVALUE__/g, filters[filter]);
-            Places.push(tmplPlace);
-        }
-    }
-
-    // a t on un filtre de type Place dans location ?
-    var tmplPlaceCity = "";
-    if (this.options.location.city) {
-        tmplPlaceCity = this.template.place;
-        tmplPlaceCity = tmplPlaceCity.replace(/__PLACETYPE__/g, "Municipality");
-        tmplPlaceCity = tmplPlaceCity.replace(/__PLACEVALUE__/g, this.options.location.city);
-        Places.push(tmplPlaceCity);
-    }
-
-    template = template.replace(/__POSTALCODE__/g, tmplPostalCode);
-    template = template.replace(/__PLACE__/g, Places.join("\n"));
-    template = template.replace(/__ENVELOPE__/g, tmplEnvelope);
-
-    this.requestString = template;
-    return this.requestString;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Address);
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-
-
-
-/**
- * @classdesc
- *
- * Ajouter des extensions de filtres spécifiques au service de geocodage de l'IGN.
- * Ceci permet de contrôler les options spécifiques de la table de geocodage intérrogées.
- *
- * @example
- * var ext =  new GeocodeFiltersExtension ();
- *     ext.add (new Administratif ());
- *     ext.add (new StreetAddress ());
- *     ext.add (new PositionOfInterest ());
- *     ext.add (new CadastralParcel ());
- *
- * ext.getNames ()
- * // --> out
- * // [Administratif, StreetAddress, PositionOfInterest, CadastralParcel]
- *
- * ext.getFilters ()
- * // --> out
- * // [Object, Object, Object, Object] = tableau d'objet GeocodeLocation
- *
- * ext.getFilter ('StreetAddress')
- * // --> out
- * // {Object} = objet GeocodeLocation
- *
- * ext.getAttributs ('StreetAddress')
- * // --> out
- * // ["bbox", "number", "ID", "IDTR", "postalCode", "quality", "street", "territoire", "commune", "department", "insee", "municipality"]
- *
- * ext.setPlaceAttributs ('StreetAddress', {number:'', territoire:'', quality:'', fake:''})
- * // --> out
- * // (fake est écarté car il n'appartient pas à la liste !)
- *
- * ext.getPlaceAttributs ('StreetAddress')
- * // --> out
- * // {number : '', territoire : '', quality : ''}
- *
- * // Comment ajouter des filtres spécifiques au service de geocodage ?
- * var req = new GeocodeRequest ({
- *      location : "saint mandé",
- *      returnFreeForm : true,
- *      filterOptions : {
- *          type : ['PositionOfInterest'], <-- ajouter une extension afin de gerer les attributs de cette table de geocodage !
- *          (...)
- *      }
- *  })
- *  req.addFilter (new PositionOfInterest ());
- * @constructor
- * @alias Gp.Formats.XLS.LocationUtilityService.GeocodeFilterExtension
- *
- * @private
- */
-function GeocodeFilterExtension () {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("GeocodeFilterExtension");
-    this.logger.trace("[Constructeur GeocodeFilterExtension ()]");
-
-    if (!(this instanceof GeocodeFilterExtension)) {
-        throw new TypeError("GeocodeFilterExtension constructor cannot be called as a function.");
-    }
-
-    /**
-     * Tableau de filtres (table de geocodage)
-     */
-    this.filters = [];
-}
-
-/**
- * @lends module:GeocodeFilterExtension#
- */
-GeocodeFilterExtension.prototype = {
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : GeocodeFilterExtension,
-
-    /**
-     * Ajout d'un filtre
-     *
-     * @param {Object} oGeocodeLocation - objet de type 'GeocodeLocation'
-     */
-    addFilterExtensions : function (oGeocodeLocation) {
-        // FIXME test sur le type d'objet !
-        if (oGeocodeLocation) {
-            // FIXME ou test sur ses propriétés !
-            this.filters.push(oGeocodeLocation);
-        }
-    },
-
-    // getter
-
-    /**
-     * Tableau de noms (tables de geocodage)
-     *
-     * @returns {Array.<String>} liste des noms de filtres
-     */
-    getNames : function () {
-        var names = [];
-        for (var idx in this.filters) {
-            names.push(this.filters[idx].CLASSNAME);
-        }
-        this.logger.trace(names);
-        return names;
-    },
-
-    /**
-     * Retourne une table de geocodage
-     *
-     * @param {String} name - nom de la table de geocodage
-     * @returns {Object} filtre
-     */
-    getFilter : function (name) {
-        var filter = null;
-        for (var idx in this.filters) {
-            if (this.filters[idx].CLASSNAME === name) {
-                filter = this.filters[idx];
-            }
-        }
-        this.logger.trace(filter);
-        return filter;
-    },
-
-    /**
-     * Tableau d'objects (tables de geocodage)
-     *
-     * @returns {Array.<Object>} liste des filtres
-     */
-    getFilters : function () {
-        this.logger.trace(this.filters);
-        return this.filters;
-    },
-
-    /**
-     * Récupère la liste des attributs (filtres) sur une table de geocodage
-     *
-     * @param {String} name - nom de la table de geocodage
-     * @returns {Array} liste des attributs d'un filtre
-     */
-    getAttributs : function (name) {
-        var attributs = [];
-        for (var idx in this.filters) {
-            if (this.filters[idx].CLASSNAME === name) {
-                attributs = this.filters[idx].attributesList;
-            }
-        }
-        this.logger.trace(attributs);
-        return attributs;
-    },
-
-    /**
-     * Ajout des attributs (filtres) sur une table de geocodage
-     *
-     * @param {String} name - nom de la table de geocodage
-     * @param {Object} options - options de la table de geocodage
-     */
-    setPlaceAttributs : function (name, options) {
-        var filter = this.getFilter(name);
-        var attributs = this.getAttributs(name);
-        for (var idx in attributs) {
-            var value = attributs[idx];
-            if (options[value]) {
-                filter.placeAttributes[value] = options[value];
-            }
-        }
-    },
-
-    /**
-     * Retourne les attributs (filtres) sur une table de geocodage
-     *
-     * @param {String} name - nom de la table de geocodage
-     * @returns {Array} liste des attributs d'un filtre
-     */
-    getPlaceAttributs : function (name) {
-        var places = {};
-        for (var idx in this.filters) {
-            if (this.filters[idx].CLASSNAME === name) {
-                places = this.filters[idx].placeAttributes;
-            }
-        }
-        this.logger.trace(places);
-        return places;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (GeocodeFilterExtension);
-
-
-/***/ }),
-/* 92 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* harmony import */ var _model_Position__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(93);
-/* harmony import */ var _model_Preference__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94);
-
-
-
-
-
-/**
- * @classdesc
- *
- * Requête de geocodage inverse
- *
- * XSD
- * ```
- * Geocodage inverse (balise xsd) :
- *   element ref="RequestHeader" [ (attribute name="clientName" attribute name="clientPassword" attribute name="sessionID" attribute name="srsName" attribute name="MSID") ]
- *     element name="Request" attribute name="methodName" attribute name="version" attribute name="requestID" [ attribute name="maximumResponses" ]
- *       element name="ReverseGeocodeRequest"
- *         element ref="xls:Position"
- *         element name="ReverseGeocodePreference" (enumeration)
- * ```
- *
- * @example
- * // creation de l"objet ReverseGeocode
- * req = new ReverseGeocodeRequest ();
- * req.addPosition (new Position (position:{x: , y: }));
- * req.addPreference (["StreetAddress"]);
- * req.toString();
- * // out ->
- * // <ReverseGeocodeRequest>
- * //     <Position>
- * //       <gml:Point xmlns:gml="http://www.opengis.net/gml">
- * //           <gml:pos>50.347775 3.205098</gml:pos>
- * //       </gml:Point>
- * //     </Position>
- * //     <ReverseGeocodePreference>StreetAddress</ReverseGeocodePreference>
- * //  </ReverseGeocodeRequest>
- * @constructor
- * @alias Gp.Formats.XLS.ReverseGeocodeRequest
- * @param {Object} options - options
- * @param {Object}   options.position - position
- * @param {String}   options.returnFreeForm - returnFreeForm
- * @param {String}   options.filterOptions - filtres
- * @param {Function} options.onsuccess - function callback success (TODO)
- * @param {Function} options.onerror   - function callback error   (TODO)
- *
- * @private
- */
-function ReverseGeocodeRequest (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger();
-    this.logger.trace("[Constructeur ReverseGeocodeRequest ()]");
-
-    if (!(this instanceof ReverseGeocodeRequest)) {
-        throw new TypeError("ReverseGeocodeRequest constructor cannot be called as a function.");
-    }
-
-    // options par defaut
-    this.options = options || {};
-
-    // et on ajoute les options en paramètre aux options par défaut
-    for (var opt in options) {
-        if (options.hasOwnProperty(opt)) {
-            this.options[opt] = options[opt];
-        }
-    }
-
-    /**
-     * Nom de la classe (heritage)
-     */
-    this.CLASSNAME = "ReverseGeocodeRequest";
-}
-
-ReverseGeocodeRequest.prototype = {
-
-    /**
-     * @lends module:ReverseGeocodeRequest#
-     */
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    strRequest : null,
-
-    /**
-     * Position
-     * @type {Position}
-     */
-    oPosition : null,
-
-    /**
-     * Preference
-     * @type {Preference}
-     */
-    oPreference : null,
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : ReverseGeocodeRequest,
-
-    /**
-     * Template de la requête.
-     * substitution des valeurs suivantes :
-     * __POSITION__, __PREFERENCE__, __RETURNFREEFORM__
-     */
-    template : "<ReverseGeocodeRequest returnFreeForm=\"__RETURNFREEFORM__\">" +
-        "__POSITION__" +
-        "__PREFERENCE__" +
-        "</ReverseGeocodeRequest>",
-
-    /**
-     * Ajout d"un objet de type Position
-     *
-     * @param {Object} oPosition - Position
-     */
-    addPosition : function (oPosition) {
-        if (oPosition instanceof _model_Position__WEBPACK_IMPORTED_MODULE_1__["default"]) {
-            this.oPosition = oPosition;
-        }
-    },
-
-    /**
-     * Ajout d"une liste de table de référence LUS :
-     * [StreetAddress, PointOfInterest, CadastralParcel, Administrativ]
-     *
-     * @param {Object} oPreference - Preference
-     */
-    addPreferences : function (oPreference) {
-        if (oPreference instanceof _model_Preference__WEBPACK_IMPORTED_MODULE_2__["default"]) {
-            this.oPreference = oPreference;
-        }
-    },
-
-    /**
-     * toString
-     * @returns {String} requête
-     */
-    toString : function () {
-        var template = "";
-        template = this.template;
-
-        // si on a déjà un objet Preference instancié,
-        // sinon, on le fabrique via les options
-        if (!this.oPreference) {
-            this.oPreference = new _model_Preference__WEBPACK_IMPORTED_MODULE_2__["default"](this.options.filterOptions.type || ["StreetAddress"]);
-            if (!this.oPreference) {
-                throw new Error("Les preferences ne sont pas definies !?");
-            }
-        }
-        template = template.replace(/__PREFERENCE__/g, this.oPreference.toString());
-
-        // si on a déjà un objet Position instancié,
-        // sinon, on le fabrique via les options
-        if (!this.oPosition) {
-            var settings = {
-                position : this.options.position,
-                filter : {}
-            };
-
-            // FIXME gestion des filtres ?
-            if (this.options.filterOptions) {
-                settings.filter = this.options.filterOptions;
-                delete settings.filter.type; // pas besoin ?
-            }
-            this.oPosition = new _model_Position__WEBPACK_IMPORTED_MODULE_1__["default"](settings);
-            if (!this.oPosition) {
-                throw new Error("La position et ses filtres ne sont pas definis !?");
-            }
-        }
-        template = template.replace(/__POSITION__/g, this.oPosition.toString());
-        template = template.replace(/__RETURNFREEFORM__/g, (this.options.returnFreeForm) ? "true" : "false");
-
-        this.strRequest = template;
-        return this.strRequest;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (ReverseGeocodeRequest);
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-
-
-/**
- * @classdesc
- * Location de type Position
- *
- * ```
- * XSD
- * Position (balise xsd) :
- *   ex. <Position><gml:Point xmlns:gml="http://www.opengis.net/gml"><gml:pos>50.347775 3.205098</gml:pos></gml:Point></Position>
- *   ex. <Position><gml:CircleByCenterPoint xmlns:gml="http://www.opengis.net/gml"><gml:pos>48.85978570614691 2.2913572761128878</gml:pos><gml:radius>1000</gml:radius></gml:CircleByCenterPoint></Position>
- *   (au choix)
- *   element ref="gml:Point"
- *   element ref="gml:CircleByCenterPoint"
- *   element ref="gml:Polygon"
- *   element ref="gml:MultiPolygon"
- * ```
- *
- * FIXME les autres elements ne sont pas implémentés (QoP, Speed, Direction, Time, ...) ?
- *
- * ```
- * template : "<Position>
- *                  __GMLPOINT__
- *                  __GMLFILTER__
- *             </Position>"
- * ```
- * ```
- * GML : {
- *  pos     : "<gml:pos>__X__ __Y__</gml:pos>",
- *  point   : "<gml:Point xmlns:gml=\"http://www.opengis.net/gml\">__POS__</gml:Point>",
- *  circle  : "<gml:CircleByCenterPoint xmlns:gml=\"http://www.opengis.net/gml\">__POS__<gml:radius>__RADIUS__</gml:radius></gml:CircleByCenterPoint>",
- *  // not yet implemented !
- *  polygon      : "",
- *  multipolygon : ""
- * }
- * ```
- *
- * @constructor
- * @alias Gp.Formats.XLS.LocationUtilityService.Position
- * @param {Object} options - options données en entrée
- * @param {Object} options.position - x/y
- * @param {Object} options.filter - filtre
- * @param {Object} options.filter.circle - un cercle
- * @param {Object} options.filter.polygon - un polygone
- *
- * @private
- */
-function Position (options) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("Position");
-    this.logger.trace("[Constructeur Position ()]");
-
-    if (!(this instanceof Position)) {
-        throw new TypeError("Position constructor cannot be called as a function.");
-    }
-
-    // param par defaut
-    this.options = options || {};
-
-    // param obligatoire
-    if (!this.options.position) {
-        throw new Error("l'option 'position' n'est pas renseignée !");
-    }
-}
-
-/**
- * @lends module:Position#
- */
-Position.prototype = {
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : Position,
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    requestString : null,
-
-    /**
-     * Template de la requête.
-     *
-     * substitution des valeurs suivantes :
-     * __GMLPOINT__ __GMLFILTER__
-     * __X__ __Y__ __RADIUS__
-     * __XY__
-     * @todo indentation XML
-     * @todo implementation classe GML
-     */
-    template : {
-        position : "<Position>" +
-            "__GMLPOINT__" +
-            "__GMLFILTER__" +
-            "</Position>",
-        gml : {
-            point : "<gml:Point xmlns:gml=\"http://www.opengis.net/gml\"><gml:pos>__X__ __Y__</gml:pos></gml:Point>",
-            pos : null,
-            filter : {
-                bbox : "<gml:Envelope xmlns:gml=\"http://www.opengis.net/gml\">" +
-                    "<gml:lowerCorner>__LEFT__ __BOTTOM__</gml:lowerCorner>" +
-                    "<gml:upperCorner>__RIGHT__ __TOP__</gml:upperCorner>" +
-                    "</gml:Envelope>",
-                circle : "<gml:CircleByCenterPoint xmlns:gml=\"http://www.opengis.net/gml\"><gml:pos>__X__ __Y__</gml:pos><gml:radius>__RADIUS__</gml:radius></gml:CircleByCenterPoint>",
-                polygon : "<gml:Polygon xmlns:gml=\"http://www.opengis.net/gml\"><gml:exterior><gml:LinearRing><gml:posList>__XY__</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>",
-                multipolygon : null
-            }
-        }
-    }
-};
-
-/**
- * toString
- *
- * @returns {String} requête
- */
-Position.prototype.toString = function () {
-    var template = this.template.position;
-
-    var tmplGmlPoint = this.template.gml.point;
-    tmplGmlPoint = tmplGmlPoint.replace(/__X__/g, this.options.position.x);
-    tmplGmlPoint = tmplGmlPoint.replace(/__Y__/g, this.options.position.y);
-
-    var tmplGmlFilter = "";
-    if (this.options.filter) {
-        var filter = this.options.filter;
-
-        for (var name in filter) {
-            switch (name) {
-                case "circle":
-                    tmplGmlFilter = this.template.gml.filter[name];
-                    tmplGmlFilter = tmplGmlFilter.replace(/__X__/g, filter[name].x);
-                    tmplGmlFilter = tmplGmlFilter.replace(/__Y__/g, filter[name].y);
-                    tmplGmlFilter = tmplGmlFilter.replace(/__RADIUS__/g, filter[name].radius);
-                    break;
-                case "bbox":
-                    tmplGmlFilter = this.template.gml.filter[name];
-                    tmplGmlFilter = tmplGmlFilter.replace(/__LEFT__/g, filter[name].left);
-                    tmplGmlFilter = tmplGmlFilter.replace(/__BOTTOM__/g, filter[name].bottom);
-                    tmplGmlFilter = tmplGmlFilter.replace(/__RIGHT__/g, filter[name].right);
-                    tmplGmlFilter = tmplGmlFilter.replace(/__TOP__/g, filter[name].top);
-                    break;
-                case "polygon":
-                    // FIXME implementation simple du polygone !
-                    // aucun test de fermeture du polygone, ni de gestion des trous !
-                    tmplGmlFilter = this.template.gml.filter[name];
-                    var strPoints = "";
-                    var lstPoints = filter[name];
-                    for (var i = 0; i < lstPoints.length; i++) {
-                        var coord = lstPoints[i];
-                        if (Array.isArray(coord)) {
-                            this.logger.error("Holes are not implemented !");
-                            break;
-                        }
-                        if ((coord.x && coord.y) || (coord.x === 0 || coord.y === 0)) {
-                            strPoints += coord.x + " " + coord.y;
-                        }
-                        if (lstPoints.length !== i + 1) {
-                            strPoints += " ";
-                        }
-                    }
-                    tmplGmlFilter = tmplGmlFilter.replace(/__XY__/g, strPoints);
-                    break;
-                case "multipolygon":
-                    this.logger.warn("Filter '" + name + "' is not yet implemented !");
-                    break;
-                default:
-                    this.logger.error("This filter '" + name + "' is not useful !");
-            }
-        }
-    }
-
-    template = template.replace(/__GMLPOINT__/g, tmplGmlPoint);
-    template = template.replace(/__GMLFILTER__/g, tmplGmlFilter);
-
-    this.requestString = template;
-    return this.requestString;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Position);
-
-
-/***/ }),
-/* 94 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-
-
-/**
- * @classdesc
- *
- * Preference (Reverse)
- *
- * FIXME liste des types de tables de geocodage
- *
- * ```
- * template : "<ReverseGeocodePreference>__TYPE__</ReverseGeocodePreference>"
- * ```
- *
- * @constructor
- * @alias Gp.Formats.XLS.LocationUtilityService.Preference
- * @param {String} type - type de table de geocodage
- *
- * @private
- *
- */
-
-function Preference (type) {
-    this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("Preference");
-    this.logger.trace("[Constructeur Preference ()]");
-
-    if (!(this instanceof Preference)) {
-        throw new TypeError("Preference constructor cannot be called as a function.");
-    }
-
-    /**
-     * type de table de geocodage
-     * @type {Array.<String>}
-     */
-    this.type = type;
-}
-
-/**
- * @lends module:Preference#
- */
-Preference.prototype = {
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : Preference,
-
-    /**
-     * request (out)
-     * @type {String}
-     */
-    requestString : null,
-
-    /**
-     * Template de la requête.
-     *
-     * substitution des valeurs suivantes :
-     *  __TYPE__
-     *
-     */
-    template : "<ReverseGeocodePreference>__TYPE__</ReverseGeocodePreference>"
-};
-
-/**
- * toString
- *
- * @returns {String} requête
- */
-Preference.prototype.toString = function () {
-    var Preferences = [];
-    var tmplPreference = "";
-    for (var idx = 0; idx < this.type.length; idx++) {
-        tmplPreference = this.template;
-        tmplPreference = tmplPreference.replace(/__TYPE__/g, this.type[idx]);
-        Preferences.push(tmplPreference);
-    }
-
-    this.strRequest = Preferences.join("\n");
-    return this.strRequest;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Preference);
-
-
-/***/ }),
-/* 95 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96);
-
-
-
-/**
- * @classdesc
- * Format des attributs d'un résultat de géocodage de type StreetAddress.
- *
- * @constructor
- * @alias Gp.Services.Geocode.Request.StreetAddress
- * @private
- */
-function StreetAddress () {
-    if (!(this instanceof StreetAddress)) {
-        throw new TypeError("StreetAddress constructor cannot be called as a function.");
-    }
-
-    // INFO
-    // appel du constructeur de la classe mère
-    // avec passage de param.
-    _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
-    /**
-     * Nom de la classe (heritage)
-     * @type {String}
-     */
-    this.CLASSNAME = "StreetAddress";
-
-    /**
-     * Liste des attributs possibles pour une GeocodeLocation de type StreetAddress
-     * - **bbox** : Emprise de l'adresse dans le système de coordonnées demandé {left, right, top, bottom}. *{Object}*
-     * - **ID** : Identifiant BD ADRESSE dans le cas où le résultat est une adresse. *{String}*
-     * - **IDTR** : Identifiant "Route Adresse" de la voie portant l'adresse dans la base BD ADRESSE. *{String}*
-     * - **quality** : Indicateur de qualité du géocodage (pour plus d'infos : http://api.ign.fr/tech-docs-js/fr/developpeur/search.html *{String}*
-     * - **territory** : Code du territoire français où se situe l'adresse *{String}*
-     * - **commune** : Ville l'adresse. *{String}*
-     * - **department** : Département l'adresse. *{String}*
-     * - **insee** : Code INSEE de l'adresse. *{Number}*
-     * - **municipality** : Municipalité de l'adresse. *{String}*
-     */
-
-    this.attributesList = ["bbox", "ID", "IDTR", "quality", "territory", "commune", "department", "insee", "municipality"];
-
-    this.serviceAttributes = ["bbox", "ID", "IDTR", "Qualite", "Territoire", "Commune", "Departement", "INSEE", "Municipality"];
-}
-
-/**
- * @lends module:StreetAdress#
- */
-StreetAddress.prototype = Object.create(_GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].prototype);
-
-/**
- * Constructeur (alias)
- */
-StreetAddress.prototype.constructor = StreetAddress;
-
-/* harmony default export */ __webpack_exports__["default"] = (StreetAddress);
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-/**
- * @classdesc
- *
- * Liste des attributs des tables de geocodage
- * @constructor
- * @alias Gp.Services.Geocode.Request.GeocodeLocation
- * @private
- */
-function GeocodeLocation () {
-    if (!(this instanceof GeocodeLocation)) {
-        throw new TypeError("GeocodeLocation constructor cannot be called as a function.");
-    }
-
-    /**
-     * Objet qui peut prendre comme propriétés les valeurs du tableau serviceAttributes
-     * @type {Object}
-     */
-    this.placeAttributes = {};
-
-    /**
-     * Tableau qui liste les attributs spécifiques selon le type de la GeocodeLocation.
-     * Ces attributs correspondent à ceux saisis par l'utilisateur (légèrement différents de ceux du service)
-     * @type {String[]}
-     */
-    this.attributesList = [];
-
-    /**
-     * Tableau qui liste les attributs spécifiques selon le type de la GeocodeLocation
-     * Ces attributs correspondent à ceux interprétés par le service (balises Place).
-     * @type {String[]}
-     */
-    this.serviceAttributes = [];
-}
-
-/**
- * @lends module:GeocodeLocation
- */
-GeocodeLocation.prototype = {
-
-    /**
-     * Constructeur (alias)
-     */
-    constructor : GeocodeLocation
-
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (GeocodeLocation);
-
-
-/***/ }),
-/* 97 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96);
-
-
-
-/**
- * @classdesc
- * Format des attributs d'un résultat de géocodage de type PositionOfInterest
- *
- * @constructor
- * @alias Gp.Services.Geocode.Request.PositionOfInterest
- * @private
- */
-function PositionOfInterest () {
-    if (!(this instanceof PositionOfInterest)) {
-        throw new TypeError("PositionOfInterest constructor cannot be called as a function.");
-    }
-
-    // INFO
-    // appel du constructeur de la classe mère
-    // avec passage de param.
-    _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
-    /**
-     * Nom de la classe (heritage)
-     * @type {String}
-     */
-    this.CLASSNAME = "PositionOfInterest";
-
-    /**
-     * Liste des attributs possibles pour une GeocodeLocation de type PositionOfInterest
-     * - **bbox** : Emprise du toponyme dans le système de coordonnées demandé {left, right, top, bottom} *{Object}*
-     * - **importance** : Importance du toponyme *{number}*
-     * - **nature** : Nature du toponyme. *{String}*
-     * - **territory** : Code du territoire français où se situe le toponyme *{String}*
-     * - **commune** : Ville du toponyme. *{String}*
-     * - **department** : Département du toponyme. *{String}*
-     * - **insee** : Code INSEE de la commune où se situe le toponyme. *{Number}*
-     * - **municipality** : Municipalité du toponyme. *{String}*
-     */
-
-    this.attributesList = ["bbox", "importance", "nature", "territory", "commune", "department", "insee", "municipality"];
-
-    this.serviceAttributes = ["bbox", "Importance", "Nature", "Territoire", "Commune", "Departement", "INSEE", "Municipality"];
-}
-
-/**
- * @lends module:PositionOfInterest#
- */
-PositionOfInterest.prototype = Object.create(_GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].prototype);
-
-/**
- * Constructeur (alias)
- */
-PositionOfInterest.prototype.constructor = PositionOfInterest;
-
-/* harmony default export */ __webpack_exports__["default"] = (PositionOfInterest);
-
-
-/***/ }),
-/* 98 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96);
-
-
-
-/**
- * @classdesc
- * Format des attributs d'un filtre de géocodage de type CadastralParcel.
- *
- * @constructor
- * @alias Gp.Services.Geocode.Request.CadastralParcel
- * @private
- */
-function CadastralParcel () {
-    if (!(this instanceof CadastralParcel)) {
-        throw new TypeError("CadastralParcel constructor cannot be called as a function.");
-    }
-
-    // INFO
-    // appel du constructeur de la classe mère
-    // avec passage de param.
-    _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
-    /**
-     * Nom de la classe (heritage)
-     */
-    this.CLASSNAME = "CadastralParcel";
-
-    /**
-     * Liste des attributs possibles pour une GeocodeLocation de type CadastralParcel
-     * - **absorbedCity** : Code commune absorbée de la parcelle :
-     *      lorsqu'une parcelle est issue p d'une ancienne commune qui a fusionné avec une autre.
-     *      Sinon, le code vaut '000'. *{String}*
-     * - **sheet** : Feuille de la parcelle (ex 1). *{String}*
-     * - **number** : Numéro de la parcelle (ex. 0041) *{String}*
-     * - **section** : Section de la parcelle (ex 0D). *{String}*
-     * - **commune** : Ville du filtre. *{String}*
-     * - **department** : Département du filtre. *{String}*
-     * - **insee** : Code INSEE du filtre. *{Number}*
-     * - **municipality** : Municipalité du filtre. *{String}*
-     * - **origin** : L'origine de l'objet parcellaire renvoyé
-     *      (correspond à l'attribut "type" dans la réponse XML)
-     *      Pour plus d'informations : http://api.ign.fr/tech-docs-js/fr/developpeur/search.html#Recherche_par_parcelles_cadastrales *{Number}*
-     *
-     */
-
-    this.attributesList = ["absorbedCity", "sheet", "number", "section", "commune", "department", "insee", "municipality", "origin"];
-
-    this.serviceAttributes = ["CommuneAbsorbee", "Feuille", "Numero", "Section", "Commune", "Departement", "INSEE", "Municipality", "Type"];
-}
-
-/**
- * @lends module:CadastralParcel#
- */
-CadastralParcel.prototype = Object.create(_GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].prototype);
-
-/**
- * Constructeur (alias)
- */
-CadastralParcel.prototype.constructor = CadastralParcel;
-
-/* harmony default export */ __webpack_exports__["default"] = (CadastralParcel);
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96);
-
-
-
-/**
- * @classdesc
- * Format des attributs d'un filtre de géocodage de type Administratif.
- * @constructor
- * @alias Gp.Services.Geocode.Request.Administratif
- * @private
- */
-function Administratif () {
-    if (!(this instanceof Administratif)) {
-        throw new TypeError("Administratif constructor cannot be called as a function.");
-    }
-
-    // INFO
-    // appel du constructeur de la classe mère
-    // avec passage de param.
-    _GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
-    /**
-     * Nom de la classe (heritage)
-     * @type {String}
-     */
-    this.CLASSNAME = "Administratif";
-
-    /**
-     * Liste des attributs possibles pour une GeocodedLocation de type Administratif
-     * - **bbox** : Emprise de l'unité administrative dans le système de coordonnées demandé *{left, right, top, bottom}*
-     * - **prefecture** - Nom de la préfécture de la région ou du département *{String}*
-     * - **inseeRegion** - Numéro INSEE de la région *{String}*
-     * - **inseeDepartment** - Numéro INSEE du département *{String}*
-     * - **municipality** - Nom de l'unité administrative *{String}*
-     *
-     */
-
-    this.attributesList = ["bbox", "prefecture", "inseeRegion", "inseeDepartment", "municipality"];
-
-    this.serviceAttributes = ["bbox", "Prefecture", "InseeRegion", "InseeDepartement", "Municipality"];
-}
-
-/**
- * @lends module:Administratif#
- */
-Administratif.prototype = Object.create(_GeocodeLocation__WEBPACK_IMPORTED_MODULE_0__["default"].prototype);
-
-/**
- * Constructeur (alias)
- */
-Administratif.prototype.constructor = Administratif;
-
-/* harmony default export */ __webpack_exports__["default"] = (Administratif);
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
-/* harmony import */ var _Formats_XML__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
-/* harmony import */ var _Formats_DirectGeocodeResponseReader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(101);
+/* harmony import */ var _Formats_GeocodeResponseParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(87);
 /**
  * Factory pour générer une reponse JSON à partir d'un XML
- * ou d'un JSON encapsulant du XML
  * (Factory)
  *
  * @module GeocodeResponseFactory
  * @alias Gp.Services.Geocode.Response.GeocodeResponseFactory
- * @todo La reponse JSON peut encapsuler un XML !
  * @private
  */
 // import Logger from "../../../Utils/LoggerByDefault";
@@ -21442,8 +19169,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var DirectGeocodeReponseFactory = {
+var GeocodeReponseFactory = {
 
     /**
      * interface unique
@@ -21471,17 +19197,8 @@ var DirectGeocodeReponseFactory = {
                 data = options.response;
             } else {
                 try {
-                    var p = new _Formats_XML__WEBPACK_IMPORTED_MODULE_2__["default"]({
-                        reader : _Formats_DirectGeocodeResponseReader__WEBPACK_IMPORTED_MODULE_3__["default"]
-                    });
-
-                    if (typeof options.response === "string") {
-                        p.setXMLString(options.response);
-                    } else {
-                        p.setXMLDoc(options.response);
-                    }
-
-                    data = p.parse();
+                    const parser = new _Formats_GeocodeResponseParser__WEBPACK_IMPORTED_MODULE_2__["default"]();
+                    data = parser.parse(options.response);
 
                     if (!data) {
                         throw new Error("L'analyse de la réponse du service !?");
@@ -21524,26 +19241,25 @@ var DirectGeocodeReponseFactory = {
     }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (DirectGeocodeReponseFactory);
+/* harmony default export */ __webpack_exports__["default"] = (GeocodeReponseFactory);
 
 
 /***/ }),
-/* 101 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
-/* harmony import */ var _Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(102);
-/* harmony import */ var _Response_model_DirectGeocodedLocation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(103);
-
+/* harmony import */ var _Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(88);
+/* harmony import */ var _Response_model_GeocodedLocation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89);
 /**
  * Fonction retournant un objet contenant des clés de lecture (readers)
  *      qui permettent de parser des réponses XML du service de géocodage direct du Géoportail
  *      afin de récupérer les résultats retournés.
- * @module DirectGeocodeResponseReader
- * @alias Gp.Services.Geocode.Formats.DirectGeocodeResponseReader
+ * @module GeocodeResponseParser
+ * @alias Gp.Services.Geocode.Formats.GeocodeResponseParser
  * @private
  */
 
@@ -21554,435 +19270,128 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * @member DirectGeocodeResponseReader
+ * @classdesc
+ *
+ * Classe permettant de parser une réponse GeoJSON
+ *
+ * @constructor
+ * @alias Gp.Formats.GeocodeResponseParser
+ *
+ * @private
  */
-var DirectGeocodeResponseReader = {};
+function GeocodeResponseParser () {
+    if (!(this instanceof GeocodeResponseParser)) {
+        throw new TypeError("GeocodeResponseParser constructor cannot be called as a function.");
+    }
+}
 
-/**
- * @property {String} DirectGeocodeResponseReader.VERSION - version du service de géocodage
- */
-DirectGeocodeResponseReader.VERSION = "1.2";
+GeocodeResponseParser.prototype = {
 
-/**
- * Objet stockant les différents namespaces et les URI associées
- */
-DirectGeocodeResponseReader.NAMESPACES = {
-    xmlns : "http://www.opengis.net/xls",
-    gml : "http://www.opengis.net/gml",
-    xls : "http://www.opengis.net/xls",
-    xlsext : "http://www.opengis.net/xlsext",
-    xsi : "http://www.w3.org/2001/XMLSchema-instance"
-};
+    /**
+     * @lends module:GeocodeResponseParser
+     */
 
-/**
- * Localisation (URL) du schema de définition du XML (XSD)
- */
-DirectGeocodeResponseReader.SCHEMALOCATION = "http://wxs.ign.fr/schemas/olsAll.xsd";
+    /*
+     * Constructeur (alias)
+     */
+    constructor : GeocodeResponseParser,
 
-/**
- * Namespace par défaut du format
- */
-DirectGeocodeResponseReader.DEFAULTPREFIX = "xls";
+    /**
+     * Méthode permettant de lancer la lecture d'une réponse GeoJSON,
+     *
+     * @param {String} json - réponse au format GeoJSON
+     * @return {Object} geocodeResponse|exceptionReport : l'objet contenant les informations de la réponse GeoJSON,
+     *      sous la forme d'un objet GeocodeResponse, ou un objet littéral exceptionReport si le service a renvoyé une exception.
+     */
+    parse : function (json) {
+        var geocodeResponse = new _Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
-/**
- * Objet contenant des fonctions de lecture, appelées "READERS"
- *      dont chaque clé correspond au nom d'un tag du XML que l'on souhaite lire
- *      et la valeur associée est une fonction (node, data)
- *      où node est un noeud du document DOM
- *      et data est un objet où l'on stocke les informations lues dans le XML.
- */
-DirectGeocodeResponseReader.READERS = {
+        const obj = JSON.parse(json);
 
-    xls : {
-
-        /** TODO : jsdoc block */
-        XLS : function (root) {
-            var geocodeResponse = new _Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_2__["default"]();
-
-            // vérification de la version du service, et des namespaces de l'en-tête
-            __checkServiceAttributes(root);
-
-            // puis lancement de la lecture de l'ensemble des noeuds, en bouclant sur les childNodes
-            __getChildNodes(root, geocodeResponse);
-
-            return geocodeResponse;
-        },
-
-        /** TODO : jsdoc block */
-        GeocodedAddress : function (node, geocodeResponse) {
-            var geocodedLocation = new _Response_model_DirectGeocodedLocation__WEBPACK_IMPORTED_MODULE_3__["default"]();
-
-            __getChildNodes(node, geocodedLocation);
-
-            // Ajout du résultat au tableau geocodedLocations de geocodeReponse
-            if (geocodeResponse && Array.isArray(geocodeResponse.locations)) {
-                geocodeResponse.locations.push(geocodedLocation);
+        if (obj.type === "FeatureCollection") {
+            for (var i = 0; i < obj.features.length; ++i) {
+                _parseFeature(obj.features[i], geocodeResponse);
             }
-        },
-
-        /** TODO : jsdoc block */
-        GeocodeMatchCode : function (node, geocodedLocation) {
-            var acc = node.getAttribute("accuracy");
-            if (acc && geocodedLocation) {
-                geocodedLocation.accuracy = parseFloat(acc);
-            }
-            var matchType = node.getAttribute("matchType");
-            if (matchType && geocodedLocation) {
-                geocodedLocation.matchType = matchType;
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Address : function (node, geocodedLocation) {
-            var countrycode = node.getAttribute("countryCode");
-            if (geocodedLocation && countrycode) {
-                geocodedLocation.type = countrycode;
-            }
-            // on va récupérer les autres informations (StreetAddress, place, postalCode...)
-            __getChildNodes(node, geocodedLocation);
-        },
-
-        /** TODO : jsdoc block */
-        freeFormAddress : function (node, geocodedLocation) {
-            if (geocodedLocation && geocodedLocation.hasOwnProperty("placeAttributes")) {
-                geocodedLocation.placeAttributes.freeform = __getChildValue(node);
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Building : function (node, geocodedLocation) {
-            var num = node.getAttribute("number");
-            if (geocodedLocation && geocodedLocation.hasOwnProperty("placeAttributes")) {
-                if (num) {
-                    geocodedLocation.placeAttributes.number = num;
-                } else if (node.getAttribute("buildingName")) {
-                    geocodedLocation.placeAttributes.number = node.getAttribute("buildingName");
-                } else if (node.getAttribute("subdivision")) {
-                    geocodedLocation.placeAttributes.number = node.getAttribute("subdivision");
-                }
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Street : function (node, geocodedLocation) {
-            if (geocodedLocation && geocodedLocation.hasOwnProperty("placeAttributes")) {
-                // in case of a streetAddress result : street represents the street name
-                if (geocodedLocation.type === "StreetAddress") {
-                    geocodedLocation.placeAttributes.street = __getChildValue(node);
-
-                    // in case of a cadastral parcel result : street represents the cadastral parcel identifier
-                } else if (geocodedLocation.type === "CadastralParcel") {
-                    geocodedLocation.placeAttributes.cadastralParcel = __getChildValue(node);
-                }
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Place : function (node, geocodedLocation) {
-            var placeType = node.getAttribute("type");
-            var placeName = __getChildValue(node);
-
-            if (geocodedLocation && geocodedLocation.hasOwnProperty("placeAttributes")) {
-                if (placeType === "Municipality") {
-                    geocodedLocation.placeAttributes.municipality = placeName;
-                } else if (placeType === "Bbox") {
-                    var values = placeName.split(";");
-                    if (values.length === 4) {
-                        geocodedLocation.placeAttributes.bbox = {
-                            left : parseFloat(values[0]),
-                            right : parseFloat(values[2]),
-                            top : parseFloat(values[1]),
-                            bottom : parseFloat(values[3])
-                        };
-                    }
-                } else if (placeType === "Commune") {
-                    geocodedLocation.placeAttributes.commune = placeName;
-                } else if (placeType === "Departement") {
-                    geocodedLocation.placeAttributes.department = placeName;
-                } else if (placeType === "INSEE") {
-                    geocodedLocation.placeAttributes.insee = placeName;
-                } else if (placeType === "Qualite") {
-                    geocodedLocation.placeAttributes.quality = placeName;
-                } else if (placeType === "Territoire") {
-                    geocodedLocation.placeAttributes.territory = placeName;
-                } else if (placeType === "ID") {
-                    geocodedLocation.placeAttributes.ID = placeName;
-                } else if (placeType === "ID_TR") {
-                    geocodedLocation.placeAttributes.IDTR = placeName;
-                } else if (placeType === "Importance") {
-                    geocodedLocation.placeAttributes.importance = parseInt(placeName, 10);
-                } else if (placeType === "Nature") {
-                    geocodedLocation.placeAttributes.nature = placeName;
-                } else if (placeType === "Numero") {
-                    geocodedLocation.placeAttributes.number = placeName;
-                } else if (placeType === "Feuille") {
-                    geocodedLocation.placeAttributes.sheet = placeName;
-                } else if (placeType === "Section") {
-                    geocodedLocation.placeAttributes.section = placeName;
-                } else if (placeType === "CommuneAbsorbee") {
-                    geocodedLocation.placeAttributes.absorbedCity = placeName;
-                } else if (placeType === "Arrondissement") {
-                    if (placeName) {
-                        geocodedLocation.placeAttributes.arrondissement = placeName;
-                    }
-                } else if (placeType === "Type") {
-                    geocodedLocation.placeAttributes.origin = placeName;
-                } else if (placeType === "Prefecture") {
-                    geocodedLocation.placeAttributes.prefecture = placeName;
-                } else if (placeType === "InseeRegion") {
-                    geocodedLocation.placeAttributes.inseeRegion = placeName;
-                } else if (placeType === "InseeDepartment") {
-                    geocodedLocation.placeAttributes.inseeDepartment = placeName;
-                }
-            }
-        },
-
-        /** TODO : jsdoc block */
-        PostalCode : function (node, geocodedLocation) {
-            if (geocodedLocation && geocodedLocation.hasOwnProperty("placeAttributes")) {
-                geocodedLocation.placeAttributes.postalCode = __getChildValue(node);
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Error : function (node) {
-            // on imagine qu'on a une balise ainsi :
-            // <Error message="Message..." errorCode="InternalServerError"/>
-            var srvMess = node.getAttribute("message");
-            var errorCode = node.getAttribute("errorCode");
-            var message = _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION",
-                "(" + errorCode + ") : " + srvMess);
+        } else if (obj.type === "Feature") {
+            _parseFeature(obj, geocodeResponse);
+        } else if (obj.type === "SERVICE_ERROR") {
+            return _parseError(obj);
+        } else {
+            var mess = _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", obj.type);
             throw new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"]({
-                message : message,
-                type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"].TYPE_SRVERR
+                message : mess,
+                type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"].TYPE_UNKERR,
+                status : 200
             });
         }
-    },
 
-    gml : {
-
-        /** TODO : jsdoc block */
-        pos : function (node, geocodedLocation) {
-            var pos = __getChildValue(node);
-            if (geocodedLocation && pos) {
-                geocodedLocation.position = {
-                    x : parseFloat(pos.split(" ")[0]),
-                    y : parseFloat(pos.split(" ")[1])
-                };
-            }
-        }
-    },
-
-    /** TODO : jsdoc block */
-    ExceptionReport : function (node) {
-        var response = {};
-        if (node.hasChildNodes()) {
-            var children = node.childNodes;
-            var child;
-            for (var i = 0; i < children.length; i++) {
-                child = children[i];
-                if (child.nodeName === "Exception") {
-                    response.exceptionReport = DirectGeocodeResponseReader.READERS["Exception"](child);
-                }
-            }
-        }
-        return response;
-    },
-
-    /** TODO : jsdoc block */
-    Exception : function (node) {
-        var exceptionReport = {};
-
-        // get exception code
-        var exceptionCode = node.getAttribute("exceptionCode");
-        if (exceptionCode) {
-            exceptionReport.exceptionCode = exceptionCode;
-        }
-
-        // get exception message
-        var textNode = node.firstChild;
-        if (textNode && textNode.nodeType === 3) { // 3 === node.TEXT_NODE
-            exceptionReport.exception = textNode.nodeValue;
-        }
-
-        return exceptionReport;
-    }
-
-};
-
-/**
- * Méthode permettant de lancer la lecture d'une réponse XML du service de géocodage,
- *      à l'aide des READERS de la classe.
- *
- * @method DirectGeocodeResponseReader.read
- * @param {DOMElement} root - racine de la réponse XML à lire
- * @return {Object} geocodeResponse|exceptionReport : l'objet contenant les informations de la réponse XML,
- *      sous la forme d'un objet GeocodeResponse, ou un objet littéral exceptionReport si le service a renvoyé une exception.
- * @static
- * @memberof DirectGeocodeResponseReader
- */
-DirectGeocodeResponseReader.read = function (root) {
-    if (root.nodeName === "XLS") {
-        var nsPrefix = root.prefix;
-        if (!nsPrefix) {
-            nsPrefix = DirectGeocodeResponseReader.DEFAULTPREFIX;
-        }
-        var geocodeResponse = DirectGeocodeResponseReader.READERS[nsPrefix][root.nodeName](root);
         return geocodeResponse;
-    } else if (root.nodeName === "ExceptionReport") {
-        var exceptionReport = DirectGeocodeResponseReader.READERS[root.nodeName](root);
-        return exceptionReport;
-    } else {
-        var mess = _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_ANALYSE", root.nodeName);
-        throw new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"]({
-            message : mess,
-            type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"].TYPE_UNKERR,
-            status : 200
-        });
     }
 };
 
 /**
- * Récupération des attributs d'un noeud élément
+ * Méthode permettant de parser un feature
  *
  * @private
- * @memberof DirectGeocodeResponseReader
- * @method __getAttributes
- * @param {DOMElement} node - noeud contenant l'attribut recherché
- * @return {Object} nodeAttributes - objet contenant les noms et valeurs des différents attributs
+ *
+ * @param {Object} feature
+ * @param {Object} geocodeResponse
+ *
+ * @memberof GeocodeResponseParser
+ * @return {Object} objet GeocodedLocation
  */
-function __getAttributes (node) {
-    if (node.attributes.length > 0) {
-        var nodeAttributes = {};
-        var attributes = node.attributes;
-        for (var i = 0; i < attributes.length; i++) {
-            var attribute = attributes[i];
-            nodeAttributes[attribute.nodeName] = attribute.nodeValue;
-        }
-        return nodeAttributes;
+function _parseFeature (feature, geocodeResponse) {
+    var location = new _Response_model_GeocodedLocation__WEBPACK_IMPORTED_MODULE_3__["default"]();
+    if (feature.geometry && feature.geometry.type === "Point") {
+        location.position = {
+            lon : feature.geometry.coordinates[0],
+            lat : feature.geometry.coordinates[1]
+        };
     }
-}
-
-/**
- * Récupération des noeuds enfants à partir d'un noeud donné, pour lecture (readNode).
- *
- * @private
- * @memberof DirectGeocodeResponseReader
- * @method __getChildNodes
- * @param {DOMElement} node - a DOM node
- * @param {Array|Object} [data] - an object to be filled with node data
- */
-function __getChildNodes (node, data) {
-    if (node.hasChildNodes()) {
-        var children = node.childNodes;
-        var child;
-        var childName;
-        var childPrefix;
-
-        for (var i = 0; i < children.length; i++) {
-            child = children[i];
-
-            if (child.nodeType === 1) { // 1 === node.ELEMENT_NODE
-                childName = child.localName || child.baseName || child.nodeName;
-                childPrefix = child.prefix || DirectGeocodeResponseReader.DEFAULTPREFIX;
-
-                if (DirectGeocodeResponseReader.READERS[childPrefix][childName]) {
-                    var reader = DirectGeocodeResponseReader.READERS[childPrefix][childName];
-                    reader(child, data);
-                } else {
-                    __getChildNodes(child, data);
+    if (feature.properties) {
+        for (var prop in feature.properties) {
+            if (prop === "_score") {
+                location.accuracy = feature.properties[prop];
+            } else if (prop === "_type") {
+                if (feature.properties[prop] === "address") {
+                    location.type = "StreetAddress";
+                } else if (feature.properties[prop] === "poi") {
+                    location.type = "PositionOfInterest";
+                } else if (feature.properties[prop] === "parcel") {
+                    location.type = "CadastralParcel";
                 }
+            } else {
+                location.placeAttributes[prop] = feature.properties[prop];
             }
         }
+        if (feature.properties._type === "address") {
+            location.matchType = feature.properties.number !== undefined && feature.properties.number !== null ? "street number" : "street";
+        }
     }
+    geocodeResponse.locations.push(location);
 }
 
 /**
- * Lecture de la valeur du premier child d'un noeud, si elle existe.
+ * Méthode permettant de parser une erreur
  *
  * @private
- * @memberof DirectGeocodeResponseReader
- * @method __getChildValue
- * @param {DOMElement} node - a DOM node
- * @return {String} value - valeur du firstChild du noeud en entrée, ou chaîne vide.
- */
-function __getChildValue (node) {
-    var textNode;
-    var value = "";
-
-    if (node.hasChildNodes()) {
-        textNode = node.firstChild;
-        if (textNode.nodeType === 3) { // 3 === node.TEXT_NODE
-            value = textNode.nodeValue;
-        }
-    }
-    return value;
-}
-
-/**
- * Vérification des attributs du service, dans la balise XLS de la réponse :
- *      version, namespaces, et namespace par défaut doivent correspondre à ceux attendus.
  *
- * @private
- * @memberof DirectGeocodeResponseReader
- * @method __checkServiceAttributes
- * @param {DOMElement} XLSNode - a DOM node, corresponding to XLS first tag.
+ * @param {Object} error
+ *
+ * @memberof GeocodeResponseParser
+ * @return {Object}
  */
-function __checkServiceAttributes (XLSNode) {
-    if (XLSNode.attributes.length > 0) {
-        // on récupère et parcourt les attributs de la balise XLS de la réponse
-        var xlsAttributes = __getAttributes(XLSNode);
-        for (var att in xlsAttributes) {
-            if (xlsAttributes.hasOwnProperty(att)) {
-                // vérification de la version
-                if (att === "version") {
-                    if (xlsAttributes["version"] !== DirectGeocodeResponseReader.VERSION) {
-                        console.log("[DirectGeocodeResponseReader] geocode version is not the expected one : there may be errors in parsing");
-                        return;
-                    }
-                }
-
-                // on vérifie que l'uri du namespace par défaut est bien celle que l'on attend
-                if (att === "xmlns") {
-                    if (xlsAttributes[att] !== DirectGeocodeResponseReader.NAMESPACES[DirectGeocodeResponseReader.DEFAULTPREFIX]) {
-                        console.log("[DirectGeocodeResponseReader] geocode response default namespace is not the expected one");
-                        return;
-                    }
-                    continue;
-                }
-
-                var prefix = att.split(":")[0];
-                var ns = att.split(":")[1];
-
-                // si on a un autre xmlns, on vérifie aussi les URI
-                if (prefix === "xmlns" && ns) {
-                    // si l'attribut correspond à un namespace défini dans le reader
-                    if (DirectGeocodeResponseReader.NAMESPACES[ns]) {
-                        // il faut que les URI correspondent aussi.
-                        if (DirectGeocodeResponseReader.NAMESPACES[ns] !== xlsAttributes[att]) {
-                            console.log("[DirectGeocodeResponseReader] geocode response " + att + " namespace is not the expected one");
-                            return;
-                        }
-                    }
-                }
-
-                // pour finir on vérifie la localisation du schema XSD du service
-                if (ns === "schemaLocation") {
-                    if (DirectGeocodeResponseReader.SCHEMALOCATION !== xlsAttributes[att]) {
-                        console.log("[DirectGeocodeResponseReader] geocode response schema location is not the expected one");
-                        return;
-                    }
-                }
-            }
-        }
-    }
+function _parseError (error) {
+    return {
+        exceptionReport : error
+    };
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (DirectGeocodeResponseReader);
+/* harmony default export */ __webpack_exports__["default"] = (GeocodeResponseParser);
 
 
 /***/ }),
-/* 102 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21991,7 +19400,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Response object for {@link module:Services~geocode Gp.Services.geocode ()} or {@link module:Services~reverseGeocode Gp.Services.reverseGeocode ()} invocation when successful. Received as the argument of onSuccess callback function.
  *
- * @property {Array.<Gp.Services.Geocode.DirectGeocodedLocation|Gp.Services.Geocode.ReverseGeocodedLocation>} locations - locations array.
+ * @property {Array.<Gp.Services.Geocode.GeocodedLocation>} locations - locations array.
  *
  * @namespace
  * @alias Gp.Services.GeocodeResponse
@@ -22014,109 +19423,55 @@ GeocodeResponse.prototype = {
 
 
 /***/ }),
-/* 103 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GeocodedLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(104);
-
-
 
 /**
  * Single location object returned by the underlying geocoding web service.
  *
- * @property {Float} accuracy - Accuracy of the response towards the requested location between 0 (unaccurate) and 1 (exact match).
- *
- * @namespace
- * @extends {Gp.Services.Geocode.GeocodedLocation}
- * @alias Gp.Services.Geocode.DirectGeocodedLocation
- */
-function DirectGeocodedLocation () {
-    if (!(this instanceof DirectGeocodedLocation)) {
-        throw new TypeError("DirectGeocodedLocation constructor cannot be called as a function.");
-    }
-
-    // INFO
-    // appel du constructeur de la classe mère
-    // avec passage de param.
-    _GeocodedLocation__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
-    /**
-     * Nom de la classe (heritage) : "DirectGeocodedLocation"
-     * @type {String}
-     */
-    this.CLASSNAME = "DirectGeocodedLocation";
-
-    this.accuracy = null;
-}
-
-DirectGeocodedLocation.prototype = Object.create(_GeocodedLocation__WEBPACK_IMPORTED_MODULE_0__["default"].prototype);
-
-DirectGeocodedLocation.prototype.constructor = DirectGeocodedLocation;
-
-/* harmony default export */ __webpack_exports__["default"] = (DirectGeocodedLocation);
-
-
-/***/ }),
-/* 104 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-/**
- * Location object holding common properties returned by the underlying geocoding and reverse geocoding web service.
- *
  * @property {Gp.Point} position - Position of the location given in the requested coordinates system.
  * @property {String} type - location type "StreetAddress" (for an address), "PositionOfInterest" (for a place name) or "CadastralParcel" (for cadastral parcel).
  * @property {String} matchType - how geocoding is performed : "street number" (exact address), "street enhanced" (street number calculated by interpolation), "street" (only the street), "city" (only the city).
+ * @property {Float} accuracy - Accuracy of the response towards the requested location between 0 (unaccurate) and 1 (exact match).
  * @property {Object} placeAttributes - Associative array matching the following attributes with their values given by the underlying web service :
  *
  * *Common attributes : *
  *
- * - **freeform** - freeform complete Address.
- * - **bbox** - Bounding Box *{@link Gp.BBox}*.
- * - **municipality** - Municipality
+ * - **trueGeometry** - the 'real life' geometry if different from 'Point' type.
  *
- * *if type === "StreetAddress" : *
+ * *if type === "StreetAddress" :*
  *
  * - **number** - Street number.
- * - **ID** - Identifier of the address in the [BD ADRESSE Database]{@link http://professionnels.ign.fr/bdadresse}.
- * - **IDTR** - Identifier of the lineString in the [BD ADRESSE Database]{@link http://professionnels.ign.fr/bdadresse}.
  * - **postalCode** - PostCode
- * - **quality** - Geocoding quality ([see]{@link http://api.ign.fr/tech-docs-js/developpeur/search.html})
  * - **street** - Street name
- * - **territory** - French Territory code
- * - **commune** - City
- * - **department** - Department
- * - **insee** - INSEE Code
+ * - **city** - City
+ * - **houseNumberInfos** - additional street number information
+ * - **inseeCode** - INSEE Code
  *
  *
  * *if type === "PositionOfInterest" :*
  *
- * - **importance** - Place name importance
- * - **nature** - Place name nature
+ * - **type** - Place name type
  * - **postalCode** - PostCode
- * - **territory** - French Territory code
- * - **commune** - City
- * - **department** - Department
- * - **insee** - INSEE Code
+ * - **toponyme** - Toponyme
+ * - **extraFields** - additional place name properties
+ * - **inseeCode** - INSEE Code
  *
  *
  * *si type = "CadastralParcel" :*
  *
- * - **absorbedCity** - when a parcel comes from a city that was absorbed by another, code of that old city. "000" otherwise.
- * - **arrondissement** - arrondissement
- * - **cadastralParcel** - cadastral parcel code
- * - **district** - district
- * - **sheet** - Parcel Sheet (eg. "1").
- * - **number** - Parcel Number (eg. "0041")
+ * - **codeCommuneAbs** - when a parcel comes from a city that was absorbed by another, code of that old city. "000" otherwise.
+ * - **codeArrondissement** - arrondissement
+ * - **identifiant** - cadastral parcel code
+ * - **feuille** - Parcel Sheet (eg. "1").
+ * - **numero** - Parcel Number (eg. "0041")
  * - **section** - Parcel Section (eg. "0D").
- * - **commune** - Parcel municipality.
- * - **department** - Parcel Department.
- * - **insee** - INSEE Code.
- * - **origin** - Parcel origin (see "type" attribute in the [underlying web service response]{@link http://api.ign.fr/tech-docs-js/developpeur/search.html#Cadastral_parcels_search})
+ * - **nomCommune** - Parcel municipality name.
+ * - **codeCommune** - Parcel municipality.
+ * - **codeDepartement** - Parcel Department.
  *
  * @namespace
  * @alias Gp.Services.Geocode.GeocodedLocation
@@ -22126,16 +19481,21 @@ function GeocodedLocation () {
         throw new TypeError("GeocodedLocation constructor cannot be called as a function.");
     }
 
-    this.position = {
-        x : null,
-        y : null
-    };
+    this.position = null;
 
     this.matchType = null;
 
     this.placeAttributes = {};
 
     this.type = null;
+
+    this.accuracy = null;
+
+    /**
+     * Nom de la classe : "GeocodedLocation"
+     * @type {String}
+     */
+    this.CLASSNAME = "GeocodedLocation";
 }
 
 GeocodedLocation.prototype = {
@@ -22148,7 +19508,7 @@ GeocodedLocation.prototype = {
 
 
 /***/ }),
-/* 105 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22157,9 +19517,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(42);
-/* harmony import */ var _Request_ReverseGeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(106);
-/* harmony import */ var _Response_ReverseGeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(107);
-
+/* harmony import */ var _Request_GeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(83);
+/* harmony import */ var _Response_GeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(86);
 
 
 
@@ -22180,70 +19539,62 @@ __webpack_require__.r(__webpack_exports__);
  * @param {Object} options - options spécifiques au service (+ les options heritées)
  *
  * @param {Object} options.position - Position du point de référence pour le calcul de proximité exprimée dans le système de référence spécifié par le srs.
- *      @param {Float} options.position.x - Abcisse du point de référence pour le calcul de proximité exprimée dans le système de référence spécifié par le srs. (= longitude si srs = "CRS:84", latitude si srs = "EPSG:4326")
- *      @param {Float} options.position.y - Ordonnée du point de référence pour le calcul de proximité exprimée dans le système de référence spécifié par le srs. (= latitude si srs = "CRS:84", longitude si srs = "EPSG:4326")
+ *      @param {Float} options.position.lon - Longitude du point de référence pour le calcul de proximité.
+ *      @param {Float} options.position.lat - Latitude du point de référence pour le calcul de proximité.
  *
- * @param {Object} [options.filterOptions] - Les propriétés possibles de cet objet sont décrites ci-après.
- * @param {Object} [options.filterOptions.bbox] - Emprise dans laquelle on souhaite effectuer la recherche.
+ * @param {Object} [options.filters] - Les propriétés possibles de cet objet.
+ * @param {String} [options.filters.[proprietes du filtre]] - Critère supplémentaire pour filtrer la recherche sous la forme
+ *      d'un couple clé/valeur à définir selon les possibilités du serveur ajouté à la requête.
+ *      Le service de géocodage du Géoportail permet de filtrer les adresses postales avec les propriétés :
+ *          "postalCode", "inseeCode", "city".
+ *      Il permet également de filtrer les toponymes avec les propriétés :
+ *          "postalCode", "inseeCode", "type".
+ *      Enfin, il permet de filtrer les parcelles cadastrales avec les propriétés :
+ *          "codeDepartement", "codeCommune", "nomCommune", "codeCommuneAbs", "codeArrondissement", "section", "numero", "feuille".
+ *
+ * @param {Object} [options.searchGeometry] - Emprise dans laquelle on souhaite effectuer la recherche.
  *      Les propriétés possibles de cet objet sont décrites ci-après.
- *      @param {Float} options.filterOptions.bbox.left   - Abscisse du côté gauche de la BBOX
- *      @param {Float} options.filterOptions.bbox.right  - Abscisse du côté droit de la BBOX
- *      @param {Float} options.filterOptions.bbox.top    - Ordonnée supérieure de la BBOX
- *      @param {Float} options.filterOptions.bbox.bottom - Ordonnée inférieure de la BBOX
+ *      @param {String} options.searchGeometry.type   - Type de géometrie (Point|Circle|Linestring|Polygon)
+ *      @param {Array.<Float>|Array.Array.<Float>} options.searchGeometry.coordinates - Coordonnées des points constituant la géométrie.
+ *      @param {Float} options.searchGeometry.radius    - Rayon. Paramètre applicable uniquement pour le type 'Circle'.
  *
- * @param {Object} [options.filterOptions.circle] - Cercle dans lequel on souhaite effectuer la recherche.
- *      Les propriétés possibles de cet objet sont décrites ci-après.
- *      @param {Float} options.filterOptions.circle.x      - Abscisse du centre du cercle de recherche.
- *      @param {Float} options.filterOptions.circle.y      - Ordonnée du centre du cercle de recherche.
- *      @param {Float} options.filterOptions.circle.radius - Rayon du cercle de recherche.
- *
- * @param {Array.<Object>} [options.filterOptions.polygon] - Polygone dans lequel on souhaite effectuer la recherche.
- *      Liste des couples x et y pour chaque point constituant le polygone.
- *
- * @param {Array.<String>} [options.filterOptions.type = "StreetAddress"] - Type de l'objet recherché.
- *      Le service de géocodage du Géoportail permet de rechercher des 'PostionOfInterest' pour des toponymes, des 'StreetAddress'
- *      pour des adresses postales et/ou des 'CadastralParcel' pour des parcelles cadastrales.
+ * @param {String} [options.index = "StreetAddress"] - Type de l'objet recherché.
+ *      Le service de géocodage du Géoportail permet de rechercher des 'PositionOfInterest' pour des toponymes, des 'StreetAddress'
+ *      pour des adresses postales ou des 'CadastralParcel' pour des parcelles cadastrales. L'index 'location' permet une recherche
+ *      multi-indexes en regroupant les indexes 'PositionOfInterest' et 'StreetAddress'.
  *      D'autres types pourront être rajoutés selon l'évolution du service.
- *      Par défaut, type = ['StreetAddress'].
+ *      Par défaut, index = 'StreetAddress'.
  *
  * @param {Number} [options.maximumResponses] - Nombre de réponses maximal que l'on souhaite recevoir.
- *      Pas de valeur par défaut. Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 25.
+ *      Pas de valeur par défaut. Si le serveur consulté est celui du Géoportail, la valeur par défaut sera donc celle du service : 20s.
  *
- * @param {String} [options.srs = CRS:84] - Système de coordonnées dans lequel les paramètres géographiques en entrée et la réponse du service sont exprimés.
- *      Pas de valeur par défaut.
- *      Si le serveur consulté est celui du Géoportail, la valeur par défaut est : "CRS:84".
+ * @param {Boolean} [options.returnTrueGeometry] - Booléen indiquant si l'on souhaite récupérer la géométrie vraie des objects géolocalisés.
+ *      false par défaut.
  *
  * @example
  *   var options = {
  *      apiKey : null,
  *      serverUrl : 'http://localhost/service/',
- *      protocol : 'JSONP', // JSONP|XHR
  *      proxyURL : null,
- *      httpMethod : 'GET', // GET|POST
  *      timeOut : 10000, // ms
  *      rawResponse : false, // true|false
  *      scope : null, // this
  *      onSuccess : function (response) {},
  *      onFailure : function (error) {},
  *      // spécifique au service
- *      position : {x:0 , y:0},
- *      filterOptions :{
- *          bbox : {left : 0, right : 1, top : 1, bottom : 0},
- *          [circle : {
- *              x : 0,
- *              y : 0,
- *              radius : 100
- *          }]
- *          [polygon  : [{x:0,y:0}, {x:1,y:1}, {x:2,y:2}, {x:3,y:2}, {x:4,y:1}, {x:0,y:0}]]
- *          type : ['StreetAddress']
+ *      index : 'StreetAddress',
+ *      searchGeometry : {
+ *          type : Circle,
+ *          coordinates : [48, 2],
+ *          radius : 100
  *      },
+ *      position : {lon:2 , lat:48.5},
  *      maximumResponses : 25,
- *      srs : 'EPSG:4326'
  *   };
  *
  * @private
  */
-function ReverseGeocode (options) {
+function ReverseGeocode (options_) {
     if (!(this instanceof ReverseGeocode)) {
         throw new TypeError(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("CLASS_CONSTRUCTOR", "ReverseGeocode"));
     }
@@ -22254,103 +19605,45 @@ function ReverseGeocode (options) {
      */
     this.CLASSNAME = "ReverseGeocode";
 
-    // appel du constructeur par heritage
-    _CommonService__WEBPACK_IMPORTED_MODULE_3__["default"].apply(this, arguments);
-
     this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("Gp.Services.ReverseGeocode");
     this.logger.trace("[Constructeur ReverseGeocode (options)]");
 
-    if (!options.position) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_MISSING", "position"));
-    }
+    var options = this.patchOptionConvertor(options_);
+    options.serverUrl = options.serverUrl || "https://wxs.ign.fr/calcul/geoportail/geocodage/rest/0.1/reverse";
 
-    // on lance une exception afin d'eviter au service de le faire...
-    if (options.position.x === null) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_MISSING", "position.x"));
-    }
+    // appel du constructeur par heritage
+    _CommonService__WEBPACK_IMPORTED_MODULE_3__["default"].apply(this, [options]);
 
-    if (options.position.y === null) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_MISSING", "position.y"));
+    if (!options.searchGeometry) {
+        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_MISSING", "searchGeometry"));
     }
 
     // ajout des options spécifiques au service
-    this.options.position = options.position;
+    this.options.searchGeometry = options.searchGeometry;
 
-    // on definit des filtres par defaut
-    if (!options.filterOptions || typeof options.filterOptions !== "object") {
-        this.options.filterOptions = options.filterOptions = {
-            type : ["StreetAddress"]
-        };
+    // on definit l'index par defaut
+    if (!options.index) {
+        this.options.index = options.index = "StreetAddress";
     }
 
-    // FIXME ECMAScript 5 support (valable pour un objet uniquement !)
-    // ceci permet de tester le cas où : object = {}
-    if (Object.keys(options.filterOptions).length === 0) {
-        this.options.filterOptions = {
-            type : ["StreetAddress"]
-        };
-    }
-
-    // on teste pour chaque filtre, les conditions suivantes : null ou vide !
-    var filter = Object.keys(options.filterOptions);
-    for (var i = 0; i < filter.length; i++) {
-        var key = filter[i];
-        if (!options.filterOptions[key] || Object.keys(options.filterOptions[key]).length === 0) {
-            delete this.options.filterOptions[key];
-        }
-    }
-
-    this.options.filterOptions.type = options.filterOptions.type || ["StreetAddress"];
-    // on vérifie que le type est bien dans un tableau
-    if (!Array.isArray(this.options.filterOptions.type)) {
-        throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("PARAM_TYPE", "filterOptions.type"));
-    }
-
-    this.options.maximumResponses = options.maximumResponses || 25;
-
-    // FIXME : cet attribut (returnFreeForm) n'est pas spécifié dans la doc du constructeur ?
-    // Il est inutile en effet, mais présent dans les specs...
-    this.options.returnFreeForm = options.returnFreeForm || false;
-    // info : en réalité le service ne reconnait que EPSG:4326. this.options.srs permet essentiellement de différencier EPSG:4326 (lat,lon) et CRS:84 (lon,lat)
-    this.options.srs = options.srs || "CRS:84";
-
-    // si on n'a pas un systeme de coordonnées EPSG géographique, il faut inverser les coordonnées
-    // (car elles sont en lon, lat alors que le service attend une position en lat, lon).
-    // dans le cas d'EPSG:4326 par exemple, les coordonnées sont bien en lat, lon donc on ne fait rien.
-    if (ReverseGeocode.geoEPSG.indexOf(this.options.srs) === -1) {
-        // pour la position
-        this.options.position = {
-            x : this.options.position.y,
-            y : this.options.position.x
-        };
-        // pour les filtres spatiaux s'ils sont spécifiés
-        if (this.options.filterOptions && this.options.filterOptions.circle) {
-            var circle = this.options.filterOptions.circle;
-            this.options.filterOptions.circle = {
-                x : circle.y,
-                y : circle.x,
-                radius : circle.radius
-            };
-        }
-        if (this.options.filterOptions && this.options.filterOptions.polygon) {
-            var polygon = this.options.filterOptions.polygon;
-            for (i = 0; i < polygon.length; i++) {
-                var coords = polygon[i];
-                this.options.filterOptions.polygon[i] = {
-                    x : coords.y,
-                    y : coords.x
-                };
+    if (options.filters) {
+        var filter = Object.keys(options.filters);
+        for (var i = 0; i < filter.length; i++) {
+            var key = filter[i];
+            // on supprime les filtres vides
+            if (typeof options.filters[key] === "undefined" ||
+                (typeof options.filters[key] === "object" && Object.keys(options.filters[key]).length === 0) ||
+                (typeof options.filters[key] === "string" && options.filters[key].length === 0) ||
+                (Array.isArray(options.filters[key]) && options.filters[key].length === 0)
+            ) {
+                delete this.options.filters[key];
             }
         }
     }
 
-    // attributs d'instances
-
-    /**
-     * Format forcé de la réponse du service : "xml"
-     * sauf si l'on souhaite une reponse brute (options.rawResponse)
-     */
-    this.options.outputFormat = (this.options.rawResponse) ? "" : "xml";
+    this.options.position = options.position;
+    this.options.index = options.index || "StreetAddress";
+    this.options.maximumResponses = options.maximumResponses || 20;
 }
 
 /**
@@ -22367,6 +19660,92 @@ ReverseGeocode.prototype = Object.create(_CommonService__WEBPACK_IMPORTED_MODULE
 ReverseGeocode.prototype.constructor = ReverseGeocode;
 
 /**
+ * Patch pour la convertion des options vers le nouveau formalisme.
+ *
+ * @param {Object} options_ - options du service
+ * @return {Object} - options
+ */
+ReverseGeocode.prototype.patchOptionConvertor = function (options_) {
+    var options = options_;
+
+    if (options.filterOptions) {
+        this.logger.warn("The parameter 'filterOptions' is deprecated");
+
+        if (options.filterOptions.type) {
+            this.logger.warn("The parameter 'filterOptions.type' is deprecated");
+            if (!options.index) {
+                if (Array.isArray(options.filterOptions.type) && options.filterOptions.type.length > 0) {
+                    options.index = options.filterOptions.type[0];
+                } else {
+                    options.index = options.filterOptions.type;
+                }
+            }
+            delete options.filterOptions.type;
+        }
+
+        if (options.filterOptions.bbox) {
+            this.logger.warn("The parameter 'filterOptions.bbox' is deprecated");
+            if (!options.searchGeometry) {
+                // convertir la geometrie
+                options.searchGeometry = this.bbox2Json(options.filterOptions.bbox);
+            }
+            delete options.filterOptions.bbox;
+        }
+
+        if (options.filterOptions.circle) {
+            this.logger.warn("The parameter 'filterOptions.circle' is deprecated");
+            if (!options.searchGeometry) {
+                // convertir la geometrie
+                options.searchGeometry = this.circle2Json(options.filterOptions.circle);
+            }
+            delete options.filterOptions.circle;
+        }
+
+        if (options.filterOptions.polygon) {
+            this.logger.warn("The parameter 'filterOptions.polygon' is deprecated");
+            if (!options.searchGeometry) {
+                // convertir la geometrie
+                options.searchGeometry = this.polygon2Json(options.filterOptions.polygon);
+            }
+            delete options.filterOptions.polygon;
+        }
+
+        if (!options.filters && Object.keys(options.filterOptions).length > 0) {
+            options.filters = options.filterOptions;
+        }
+
+        delete options.filterOptions;
+    }
+
+    if (options.position) {
+        if (options.position.x) {
+            this.logger.warn("The parameter 'position.x' is deprecated");
+
+            if (!options.position.lon) {
+                options.position.lon = options.position.x;
+            }
+            delete options.position.x;
+        }
+
+        if (options.position.y) {
+            this.logger.warn("The parameter 'position.y' is deprecated");
+
+            if (!options.position.lat) {
+                options.position.lat = options.position.y;
+            }
+            delete options.position.y;
+        }
+    }
+
+    if (options.srs) {
+        this.logger.warn("The parameter 'srs' is deprecated");
+        delete options.srs;
+    }
+
+    return options;
+};
+
+/**
  * (overwrite)
  * Création de la requête
  *
@@ -22377,14 +19756,16 @@ ReverseGeocode.prototype.buildRequest = function (error, success) {
     var options = {
         httpMethod : this.options.httpMethod,
         // options specifiques du service
+        geocodeMethod : "reverse",
+        searchGeometry : this.options.searchGeometry,
+        index : this.options.index,
         position : this.options.position,
-        returnFreeForm : this.options.returnFreeForm,
-        filterOptions : this.options.filterOptions,
-        srs : "EPSG:4326", // info : en réalité le service ne reconnait que EPSG:4326. this.options.srs permet essentiellement de différencier EPSG:4326 (lat,lon) et CRS:84 (lon,lat)
-        maximumResponses : this.options.maximumResponses
+        returnTrueGeometry : this.options.returnTrueGeometry,
+        maxResp : this.options.maximumResponses,
+        filters : this.options.filters
     };
 
-    this.request = _Request_ReverseGeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__["default"].build(options);
+    this.request = _Request_GeocodeRequestFactory__WEBPACK_IMPORTED_MODULE_4__["default"].build(options);
 
     // on teste si la requete a bien été construite !
     (!this.request)
@@ -22409,10 +19790,62 @@ ReverseGeocode.prototype.analyzeResponse = function (error, success) {
             scope : this
         };
 
-        _Response_ReverseGeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__["default"].build(options);
+        _Response_GeocodeResponseFactory__WEBPACK_IMPORTED_MODULE_5__["default"].build(options);
     } else {
         error.call(this, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__["default"](_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__["default"].getMessage("SERVICE_RESPONSE_EMPTY")));
     }
+};
+
+/**
+ * Patch pour la convertion des options vers le nouveau formalisme.
+ *
+ * @param {Array} bbox - bbox
+ * @return {Object} - geometrie au format json
+ */
+ReverseGeocode.prototype.bbox2Json = function (bbox) {
+    return {
+        type : "Polygon",
+        coordinates : [[
+            [bbox.left, bbox.top],
+            [bbox.right, bbox.top],
+            [bbox.right, bbox.bottom],
+            [bbox.left, bbox.bottom],
+            [bbox.left, bbox.top]
+        ]]
+    };
+};
+
+/**
+ * Patch pour la convertion des options vers le nouveau formalisme.
+ *
+ * @param {Object} circle - circle
+ * @return {Object} - geometrie au format json
+ */
+ReverseGeocode.prototype.circle2Json = function (circle) {
+    return {
+        type : "Circle",
+        radius : circle.radius,
+        coordinates : [circle.x, circle.y]
+    };
+};
+
+/**
+ * Patch pour la convertion des options vers le nouveau formalisme.
+ *
+ * @param {Array} polygon - polygon
+ * @return {Object} - geometrie au format json
+ */
+ReverseGeocode.prototype.polygon2Json = function (polygon) {
+    var jsonGeom = {
+        type : "Polygon",
+        coordinates : [[]]
+    };
+
+    for (var i = 0; i < polygon.length; ++i) {
+        jsonGeom.coordinates[0].push([polygon[i].x, polygon[i].y]);
+    }
+
+    return jsonGeom;
 };
 
 /**
@@ -22424,745 +19857,13 @@ ReverseGeocode.geoEPSG = ["EPSG:4326"];
 
 
 /***/ }),
-/* 106 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
-/* harmony import */ var _Formats_XLS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(84);
-/* harmony import */ var _Formats_XLS_LocationUtilityService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(88);
-/**
- * Creation d'une requête OpenLS en mode POST ou GET
- * (Factory)
- *
- * @module ReverseGeocodeRequestFactory
- * @alias Gp.Services.Geocode.Request.ReverseGeocodeRequestFactory
- * @private
- */
-
-
-
-
-var ReverseGeocodeRequestFactory = {
-
-    /**
-     * interface unique
-     *
-     * @method build
-     * @static
-     * @param {Object} options - options definies dans le composant Geocode
-     *
-     * @example
-     *   var options = {
-     *      httpMethod :
-     *      // options specifiques du service
-     *      position :
-     *      returnFreeForm :
-     *      filterOptions :
-     *      srs :
-     *      maximumResponses :
-     *   };
-     *   var result = ReverseGeocodeRequestFactory.build(options);
-     *   if (!result) {
-     *       // error...
-     *   }
-     * @returns {String} request
-     */
-    build : function (options) {
-        // logger
-        var logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__["default"].getLogger("ReverseGeocodeRequestFactory");
-        logger.trace(["ReverseGeocodeRequestFactory::build()"]);
-
-        // options non definies
-        var settings = options || {};
-
-        var request = null;
-
-        // objet LUS
-        var oLUS = new _Formats_XLS_LocationUtilityService__WEBPACK_IMPORTED_MODULE_2__["default"]({
-            position : settings.position,
-            returnFreeForm : settings.returnFreeForm,
-            filterOptions : settings.filterOptions
-        });
-
-        // Format XLS
-        var oXLS = new _Formats_XLS__WEBPACK_IMPORTED_MODULE_1__["default"]({
-            srsName : settings.srs,
-            maximumResponses : settings.maximumResponses
-        });
-        oXLS.namespace = true;
-        oXLS.setService(oLUS);
-
-        // request brute !
-        request = oXLS.build();
-
-        // en mode GET, la requête est encodée
-        // et le param. 'qxml' est ajouté
-        if (settings.httpMethod === "GET") {
-            var myRequest = "qxml=" +
-                encodeURIComponent(request)
-                    .replace(/-/g, "%2D")
-                    .replace(/_/g, "%5F")
-                    .replace(/\./g, "%2E")
-                    .replace(/!/g, "%21")
-                    .replace(/~/g, "%7E")
-                    .replace(/\*/g, "%2A")
-                    .replace(/'/g, "%27")
-                    .replace(/\(/g, "%28")
-                    .replace(/\)/g, "%29");
-            request = myRequest;
-        }
-
-        logger.trace(request);
-
-        return request;
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (ReverseGeocodeRequestFactory);
-
-
-/***/ }),
-/* 107 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
-/* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
-/* harmony import */ var _Formats_XML__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(61);
-/* harmony import */ var _Formats_ReverseGeocodeResponseReader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(108);
-/**
- * Factory pour générer une reponse JSON à partir d'un XML
- * ou d'un JSON encapsulant du XML
- * (Factory)
- *
- * @module ReverseGeocodeResponseFactory
- * @alias Gp.Services.ReverseGeocode.Response.ReverseGeocodeResponseFactory
- * @todo La reponse JSON peut encapsuler un XML !
- * @private
- */
-
-
-
-
-
-
-var ReverseGeocodeReponseFactory = {
-
-    /**
-     * interface unique
-     *
-     * @method build
-     * @static
-     * @param {Object} options - options definies dans le composant ReverseGeocode
-     *
-     * @example
-     *   var options = {
-     *      response :
-     *      rawResponse :
-     *      scope :
-     *      onSuccess :
-     *      onError :
-     *   };
-     *
-     */
-    build : function (options) {
-        // data de type ReverseGeocodeResponse
-        var data = null;
-
-        if (options.response) {
-            if (options.rawResponse) {
-                data = options.response;
-            } else {
-                try {
-                    var p = new _Formats_XML__WEBPACK_IMPORTED_MODULE_2__["default"]({
-                        reader : _Formats_ReverseGeocodeResponseReader__WEBPACK_IMPORTED_MODULE_3__["default"]
-                    });
-
-                    if (typeof options.response === "string") {
-                        p.setXMLString(options.response);
-                    } else {
-                        p.setXMLDoc(options.response);
-                    }
-
-                    data = p.parse();
-
-                    if (!data) {
-                        throw new Error("L'analyse de la réponse du service !?");
-                    }
-                } catch (e) {
-                    // on relaye l'erreur reçue
-                    e.status = 200;
-                    options.onError.call(options.scope, e);
-                    return;
-                }
-
-                // Si la réponse contenait une exception renvoyée par le service
-                // TODO : quand cela arrive-t-il ?
-                if (data.exceptionReport) {
-                    options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"]({
-                        message : _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION", data.exceptionReport),
-                        type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"].TYPE_SRVERR,
-                        status : 200
-                    }));
-                    return;
-                }
-
-                // dans le cas d'un srs non EPSG géographique, il faut réinverser les coordonnées (lat,lon => lon,lat)
-                if (options.scope && options.scope.options && options.scope.options.srs && options.scope.options.srs !== "EPSG:4326") {
-                    var location;
-                    var pos;
-                    if (data.locations) {
-                        for (var i = 0; i < data.locations.length; i++) {
-                            location = data.locations[i];
-                            if (location) {
-                                pos = location.position;
-                                if (pos) {
-                                    // on inverse les 2 coordonnées
-                                    location.position = {
-                                        x : pos.y,
-                                        y : pos.x
-                                    };
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            options.onError.call(options.scope, new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"]({
-                message : _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_EMPTY"),
-                type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"].TYPE_SRVERR,
-                status : -1 // FIXME : status response
-            }));
-            return;
-        }
-
-        options.onSuccess.call(options.scope, data);
-    }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (ReverseGeocodeReponseFactory);
-
-
-/***/ }),
-/* 108 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
-/* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
-/* harmony import */ var _Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(102);
-/* harmony import */ var _Response_model_ReverseGeocodedLocation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(109);
-
-/**
- * Fonction retournant un objet contenant des clés de lecture (readers)
- *      qui permettent de parser des réponses XML du service de géocodage inverse du Géoportail
- *      afin de récupérer les résultats retournés.
- * @module ReverseGeocodeResponseReader
- * @alias Gp.Services.Geocode.Formats.ReverseGeocodeResponseReader
- * @private
- */
-
-// import Logger from "../../../Utils/LoggerByDefault";
-
-
-
-
-
-/**
- * Objet ReverseGeocodeResponseReader
- * @member {Object} ReverseGeocodeResponseReader
- *
- * @property {String} ReverseGeocodeResponseReader.VERSION - Version du service de géocodage
- *
- * @property {Object} ReverseGeocodeResponseReader.NAMESPACES - Objet stockant les différents namespaces et les URI associées
- *
- * @property {String} ReverseGeocodeResponseReader.SCHEMALOCATION - Localisation (URL) du schema de définition du XML (XSD)
- *
- * @property {String} ReverseGeocodeResponseReader.DEFAULTPREFIX - Namespace par défaut du format
- *
- * @property {Object} ReverseGeocodeResponseReader.READERS - Objet contenant des fonctions de lecture, appelées "READERS"
- *      dont chaque clé correspond au nom d'un tag du XML que l'on souhaite lire
- *      et la valeur associée est une fonction (node, data)
- *      où node est un noeud du document DOM
- *      et data est un objet où l'on stocke les informations lues dans le XML.
- *
- * @property {Method} ReverseGeocodeResponseReader.read - Méthode permettant de lancer la lecture d'une réponse XML du service de géocodage,
- *      à l'aide des READERS de la classe.
- *
- */
-
-var ReverseGeocodeResponseReader = {};
-
-/**
- * version du service de géocodage
- */
-ReverseGeocodeResponseReader.VERSION = "1.2";
-
-/**
- * Objet stockant les différents namespaces et les URI associées
- */
-ReverseGeocodeResponseReader.NAMESPACES = {
-    xmlns : "http://www.opengis.net/xls",
-    gml : "http://www.opengis.net/gml",
-    xls : "http://www.opengis.net/xls",
-    xlsext : "http://www.opengis.net/xlsext",
-    xsi : "http://www.w3.org/2001/XMLSchema-instance"
-};
-
-/**
- * Localisation (URL) du schema de définition du XML (XSD)
- */
-ReverseGeocodeResponseReader.SCHEMALOCATION = "http://wxs.ign.fr/schemas/olsAll.xsd";
-
-/**
- * Namespace par défaut du format
- */
-ReverseGeocodeResponseReader.DEFAULTPREFIX = "xls";
-
-/**
- * Objet contenant des fonctions de lecture, appelées "READERS"
- *      dont chaque clé correspond au nom d'un tag du XML que l'on souhaite lire
- *      et la valeur associée est une fonction (node, data)
- *      où node est un noeud du document DOM
- *      et data est un objet où l'on stocke les informations lues dans le XML.
- */
-ReverseGeocodeResponseReader.READERS = {
-
-    xls : {
-
-        /** TODO : jsdoc block */
-        XLS : function (root) {
-            var reverseGeocodeResponse = new _Response_model_GeocodeResponse__WEBPACK_IMPORTED_MODULE_2__["default"]();
-
-            // vérification de la version du service, et des namespaces de l'en-tête
-            __checkServiceAttributes(root);
-
-            // puis lancement de la lecture de l'ensemble des noeuds, en bouclant sur les childNodes
-            __getChildNodes(root, reverseGeocodeResponse);
-
-            return reverseGeocodeResponse;
-        },
-
-        /** TODO : jsdoc block */
-        ReverseGeocodedLocation : function (node, reverseGeocodeResponse) {
-            var reverseGeocodedLocation = new _Response_model_ReverseGeocodedLocation__WEBPACK_IMPORTED_MODULE_3__["default"]();
-
-            __getChildNodes(node, reverseGeocodedLocation);
-
-            // Ajout du résultat au tableau locations de reverseGeocodeResponse
-            if (reverseGeocodeResponse && Array.isArray(reverseGeocodeResponse.locations)) {
-                reverseGeocodeResponse.locations.push(reverseGeocodedLocation);
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Address : function (node, reverseGeocodedLocation) {
-            var countrycode = node.getAttribute("countryCode");
-            if (reverseGeocodedLocation && countrycode) {
-                reverseGeocodedLocation.type = countrycode;
-            }
-            // on va récupérer les autres informations (StreetAddress, place, postalCode...)
-            __getChildNodes(node, reverseGeocodedLocation);
-        },
-
-        /** TODO : jsdoc block */
-        Building : function (node, reverseGeocodedLocation) {
-            var num = node.getAttribute("number");
-            if (reverseGeocodedLocation && reverseGeocodedLocation.hasOwnProperty("placeAttributes")) {
-                if (num) {
-                    reverseGeocodedLocation.placeAttributes.number = num;
-                } else if (node.getAttribute("buildingName")) {
-                    reverseGeocodedLocation.placeAttributes.number = node.getAttribute("buildingName");
-                } else if (node.getAttribute("subdivision")) {
-                    reverseGeocodedLocation.placeAttributes.number = node.getAttribute("subdivision");
-                }
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Street : function (node, reverseGeocodedLocation) {
-            // in case of a streetAddress result : street represents the street name
-            if (reverseGeocodedLocation.type === "StreetAddress") {
-                reverseGeocodedLocation.placeAttributes.street = __getChildValue(node);
-
-                // in case of a cadastral parcel result : street represents the cadastral parcel identifier
-            } else if (reverseGeocodedLocation.type === "CadastralParcel") {
-                reverseGeocodedLocation.placeAttributes.cadastralParcel = __getChildValue(node);
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Place : function (node, reverseGeocodedLocation) {
-            var placeType = node.getAttribute("type");
-            var placeName = __getChildValue(node);
-
-            if (reverseGeocodedLocation && reverseGeocodedLocation.hasOwnProperty("placeAttributes")) {
-                if (placeType === "Municipality") {
-                    reverseGeocodedLocation.placeAttributes.municipality = placeName;
-                } else if (placeType === "Bbox") {
-                    var values = placeName.split(";");
-                    if (values.length === 4) {
-                        reverseGeocodedLocation.placeAttributes.bbox = {
-                            left : parseFloat(values[0]),
-                            right : parseFloat(values[2]),
-                            top : parseFloat(values[1]),
-                            bottom : parseFloat(values[3])
-                        };
-                    }
-                } else if (placeType === "Commune") {
-                    reverseGeocodedLocation.placeAttributes.commune = placeName;
-                } else if (placeType === "Departement") {
-                    reverseGeocodedLocation.placeAttributes.department = placeName;
-                } else if (placeType === "INSEE") {
-                    reverseGeocodedLocation.placeAttributes.insee = placeName;
-                } else if (placeType === "Qualite") {
-                    reverseGeocodedLocation.placeAttributes.quality = placeName;
-                } else if (placeType === "Territoire") {
-                    reverseGeocodedLocation.placeAttributes.territory = placeName;
-                } else if (placeType === "ID") {
-                    reverseGeocodedLocation.placeAttributes.ID = placeName;
-                } else if (placeType === "ID_TR") {
-                    reverseGeocodedLocation.placeAttributes.IDTR = placeName;
-                } else if (placeType === "Importance") {
-                    reverseGeocodedLocation.placeAttributes.importance = parseInt(placeName, 10);
-                } else if (placeType === "Nature") {
-                    reverseGeocodedLocation.placeAttributes.nature = placeName;
-                } else if (placeType === "Numero") {
-                    reverseGeocodedLocation.placeAttributes.number = placeName;
-                } else if (placeType === "Feuille") {
-                    reverseGeocodedLocation.placeAttributes.sheet = placeName;
-                } else if (placeType === "Section") {
-                    reverseGeocodedLocation.placeAttributes.section = placeName;
-                } else if (placeType === "CommuneAbsorbee") {
-                    reverseGeocodedLocation.placeAttributes.absorbedCity = placeName;
-                } else if (placeType === "Arrondissement") {
-                    if (placeName) {
-                        reverseGeocodedLocation.placeAttributes.arrondissement = placeName;
-                    }
-                } else if (placeType === "Type") {
-                    reverseGeocodedLocation.placeAttributes.origin = placeName;
-                } else if (placeType === "Prefecture") {
-                    reverseGeocodedLocation.placeAttributes.prefecture = placeName;
-                } else if (placeType === "InseeRegion") {
-                    reverseGeocodedLocation.placeAttributes.inseeRegion = placeName;
-                } else if (placeType === "InseeDepartment") {
-                    reverseGeocodedLocation.placeAttributes.inseeDepartment = placeName;
-                }
-            }
-        },
-
-        /** TODO : jsdoc block */
-        PostalCode : function (node, reverseGeocodedLocation) {
-            if (reverseGeocodedLocation && reverseGeocodedLocation.hasOwnProperty("placeAttributes")) {
-                reverseGeocodedLocation.placeAttributes.postalCode = __getChildValue(node);
-            }
-        },
-
-        /** TODO : jsdoc block */
-        SearchCentreDistance : function (node, reverseGeocodedLocation) {
-            if (reverseGeocodedLocation) {
-                reverseGeocodedLocation.searchCenterDistance = parseFloat(node.getAttribute("value"));
-            }
-        },
-
-        /** TODO : jsdoc block */
-        Error : function (node) {
-            // <Error message="For input string : &quot;2,45&quot;" errorCode="InternalServerError"/>
-            var srvMess = node.getAttribute("message");
-            var errorCode = node.getAttribute("errorCode");
-            var message = _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_0__["default"].getMessage("SERVICE_RESPONSE_EXCEPTION",
-                "(" + errorCode + ") : " + srvMess);
-            throw new _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"]({
-                message : message,
-                type : _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__["default"].TYPE_SRVERR
-            });
-        }
-    },
-
-    gml : {
-
-        /** TODO : jsdoc block */
-        pos : function (node, reverseGeocodedLocation) {
-            var pos = __getChildValue(node);
-            if (reverseGeocodedLocation && pos) {
-                reverseGeocodedLocation.position = {
-                    x : parseFloat(pos.split(" ")[0]),
-                    y : parseFloat(pos.split(" ")[1])
-                };
-            }
-        }
-    },
-
-    xlsext : {
-        /** TODO : jsdoc block */
-        ExtendedGeocodeMatchCode : function (node, reverseGeocodedLocation) {
-            if (reverseGeocodedLocation) {
-                reverseGeocodedLocation.matchType = __getChildValue(node);
-            }
-        }
-    },
-
-    /** TODO : jsdoc block */
-    ExceptionReport : function (node) {
-        var response = {};
-        if (node.hasChildNodes()) {
-            var children = node.childNodes;
-            var child;
-            for (var i = 0; i < children.length; i++) {
-                child = children[i];
-                if (child.nodeName === "Exception") {
-                    response.exceptionReport = ReverseGeocodeResponseReader.READERS["Exception"](child);
-                }
-            }
-        }
-        return response;
-    },
-
-    /** TODO : jsdoc block */
-    Exception : function (node) {
-        var exceptionReport = {};
-
-        // get exception code
-        var exceptionCode = node.getAttribute("exceptionCode");
-        if (exceptionCode) {
-            exceptionReport.exceptionCode = exceptionCode;
-        }
-
-        // get exception message
-        var textNode = node.firstChild;
-        if (textNode && textNode.nodeType === 3) { // 3 === node.TEXT_NODE
-            exceptionReport.exception = textNode.nodeValue;
-        }
-
-        return exceptionReport;
-    }
-
-};
-
-/**
- * Méthode permettant de lancer la lecture d'une réponse XML du service de géocodage,
- *      à l'aide des READERS de la classe.
- *
- * @method ReverseGeocodeResponseReader.read
- * @param {DOMElement} root - racine de la réponse XML à lire
- * @return {Object} geocodeResponse|exceptionReport : l'objet contenant les informations de la réponse XML,
- *      sous la forme d'un objet GeocodeResponse, ou un objet littéral exceptionReport si le service a renvoyé une exception.
- * @static
- * @memberof ReverseGeocodeResponseReader
- */
-ReverseGeocodeResponseReader.read = function (root) {
-    if (root.nodeName === "XLS") {
-        var nsPrefix = root.prefix;
-        if (!nsPrefix) {
-            nsPrefix = ReverseGeocodeResponseReader.DEFAULTPREFIX;
-        }
-        var geocodeResponse = ReverseGeocodeResponseReader.READERS[nsPrefix][root.nodeName](root);
-        return geocodeResponse;
-    } else if (root.nodeName === "ExceptionReport") {
-        var exceptionReport = ReverseGeocodeResponseReader.READERS[root.nodeName](root);
-        return exceptionReport;
-    } else {
-        throw new Error("Erreur lors de la lecture de la réponse : elle n'est pas au format attendu.");
-    }
-};
-
-/**
- * Récupération des attributs d'un noeud élément
- *
- * @private
- * @memberof ReverseGeocodeResponseReader
- * @method __getAttributes
- * @param {DOMElement} node - noeud contenant l'attribut recherché
- * @return {Object} nodeAttributes - objet contenant les noms et valeurs des différents attributs
- */
-function __getAttributes (node) {
-    if (node.attributes.length > 0) {
-        var nodeAttributes = {};
-        var attributes = node.attributes;
-        for (var i = 0; i < attributes.length; i++) {
-            var attribute = attributes[i];
-            nodeAttributes[attribute.nodeName] = attribute.nodeValue;
-        }
-        return nodeAttributes;
-    }
-}
-
-/**
- * Récupération des noeuds enfants à partir d'un noeud donné, pour lecture (readNode).
- *
- * @private
- * @memberof ReverseGeocodeResponseReader
- * @method __getChildNodes
- * @param {DOMElement} node - a DOM node
- * @param {Array|Object} [data] - an object to be filled with node data
- */
-function __getChildNodes (node, data) {
-    if (node.hasChildNodes()) {
-        var children = node.childNodes;
-        var child;
-        var childName;
-        var childPrefix;
-
-        for (var i = 0; i < children.length; i++) {
-            child = children[i];
-
-            if (child.nodeType === 1) { // 1 === node.ELEMENT_NODE
-                childName = child.localName || child.baseName || child.nodeName;
-                childPrefix = child.prefix || ReverseGeocodeResponseReader.DEFAULTPREFIX;
-
-                if (ReverseGeocodeResponseReader.READERS[childPrefix][childName]) {
-                    var reader = ReverseGeocodeResponseReader.READERS[childPrefix][childName];
-                    reader(child, data);
-                } else {
-                    __getChildNodes(child, data);
-                }
-            }
-        }
-    }
-}
-
-/**
- * Lecture de la valeur du premier child d'un noeud, si elle existe.
- *
- * @private
- * @memberof ReverseGeocodeResponseReader
- * @method __getChildValue
- * @param {DOMElement} node - a DOM node
- * @return {String} value - valeur du firstChild du noeud en entrée, ou chaîne vide.
- */
-function __getChildValue (node) {
-    var textNode;
-    var value = "";
-
-    if (node.hasChildNodes()) {
-        textNode = node.firstChild;
-        if (textNode.nodeType === 3) { // 3 === node.TEXT_NODE
-            value = textNode.nodeValue;
-        }
-    }
-    return value;
-}
-
-/**
- * Vérification des attributs du service, dans la balise XLS de la réponse :
- *      version, namespaces, et namespace par défaut doivent correspondre à ceux attendus.
- *
- * @private
- * @memberof ReverseGeocodeResponseReader
- * @method __checkServiceAttributes
- * @param {DOMElement} XLSNode - a DOM node, corresponding to XLS first tag.
- */
-function __checkServiceAttributes (XLSNode) {
-    if (XLSNode.attributes.length > 0) {
-        // on récupère et parcourt les attributs de la balise XLS de la réponse
-        var xlsAttributes = __getAttributes(XLSNode);
-        for (var att in xlsAttributes) {
-            if (xlsAttributes.hasOwnProperty(att)) {
-                // vérification de la version
-                if (att === "version") {
-                    if (xlsAttributes["version"] !== ReverseGeocodeResponseReader.VERSION) {
-                        console.log("[ReverseGeocodeResponseReader] geocode version is not the expected one : there may be errors in parsing");
-                        return;
-                    }
-                }
-
-                // on vérifie que l'uri du namespace par défaut est bien celle que l'on attend
-                if (att === "xmlns") {
-                    if (xlsAttributes[att] !== ReverseGeocodeResponseReader.NAMESPACES[ReverseGeocodeResponseReader.DEFAULTPREFIX]) {
-                        console.log("[ReverseGeocodeResponseReader] geocode response default namespace is not the expected one");
-                        return;
-                    }
-                    continue;
-                }
-
-                var prefix = att.split(":")[0];
-                var ns = att.split(":")[1];
-
-                // si on a un autre xmlns, on vérifie aussi les URI
-                if (prefix === "xmlns" && ns) {
-                    // si l'attribut correspond à un namespace défini dans le reader
-                    if (ReverseGeocodeResponseReader.NAMESPACES[ns]) {
-                        // il faut que les URI correspondent aussi.
-                        if (ReverseGeocodeResponseReader.NAMESPACES[ns] !== xlsAttributes[att]) {
-                            console.log("[ReverseGeocodeResponseReader] geocode response " + att + " namespace is not the expected one");
-                            return;
-                        }
-                    }
-                }
-
-                // pour finir on vérifie la localisation du schema XSD du service
-                if (ns === "schemaLocation") {
-                    if (ReverseGeocodeResponseReader.SCHEMALOCATION !== xlsAttributes[att]) {
-                        console.log("[ReverseGeocodeResponseReader] geocode response schema location is not the expected one");
-                        return;
-                    }
-                }
-            }
-        }
-    }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (ReverseGeocodeResponseReader);
-
-
-/***/ }),
-/* 109 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GeocodedLocation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(104);
-
-
-
-/**
- * Single location object returned by the underlying reverse geocoding web service.
- *
- * @property {Float} searchCenterDistance - Distance between the requested point and the location.
- *
- * @namespace
- * @extends {Gp.Services.Geocode.GeocodedLocation}
- * @alias Gp.Services.Geocode.ReverseGeocodedLocation
- */
-function ReverseGeocodedLocation () {
-    if (!(this instanceof ReverseGeocodedLocation)) {
-        throw new TypeError("ReverseGeocodedLocation constructor cannot be called as a function.");
-    }
-
-    // INFO
-    // appel du constructeur de la classe mère
-    // avec passage de param.
-    _GeocodedLocation__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
-    /**
-     * Nom de la classe (heritage) : "ReverseGeocodedLocation"
-     * @type {String}
-     */
-    this.CLASSNAME = "ReverseGeocodedLocation";
-
-    this.searchCenterDistance = null;
-}
-
-ReverseGeocodedLocation.prototype = Object.create(_GeocodedLocation__WEBPACK_IMPORTED_MODULE_0__["default"].prototype);
-
-ReverseGeocodedLocation.prototype.constructor = ReverseGeocodedLocation;
-
-/* harmony default export */ __webpack_exports__["default"] = (ReverseGeocodedLocation);
-
-
-/***/ }),
-/* 110 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42);
-/* harmony import */ var _Response_AutoCompleteResponseFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(111);
+/* harmony import */ var _Response_AutoCompleteResponseFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(92);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(39);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(40);
 /* harmony import */ var _Utils_Helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(43);
@@ -23190,14 +19891,14 @@ __webpack_require__.r(__webpack_exports__);
  *      Cette chaîne n'est pas "URL encodée".
  *      C'est l'API qui s'occupe de l'encoder pour l'inclure dans la requête.
  *
- * @param {Array.<String>} [options.filterOptions.type = "StreetAddress"] - Type de l'objet recherché.
- *      Le service d'autocomplétion du Géoportail permet de rechercher des toponymes 'PostionOfInterest' et/ou des adresses postales 'StreetAddress'.
+ * @param {Array.<String>} [options.type = ["StreetAddress"]] - Type de l'objet recherché.
+ *      Le service d'autocomplétion du Géoportail permet de rechercher des toponymes 'PositionOfInterest' et/ou des adresses postales 'StreetAddress'.
  *      D'autres types pourront être rajoutés selon l'évolution du service.
  *      Par défaut, type = ['StreetAddress'].
  *
- * @param {Array.<String>} [options.filterOptions.territory] - Limitation de la zone de recherche de localisants.
- *      Le service d'autocomplétion du Géoportail permet de limiter la recherche à la métropole et la Corse : options.filterOptions.territory = ['METROPOLE'],
- *      DOMS TOMS : options.filterOptions.territory = ['DOMTOM'], ou à une liste de départements : options.filterOptions.territory = ['31', '34']
+ * @param {String} [options.territory] - Limitation de la zone de recherche de localisants.
+ *      Le service d'autocomplétion du Géoportail permet de limiter la recherche à la métropole et la Corse : options.territory = 'METROPOLE',
+ *      DOMS TOMS : options.territory = 'DOMTOM', ou à un département : options.territory = '31'
  *      Pas de valeur par défaut.
  *      La valeur par défaut est donc celle du service.
  *      Le service d'autocomplétion du Géoportail renvoie toutes les informations quand aucun territoire n'est spécifié.
@@ -23221,15 +19922,13 @@ __webpack_require__.r(__webpack_exports__);
  *      onFailure : function (error) {},
  *      // spécifique au service
  *      text : "",
- *      filterOptions : {
- *          type : ["StreetAddress"],
- *          territory : ['METROPOLE', 'DOMTOM', '31']
- *      },
+ *      type : "StreetAddress",
+ *      territory : 'METROPOLE',
  *      maximumResponses : 10
  *   };
  * @private
  */
-function AutoComplete (options) {
+function AutoComplete (options_) {
     if (!(this instanceof AutoComplete)) {
         throw new TypeError(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_3__["default"].getMessage("CLASS_CONSTRUCTOR", "AutoComplete"));
     }
@@ -23240,11 +19939,14 @@ function AutoComplete (options) {
      */
     this.CLASSNAME = "AutoComplete";
 
-    // appel du constructeur par heritage
-    _CommonService__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
-
     this.logger = _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_2__["default"].getLogger("Gp.Services.AutoComplete");
     this.logger.trace("[Constructeur AutoComplete (options)]");
+
+    var options = this.patchOptionConvertor(options_);
+    options.serverUrl = options.serverUrl || "https://wxs.ign.fr/calcul/geoportail/geocodage/rest/0.1/completion";
+
+    // appel du constructeur par heritage
+    _CommonService__WEBPACK_IMPORTED_MODULE_0__["default"].apply(this, arguments);
 
     if (!options.text) {
         throw new Error(_Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_3__["default"].getMessage("PARAM_MISSING", "text"));
@@ -23253,25 +19955,13 @@ function AutoComplete (options) {
     // ajout des options spécifiques au service
     this.options.text = options.text;
 
-    // on definit des filtres par defaut
-    if (!options.filterOptions || typeof options.filterOptions !== "object") {
-        this.options.filterOptions = options.filterOptions = {
-            territory : [],
-            type : ["StreetAddress"]
-        };
+    // on definit des parametres par defaut
+    if (!options.type) {
+        options.type = ["StreetAddress,PositionOfInterest"];
     }
 
-    // FIXME ECMAScript 5 support (valable pour un objet uniquement !)
-    // ceci permet de tester le cas où : object = {}
-    if (Object.keys(options.filterOptions).length === 0) {
-        this.options.filterOptions = {
-            territory : [],
-            type : ["StreetAddress"]
-        };
-    }
-
-    this.options.filterOptions.type = options.filterOptions.type || ["StreetAddress"];
-    this.options.filterOptions.territory = options.filterOptions.territory || [];
+    this.options.type = options.type;
+    this.options.territory = options.territory || "";
     this.options.maximumResponses = options.maximumResponses || 10;
 
     // INFO
@@ -23305,6 +19995,38 @@ AutoComplete.prototype = Object.create(_CommonService__WEBPACK_IMPORTED_MODULE_0
 AutoComplete.prototype.constructor = AutoComplete;
 
 /**
+ * Patch pour la convertion des options vers le nouveau formalisme.
+ *
+ * @param {Object} options_ - options du service
+ * @return {Object} - options
+ */
+AutoComplete.prototype.patchOptionConvertor = function (options_) {
+    const options = options_;
+
+    if (options.filterOptions) {
+        this.logger.warn("The parameter 'filterOptions' is deprecated");
+
+        if (options.filterOptions.type) {
+            this.logger.warn("The parameter 'filterOptions.type' is deprecated");
+            if (!options.type) {
+                options.type = options.filterOptions.type;
+            }
+        }
+
+        if (options.filterOptions.territory) {
+            this.logger.warn("The parameter 'filterOptions.territory' is deprecated");
+            if (!options.terr) {
+                options.terr = options.filterOptions.territory;
+            }
+        }
+
+        delete options.filterOptions;
+    }
+
+    return options;
+};
+
+/**
  * (overwrite)
  * Création de la requête
  *
@@ -23320,21 +20042,21 @@ AutoComplete.prototype.buildRequest = function (error, success) {
     // maximumResponses=10
 
     // traitement des param KPV sous forme de tableau
-    var territories = "";
-    if (this.options.filterOptions.territory) {
-        territories = this.options.filterOptions.territory.join(";");
+    var territory = "";
+    if (this.options.territory) {
+        territory = this.options.territory;
     }
 
-    var types = "";
-    if (this.options.filterOptions.type) {
-        types = this.options.filterOptions.type.join(",");
+    var type = "";
+    if (this.options.type) {
+        type = this.options.type.join(",");
     }
 
     // normalisation de la requete avec param KPV
     this.request = _Utils_Helper__WEBPACK_IMPORTED_MODULE_4__["default"].normalyzeParameters({
         text : encodeURIComponent(this.options.text),
-        type : types,
-        terr : territories,
+        type : type,
+        terr : territory,
         maximumResponses : this.options.maximumResponses
     });
 
@@ -23370,7 +20092,7 @@ AutoComplete.prototype.analyzeResponse = function (error, success) {
 
 
 /***/ }),
-/* 111 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23378,8 +20100,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
-/* harmony import */ var _model_AutoCompleteResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(112);
-/* harmony import */ var _model_SuggestedLocation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(113);
+/* harmony import */ var _model_AutoCompleteResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(93);
+/* harmony import */ var _model_SuggestedLocation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(94);
 /**
  * Factory pour générer une reponse JSON à partir d'un XML ou d'un JSON
  * (Factory)
@@ -23525,7 +20247,7 @@ var AutoCompleteResponseFactory = {
 
 
 /***/ }),
-/* 112 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23556,7 +20278,7 @@ AutoCompleteResponse.prototype = {
 
 
 /***/ }),
-/* 113 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23687,7 +20409,7 @@ SuggestedLocation.prototype = {
 
 
 /***/ }),
-/* 114 */
+/* 95 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23697,8 +20419,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(42);
 /* harmony import */ var _DefaultUrlService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51);
-/* harmony import */ var _Request_RouteRequestFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(115);
-/* harmony import */ var _Response_RouteResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(118);
+/* harmony import */ var _Request_RouteRequestFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96);
+/* harmony import */ var _Response_RouteResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(99);
 
 
 
@@ -24024,14 +20746,14 @@ Route.prototype.analyzeResponse = function (error, success) {
 
 
 /***/ }),
-/* 115 */
+/* 96 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41);
-/* harmony import */ var _RouteRequestREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(116);
+/* harmony import */ var _RouteRequestREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(97);
 /**
  * Creation d'une requête REST en mode POST ou GET
  * (Factory)
@@ -24121,14 +20843,14 @@ var RouteRequestFactory = {
 
 
 /***/ }),
-/* 116 */
+/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
-/* harmony import */ var _model_RouteParamREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(117);
+/* harmony import */ var _model_RouteParamREST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(98);
 
 
 
@@ -24234,7 +20956,7 @@ RouteRequestREST.prototype = {
 
 
 /***/ }),
-/* 117 */
+/* 98 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24485,7 +21207,7 @@ RouteParamREST.prototype.getParams = function () {
 
 
 /***/ }),
-/* 118 */
+/* 99 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24493,8 +21215,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
-/* harmony import */ var _model_RouteResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(119);
-/* harmony import */ var _model_RouteInstruction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(120);
+/* harmony import */ var _model_RouteResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(100);
+/* harmony import */ var _model_RouteInstruction__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(101);
 /**
  * Factory pour générer une reponse JSON à partir d'un XML ou d'un JSON
  * (Factory)
@@ -24745,7 +21467,7 @@ var RouteResponseFactory = {
 
 
 /***/ }),
-/* 119 */
+/* 100 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24793,7 +21515,7 @@ RouteResponse.prototype = {
 
 
 /***/ }),
-/* 120 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24849,7 +21571,7 @@ RouteInstruction.prototype = {
 
 
 /***/ }),
-/* 121 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24859,8 +21581,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
 /* harmony import */ var _CommonService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(42);
 /* harmony import */ var _DefaultUrlService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51);
-/* harmony import */ var _Request_ProcessIsoCurveRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(122);
-/* harmony import */ var _Response_ProcessIsoCurveResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(124);
+/* harmony import */ var _Request_ProcessIsoCurveRequest__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(103);
+/* harmony import */ var _Response_ProcessIsoCurveResponseFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(105);
 
 
 
@@ -25182,14 +21904,14 @@ ProcessIsoCurve.prototype.analyzeResponse = function (onError, onSuccess) {
 
 
 /***/ }),
-/* 122 */
+/* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
-/* harmony import */ var _model_ProcessIsoCurveParam__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(123);
+/* harmony import */ var _model_ProcessIsoCurveParam__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(104);
 
 
 
@@ -25383,7 +22105,7 @@ ProcessIsoCurveRequest.prototype = {
 
 
 /***/ }),
-/* 123 */
+/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25594,7 +22316,7 @@ ProcessIsoCurveParam.prototype.getParams = function () {
 
 
 /***/ }),
-/* 124 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25602,7 +22324,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /* harmony import */ var _Utils_MessagesResources__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 /* harmony import */ var _Exceptions_ErrorService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(41);
-/* harmony import */ var _model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(125);
+/* harmony import */ var _model_ProcessIsoCurveResponse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(106);
 /**
  * Factory pour générer une reponse JSON à partir d'un JSON
  * (Factory)
@@ -25712,7 +22434,7 @@ var ProcessIsoCurveResponseFactory = {
 
 
 /***/ }),
-/* 125 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25765,13 +22487,13 @@ ProcessIsoCurveResponse.prototype = {
 
 
 /***/ }),
-/* 126 */
+/* 107 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(127);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(108);
 /* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -26713,13 +23435,13 @@ GlobeViewExtended.prototype._fromItownsCoords = function (itownsCoord) {
 /* harmony default export */ __webpack_exports__["default"] = (GlobeViewExtended);
 
 /***/ }),
-/* 127 */
+/* 108 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__127__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__108__;
 
 /***/ }),
-/* 128 */
+/* 109 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26819,13 +23541,13 @@ var Utils = {
 /* harmony default export */ __webpack_exports__["default"] = (Utils);
 
 /***/ }),
-/* 129 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(130);
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(111);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -26877,8 +23599,8 @@ __webpack_require__.r(__webpack_exports__);
     // Ex.
     // {
     //   "Itineraire"     : ["Pieton", "Voiture"],
-    //   "Geocode"        : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
-    //   "AutoCompletion" : ["PositionOfInterest", "StreetAddress", "CadastralParcel", "Administratif"],
+    //   "Geocode"        : ["PositionOfInterest", "StreetAddress", "CadastralParcel"],
+    //   "AutoCompletion" : ["PositionOfInterest", "StreetAddress", "CadastralParcel"],
     //   "Elevation"      : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"]
     // }
 
@@ -26968,7 +23690,7 @@ __webpack_require__.r(__webpack_exports__);
 });
 
 /***/ }),
-/* 130 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27252,7 +23974,7 @@ var Config = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(32)))
 
 /***/ }),
-/* 131 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27339,7 +24061,7 @@ var SelectorID = {
 /* harmony default export */ __webpack_exports__["default"] = (SelectorID);
 
 /***/ }),
-/* 132 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28272,12 +24994,12 @@ var MousePositionDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (MousePositionDOM);
 
 /***/ }),
-/* 133 */
+/* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(134);
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(115);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 // import { THREE } from "itowns";
 
@@ -28440,7 +25162,7 @@ Widget.prototype.setOptions = function setOptions(options) {
 /* harmony default export */ __webpack_exports__["default"] = (Widget);
 
 /***/ }),
-/* 134 */
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79332,7 +76054,7 @@ if ( typeof window !== 'undefined' ) {
 
 
 /***/ }),
-/* 135 */
+/* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79424,7 +76146,7 @@ var PositionFormater = {
 /* harmony default export */ __webpack_exports__["default"] = (PositionFormater);
 
 /***/ }),
-/* 136 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79633,17 +76355,17 @@ var CRS = {
 /* harmony default export */ __webpack_exports__["default"] = (CRS);
 
 /***/ }),
-/* 137 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(126);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(107);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(131);
-/* harmony import */ var _Common_Controls_LayerSwitcherDOM__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(138);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(133);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(112);
+/* harmony import */ var _Common_Controls_LayerSwitcherDOM__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(119);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(114);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
@@ -80639,12 +77361,12 @@ LayerSwitcher.prototype._resolveLayerId = function (divId) {
 /* harmony default export */ __webpack_exports__["default"] = (LayerSwitcher);
 
 /***/ }),
-/* 138 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(139);
+/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(120);
 
 var LayerSwitcherDOM = {
   /**
@@ -81271,7 +77993,7 @@ var LayerSwitcherDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (LayerSwitcherDOM);
 
 /***/ }),
-/* 139 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -85055,16 +81777,16 @@ Sortable.mount(Remove, Revert);
 
 
 /***/ }),
-/* 140 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(131);
-/* harmony import */ var _Common_Controls_BoostReliefDOM__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(141);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(133);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(112);
+/* harmony import */ var _Common_Controls_BoostReliefDOM__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(122);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(114);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
@@ -85356,7 +82078,7 @@ BoostRelief.prototype._resolveLayerId = function (divId) {
 /* harmony default export */ __webpack_exports__["default"] = (BoostRelief);
 
 /***/ }),
-/* 141 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -85579,16 +82301,16 @@ var BoostReliefDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (BoostReliefDOM);
 
 /***/ }),
-/* 142 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(131);
-/* harmony import */ var _Common_Controls_BuildingsDOM__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(143);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(133);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(127);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(112);
+/* harmony import */ var _Common_Controls_BuildingsDOM__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(124);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(114);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(108);
 /* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -85997,7 +82719,7 @@ Buildings.prototype.setOptions = function (options) {
 /* harmony default export */ __webpack_exports__["default"] = (Buildings);
 
 /***/ }),
-/* 143 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86045,18 +82767,18 @@ var BuildingsDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (BuildingsDOM);
 
 /***/ }),
-/* 144 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(126);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(107);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(131);
-/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(145);
-/* harmony import */ var _Common_Controls_AttributionDOM__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(146);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(133);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(112);
+/* harmony import */ var _Common_Utils_LayerUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(126);
+/* harmony import */ var _Common_Controls_AttributionDOM__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(127);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(114);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
@@ -86406,7 +83128,7 @@ Attributions.prototype._resolutionsWGS84 = {
 /* harmony default export */ __webpack_exports__["default"] = (Attributions);
 
 /***/ }),
-/* 145 */
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86725,7 +83447,7 @@ var LayerUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (LayerUtils);
 
 /***/ }),
-/* 146 */
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86820,16 +83542,16 @@ var AttributionDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (AttributionDOM);
 
 /***/ }),
-/* 147 */
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(126);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(131);
-/* harmony import */ var _Common_Controls_ScaleDOM__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(148);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(133);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(107);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(112);
+/* harmony import */ var _Common_Controls_ScaleDOM__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(129);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(114);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
@@ -86988,7 +83710,7 @@ Scale.prototype._initContainer = function () {
 /* harmony default export */ __webpack_exports__["default"] = (Scale);
 
 /***/ }),
-/* 148 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87019,16 +83741,16 @@ var ScaleDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (ScaleDOM);
 
 /***/ }),
-/* 149 */
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(126);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(131);
-/* harmony import */ var _Common_Controls_MiniGlobeDOM__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(150);
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(133);
+/* harmony import */ var _GlobeViewExtended__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(107);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_SelectorID__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(112);
+/* harmony import */ var _Common_Controls_MiniGlobeDOM__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(131);
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(114);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 
@@ -87193,7 +83915,7 @@ MiniGlobe.prototype._initContainer = function () {
 /* harmony default export */ __webpack_exports__["default"] = (MiniGlobe);
 
 /***/ }),
-/* 150 */
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87226,18 +83948,18 @@ var MiniGlobeDOM = {
 /* harmony default export */ __webpack_exports__["default"] = (MiniGlobeDOM);
 
 /***/ }),
-/* 151 */
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(130);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(111);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(127);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(108);
 /* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -87362,18 +84084,18 @@ LayerWMTS.prototype.constructor = LayerWMTS;
 /* harmony default export */ __webpack_exports__["default"] = (LayerWMTS);
 
 /***/ }),
-/* 152 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(130);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(111);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(127);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(108);
 /* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -87495,18 +84217,18 @@ LayerWMS.prototype.constructor = LayerWMS;
 /* harmony default export */ __webpack_exports__["default"] = (LayerWMS);
 
 /***/ }),
-/* 153 */
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var geoportal_access_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36);
-/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(128);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(130);
+/* harmony import */ var _Common_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(109);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(111);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1);
 var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(1, 1);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(127);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(108);
 /* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_5__);
 /* globals self */
 
@@ -87631,14 +84353,14 @@ LayerElevation.prototype.constructor = LayerElevation;
 /* harmony default export */ __webpack_exports__["default"] = (LayerElevation);
 
 /***/ }),
-/* 154 */
+/* 135 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Common_Utils_LoggerByDefault__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34);
-/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(130);
-/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(127);
+/* harmony import */ var _Common_Utils_Config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(111);
+/* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(108);
 /* harmony import */ var itowns__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(itowns__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -87725,7 +84447,7 @@ VectorTileLayer.prototype.constructor = VectorTileLayer;
 /* harmony default export */ __webpack_exports__["default"] = (VectorTileLayer);
 
 /***/ }),
-/* 155 */
+/* 136 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87792,7 +84514,7 @@ __webpack_require__.r(__webpack_exports__);
 })();
 
 /***/ }),
-/* 156 */
+/* 137 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87846,7 +84568,7 @@ var ProxyUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (ProxyUtils);
 
 /***/ }),
-/* 157 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87980,7 +84702,7 @@ var ColorUtils = {
 /* harmony default export */ __webpack_exports__["default"] = (ColorUtils);
 
 /***/ }),
-/* 158 */
+/* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
