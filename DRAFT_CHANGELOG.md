@@ -5,6 +5,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -12,15 +13,11 @@
 
 ## Summary
 
-Utilisation du Geocodage v2
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - mise à jour  pour utilisation du service de Geocodage v2 (#279)
 
 * [Deprecated]
 

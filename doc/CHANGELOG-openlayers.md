@@ -133,6 +133,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.15](#extension-geoportail-openlayers-version-3215)
   * [Summary](#summary-39)
   * [Changelog](#changelog-36)
+- [Extension Geoportail OpenLayers, version 3.2.16](#extension-geoportail-openlayers-version-3216)
+  * [Summary](#summary-40)
+  * [Changelog](#changelog-37)
 
 <!-- tocstop -->
 
@@ -1441,6 +1444,32 @@ Correction sur la gestion des projections pour les imports WMS
 * [Fixed]
 
     - Pour une couche WMS issue d'un import, on prend en priorité la projection de la carte si elle est gérée par le serveur WMS (#338) 
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.16
+
+**04/10/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Utilisation du Geocodage v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour  pour utilisation du service de Geocodage v2 (#279)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
