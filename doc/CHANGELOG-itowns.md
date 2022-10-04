@@ -76,6 +76,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.8](#extension-geoportail-itowns-version-238)
   * [Summary](#summary-22)
   * [Changelog](#changelog-21)
+- [Extension Geoportail Itowns, version 2.3.9](#extension-geoportail-itowns-version-239)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-22)
 
 <!-- tocstop -->
 
@@ -612,6 +615,28 @@ Mise à jour de la bibliothèque d'accès aux services Geoportail
 * [Changed]
 
     - access-lib geoportal 3.2.0
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.9
+
+**04/10/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 
