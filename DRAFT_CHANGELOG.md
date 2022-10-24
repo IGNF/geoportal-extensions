@@ -4,6 +4,8 @@
 
 
 
+
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -29,6 +31,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -42,8 +45,6 @@
 
 * [Changed]
 
-    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33) 
-
 * [Deprecated]
 
 * [Removed]
@@ -53,6 +54,8 @@
 * [Security]
 
 ---
+
+
 
 
 
