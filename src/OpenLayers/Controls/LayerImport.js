@@ -1440,6 +1440,7 @@ var LayerImport = (function (Control) {
                                             // un peu en décalé...
                                             setTimeout(function () {
                                                 map.dispatchEvent({
+                                                    id : editor.getID(),
                                                     type : "editor:loaded",
                                                     layer : p.layer
                                                 });
