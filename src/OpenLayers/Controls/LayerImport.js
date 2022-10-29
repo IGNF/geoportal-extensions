@@ -81,6 +81,7 @@ var logger = Logger.getLogger("layerimport");
  * @param {Object} [options.vectorStyleOptions.MapBox] - Options for MapBox layer styling
  * @param {Object} [options.vectorStyleOptions.MapBox.defaultStyle] - default style to be applied to MapBox imports in case no style is defined. defaultStyle is an {@link http://openlayers.org/en/latest/apidoc/ol.style.Style.html ol.style.Style} object.
  * @param {Object} [options.vectorStyleOptions.MapBox.editor] - options for tools editor
+ * @param {Boolean} [options.vectorStyleOptions.MapBox.display = true] - display tools editor
  * @example
  *  var LayerImport = new ol.control.LayerImport({
  *      "collapsed" : false,
@@ -441,6 +442,12 @@ var LayerImport = (function (Control) {
                 legend : true,
                 group : false
             };
+        }
+
+        if (options.vectorStyleOptions && options.vectorStyleOptions.MapBox && options.vectorStyleOptions.MapBox.hasOwnProperty("display")) {
+            this.options.vectorStyleOptions.MapBox.display = options.vectorStyleOptions.MapBox.display;
+        } else {
+            this.options.vectorStyleOptions.MapBox.display = true;
         }
 
         // merge layer types
@@ -1421,18 +1428,34 @@ var LayerImport = (function (Control) {
                                     });
                                     editor.setContext("map", map);
                                     editor.setContext("layer", p.layer);
-                                    editor.createElement().then(function () {
-                                        // affichage du panneau des couches accessibles à l'edition
-                                        self._mapBoxPanel.style.display = "block";
-                                        // envoi d'un evenement !
-                                        // un peu en décalé...
-                                        setTimeout(function () {
-                                            map.dispatchEvent({
-                                                type : "editor:loaded",
-                                                layer : p.layer
-                                            });
-                                        }, 100);
-                                    });
+                                    editor.createElement()
+                                        .then(function () {
+                                            // affichage du panneau des couches accessibles à l'edition
+                                            if (self.options.vectorStyleOptions.MapBox.display) {
+                                                self._mapBoxPanel.style.display = "block";
+                                            }
+                                        })
+                                        .then(function () {
+                                            // envoi d'un evenement !
+                                            // un peu en décalé...
+                                            setTimeout(function () {
+                                                map.dispatchEvent({
+                                                    id : editor.getID(),
+                                                    type : "editor:loaded",
+                                                    layer : p.layer
+                                                });
+                                            }, 100);
+                                        })
+                                        .then(function () {
+                                            // hack pour modifier le titre de la couche de fond
+                                            var elements = self._mapBoxResultsListContainer.getElementsByClassName("GPEditorMapBoxLayerTitleLabel");
+                                            for (let index = 0; index < elements.length; index++) {
+                                                const element = elements[index];
+                                                if (element.textContent === "bckgrd") {
+                                                    element.textContent = "Couleur de remplissage";
+                                                }
+                                            }
+                                        });
 
                                     // association entre le layer et l'editeur via l'id
                                     p.layer.set("mapbox-editor", editor.getID());
