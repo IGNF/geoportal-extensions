@@ -43,6 +43,7 @@ var logger = Logger.getLogger("elevationpath");
  *
  * @constructor
  * @alias ol.control.ElevationPath
+ * @type {ol.control.ElevationPath}
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
  * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance

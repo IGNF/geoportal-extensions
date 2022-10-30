@@ -6,10 +6,8 @@ import Register from "../../Common/Utils/Register";
  *
  * Projection Lambert 2 étendu
  *
- * @ignore
- * @module EPSG27572
- * @alias EPSG27572
- * @returns {L.Proj.CRS}
+ * @module
+ * @alias L.geoportalCRS.EPSG27572
  * @example
  *  var map = L.Map('divmap', {
  *    crs : L.geoportalCRS.EPSG27572
@@ -30,6 +28,7 @@ import Register from "../../Common/Utils/Register";
  *
  *  lyr.addTo(map); // ou map.addLayer(lyr);
  */
+/** @type {L.geoportalCRS.EPSG27572} */
 var EPSG27572 = {
 
     /**

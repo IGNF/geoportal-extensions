@@ -10,6 +10,7 @@
   "itownsExtName": "French Geoportal Extension for Itowns",
   "itownsExtVersion": "2.3.9",
   "main": "dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js",
+  "types": "dist/leaflet/index.d.ts, dist/openlayers/index.d.ts, dist/itowns/index.d.ts",
   "module": "src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js",
   "directories": {},
   "scripts": {
@@ -23,6 +24,12 @@
     "sample:itowns:serve": "webpack-dev-server --config build/webpack/webpack.config.itowns --mode=development --https --open-page samples/index-itowns-map.html --content-base . --output-public-path '/dist/itowns/' --port 9001 --open",
     "sample:leaflet:serve": "webpack-dev-server --config build/webpack/webpack.config.leaflet --mode=development --https --open-page samples/index-leaflet-map.html --content-base . --output-public-path '/dist/leaflet/' --port 9001 --open",
     "sample:ol:serve": "webpack-dev-server --config build/webpack/webpack.config.openlayers --mode=development --https --open-page samples/index-openlayers-map.html --content-base . --output-public-path '/dist/openlayers/' --port 9001 --open",
+    "generate-types:ol": "npx tsc -p build/types/tsconfig-openlayers.json",
+    "generate-types:leaflet": "npx tsc -p build/types/tsconfig-leaflet.json",
+    "generate-types:itowns": "npx tsc -p build/types/tsconfig-itowns.json",
+    "generate-jsdoc:ol": "jsdoc -c build/jsdoc/jsdoc-openlayers.json",
+    "generate-jsdoc:leaflet": "jsdoc -c build/jsdoc/jsdoc-leaflet.json",
+    "generate-jsdoc:itowns": "jsdoc -c build/jsdoc/jsdoc-itowns.json",
     "doc": "npm run doc:serve",
     "doc:serve": "npm run doc:ol:serve",
     "doc:itowns:serve": "webpack-dev-server --hot  --config build/webpack/webpack.config.itowns --content-base jsdoc/itowns --port 9001 --open",
@@ -78,6 +85,7 @@
     "proj4leaflet": "1.0.2",
     "sortablejs": "1.14.0",
     "three": "0.137.5",
+    "typescript": "^4.5.5",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {

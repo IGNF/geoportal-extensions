@@ -1,10 +1,18 @@
 /* globals AmCharts, d3 */
+
+/**
+ * @module ProfileElevationPathDOM
+ * @alias [private] ProfileElevationPathDOM
+ * @description
+ * create DOM element
+ */
 var ProfileElevationPathDOM = {
 
     /**
      * Gets a css property from an element
      *
-     * @param {String} element The element to get the property from
+     * @private
+     * @param {HTMLElement} element The element to get the property from
      * @param {String} property The css property
      * @returns {String} The value of the property
      *
@@ -17,8 +25,9 @@ var ProfileElevationPathDOM = {
     /**
      * Uses canvas.measureText to compute and return the width of the given text of given font in pixels.
      *
+     * @private
      * @param {String} text The text to be rendered.
-     * @param {String} container The container of the text
+     * @param {HTMLElement} container The container of the text
      * @param {String} font The font of the container if known, format: 'weight size familiy'
      * @returns {Number} The width of the text
      *
@@ -26,7 +35,7 @@ var ProfileElevationPathDOM = {
      */
     _getTextWidth : function (text, container, font = null) {
         // re-use canvas object for better performance
-        var canvas = this.canvas || (this.canvas = document.createElement("canvas"));
+        var canvas = /** ts-syntax */(this.canvas) || ((this.canvas) = document.createElement("canvas"));
         var context = canvas.getContext("2d");
         if (font === null) {
             context.font = `${this._getCssProperty(container, "font-weight")} ${this._getCssProperty(container, "font-size")} ${this._getCssProperty(container, "font-family")}`;
@@ -41,6 +50,7 @@ var ProfileElevationPathDOM = {
     /**
      * Converts a data point z to svg y coord
      *
+     * @private
      * @param {Object} z The z to convert.
      * @param {Number} pathHeight The height of the path in the svg container in px
      * @param {Number} minGraphZ Min z of the graph
@@ -55,6 +65,7 @@ var ProfileElevationPathDOM = {
     /**
      * Converts a data point dist value to svg x coord
      *
+     * @private
      * @param {Number} dist The dist to convert
      * @param {Number} svgWidth The witdth of the svg container in px
      * @param {Number} pathWidth The witdth of the path in the svg container in px
@@ -69,6 +80,7 @@ var ProfileElevationPathDOM = {
     /**
      * Converts a svg x coord to dist value
      *
+     * @private
      * @param {Number} svgX The dist to convert
      * @param {Number} svgWidth The witdth of the svg container in px
      * @param {Number} pathWidth The witdth of the path in the svg container in px
@@ -83,6 +95,7 @@ var ProfileElevationPathDOM = {
     /**
      * Returns the index of value if it were inserted in sorted (by dist) array of data points.
      *
+     * @private
      * @param {Array} array Sorted array of data points (with dist property)
      * @param {Number} value Value to test the index of.
      * @returns {Number} The index the value would have.
@@ -103,6 +116,8 @@ var ProfileElevationPathDOM = {
 
     /**
      * Display Profile function used by default : no additonal framework needed.
+     *
+     * @public
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
@@ -655,6 +670,8 @@ var ProfileElevationPathDOM = {
 
     /**
      * Display Profile without graphical rendering (raw service response)
+     *
+     * @public
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
@@ -702,6 +719,8 @@ var ProfileElevationPathDOM = {
 
     /**
      * Display Profile using D3 javascript framework. This method needs D3 libraries to be loaded.
+     *
+     * @public
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object
@@ -945,6 +964,8 @@ var ProfileElevationPathDOM = {
 
     /**
      * Display Profile using Amcharts framework. This method needs AmCharts libraries to be loaded.
+     *
+     * @public
      * @param {Object} data - elevations values for profile
      * @param {HTMLElement} container - html container where to display profile
      * @param {Object} context - this control object

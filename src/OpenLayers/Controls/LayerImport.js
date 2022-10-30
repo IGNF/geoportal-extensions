@@ -62,6 +62,7 @@ var logger = Logger.getLogger("layerimport");
  * @constructor
  * @alias ol.control.LayerImport
  * @extends {ol.control.Control}
+ * @type {ol.control.LayerImport}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if LayerImport control should be collapsed at startup. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable

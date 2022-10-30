@@ -25,7 +25,9 @@
           window.onload = function () {
 
               var wmts = L.geoportalLayer.WMTS({
-                  layer : "ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO.L93"
+                  layer : "CADASTRALPARCELS.PARCELS.L93"
+              }, {
+                  format: "image/png"
               });
 
               var map  = L.map("map", {

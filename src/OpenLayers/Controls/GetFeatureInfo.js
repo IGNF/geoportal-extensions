@@ -22,6 +22,7 @@ var logger = Logger.getLogger("getfeatureinfo");
  * @constructor
  * @alias ol.control.GetFeatureInfo
  * @extends {ol.control.Control}
+ * @type {ol.control.GetFeatureInfo}
  * @param {Object} options - control options
  * @param {Array.<Object>} [options.layers] - list of layers which can be requested through the control. Each array element is an object, with following properties :
  * @param {ol.layer.Layer} options.layers.obj - {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).

@@ -17,6 +17,7 @@ import Utils from "../../Common/Utils";
  *
  * @constructor
  * @alias ol.source.WMTSExtended
+ * @type {ol.source.WMTS}
  * @extends {ol.source.WMTS}
  * @param {Object} options - Options
  */
@@ -35,7 +36,7 @@ var WMTS = (function (WMTSSource) {
     // Inherits
     if (WMTSSource) WMTS.__proto__ = WMTSSource;
 
-    /*
+    /**
      * @lends module:WMTS
      */
     WMTS.prototype = Object.create(WMTSSource.prototype, {});

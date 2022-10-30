@@ -16,7 +16,7 @@ import Epsg4326 from "./EPSG4326";
  *
  * @module CRS
  * @alias L.geoportalCRS
- * @ignore
+ * @abstract
  * @example
  *  var map = L.Map('divmap', {
  *    crs : L.geoportalCRS.EPSG2154
@@ -36,6 +36,7 @@ import Epsg4326 from "./EPSG4326";
  *
  *  lyr.addTo(map); // ou map.addLayer(lyr);
  */
+/** @type {L.geoportalCRS} */
 var CRS = {
 
     /**
@@ -53,8 +54,8 @@ var CRS = {
     /**
      * CRS : Lambert 2 extened
      *
-     * @ignore
      * @method EPSG27572
+     * @static
      * @alias L.geoportalCRS.EPSG27572
      * @returns {EPSG27572} epsg code
      */
@@ -67,6 +68,7 @@ var CRS = {
      *
      * @ignore
      * @method EPSG4326
+     * @static
      * @alias L.geoportalCRS.EPSG4326
      * @returns {EPSG4326} epsg code
      */

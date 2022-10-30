@@ -21,8 +21,8 @@ import LayerSwitcher from "../LayerSwitcher";
 var logger = Logger.getLogger("measures");
 
 /**
- * @private
- * @description
+ * @type {ol.control.Measures}
+ * @abstract
  * Measures Tools :
  * - length
  * - aera

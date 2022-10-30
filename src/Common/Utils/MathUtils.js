@@ -14,6 +14,7 @@
 var MathUtils = {
     /**
      * Reste de la division euclidienne
+     * @function modulo
      * @param {Number} a - divisor
      * @param {Number} b - quotient
      * @returns {Number} Modulo
@@ -27,6 +28,7 @@ var MathUtils = {
      * Transform degrees, minutes, seconds form decimal degrees -
      * Largely inspired by the private function degreesToStringHDMS from ol/coordinate.js
      *
+     * @function decimalToDMS
      * @param {Number} degrees - decimal degrees
      * @param {Array} hemispheres - "NS" ou "EO"
      * @param {Number} numDigits - number of digits for seconds
@@ -65,6 +67,7 @@ var MathUtils = {
     /**
      * Converts string to Integer
      *
+     * @function toInteger
      * @param {String} s - string number
      * @param {Numeric} base - between 2 and 36
      * @returns {null|Numeric} result
@@ -81,6 +84,7 @@ var MathUtils = {
     /**
      * check if s represents an integer
      *
+     * @function isInteger
      * @param {String} s - string number
      * @returns {Boolean} is integer
      */
@@ -96,6 +100,7 @@ var MathUtils = {
     /**
      * Converts s to float
      *
+     * @function toFloat
      * @param {String} s - string number
      * @returns {null|Numeric} result
      */

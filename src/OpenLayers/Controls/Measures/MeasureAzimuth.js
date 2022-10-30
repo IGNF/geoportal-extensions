@@ -26,6 +26,7 @@ var logger = Logger.getLogger("measureazimut");
  *
  * @constructor
  * @alias ol.control.MeasureAzimuth
+ * @type {ol.control.MeasureAzimuth}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.geodesic = false] - If true, azimuth will be computed on the global sphere. Otherwise, it will be computed on the projected plane.

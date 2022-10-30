@@ -10,6 +10,7 @@ var logger = Logger.getLogger("layer-event");
  * Evenement sur les couches Geoportail
  * @private
  */
+/** @type {LayerEvent} */
 var LayerEvent = {
 
     _id : null,

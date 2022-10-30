@@ -26,6 +26,7 @@ var logger = Logger.getLogger("searchengine");
  *
  * @constructor
  * @extends {ol.control.Control}
+ * @type {ol.control.SearchEngine}
  * @alias ol.control.SearchEngine
  * @param {Object}  options - control options
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance

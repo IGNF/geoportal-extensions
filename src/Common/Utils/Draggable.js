@@ -2,12 +2,20 @@ import Logger from "./LoggerByDefault";
 
 var logger = Logger.getLogger("draggable");
 
-// FIXME le mode draggable annule le resizing de la fenêtre !?
-
+/**
+ * @module Draggable
+ * @alias [private] Draggable
+ * @description
+ * ...
+ *
+ * @example
+ * dragElement();
+ */
 var Draggable = {
     /**
     * A draggable HTML element with JavaScript and CSS.
     *
+    * @function dragElement
     * @param {DOMElement} element - element
     * @param {DOMElement} header - header (optional)
     * @param {DOMElement} container - container (optional)

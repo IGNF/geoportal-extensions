@@ -20,6 +20,7 @@ var logger = Logger.getLogger("layerswitcher");
  * @constructor
  * @extends {ol.control.Control}
  * @alias ol.control.LayerSwitcher
+ * @type {ol.control.LayerSwitcher}
  * @param {Object} options - control options
  * @param {Array} [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
  * @param {ol.layer.Layer} [options.layers.layer] - ol.layer.Layer layer to be configured (that has been added to map)

@@ -17,6 +17,7 @@ var logger = Logger.getLogger("layers");
  *      layer : "ORTHOIMAGERY.ORTHOPHOTOS",
  * }).addTo(map) ;
  */
+/** @type {L.geoportalLayer} */
 var Layers = {
 
     options : {},

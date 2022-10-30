@@ -19,6 +19,7 @@ var logger = Logger.getLogger("sourcewmts");
  *
  * @constructor
  * @alias ol.source.GeoportalWMTS
+ * @type {ol.source.GeoportalWMTS}
  * @extends {WMTSExtended}
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")

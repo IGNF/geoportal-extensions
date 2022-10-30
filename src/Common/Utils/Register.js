@@ -1,7 +1,9 @@
 /**
- * @private
+ * @module Register
+ * @alias [private] Register
  * @description
  * Register definition for IGNF, and EPSG CRS.
+ *
  * @example
  * Gp.Register.IGNF.AMST63
  *   // return : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs"
@@ -18,6 +20,7 @@ var Register = {
     /**
      * get the definition for a code
      *
+     * @function get
      * @param {String} name - ie. EPSG:2154 (Lambert)
      * @returns {Object} definition
      * @example
@@ -49,8 +52,9 @@ var Register = {
     },
 
     /**
-     *  does projection code exist ?
+     * does projection code exist ?
      *
+     * @function exist
      * @param {String} name - ie. EPSG:2154 (Lambert)
      * @returns {Boolean} true/false
      * @example
@@ -82,6 +86,7 @@ var Register = {
 
     /**
      * load all defs to proj4
+     * @function load
      * @param {Object} Proj4 - proj4 instance
      */
     load : function (Proj4) {
@@ -114,7 +119,7 @@ var Register = {
                     }
                 }
             }
-            this.isLoaded = true;
+            /** ts-syntax */ (this.isLoaded) = true;
         }
     },
 
@@ -133,6 +138,7 @@ var Register = {
      * - ["IGNF:RGF93G"],
      * - ["IGNF:WGS84G"]
      *
+     * @function loadByDefault
      * @param {Object} Proj4 - proj4 instance
      */
     loadByDefault : function (Proj4) {
@@ -175,6 +181,8 @@ var Register = {
 
     /**
      * load only a def to proj4
+     *
+     * @function loadByName
      * @param {Object} Proj4 - proj4 instance
      * @param {String} name - ie. EPSG:2154 (Lambert)
      * @returns {Boolean} true/false
@@ -194,7 +202,10 @@ var Register = {
         return true;
     },
 
-    // definitions
+    /**
+     * definitions EPSG
+     * @enum
+     */
     EPSG : {
         4978 : "+proj=geocent +datum=WGS84 +units=m +no_defs ",
         3857 : "+title=WGS 84 / Pseudo-Mercator +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs",
@@ -476,9 +487,17 @@ var Register = {
         5489 : "+title=RGAF09 geographiques (dms) +proj=longlat +nadgrids=@null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137 +rf=298.257222101 +units=m +no_defs",
         5490 : "+title=RGAF09 UTM Nord Fuseau 20 +proj=tmerc +nadgrids=@null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378137 +rf=298.257222101 +lat_0=0.000000000 +lon_0=-63.000000000 +k_0=0.99960000 +x_0=500000.000 +y_0=0.000 +units=m +no_defs"
     },
+    /**
+     * definitions CRS
+     * @enum
+     */
     CRS : {
         84 : "+title=WGS 84 longitude-latitude +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
     },
+    /**
+     * definitions IGNF
+     * @enum
+     */
     IGNF : {
         AMST63 : "+title=Amsterdam 1963 +proj=geocent +towgs84=109.753,-528.133,-362.244,0,0,0,0 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",
         CROZ63 : "+title=Crozet 1963 +proj=geocent +nadgrids=null +wktext +towgs84=0.0000,0.0000,0.0000 +a=6378388.0000 +rf=297.0000000000000 +units=m +no_defs",

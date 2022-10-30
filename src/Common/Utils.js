@@ -16,6 +16,7 @@ var Utils = {
      * this information is useful to switch to touch mode.
      * Detection : test for desktop or tactile
      *
+     * @function detectSupport
      * @returns {Boolean} isDesktop - true for desktop userAgent, false for mobile
      */
     detectSupport : function () {
@@ -45,6 +46,7 @@ var Utils = {
     /**
      *  Copies all source object members to dest
      *
+     * @function assign
      * @param {Object} dest - destination object where properties and method will be copied
      * @param {Object} source - source object from which properties and method will be copied
      * @returns {Object} dest
@@ -62,6 +64,7 @@ var Utils = {
     /**
      * Merge two objects parameters (deeper than assign)
      *
+     * @function mergeParams
      * @param {Object} dest     - destination object where properties and method will be merge
      * @param {Object} source   - source object from which properties and method will be merge
      * @param {Boolean} replace - replace destination value by source if exists or not (true by default)

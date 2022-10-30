@@ -3,6 +3,7 @@
 /jsdoc
 /test
 /test_rendering
+/types
 /samples*
 /samples-src
 /coverage

@@ -63,6 +63,9 @@ build () {
     printTo "> bin..."
     doCmd "npm run build:${run_lib_target}"
 
+    # construction des types declaration ts
+    doCmd "npm run generate-types:${run_lib_target}"
+
     # binaires
     printTo "> dist/..."
     doCmd "mkdir -p ./${main_directory}/dist/"
@@ -74,6 +77,11 @@ build () {
     doCmd "mkdir -p ./${main_directory}/src/"
     doCmd "cp -r ../../../src/Common/ ./${main_directory}/src/."
     doCmd "cp -r ../../../src/${src_directory}/ ./${main_directory}/src/."
+
+    # declaration types
+    printTo "> types/..."
+    doCmd "cp -r ../../../dist/${name}/Common/* ./${main_directory}/src/Common/."
+    doCmd "cp -r ../../../dist/${name}/${src_directory}/* ./${main_directory}/src/${src_directory}/."
 
     # flag de compilation
     doCmd 'find ./${main_directory}/src/ -type f -name "*.js" -exec sed -i "s/__FLAG_PLUGIN_CSS__/false/g" {} +'
@@ -164,8 +172,8 @@ while true; do
             echo "Il faut au prealable construire les binaires :"
             echo "  > npm run build"
             echo ""
-            echo "Attention, la date et la version sont extraites du package.json principal."
-            echo "Par contre, les dependances ne sont pas gérées par le script..."
+            echo "/!\ Attention, la date et la version sont extraites du package.json principal."
+            echo "Les dependances ne sont pas gérées par le script..."
             echo ""
             echo "Usage :"
             echo "    `basename $0` - construction du package TGZ à publier dans NPM"
@@ -176,7 +184,7 @@ while true; do
             echo "    -a            build : All."
             echo ""
             echo "Par defaut, le repertoire n'est pas supprimé."
-            echo "Le package validé, on se place dans le répertoire pour la publication :"
+            echo "(!) Le package validé, on se place dans le répertoire pour la publication :"
             echo "  > npm login"
             echo "  > npm publish"
             exit 0

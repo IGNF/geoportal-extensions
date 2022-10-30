@@ -45,14 +45,14 @@ function clean() {
 ##########
 # leaflet
 function leaflet() {
-  printTo "####### LEAFLET !"
+  printTo "####### LEAFLET !"
   doCmd "npm run build:leaflet"
 }
 
 ##########
 # ol
 function ol() {
-  printTo "####### OL !"
+  printTo "####### OL !"
   doCmd "npm run build:ol"
 }
 
@@ -71,25 +71,25 @@ do
    case $opts in
      o)
         printTo "#################################"
-        printTo "###### OpenLayers bundle ! ######"
+        printTo "###### OpenLayers bundle ! ######"
         clean "openlayers"
         ol
         ;;
      l)
         printTo "#################################"
-        printTo "####### Leaflet bundle ! ########"
+        printTo "####### Leaflet bundle ! ########"
         clean "leaflet"
         leaflet
         ;;
      i)
         printTo "#############################"
-        printTo "###### Itowns bundle ! ######"
+        printTo "###### Itowns bundle ! ######"
         clean "itowns"
         itowns
         ;;
      a)
         printTo "#################################"
-        printTo "########## ALL bundle ! #########"
+        printTo "########## ALL bundle ! #########"
         clean "openlayers"
         ol
         clean "leaflet"

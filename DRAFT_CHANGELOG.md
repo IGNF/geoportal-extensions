@@ -1,11 +1,6 @@
 
 
 
-
-
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -16,6 +11,8 @@
 ## Changelog
 
 * [Added]
+
+    - Ajout des "@types declaration" pour publication
 
 * [Changed]
 
@@ -28,9 +25,6 @@
 * [Security]
 
 ---
-
-
-
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -44,6 +38,8 @@
 
 * [Added]
 
+    - Ajout des "@types declaration" pour publication
+
 * [Changed]
 
 * [Deprecated]
@@ -57,9 +53,6 @@
 ---
 
 
-
-
-
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -70,6 +63,8 @@
 ## Changelog
 
 * [Added]
+
+    - Ajout des "@types declaration ts" pour publication
 
 * [Changed]
 

@@ -13,6 +13,7 @@ var LayerUtils = {
 
     /**
      * Obtenir le ZoomLevel à partir du ScaleDenominator
+     * @function getZoomLevelFromScaleDenominator
      * @param {Number} scaleDenominator - the scale denominator
      * @param {String} crs - the crs
      *
@@ -183,6 +184,7 @@ var LayerUtils = {
     /**
      * Get attributions list for a layer, based on current zoom and extent
      *
+     * @function getAttributions
      * @param {Object} params - function params
      * @param {Array.<Float>} params.extent - map current geographical extent (EPSG:4326) : [top, left, bottom, right] = [maxy, minx, miny, maxx]
      * @param {Number} params.zoom - map current zoom
@@ -298,6 +300,7 @@ var LayerUtils = {
     /**
      * Determines if one extent (extent1) intersects another (extent2)
      *
+     * @function intersects
      * @param {Array.<Float>} extent1 - First extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
      * @param {Array.<Float>} extent2 - Second extent : [top, left, bottom, right] = [maxy, minx, miny, maxx]
      * @return {Boolean} intersects - True if the two extents intersect, false otherwise.
