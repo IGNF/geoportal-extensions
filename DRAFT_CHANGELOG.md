@@ -32,6 +32,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -50,7 +51,6 @@
 * [Removed]
 
 * [Fixed]
-  - Calcul d'itinéraire fonctionnel
 
 * [Security]
 
