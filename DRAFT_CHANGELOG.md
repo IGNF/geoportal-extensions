@@ -50,10 +50,12 @@
 * [Removed]
 
 * [Fixed]
+  - Calcul d'itinéraire fonctionnel
 
 * [Security]
 
 ---
+
 
 
 

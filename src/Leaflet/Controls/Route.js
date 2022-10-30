@@ -703,21 +703,40 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         var points = this._currentPoints;
 
         // - point de depart
-        var start = points[0].getCoordinate();
+        var start;
+        if (points[0].getCoordinate) {
+            var startCoordinate = points[0].getCoordinate();
+            start = {
+                x : startCoordinate.lon || startCoordinate.lng,
+                y : startCoordinate.lat
+            };
+        }
         points[0].dragging(false);
         logger.log("start", start);
         // - point d'arrivée
-        var end = points[points.length - 1].getCoordinate();
+        var end;
+        if (points[points.length - 1] && points[points.length - 1].getCoordinate) {
+            var endCoordinate = points[points.length - 1].getCoordinate();
+            end = {
+                x : endCoordinate.lon || endCoordinate.lng,
+                y : endCoordinate.lat
+            };
+        }
         points[points.length - 1].dragging(false);
         logger.log("end", end);
         // - les étapes
         var step = [];
         for (var i = 1; i < points.length - 1; i++) {
-            var coordinate = points[i].getCoordinate();
-            points[i].dragging(false);
-            if (coordinate) {
-                logger.log("step", coordinate);
-                step.push(coordinate);
+            if (points[i] && points[i].getCoordinate) {
+                var iCoordinate = points[i].getCoordinate();
+                if (iCoordinate) {
+                    var coordinate = {
+                        x : iCoordinate.lon || iCoordinate.lng,
+                        y : iCoordinate.lat
+                    };
+                    logger.log("step", coordinate);
+                    step.push(coordinate);
+                }
             }
         }
 
