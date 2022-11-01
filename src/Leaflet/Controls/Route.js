@@ -751,6 +751,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         this._currentComputation = options.computation;
         this._currentExclusions = options.exclusions;
 
+        if (typeof this.options.routeOptions.geometryInInstructions === "undefined") {
+            this.options.routeOptions.geometryInInstructions = true;
+        }
+
         // mise en place de la patience
         this._displayWaitingContainer();
 
@@ -763,13 +767,16 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             graph : this._currentTransport,
             routePreference : this._currentComputation,
             exclusions : this._currentExclusions,
-            geometryInInstructions : true, // surcharge obligatoire !
+            geometryInInstructions : this.options.routeOptions.geometryInInstructions,
             distanceUnit : "m", // surcharge obligatoire !
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     context._fillRouteResultsDetails(results);
+                    if (context.options.routeOptions.onSuccess) {
+                        context.options.routeOptions.onSuccess(results);
+                    }
                 }
             },
             // callback onFailure
@@ -1050,12 +1057,14 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             this._fillRouteResultsDetailsGeometry(geometry);
         }
 
-        // existe t il une geometrie pour chaque troncon de route ?
-        var bGeometryInstructions = (instructions && Array.isArray(instructions) && instructions[0].geometry.length !== 0);
+        if (this.options.routeOptions.geometryInInstructions) {
+            // existe t il une geometrie pour chaque troncon de route ?
+            var bGeometryInstructions = (instructions && Array.isArray(instructions) && instructions[0].geometry.length !== 0);
 
-        // Geometries des tronçon
-        if (instructions && bGeometryInstructions) {
-            this._fillRouteResultsDetailsFeatureGeometry(instructions);
+            // Geometries des tronçon
+            if (instructions && bGeometryInstructions) {
+                this._fillRouteResultsDetailsFeatureGeometry(instructions);
+            }
         }
 
         // Emprise
@@ -1114,9 +1123,9 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         var map = this._map;
 
         var _style = {
-            color : "#ff7800",
+            color : "#ED7F10",
             weight : 5,
-            opacity : 0.65
+            opacity : 0.75
         };
 
         this._geojsonRoute = L.geoJson(geometry, {
