@@ -560,7 +560,7 @@ var ProfileElevationPathDOM = {
         tooltipG.setAttribute("class", "tooltipInit");
         tooltipG.style.pointerEvents = "none";
 
-        pathRectangle.addEventListener("mouseover", function () {
+        function onMouseOver() {
             focusLineX.setAttribute("visibility", "visible");
             focusLineY.setAttribute("visibility", "visible");
             focusCircle.setAttribute("visibility", "visible");
@@ -576,9 +576,9 @@ var ProfileElevationPathDOM = {
             // IE... deprecated
             tooltipDiv.setAttribute("class", "tooltipFadeIn");
             tooltipG.setAttribute("class", "tooltipFadeIn");
-        });
+        }
 
-        pathRectangle.addEventListener("mouseout", function () {
+        function onMouseOut() {
             focusLineX.setAttribute("visibility", "hidden");
             focusLineY.setAttribute("visibility", "hidden");
             focusCircle.setAttribute("visibility", "hidden");
@@ -591,9 +591,9 @@ var ProfileElevationPathDOM = {
             // IE... deprecated
             tooltipDiv.setAttribute("class", "tooltipFadeOut");
             tooltipG.setAttribute("class", "tooltipFadeOut");
-        });
+        }
 
-        pathRectangle.addEventListener("mousemove", function (e) {
+        function onMouseMove(e) {
             const mousePoint = elevationSvg.createSVGPoint();
             mousePoint.x = e.clientX;
             mousePoint.y = e.clientY;
@@ -658,7 +658,11 @@ var ProfileElevationPathDOM = {
 
             tooltipG.setAttribute("transform", `translate(${focusX},${focusY})`); // IE11 !
             tooltipG.style.transform = `translate(${focusX}px,${focusY}px)`;
-        }.bind(this));
+        }
+
+        pathRectangle.addEventListener("pointerover", onMouseOver);
+        pathRectangle.addEventListener("pointerout", onMouseOut);
+        pathRectangle.addEventListener("pointermove", onMouseMove.bind(this));
 
         dynamicsG.appendChild(pathRectangle);
         elevationSvg.appendChild(dynamicsG);
