@@ -560,7 +560,7 @@ var ProfileElevationPathDOM = {
         tooltipG.setAttribute("class", "tooltipInit");
         tooltipG.style.pointerEvents = "none";
 
-        function onMouseOver() {
+        function onMouseOver () {
             focusLineX.setAttribute("visibility", "visible");
             focusLineY.setAttribute("visibility", "visible");
             focusCircle.setAttribute("visibility", "visible");
@@ -578,7 +578,7 @@ var ProfileElevationPathDOM = {
             tooltipG.setAttribute("class", "tooltipFadeIn");
         }
 
-        function onMouseOut() {
+        function onMouseOut () {
             focusLineX.setAttribute("visibility", "hidden");
             focusLineY.setAttribute("visibility", "hidden");
             focusCircle.setAttribute("visibility", "hidden");
@@ -593,7 +593,7 @@ var ProfileElevationPathDOM = {
             tooltipG.setAttribute("class", "tooltipFadeOut");
         }
 
-        function onMouseMove(e) {
+        function onMouseMove (e) {
             const mousePoint = elevationSvg.createSVGPoint();
             mousePoint.x = e.clientX;
             mousePoint.y = e.clientY;
