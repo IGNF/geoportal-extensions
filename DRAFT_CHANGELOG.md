@@ -22,6 +22,9 @@
 
 * [Fixed]
 
+    - Ajout des evenements (map) : "render:success" / "render:failure" pour l'application du rendu des styles MapBox
+    - Ajout de l'evenement (map) : "editor:loaded" pour le chargement de l'editeur de style
+
 * [Security]
 
 ---

@@ -12,15 +12,23 @@
             }
             #zoom-container,
             #zoom-level {}
+            #info {
+              text-align: center;
+              font-weight: bold;
+              color: red;
+            }
         </style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout du widget d'import de couches sur un service MapBox de type TileJSON</h2>
+            <h2>Ajout du widget d'import de couches sur un service MapBox</h2>
+            <h3>Gestion des exceptions de chargement des styles</h3>
             <div id="zoom-container">Niveau de zoom : <span id="zoom-level">?</span></div>
             <!-- map -->
             <div id="map">
             </div>
+            <div id="info">Ouvrir la console pour visualiser l'exception : <span style="font-style: italic;">"Il n'existe pas de styles pour la source demandée !?"</span></div>
+
 {{/content}}
 
 {{#content "js"}}
@@ -46,7 +54,6 @@
 
                 var layerImport = new ol.control.LayerImport({
                     collapsed : false,
-                    draggable : true,
                     layerTypes : ["MapBox"],
                     webServicesOptions : {
                         proxyUrl : "{{ proxy }}?url=",
@@ -61,7 +68,7 @@
                 var div = document.querySelector("input[id^=GPimportChoiceAltUrl-");
                 div.click();
                 var input = document.querySelector("input[id^=GPimportUrl-]");
-                input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/mapbox/styles/planign/standard.json";
+                input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/mapbox/styles/bati_failed_source.json";
 
                 var zoomContainer = document.getElementById('zoom-level');
                 map.on('moveend', function (event) {
@@ -69,6 +76,7 @@
                     var zoom = map.getView().getZoom();
                     zoomContainer.innerHTML = zoom;
                 });
+
                 map.on("editor:loaded", function (e) {
                   console.info(e);
                 })
