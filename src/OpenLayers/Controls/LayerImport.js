@@ -1462,7 +1462,8 @@ var LayerImport = (function (Control) {
                                                 map.dispatchEvent({
                                                     id : editor.getID(),
                                                     type : "editor:loaded",
-                                                    style : p.styles
+                                                    style : p.styles,
+                                                    layer : p.layer
                                                 });
                                             }, 100);
                                         })
