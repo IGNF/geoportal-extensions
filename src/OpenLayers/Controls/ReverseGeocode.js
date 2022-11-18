@@ -48,6 +48,7 @@ var logger = Logger.getLogger("reversegeocoding");
  *
  * @constructor
  * @alias ol.control.ReverseGeocode
+ * @type {ol.control.ReverseGeocode}
  * @extends {ol.control.Control}
  * @param {Object} options - ReverseGeocode control options
  * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance

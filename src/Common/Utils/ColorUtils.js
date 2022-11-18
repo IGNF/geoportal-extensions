@@ -1,20 +1,21 @@
 /**
-* @module ColorUtils
-* @alias Gp.ColorUtils
-* @description
-* ...
-*
-* @example
-* rgbaToHex();
-* hexToRgba();
-* isHex();
-* isRGB();
-*/
+ * @module ColorUtils
+ * @alias Gp.ColorUtils
+ * @description
+ * ...
+ *
+ * @example
+ * rgbaToHex();
+ * hexToRgba();
+ * isHex();
+ * isRGB();
+ */
 var ColorUtils = {
     /**
      * Converts rgba String to #RRGGBBAA
      * (Code adapted from : https://gist.github.com/mstssk/afda4ce9e5c335fd79cd)
      *
+     * @function rgbaToHex
      * @param {String} rgba - A color of RGB or RGBA format.
      * @returns {Object} hex and opacity formated values
      */
@@ -49,6 +50,8 @@ var ColorUtils = {
     /**
      * Converts hex color and opacity value to rgba String.
      * (Code adapted from : http://stackoverflow.com/a/5624139)
+     *
+     * @function hexToRgba
      * @param {String} hex - A color value on RGB format (hexa).
      * @param {Number} opacity - A opacity value.
      * @returns {String} A color of RGB or RGBA format

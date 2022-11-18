@@ -107,7 +107,7 @@ Search.prototype._initialize = function () {
  */
 Search.prototype._initContainer = function () {
     // contexte
-    var self = this;
+    // var self = this;
 
     var _search = JSON.parse(JSON.stringify(this.options.obj)); // on manipule une copie  !
 

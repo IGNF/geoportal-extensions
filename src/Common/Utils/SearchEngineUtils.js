@@ -1,6 +1,17 @@
+/**
+ * @module SearchEngineUtils
+ * @alias [private] SearchEngineUtils
+ * @description
+ * ...
+ *
+ * @example
+ * advancedSearchFiltersByDefault();
+ * zoomToResultsByDefault();
+ */
 var SearchEngineUtils = {
     /**
      * Advanced Search Filters by default
+     * @function advancedSearchFiltersByDefault
      */
     advancedSearchFiltersByDefault : {
         PositionOfInterest : [
@@ -87,6 +98,7 @@ var SearchEngineUtils = {
     /**
      * Provides default zoom based on results.
      *
+     * @function zoomToResultsByDefault
      * @param {Object} info - location information
      * @returns {Integer} zoom level
      */

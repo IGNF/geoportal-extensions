@@ -37,6 +37,7 @@ var logger = Logger.getLogger("extended KML format");
  *
  * @constructor
  * @alias ol.format.KMLExtended
+ * @type {ol.format.KMLExtended}
  * @extends {ol.format.KML}
  * @param {Object} options - Options
  */

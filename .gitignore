@@ -47,6 +47,7 @@ nb-configuration.xml
 /target/
 /tests/
 /test_rendering/node_modules/
+/types/
 
 # add other directories to ignore
 /samples-old/

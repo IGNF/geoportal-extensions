@@ -26,6 +26,7 @@ var logger = Logger.getLogger("measurearea");
  *
  * @constructor
  * @alias ol.control.MeasureArea
+ * @type {ol.control.MeasureArea}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.geodesic = true] - If true, area will be computed on the global sphere using the {@link https://openlayers.org/en/latest/apidoc/module-ol_sphere.html#geodesicArea ol.Sphere.geodesicArea()} function. Otherwise, area will be computed on the projected plane.

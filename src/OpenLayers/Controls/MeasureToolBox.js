@@ -9,12 +9,13 @@ import MeasureToolBoxDOM from "../../Common/Controls/MeasureToolBoxDOM";
 
 var logger = Logger.getLogger("toolbox");
 
-/*
-* MeasureToolBox - Boite à outils (ToolBox) pour les outils de mesures.
-* - distance
-* - aire
-* - azimut
-*/
+/**
+ * @type {ol.control.MeasureToolBox}
+ * MeasureToolBox - Boite à outils (ToolBox) pour les outils de mesures.
+ * - distance
+ * - aire
+ * - azimut
+ */
 var MeasureToolBox = {
 
     /**

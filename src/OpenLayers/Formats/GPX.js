@@ -22,6 +22,7 @@ import Parser from "../../Common/Utils/Parser";
  * @constructor
  * @alias ol.format.GPXExtended
  * @extends {ol.format.GPX}
+ * @type {ol.format.GPXExtended}
  * @param {Object} options - Options
  * @param {Object} options.defaultStyle - Styles by default
  * @param {function} options.readExtensions - Reading extensions (native)

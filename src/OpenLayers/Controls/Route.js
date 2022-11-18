@@ -39,6 +39,7 @@ var logger = Logger.getLogger("route");
  *
  * @constructor
  * @alias ol.control.Route
+ * @type {ol.control.Route}
  * @extends {ol.control.Control}
  * @param {Object} options - route control options
  * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance

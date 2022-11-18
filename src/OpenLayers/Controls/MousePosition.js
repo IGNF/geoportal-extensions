@@ -39,6 +39,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *
  * @constructor
  * @alias ol.control.GeoportalMousePosition
+ * @type {ol.control.GeoportalMousePosition}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance

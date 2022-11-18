@@ -35,6 +35,7 @@ var logger = Logger.getLogger("isocurve");
  *
  * @constructor
  * @alias ol.control.Isocurve
+ * @type {ol.control.Isocurve}
  * @extends {ol.control.Control}
  * @param {Object} options - Isocurve control options
  * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance

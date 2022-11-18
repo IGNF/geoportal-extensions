@@ -1,10 +1,20 @@
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Config from "./Config";
 
+/**
+ * @module CheckRightManagement
+ * @alias [private] CheckRightManagement
+ * @description
+ * ...
+ *
+ * @example
+ * check();
+ */
 export default {
     /**
      * Contrôle des droits sur les ressources.
      *
+     * @function check
      * @param {Object} options - liste des options
      * @param {String} options.key - clef API
      * @param {Array} options.resources - liste des ressources

@@ -78,6 +78,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.5](#extension-geoportail-leaflet-version-225)
   * [Summary](#summary-22)
   * [Changelog](#changelog-19)
+- [Extension Geoportail Leaflet, version 2.2.7](#extension-geoportail-leaflet-version-227)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-20)
 
 <!-- tocstop -->
 
@@ -692,6 +695,29 @@ Utilisation du Geocodage v2
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.7
+
+**30/10/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+  - Calcul d'itinéraire fonctionnel
 
 * [Security]
 

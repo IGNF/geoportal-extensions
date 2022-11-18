@@ -22,6 +22,7 @@ import Color from "../../Common/Utils/ColorUtils";
  * @constructor
  * @alias ol.format.GeoJSONExtended
  * @extends {ol.format.GeoJSON}
+ * @type {ol.format.GeoJSONExtended}
  * @param {Object} options - Options
  * @param {Object} options.defaultStyle - Styles by default
  */

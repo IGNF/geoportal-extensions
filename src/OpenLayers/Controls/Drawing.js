@@ -62,6 +62,7 @@ var logger = Logger.getLogger("Drawing");
  *
  * @constructor
  * @alias ol.control.Drawing
+ * @type {ol.control.Drawing}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if Drawing control should be collapsed at startup. Default is true.

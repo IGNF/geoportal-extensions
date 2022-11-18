@@ -1,5 +1,6 @@
 /**
- * @private
+ * @module SelectorID
+ * @alias [private] SelectorID
  * @description
  * formalisme d'un tag ID :
  * -> NAME(_ORDER)-1460636385836
@@ -14,6 +15,7 @@ var SelectorID = {
     /**
      * Construction d'un identifiant statique basé sur le timestamp,
      * et qui s'incremente de +1 à chaque appel
+     * @function generate
      */
     generate : (function () {
         var timestamp = Math.floor(Date.now());
@@ -24,8 +26,8 @@ var SelectorID = {
 
     /**
      * nom du tag
+     * @function name
      * @param {String} id - the id
-     *
      * @returns {String} index
      */
     name : function (id) {
@@ -43,8 +45,9 @@ var SelectorID = {
 
     /**
      * numero d'identifiant du tag
-     * @param {String} id - the id
      *
+     * @function index
+     * @param {String} id - the id
      * @returns {String} index
      */
     index : function (id) {
@@ -63,8 +66,9 @@ var SelectorID = {
 
     /**
      * uuid du tag
-     * @param {String} id - the id
      *
+     * @function uuid
+     * @param {String} id - the id
      * @returns {String} uuid
      */
     uuid : function (id) {

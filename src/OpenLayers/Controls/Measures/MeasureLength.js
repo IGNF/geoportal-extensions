@@ -26,6 +26,7 @@ var logger = Logger.getLogger("measurelength");
  *
  * @constructor
  * @alias ol.control.MeasureLength
+ * @type {ol.control.MeasureLength}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.geodesic = true] - If true, length will be computed on the global sphere using the {@link https://openlayers.org/en/latest/apidoc/module-ol_sphere.html#haversineDistance ol.Sphere.haversineDistance()} function. Otherwise, length will be computed on the projected plane.

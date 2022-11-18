@@ -62,6 +62,7 @@ var logger = Logger.getLogger("layerimport");
  * @constructor
  * @alias ol.control.LayerImport
  * @extends {ol.control.Control}
+ * @type {ol.control.LayerImport}
  * @param {Object} options - options for function call.
  * @param {Boolean} [options.collapsed = true] - Specify if LayerImport control should be collapsed at startup. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
@@ -1428,23 +1429,19 @@ var LayerImport = (function (Control) {
                                     });
                                     editor.setContext("map", map);
                                     editor.setContext("layer", p.layer);
-                                    editor.createElement()
+                                    // creation de l'editeur
+                                    return editor.createElement()
+                                        .then(function () {
+                                            // exception...
+                                            if (editor.getLayers().length === 0) {
+                                                throw new Error("Il n'existe pas de styles pour la source demandée !?");
+                                            }
+                                        })
                                         .then(function () {
                                             // affichage du panneau des couches accessibles à l'edition
                                             if (self.options.vectorStyleOptions.MapBox.display) {
                                                 self._mapBoxPanel.style.display = "block";
                                             }
-                                        })
-                                        .then(function () {
-                                            // envoi d'un evenement !
-                                            // un peu en décalé...
-                                            setTimeout(function () {
-                                                map.dispatchEvent({
-                                                    id : editor.getID(),
-                                                    type : "editor:loaded",
-                                                    layer : p.layer
-                                                });
-                                            }, 100);
                                         })
                                         .then(function () {
                                             // hack pour modifier le titre de la couche de fond
@@ -1455,13 +1452,42 @@ var LayerImport = (function (Control) {
                                                     element.textContent = "Couleur de remplissage";
                                                 }
                                             }
+                                        })
+                                        .then(function () {
+                                            // association entre le layer et l'editeur via l'id
+                                            p.layer.set("mapbox-editor", editor.getID());
+                                            // envoi d'un evenement
+                                            // un peu en décalé pour laisser le temps au DOM de faire le job...
+                                            setTimeout(function () {
+                                                map.dispatchEvent({
+                                                    id : editor.getID(),
+                                                    type : "editor:loaded",
+                                                    style : p.styles,
+                                                    layer : p.layer
+                                                });
+                                            }, 100);
+                                        })
+                                        .catch(function (e) {
+                                            // on propage l'exception
+                                            throw e;
                                         });
-
-                                    // association entre le layer et l'editeur via l'id
-                                    p.layer.set("mapbox-editor", editor.getID());
+                                })
+                                .then(function () {
+                                    // envoi d'un evenement !
+                                    map.dispatchEvent({
+                                        id : p.id,
+                                        type : "render:success",
+                                        style : p.styles
+                                    });
                                 })
                                 .catch(function (e) {
                                     logger.error(e);
+                                    // envoi d'un evenement !
+                                    map.dispatchEvent({
+                                        id : p.id,
+                                        type : "render:failure",
+                                        error : e
+                                    });
                                 });
                         };
 

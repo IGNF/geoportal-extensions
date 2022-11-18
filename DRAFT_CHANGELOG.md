@@ -1,11 +1,6 @@
 
 
 
-
-
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -17,6 +12,8 @@
 
 * [Added]
 
+    - Ajout des "@types declaration" pour publication
+
 * [Changed]
 
 * [Deprecated]
@@ -25,11 +22,12 @@
 
 * [Fixed]
 
+    - Ajout des evenements (map) : "render:success" / "render:failure" pour l'application du rendu des styles MapBox
+    - Ajout de l'evenement (map) : "editor:loaded" pour le chargement de l'editeur de style
+
 * [Security]
 
 ---
-
-
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -43,6 +41,8 @@
 
 * [Added]
 
+    - Ajout des "@types declaration" pour publication
+
 * [Changed]
 
 * [Deprecated]
@@ -50,14 +50,10 @@
 * [Removed]
 
 * [Fixed]
-  - Calcul d'itinéraire fonctionnel
 
 * [Security]
 
 ---
-
-
-
 
 
 # Extension Geoportail Itowns, version __VERSION__
@@ -70,6 +66,8 @@
 ## Changelog
 
 * [Added]
+
+    - Ajout des "@types declaration ts" pour publication
 
 * [Changed]
 

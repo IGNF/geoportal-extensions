@@ -17,6 +17,7 @@ import SourceWMS from "./SourceWMS";
  * @constructor
  * @extends {ol.layer.Tile}
  * @alias ol.layer.GeoportalWMS
+ * @type {ol.layer.GeoportalWMS}
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)

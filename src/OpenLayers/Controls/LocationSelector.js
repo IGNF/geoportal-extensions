@@ -23,8 +23,7 @@ var logger = Logger.getLogger("locationselector");
  * @classdesc
  *
  * LocationSelector component. Enables to select a location, using autocompletion or picking location on the map
- *
- * @private
+ * @type {ol.control.LocationSelector}
  * @param {Object} [options] - component options
  * @param {String} [options.apiKey] - API key for autocomplete service call, mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
