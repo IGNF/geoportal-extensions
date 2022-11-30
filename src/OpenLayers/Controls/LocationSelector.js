@@ -226,14 +226,21 @@ var LocationSelector = (function (Control) {
 
     /**
      * set coordinate
-     * @param {Object} coordinate - Coordinate in the projection map
+     * @param {Object} coordinate - Coordinate in the map projection by default, otherwise, the projection is entered in the following parameter
+     * @param {String} crs - Coordinate projection
      */
-    LocationSelector.prototype.setCoordinate = function (coordinate) {
+    LocationSelector.prototype.setCoordinate = function (coordinate, crs) {
         var map = this.getMap();
-        var crs = map.getView().getProjection();
+        var proj = map.getView().getProjection();
+        // on utilise la projection de la carte
+        if (crs === null) {
+            crs = proj;
+        }
 
         this._setCoordinate(coordinate, crs);
 
+        // on utilise toujours la projection de la carte pour placer le marker
+        coordinate = olTransformProj(coordinate, crs, proj);
         this._setMarker([
             coordinate[0],
             coordinate[1]
