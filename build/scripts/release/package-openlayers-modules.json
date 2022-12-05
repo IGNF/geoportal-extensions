@@ -1,0 +1,47 @@
+{
+   "name" : "__NAME__",
+   "version" : "__VERSION__",
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "date" : "__DATE__",
+   "main" : "dist/__MAIN__.js",
+   "scripts" : {},
+   "directories" : {},
+   "bugs" : {},
+   "license" : "CECILL-B",
+   "author" : "IGNF",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "files" : [
+      "dist/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "bundleDependencies" : [],
+   "peerDependencies" : {},
+   "optionalDependencies" : {
+      "xmldom" : "^0.1.27",
+      "node-fetch" : "^2.6.1"
+   },
+   "devDependencies" : {
+      "sortablejs" : "1.14.0",
+      "ol-mapbox-style" : "6.7.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
+      "eventbusjs" : "0.2.0",
+      "proj4" : "2.7.5",
+      "geoportal-access-lib" : "3.2.0",
+      "loglevel" : "1.6.6"
+   },
+   "dependencies" : {
+      "ol" : "6.9.0"
+   }
+}

@@ -83,7 +83,7 @@ module.exports = (env, argv) => {
             "CRS" : path.join(ROOT, "src", "OpenLayers", "CRS", "AutoLoadCRS.js"),
         },
         output : {
-            path : path.join(ROOT, "dist", "openlayers", "modules"),
+            path : path.join(ROOT, "dist", "openlayers-modules"),
             filename : "[name]" + suffix + ".js",
             libraryExport : 'default',
             libraryTarget : 'assign',
@@ -338,9 +338,9 @@ module.exports = (env, argv) => {
             //     __PRODUCTION__ : JSON.stringify(!logMode)
             // }),
             /** GENERATION DE LA JSDOC */
-            new JsDocWebPackPlugin({
-                conf : path.join(ROOT, "build/jsdoc/jsdoc-openlayers.json")
-            }),
+            // new JsDocWebPackPlugin({
+            //     conf : path.join(ROOT, "build/jsdoc/jsdoc-openlayers.json")
+            // }),
             /** CSS / IMAGES */
             new MiniCssExtractPlugin({
                 filename : "[name]" + suffix + ".css"
@@ -412,35 +412,35 @@ module.exports = (env, argv) => {
         ]
             /** AJOUT DES LICENCES */
             .concat([
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["proj4"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-eventbusjs.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["eventbusjs"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["sortablejs"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-olms.tmpl"),"utf8"), {
-                        __VERSION__ : pkg.dependencies["ol-mapbox-style"],
-                    }),
-                    raw : true,
-                    entryOnly : true
-                }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["proj4"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-eventbusjs.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["eventbusjs"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["sortablejs"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-olms.tmpl"),"utf8"), {
+                //         __VERSION__ : pkg.dependencies["ol-mapbox-style"],
+                //     }),
+                //     raw : true,
+                //     entryOnly : true
+                // }),
                 new BannerWebPackPlugin({
                     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-ign.tmpl"), "utf8"), {
                         __BRIEF__ : pkg.olExtName,

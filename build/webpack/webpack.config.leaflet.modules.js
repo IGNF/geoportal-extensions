@@ -73,7 +73,7 @@ module.exports = (env, argv) => {
             "CRS" : path.join(ROOT, "src", "Leaflet", "CRS", "CRS.js"),
         },
         output : {
-            path : path.join(ROOT, "dist", "leaflet", "modules"),
+            path : path.join(ROOT, "dist", "leaflet-modules"),
             filename : "[name]" + suffix + ".js",
             libraryExport : 'default',
             libraryTarget : 'assign',
@@ -265,9 +265,9 @@ module.exports = (env, argv) => {
             //     __PRODUCTION__ : JSON.stringify(!logMode)
             // }),
             /** GENERATION DE LA JSDOC */
-            new JsDocWebPackPlugin({
-                conf : path.join(ROOT, "build/jsdoc/jsdoc-leaflet.json")
-            }),
+            // new JsDocWebPackPlugin({
+            //     conf : path.join(ROOT, "build/jsdoc/jsdoc-leaflet.json")
+            // }),
             /** CSS / IMAGES */
             new MiniCssExtractPlugin({
                 filename : "[name]" + suffix + ".css"
@@ -338,34 +338,34 @@ module.exports = (env, argv) => {
         ]
             /** AJOUT DES LICENCES */
             .concat([
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["proj4"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["sortablejs"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-plugin-leaflet-draw.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["leaflet-draw"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4leaflet.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["proj4leaflet"],
-                    }),
-                    raw : true
-                }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["proj4"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["sortablejs"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-plugin-leaflet-draw.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["leaflet-draw"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4leaflet.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["proj4leaflet"],
+                //     }),
+                //     raw : true
+                // }),
                 new BannerWebPackPlugin({
                     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-ign.tmpl"), "utf8"), {
                         __BRIEF__ : pkg.leafletExtName,

@@ -86,7 +86,7 @@ do
      O)
         printTo "#################################"
         printTo "###### OpenLayers modules ! ######"
-        clean "openlayers/modules"
+        clean "openlayers-modules"
         ol-modules
         ;;
      l)
@@ -98,7 +98,7 @@ do
      L)
         printTo "#################################"
         printTo "####### Leaflet modules ! ########"
-        clean "leaflet/modules"
+        clean "leaflet-modules"
         leaflet-modules
         ;;
      i)
