@@ -3,7 +3,7 @@
 * W106 - Identifier '_geoportal_id' is not in camel case
 */
 
-import Gp from "geoportal-access-lib";
+import Helper from "geoportal-access-lib/src/Utils/Helper";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import LayerEvent from "./LayerEvent";
@@ -93,7 +93,7 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
             this,
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
-            Gp.Helper.normalyzeUrl(url, {
+            Helper.normalyzeUrl(url, {
                 "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
             }, false),
             options.paramsNative

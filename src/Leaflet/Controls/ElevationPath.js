@@ -1,7 +1,8 @@
 /* globals AmCharts, d3 */
-import Gp from "geoportal-access-lib";
+import ServiceAlti from "geoportal-access-lib/src/Services/Alti/Alti";
 import L from "leaflet";
 import "leaflet-draw";
+import "../CSS/Controls/ElevationPath/GPelevationPathLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -723,7 +724,8 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         this._waitingContainer.className = "GPelevationPathCalcWaitingContainerVisible";
 
         // Request altitude service
-        Gp.Services.getAltitude(options);
+        var altiService = new ServiceAlti(options);
+        altiService.call();
     },
 
     // ################################################################### //
@@ -1136,3 +1138,11 @@ ElevationPath.DISPLAY_PROFILE_LIB_AMCHARTS = function (data, container, context)
 };
 
 export default ElevationPath;
+
+// Expose Isocurve as L.geoportalControl.ElevationPath (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.ElevationPath = ElevationPath;
+}

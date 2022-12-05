@@ -78,3 +78,8 @@ var CRS = {
 };
 
 export default CRS;
+
+// Expose CRS as L.geoportalCRS (for a build bundle)
+if (window.L) {
+    window.L.geoportalCRS = CRS;
+}

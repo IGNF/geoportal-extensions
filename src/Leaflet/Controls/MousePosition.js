@@ -1,5 +1,6 @@
-import Gp from "geoportal-access-lib";
+import ServiceAlti from "geoportal-access-lib/src/Services/Alti/Alti";
 import L from "leaflet";
+import "../CSS/Controls/MousePosition/GPmousePositionLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -1053,7 +1054,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
         logger.log(options);
 
-        Gp.Services.getAltitude(options);
+        var altiService = new ServiceAlti(options);
+        altiService.call();
     },
 
     /**
@@ -1544,3 +1546,11 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 });
 
 export default MousePosition;
+
+// Expose MousePosition as L.geoportalControl.MousePosition (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.MousePosition = MousePosition;
+}

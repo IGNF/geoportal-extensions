@@ -49,6 +49,10 @@ function leaflet() {
   doCmd "npm run build:leaflet"
 }
 
+function leaflet-modules() {
+  printTo "####### LEAFLET experimental !"
+  doCmd "./node_modules/.bin/webpack --config build/webpack/webpack.config.leaflet.modules --mode=production"
+}
 ##########
 # ol
 function ol() {
@@ -56,6 +60,10 @@ function ol() {
   doCmd "npm run build:ol"
 }
 
+function ol-modules() {
+  printTo "####### OL experimental !"
+  doCmd "./node_modules/.bin/webpack --config build/webpack/webpack.config.openlayers.modules --mode=production"
+}
 ##########
 # itowns
 function itowns() {
@@ -66,7 +74,7 @@ function itowns() {
 printTo "###########  NPM  ##############"
 doCmd "npm run setup"
 
-while getopts "aoliI" opts
+while getopts "aoliOL" opts
 do
    case $opts in
      o)
@@ -75,11 +83,23 @@ do
         clean "openlayers"
         ol
         ;;
+     O)
+        printTo "#################################"
+        printTo "###### OpenLayers modules ! ######"
+        clean "openlayers/modules"
+        ol-modules
+        ;;
      l)
         printTo "#################################"
         printTo "####### Leaflet bundle ! ########"
         clean "leaflet"
         leaflet
+        ;;
+     L)
+        printTo "#################################"
+        printTo "####### Leaflet modules ! ########"
+        clean "leaflet/modules"
+        leaflet-modules
         ;;
      i)
         printTo "#############################"
@@ -98,7 +118,7 @@ do
         itowns
         ;;
      \?)
-        printTo "$OPTARG : option invalide : a(all), o(openlayers), l(leaflet), i(itowns) !"
+        printTo "$OPTARG : option invalide : a(all), oO(openlayers), lL(leaflet), i(itowns) !"
         exit -1
         ;;
    esac

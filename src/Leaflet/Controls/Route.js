@@ -1,5 +1,6 @@
-import Gp from "geoportal-access-lib";
+import ServiceRoute from "geoportal-access-lib/src/Services/Route/Route";
 import L from "leaflet";
+import "../CSS/Controls/Route/GProuteLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -1024,7 +1025,8 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
         logger.log(options);
 
-        Gp.Services.route(options);
+        var routeService = new ServiceRoute(options);
+        routeService.call();
     },
 
     /**
@@ -1513,3 +1515,11 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 });
 
 export default Route;
+
+// Expose Route as L.geoportalControl.Route (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.Route = Route;
+}

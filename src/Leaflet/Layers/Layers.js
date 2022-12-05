@@ -298,3 +298,8 @@ var Layers = {
 };
 
 export default Layers;
+
+// Expose Layers as L.geoportalLayer (for a build bundle)
+if (window.L) {
+    window.L.geoportalLayer = Layers;
+}

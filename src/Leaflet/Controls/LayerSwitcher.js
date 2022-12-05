@@ -1,5 +1,6 @@
 
 import L from "leaflet";
+import "../CSS/Controls/LayerSwitcher/GPlayerSwitcherLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import ID from "../../Common/Utils/SelectorID";
 import LayerSwitcherDOM from "../../Common/Controls/LayerSwitcherDOM";
@@ -879,3 +880,11 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
 });
 
 export default LayerSwitcher;
+
+// Expose LayerSwitcher as L.geoportalControl.LayerSwitcher (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.LayerSwitcher = LayerSwitcher;
+}

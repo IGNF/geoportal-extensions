@@ -1,4 +1,6 @@
-import Gp from "geoportal-access-lib";
+import ServiceAutoComplete from "geoportal-access-lib/src/Services/AutoComplete/AutoComplete";
+import ServiceReverseGeocode from "geoportal-access-lib/src/Services/Geocode/ReverseGeocode";
+
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
@@ -598,7 +600,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         logger.log(options);
 
-        Gp.Services.autoComplete(options);
+        var autoCompleteService = new ServiceAutoComplete(options);
+        autoCompleteService.call();
     },
 
     /**
@@ -705,7 +708,8 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         logger.log(options);
 
-        Gp.Services.reverseGeocode(options);
+        var reverseGeocodeService = new ServiceReverseGeocode(options);
+        reverseGeocodeService.call();
     },
 
     /**

@@ -1,6 +1,7 @@
 import L from "leaflet";
+import "../CSS/Controls/Isochrone/GPisochronLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import Gp from "geoportal-access-lib";
+import ServiceIsoCurve from "geoportal-access-lib/src/Services/ProcessIsoCurve/ProcessIsoCurve";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import LocationSelector from "./LocationSelector";
@@ -909,7 +910,8 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
 
         logger.log(options);
 
-        Gp.Services.isoCurve(options);
+        var isocurveService = new ServiceIsoCurve(options);
+        isocurveService.call();
     },
 
     /**
@@ -1120,6 +1122,14 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
 });
 
 export default Isocurve;
+
+// Expose Isocurve as L.geoportalControl.Isocurve (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.Isocurve = Isocurve;
+}
 
 const deepEqual = function (x, y) {
     if (x === y) {

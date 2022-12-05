@@ -373,3 +373,8 @@ var Controls = {
 };
 
 export default Controls;
+
+// Expose Controls as L.geoportalControl (for a build bundle)
+if (window.L) {
+    window.L.geoportalControl = Controls;
+}

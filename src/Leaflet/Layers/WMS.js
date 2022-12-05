@@ -4,7 +4,7 @@
 */
 /* jshint -W106 */
 
-import Gp from "geoportal-access-lib";
+import Helper from "geoportal-access-lib/src/Utils/Helper";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import LayerEvent from "./LayerEvent";
@@ -77,7 +77,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
             this,
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
-            Gp.Helper.normalyzeUrl(url, {
+            Helper.normalyzeUrl(url, {
                 "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
             }, false),
             settings

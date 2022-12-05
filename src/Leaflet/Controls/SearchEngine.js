@@ -1,6 +1,9 @@
 /* global KeyboardEvent */
-import Gp from "geoportal-access-lib";
+import ServiceAutoComplete from "geoportal-access-lib/src/Services/AutoComplete/AutoComplete";
+import ServiceGeocode from "geoportal-access-lib/src/Services/Geocode/Geocode";
+
 import L from "leaflet";
+import "../CSS/Controls/SearchEngine/GPsearchEngineLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -633,7 +636,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         logger.log(options);
 
-        Gp.Services.autoComplete(options);
+        var autoCompleteService = new ServiceAutoComplete(options);
+        autoCompleteService.call();
     },
 
     /**
@@ -732,7 +736,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         });
 
         logger.log(options);
-        Gp.Services.geocode(options);
+        var geocodeService = new ServiceGeocode(options);
+        geocodeService.call();
     },
 
     /**
@@ -1459,3 +1464,11 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 });
 
 export default SearchEngine;
+
+// Expose SearchEngine as L.geoportalControl.SearchEngine (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.SearchEngine = SearchEngine;
+}

@@ -1,6 +1,7 @@
-import Gp from "geoportal-access-lib";
+import ServiceReverseGeocode from "geoportal-access-lib/src/Services/Geocode/ReverseGeocode";
 import L from "leaflet";
 import "leaflet-draw";
+import "../CSS/Controls/ReverseGeocoding/GPreverseGeocodingLeaflet.css";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
@@ -736,7 +737,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         this._displayWaitingContainer();
 
         // envoi de la requête
-        Gp.Services.reverseGeocode(options);
+        var reverseGeocodeService = new ServiceReverseGeocode(options);
+        reverseGeocodeService.call();
     },
 
     // ################################################################### //
@@ -1249,3 +1251,11 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 });
 
 export default ReverseGeocoding;
+
+// Expose ReverseGeocoding as L.geoportalControl.ReverseGeocoding (for a build bundle)
+if (window.L) {
+    if (!window.L.geoportalControl) {
+        window.L.geoportalControl = {};
+    }
+    window.L.geoportalControl.ReverseGeocoding = ReverseGeocoding;
+}
