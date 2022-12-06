@@ -4,8 +4,8 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta charset="UTF-8">
     <!-- Library Leaflet -->
-    <link rel="stylesheet" href="/assets/lib/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="/assets/lib/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="/geoportal-extensions/assets/lib/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="/geoportal-extensions/assets/lib/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- Library Access Geoportal Service -->
     <script src="https://ignf.github.io/geoportal-access-lib/latest/dist/GpServices.js"></script>
     <!-- Modules Leaflet IGN -->
@@ -63,7 +63,7 @@
       };
 
       Gp.Services.getConfig({
-        serverUrl: "/assets/data/AutoConf.js",
+        serverUrl: "/geoportal-extensions/assets/data/AutoConf.js",
         callbackSuffix: "",
         timeOut: 20000,
         onSuccess: createMap

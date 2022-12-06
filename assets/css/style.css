@@ -10,7 +10,7 @@ header {
     min-width: 590px;
     z-index: 1000;
     top: 10px;
-    background-image: url("/assets/img/entete.png");
+    background-image: url("/geoportal-extensions/assets/img/entete.png");
     height : 120px ;
     margin-bottom: 10px;
     box-shadow: 0 0 10px #71767A;
