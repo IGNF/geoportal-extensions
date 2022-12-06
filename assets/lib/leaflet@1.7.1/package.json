@@ -1,0 +1,137 @@
+{
+  "_from": "leaflet@1.7.1",
+  "_id": "leaflet@1.7.1",
+  "_inBundle": false,
+  "_integrity": "sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==",
+  "_location": "/leaflet",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "leaflet@1.7.1",
+    "name": "leaflet",
+    "escapedName": "leaflet",
+    "rawSpec": "1.7.1",
+    "saveSpec": null,
+    "fetchSpec": "1.7.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/leaflet/-/leaflet-1.7.1.tgz",
+  "_shasum": "10d684916edfe1bf41d688a3b97127c0322a2a19",
+  "_spec": "leaflet@1.7.1",
+  "_where": "/home/JPBazonnais/Projets/API/geoportal-extensions",
+  "bugs": {
+    "url": "https://github.com/Leaflet/Leaflet/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "JavaScript library for mobile-friendly interactive maps",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-mourner": "^2.0.1",
+    "git-rev-sync": "^2.1.0",
+    "happen": "~0.3.2",
+    "karma": "^5.2.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-edge-launcher": "^0.4.2",
+    "karma-expect": "^1.1.3",
+    "karma-firefox-launcher": "^1.3.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-mocha": "^2.0.1",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-rollup-preprocessor": "^6.1.2",
+    "karma-safari-launcher": "~1.0.0",
+    "karma-sinon": "^1.0.5",
+    "leafdoc": "^1.4.1",
+    "mocha": "^7.1.2",
+    "phantomjs-prebuilt": "^2.1.16",
+    "prosthetic-hand": "^1.3.1",
+    "rollup": "^0.59.4",
+    "rollup-plugin-git-version": "^0.3.1",
+    "rollup-plugin-json": "^4.0.0",
+    "sinon": "^7.5.0",
+    "ssri": "^8.0.0",
+    "uglify-js": "^3.10.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "globals": {
+      "L": true
+    },
+    "env": {
+      "commonjs": true,
+      "amd": true,
+      "node": false
+    },
+    "extends": "mourner",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "rules": {
+      "linebreak-style": [
+        0,
+        "unix"
+      ],
+      "no-mixed-spaces-and-tabs": [
+        2,
+        "smart-tabs"
+      ],
+      "indent": [
+        2,
+        "tab",
+        {
+          "VariableDeclarator": 0,
+          "flatTernaryExpressions": true
+        }
+      ],
+      "curly": 2,
+      "spaced-comment": 2,
+      "strict": 0,
+      "wrap-iife": 0,
+      "key-spacing": 0,
+      "consistent-return": 0,
+      "no-unused-expressions": [
+        "error",
+        {
+          "allowShortCircuit": true
+        }
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "!dist/leaflet.zip"
+  ],
+  "homepage": "https://leafletjs.com/",
+  "keywords": [
+    "gis",
+    "map"
+  ],
+  "license": "BSD-2-Clause",
+  "main": "dist/leaflet-src.js",
+  "name": "leaflet",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Leaflet/Leaflet.git"
+  },
+  "scripts": {
+    "build": "npm run rollup && npm run uglify",
+    "docs": "node ./build/docs.js",
+    "integrity": "node ./build/integrity.js",
+    "lint": "eslint src spec/suites docs/docs/js",
+    "lintfix": "npm run lint -- --fix",
+    "pretest": "npm run lint",
+    "release": "./build/publish.sh",
+    "rollup": "rollup -c build/rollup-config.js",
+    "test": "npm run test-nolint",
+    "test-nolint": "karma start ./spec/karma.conf.js",
+    "uglify": "uglifyjs dist/leaflet-src.js -c -m -o dist/leaflet.js --source-map filename=dist/leaflet.js.map --source-map content=dist/leaflet-src.js.map --source-map url=leaflet.js.map --comments",
+    "watch": "rollup -w -c build/rollup-watch-config.js"
+  },
+  "style": "dist/leaflet.css",
+  "version": "1.7.1"
+}

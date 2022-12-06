@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta charset="UTF-8">
+    <!-- Library Leaflet -->
+    <link rel="stylesheet" href="/assets/lib/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="/assets/lib/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Library Access Geoportal Service -->
+    <script src="https://ignf.github.io/geoportal-access-lib/latest/dist/GpServices.js"></script>
+    <!-- Modules Leaflet IGN -->
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/WMTS.js"></script>   
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/LayerSwitcher.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/LayerSwitcher.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Isocurve.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Isocurve.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/MousePosition.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/MousePosition.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Route.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Route.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/ReverseGeocode.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/ReverseGeocode.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/SearchEngine.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/SearchEngine.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/ElevationPath.css" />
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/ElevationPath.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Common.css"
+
+    <title>Leaflet (modules with classe)</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      div#map {
+        min-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- map -->
+    <div id="map"></div>
+    <script>
+
+      var createMap = function () {
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById("map").style.backgroundImage = "none";
+
+        // Création de la map
+        var layer = new WMTS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts", {
+              paramsNative : {
+                  minZoom : 1,
+                  maxZoom : 21
+              },
+              paramsWmts   : {
+                  layer   : "ORTHOIMAGERY.ORTHOPHOTOS",
+                  style   : "normal",
+                  format  : "image/jpeg",
+                  version : "1.0.0",
+                  tilematrixset : "PM"
+              },
+              originators  : [],
+              legends      : [],
+              metadata     : [],
+              title        : "",
+              description  : "",
+              quicklookUrl : ""
+        });
+
+        var map  = L.map('map', {
+          zoom : 2,
+          center : L.latLng(48, 2)
+        });
+
+        layer.addTo(map);
+
+        var iso = new Isocurve();
+        map.addControl(iso);
+        var layerSwitcher = new LayerSwitcher();
+        map.addControl(layerSwitcher);
+        var mp = new MousePosition();
+        map.addControl(mp);
+        var route = new Route();
+        map.addControl(route);
+        var reverse = new ReverseGeocode();
+        map.addControl(reverse);
+        var search = new SearchEngine();
+        map.addControl(search);
+        var measureProfil = new ElevationPath();
+        map.addControl(measureProfil);
+      };
+
+      Gp.Services.getConfig({
+        serverUrl: "/assets/data/AutoConf.js",
+        callbackSuffix: "",
+        timeOut: 20000,
+        onSuccess: createMap
+      });
+
+    </script>
+  </body>
+</html>

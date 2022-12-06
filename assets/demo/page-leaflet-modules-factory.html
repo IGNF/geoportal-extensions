@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta charset="UTF-8">
+    <!-- Library Leaflet -->
+    <link rel="stylesheet" href="/assets/lib/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="/assets/lib/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Library Access Geoportal Service -->
+    <script src="https://ignf.github.io/geoportal-access-lib/latest/dist/GpServices.js"></script>
+    <!-- Modules Leaflet IGN -->
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Layers.js"></script>
+    <script src="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Controls.js"></script>
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Controls.css" />
+    <link rel="stylesheet" href="http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/modules/Common.css"
+
+    <title>Leaflet (modules with factory)</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      div#map {
+        min-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- map -->
+    <div id="map"></div>
+    <script>
+
+      var createMap = function () {
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById("map").style.backgroundImage = "none";
+
+        // Création de la map
+        var layer = L.geoportalLayer.WMTS({
+          layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+        });
+
+        var map = L.map('map', {
+          zoom: 2,
+          center: L.latLng(48, 2)
+        });
+
+        layer.addTo(map);
+
+        var iso = L.geoportalControl.Isocurve();
+        map.addControl(iso);
+        var layerSwitcher = L.geoportalControl.LayerSwitcher();
+        map.addControl(layerSwitcher);
+        var mp = L.geoportalControl.MousePosition();
+        map.addControl(mp);
+        var route = L.geoportalControl.Route();
+        map.addControl(route);
+        var reverse = L.geoportalControl.ReverseGeocode();
+        map.addControl(reverse);
+        var search = L.geoportalControl.SearchEngine();
+        map.addControl(search);
+        var measureProfil = L.geoportalControl.ElevationPath();
+        map.addControl(measureProfil);
+      };
+
+      Gp.Services.getConfig({
+        serverUrl: "/assets/data/AutoConf.js",
+        callbackSuffix: "",
+        timeOut: 20000,
+        onSuccess: createMap
+      });
+
+    </script>
+  </body>
+</html>
