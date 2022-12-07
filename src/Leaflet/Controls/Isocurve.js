@@ -808,8 +808,14 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
 
         var self = this;
 
+        var pointCoordinate = self._currentPoint.getCoordinate();
+        var position = {
+            x : pointCoordinate.lon || pointCoordinate.lng,
+            y : pointCoordinate.lat
+        };
+
         this._requestIsoCurve({
-            position : self._currentPoint.getCoordinate(),
+            position : position,
             graph : self._currentTransport,
             exclusions : self._currentExclusions,
             method : self._currentComputation,
