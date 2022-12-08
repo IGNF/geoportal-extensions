@@ -18,6 +18,7 @@ var JsDocWebPackPlugin = require("../scripts/webpackPlugins/jsdoc-plugin");
 var HandlebarsPlugin = require("../scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
+var SourceByChunksPlugin = require("../scripts/webpackPlugins/sourcebychunks-plugin");
 
 // -- performances
 var SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -230,6 +231,11 @@ module.exports = (env, argv) => {
             ]
         },
         plugins : [
+            new SourceByChunksPlugin({
+                entry : "Leaflet",
+                output : path.join(ROOT, "build", "scripts", "release", "manifest-leaflet.txt"),
+                format : "txt"
+            }),
             /** REPLACEMENT DE VALEURS */
             new ReplaceWebpackPlugin(
                 [

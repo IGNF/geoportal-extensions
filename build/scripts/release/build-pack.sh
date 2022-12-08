@@ -176,7 +176,7 @@ build-modules () {
     [ ${name} == "leaflet" ] && {
         run_lib_target="leaflet-modules"
         main_directory="geoportal-extensions-leaflet-modules"
-        list_widgets=("Layers" "ElevationPath" "Isocurve" "LayerSwitcher" "MousePosition" "ReverseGeocode" "Route" "SearchEngine")
+        list_widgets=("Layers" "Controls" "Common" "ElevationPath" "Isocurve" "LayerSwitcher" "MousePosition" "ReverseGeocode" "Route" "SearchEngine")
         list_layers=("WMS" "WMTS" "Layers" "CRS")
         export _PACKAGE_FIELD_NAME="leafletExtVersion"
         export _PACKAGE_LIB_DEPENDANCIES="leaflet"
@@ -203,7 +203,23 @@ build-modules () {
         fi
     done
 
-    
+    # copie des sources
+    # FIXME : Ajouter la classe CRS avec Layers ! 
+    printTo "> copy src/..."
+    for widget in "${list_widgets[@]}"
+    do
+        lstSrc=($(grep -Po "(?<=^$widget=).*$"  manifest-$name.txt  | sed 's/(//' | sed 's/)//'))
+        for i in ${!lstSrc[@]}
+        do
+            srcpath=${lstSrc[$i]}
+            dirpath=$(dirname $srcpath | sed 's/"//')
+            filename=$(basename $srcpath | sed 's/"//')
+            # printTo ">>>>> DEBUG $widget > $dirpath - $filename"
+
+            doCmd "mkdir -p ./${main_directory}/$widget/$dirpath"
+            doCmd "cp ../../../$dirpath/$filename ./${main_directory}/$widget/$dirpath"
+        done
+    done
 
     # lecture du package.json du projet
     # - version :
@@ -237,7 +253,7 @@ build-modules () {
     do
         # modification du package.json
         printTo "> modify package.json..."
-        export _PACKAGE_MAIN=$(echo "$widget.js")
+        export _PACKAGE_MAIN=$(echo "dist/$widget.js")
         export _PACKAGE_NAME=$(echo "@ignf-geoportal/plugin-leaflet-$widget" | tr '[:upper:]' '[:lower:]')
         `cat "package-${name}-modules.json" |
             perl -MJSON -0ne '
