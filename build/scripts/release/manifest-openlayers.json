@@ -1,0 +1,289 @@
+[
+  {
+    "id": 0,
+    "name": "Common",
+    "modules": [
+      "src/OpenLayers/Styles.js",
+      "src/OpenLayers/CSS/GPgeneralWidgetOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/Attribution/GPattributionOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/Drawing/GPdrawingOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/Editor/GPeditorOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/ElevationPath/GPelevationPathOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/GetFeatureInfo/GPgetFeatureInfoOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/Isochrone/GPisochronOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerImport/GPimportOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LocationSelector/GPlocationOpenLayers.css",
+      null,
+      null,
+      null,
+      "src/OpenLayers/CSS/Controls/MousePosition/GPmousePositionOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/ReverseGeocoding/GPreverseGeocodingOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/Route/GProuteOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/SearchEngine/GPsearchEngineOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/ToolBoxMeasure/GPtoolBoxMeasureOpenLayers.css"
+    ]
+  },
+  {
+    "id": 1,
+    "name": "LayerImport",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/Editor/GPeditorOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerImport/GPimportOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Formats/KML.js",
+      "src/OpenLayers/Formats/GeoJSON.js",
+      "src/OpenLayers/Formats/GPX.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/Editor.js",
+      "src/OpenLayers/Controls/Editor/Style.js",
+      "src/OpenLayers/Controls/Editor/Event.js",
+      "src/OpenLayers/Controls/Editor/Themes.js",
+      "src/OpenLayers/Controls/Editor/Filter.js",
+      "src/OpenLayers/Controls/Editor/Legend.js",
+      "src/OpenLayers/Controls/Editor/Layer.js",
+      "src/OpenLayers/Controls/Editor/Group.js",
+      "src/OpenLayers/Controls/Editor/Search.js",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/LayerImport.js"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "ElevationPath",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/ElevationPath/GPelevationPathOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/ToolBoxMeasure/GPtoolBoxMeasureOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/ElevationPath.js",
+      "src/OpenLayers/Controls/MeasureToolBox.js",
+      "src/OpenLayers/Controls/Measures/Measures.js"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Isocurve",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/Isochrone/GPisochronOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LocationSelector/GPlocationOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/Isocurve.js",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/LocationSelector.js"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Route",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LocationSelector/GPlocationOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/Route/GProuteOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/LocationSelector.js",
+      "src/OpenLayers/Controls/Route.js"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "MeasureArea",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      null,
+      "src/OpenLayers/CSS/Controls/ToolBoxMeasure/GPtoolBoxMeasureOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/MeasureToolBox.js",
+      "src/OpenLayers/Controls/Measures/Measures.js",
+      "src/OpenLayers/Controls/Measures/MeasureArea.js"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "MeasureAzimuth",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      null,
+      "src/OpenLayers/CSS/Controls/ToolBoxMeasure/GPtoolBoxMeasureOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/MeasureToolBox.js",
+      "src/OpenLayers/Controls/Measures/Measures.js",
+      "src/OpenLayers/Controls/Measures/MeasureAzimuth.js"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "MeasureLength",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      null,
+      "src/OpenLayers/CSS/Controls/ToolBoxMeasure/GPtoolBoxMeasureOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/MeasureToolBox.js",
+      "src/OpenLayers/Controls/Measures/Measures.js",
+      "src/OpenLayers/Controls/Measures/MeasureLength.js"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Drawing",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/Drawing/GPdrawingOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/Controls/Drawing.js",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Formats/KML.js",
+      "src/OpenLayers/Formats/GeoJSON.js",
+      "src/OpenLayers/Formats/GPX.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "ReverseGeocode",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/CSS/Controls/ReverseGeocoding/GPreverseGeocodingOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/LayerSwitcher.js",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/ReverseGeocode.js"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "GeoportalAttribution",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/Attribution/GPattributionOpenLayers.css",
+      "src/OpenLayers/Controls/GeoportalAttribution.js"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Editor",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/Editor/GPeditorOpenLayers.css",
+      "src/OpenLayers/Controls/Editor.js",
+      "src/OpenLayers/Controls/Editor/Style.js",
+      "src/OpenLayers/Controls/Editor/Event.js",
+      "src/OpenLayers/Controls/Editor/Themes.js",
+      "src/OpenLayers/Controls/Editor/Filter.js",
+      "src/OpenLayers/Controls/Editor/Legend.js",
+      "src/OpenLayers/Controls/Editor/Layer.js",
+      "src/OpenLayers/Controls/Editor/Group.js",
+      "src/OpenLayers/Controls/Editor/Search.js"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "GetFeatureInfo",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/GetFeatureInfo/GPgetFeatureInfoOpenLayers.css",
+      "src/OpenLayers/Controls/GetFeatureInfo.js",
+      "src/OpenLayers/GfiUtils.js"
+    ]
+  },
+  {
+    "id": 13,
+    "name": "LayerSwitcher",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LayerSwitcher/GPlayerSwitcherOpenLayers.css",
+      "src/OpenLayers/Controls/LayerSwitcher.js"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "LocationSelector",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/LocationSelector/GPlocationOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/LocationSelector.js"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "GeoportalMousePosition",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/MousePosition/GPmousePositionOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/MousePosition.js",
+      "src/OpenLayers/CRS/AutoLoadCRS.js",
+      "src/OpenLayers/CRS/Proj4.js"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "SearchEngine",
+    "modules": [
+      "src/OpenLayers/CSS/Controls/SearchEngine/GPsearchEngineOpenLayers.css",
+      "src/OpenLayers/Controls/Utils/Interactions.js",
+      "src/OpenLayers/Controls/Utils/Markers.js",
+      "src/OpenLayers/Controls/SearchEngine.js"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "GeoportalLayerWMTS",
+    "modules": [
+      "src/OpenLayers/Sources/WMTS.js",
+      "src/OpenLayers/Layers/LayerWMTS.js",
+      "src/OpenLayers/Layers/SourceWMTS.js"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "GeoportalLayerWMS",
+    "modules": [
+      "src/OpenLayers/Layers/LayerWMS.js",
+      "src/OpenLayers/Layers/SourceWMS.js"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "CRS",
+    "modules": [
+      "src/OpenLayers/CRS/AutoLoadCRS.js",
+      "src/OpenLayers/CRS/Proj4.js",
+      "src/OpenLayers/CRS/AutoLoadCRS.js"
+    ]
+  },
+  {
+    "id": 20,
+    "name": "KMLExtended",
+    "modules": [
+      "src/OpenLayers/Formats/KML.js"
+    ]
+  },
+  {
+    "id": 21,
+    "name": "GeoportalSourceWMTS",
+    "modules": [
+      "src/OpenLayers/Sources/WMTS.js",
+      "src/OpenLayers/Layers/SourceWMTS.js"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "GeoportalSourceWMS",
+    "modules": [
+      "src/OpenLayers/Layers/SourceWMS.js"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "WMTSExtended",
+    "modules": [
+      "src/OpenLayers/Sources/WMTS.js"
+    ]
+  }
+]

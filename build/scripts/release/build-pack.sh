@@ -204,21 +204,41 @@ build-modules () {
     done
 
     # copie des sources
-    # FIXME : Ajouter la classe CRS avec Layers ! 
+    # TODO : Ajouter la classe CRS avec Layers ! 
     printTo "> copy src/..."
     for widget in "${list_widgets[@]}"
     do
-        lstSrc=($(grep -Po "(?<=^$widget=).*$"  manifest-$name.txt  | sed 's/(//' | sed 's/)//'))
-        for i in ${!lstSrc[@]}
-        do
-            srcpath=${lstSrc[$i]}
-            dirpath=$(dirname $srcpath | sed 's/"//')
-            filename=$(basename $srcpath | sed 's/"//')
-            # printTo ">>>>> DEBUG $widget > $dirpath - $filename"
+        # cas particulier de Layers
+        if [ $widget == "Layers" ]
+        then 
+            for layer in "${list_layers[@]}"
+            do
+                lstSrc=($(grep -Po "(?<=^$layer=).*$"  manifest-$name.txt  | sed 's/(//' | sed 's/)//'))
+                for i in ${!lstSrc[@]}
+                do
+                    srcpath=${lstSrc[$i]}
+                    dirpath=$(dirname $srcpath | sed 's/"//')
+                    filename=$(basename $srcpath | sed 's/"//')
+                    # printTo ">>>>> DEBUG $layer > $dirpath - $filename"
 
-            doCmd "mkdir -p ./${main_directory}/$widget/$dirpath"
-            doCmd "cp ../../../$dirpath/$filename ./${main_directory}/$widget/$dirpath"
-        done
+                    doCmd "mkdir -p ./${main_directory}/$widget/$dirpath"
+                    doCmd "cp ../../../$dirpath/$filename ./${main_directory}/$widget/$dirpath"
+                done
+            done
+        else 
+            # traiter les autres classes
+            lstSrc=($(grep -Po "(?<=^$widget=).*$"  manifest-$name.txt  | sed 's/(//' | sed 's/)//'))
+            for i in ${!lstSrc[@]}
+            do
+                srcpath=${lstSrc[$i]}
+                dirpath=$(dirname $srcpath | sed 's/"//')
+                filename=$(basename $srcpath | sed 's/"//')
+                # printTo ">>>>> DEBUG $widget > $dirpath - $filename"
+
+                doCmd "mkdir -p ./${main_directory}/$widget/$dirpath"
+                doCmd "cp ../../../$dirpath/$filename ./${main_directory}/$widget/$dirpath"
+            done
+        fi
     done
 
     # lecture du package.json du projet
