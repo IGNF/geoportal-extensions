@@ -73,6 +73,8 @@
 
 * [Fixed]
 
+    - Afficher les informations des elements cliqués sans doublons
+
 * [Security]
 
 ---
