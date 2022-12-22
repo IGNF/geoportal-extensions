@@ -1,0 +1,78 @@
+/* ROUTE */
+
+div[id^=GProute-] {
+  left: 10px;
+}
+
+/* Showing/hiding route panel */
+
+span[id^=GPshowRouteOpen] {
+  background-image: url("img/GProuteOpen.png");
+  z-index: 1;
+}
+
+/* General panels */
+
+div[id^=GProutePanel-] {
+  /*left: 8px;*/
+  position: absolute;
+  z-index:2;
+}
+
+div[id^=GProutePanelClose] {
+  background-image: url("img/GProuteOpen.png");
+}
+
+/* Calc waiting */
+
+.GProuteCalcWaitingContainerVisible,
+.GProuteCalcWaitingContainerHidden {
+  border-radius: 4px;
+}
+
+/* Route form */
+
+.GProuteOriginPointerImg,
+.GProuteStageRemove,
+div[id^=GProuteStageAdd],
+.GProuteTransportImg {
+  background-image: url("img/GProuteOptions.png");
+}
+
+.GProuteExclusionsOption {
+  background-image: url("img/GProuteCheck.png");
+}
+
+/* Reset picto */
+div[id^=GProuteReset] {
+  background-color: #366291;
+  background-image: url("img/GProuteOptions.png");
+}
+
+/* Results panel */
+
+div[id^=GProuteResultsValueDist],
+div[id^=GProuteResultsValueTime]  {
+  color: #366291;
+}
+
+div[id^=GProuteResultsNew] {
+  background-color: #366291;
+  background-image: url("img/GProuteOptions.png");
+}
+
+input[id^=GProuteResultsShowDetails] + label:hover,
+input[id^=GProuteResultsShowDetails] + label + label:hover {
+  color: #366291;
+}
+
+.GProuteResultsDetailsInstructionHighlight {
+    background-color: rgba(255,200,0,0.25);
+    color: #222;
+}
+
+/* Results popup */
+
+.gp-features-content-div {
+  /* min-width: 240px; */
+}

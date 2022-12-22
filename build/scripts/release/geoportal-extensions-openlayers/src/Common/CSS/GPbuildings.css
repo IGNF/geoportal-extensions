@@ -1,0 +1,15 @@
+/* BUILDINGS */
+
+  div[id^=GPbuildings-] {
+    font-size: 11px;
+  }
+  
+  div[id^=GPbuildings-] label {
+    display: block;
+  }
+  
+  label[id^=GPshowBuildingsPicto] {
+    display: inline-block;
+    cursor: pointer;
+  }
+

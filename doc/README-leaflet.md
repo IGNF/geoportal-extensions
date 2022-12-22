@@ -53,36 +53,33 @@
 
 L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
 
-* [affichage des couches WMTS Géoportail](#WMTS)
+- [affichage des couches WMTS Géoportail](#WMTS)
 
-* [affichage des couches WMS Géoportail](#WMS)
+- [affichage des couches WMS Géoportail](#WMS)
 
-* [widget de gestion d'empilement des couches](#layerswitcher)
+- [widget de gestion d'empilement des couches](#layerswitcher)
 
-* [barre de recherche utilisant le service de géocodage IGN](#geocode)
+- [barre de recherche utilisant le service de géocodage IGN](#geocode)
 
-* [obtention d'une adresse, d'un nom de lieu, ... au clic sur la carte](#reverse)
+- [obtention d'une adresse, d'un nom de lieu, ... au clic sur la carte](#reverse)
 
-* [calculs d'itinéraires à partir du service de la plateforme Géoportail](#route)
+- [calculs d'itinéraires à partir du service de la plateforme Géoportail](#route)
 
-* [calculs d'isochrones / isodistances à partir du service de la plateforme Géoportail](#isocurve)
+- [calculs d'isochrones / isodistances à partir du service de la plateforme Géoportail](#isocurve)
 
-* [altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
+- [altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
 
-* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
-
+- [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
 
 ## Mise en oeuvre
 
 L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes suivantes :
 
-* [Téléchargement de l'extension Géoportail](#download)
+- [Téléchargement de l'extension Géoportail](#download)
 
-* [Intégration de l'extension dans une page web](#integration)
+- [Intégration de l'extension dans une page web](#integration)
 
-* [Configuration de l'accès à la plateforme Géoportail](#config)
-
-
+- [Configuration de l'accès à la plateforme Géoportail](#config)
 
 <a id="download"/>
 
@@ -92,8 +89,7 @@ Vous pouvez récupérer l'extension Géoportail pour Leaflet soit par [télécha
 
 L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivante :
 
-
-```
+```text
   <Extension Géoportail pour Leaflet>/
     GpPluginLeaflet.js         (version minifiée du code javascript pour une utilisation en production)
     GpPluginLeaflet.css        (version minifiée des css pour une utilisation en production)
@@ -111,7 +107,6 @@ Vous pouvez télécharger la dernière version de l'extension Géoportail pour L
 
 L'archive téléchargée (GpLeaflet.zip) comprend l'arborescence décrite ci-dessus.
 
-
 <a id="download-npm"/>
 
 #### Récupération avec NPM
@@ -120,18 +115,18 @@ L'extension Géoportail pour Leaflet est aussi disponible dans les dépôts [NPM
 
 Prérequis : [NodeJS](https://nodejs.org/en/) et [npm](https://www.npmjs.com/) installés.
 
-```
+```bash
 npm i geoportal-extensions-leaflet
 ```
 
 L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-leaflet/dist/` de votre projet.
 
-
 #### Accès direct
 
 Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tests par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
 Par exemple sur Github Pages :
-```
+
+```text
 http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet.js
 http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet.css
 http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet-src.js
@@ -146,7 +141,7 @@ Dézippez l'extension géoportail dans l'arborescence de votre serveur web. Vous
 
 Intégrez l'extension géoportail pour leaflet dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque Leaflet.
 
-``` html
+```html
 <!-- Library Leaflet -->
 <link rel="stylesheet" href="chemin/vers/leaflet/leaflet.css" />
 <script src="chemin/vers/leaflet/leaflet.js"></script>
@@ -225,9 +220,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
-
 Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
-
 
 ``` html
 <html>
@@ -287,7 +280,6 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
     </body>
 </html>
 ```
-
 
 **Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier, ainsi que le paramètre *callbackSuffix*, de la manière suivante :
 
@@ -354,13 +346,13 @@ Gp.Services.getConfig(...)
 ### Versions de Leaflet supportées
 
 L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leaflet suivantes :
-* [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
-* [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
-* [version 1.2.X](http://leafletjs.com/reference-1.2.0.html)
-* [version 1.3.X](http://leafletjs.com/reference-1.3.4.html)
-* [version 1.4.X](http://leafletjs.com/reference-1.4.0.html)
-* [version 1.5.1](http://leafletjs.com/reference-1.5.1.html)
-* [version 1.7.1](http://leafletjs.com/reference-1.7.1.html)
+- [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
+- [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
+- [version 1.2.X](http://leafletjs.com/reference-1.2.0.html)
+- [version 1.3.X](http://leafletjs.com/reference-1.3.4.html)
+- [version 1.4.X](http://leafletjs.com/reference-1.4.0.html)
+- [version 1.5.1](http://leafletjs.com/reference-1.5.1.html)
+- [version 1.7.1](http://leafletjs.com/reference-1.7.1.html)
 
 La release Leaflet [version 1.1.0](http://leafletjs.com/reference-1.1.0.html) est incompatible avec l'utilisation du plugin [Leaflet-Draw](https://github.com/Leaflet/Leaflet.draw).
 
@@ -368,14 +360,12 @@ Pour profiter de toutes les fonctionnalités, il faut utiliser la dernière rele
 
 ### Navigateurs supportés
 
-
 Navigateur | version
 -----------|--------
 Chrome     | Versions récentes (21+)
 Firefox    | Versions récentes (28+)
 Edge       | 12+
 Safari     | Versions récentes (6.1+)
-
 
 ## Fonctionnalités
 
@@ -411,18 +401,15 @@ var utm20 = new L.Proj.CRS('EPSG:4559',
 
 NB :
 
-* Le site [epsg.io](http://epsg.io/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
+- Le site [epsg.io](http://epsg.io/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
 
-* Les définitions des systèmes de coordonnées du registre IGNF peuvent être trouvées [ici](https://geodesie.ign.fr/contenu/fichiers/IGNF.xml).
-
-
+- Les définitions des systèmes de coordonnées du registre IGNF peuvent être trouvées [ici](https://geodesie.ign.fr/contenu/fichiers/IGNF.xml).
 
 L'extension Géoportail pour Leaflet définit par défaut la projection légale Lambert 93 (EPSG:2154) qu'elle expose sous la variable globale suivante.
 
 ``` javascript
 L.geoportalCRS.EPSG2154
 ```
-
 
 <a id="WMTS"/>
 
@@ -435,7 +422,6 @@ L.geoportalLayer.WMTS(options, [leafletParams]);
 ```
 
 Cette fonction retourne un objet de type [L.TileLayer](http://leafletjs.com/reference.html#tilelayer).
-
 
 #### Exemples d'utilisation
 
@@ -486,9 +472,7 @@ lyr.addTo(map); // ou map.addLayer(lyr);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/kss0j1yp/embedded/result,js,html,css/)
 
-
 NB : D'autres systèmes de coordonnées peuvent être définis : [plus d'informations...](#crs)
-
 
 <a id="WMS"/>
 
@@ -521,7 +505,6 @@ L.geoportalLayer.WMS({
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/d9402Lba/embedded/result,js,html,css/)
-
 
 <a id="layerswitcher"/>
 

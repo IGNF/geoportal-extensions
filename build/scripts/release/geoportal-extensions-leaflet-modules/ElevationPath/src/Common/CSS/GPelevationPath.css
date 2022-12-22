@@ -1,0 +1,191 @@
+div[id^=GPelevationPathPanelInfo] {
+  display: none; /* on n'affiche pas le bouton d'information par defaut */
+}
+
+/* Calc waiting */
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.GPelevationPathCalcWaitingContainerVisible {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.GPelevationPathInformationsContainerVisible {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+}
+
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerHidden {
+  display: none;
+}
+
+.GPelevationPathCalcWaiting,
+.GPelevationPathInformations {
+  margin: auto;
+}
+
+.GPelevationPathInformations {
+  font-size: 0.8em;
+}
+
+.GPelevationPathCalcWaitingContainerVisible,
+.GPelevationPathCalcWaitingContainerHidden,
+.GPelevationPathInformationsContainerVisible,
+.GPelevationPathInformationsContainerHidden {
+  border-radius: 5px;
+}
+
+/* CSS : Raw */
+
+#profileElevationRaw {
+  resize: none;
+  padding: unset;
+}
+
+/* CSS : default */
+
+#profileElevationByDefault {
+  display:-webkit-flex;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -webkit-flex-direction:column;
+      -ms-flex-direction:column;
+          flex-direction:column;
+  height:100%;
+}
+
+.altiPathValue {
+  font-weight: 700;
+  fill: #5E5E5E;
+}
+
+.altiPathCoords {
+  font-style: italic;
+  fill: #5E5E5E;
+}
+
+.tooltipInit {
+  opacity: 0;
+}
+
+.tooltipFadeIn {
+  transition: opacity 300ms ease 0ms, transform 50ms ease 0s, top 50ms ease 0s, left 50ms ease 0s;
+  opacity: 1;
+}
+
+.tooltipFadeOut {
+  transition: opacity 500ms ease 0ms;
+  opacity: 0;
+}
+
+
+
+/* CSS : D3 */
+
+.axis-d3 > text {
+  fill: rgb(94, 94, 94);
+  font-family: Verdana;
+  font-size: 10px;
+  opacity: 1;
+  text-anchor: end;
+}
+
+.axis-d3 {
+  fill: none;
+  stroke: #5E5E5E;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.area-d3 {
+  fill: #C77A04;
+  stroke: #5E5E5E;
+  stroke-width: 0;
+  fill-opacity: 0.4;
+}
+
+.line-d3 {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 1px;
+}
+
+.grid-d3 .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid-d3 path {
+  stroke-width: 0;
+}
+
+.grid-d3 .tick {
+  stroke: lightgrey;
+  opacity: 0.7;
+}
+
+.grid-d3 path {
+  stroke-width: 0;
+}
+
+.overlay-d3 {
+  fill: none;
+  pointer-events: all;
+}
+
+.focusLine-d3 {
+  fill: none;
+  stroke: #C77A04;
+  stroke-width: 0.5px;
+}
+
+.focusCircle-d3 {
+  fill: #C77A04;
+}
+
+div.tooltip-d3 {
+    position: inherit;;
+    text-align: left;
+    width: 80px;
+    height: 45px;
+    padding: 5px;
+    font: 8px sans-serif;
+    background: white;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}

@@ -1,0 +1,75 @@
+/* BOOST RELIEF ITOWNS */
+
+div[id^=GPboostRelief-]  {
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+}
+
+/* Showing/hiding boostRelief panel */
+label[id^=GPshowBoostReliefPicto-] {
+  display: flex;
+  z-index: 1;
+  position: relative;
+  margin-left: auto;
+}
+
+label[id^=GPshowBoostReliefListPicto-] {
+  display: flex;
+  z-index: 1;
+  position: relative;
+}
+
+/*
+span[id^=GPshowBoostReliefOpenClose-] {
+  color: #fff;
+  font-size: 1.6em;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2em;
+}*/
+
+span[id^="GPshowBoostReliefOpenClose-"] {
+  background-image: url("img/GPboostReliefOpen.png");
+}
+
+.spanClose span[id^="GPshowBoostReliefOpenClose-"]  {
+  background-position: 0 0;
+}
+
+.spanOpen span[id^="GPshowBoostReliefOpenClose-"]  {
+  background-position: -26px 0;
+}
+
+/*
+div[id^=GPboostRelief-]  input[type="checkbox"]:checked + div + label[id^=GPshowBoostReliefPicto]  span[id^=GPshowBoostReliefOpen]  {
+  opacity: 0.7;
+}
+
+div[id^=GPboostRelief-]  input[type="checkbox"]:checked + div + label[id^=GPshowBoostReliefPicto]  span[id^=GPshowBoostReliefClose]  {
+  background-color: rgba(0,60,136,0.3);
+}
+
+div[id^=GPboostRelief-]  input[type="checkbox"]:checked + div + label[id^=GPshowBoostReliefPicto] :hover span[id^=GPshowBoostReliefClose]  {
+  background-color: rgba(0,60,136,0.4);
+}
+
+*/
+
+/* Relief slider : Chrome, Safari, Opera */
+
+.GPlayerRelief input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPreliefSlider.png");
+}
+
+/* Relief slider : Firefox */
+
+.GPlayerRelief input[type="range"]::-moz-range-track {
+  background: url("img/GPreliefSlider.png");
+}
+
+/* Relief slider : IE */
+
+.GPlayerRelief input[type="range"]::-ms-track {
+  background: url("img/GPreliefSlider.png");
+}

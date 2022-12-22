@@ -1,0 +1,46 @@
+{
+   "license" : "CECILL-B",
+   "description" : "French Geoportal Extension for Leaflet",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "files" : [
+      "dist/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "main" : "dist/ReverseGeocode.js",
+   "version" : "2.2.7",
+   "bugs" : {},
+   "bundleDependencies" : [],
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "peerDependencies" : {},
+   "date" : "18/11/2022",
+   "scripts" : {},
+   "optionalDependencies" : {
+      "xmldom" : "^0.1.27",
+      "node-fetch" : "^2.6.1"
+   },
+   "dependencies" : {
+      "leaflet" : "1.7.1"
+   },
+   "name" : "@ignf-geoportal/leaflet-reversegeocode",
+   "directories" : {},
+   "devDependencies" : {
+      "proj4leaflet" : "1.0.2",
+      "geoportal-access-lib" : "3.2.0",
+      "proj4" : "2.7.5",
+      "loglevel" : "1.6.6",
+      "sortablejs" : "1.8.4",
+      "leaflet-draw" : "1.0.4"
+   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "leaflet",
+      "publish"
+   ]
+}

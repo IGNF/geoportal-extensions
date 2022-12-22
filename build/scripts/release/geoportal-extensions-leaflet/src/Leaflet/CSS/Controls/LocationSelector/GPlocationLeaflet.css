@@ -1,0 +1,14 @@
+/* Location */
+
+.GPlocationStageFlexInput {
+  margin-bottom: 5px; /*overwritten*/
+}
+
+/* Location form */
+
+.GPlocationOriginPointerImg,
+.GPlocationStageRemove,
+div[id^=GPlocationStageAdd],
+.GPlocationTransportImg {
+  background-image: url("img/GPlocationOptions.png");
+}

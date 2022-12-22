@@ -1,0 +1,46 @@
+{
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "leaflet",
+      "publish"
+   ],
+   "bundleDependencies" : [],
+   "version" : "2.2.7",
+   "optionalDependencies" : {
+      "xmldom" : "^0.1.27",
+      "node-fetch" : "^2.6.1"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "scripts" : {},
+   "description" : "French Geoportal Extension for Leaflet",
+   "name" : "@ignf-geoportal/leaflet-elevationpath",
+   "bugs" : {},
+   "dependencies" : {
+      "leaflet" : "1.7.1"
+   },
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "files" : [
+      "dist/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "peerDependencies" : {},
+   "directories" : {},
+   "date" : "18/11/2022",
+   "license" : "CECILL-B",
+   "devDependencies" : {
+      "sortablejs" : "1.8.4",
+      "leaflet-draw" : "1.0.4",
+      "geoportal-access-lib" : "3.2.0",
+      "loglevel" : "1.6.6",
+      "proj4" : "2.7.5",
+      "proj4leaflet" : "1.0.2"
+   },
+   "main" : "dist/ElevationPath.js"
+}

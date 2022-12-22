@@ -1,0 +1,46 @@
+{
+   "description" : "French Geoportal Extension for Leaflet",
+   "bundleDependencies" : [],
+   "peerDependencies" : {},
+   "license" : "CECILL-B",
+   "optionalDependencies" : {
+      "xmldom" : "^0.1.27",
+      "node-fetch" : "^2.6.1"
+   },
+   "files" : [
+      "dist/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "bugs" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "date" : "18/11/2022",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "dependencies" : {
+      "leaflet" : "1.7.1"
+   },
+   "devDependencies" : {
+      "loglevel" : "1.6.6",
+      "proj4leaflet" : "1.0.2",
+      "leaflet-draw" : "1.0.4",
+      "proj4" : "2.7.5",
+      "geoportal-access-lib" : "3.2.0",
+      "sortablejs" : "1.8.4"
+   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "leaflet",
+      "publish"
+   ],
+   "scripts" : {},
+   "version" : "2.2.7",
+   "main" : "dist/Layers.js",
+   "name" : "@ignf-geoportal/leaflet-layers",
+   "directories" : {}
+}

@@ -204,7 +204,6 @@ build-modules () {
     done
 
     # copie des sources
-    # TODO : Ajouter la classe CRS avec Layers ! 
     printTo "> copy src/..."
     for widget in "${list_widgets[@]}"
     do
@@ -274,7 +273,7 @@ build-modules () {
         # modification du package.json
         printTo "> modify package.json..."
         export _PACKAGE_MAIN=$(echo "dist/$widget.js")
-        export _PACKAGE_NAME=$(echo "@ignf-geoportal/plugin-leaflet-$widget" | tr '[:upper:]' '[:lower:]')
+        export _PACKAGE_NAME=$(echo "@ignf-geoportal/leaflet-$widget" | tr '[:upper:]' '[:lower:]')
         `cat "package-${name}-modules.json" |
             perl -MJSON -0ne '
             my $DS = decode_json $_;
@@ -302,7 +301,7 @@ build-modules () {
         doCmd "cd ./${main_directory}/$widget/"
         doCmd "npm pack"
         doCmd "cd ../.."
-        doCmd "mv ./${main_directory}/$widget/*.tgz ./${main_directory}"
+        # doCmd "mv ./${main_directory}/$widget/*.tgz ./${main_directory}"
     done
 }
 

@@ -1,0 +1,40 @@
+/* MOUSE POSITION */
+
+div[id^=GPmousePosition-] {
+  bottom: 8px;
+  left: 10px;
+}
+
+/* Showing/hiding mouse position panel */
+
+span[id^=GPshowMousePositionOpen] {
+  background-image: url("img/GPmousePositionOpen.png");
+}
+
+/* General panels */
+
+div[id^=GPmousePositionPanel-] {
+    /* on desactive le mode draggable de la fenêtre : */
+    position: absolute;
+    left: 10px;
+    top: calc(-8px + -118px);
+    /* transition: top 0.5s ease-out 0s;
+    transition-property: top;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+    transition-delay: 0s; */
+}
+
+div[id^=GPmousePositionPanelClose]  {
+  background-image: url("img/GPmousePositionOpen.png");
+}
+
+.GPmousePositionEditTool {
+    background-image: url("img/GPmousePositionEditCoordinates.png");
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  background-image: url("img/GPmapCenter.png");
+}

@@ -1,0 +1,175 @@
+/* SEARCH ENGINE */
+
+input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] {
+  max-width: 0px;
+}
+
+/* Showing/hiding search engine input */
+
+input[id^=GPshowSearchEngine-] {
+  display: none;
+}
+
+label[id^=GPshowSearchEnginePicto] {
+  display: inline-block;
+  transition: border-radius 0s ease-out 0s;
+  transition-delay: 0.5s;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transition-delay: 0s;
+}
+
+input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] {
+  max-width: 0px;
+  border: none;
+  transition: max-width 0.5s ease-out 0s;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label + form[id^=GPsearchInput-] {
+  max-width: 280px;
+}
+
+input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] + div[id^=GPshowAdvancedSearch] {
+  display: none;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label + form[id^=GPsearchInput-] + div[id^=GPshowAdvancedSearch] {
+  display: inline-block;
+}
+
+div[id^=GPautoCompleteList] {
+  display: none;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label + form[id^=GPsearchInput-] + div[id^=GPautoCompleteList] {
+  display: block;
+}
+
+/* Simple search input */
+
+form[id^=GPsearchInput-] {
+  display: inline-block;
+  position: relative;
+  left: -3px;
+  width: 280px;
+  overflow: hidden;
+}
+
+form[id^=GPsearchInput-] input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #999;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 0;
+  padding-right: 30px;
+  padding-left: 5px;
+  color: #333;
+  font-size: 1.0em;
+}
+
+form[id^=GPsearchInput-] input:disabled {
+  background-color: #DDD;
+  color: #999;
+}
+
+div[id^=GPsearchInputReset] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+  background-position: -30px 0;
+  cursor: pointer;
+}
+
+/* General panels */
+
+div[id^=GPgeocodeResultsClose],
+div[id^=GPadvancedSearchClose] {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+}
+
+div[id^=GPgeocodeResultsClose] {
+  background-position: 0 0;
+}
+
+div[id^=GPadvancedSearchClose] {
+  background-repeat: no-repeat;
+}
+
+/* Advanced search picto */
+
+div[id^=GPshowAdvancedSearch] {
+  transition: border-radius 0s ease-out 0s;
+  transition-delay: 0.5s;
+}
+
+/* Advanced search panel */
+
+div[id^=GPadvancedSearchPanel] {
+  display: none;
+  width: 280px;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+form[id^=GPadvancedSearchForm] {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.GPadvancedSearchCodeLabel,
+.GPadvancedSearchFilterLabel {
+  max-width: 105px;
+}
+
+.GPadvancedSearchCodeLabel,
+.GPadvancedSearchCode,
+ div[id^=GPadvancedSearchFilters] {
+  margin-top: 15px;
+}
+
+.GPadvancedSearchFilterLabel,
+.GPadvancedSearchFilterInput {
+  margin-bottom: 5px;
+}
+
+input[id^=GPadvancedSearchSubmit] {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+/* Autocomplete list / geocode results */
+
+div[id^=GPautoCompleteList],
+div[id^=GPgeocodeResultsList] {
+  width: 280px;
+}
+
+div[id^=GPautoCompleteList] {
+  top: 35px;
+}
+
+div[id^=GPgeocodeResultsList] {
+  display: none;
+  position: absolute;
+  top: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+div[id^=GPgeocodeResults-] {
+  background-color: #FFF;
+  max-height: 140px;
+  overflow-y: auto;
+}

@@ -1,0 +1,83 @@
+/* LAYER SWITCHER LEAFLET */
+
+div[id^=GPlayerSwitcher-] {
+  top: 10px;
+  right: 10px;
+}
+
+/* Showing/hiding layers list */
+
+label[id^=GPshowLayersListPicto] {
+  width: 36px;
+  height: 36px;
+}
+
+span[id^=GPshowLayersListOpen],
+span[id^=GPshowLayersListClose] {
+  background-image: url("img/GPshowLayersList.png");
+}
+
+span[id^=GPshowLayersListClose] {
+  background-position: -36px 0;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] {
+  box-shadow: 0 2px 2px #000;
+  border-top: 1px solid #CCC;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] span[id^=GPshowLayersListOpen] {
+  opacity: 0.4;
+}
+
+/* Layers list */
+
+.GPlayerVisibility,
+.GPshowLayerAdvancedTools,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  background-image: url("img/GPlayerTools.png");
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  background: url("img/GPopacitySlider.png");
+}
+
+/* Layer info panel */
+
+div[id^=GPlayerInfoPanel] {
+  right: 190px;
+}
+
+div[id^=GPlayerInfoTitle] {
+  color: #C77A04;
+  border-bottom: 1px solid #C77A04;
+}
+
+div[id^=GPlayerInfoQuicklook] {
+  background-image: url("img/GPlayerInfo.png");
+}
+
+div[id^=GPlayerInfoClose] {
+  background-image: url("img/GPlayerInfoClose.png");
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  background-image: url("img/GPlayerInfo.png");
+}

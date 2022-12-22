@@ -1,0 +1,180 @@
+/* BOOST RELIEF */
+
+  div[id^=GPboostRelief-] {
+    font-size: 11px;
+    width: 150px;
+  }
+  
+  div[id^=GPboostRelief-] label {
+    display: block;
+  }
+
+  div[id^=GPBoostReliefListContainer-] {
+    position: relative;
+    width: 100%;
+    height: 28px;
+    padding-left: 8px;
+    line-height: 28px;
+  }
+  
+  .GPlayerRelief,
+  .GPlayerReliefValue {
+    position: absolute;
+    top: 0;
+  }
+  
+  .GPlayerRelief {
+    width: calc(100% - 60px);
+    height: 28px;
+    padding-left: 8px;
+  }
+  
+  .GPlayerReliefValue {
+    width: 32px;
+    left: calc(100% - 40px);
+    line-height: 28px;
+    font-size: 10px;
+    font-style: italic;
+    cursor: default;
+  }
+
+  /* Showing/hiding boost relief panel */
+
+  label[id^=GPshowBoostReliefPicto] {
+    display: inline-block;
+  }
+
+  input[id^=GPshowBoostRelief-] + label {
+    display: block;
+  }
+
+  input[id^=GPshowBoostRelief-]:checked + label {
+    display: none;
+  }
+
+  input[id^=GPshowBoostRelief-] + label + div {
+    display: none;
+  }
+
+  input[id^=GPshowBoostRelief-]:checked + label + div {
+    display: block;
+  }
+
+  /* Showing layer advanced tools */
+
+  div[id^=GPboostRelief-] input[type="checkbox"]:checked + label + .GPlayerAdvancedToolsRelief {
+    max-height: 28px;
+    opacity: 1;
+  }
+
+  .GPlayerAdvancedToolsRelief {
+    display: block;
+    position: relative;
+    width: 100%;
+    border-bottom : 1px dotted #CCC;
+    background-color : #FFF;
+  }
+
+  .GPlayerReliefLayerId {
+    position: relative;
+    width: 100px;
+    height: 28px;
+    padding-left: 8px;
+    line-height: 28px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  /* Relief slider : general */
+  
+  .GPlayerRelief input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .GPlayerRelief input[type="range"]:focus {
+    box-shadow: none;
+    outline: none;
+  }
+  
+  /* Relief slider : Chrome, Safari, Opera */
+  
+  .GPlayerRelief input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    height: 3px;
+  }
+  
+  .GPlayerRelief input[type="range"]::-webkit-slider-thumb:before {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    left: -200px;
+    height: 3px;
+    pointer-events: none;
+  }
+  
+  .GPlayerRelief input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 9px;
+    height: 17px;
+    -webkit-appearance: none;
+    border: 2px solid #FFF;
+    background-color: #505050;
+    position: relative;
+    top: -7px;
+  }
+  
+  /* Relief slider : Firefox */
+  
+  .GPlayerRelief input[type="range"]::-moz-range-track {
+    width: 80px;
+    height: 3px;
+  }
+  
+  .GPlayerRelief input[type="range"]::-moz-range-thumb {
+    width: 5px;
+    height: 13px;
+    border: 2px solid #FFF;
+    border-radius: 0;
+    box-shadow: 0;
+    background-color: #505050;
+    position: relative;
+  }
+  
+  /* Relief slider : IE */
+  
+  .GPlayerRelief input[type="range"]::-ms-track {
+    border: 0;
+    border-color: transparent;
+    border-radius: 0;
+    border-width: 0;
+    color: transparent;
+    height: 3px;
+    width: 80px;
+  }
+  
+  .GPlayerRelief input[type="range"]::-ms-fill-lower,
+  .GPlayerRelief input[type="range"]::-ms-fill-upper {
+    background: transparent;
+    border-radius: 0;
+  }
+  
+  .GPlayerRelief input[type="range"]::-ms-thumb {
+    width: 5px;
+    height: 13px;
+    border: 2px solid #FFF;
+    background-color: #505050;
+  }
+  
+  .GPlayerRelief input[type="range"]::-ms-tooltip {
+    display: none;
+  }
