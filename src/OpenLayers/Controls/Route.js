@@ -414,7 +414,7 @@ var Route = (function (Control) {
         }
 
         var rightManagementRoute = RightManagement.check({
-            key : _key || this.options.apiKey,
+            key : "calcul",
             resources : _res,
             services : ["Itineraire"]
         });

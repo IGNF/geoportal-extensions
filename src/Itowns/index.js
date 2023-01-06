@@ -55,7 +55,7 @@ import GlobeViewExtended from "./GlobeViewExtended";
 import CRS from "./CRS/CRS";
 
 // Autoload...
-import "../Common/Utils/AutoLoadConfig";
+// import "../Common/Utils/AutoLoadConfig";
 
 // export des services
 import Gp from "geoportal-access-lib";

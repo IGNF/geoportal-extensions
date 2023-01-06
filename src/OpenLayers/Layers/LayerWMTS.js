@@ -46,9 +46,9 @@ var LayerWMTS = (function (TileLayer) {
         }
 
         // Check if configuration is loaded
-        if (!Config.isConfigLoaded()) {
-            throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
-        }
+        // if (!Config.isConfigLoaded()) {
+        //     throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+        // }
 
         // création de la source WMTS
         var olSourceParams;
