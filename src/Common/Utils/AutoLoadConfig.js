@@ -28,7 +28,7 @@ var AutoLoadConfig = {
                     if (splitKeys.length > 1) {
                         var keys = [];
                         for (var j = 0; j < splitKeys.length; j++) {
-                            keys.push(splitKeys[i]);
+                            keys.push(splitKeys[j]);
                         }
                         key = keys;
                     }

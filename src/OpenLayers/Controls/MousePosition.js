@@ -439,7 +439,7 @@ var MousePosition = (function (Control) {
             return;
         }
         if (typeof this._noRightManagement === "undefined") {
-            this._checkRightsManagement();
+            //this._checkRightsManagement();
         }
         this.options.displayAltitude = displayAltitude;
         this._setElevationPanel(displayAltitude);
@@ -587,7 +587,7 @@ var MousePosition = (function (Control) {
         // gestion des droits sur les ressources/services
         // si l'on souhaite un calcul d'altitude, on verifie les droits sur les ressources d'alti...
         if (this.options.displayAltitude) {
-            this._checkRightsManagement();
+            //this._checkRightsManagement();
         }
 
         // listener key for event on pointermove or moveend map

@@ -174,7 +174,7 @@ var LocationSelector = (function (Control) {
         this._noRightManagement = false;
 
         // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
+        //this._checkRightsManagement();
 
         // listener key for event click on map
         this.listenerKey = null;

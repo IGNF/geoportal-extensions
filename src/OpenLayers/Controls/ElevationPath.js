@@ -161,7 +161,7 @@ var ElevationPath = (function (Control) {
         this._initialize(options);
 
         // gestion des droits
-        this._checkRightsManagement();
+        // //this._checkRightsManagement();
 
         // creation du DOM container
         this._container = (options.element) ? options.element : this._initializeContainer();

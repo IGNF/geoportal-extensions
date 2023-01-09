@@ -374,7 +374,7 @@ var Isocurve = (function (Control) {
         this._noRightManagement = false;
 
         // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
+        //this._checkRightsManagement();
 
         // listener key for event click on map
         this.listenerKey = null;
@@ -1140,11 +1140,12 @@ var Isocurve = (function (Control) {
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         // var key = this._resources["Isocurve"]["key"];
-        var config = AutoLoadConfig.autoloadconfig();
-        options.apiKey = this.options.isocurveOptions.apiKey || config.apiKey;
-        if (config.timeOut) {
-            options.timeout = config.timeOut;
-        }
+
+        // var config = AutoLoadConfig.autoloadconfig();
+        // options.apiKey = this.options.isocurveOptions.apiKey || config.apiKey;
+        // if (config.timeOut) {
+        //     options.timeout = config.timeOut;
+        // }
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)

@@ -348,7 +348,7 @@ var Route = (function (Control) {
         this._noRightManagement = false;
 
         // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
+        //this._checkRightsManagement();
 
         // listener key for event on pointermove or moveend map
         this.listenerKey = null;
