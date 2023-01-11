@@ -54,9 +54,6 @@ import GlobeViewExtended from "./GlobeViewExtended";
 
 import CRS from "./CRS/CRS";
 
-// Autoload...
-// import "../Common/Utils/AutoLoadConfig";
-
 // export des services
 import Gp from "geoportal-access-lib";
 
@@ -101,6 +98,7 @@ export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 export { default as Logger } from "../Common/Utils/LoggerByDefault";
+export { default as AutoLoadConfig } from "../Common/Utils/AutoLoadConfig";
 
 function deepCopy (source, target) {
     // Implementing Tail Call Elimination

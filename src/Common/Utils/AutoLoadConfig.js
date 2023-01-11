@@ -14,7 +14,7 @@ var AutoLoadConfig = {
      * @function autoloadconfig
      * @returns {Object} options - undefined ou options
      */
-    autoloadconfig: function () {
+    getConfig: function () {
         var scripts = document.getElementsByTagName("script");
         for (var i=0; i<scripts.length; i++) {
             if (!scripts[i].getAttribute("data-key") && !scripts[i].getAttribute("data-timeout")) {
