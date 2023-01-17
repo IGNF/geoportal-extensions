@@ -81,6 +81,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.7](#extension-geoportail-leaflet-version-227)
   * [Summary](#summary-23)
   * [Changelog](#changelog-20)
+- [Extension Geoportail Leaflet, version 2.2.8](#extension-geoportail-leaflet-version-228)
+  * [Summary](#summary-24)
+  * [Changelog](#changelog-21)
 
 <!-- tocstop -->
 
@@ -718,6 +721,38 @@ Utilisation du Geocodage v2
 
 * [Fixed]
   - Calcul d'itinéraire fonctionnel
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.8
+
+**17/01/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout des déclarations typescript, améliorations et corrections des interfaces sur les controles d'itinéraire et d'isochrone
+
+## Changelog
+
+* [Added]
+
+    - Ajout des "@types declaration" pour publication (16120e8ac5a36a80cded6cbc53eb8c9c6db37e82)
+
+* [Changed]
+
+    - Prise en compte des options routeOptions.onSuccess et routeOptions.geometryInInstructions passées à la création du widget (#341)
+    - Mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Survol du profil altimétrique rendu compatible avec les téléphones (af2c669563b248c398aa11932a50839d975dff85i)
+    - Corrige la prise en compte des coordonnées du point de départ des isochrones (38d86213848d5b14539fdeaf1e46049c8f9bb73e)
 
 * [Security]
 
