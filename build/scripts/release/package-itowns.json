@@ -9,7 +9,7 @@
       "Itowns"
    ],
    "dependencies" : {
-      "geoportal-access-lib" : "3.2.0",
+      "geoportal-access-lib" : "3.2.1",
       "node-fetch" : "^2.6.1",
       "itowns" : "2.38.2",
       "proj4" : "2.7.5",
@@ -28,10 +28,10 @@
    "module" : "src/Itowns/index.js",
    "license" : "CECILL-B",
    "peerDependencies" : {},
-   "version" : "2.3.9",
+   "version" : "2.3.10",
    "description" : "French Geoportal Extensions for iTowns",
    "devDependencies" : {},
-   "date" : "18/11/2022",
+   "date" : "17/01/2023",
    "files" : [
       "dist/",
       "src/",

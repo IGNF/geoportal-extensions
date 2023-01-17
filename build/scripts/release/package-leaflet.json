@@ -21,7 +21,7 @@
       "package.json"
    ],
    "types" : "src/Leaflet/index.d.ts",
-   "version" : "2.2.7",
+   "version" : "2.2.8",
    "description" : "French Geoportal Extension for Leaflet",
    "license" : "CECILL-B",
    "repository" : {
@@ -29,9 +29,9 @@
       "type" : "git"
    },
    "name" : "geoportal-extensions-leaflet",
-   "date" : "30/10/2022",
+   "date" : "17/01/2023",
    "dependencies" : {
-      "geoportal-access-lib" : "3.2.0",
+      "geoportal-access-lib" : "3.2.1",
       "leaflet" : "1.7.1",
       "proj4" : "2.7.5",
       "loglevel" : "1.6.6",
