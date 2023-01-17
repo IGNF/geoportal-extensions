@@ -79,6 +79,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.9](#extension-geoportail-itowns-version-239)
   * [Summary](#summary-23)
   * [Changelog](#changelog-22)
+- [Extension Geoportail Itowns, version 2.3.10](#extension-geoportail-itowns-version-2310)
+  * [Summary](#summary-24)
+  * [Changelog](#changelog-23)
 
 <!-- tocstop -->
 
@@ -643,6 +646,36 @@ Mise à jour de la bibliothèque d'accès aux services Geoportail
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.10
+
+**17/01/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Ajout des déclarations typescript
+
+## Changelog
+
+* [Added]
+
+    - Ajout des "@types declaration ts" pour publication (16120e8ac5a36a80cded6cbc53eb8c9c6db37e82)
+
+* [Changed]
+
+    - Mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Afficher les informations des elements cliqués sans doublons (8638fb079e7a6d06f4d8687c4c349309a799489f)
 
 * [Security]
 

@@ -64,6 +64,7 @@ Ajout des déclarations typescript, améliorations et corrections des interfaces
 ---
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -71,25 +72,17 @@ Ajout des déclarations typescript, améliorations et corrections des interfaces
 
 ## Summary
 
-Ajout des déclarations typescript
-
 ## Changelog
 
 * [Added]
 
-    - Ajout des "@types declaration ts" pour publication (16120e8ac5a36a80cded6cbc53eb8c9c6db37e82)
-
 * [Changed]
-
-    - Mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
 
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - Afficher les informations des elements cliqués sans doublons (8638fb079e7a6d06f4d8687c4c349309a799489f)
 
 * [Security]
 
