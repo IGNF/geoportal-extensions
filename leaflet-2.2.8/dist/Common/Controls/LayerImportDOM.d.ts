@@ -1,0 +1,42 @@
+export default LayerImportDOM;
+declare namespace LayerImportDOM {
+    function _addUID(id: string): string;
+    function _createLoadingElement(): DOMElement;
+    function _createMainContainerElement(): DOMElement;
+    function _createShowImportElement(): DOMElement;
+    function _createShowImportPictoElement(): DOMElement;
+    function _createImportPanelElement(): DOMElement;
+    function _createImportPanelHeaderElement(): DOMElement;
+    function _createImportPanelTitleElement(): DOMElement;
+    function _createImportPanelCloseElement(): DOMElement;
+    function _createImportPanelFormElement(): DOMElement;
+    function _createImportTypeLineElement(importTypes: any[]): DOMElement;
+    function _createImportWaitingElement(): DOMElement;
+    function _createImportStaticParamsContainer(currentType: string): DOMElement;
+    function _createStaticNameLabel(): DOMElement;
+    function _createStaticModeChoiceDiv(): DOMElement;
+    function _createStaticLocalChoiceDiv(): DOMElement;
+    function _createStaticUrlChoiceDiv(): DOMElement;
+    function _createStaticLocalInputDiv(): DOMElement;
+    function _createStaticLocalInputLabel(): DOMElement;
+    function _createStaticLocalInput(): DOMElement;
+    function _createStaticUrlInputDiv(): DOMElement;
+    function _createStaticUrlInputLabel(): DOMElement;
+    function _createStaticUrlInput(): DOMElement;
+    function _createServiceParamsContainer(currentType: string): DOMElement;
+    function _createServiceUrlDiv(): DOMElement;
+    function _createServiceUrlInputLabel(): DOMElement;
+    function _createServiceUrlInput(): DOMElement;
+    function _createImportSubmitFormElement(): DOMElement;
+    function _createImportGetCapPanelElement(): DOMElement;
+    function _createImportGetCapPanelHeaderElement(): DOMElement;
+    function _createImportGetCapResultsContainer(): DOMElement;
+    function _addImportGetCapResultListRubrique(title: any, container: any): any;
+    function _addImportGetCapResultRubrique(title: any, container: any): any;
+    function _addImportGetCapResultListLayer(container: any): any;
+    function _addImportGetCapResultLayer(description: any, id: any, container: any): any;
+    function _createImportMapBoxPanelElement(): DOMElement;
+    function _createImportMapBoxPanelHeaderElement(): DOMElement;
+    function _createImportMapBoxResultsContainer(): DOMElement;
+}
+//# sourceMappingURL=LayerImportDOM.d.ts.map
