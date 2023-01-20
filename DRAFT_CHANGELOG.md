@@ -22,6 +22,8 @@
 
 * [Fixed]
 
+    - faute d'ortographe description couche Isocurve
+
 * [Security]
 
 ---
