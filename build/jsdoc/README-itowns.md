@@ -14,7 +14,7 @@ This extension is not standalone and has to be used **together with the Itowns**
 <link rel="stylesheet" href="path/to/GpPluginItowns.css" />
 ```
 
-NB : to have complete access to this extension functionnalities, you need to provide your geoportal access key (<a href="http://professionnels.ign.fr/ign/contrats">obtained here</a>) either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getConfig">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
+NB : to have complete access to this extension functionnalities, you need to freely provide a geoportal access key among the one available here : <a href="https://geoservices.ign.fr/services-web"></a>. Use it either when loading extension script (using the data-key attribute) or by conditinning their use to the onSuccess callback function of a <a href="http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getConfig">Gp.Services.GetConfig()</a> call with that key. Otherwhise some functionalities may not work as announced.
 
 
 ## Geoportal Controls
