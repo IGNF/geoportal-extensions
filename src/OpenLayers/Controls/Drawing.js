@@ -163,6 +163,14 @@ var logger = Logger.getLogger("Drawing");
  * });
  */
 var Drawing = (function (Control) {
+    /**
+     * See {@link ol.control.Drawing}
+     * @module Drawing
+     * @alias module:~Controls/Drawing
+     * @param {*} options - options
+     * @example
+     * import Drawing from "src/OpenLayers/Controls/Drawing"
+     */
     function Drawing (options) {
         options = options || {};
 

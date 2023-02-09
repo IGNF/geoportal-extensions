@@ -56,6 +56,14 @@ var logger = Logger.getLogger("locationselector");
  *  });
  */
 var LocationSelector = (function (Control) {
+    /**
+     * See {@link ol.control.LocationSelector}
+     * @module LocationSelector
+     * @alias module:~Controls/LocationSelector
+     * @param {*} options - options
+     * @example
+     * import LocationSelector from "src/OpenLayers/Controls/LocationSelector"
+     */
     function LocationSelector (options) {
         options = options || {};
 

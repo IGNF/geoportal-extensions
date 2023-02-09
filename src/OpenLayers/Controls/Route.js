@@ -88,6 +88,14 @@ var logger = Logger.getLogger("route");
  *  });
  */
 var Route = (function (Control) {
+    /**
+     * See {@link ol.control.Route}
+     * @module Route
+     * @alias module:~Controls/Route
+     * @param {*} options - options
+     * @example
+     * import Route from "src/OpenLayers/Controls/Route"
+     */
     function Route (options) {
         options = options || {};
 
