@@ -55,6 +55,8 @@ var logger = Logger.getLogger("searchengine");
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
  * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
  * @fires searchengine:compute
+ * @fires searchengine:autocomplete:click
+ * @fires searchengine:geocode:click
  * @example
  *  var SearchEngine = ol.control.SearchEngine({
  *      apiKey : "CLEAPI",
@@ -69,6 +71,10 @@ var logger = Logger.getLogger("searchengine");
  *      },
  *      geocodeOptions : {},
  *      autocompleteOptions : {}
+ *  });
+ *
+ *  SearchEngine.on("searchengine:autocomplete:click", function (e) {
+ *    console.warn("autocomplete", e);
  *  });
  */
 var SearchEngine = (function (Control) {
@@ -922,7 +928,7 @@ var SearchEngine = (function (Control) {
          * @property {Object} type - event
          * @property {Object} target - instance SearchEngine
          * @example
-         * ReverseGeocode.on("searchengine:compute", function (e) {
+         * SearchEngine.on("searchengine:compute", function (e) {
          *   console.log(e.target.getData());
          * })
          */
@@ -1422,6 +1428,22 @@ var SearchEngine = (function (Control) {
         if (this._displayMarker) {
             this._setMarker(position, info);
         }
+        /**
+         * event triggered when an element of the results is clicked for autocompletion
+         *
+         * @event searchengine:autocomplete:click
+         * @property {Object} type - event
+         * @property {Object} location - location
+         * @property {Object} target - instance SearchEngine
+         * @example
+         * SearchEngine.on("searchengine:autocomplete:click", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "searchengine:autocomplete:click",
+            location : this._locationsToBeDisplayed[idx]
+        });
     };
 
     // ################################################################### //
@@ -1515,6 +1537,22 @@ var SearchEngine = (function (Control) {
         if (this._displayMarker) {
             this._setMarker(position, info);
         }
+        /**
+         * event triggered when an element of the results is clicked for geocoding
+         *
+         * @event searchengine:geocode:click
+         * @property {Object} type - event
+         * @property {Object} location - location
+         * @property {Object} target - instance SearchEngine
+         * @example
+         * SearchEngine.on("searchengine:geocode:click", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "searchengine:geocode:click",
+            location : this._geocodedLocations[idx]
+        });
     };
 
     // ################################################################### //

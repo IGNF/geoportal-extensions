@@ -1,8 +1,5 @@
 
 
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -14,6 +11,8 @@
 
 * [Added]
 
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
+
 * [Changed]
 
 * [Deprecated]
@@ -22,7 +21,7 @@
 
 * [Fixed]
 
-    - faute d'ortographe description couche Isocurve
+    - Faute d'ortographe description couche Isocurve
 
 * [Security]
 
