@@ -1583,15 +1583,42 @@ var Route = (function (Control) {
 
         // création de l'objet geoJSON
         var geojsonObject = {
-            type : "Feature",
-            crs : {
-                type : "name",
-                properties : {
-                    name : "EPSG:4326"
+            type : "FeatureCollection",
+            features : [
+                {
+                    type : "Feature",
+                    crs : {
+                        type : "name",
+                        properties : {
+                            name : "EPSG:4326"
+                        }
+                    },
+                    geometry : geometry
                 }
-            },
-            geometry : geometry
+            ]
         };
+        // ajout des points de depart et arrivée du tracé
+        geojsonObject.features.add({
+            type : "Feature",
+            geometry : {
+                type : "Point",
+                coordinates : this._currentPoints[0].getCoordinate()
+            },
+            properties : {
+                description : "Point de départ"
+            }
+        });
+        geojsonObject.features.add({
+            type : "Feature",
+            geometry : {
+                type : "Point",
+                coordinates : this._currentPoints[this._currentPoints.length - 1].getCoordinate()
+            },
+            properties : {
+                description : "Point d'arrivée"
+            }
+        });
+
         var geojsonformat = new GeoJSON({
             defaultDataProjection : "EPSG:4326"
         });
