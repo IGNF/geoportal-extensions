@@ -1424,7 +1424,7 @@ var SearchEngine = (function (Control) {
          * @property {Object} target - instance SearchEngine
          * @example
          * SearchEngine.on("searchengine:autocomplete:click", function (e) {
-         *   console.log(e.target.getData());
+         *   console.log(e.location);
          * })
          */
         this.dispatchEvent({
@@ -1533,7 +1533,7 @@ var SearchEngine = (function (Control) {
          * @property {Object} target - instance SearchEngine
          * @example
          * SearchEngine.on("searchengine:geocode:click", function (e) {
-         *   console.log(e.target.getData());
+         *   console.log(e.location);
          * })
          */
         this.dispatchEvent({
