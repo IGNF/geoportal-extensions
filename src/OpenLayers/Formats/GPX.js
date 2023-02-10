@@ -28,6 +28,14 @@ import Parser from "../../Common/Utils/Parser";
  * @param {function} options.readExtensions - Reading extensions (native)
  */
 var GPX = (function (olGPX) {
+    /**
+     * See {@link ol.format.GPXExtended}
+     * @module GPXExtended
+     * @alias module:~Formats/GPXExtended
+     * @param {*} options - options
+     * @example
+     * import GPXExtended from "src/OpenLayers/Formats/GPX"
+     */
     function GPX (options) {
         if (!(this instanceof GPX)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");

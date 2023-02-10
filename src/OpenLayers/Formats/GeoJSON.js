@@ -27,6 +27,14 @@ import Color from "../../Common/Utils/ColorUtils";
  * @param {Object} options.defaultStyle - Styles by default
  */
 var GeoJSON = (function (olGeoJSON) {
+    /**
+     * See {@link ol.format.GeoJSONExtended}
+     * @module SearchEngine
+     * @alias module:~Formats/GeoJSONExtended
+     * @param {*} options - options
+     * @example
+     * import GeoJSONExtended from "src/OpenLayers/Formats/GeoJSON"
+     */
     function GeoJSON (options) {
         if (!(this instanceof GeoJSON)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");

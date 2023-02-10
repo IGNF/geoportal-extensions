@@ -78,6 +78,14 @@ var logger = Logger.getLogger("isocurve");
  *  });
  */
 var Isocurve = (function (Control) {
+    /**
+     * See {@link ol.control.Isocurve}
+     * @module Isocurve
+     * @alias module:~Controls/Isocurve
+     * @param {*} options - options
+     * @example
+     * import Isocurve from "src/OpenLayers/Controls/Isocurve"
+     */
     function Isocurve (options) {
         options = options || {};
 

@@ -26,7 +26,8 @@
 
 * [Fixed]
 
-    - faute d'ortographe description couche Isocurve
+    - Faute d'ortographe description couche Isocurve
+    - Ajout des modules dans la JSDoc
 
 * [Security]
 
