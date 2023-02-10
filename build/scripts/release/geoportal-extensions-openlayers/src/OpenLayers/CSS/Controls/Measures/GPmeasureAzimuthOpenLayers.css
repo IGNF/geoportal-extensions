@@ -1,0 +1,12 @@
+/* MEASURELENGTH POSITION */
+
+div[id^=GPmeasureAzimuth-] {
+  top: 260px;
+  left: 10px;
+}
+
+/* Showing/hiding measureLength position panel */
+
+span[id^=GPshowMeasureAzimuthOpen-] {
+  background-image: url("img/GPmeasuresOpen.png");
+}

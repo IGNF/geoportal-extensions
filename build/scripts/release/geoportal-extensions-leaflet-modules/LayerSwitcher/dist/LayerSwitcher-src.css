@@ -1,0 +1,819 @@
+/*!
+ * @brief French Geoportal Extension for Leaflet
+ *
+ * This software is released under the licence CeCILL-B (Free BSD compatible)
+ * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.txt
+ * @see http://www.cecill.info/
+ *
+ * @copyright copyright (c) IGN 
+ * @license CeCILL-B
+ * @author IGN
+ * @version 2.2.7
+ * @date 18/11/2022
+ *
+ */
+
+/* Widgets : general */
+
+.GPwidget {
+  position: absolute;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.GPwidget input[type='text'],
+.GPwidget input[type='button'] {
+  -webkit-appearance: none;
+  color: #333333;
+}
+
+.GPwidget input[type="checkbox"] {
+  display: none;
+}
+
+.GPwidget select {
+  padding-left: 3px;
+  border-radius: 3px;
+}
+
+.GPwidget form {
+  margin-bottom: 0;
+}
+
+.GPwidget * {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+/* waiting */
+
+.GPwaiting {
+    background-image : url(data:image/gif;base64,R0lGODlhNAA0AIQSAAFkpSZ5sAGV3k2Ruiao3kOj1/GUBk225pe/B4S83XrK75HH3qrS5szMzNbW1sHe797e3ubm5v///////////////////////////////////////////////////////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAQAfACwAAAAANAA0AAAF5uAnjmRpnmiqrmzrvnAsz3T9FXhh72Ke8zWfDzgT/ogxIw55cjgiJ6XOhKjaII1sNio8Vb8ImnbMXVLBVhl2vI2hvzIHOwt9veGxyLwhu4dlcw59bzVjgjNoPHU2f0yOj5CRkpMocg2HjwaaBitzmZuaKWuGTKCgKHt8SKabqHulrJwno1qYQLGyJ56OrCuWtrChlMPExcbHH4s1ymK1NJZtM4Fxu3mvMXvMLdBj2ip60zG0WoBzENLVJL+66TDj7GQmbOc1EE9N4SURDvSRqcgj/gH8wC0LsGPtAK7pN7Chw4cQSYQAACH5BAUBAB8ALBYABAAaACcAAAVw4PdBTQOJaKquX+k2bJw6b+nIcu3isV7yLFrttioYczWWcVmICYkq5hKolB6pKOsUm9Vyu9JvKiyOls/otHqNQ7gR6ff7LJeX63Mx3n3f0+txeWyDhIVlBmsGiopoi45njo9fkZKTlIhil42RaYsxIQAh+QQFAQAfACwWAAkAGgAnAAAFdOAnjmQZOVCprmTjuikrf289y/Ub32SUuw6e6teICEuO31GVfC1Zxqd0Sq1arYVsAavNUrvdKVgrHm+l5jMazPVe3/C4/IN4I+73Kn5P3fOffn+AgXUqBocGK4QriIiKfoaNjip4LJKTT5eHU5qJnJJWjVUhACH5BAUBAB8ALAkAFgAnABoAAAV04CeOZGmepdM0Duq+5yo3cO2qcwPZPJnLveBvFezhZrsi76cM4lrNqHRKrVpPhmoBZuh2o4VwGOUtK8VoU9lcRKdJazbP/R7Fv236tnQ/If4IJ3pYa36Af4JuLl6Gh4gmYlKOgFclk4+VIpeBmSOTnZaUTSEAIfkEBQEAHwAsBAAWACcAGgAABXfg9xmkIZ5oqq5rWbJwnLqubLP0e+9nTvJAnwnIyxGJtaNyyWw6n1Ao4hmRIa7XpaPBbbCw4OO2y1WBw0Ryt4o6o3cRNdeRcmfTcojZvSr4CytyXntvKH9/gWR6X3cph4crEQ6LSo+IUYaWgJgnmpucIpagjpc3IQAh+QQFAQAfACwEAAkAGgAnAAAFb+AnjqJhkmiamqyhvmjLwrA806p946Tu8isbMNca1ozIpHLJTCKeiCYUupxOlVaqMxvdZqtWqbZJLpvPyEK5wGYz23AlPJ6c0412t9yucjQaDi98KX+FDTBtfYZ/gUmLhUqPf0p+i42Oi00QfxAiIQAh+QQFAQAfACwEAAQAGgAnAAAFc+AnjmRZGqhhrmyasrDounE7o/V64yvi6zuTb4gA0oTEn+lYSg5zSGcROpJOqVUntknc9rzgsHhMLhXOhTEaHV6vwW62N36G09tutbzM7/v/JhFlDYQNDmKFhYdeEYmFYA6OhIJbEJINYZdhlolkEA6UUCEAIfkEAQEAHwAsBAAEACcAGgAABXXgJ45kWSIoYq5sS6apK8swPN9mHeP8p6O9UmG4+qlMhmRryCwUa6uk1LBqMp9A5FQptBKDW2nX6+SFxSRyuXemjpvBz5lljYu2srX9vu/7/4CBgh8NhQ6DK4WKDYgkEIuGjSKQipKElIySj5CHlpSWIw6RoCEAOw==);
+    background-position : center center;
+    background-repeat : no-repeat;
+}
+
+/* General panels */
+
+.GPpanel {
+  background-color: #FFF;
+}
+
+.GPpanelHeader {
+  position: relative;
+  width: 100%;
+}
+
+.GPpanelTitle {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.GPpanelClose, .GPpanelReduce, .GPpanelInfo {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* Showing/hiding advanced panels */
+
+.GPshowAdvancedToolPicto {
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.GPshowAdvancedToolOpen {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Flex inputs */
+
+.GPflexInput {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* FIXME tempory hack with :not(.GPlocationOriginHidden) !
+.GPflexInput > *:not(.GPlocationOriginHidden) */
+.GPflexInput > * {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  border: 1px solid #999;
+  border-radius: 0;
+}
+
+.GPflexInput *:not(:last-child) {
+  border-right:none;
+}
+
+.GPflexInput *:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.GPflexInput *:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.GPflexInput > *:not(input) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.GPflexInput > input {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.GPflexInput > select {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-right: 7px;
+}
+
+.GPflexInput > label {
+  background-color:  #F2F2F2;
+  color: #666;
+  padding-left: 7px;
+  padding-right: 9px;
+  cursor: pointer;
+}
+
+/* Particular inputs */
+
+.GPinputSelect {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  margin: auto;
+  border: 1px solid #999;
+  color: #333;
+  cursor: pointer;
+}
+
+input.GPinputSubmit {
+  display: block;
+  width: 80px;
+  margin: auto;
+  height: 28px;
+  line-height: 26px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  color: #FFF;
+  font-weight: bold;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-out;
+  cursor: pointer;
+}
+
+input.GPinputSubmit:hover {
+  opacity: 1;
+}
+
+/* Autocomplete/geocode results */
+
+.GPautoCompleteList,
+.GPadvancedAutoCompleteList {
+  z-index: 2;
+  display: none;
+  position: absolute;
+  max-height: 140px;
+  background-color: #FFF;
+  border: 1px solid #999;
+  overflow-y: hidden;
+}
+
+.GPadvancedAutoCompleteList {
+  width: calc(100% - 28px);
+  border-top: none;
+  font-size: 0.9em;
+}
+
+.GPautoCompleteProposal {
+  width: 100%;
+  height: 28px;
+  line-height: 16px;
+  padding: 6px 10px;
+  color: #5E5E5E;
+  font-size: 1.0em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  cursor: pointer;
+}
+
+.GPautoCompleteProposal:hover {
+  color: #000000;
+  background-color: #CEDBEF
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptions {
+  display: block;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.5s ease-out 0s;
+}
+
+input[type="checkbox"]:checked + .GPshowMoreOptions {
+  -webkit-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+  /* bottom: 90px; */
+}
+
+/* LAYER SWITCHER */
+
+div[id^=GPlayerSwitcher-] {
+  font-size: 11px;
+}
+
+div[id^=GPlayerSwitcher-] [draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+/* Manage opening of the components through hiden checkboxes */
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"] + div,
+div[id^=GPlayerSwitcher-] input[type="checkbox"] + label + div {
+  max-height: 0px;
+}
+
+div[id^=GPlayerSwitcher-] label {
+  display: block;
+}
+
+/* Showing/hiding layers list */
+
+label[id^=GPshowLayersListPicto] {
+  position: relative;
+  float: right;
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease-out 0s, box-shadow  0.5s ease-out 0s, border  0.5s ease-out 0s, border-radius  0.5s ease-out 0s;
+  cursor: pointer;
+}
+
+span[id^=GPshowLayersListOpen],
+span[id^=GPshowLayersListClose] {
+  position: absolute;
+  display: block;
+  transition: border-radius 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
+}
+
+span[id^=GPshowLayersListOpen] {
+  background-position: 0 0;
+  opacity: 1;
+}
+
+span[id^=GPshowLayersListClose] {
+  opacity: 0;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] span[id^=GPshowLayersListClose] {
+  opacity: 1;
+}
+
+/* Layers list */
+
+div[id^=GPlayersList] {
+  position: relative;
+  width: 180px;
+  border-bottom-right-radius: 0;
+  opacity: 0;
+  overflow: auto;
+  transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0.25s;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div[id^=GPlayersList] {
+  max-height: 232px;
+  opacity: 1;
+  transition: max-height 0.5s ease-in 0s, opacity 0.25s ease-in 0s;
+}
+
+/* Layer : general */
+
+.GPlayerSwitcher_layer {
+  position: relative;
+  top: 0;
+  background-color: #FFF;
+  border-bottom: 1px dotted #CCC;
+  overflow: hidden;
+}
+
+div[id^=GPlayersList] .GPlayerSwitcher_layer:last-child {
+  border-bottom: none;
+}
+
+.GPlayerBasicTools,
+.GPlayerAdvancedTools {
+  position: relative;
+  width: 100%;
+  height: 28px;
+}
+
+.GPlayerVisibility,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.GPlayerVisibility,
+.GPlayerName,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove,
+.GPlayerOpacity,
+.GPlayerOpacityValue {
+  position: absolute;
+  top: 0;
+}
+
+.GPghostLayer {
+  opacity: 0;
+}
+
+/* Layer basic tools */
+
+.GPlayerBasicTools {
+  background-color: #FFF;
+}
+
+.GPlayerVisibility {
+  left: 0;
+  background-position: -28px 0;
+}
+
+input[type="checkbox"]:checked + .GPlayerVisibility {
+  background-position: 0 0;
+}
+
+.GPlayerName {
+  left: 28px;
+  width: calc(100% - 56px);
+  line-height: 28px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  cursor: move;
+}
+
+.outOfRange .GPlayerName {
+  color: #AAA;
+}
+
+/* Showing layer advanced tools */
+
+.GPshowLayerAdvancedTools {
+  top: 0;
+  right: 0;
+  background-position: -112px 0;
+}
+
+.GPlayerAdvancedTools {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + label + .GPlayerAdvancedTools {
+  max-height: 28px;
+  opacity: 1;
+}
+
+/* Layer advanced tools */
+
+.GPlayerInfo {
+  left: 0;
+  background-position: -55px 0;
+}
+
+.GPlayerInfoOpened {
+  left: 0;
+  background-position: -83px 0;
+}
+
+.GPlayerOpacity {
+  left: 28px;
+  width: calc(100% - 100px);
+  height: 28px;
+  padding-left: 8px;
+}
+
+.GPlayerOpacityValue {
+  width: 32px;
+  left: calc(100% - 60px);
+  line-height: 28px;
+  font-size: 10px;
+  font-style: italic;
+  cursor: default;
+}
+
+.GPlayerRemove {
+  right: 0;
+  background-position: -140px 0;
+}
+
+/* Opacity slider : general */
+
+.GPlayerOpacity input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.GPlayerOpacity input[type="range"]:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 3px;
+}
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-thumb:before {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  left: -200px;
+  height: 3px;
+  pointer-events: none;
+}
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-thumb {
+  width: 9px;
+  height: 17px;
+  -webkit-appearance: none;
+  border: 2px solid #FFF;
+  background-color: #505050;
+  position: relative;
+  top: -7px;
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  width: 80px;
+  height: 3px;
+}
+
+.GPlayerOpacity input[type="range"]::-moz-range-thumb {
+  width: 5px;
+  height: 13px;
+  border: 2px solid #FFF;
+  border-radius: 0;
+  box-shadow: 0;
+  background-color: #505050;
+  position: relative;
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  border: 0;
+  border-color: transparent;
+  border-radius: 0;
+  border-width: 0;
+  color: transparent;
+  height: 3px;
+  width: 80px;
+}
+
+.GPlayerOpacity input[type="range"]::-ms-fill-lower,
+.GPlayerOpacity input[type="range"]::-ms-fill-upper {
+  background: transparent;
+  border-radius: 0;
+}
+
+.GPlayerOpacity input[type="range"]::-ms-thumb {
+  width: 5px;
+  height: 13px;
+  border: 2px solid #FFF;
+  background-color: #505050;
+}
+
+.GPlayerOpacity input[type="range"]::-ms-tooltip {
+  display: none;
+}
+
+/* Layer info panel */
+
+div[id^=GPlayerInfoPanel] {
+  position: absolute;
+  top: 0;
+  overflow-y: hidden;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.GPlayerInfoPanelOpened {
+  display: block;
+}
+
+.GPlayerInfoPanelClosed {
+  display: none;
+}
+
+div[id^=GPlayerInfoContent] {
+  position: relative;
+  width: 280px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+div[id^=GPlayerInfoTitle] {
+  width: calc(100% - 52px);
+  margin: auto;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+div[id^=GPlayerInfoQuicklook] {
+  position: absolute;
+  top: -2px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+div[id^=GPlayerInfoClose] {
+  position: absolute;
+  top: -8px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+div[id^=GPlayerInfoDescription] {
+  font-size: 0.9em;
+}
+
+div[id^=GPlayerInfoLegend] {
+
+}
+
+div[id^=GPlayerInfoMetadata] {
+
+}
+
+.GPlayerInfoSubtitle {
+  padding-left: 35px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  line-height: 20px;
+  padding-left: 23px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  color: #999999;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.GPlayerInfoLink {
+  background-position: 0 -20px;
+}
+
+.GPlayerInfoLink:hover,
+.GPlayerInfoPopup:hover {
+  color: #333;
+}
+
+.GPlayerInfoLink a,
+.GPlayerInfoLink a:visited
+.GPlayerInfoLink a:focus
+.GPlayerInfoLink a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.GPwidget {
+  position: relative; /* overwritten */
+}
+
+
+#GPadvancedToolsPanel {
+  position: initial; /* overwritten */
+}
+
+/* General panels */
+
+.GPpanel {
+  box-shadow: 0 1px 6px #000;
+  border-radius: 5px;
+}
+
+.GPpanelHeader {
+  height: 32px;
+  background-color: #FFF;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.GPpanelTitle {
+  width: calc(100% - 60px);
+  margin: auto;
+  line-height: 32px;
+  color: #C77A04;
+  border-bottom: 1px solid #C77A04;
+}
+
+.GPpanelClose {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+  background-position: -30px 1px;
+}
+
+.GPpanelReduce {
+  top: 0;
+  right: 30px;
+  width: 30px;
+  height: 32px;
+  background-position: -60px 1px;
+}
+
+.GPpanelInfo {
+  top: 0;
+  left: 0px;
+  width: 30px;
+  height: 32px;
+  background-position: -90px 1px;
+}
+
+/* Showing/hiding advanced panel */
+
+.GPshowAdvancedToolPicto {
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 1px 6px #000;
+  background-color: #FFF;
+  border-radius: 5px;
+}
+
+.GPshowAdvancedToolPicto:hover {
+  background-color: #F4F4F4;
+}
+
+.GPshowAdvancedToolOpen {
+  width: 100%;
+  height: 100%;
+}
+
+/* Submit inputs */
+
+input.GPinputSubmit {
+  background-color: #C77A04;
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptionsImage {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAA7klEQVRIx+3UsUtCURTH8e/x3eciSAhC/QnRGIQPHPoTHPJfyLEpyFqcXkGT/0HQ4uBQs4s4VAiO0b/QJKIIcn333QYVnErIt53PeO7hnnv4wQWllMqa7NL0fmu+wPeLeXd10sJun322yE9t0AY5j+Lk+K+7cjs+rAPSmFnTGzQpb4qDJuWZNT2QxqpnTxsCvN0FdfHyBIwllVoaihXnXkGOxPvLyr173utAgI+b8NTn/AtwsC5NJJVa5WE5yizD+ZySC00XIFgmF4UC40wzXBhcFCfVKE6qC4PTDP81EGB4zeF2hmePfOt3ppT61Q8G2258CD5NRAAAAABJRU5ErkJggg==);
+}
+
+/* LAYER SWITCHER LEAFLET */
+
+div[id^=GPlayerSwitcher-] {
+  top: 10px;
+  right: 10px;
+}
+
+/* Showing/hiding layers list */
+
+label[id^=GPshowLayersListPicto] {
+  width: 36px;
+  height: 36px;
+}
+
+span[id^=GPshowLayersListOpen],
+span[id^=GPshowLayersListClose] {
+  background-image: url(data:image/png;base64,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);
+}
+
+span[id^=GPshowLayersListClose] {
+  background-position: -36px 0;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] {
+  box-shadow: 0 2px 2px #000;
+  border-top: 1px solid #CCC;
+}
+
+div[id^=GPlayerSwitcher-] input[type="checkbox"]:checked + div + label[id^=GPshowLayersListPicto] span[id^=GPshowLayersListOpen] {
+  opacity: 0.4;
+}
+
+/* Layers list */
+
+.GPlayerVisibility,
+.GPshowLayerAdvancedTools,
+.GPlayerInfo,
+.GPlayerInfoOpened,
+.GPlayerRemove {
+  background-image: url(data:image/png;base64,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);
+}
+
+/* Opacity slider : Chrome, Safari, Opera */
+
+.GPlayerOpacity input[type="range"]::-webkit-slider-runnable-track {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAECAYAAAAZDrhMAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAwSURBVDiNY/z379//v3//Mvz9+5fh379/DITYxKobKWYxMYwCisBoAFIIRgOQQgAADrTuhXfc36kAAAAASUVORK5CYII=);
+}
+
+/* Opacity slider : Firefox */
+
+.GPlayerOpacity input[type="range"]::-moz-range-track {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAECAYAAAAZDrhMAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAwSURBVDiNY/z379//v3//Mvz9+5fh379/DITYxKobKWYxMYwCisBoAFIIRgOQQgAADrTuhXfc36kAAAAASUVORK5CYII=);
+}
+
+/* Opacity slider : IE */
+
+.GPlayerOpacity input[type="range"]::-ms-track {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAECAYAAAAZDrhMAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAwSURBVDiNY/z379//v3//Mvz9+5fh379/DITYxKobKWYxMYwCisBoAFIIRgOQQgAADrTuhXfc36kAAAAASUVORK5CYII=);
+}
+
+/* Layer info panel */
+
+div[id^=GPlayerInfoPanel] {
+  right: 190px;
+}
+
+div[id^=GPlayerInfoTitle] {
+  color: #C77A04;
+  border-bottom: 1px solid #C77A04;
+}
+
+div[id^=GPlayerInfoQuicklook] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAYAAAD+MdrbAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI9SURBVEiJ7ZZBSxRhGMd/7zi7SGxLg4mWnSIWOoSFKLvbyUN5DtMPUEqfQNLJg0GuJlE3L+UXcA8JHRKDCERmaQOLTnoKXEkhq11nDzm783TIXdZ1d9TdCEL/p3mf9/3/eJ73eeedgWMnVTqYnp42gI7DGLPZrDU0NJQtj+t76Eq1h0KhN4FAwBNm2zarq6vdwDtPIEAwGMQwDE+gpmnV5zydNWhfhuVysxvY76dwNj8A4G/tgtBgbUA3+5Ufc7cQZxu9pROAX19eI6lFjNO9zUcG2skniLNN8OZz/OejAOysL5FeGOTcz7l7QLzc47mHzkYSvaWzCAPwt11Hnb2Gz92+Wsnz15viCfS3dpHbTLKzvlSMOetLyLdlclpwuZJn3x5mMhlc1/0zuHQXSS2SXhiEpt0Ktz4ieoBM4+X52b7Nhv44+apA27aTKysrN0pjZwK3m9vScwO+rc/tAI5mfPp+qvNla3p+qinkuyJjzh01hutV6aFkjeijlqlLwmyYkbI7oXaoqT+yTF0sU39aiNXV5UgsNwo8A7VWd3YnOs6qeMItU5fCsyjpj47n45ap3wcmS9dFYrl9fq+DnVKouIa2tmt+DPLioAyr3tgKZYVjTn9hnBj2dQjSexDwUK9e4oEvLJq8BQwgg5KZuoCuSDcQBDJKqZ7IeH4AeFgzMBrLTShhRCnVEx53EsnhxovKVa8qrT3wu1xQeCJX7HBey08K0keFU/Lv/hwEiSRM32y1uSMDgQu7ZZ3of9dvep7Bwy5Q9Q8AAAAASUVORK5CYII=);
+}
+
+div[id^=GPlayerInfoClose] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAgCAYAAAAFQMh/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFgSURBVEiJ7ZS7UoNAGIXPYYe8i52FMxKfJ5kEQ+yhSiP2MXhL3gfGxs4ZXyXO8luEyEXIglruaffsfv91ASsrK6tfin1MaehOhfnFeKR9rpC3eQRgFqq1OM7H1e3n5s/gNHSnoDwBcADZeSM9a8IFYBqpe4ILACLkjQnumMBgfl76OMn2aiOVgAVgFqmkgAIAKfmZ6Vkj2It1AJFK9PSzSL3ICs4xU4B+eSxbb6SXxnxMBqDsH8igjFh2ObAHeF2DunreNQeDwW1waV4eAB0EPsJfQ7XWZFC/2D50p2QeroY0wR/RyrAEgIGlrqxMm2NQ1r0yboVSthRJShcn2V49y6rfm0ZTF9Rz9fzyTi8bq9Ybbv65IpXUVgby6MV6wcNgf38gtV2GPIxj3dGSg3qUxXkDir4dPofgCC0iFy/Wi0rmInDeze/2UBq6fhqpRE5UqGhJkoau3+WxsrKy+hd9AZasoFzDGcuhAAAAAElFTkSuQmCC);
+}
+
+.GPlayerInfoLink,
+.GPlayerInfoPopup {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAYAAAD+MdrbAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAI9SURBVEiJ7ZZBSxRhGMd/7zi7SGxLg4mWnSIWOoSFKLvbyUN5DtMPUEqfQNLJg0GuJlE3L+UXcA8JHRKDCERmaQOLTnoKXEkhq11nDzm783TIXdZ1d9TdCEL/p3mf9/3/eJ73eeedgWMnVTqYnp42gI7DGLPZrDU0NJQtj+t76Eq1h0KhN4FAwBNm2zarq6vdwDtPIEAwGMQwDE+gpmnV5zydNWhfhuVysxvY76dwNj8A4G/tgtBgbUA3+5Ufc7cQZxu9pROAX19eI6lFjNO9zUcG2skniLNN8OZz/OejAOysL5FeGOTcz7l7QLzc47mHzkYSvaWzCAPwt11Hnb2Gz92+Wsnz15viCfS3dpHbTLKzvlSMOetLyLdlclpwuZJn3x5mMhlc1/0zuHQXSS2SXhiEpt0Ktz4ieoBM4+X52b7Nhv44+apA27aTKysrN0pjZwK3m9vScwO+rc/tAI5mfPp+qvNla3p+qinkuyJjzh01hutV6aFkjeijlqlLwmyYkbI7oXaoqT+yTF0sU39aiNXV5UgsNwo8A7VWd3YnOs6qeMItU5fCsyjpj47n45ap3wcmS9dFYrl9fq+DnVKouIa2tmt+DPLioAyr3tgKZYVjTn9hnBj2dQjSexDwUK9e4oEvLJq8BQwgg5KZuoCuSDcQBDJKqZ7IeH4AeFgzMBrLTShhRCnVEx53EsnhxovKVa8qrT3wu1xQeCJX7HBey08K0keFU/Lv/hwEiSRM32y1uSMDgQu7ZZ3of9dvep7Bwy5Q9Q8AAAAASUVORK5CYII=);
+}
+

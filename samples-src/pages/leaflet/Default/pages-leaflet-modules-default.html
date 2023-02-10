@@ -1,0 +1,72 @@
+{{#extend "layout-leaflet-sample-modules"}}
+
+{{#content "vendor"}}
+        <script src="{{ baseurl }}/dist/leaflet-modules/Layers{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/Controls{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/Controls{{ mode }}.css" />
+{{/content}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout de tous les widgets (utilisation de la Factory)</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+    <script>
+
+    var createMap = function () {
+      // on cache l'image de chargement du Géoportail.
+      document.getElementById("map").style.backgroundImage = "none";
+
+      // Création de la map
+      var layer = L.geoportalLayer.WMTS({
+        layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+      });
+
+      var map  = L.map('map', {
+        zoom : 2,
+        center : L.latLng(48, 2)
+      });
+
+      layer.addTo(map);
+
+      var iso = L.geoportalControl.Isocurve();
+      map.addControl(iso);
+      var layerSwitcher = L.geoportalControl.LayerSwitcher();
+      map.addControl(layerSwitcher);
+      var mp = L.geoportalControl.MousePosition();
+      map.addControl(mp);
+      var route = L.geoportalControl.Route();
+      map.addControl(route);
+      var reverse = L.geoportalControl.ReverseGeocode();
+      map.addControl(reverse);
+      var search = L.geoportalControl.SearchEngine();
+      map.addControl(search);
+      var measureProfil = L.geoportalControl.ElevationPath();
+      map.addControl(measureProfil);
+    };
+
+    Gp.Services.getConfig({
+        serverUrl : "{{ resources }}/AutoConf.js",
+        callbackSuffix : "",
+        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+        timeOut : 20000,
+        onSuccess : createMap
+    });
+    </script>
+{{/content}}
+{{/extend}}

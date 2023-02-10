@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta charset="UTF-8"> 
+
+        <!-- Library Leaflet -->
+        <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+        <script src="../node_modules/leaflet/dist/leaflet-src.js"></script>
+        <!-- Library Access Geoportal Service -->
+        <script src="../node_modules/geoportal-access-lib/dist/GpServices-src.js"></script>
+        <!-- Library Module Leaflet IGN -->
+        <link rel="stylesheet" href="../dist/SearchEngine-src.css" />
+        <script src="../dist/SearchEngine-src.js"></script>
+
+        <title>Sample Leaflet</title>
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+
+    </head>
+    <body>
+        <h1>Extension Géoportail pour Leaflet</h1>
+        <!-- map -->
+        <div id="map"></div>
+
+    <script>
+      var map;
+      var createMap = function () {
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById("map").style.backgroundImage = "none";
+
+        var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          opacity : 0.5
+        });
+
+        map  = L.map('map', {
+          zoom : 2,
+          center : L.latLng(48, 2)
+        });
+
+        osm.addTo(map);
+
+        var search = new SearchEngine();
+        map.addControl(search);
+      };
+
+      Gp.Services.getConfig({
+          serverUrl : "AutoConf.js",
+          callbackSuffix : "",
+          timeOut : 20000,
+          onSuccess : createMap
+      });
+
+    </script>
+    </body>
+</html>

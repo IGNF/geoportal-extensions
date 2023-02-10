@@ -908,19 +908,19 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/search/layers" xlink:type="simple"/>
 					</Server>
 					<Server service="OGC:OPENLS;Geocode" title="Service de Geocodage" version="1.2">
-						<OnlineResource xlink:href="https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols" xlink:type="simple"/>
+						<OnlineResource xlink:href="https://wxs.ign.fr/essentiels/geoportail/ols" xlink:type="simple"/>
 					</Server>
 					<Server service="OGC:OPENLS;ReverseGeocode" title="Service de Reverse Geocodage" version="1.2">
-						<OnlineResource xlink:href="https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols" xlink:type="simple"/>
+						<OnlineResource xlink:href="https://wxs.ign.fr/essentiels/geoportail/ols" xlink:type="simple"/>
 					</Server>
 					<Server service="OGC:OPENLS;AutoCompletion" title="Service d'auto-completion" version="1.2">
-						<OnlineResource xlink:href="https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/ols/apis/completion" xlink:type="simple"/>
+						<OnlineResource xlink:href="https://wxs.ign.fr/essentiels/ols/apis/completion" xlink:type="simple"/>
 					</Server>
 					<Server service="OGC:OPENLS;Itineraire" title="Service de calcul d'itinÃ©raire" version="1.2">
-						<OnlineResource xlink:href="https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/itineraire/ols" xlink:type="simple"/>
+						<OnlineResource xlink:href="https://wxs.ign.fr/essentiels/itineraire/ols" xlink:type="simple"/>
 					</Server>
 					<Server service="GPP:Isochrone" title="Service de calcul d'isochrone" version="1.0.0">
-						<OnlineResource xlink:href="https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/isochrone/isochrone.json" xlink:type="simple"/>
+						<OnlineResource xlink:href="https://wxs.ign.fr/essentiels/isochrone/isochrone.json" xlink:type="simple"/>
 					</Server>
 					<Server service="OGC:WPS" title="Service WPS" version="1.0.0">
 						<OnlineResource xlink:href="https://wxs.ign.fr/chaine/wps" xlink:type="simple"/>
@@ -947,7 +947,7 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox>-180,-90,180,90</gpp:BoundingBox>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -969,7 +969,7 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox>-180,-90,180,90</gpp:BoundingBox>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1104,7 +1104,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=ECOLES.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1217,7 +1217,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDTOPOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1237,7 +1237,7 @@
 						<gpp:Thematic>Pieton</gpp:Thematic>
 					</gpp:Thematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/isochrone/isochrone.json</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/isochrone/isochrone.json</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1257,7 +1257,7 @@
 						<gpp:Thematic>Pieton</gpp:Thematic>
 					</gpp:Thematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/itineraire/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/itineraire/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1611,7 +1611,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDPARCELLAIREr_1-2_image.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1631,7 +1631,7 @@
 						<gpp:Thematic>Voiture</gpp:Thematic>
 					</gpp:Thematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/itineraire/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/itineraire/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -1784,7 +1784,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_ERMr_2-2.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -2101,7 +2101,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/r/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/r/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -3544,7 +3544,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=SPOT5.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -3564,7 +3564,7 @@
 						<gpp:Thematic>Voiture</gpp:Thematic>
 					</gpp:Thematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/isochrone/isochrone.json</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/isochrone/isochrone.json</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -4107,7 +4107,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/r/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -4424,7 +4424,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/r/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -4701,7 +4701,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDTOPOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -5140,7 +5140,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/r/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/r/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -5523,7 +5523,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_SCAN100r_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -5693,7 +5693,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -5905,7 +5905,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDPARCELLAIREr_1-2_image.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -6033,7 +6033,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=NATURAL-EARTH.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -6197,7 +6197,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=RESTRICTIONS_DRONES_FRANCE_METROPOLITAINE.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -6616,7 +6616,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_SCAN-EXPRESS_1-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -6778,7 +6778,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_ERMr_2-2.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -6891,7 +6891,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDTOPOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -6913,7 +6913,7 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox>-180,-90,180,90</gpp:BoundingBox>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/ols/apis/completion</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/ols/apis/completion</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7352,7 +7352,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/r/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7374,7 +7374,7 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox>-180,-90,180,90</gpp:BoundingBox>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7509,7 +7509,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDTOPOr_2-0.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7653,7 +7653,7 @@
 						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/inspire/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDADRESSEr_2-1.xml" xlink:type="simple"/>
 					</gpp:MetadataURL>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/inspire/v/wms</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/inspire/v/wms</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7675,7 +7675,7 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox>-180,-90,180,90</gpp:BoundingBox>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7696,7 +7696,7 @@
 						<gpp:InspireThematic>Dénominations géographiques</gpp:InspireThematic>
 					</gpp:InspireThematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7717,7 +7717,7 @@
 						<gpp:InspireThematic>Altitude</gpp:InspireThematic>
 					</gpp:InspireThematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/alti/rest/elevation.xml</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/alti/rest/elevation.xml</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7738,7 +7738,7 @@
 						<gpp:InspireThematic>Altitude</gpp:InspireThematic>
 					</gpp:InspireThematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/alti/rest/elevationLine.xml</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/alti/rest/elevationLine.xml</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7759,7 +7759,7 @@
 						<gpp:InspireThematic>Dénominations géographiques</gpp:InspireThematic>
 					</gpp:InspireThematics>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/ols</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/ols</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -7781,7 +7781,7 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox>-180,-90,180,90</gpp:BoundingBox>
 					<gpp:Keys>
-						<gpp:Key id="jhyvi0fgmnuxvfv0zjzorvdn">https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/ols/apis/completion</gpp:Key>
+						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/ols/apis/completion</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>

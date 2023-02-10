@@ -1,0 +1,7 @@
+/* Geoportal Attribution */
+
+.ol-attribution .gp-control-attribution-image {
+  max-height: 30px;
+  max-width: inherit;
+  vertical-align: middle;
+}

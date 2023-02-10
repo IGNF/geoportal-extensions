@@ -18,6 +18,7 @@ var JsDocWebPackPlugin = require("../scripts/webpackPlugins/jsdoc-plugin");
 var HandlebarsPlugin = require("../scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
+var SourceByChunksPlugin = require("../scripts/webpackPlugins/sourcebychunks-plugin");
 
 // -- performances
 var SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -83,7 +84,7 @@ module.exports = (env, argv) => {
             "CRS" : path.join(ROOT, "src", "OpenLayers", "CRS", "AutoLoadCRS.js"),
         },
         output : {
-            path : path.join(ROOT, "dist", "openlayers", "modules"),
+            path : path.join(ROOT, "dist", "openlayers-modules"),
             filename : "[name]" + suffix + ".js",
             libraryExport : 'default',
             libraryTarget : 'assign',
@@ -99,32 +100,44 @@ module.exports = (env, argv) => {
                 if (/^ol\/.+$/.test(request)) {
                     // liste des modules ES6 à garder dans le code...
                     if ([
-                        "ol/events/Event",
                         "ol/events/EventType",
+                        "ol/events/EventType.js",
                         "ol/events",
-                        "ol/obj",
-                        "ol/render/canvas",
-                        "ol/css",
-                        "ol/dom",
-                        "ol/transform",
-                        "ol/asserts",
-                        "ol/AssertionError",
-                        "ol/util",
-                        "ol/render/canvas/LabelCache",
-                        "ol/structs/LRUCache",
-                        "ol/events/Target",
-                        "ol/Disposable",
-                        "ol/functions",
-                        "ol/proj/transforms"
+                        "ol/events.js",
+                        "ol/render/Feature",
+                        "ol/render/Feature.js",
+                        // "ol/obj",
+                        // "ol/css",
+                        // "ol/dom",
+                        // "ol/transform",
+                        // "ol/asserts",
+                        // "ol/AssertionError",
+                        // "ol/util",
+                        // "ol/render/canvas/LabelCache", <!-- depreciate -->
+                        // "ol/structs/LRUCache",
+                        // "ol/events/Event",
+                        // "ol/events/Target",
+                        // "ol/Disposable",
+                        // "ol/functions",
+                        // "ol/proj/transforms"
                     ].includes(request)) {
-                        // console.log("#### IN : ", request);
+                        if (devMode) {
+                            console.log("#### MODULE ES6 ONLY : " + request + " (" + context + ")");
+                        }
                         return callback();
                     }
-                    // console.log("#### OUT : ", request);
-                    const replacedWith = request.replace(/\//g, '.');
+                    if (devMode) {
+                        console.log("#### OL : " + request + " (" + context + ")");
+                    }
+                    const replacedWith = request.replace(/\.js$/g, '').replace(/\//g, '.');
+                    if (devMode) {
+                        console.log(">>> : ", replacedWith);
+                    }
                     return callback(null, replacedWith);
                 }
-                // console.log("#### NULL : ", request);
+                if (devMode) {
+                    console.log("#### OTHER : " + request + " (" + context + ")");
+                }
                 callback();
             },
             /**
@@ -295,6 +308,11 @@ module.exports = (env, argv) => {
             ]
         },
         plugins : [
+            new SourceByChunksPlugin({
+                entry : "OpenLayers",
+                output : path.join(ROOT, "build", "scripts", "release", "manifest-openlayers.txt"),
+                format : "txt"
+            }),
             /** REPLACEMENT DE VALEURS */
             new ReplaceWebpackPlugin(
                 [
@@ -326,9 +344,9 @@ module.exports = (env, argv) => {
             //     __PRODUCTION__ : JSON.stringify(!logMode)
             // }),
             /** GENERATION DE LA JSDOC */
-            new JsDocWebPackPlugin({
-                conf : path.join(ROOT, "build/jsdoc/jsdoc-openlayers.json")
-            }),
+            // new JsDocWebPackPlugin({
+            //     conf : path.join(ROOT, "build/jsdoc/jsdoc-openlayers.json")
+            // }),
             /** CSS / IMAGES */
             new MiniCssExtractPlugin({
                 filename : "[name]" + suffix + ".css"
@@ -400,35 +418,35 @@ module.exports = (env, argv) => {
         ]
             /** AJOUT DES LICENCES */
             .concat([
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["proj4"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-eventbusjs.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["eventbusjs"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
-                        __VERSION__ : pkg.dependencies["sortablejs"],
-                    }),
-                    raw : true
-                }),
-                new BannerWebPackPlugin({
-                    banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-olms.tmpl"),"utf8"), {
-                        __VERSION__ : pkg.dependencies["ol-mapbox-style"],
-                    }),
-                    raw : true,
-                    entryOnly : true
-                }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-proj4js.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["proj4"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : fs.readFileSync(path.join(ROOT, "build/licences", "licence-es6promise.txt"), "utf8"),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-eventbusjs.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["eventbusjs"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-sortablejs.tmpl"), "utf8"), {
+                //         __VERSION__ : pkg.dependencies["sortablejs"],
+                //     }),
+                //     raw : true
+                // }),
+                // new BannerWebPackPlugin({
+                //     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-olms.tmpl"),"utf8"), {
+                //         __VERSION__ : pkg.dependencies["ol-mapbox-style"],
+                //     }),
+                //     raw : true,
+                //     entryOnly : true
+                // }),
                 new BannerWebPackPlugin({
                     banner : header(fs.readFileSync(path.join(ROOT, "build/licences", "licence-ign.tmpl"), "utf8"), {
                         __BRIEF__ : pkg.olExtName,

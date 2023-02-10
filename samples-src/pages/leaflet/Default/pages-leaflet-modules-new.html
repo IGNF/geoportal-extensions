@@ -1,0 +1,100 @@
+{{#extend "layout-leaflet-sample-modules"}}
+
+{{#content "vendor"}}
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/ElevationPath{{ mode }}.css" />
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/LayerSwitcher{{ mode }}.css" />
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/MousePosition{{ mode }}.css" />
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/ReverseGeocode{{ mode }}.css" />
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/SearchEngine{{ mode }}.css" />
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/Route{{ mode }}.css" />
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/Isocurve{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/leaflet-modules/WMTS{{ mode }}.js"></script>   
+        <script src="{{ baseurl }}/dist/leaflet-modules/LayerSwitcher{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/Isocurve{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/MousePosition{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/Route{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/ReverseGeocode{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/SearchEngine{{ mode }}.js"></script>
+        <script src="{{ baseurl }}/dist/leaflet-modules/ElevationPath{{ mode }}.js"></script>
+{{/content}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout de tous les widgets (Utilisation des classes)</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+    <script>
+
+    var createMap = function () {
+      // on cache l'image de chargement du Géoportail.
+      document.getElementById("map").style.backgroundImage = "none";
+
+      // Création de la map
+      var layer = new WMTS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts", {
+	          paramsNative : {
+	              minZoom : 1,
+	              maxZoom : 21
+	          },
+	          paramsWmts   : {
+	              layer   : "ORTHOIMAGERY.ORTHOPHOTOS",
+	              style   : "normal",
+	              format  : "image/jpeg",
+	              version : "1.0.0",
+	              tilematrixset : "PM"
+	          },
+	          originators  : [],
+	          legends      : [],
+	          metadata     : [],
+	          title        : "",
+	          description  : "",
+	          quicklookUrl : ""
+	    });
+
+      var map  = L.map('map', {
+        zoom : 2,
+        center : L.latLng(48, 2)
+      });
+
+      layer.addTo(map);
+
+      var iso = new Isocurve();
+      map.addControl(iso);
+      var layerSwitcher = new LayerSwitcher();
+      map.addControl(layerSwitcher);
+      var mp = new MousePosition();
+      map.addControl(mp);
+      var route = new Route();
+      map.addControl(route);
+      var reverse = new ReverseGeocode();
+      map.addControl(reverse);
+      var search = new SearchEngine();
+      map.addControl(search);
+      var measureProfil = new ElevationPath();
+      map.addControl(measureProfil);
+    };
+
+    Gp.Services.getConfig({
+        serverUrl : "{{ resources }}/AutoConf.js",
+        callbackSuffix : "",
+        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+        timeOut : 20000,
+        onSuccess : createMap
+    });
+    </script>
+{{/content}}
+{{/extend}}

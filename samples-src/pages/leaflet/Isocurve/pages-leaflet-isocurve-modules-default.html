@@ -1,0 +1,61 @@
+{{#extend "layout-leaflet-sample-modules"}}
+
+{{#content "vendor"}}
+        <script src="{{ baseurl }}/dist/leaflet-modules/Layers{{ mode }}.js"></script>
+        <link rel="stylesheet" href="{{ baseurl }}/dist/leaflet-modules/Isocurve{{ mode }}.css" />
+        <script src="{{ baseurl }}/dist/leaflet-modules/Isocurve{{ mode }}.js"></script>
+{{/content}}
+
+{{#content "head"}}
+        <title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+          div#map {
+            width: 100%;
+            height: 500px;
+          }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+        <h2>Ajout de tous les widgets</h2>
+        <!-- map -->
+        <div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+    <script>
+    var map;
+    var createMap = function () {
+      // on cache l'image de chargement du Géoportail.
+      document.getElementById("map").style.backgroundImage = "none";
+
+      // Création de la map
+      var layer = L.geoportalLayer.WMTS({
+        layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+      });
+
+      map  = L.map('map', {
+        zoom : 2,
+        center : L.latLng(48, 2)
+      });
+
+      layer.addTo(map);
+
+      var iso = new Isocurve();
+      map.addControl(iso);
+    };
+
+    Gp.Services.getConfig({
+        serverUrl : "{{ resources }}/AutoConf.js",
+        callbackSuffix : "",
+        // apiKey: "jhyvi0fgmnuxvfv0zjzorvdn",
+        timeOut : 20000,
+        onSuccess : createMap
+    });
+
+    </script>
+{{/content}}
+{{/extend}}

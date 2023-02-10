@@ -1,0 +1,46 @@
+{
+   "peerDependencies" : {},
+   "optionalDependencies" : {
+      "node-fetch" : "^2.6.1",
+      "xmldom" : "^0.1.27"
+   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "leaflet",
+      "publish"
+   ],
+   "bugs" : {},
+   "version" : "2.2.7",
+   "bundleDependencies" : [],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "description" : "French Geoportal Extension for Leaflet",
+   "directories" : {},
+   "devDependencies" : {
+      "proj4leaflet" : "1.0.2",
+      "sortablejs" : "1.8.4",
+      "proj4" : "2.7.5",
+      "loglevel" : "1.6.6",
+      "geoportal-access-lib" : "3.2.0",
+      "leaflet-draw" : "1.0.4"
+   },
+   "name" : "@ignf-geoportal/leaflet-isocurve",
+   "files" : [
+      "dist/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "scripts" : {},
+   "main" : "dist/Isocurve.js",
+   "dependencies" : {
+      "leaflet" : "1.7.1"
+   },
+   "license" : "CECILL-B",
+   "date" : "18/11/2022"
+}

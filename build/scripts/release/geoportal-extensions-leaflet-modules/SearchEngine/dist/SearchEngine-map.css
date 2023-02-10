@@ -1,0 +1,562 @@
+/*!
+ * @brief French Geoportal Extension for Leaflet
+ *
+ * This software is released under the licence CeCILL-B (Free BSD compatible)
+ * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.txt
+ * @see http://www.cecill.info/
+ *
+ * @copyright copyright (c) IGN 
+ * @license CeCILL-B
+ * @author IGN
+ * @version 2.2.7
+ * @date 18/11/2022
+ *
+ */
+
+/* Widgets : general */
+
+.GPwidget {
+  position: absolute;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.GPwidget input[type='text'],
+.GPwidget input[type='button'] {
+  -webkit-appearance: none;
+  color: #333333;
+}
+
+.GPwidget input[type="checkbox"] {
+  display: none;
+}
+
+.GPwidget select {
+  padding-left: 3px;
+  border-radius: 3px;
+}
+
+.GPwidget form {
+  margin-bottom: 0;
+}
+
+.GPwidget * {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+/* waiting */
+
+.GPwaiting {
+    background-image : url(data:image/gif;base64,R0lGODlhNAA0AIQSAAFkpSZ5sAGV3k2Ruiao3kOj1/GUBk225pe/B4S83XrK75HH3qrS5szMzNbW1sHe797e3ubm5v///////////////////////////////////////////////////////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAQAfACwAAAAANAA0AAAF5uAnjmRpnmiqrmzrvnAsz3T9FXhh72Ke8zWfDzgT/ogxIw55cjgiJ6XOhKjaII1sNio8Vb8ImnbMXVLBVhl2vI2hvzIHOwt9veGxyLwhu4dlcw59bzVjgjNoPHU2f0yOj5CRkpMocg2HjwaaBitzmZuaKWuGTKCgKHt8SKabqHulrJwno1qYQLGyJ56OrCuWtrChlMPExcbHH4s1ymK1NJZtM4Fxu3mvMXvMLdBj2ip60zG0WoBzENLVJL+66TDj7GQmbOc1EE9N4SURDvSRqcgj/gH8wC0LsGPtAK7pN7Chw4cQSYQAACH5BAUBAB8ALBYABAAaACcAAAVw4PdBTQOJaKquX+k2bJw6b+nIcu3isV7yLFrttioYczWWcVmICYkq5hKolB6pKOsUm9Vyu9JvKiyOls/otHqNQ7gR6ff7LJeX63Mx3n3f0+txeWyDhIVlBmsGiopoi45njo9fkZKTlIhil42RaYsxIQAh+QQFAQAfACwWAAkAGgAnAAAFdOAnjmQZOVCprmTjuikrf289y/Ub32SUuw6e6teICEuO31GVfC1Zxqd0Sq1arYVsAavNUrvdKVgrHm+l5jMazPVe3/C4/IN4I+73Kn5P3fOffn+AgXUqBocGK4QriIiKfoaNjip4LJKTT5eHU5qJnJJWjVUhACH5BAUBAB8ALAkAFgAnABoAAAV04CeOZGmepdM0Duq+5yo3cO2qcwPZPJnLveBvFezhZrsi76cM4lrNqHRKrVpPhmoBZuh2o4VwGOUtK8VoU9lcRKdJazbP/R7Fv236tnQ/If4IJ3pYa36Af4JuLl6Gh4gmYlKOgFclk4+VIpeBmSOTnZaUTSEAIfkEBQEAHwAsBAAWACcAGgAABXfg9xmkIZ5oqq5rWbJwnLqubLP0e+9nTvJAnwnIyxGJtaNyyWw6n1Ao4hmRIa7XpaPBbbCw4OO2y1WBw0Ryt4o6o3cRNdeRcmfTcojZvSr4CytyXntvKH9/gWR6X3cph4crEQ6LSo+IUYaWgJgnmpucIpagjpc3IQAh+QQFAQAfACwEAAkAGgAnAAAFb+AnjqJhkmiamqyhvmjLwrA806p946Tu8isbMNca1ozIpHLJTCKeiCYUupxOlVaqMxvdZqtWqbZJLpvPyEK5wGYz23AlPJ6c0412t9yucjQaDi98KX+FDTBtfYZ/gUmLhUqPf0p+i42Oi00QfxAiIQAh+QQFAQAfACwEAAQAGgAnAAAFc+AnjmRZGqhhrmyasrDounE7o/V64yvi6zuTb4gA0oTEn+lYSg5zSGcROpJOqVUntknc9rzgsHhMLhXOhTEaHV6vwW62N36G09tutbzM7/v/JhFlDYQNDmKFhYdeEYmFYA6OhIJbEJINYZdhlolkEA6UUCEAIfkEAQEAHwAsBAAEACcAGgAABXXgJ45kWSIoYq5sS6apK8swPN9mHeP8p6O9UmG4+qlMhmRryCwUa6uk1LBqMp9A5FQptBKDW2nX6+SFxSRyuXemjpvBz5lljYu2srX9vu/7/4CBgh8NhQ6DK4WKDYgkEIuGjSKQipKElIySj5CHlpSWIw6RoCEAOw==);
+    background-position : center center;
+    background-repeat : no-repeat;
+}
+
+/* General panels */
+
+.GPpanel {
+  background-color: #FFF;
+}
+
+.GPpanelHeader {
+  position: relative;
+  width: 100%;
+}
+
+.GPpanelTitle {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.GPpanelClose, .GPpanelReduce, .GPpanelInfo {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* Showing/hiding advanced panels */
+
+.GPshowAdvancedToolPicto {
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.GPshowAdvancedToolOpen {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Flex inputs */
+
+.GPflexInput {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* FIXME tempory hack with :not(.GPlocationOriginHidden) !
+.GPflexInput > *:not(.GPlocationOriginHidden) */
+.GPflexInput > * {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  border: 1px solid #999;
+  border-radius: 0;
+}
+
+.GPflexInput *:not(:last-child) {
+  border-right:none;
+}
+
+.GPflexInput *:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.GPflexInput *:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.GPflexInput > *:not(input) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.GPflexInput > input {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.GPflexInput > select {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-right: 7px;
+}
+
+.GPflexInput > label {
+  background-color:  #F2F2F2;
+  color: #666;
+  padding-left: 7px;
+  padding-right: 9px;
+  cursor: pointer;
+}
+
+/* Particular inputs */
+
+.GPinputSelect {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  margin: auto;
+  border: 1px solid #999;
+  color: #333;
+  cursor: pointer;
+}
+
+input.GPinputSubmit {
+  display: block;
+  width: 80px;
+  margin: auto;
+  height: 28px;
+  line-height: 26px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  color: #FFF;
+  font-weight: bold;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-out;
+  cursor: pointer;
+}
+
+input.GPinputSubmit:hover {
+  opacity: 1;
+}
+
+/* Autocomplete/geocode results */
+
+.GPautoCompleteList,
+.GPadvancedAutoCompleteList {
+  z-index: 2;
+  display: none;
+  position: absolute;
+  max-height: 140px;
+  background-color: #FFF;
+  border: 1px solid #999;
+  overflow-y: hidden;
+}
+
+.GPadvancedAutoCompleteList {
+  width: calc(100% - 28px);
+  border-top: none;
+  font-size: 0.9em;
+}
+
+.GPautoCompleteProposal {
+  width: 100%;
+  height: 28px;
+  line-height: 16px;
+  padding: 6px 10px;
+  color: #5E5E5E;
+  font-size: 1.0em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  cursor: pointer;
+}
+
+.GPautoCompleteProposal:hover {
+  color: #000000;
+  background-color: #CEDBEF
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptions {
+  display: block;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.5s ease-out 0s;
+}
+
+input[type="checkbox"]:checked + .GPshowMoreOptions {
+  -webkit-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+  /* bottom: 90px; */
+}
+
+/* SEARCH ENGINE */
+
+input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] {
+  max-width: 0px;
+}
+
+/* Showing/hiding search engine input */
+
+input[id^=GPshowSearchEngine-] {
+  display: none;
+}
+
+label[id^=GPshowSearchEnginePicto] {
+  display: inline-block;
+  transition: border-radius 0s ease-out 0s;
+  transition-delay: 0.5s;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transition-delay: 0s;
+}
+
+input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] {
+  max-width: 0px;
+  border: none;
+  transition: max-width 0.5s ease-out 0s;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label + form[id^=GPsearchInput-] {
+  max-width: 280px;
+}
+
+input[id^=GPshowSearchEngine-] + label + form[id^=GPsearchInput-] + div[id^=GPshowAdvancedSearch] {
+  display: none;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label + form[id^=GPsearchInput-] + div[id^=GPshowAdvancedSearch] {
+  display: inline-block;
+}
+
+div[id^=GPautoCompleteList] {
+  display: none;
+}
+
+input[id^=GPshowSearchEngine-]:checked + label + form[id^=GPsearchInput-] + div[id^=GPautoCompleteList] {
+  display: block;
+}
+
+/* Simple search input */
+
+form[id^=GPsearchInput-] {
+  display: inline-block;
+  position: relative;
+  left: -3px;
+  width: 280px;
+  overflow: hidden;
+}
+
+form[id^=GPsearchInput-] input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #999;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 0;
+  padding-right: 30px;
+  padding-left: 5px;
+  color: #333;
+  font-size: 1.0em;
+}
+
+form[id^=GPsearchInput-] input:disabled {
+  background-color: #DDD;
+  color: #999;
+}
+
+div[id^=GPsearchInputReset] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+  background-position: -30px 0;
+  cursor: pointer;
+}
+
+/* General panels */
+
+div[id^=GPgeocodeResultsClose],
+div[id^=GPadvancedSearchClose] {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+}
+
+div[id^=GPgeocodeResultsClose] {
+  background-position: 0 0;
+}
+
+div[id^=GPadvancedSearchClose] {
+  background-repeat: no-repeat;
+}
+
+/* Advanced search picto */
+
+div[id^=GPshowAdvancedSearch] {
+  transition: border-radius 0s ease-out 0s;
+  transition-delay: 0.5s;
+}
+
+/* Advanced search panel */
+
+div[id^=GPadvancedSearchPanel] {
+  display: none;
+  width: 280px;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+form[id^=GPadvancedSearchForm] {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.GPadvancedSearchCodeLabel,
+.GPadvancedSearchFilterLabel {
+  max-width: 105px;
+}
+
+.GPadvancedSearchCodeLabel,
+.GPadvancedSearchCode,
+ div[id^=GPadvancedSearchFilters] {
+  margin-top: 15px;
+}
+
+.GPadvancedSearchFilterLabel,
+.GPadvancedSearchFilterInput {
+  margin-bottom: 5px;
+}
+
+input[id^=GPadvancedSearchSubmit] {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+/* Autocomplete list / geocode results */
+
+div[id^=GPautoCompleteList],
+div[id^=GPgeocodeResultsList] {
+  width: 280px;
+}
+
+div[id^=GPautoCompleteList] {
+  top: 35px;
+}
+
+div[id^=GPgeocodeResultsList] {
+  display: none;
+  position: absolute;
+  top: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+div[id^=GPgeocodeResults-] {
+  background-color: #FFF;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+
+.GPwidget {
+  position: relative; /* overwritten */
+}
+
+
+#GPadvancedToolsPanel {
+  position: initial; /* overwritten */
+}
+
+/* General panels */
+
+.GPpanel {
+  box-shadow: 0 1px 6px #000;
+  border-radius: 5px;
+}
+
+.GPpanelHeader {
+  height: 32px;
+  background-color: #FFF;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.GPpanelTitle {
+  width: calc(100% - 60px);
+  margin: auto;
+  line-height: 32px;
+  color: #C77A04;
+  border-bottom: 1px solid #C77A04;
+}
+
+.GPpanelClose {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+  background-position: -30px 1px;
+}
+
+.GPpanelReduce {
+  top: 0;
+  right: 30px;
+  width: 30px;
+  height: 32px;
+  background-position: -60px 1px;
+}
+
+.GPpanelInfo {
+  top: 0;
+  left: 0px;
+  width: 30px;
+  height: 32px;
+  background-position: -90px 1px;
+}
+
+/* Showing/hiding advanced panel */
+
+.GPshowAdvancedToolPicto {
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 1px 6px #000;
+  background-color: #FFF;
+  border-radius: 5px;
+}
+
+.GPshowAdvancedToolPicto:hover {
+  background-color: #F4F4F4;
+}
+
+.GPshowAdvancedToolOpen {
+  width: 100%;
+  height: 100%;
+}
+
+/* Submit inputs */
+
+input.GPinputSubmit {
+  background-color: #C77A04;
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptionsImage {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAA7klEQVRIx+3UsUtCURTH8e/x3eciSAhC/QnRGIQPHPoTHPJfyLEpyFqcXkGT/0HQ4uBQs4s4VAiO0b/QJKIIcn333QYVnErIt53PeO7hnnv4wQWllMqa7NL0fmu+wPeLeXd10sJun322yE9t0AY5j+Lk+K+7cjs+rAPSmFnTGzQpb4qDJuWZNT2QxqpnTxsCvN0FdfHyBIwllVoaihXnXkGOxPvLyr173utAgI+b8NTn/AtwsC5NJJVa5WE5yizD+ZySC00XIFgmF4UC40wzXBhcFCfVKE6qC4PTDP81EGB4zeF2hmePfOt3ppT61Q8G2258CD5NRAAAAABJRU5ErkJggg==);
+}
+
+/* SEARCH ENGINE */
+
+div[id^=GPsearchEngine-] {
+  /* top: 10px; */
+  /* left: 46px; */
+}
+
+/* Showing/hiding search engine input */
+
+span[id^=GPshowSearchEngineOpen] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAeCAYAAACsYQl4AAAGbElEQVRo3u2Zf4xUVxXHP+e+mV2QdVdCaaAZagoNbRMxEpeuP0CXbqupURuNVFqzK84OryxIjYJt0vjH9I/+Q0VNy9r17ZsJQrDo1hqNqdEKbECKRQjVxugGS8kyFZDS7UKxu8ube/znTvPcALuZfftHdb7/TO6ZM+/c9z0/7x2ooYYaaqihhv9BZLPZ5q6urtmT0ZUaXdVhzZo1M1Kp1ADwXuDjYRj+7Vr6pkZZdUin098AbhSRwUwmM5BYRHd2dn5CRDYAK4DrgHPAAaA7DMMD0xw53wc+NDY29tkdO3acB+jo6JhTV1f3a+ClKIq+uX379pEk7fq+n46i6F7P8zIjIyPbdu7ceQmgvb191syZM79trd0ENIjIXb29vb+fMtG+76ettU8A666h1pPJZDbm8/lomoh+2y1Pi8guAFX9CjAfYHh4uL6vr28saaKttdvcclhEXnR2W4C7gQ+o6m8KhcJnJvO81EQKqvok8IBbngWettb+0xhzA3A/cD2w7tSpUxbYMA0pulxVK8v5qrp5vE5jY+MKYE+Sdq21N8eWTar6KcdHo4jcBijw1GSf501ULoCKV5+PoujLnue9KiJnPc/7i4g8paq3AgtFZFlzc/Oeo0ePDiYYVS2q+jTQGBO/BVwG6t5JS5G2pUuX/uHYsWOvJWE3l8vdpKo5EZkRE4+KSBlYCcwBBoC3W1pa/nHkyJE3p1Q6crncT4F7gbNRFLWmUql543WiKDqTSqX2A3NVdXehULgvgRd9xJWqTGyPB1R1c6FQOFxxQrlc/q6ILK8kH1ACfhSG4WPV2F27du3d1tpPGmPep6rinHjc87xnenp6TnZ2dt4uIn8EIlXtE5G3RESttW+KyP4wDJ+rdupY4dJld319/RXnRWPMbGC329SKhIL5fmBBnOTh4eE7KyQDBEHw4oULF9qAg7GgWQBU7WhVvV1EZsdJPn78+A96enpOOpWtgKjqFuDP7jciIrOBZVMZ7+a4z1K5XK6/CtH1qlopF3MTqo+fB87HCNh8pWbX19c3ZozZFBOdBz5XrV1jTLeIXHqnrnreM/39/ZGL9i+47PnXyMjIFhHpi5WuS8aY7qkQfd49aIGIjF2FlFERudEtzyVBdLFYPKGqP3bLi/FIHo8gCA67ug2wPQzDV6u1GwTB69baQ245UonkfD6fUtVKOcrv2rXrQhiGJ4FRFwgvBEHw+lSI3u8+V1++fPmNqxA9BKwepz9lGGNsrCRMNIZKJY2nw26pVHoAuA0YMMaEsUhmsnYnIrqSDtenUqknrLWnPc8brUSya4TbKiVDVbuTILmjo2OOm5MBGjo7O5ddo3G2ALPci381m80urNZue3v7LDcnA9SvW7fu/evXr28AvuNkDwdBcNndc9ykqvXOOR/1ff+6qol2J77KrHiXMeZAuVxeba1dZoy5z00bbRWnFAqFg0kQ7U5882OiratWraobr+dkW+M9xRjzy2rtzpgx4+tAU2yiWjU6OvoIMA84FIbhrwBaW1tTIvKlWA+ZZa3dMKW7jkwm86Cq/jDW7B40xmwBNsaaX7cx5rFcLrfH9/0lCXD90n/VBZHlTU1Ne33fr0Sb5HK5jzQ1Ne0DPhYb7wZV9SfVGi2Xy6Vxog+KyCZARWSzi+SFixYt+paILHJ7U+ANa+3hRO46fN9fXi6XN7gRbq5rfPtVtbtQKBzM5XJ7gDuAc8aYtiAIXq72hTdu3Fh/5swZbWxsXCEiO4AbYl9fcvt+T0xWEpEv9vb2/mkq3s3n86n+/n4WL158s6p+TVXvAW4BXhGR59xoVxeL5KF0Ot0TG/+m/5rU9/1brbX7XJpNmezYIeJOVX1+gnHwjmKxuC/JI3gul7sH+IWL5p+p6oUr2P1esVgcmMzzErsmDYLg78aYlcAZYK61NpEy0tDQEK/7r4nIFuBx4HRFePHixYMkDBHpcoH4V2vtIPBba+3vgOGKzokTJ16Z9DST5Oamg+yhoSEFeoAX0un0kt7e3ofDMHxobGxsCXAI6Jk3b16if2Bks9mVqvpp4N/As57nPRqG4bPFYvHno6Ojj4rICWvt/tbW1sk7bjrukH3fX2Kt3eNq+d4wDNt4lyCfz5tSqXQY+DDwUBiGjydyLpiOzQZB8LIxpg3YWy6XV/MuQqlUugVYCAxGUfQkNUwfurq6Zmez2eYaEzXUUEMN/x/4D41MuU8OSr8EAAAAAElFTkSuQmCC);
+}
+
+/* Simple search input */
+
+form[id^=GPsearchInput-] {
+  height: 30px;
+}
+
+div[id^=GPsearchInputReset] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAeCAYAAABwmH1PAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAKPSURBVFiF7Za9ctpAFIXPkQY39oukS+GZyHkeGKOA3YALqNSEFJbsGWzZscX7wKRJlxk/B3JDRntToD9kCUkJnjT7dYgVh2/v7t4FNBqNRqPR/C/YZNBy0ukJ1enZUWTTgSobIwBXE3MuhvHy+evv+0P8uevr6x7J0zAMbcdxynNFeHNzM1dKvVxdXdXm1govJ50eKN8BGIAsrKPovCgtAJdT847gAIAIefmv0rFsnItFGIbnRWkRoed5dwC2uSKXddJGbTLVx2wcu6uNeS+5iRKAq6npx7IAQIr60MKtPJbM5aJ7fHx8LyJZrghd1/WxlY1fYW1urbA1i4YQyc0a7dXUfBYHRlJZgHb2tQTWUXTRyGoPo9FoSDLNJWl7nvfsOI6RVJbMckkGYRjW5jbaw8n+BDlMnhmQhQI2AL9kvyaB1Yn6Vfu8Lcn+FJE0l+RCKbUhs1ySwXq97lft8zyNhIG30lJ8+cCyaW6J9E5sC1mghTCwlf4xMecROdx9sfwwOxQiwtvb27lSqihdepjto/7QKhARfDNL0m7i/gal1NvY3CHWlFZLOtd6yka8S5ULraeMVlVuVOFSWUpAET8bxe5qYz6J037VVOaWyJIMAORy0T05OXlyHKdRbu2gKlmrE/U/fYsuCi3rYNJVsuv1uj8ajS7yLQstpOtvWlPT32k9kEdrFg24PajTi8dOL4Y8nM2iqiXYiPhSkeaKyON4PB6QlPgzXdf1870YwMN4PN6b26ASxk8g3pfbS8UwkQUAAmLNokGu0iIwfjX02keaSzJ4fX0dJrLxM4knIM0leYhcYDnp2Mup6cueFREvfX856dhVY9rieZ7tuq6/7zROKu153sFyNRqNRqPRvA9/AHtLag4LyzlCAAAAAElFTkSuQmCC);
+}
+
+/* General panels */
+
+div[id^=GPgeocodeResultsClose] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAeCAYAAABwmH1PAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAKPSURBVFiF7Za9ctpAFIXPkQY39oukS+GZyHkeGKOA3YALqNSEFJbsGWzZscX7wKRJlxk/B3JDRntToD9kCUkJnjT7dYgVh2/v7t4FNBqNRqPR/C/YZNBy0ukJ1enZUWTTgSobIwBXE3MuhvHy+evv+0P8uevr6x7J0zAMbcdxynNFeHNzM1dKvVxdXdXm1govJ50eKN8BGIAsrKPovCgtAJdT847gAIAIefmv0rFsnItFGIbnRWkRoed5dwC2uSKXddJGbTLVx2wcu6uNeS+5iRKAq6npx7IAQIr60MKtPJbM5aJ7fHx8LyJZrghd1/WxlY1fYW1urbA1i4YQyc0a7dXUfBYHRlJZgHb2tQTWUXTRyGoPo9FoSDLNJWl7nvfsOI6RVJbMckkGYRjW5jbaw8n+BDlMnhmQhQI2AL9kvyaB1Yn6Vfu8Lcn+FJE0l+RCKbUhs1ySwXq97lft8zyNhIG30lJ8+cCyaW6J9E5sC1mghTCwlf4xMecROdx9sfwwOxQiwtvb27lSqihdepjto/7QKhARfDNL0m7i/gal1NvY3CHWlFZLOtd6yka8S5ULraeMVlVuVOFSWUpAET8bxe5qYz6J037VVOaWyJIMAORy0T05OXlyHKdRbu2gKlmrE/U/fYsuCi3rYNJVsuv1uj8ajS7yLQstpOtvWlPT32k9kEdrFg24PajTi8dOL4Y8nM2iqiXYiPhSkeaKyON4PB6QlPgzXdf1870YwMN4PN6b26ASxk8g3pfbS8UwkQUAAmLNokGu0iIwfjX02keaSzJ4fX0dJrLxM4knIM0leYhcYDnp2Mup6cueFREvfX856dhVY9rieZ7tuq6/7zROKu153sFyNRqNRqPRvA9/AHtLag4LyzlCAAAAAElFTkSuQmCC);
+}
+
+div[id^=GPadvancedSearchClose] {
+  background-image: url(data:image/png;base64,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);
+  background-position: -60px 0;
+}
+
+/* Advanced search picto */
+
+span[id^=GPshowAdvancedSearchOpen] {
+  background-image: url(data:image/png;base64,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);
+  background-position: -30px 0;
+}
+
+/* Autocomplete list / geocode results */
+
+div[id^=GPautoCompleteList],
+div[id^=GPgeocodeResultsList] {
+  margin-left: 27px;
+  box-shadow: 0 1px 5px #000;
+}
+
+div[id^=GPgeocodeResultsList] {
+  top: 38px;
+  border-radius: 5px;
+}
+

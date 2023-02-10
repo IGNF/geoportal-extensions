@@ -1,0 +1,331 @@
+/* Layer Import */
+
+div[id^="GPimport-"] {
+  top: 220px;
+  left: 10px;
+}
+
+/* Showing/hiding import panel */
+
+span[id^="GPshowImportOpen-"] {
+  background-image: url("img/GPimportOpen.png");
+}
+
+label[id^="GPshowImportPicto-"] {
+  display: inline-block;
+}
+
+input[id^="GPshowImport-"] + label {
+  display: block;
+}
+
+input[id^="GPshowImport-"]:checked + label {
+  display: none;
+}
+
+input[id^="GPshowImport-"] + label + div {
+  display: none;
+}
+
+input[id^="GPshowImport-"]:checked + label + div {
+  display: block;
+}
+
+/* General panels */
+
+div[id^="GPimportPanel-"],
+div[id^="GPimportGetCapPanel-"],
+div[id^="GPimportMapBoxPanel-"] {
+  left: 8px;
+}
+
+div[id^="GPimportPanel-"] {
+    position: absolute;
+    width: 280px;
+}
+
+div[id^="GPimportGetCapPanel-"],
+div[id^="GPimportMapBoxPanel-"] {
+    position: absolute;
+    width: 340px;
+}
+
+div[id^="GPimportPanelClose-"],
+div[id^="GPimportGetCapPanelClose-"],
+div[id^="GPimportMapBoxPanelClose-"] {
+  background-image: url("img/GPimportOpen.png");
+}
+
+div[id^="GPimportGetCapPanel-"],
+div[id^="GPimportMapBoxPanel-"] {
+  display: none;
+}
+
+div[id^=GPimportMapBoxPanelReturnPicto-] {
+  background-color: #366291;
+  background-image: url("img/GPimportMapBoxReturn.png");
+}
+
+div[id^="GPimportMapBoxPanelReturnPicto-"] {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  opacity: 1;
+  background-position: 0 0;
+  cursor: pointer;
+}
+
+/* Import waiting */
+
+.GPimportWaitingContainerVisible,
+.GPimportWaitingContainerHidden {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.9);
+  font-size: 1.5em;
+  font-weight: bold;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.GPimportWaitingContainerVisible {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+}
+
+.GPimportWaitingContainerHidden {
+  display: none;
+}
+
+.GPimportWaiting {
+  margin: auto;
+}
+
+/* Import form */
+
+form[id^="GPimportForm-"] {
+  padding: 15px;
+}
+
+.GPimportVisibleParams {
+  display: block;
+}
+
+.GPimportHiddenParams,
+.GPimportValueHidden {
+  display: none;
+}
+
+div[id^="GPimportTypeLine-"] {
+  border-bottom: 1px solid #999;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+div[id^="GPimportChoice-"] {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.GPimportChoiceAlt input[type="radio"] {
+  display: none;
+}
+
+.GPimportChoiceAltTxt {
+  display: block;
+  line-height: 28px;
+  color: #BBB;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + .GPimportChoiceAltTxt {
+  color: #366291;
+}
+
+input[id^="GPimportSubmit-"] {
+  margin-top: 20px;
+}
+
+/* Line inputs */
+
+.GPimportInputLine {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.GPimportInputLine > * {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  border: 1px solid #999;
+  border-radius: 0;
+}
+
+.GPimportInputLine *:not(:last-child) {
+  border-right:none;
+}
+
+.GPimportInputLine *:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.GPimportInputLine *:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.GPimportInputLine > *:not(input) {
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+}
+
+.GPimportInputLine > input {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+      flex: 1;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.GPimportInputLine > select {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+      flex: 1;
+  padding-right: 7px;
+}
+
+.GPimportInputLine > label {
+  background-color:  #F2F2F2;
+  color: #666;
+  padding-left: 7px;
+  padding-right: 9px;
+  cursor: pointer;
+}
+
+/* Get cap results */
+
+div[id^="GPimportGetCapResults-"],
+div[id^="GPimportMapBoxResults-"] {
+  background-color: #FFF;
+  height: 140px;
+  overflow-y: auto;
+  resize: vertical;
+}
+
+input[id^="GPimportGetCapRubrique-"],
+input[id^="GPimportMapBoxSource-"] {
+  display: none;
+}
+input[id^="GPimportGetCapRubrique-"] ~ li,
+input[id^="GPimportMapBoxSource-"] ~ div {
+ display: none;
+}
+input[id^="GPimportGetCapRubrique-"]:checked ~ li,
+input[id^="GPimportMapBoxSource-"]:checked ~ div {
+ display: block;
+}
+input[id^="GPimportGetCapRubrique-"] ~ ul {
+ display: block;
+}
+input[id^="GPimportGetCapRubrique-"]:checked ~ ul {
+ display: none;
+}
+
+.GPimportGetCapProposal {
+  width: 100%;
+  height: 28px;
+  line-height: 16px;
+  padding: 6px 10px;
+  color: #5E5E5E;
+  font-size: 1.0em;
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow:ellipsis;
+     text-overflow:ellipsis;
+  cursor: pointer;
+  list-style-type: none;
+}
+
+.GPimportGetCapRubriqueTitle,
+.GPimportMapBoxSourceTitle,
+.GPimportMapBoxListSourceTitle {
+    color: #5E5E5E;
+}
+
+.GPimportGetCapRubrique,
+.GPimportGetCapListRubrique,
+.GPimportMapBoxSource,
+.GPimportMapBoxListSource {
+    list-style-type: none;
+}
+
+li.GPimportGetCapRubrique:before,
+li.GPimportGetCapListRubrique:before,
+li.GPimportMapBoxSource:before,
+li.GPimportMapBoxListSource:before {
+	/* content: "→ "; caractère UTF-8 */
+    content: "» ";
+}
+
+.GPimportGetCapProposal:hover,
+.GPimportGetCapRubrique:hover,
+.GPimportMapBoxSource {
+
+}
+
+.GPimportGetCapRubriqueTitle:hover,
+.GPimportMapBoxSourceTitle:hover {
+    color: #000000;
+}
+
+.GPimportGetCapProposal:hover {
+  color: #000000;
+}
+
+.GPimportMapBoxSourceVisibility,
+.GPimportMapBoxSourceStyle,
+.GPimportMapBoxSourceFilter,
+.GPimportMapBoxSourceScale {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.GPimportMapBoxJsonEdit {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+.GPimportMapBoxJsonEdithidden {
+    display: none;
+}
+
+.gp-json-string { color: green; }
+.gp-json-number { color: darkorange; }
+.gp-json-boolean { color: blue; }
+.gp-json-null { color: magenta; }
+.gp-json-key { color: red; }
+
+.GPimportMapBoxSourceVisibilityInput {
+    display: block  !important;
+}
+
+.GPimportMapBoxSourceVisibilityLabel {
+
+}
+
+.GPimportMapBoxSourceScale {
+}

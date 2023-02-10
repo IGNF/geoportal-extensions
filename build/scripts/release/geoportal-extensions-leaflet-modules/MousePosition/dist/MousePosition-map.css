@@ -1,0 +1,575 @@
+/*!
+ * @brief French Geoportal Extension for Leaflet
+ *
+ * This software is released under the licence CeCILL-B (Free BSD compatible)
+ * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ * @see http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.txt
+ * @see http://www.cecill.info/
+ *
+ * @copyright copyright (c) IGN 
+ * @license CeCILL-B
+ * @author IGN
+ * @version 2.2.7
+ * @date 18/11/2022
+ *
+ */
+
+/* Widgets : general */
+
+.GPwidget {
+  position: absolute;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.GPwidget input[type='text'],
+.GPwidget input[type='button'] {
+  -webkit-appearance: none;
+  color: #333333;
+}
+
+.GPwidget input[type="checkbox"] {
+  display: none;
+}
+
+.GPwidget select {
+  padding-left: 3px;
+  border-radius: 3px;
+}
+
+.GPwidget form {
+  margin-bottom: 0;
+}
+
+.GPwidget * {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+/* waiting */
+
+.GPwaiting {
+    background-image : url(data:image/gif;base64,R0lGODlhNAA0AIQSAAFkpSZ5sAGV3k2Ruiao3kOj1/GUBk225pe/B4S83XrK75HH3qrS5szMzNbW1sHe797e3ubm5v///////////////////////////////////////////////////////yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAQAfACwAAAAANAA0AAAF5uAnjmRpnmiqrmzrvnAsz3T9FXhh72Ke8zWfDzgT/ogxIw55cjgiJ6XOhKjaII1sNio8Vb8ImnbMXVLBVhl2vI2hvzIHOwt9veGxyLwhu4dlcw59bzVjgjNoPHU2f0yOj5CRkpMocg2HjwaaBitzmZuaKWuGTKCgKHt8SKabqHulrJwno1qYQLGyJ56OrCuWtrChlMPExcbHH4s1ymK1NJZtM4Fxu3mvMXvMLdBj2ip60zG0WoBzENLVJL+66TDj7GQmbOc1EE9N4SURDvSRqcgj/gH8wC0LsGPtAK7pN7Chw4cQSYQAACH5BAUBAB8ALBYABAAaACcAAAVw4PdBTQOJaKquX+k2bJw6b+nIcu3isV7yLFrttioYczWWcVmICYkq5hKolB6pKOsUm9Vyu9JvKiyOls/otHqNQ7gR6ff7LJeX63Mx3n3f0+txeWyDhIVlBmsGiopoi45njo9fkZKTlIhil42RaYsxIQAh+QQFAQAfACwWAAkAGgAnAAAFdOAnjmQZOVCprmTjuikrf289y/Ub32SUuw6e6teICEuO31GVfC1Zxqd0Sq1arYVsAavNUrvdKVgrHm+l5jMazPVe3/C4/IN4I+73Kn5P3fOffn+AgXUqBocGK4QriIiKfoaNjip4LJKTT5eHU5qJnJJWjVUhACH5BAUBAB8ALAkAFgAnABoAAAV04CeOZGmepdM0Duq+5yo3cO2qcwPZPJnLveBvFezhZrsi76cM4lrNqHRKrVpPhmoBZuh2o4VwGOUtK8VoU9lcRKdJazbP/R7Fv236tnQ/If4IJ3pYa36Af4JuLl6Gh4gmYlKOgFclk4+VIpeBmSOTnZaUTSEAIfkEBQEAHwAsBAAWACcAGgAABXfg9xmkIZ5oqq5rWbJwnLqubLP0e+9nTvJAnwnIyxGJtaNyyWw6n1Ao4hmRIa7XpaPBbbCw4OO2y1WBw0Ryt4o6o3cRNdeRcmfTcojZvSr4CytyXntvKH9/gWR6X3cph4crEQ6LSo+IUYaWgJgnmpucIpagjpc3IQAh+QQFAQAfACwEAAkAGgAnAAAFb+AnjqJhkmiamqyhvmjLwrA806p946Tu8isbMNca1ozIpHLJTCKeiCYUupxOlVaqMxvdZqtWqbZJLpvPyEK5wGYz23AlPJ6c0412t9yucjQaDi98KX+FDTBtfYZ/gUmLhUqPf0p+i42Oi00QfxAiIQAh+QQFAQAfACwEAAQAGgAnAAAFc+AnjmRZGqhhrmyasrDounE7o/V64yvi6zuTb4gA0oTEn+lYSg5zSGcROpJOqVUntknc9rzgsHhMLhXOhTEaHV6vwW62N36G09tutbzM7/v/JhFlDYQNDmKFhYdeEYmFYA6OhIJbEJINYZdhlolkEA6UUCEAIfkEAQEAHwAsBAAEACcAGgAABXXgJ45kWSIoYq5sS6apK8swPN9mHeP8p6O9UmG4+qlMhmRryCwUa6uk1LBqMp9A5FQptBKDW2nX6+SFxSRyuXemjpvBz5lljYu2srX9vu/7/4CBgh8NhQ6DK4WKDYgkEIuGjSKQipKElIySj5CHlpSWIw6RoCEAOw==);
+    background-position : center center;
+    background-repeat : no-repeat;
+}
+
+/* General panels */
+
+.GPpanel {
+  background-color: #FFF;
+}
+
+.GPpanelHeader {
+  position: relative;
+  width: 100%;
+}
+
+.GPpanelTitle {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.GPpanelClose, .GPpanelReduce, .GPpanelInfo {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* Showing/hiding advanced panels */
+
+.GPshowAdvancedToolPicto {
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.GPshowAdvancedToolOpen {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Flex inputs */
+
+.GPflexInput {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* FIXME tempory hack with :not(.GPlocationOriginHidden) !
+.GPflexInput > *:not(.GPlocationOriginHidden) */
+.GPflexInput > * {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  border: 1px solid #999;
+  border-radius: 0;
+}
+
+.GPflexInput *:not(:last-child) {
+  border-right:none;
+}
+
+.GPflexInput *:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.GPflexInput *:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.GPflexInput > *:not(input) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.GPflexInput > input {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 5px;
+  min-width: 0;
+}
+
+.GPflexInput > select {
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-right: 7px;
+}
+
+.GPflexInput > label {
+  background-color:  #F2F2F2;
+  color: #666;
+  padding-left: 7px;
+  padding-right: 9px;
+  cursor: pointer;
+}
+
+/* Particular inputs */
+
+.GPinputSelect {
+  display: block;
+  height: 28px;
+  line-height: 26px;
+  margin: auto;
+  border: 1px solid #999;
+  color: #333;
+  cursor: pointer;
+}
+
+input.GPinputSubmit {
+  display: block;
+  width: 80px;
+  margin: auto;
+  height: 28px;
+  line-height: 26px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  color: #FFF;
+  font-weight: bold;
+  opacity: 0.8;
+  transition: opacity 0.2s ease-out;
+  cursor: pointer;
+}
+
+input.GPinputSubmit:hover {
+  opacity: 1;
+}
+
+/* Autocomplete/geocode results */
+
+.GPautoCompleteList,
+.GPadvancedAutoCompleteList {
+  z-index: 2;
+  display: none;
+  position: absolute;
+  max-height: 140px;
+  background-color: #FFF;
+  border: 1px solid #999;
+  overflow-y: hidden;
+}
+
+.GPadvancedAutoCompleteList {
+  width: calc(100% - 28px);
+  border-top: none;
+  font-size: 0.9em;
+}
+
+.GPautoCompleteProposal {
+  width: 100%;
+  height: 28px;
+  line-height: 16px;
+  padding: 6px 10px;
+  color: #5E5E5E;
+  font-size: 1.0em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  cursor: pointer;
+}
+
+.GPautoCompleteProposal:hover {
+  color: #000000;
+  background-color: #CEDBEF
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptions {
+  display: block;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.5s ease-out 0s;
+}
+
+input[type="checkbox"]:checked + .GPshowMoreOptions {
+  -webkit-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+  /* bottom: 90px; */
+}
+
+/* MOUSE POSITION */
+
+/* Showing/hiding mouse position panel */
+
+label[id^=GPshowMousePositionPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowMousePosition-] + label {
+  display: block;
+}
+
+input[id^=GPshowMousePosition-]:checked + label {
+  display: none;
+}
+
+input[id^=GPshowMousePosition-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowMousePosition-]:checked + label + div {
+  display: block;
+}
+
+/* General panels */
+
+div[id^=GPmousePositionPanel-] {
+  width: 300px;
+  overflow: hidden;
+}
+
+/* Basic infos */
+
+div[id^=GPmousePositionBasicPanel] {
+  padding: 10px 15px;
+  position: relative;
+}
+
+.GPmousePositionLabel,
+.GPmousePositionCoords {
+  display: inline-block;
+  line-height: 20px;
+}
+
+.GPmousePositionLabel {
+  width: 80px;
+  font-weight: bold;
+}
+
+.GPmousePositionCoords {
+  width: 110px;
+}
+
+/* Showing settings */
+
+.GPshowMousePositionSettingsPicto {
+  bottom: 5px;
+  right: 0;
+  transition: all 0.5s ease-out 0s;
+}
+
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + .GPshowMousePositionSettingsPicto {
+  bottom: 100px;
+}
+
+div[id^=GPmousePositionSettings-] {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
+}
+
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + label + div[id^=GPmousePositionSettings-] {
+  max-height: 95px;
+  opacity: 1;
+}
+
+/* Settings */
+
+div[id^=GPmousePositionSettings-] {
+  height: 95px;
+  padding-left: 0 15px;
+  overflow: hidden;
+}
+
+.GPmousePositionSettingsLabel {
+  display: block;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  line-height: 16px;
+}
+
+.GPmousePositionSettingsSelect {
+  width: 180px;
+  margin-top: 5px;
+}
+
+/* General panels */
+
+div[id^=GPmousePositionCoordinate-] input.error {
+    border: 1px solid rgb(255, 0, 0);
+}
+div[id^=GPmousePositionCoordinate-] input[readonly] {
+    border: 1px solid transparent;
+    padding: 2px;
+    text-align: right;
+}
+
+input[id^=GPmousePositionLat-], input[id^=GPmousePositionLon-] {
+    width: 120px;
+}
+
+span[id^=GPmousePositionAlt-] {
+    display: inline-block;
+    padding: 2px;
+    width: 120px;
+    line-height: 20px;
+    text-align: right;
+}
+
+/* sexagesimal coordinates */
+
+.GPSexagesimal, .GPSexagesimalsec {
+    margin:0;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+}
+
+input:read-only.GPSexagesimal, input:read-only.GPSexagesimalsec {
+    text-align: right;
+}
+
+.GPSexagesimal {
+    width: 30px;
+}
+
+.GPSexagesimalsec {
+    width: 45px;
+}
+.GPmousePositionSexagesimalLabel {
+    font-size: 1.2em;
+    vertical-align: middle;
+    padding: 0;
+}
+
+/* direction N/S ou E/O */
+select.GPmousePositionDirection {
+    border: 1px solid #999;
+    margin-left: 2px;
+}
+
+select.GPmousePositionDirection:disabled{
+    border: none;
+    background: transparent;
+    color: black;
+    /*For FireFox*/
+   -webkit-appearance: none;
+   /*For Chrome*/
+   -moz-appearance: none;
+}
+
+/*For IE10+*/
+select.GPmousePositionDirection:disabled::-ms-expand {
+    display: none;
+}
+select.GPmousePositionDirection:disabled::-ms-value {
+    color: black;
+}
+
+.GPmousePositionUnits,
+.GPmousePositionAltitudeUnits {
+    margin-left: 5px;
+}
+
+/* EDIT COORDINATES TOOLS */
+.GPmousePositionPanelEditTools {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}
+
+.GPmousePositionEditTool {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+span[id^=GPmousePositionCloseEdit] {
+    background-position: -18px 0;
+    margin-left: 5px;
+}
+
+img[id^=GPmousePositionMarker]:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+}
+
+#GPmapCenter.GPmapCenterVisible {
+  display: block;
+}
+
+
+.GPwidget {
+  position: relative; /* overwritten */
+}
+
+
+#GPadvancedToolsPanel {
+  position: initial; /* overwritten */
+}
+
+/* General panels */
+
+.GPpanel {
+  box-shadow: 0 1px 6px #000;
+  border-radius: 5px;
+}
+
+.GPpanelHeader {
+  height: 32px;
+  background-color: #FFF;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.GPpanelTitle {
+  width: calc(100% - 60px);
+  margin: auto;
+  line-height: 32px;
+  color: #C77A04;
+  border-bottom: 1px solid #C77A04;
+}
+
+.GPpanelClose {
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 32px;
+  background-position: -30px 1px;
+}
+
+.GPpanelReduce {
+  top: 0;
+  right: 30px;
+  width: 30px;
+  height: 32px;
+  background-position: -60px 1px;
+}
+
+.GPpanelInfo {
+  top: 0;
+  left: 0px;
+  width: 30px;
+  height: 32px;
+  background-position: -90px 1px;
+}
+
+/* Showing/hiding advanced panel */
+
+.GPshowAdvancedToolPicto {
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 1px 6px #000;
+  background-color: #FFF;
+  border-radius: 5px;
+}
+
+.GPshowAdvancedToolPicto:hover {
+  background-color: #F4F4F4;
+}
+
+.GPshowAdvancedToolOpen {
+  width: 100%;
+  height: 100%;
+}
+
+/* Submit inputs */
+
+input.GPinputSubmit {
+  background-color: #C77A04;
+}
+
+/* Showing additional hidden options */
+
+.GPshowMoreOptionsImage {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAA7klEQVRIx+3UsUtCURTH8e/x3eciSAhC/QnRGIQPHPoTHPJfyLEpyFqcXkGT/0HQ4uBQs4s4VAiO0b/QJKIIcn333QYVnErIt53PeO7hnnv4wQWllMqa7NL0fmu+wPeLeXd10sJun322yE9t0AY5j+Lk+K+7cjs+rAPSmFnTGzQpb4qDJuWZNT2QxqpnTxsCvN0FdfHyBIwllVoaihXnXkGOxPvLyr173utAgI+b8NTn/AtwsC5NJJVa5WE5yizD+ZySC00XIFgmF4UC40wzXBhcFCfVKE6qC4PTDP81EGB4zeF2hmePfOt3ppT61Q8G2258CD5NRAAAAABJRU5ErkJggg==);
+}
+
+/* MOUSE POSITION */
+
+div[id^=GPmousePosition-] {
+  /* bottom: 10px; */
+  /* left: 10px; */
+}
+
+/* Showing/hiding mouse position panel */
+
+span[id^=GPshowMousePositionOpen] {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAeCAYAAABwmH1PAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHjSURBVFiF7ZixctpAEIb/PVk09otkxkUKF8LPc45NwO5RGhqL3jZxHO55InVpMpnxg7iBOf0pLGEQaIREFJj4vhl1dzv7z7+7twA4HI53idaaWmvuO4+6qH0n4HD8XaTpxbx/jTGNY1QRD/0LSnrW7diejJBuOkNAkqF3R6Wez2/nD1UxD7aH46F/AeE3gXxKZt4TR+u5EpA49O4hMhDy7scXf1AV96hpQm06CwCQ9CMgmUjRycybE7YvAIHM2dCbCKSX3xCmH6rCHqzDQWQHIJdKVHpJ6H3nCGrh7JtYQDgNOva6Km5tl8re3jYcz/sTIotSVaBJgRkgnxcHhdPAt1dlfb7MLg6/ZF9rCMBgbG+WnbYQ3VQssEFwcYMq2ahejDEnxpgTFERveX9rctGKfCCKJUlTRyxwwD1cxApkrWdYvyV36eHc2WOgvamdDyiB9EtOmKBjLxuXdA2Os681NooVToWcvJ0SXfZOb6Ldt3QHysQGvr3CCCxO722dPljBcehNVqYx+BhE64vHylsMfu1GtqT0X2lc0u3/HlY/gcyt16VikIsFsukd2f7Sk0VC/a6K2ni1bJtuNDfx0Pch6Wlwuyo2RwBybG+S0FOg+nU+nj/uI1fHf4H7T8vhcDj+AX8AnMTkomeXEcwAAAAASUVORK5CYII=);
+}
+
+div[id^=GPmousePositionPanelClose]  {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAeCAYAAABwmH1PAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAHjSURBVFiF7ZixctpAEIb/PVk09otkxkUKF8LPc45NwO5RGhqL3jZxHO55InVpMpnxg7iBOf0pLGEQaIREFJj4vhl1dzv7z7+7twA4HI53idaaWmvuO4+6qH0n4HD8XaTpxbx/jTGNY1QRD/0LSnrW7diejJBuOkNAkqF3R6Wez2/nD1UxD7aH46F/AeE3gXxKZt4TR+u5EpA49O4hMhDy7scXf1AV96hpQm06CwCQ9CMgmUjRycybE7YvAIHM2dCbCKSX3xCmH6rCHqzDQWQHIJdKVHpJ6H3nCGrh7JtYQDgNOva6Km5tl8re3jYcz/sTIotSVaBJgRkgnxcHhdPAt1dlfb7MLg6/ZF9rCMBgbG+WnbYQ3VQssEFwcYMq2ahejDEnxpgTFERveX9rctGKfCCKJUlTRyxwwD1cxApkrWdYvyV36eHc2WOgvamdDyiB9EtOmKBjLxuXdA2Os681NooVToWcvJ0SXfZOb6Ldt3QHysQGvr3CCCxO722dPljBcehNVqYx+BhE64vHylsMfu1GtqT0X2lc0u3/HlY/gcyt16VikIsFsukd2f7Sk0VC/a6K2ni1bJtuNDfx0Pch6Wlwuyo2RwBybG+S0FOg+nU+nj/uI1fHf4H7T8vhcDj+AX8AnMTkomeXEcwAAAAASUVORK5CYII=);
+}
+
+.GPmousePositionEditTool {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAASCAYAAAAzI3woAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QYXCC4cQlf82gAAAvFJREFUSMfllk9PE1EUxc99DDQBxZV8BKGUlkJKQjEK6rIWDQETFy5o17JwQ1s0QEKhbNTA1kLixogkhIBbURL+JDYyFKTtZ9DEgIQEmb7rojNkWmYoG42Jb/fm3rz5zbnn3jdAmbURU3gjpjD+0hL4xxZZPVwbQZ34pQwQEGDAqyeqTFg+kdrUzQl8O+/Q6cE7r2vohy/kCDZhdFTavXsm0qYe4lJuILHywBZofaiij5iSAC7bHHRAzOH2ify8HUyrWH0kiJGVnly/I9hoAUWvIr5tl1DdzECKb7wzoIQFzFsdZkESOo0YM7oYWARQy0Rzm9GKXiugatpvEVSwXINI188cv0+XfDjNRHw7LqG6AYAIqMFP5xkPrY2gTleGwBj0j2s91+PaqhHvmNA+dYxr94kRBUBMlFyN4mopUDiR8mRkS9rYO4Xqmo20ZjA8LAxlnEJ1GfEse7JhR6D5TMk2YsoYgCEAC/5xradM5y0C6AZhzB/Xntn5wym2PMaDnGzO5YGTRrHdZIbprwq6zCU1lywIAJLwslwnMOM5ABDjrl1KKPHZa1bqmtiuLwcDAGQ3Y/zjGhlzyGpvl1+q1GykTa0XWx5zMCvduX5Ht5XZ//wcyoPpDClbj5tiDw0pKhjNktBpNrOlh54qXZBYAWHLH9da7c42WtsqaDcSzAot6b54UvazZSGHGcsXhcmyJ5vJe3eMfYNI188eL+3p3XcWSFZq0wAOCLi3GVUidnfZekyJ6g2wr7E2fVGY/qqgKzSZajYb3QqqqJab0YpeJporCIVFMF4Q4aOOfktXJghAMnFvRzy/UEqTjPh2GoV62k0Z6f0aSqTcANg8GM2zaE96d8OFnGJTt0/k54m4z1DqFKZQphVDGTD3WcEAwCGufJFMp8qEHAGPCUYfCSm3oRQzcITavXMv19UorlYKZQBAAIwWPXOLGctVVdqUbwTfz79cb7+ppoOmcCJVClNU2mTElz7i2t3Hkx8eXrht//v/od8GMV64Yi7NnAAAAABJRU5ErkJggg==);
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  background-image: url(data:image/png;base64,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);
+}
+

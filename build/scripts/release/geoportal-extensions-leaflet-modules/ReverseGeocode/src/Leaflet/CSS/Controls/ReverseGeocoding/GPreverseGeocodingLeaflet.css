@@ -1,0 +1,43 @@
+/* REVERSE GEOCODING */
+
+[id^="GPreverseGeocoding-"] {
+  /*left: 10px;*/
+  top: 0; /*overwritten*/
+}
+
+/* Showing/hiding reverse geocoding panel */
+
+[id^="GPshowReverseGeocodingOpen-"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* General panels */
+
+[id^="GPreverseGeocodingPanel-"] {
+  left: 10px;
+}
+
+[id^="GPreverseGeocodingPanelClose-"] {
+  background-image: url("img/GPreverseGeocodingOpen.png");
+}
+
+/* Calc waiting */
+
+.GPreverseGeocodingCalcWaitingContainerVisible,
+.GPreverseGeocodingCalcWaitingContainerHidden {
+  border-radius: 5px;
+}
+
+/* Results panel */
+
+[id^="GPreverseGeocodingReturnPicto-"] {
+  width: 30px  !important;
+  height: 30px !important;
+  background-color: #C77A04;
+  background-image: url("img/GPreverseGeocodingReturn.png");
+}
+
+.GPreverseGeocodedLocationHighlight {
+    background-color: rgba(255,200,0,0.25);
+    color: #222;
+}

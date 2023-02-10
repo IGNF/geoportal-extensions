@@ -1,0 +1,215 @@
+/* MOUSE POSITION */
+
+/* Showing/hiding mouse position panel */
+
+label[id^=GPshowMousePositionPicto] {
+  display: inline-block;
+}
+
+input[id^=GPshowMousePosition-] + label {
+  display: block;
+}
+
+input[id^=GPshowMousePosition-]:checked + label {
+  display: none;
+}
+
+input[id^=GPshowMousePosition-] + label + div {
+  display: none;
+}
+
+input[id^=GPshowMousePosition-]:checked + label + div {
+  display: block;
+}
+
+/* General panels */
+
+div[id^=GPmousePositionPanel-] {
+  width: 300px;
+  overflow: hidden;
+}
+
+/* Basic infos */
+
+div[id^=GPmousePositionBasicPanel] {
+  padding: 10px 15px;
+  position: relative;
+}
+
+.GPmousePositionLabel,
+.GPmousePositionCoords {
+  display: inline-block;
+  line-height: 20px;
+}
+
+.GPmousePositionLabel {
+  width: 80px;
+  font-weight: bold;
+}
+
+.GPmousePositionCoords {
+  width: 110px;
+}
+
+/* Showing settings */
+
+.GPshowMousePositionSettingsPicto {
+  bottom: 5px;
+  right: 0;
+  transition: all 0.5s ease-out 0s;
+}
+
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + .GPshowMousePositionSettingsPicto {
+  bottom: 100px;
+}
+
+div[id^=GPmousePositionSettings-] {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease-out 0s, opacity 0.5s ease-out 0s;
+}
+
+div[id^=GPmousePosition-] input[type="checkbox"]:checked + label + div[id^=GPmousePositionSettings-] {
+  max-height: 95px;
+  opacity: 1;
+}
+
+/* Settings */
+
+div[id^=GPmousePositionSettings-] {
+  height: 95px;
+  padding-left: 0 15px;
+  overflow: hidden;
+}
+
+.GPmousePositionSettingsLabel {
+  display: block;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  line-height: 16px;
+}
+
+.GPmousePositionSettingsSelect {
+  width: 180px;
+  margin-top: 5px;
+}
+
+/* General panels */
+
+div[id^=GPmousePositionCoordinate-] input.error {
+    border: 1px solid rgb(255, 0, 0);
+}
+div[id^=GPmousePositionCoordinate-] input[readonly] {
+    border: 1px solid transparent;
+    padding: 2px;
+    text-align: right;
+}
+
+input[id^=GPmousePositionLat-], input[id^=GPmousePositionLon-] {
+    width: 120px;
+}
+
+span[id^=GPmousePositionAlt-] {
+    display: inline-block;
+    padding: 2px;
+    width: 120px;
+    line-height: 20px;
+    text-align: right;
+}
+
+/* sexagesimal coordinates */
+
+.GPSexagesimal, .GPSexagesimalsec {
+    margin:0;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+}
+
+input:read-only.GPSexagesimal, input:read-only.GPSexagesimalsec {
+    text-align: right;
+}
+
+.GPSexagesimal {
+    width: 30px;
+}
+
+.GPSexagesimalsec {
+    width: 45px;
+}
+.GPmousePositionSexagesimalLabel {
+    font-size: 1.2em;
+    vertical-align: middle;
+    padding: 0;
+}
+
+/* direction N/S ou E/O */
+select.GPmousePositionDirection {
+    border: 1px solid #999;
+    margin-left: 2px;
+}
+
+select.GPmousePositionDirection:disabled{
+    border: none;
+    background: transparent;
+    color: black;
+    /*For FireFox*/
+   -webkit-appearance: none;
+   /*For Chrome*/
+   -moz-appearance: none;
+}
+
+/*For IE10+*/
+select.GPmousePositionDirection:disabled::-ms-expand {
+    display: none;
+}
+select.GPmousePositionDirection:disabled::-ms-value {
+    color: black;
+}
+
+.GPmousePositionUnits,
+.GPmousePositionAltitudeUnits {
+    margin-left: 5px;
+}
+
+/* EDIT COORDINATES TOOLS */
+.GPmousePositionPanelEditTools {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}
+
+.GPmousePositionEditTool {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+span[id^=GPmousePositionCloseEdit] {
+    background-position: -18px 0;
+    margin-left: 5px;
+}
+
+img[id^=GPmousePositionMarker]:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* Map center localisation */
+
+#GPmapCenter {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  margin-left: -25px;
+}
+
+#GPmapCenter.GPmapCenterVisible {
+  display: block;
+}

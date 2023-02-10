@@ -47,10 +47,18 @@
     "build:ol:dev": "webpack --config build/webpack/webpack.config.openlayers --mode=development",
     "build:ol:prod": "webpack --config build/webpack/webpack.config.openlayers --mode=production",
     "build:ol:src": "webpack --config build/webpack/webpack.config.openlayers --mode=none",
+    "build:ol-modules": "npm-run-all --print-label --print-name build:ol-modules:*",
+    "build:ol-modules:dev": "webpack --config build/webpack/webpack.config.openlayers.modules --mode=development",
+    "build:ol-modules:prod": "webpack --config build/webpack/webpack.config.openlayers.modules --mode=production",
+    "build:ol-modules:src": "webpack --config build/webpack/webpack.config.openlayers.modules --mode=none",
     "build:leaflet": "npm-run-all --print-label --print-name build:leaflet:*",
     "build:leaflet:dev": "webpack --config build/webpack/webpack.config.leaflet --mode=development",
     "build:leaflet:prod": "webpack --config build/webpack/webpack.config.leaflet --mode=production",
-    "build:leaflet:src": "webpack --config build/webpack/webpack.config.leaflet --mode=none"
+    "build:leaflet:src": "webpack --config build/webpack/webpack.config.leaflet --mode=none",
+    "build:leaflet-modules": "npm-run-all --print-label --print-name build:leaflet-modules:*",
+    "build:leaflet-modules:dev": "webpack --config build/webpack/webpack.config.leaflet.modules --mode=development",
+    "build:leaflet-modules:prod": "webpack --config build/webpack/webpack.config.leaflet.modules --mode=production",
+    "build:leaflet-modules:src": "webpack --config build/webpack/webpack.config.leaflet.modules --mode=none"
   },
   "repository": {
     "type": "git",
