@@ -94,6 +94,14 @@ var logger = Logger.getLogger("elevationpath");
  *
  */
 var ElevationPath = (function (Control) {
+    /**
+     * See {@link ol.control.ElevationPath}
+     * @module ElevationPath
+     * @alias module:~Controls/ElevationPath
+     * @param {*} options - options
+     * @example
+     * import ElevationPath from "src/OpenLayers/Controls/ElevationPath"
+     */
     function ElevationPath (options) {
         logger.trace("ElevationPath()");
 

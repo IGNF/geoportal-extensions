@@ -136,6 +136,14 @@ var logger = Logger.getLogger("layerimport");
  *  });
  */
 var LayerImport = (function (Control) {
+    /**
+     * See {@link ol.control.LayerImport}
+     * @module LayerImport
+     * @alias module:~Controls/LayerImport
+     * @param {*} options - options
+     * @example
+     * import LayerImport from "src/OpenLayers/Controls/LayerImport"
+     */
     function LayerImport (options) {
         options = options || {};
 

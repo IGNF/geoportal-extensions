@@ -80,6 +80,14 @@ var logger = Logger.getLogger("searchengine");
  *  });
  */
 var SearchEngine = (function (Control) {
+    /**
+     * See {@link ol.control.SearchEngine}
+     * @module SearchEngine
+     * @alias module:~Controls/SearchEngine
+     * @param {*} options - options
+     * @example
+     * import SearchEngine from "src/OpenLayers/Controls/SearchEngine"
+     */
     function SearchEngine (options) {
         options = options || {};
 

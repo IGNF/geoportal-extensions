@@ -51,6 +51,14 @@ var logger = Logger.getLogger("layerswitcher");
  * ));
  */
 var LayerSwitcher = (function (Control) {
+    /**
+     * See {@link ol.control.LayerSwitcher}
+     * @module LayerSwitcher
+     * @alias module:~Controls/LayerSwitcher
+     * @param {*} options - options
+     * @example
+     * import LayerSwitcher from "src/OpenLayers/Controls/LayerSwitcher"
+     */
     function LayerSwitcher (options) {
         options = options || {};
         var _options = options.options || {};

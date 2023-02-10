@@ -42,6 +42,14 @@ var logger = Logger.getLogger("extended KML format");
  * @param {Object} options - Options
  */
 var KML = (function (olKML) {
+    /**
+     * See {@link ol.format.KMLExtended}
+     * @module KMLExtended
+     * @alias module:~Formats/KMLExtended
+     * @param {*} options - options
+     * @example
+     * import KMLExtended from "src/OpenLayers/Formats/KML"
+     */
     function KML (options) {
         if (!(this instanceof KML)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
