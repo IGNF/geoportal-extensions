@@ -1669,6 +1669,9 @@ var Route = (function (Control) {
         }
 
         // Ajout des points de depart et arrivée du tracé
+        // INFO
+        //  On fait l'impasse sur les points intermediaires, ça me semble pas très utile...
+        //  On ne transmet pas les styles, ils pourront être ajoutés ulterieusement selon les besoins...
         this._geojsonObject.features.push({
             type : "Feature",
             geometry : {
@@ -1679,6 +1682,7 @@ var Route = (function (Control) {
                 description : "Point de départ"
             }
         });
+
         this._geojsonObject.features.push({
             type : "Feature",
             geometry : {

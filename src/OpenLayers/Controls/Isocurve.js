@@ -1297,15 +1297,36 @@ var Isocurve = (function (Control) {
 
         // 1. création de l'objet geoJSON
         this._geojsonObject = {
-            type : "Feature",
+            type : "FeatureCollection",
             crs : {
                 type : "name",
                 properties : {
                     name : "EPSG:4326"
                 }
             },
-            geometry : results.geometry
+            features : [
+                {
+                    type : "Feature",
+                    crs : {
+                        type : "name",
+                        properties : {
+                            name : "EPSG:4326"
+                        }
+                    },
+                    geometry : results.geometry
+                }
+            ]
         };
+        this._geojsonObject.features.push({
+            type : "Feature",
+            geometry : {
+                type : "Point",
+                coordinates : this._originPoint.getCoordinate()
+            },
+            properties : {
+                description : "Point d'origine"
+            }
+        });
         var geojsonformat = new GeoJSON({
             defaultDataProjection : "EPSG:4326"
         });

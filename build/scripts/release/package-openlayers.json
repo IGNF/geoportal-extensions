@@ -1,36 +1,25 @@
 {
-   "types" : "src/OpenLayers/index.d.ts",
-   "peerDependencies" : {},
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "dependencies" : {
-      "ol-mapbox-style" : "6.7.0",
-      "proj4" : "2.7.5",
-      "geoportal-access-lib" : "3.2.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "loglevel" : "1.6.6",
-      "sortablejs" : "1.14.0",
-      "xmldom" : "^0.1.27",
-      "ol" : "6.9.0",
-      "eventbusjs" : "0.2.0",
-      "node-fetch" : "^2.6.1"
-   },
-   "date" : "18/11/2022",
-   "bundleDependencies" : [],
-   "scripts" : {},
-   "bugs" : {},
-   "name" : "geoportal-extensions-openlayers",
-   "main" : "dist/GpPluginOpenLayers-src.js",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
-   "version" : "3.2.18",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
+   "bugs" : {},
+   "version" : "3.2.18",
+   "module" : "src/OpenLayers/index.js",
+   "dependencies" : {
+      "sortablejs" : "1.14.0",
+      "eventbusjs" : "0.2.0",
+      "geoportal-access-lib" : "3.2.0",
+      "proj4" : "2.7.5",
+      "ol" : "6.9.0",
+      "xmldom" : "^0.1.27",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
+      "node-fetch" : "^2.6.1",
+      "loglevel" : "1.6.6",
+      "ol-mapbox-style" : "6.7.0"
+   },
    "files" : [
       "dist/",
       "src/",
@@ -38,10 +27,21 @@
       "README.md",
       "package.json"
    ],
-   "devDependencies" : {},
-   "directories" : {},
-   "license" : "CECILL-B",
+   "scripts" : {},
    "author" : "IGNF",
-   "module" : "src/OpenLayers/index.js",
-   "description" : "French Geoportal Extensions for OpenLayers"
+   "description" : "French Geoportal Extensions for OpenLayers",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "directories" : {},
+   "main" : "dist/GpPluginOpenLayers-src.js",
+   "devDependencies" : {},
+   "license" : "CECILL-B",
+   "bundleDependencies" : [],
+   "name" : "geoportal-extensions-openlayers",
+   "peerDependencies" : {},
+   "types" : "src/OpenLayers/index.d.ts",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-openlayers.html",
+   "date" : "18/11/2022"
 }

@@ -13,6 +13,10 @@
 
 * [Added]
 
+    - Ajout de méthodes publiques sur les contrôles Iso et Route : 
+      - getGeoJSON() : fournit le tracé au format GeoJSON
+      - getData() : fournit la configuration du calcul
+
 * [Changed]
 
 * [Deprecated]
