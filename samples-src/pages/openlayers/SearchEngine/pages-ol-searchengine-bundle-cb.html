@@ -62,9 +62,6 @@
                             }
                         }
                     });
-                    search.on("searchengine:compute", function (e) {
-                        console.warn("compute", e.target.getData());
-                    });
                     search.on("searchengine:autocomplete:click", function (e) {
                         console.warn("autocomplete", e);
                     });

@@ -54,7 +54,6 @@ var logger = Logger.getLogger("searchengine");
  * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
  * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
  * @param {Sting|Numeric|Function} [options.zoomTo] - zoom to results, by default, current zoom.
- * @fires searchengine:compute
  * @fires searchengine:autocomplete:click
  * @fires searchengine:geocode:click
  * @example
@@ -74,7 +73,10 @@ var logger = Logger.getLogger("searchengine");
  *  });
  *
  *  SearchEngine.on("searchengine:autocomplete:click", function (e) {
- *    console.warn("autocomplete", e);
+ *    console.warn("autocomplete", e.location);
+ *  });
+ *  SearchEngine.on("searchengine:geocode:click", function (e) {
+ *    console.warn("geocode", e.location);
  *  });
  */
 var SearchEngine = (function (Control) {
@@ -920,21 +922,6 @@ var SearchEngine = (function (Control) {
 
         // sauvegarde de l'etat des locations
         this._geocodedLocations = locations;
-
-        /**
-         * event triggered when the compute is finished
-         *
-         * @event searchengine:compute
-         * @property {Object} type - event
-         * @property {Object} target - instance SearchEngine
-         * @example
-         * SearchEngine.on("searchengine:compute", function (e) {
-         *   console.log(e.target.getData());
-         * })
-         */
-        this.dispatchEvent({
-            type : "searchengine:compute"
-        });
     };
 
     // ################################################################### //
