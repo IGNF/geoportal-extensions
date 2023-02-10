@@ -1,8 +1,5 @@
 
 
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -14,6 +11,7 @@
 
 * [Added]
 
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
     - Ajout de méthodes publiques sur les contrôles Iso et Route : 
       - getGeoJSON() : fournit le tracé au format GeoJSON
       - getData() : fournit la configuration du calcul
