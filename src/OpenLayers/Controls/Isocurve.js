@@ -54,7 +54,7 @@ var logger = Logger.getLogger("isocurve");
  * @param {Array} [options.markerOpts.offset] - Offsets in pixels used when positioning the overlay. The first element in the array is the horizontal offset. A positive value shifts the overlay right. The second element in the array is the vertical offset. A positive value shifts the overlay down. Default is [0, 0]. (see http://openlayers.org/en/latest/apidoc/ol.Overlay.html)
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Isochrone/Isodistance"] - Layer title to be displayed in LayerSwitcher
- * @param {String} [options.layerDescription.description = "isochrones/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
+ * @param {String} [options.layerDescription.description = "isochrone/isodistance basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @fires isocurve:drawstart
  * @fires isocurve:drawend
  * @fires isocurve:compute
@@ -413,7 +413,7 @@ var Isocurve = (function (Control) {
             autocompleteOptions : {},
             layerDescription : {
                 title : "Isochrone/Isodistance",
-                description : "isochrones/isodistance basé sur un graphe"
+                description : "isochrone/isodistance basé sur un graphe"
             }
         };
 

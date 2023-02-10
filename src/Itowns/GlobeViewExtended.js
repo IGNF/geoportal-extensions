@@ -668,9 +668,11 @@ GlobeViewExtended.prototype.getFeaturesAtMousePosition = function (mouseEvent) {
         if (!vectorLayers[i].visible) {
             continue;
         }
-        promises.push(vectorLayers[i].source.loadData({}, {
-            crs : "EPSG:4326"
-        }));
+        if (vectorLayers[i].isColorLayer) {
+            promises.push(vectorLayers[i].source.loadData({}, {
+                crs : "EPSG:4326"
+            }));
+        }
     }
 
     return Promise.all(promises).then(result => {

@@ -96,7 +96,7 @@ var Layers = {
      * @param {Object} options - options for function call.
      * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
-     * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
+     * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
      * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
      *
      * @returns {L.geoportalLayer.WMS} WMS layer
@@ -197,7 +197,7 @@ var Layers = {
      * @param {Object} options - options for function call.
      * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
-     * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
+     * @param {String} [options.apiKey] - free access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
      * @param {Object} [settings] - other options for L.TileLayer function (see {@link http://leafletjs.com/reference.html#tilelayer-options})
      *
      * @returns {L.geoportalLayer.WMTS} WMTS layer

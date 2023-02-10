@@ -2,6 +2,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -25,9 +26,12 @@
 
 * [Fixed]
 
+    - faute d'ortographe description couche Isocurve
+
 * [Security]
 
 ---
+
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -40,8 +44,6 @@
 ## Changelog
 
 * [Added]
-
-    - Ajout des "@types declaration" pour publication
 
 * [Changed]
 
@@ -56,6 +58,7 @@
 ---
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -66,8 +69,6 @@
 ## Changelog
 
 * [Added]
-
-    - Ajout des "@types declaration ts" pour publication
 
 * [Changed]
 
