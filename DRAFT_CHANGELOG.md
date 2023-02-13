@@ -26,6 +26,7 @@
 
     - Faute d'ortographe description couche Isocurve
     - Ajout des modules dans la JSDoc
+    - Mise à jour des clefs des services
 
 * [Security]
 
