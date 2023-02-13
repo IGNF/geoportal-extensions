@@ -49,13 +49,16 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
      * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
      * @param {Object}  [options.reverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~ReverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
      * @example
-     *  var iso = L.geoportalControl.ReverseGeocode({
+     *  var reverse = L.geoportalControl.ReverseGeocode({
      *      collapsed : false,
      *      position : "topright",
      *      resources : ["StreetAddress", "PositionOfInterest","CadastralParcel"],
      *      delimitations : ["Point", "Circle"],
      *      reverseGeocodeOptions : {}
      *  });
+     * reverse.on("reverse:onclickresult", function (e) {
+     *   console.log(e.data):
+     * });
      * @private
      */
     initialize : function (options) {
@@ -904,7 +907,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 riseOnHover : true,
                 draggable : false,
                 clickable : true,
-                zIndexOffset : 1000
+                zIndexOffset : 1000,
+                data : location
             };
 
             var _marker = L.marker(L.latLng(location.position), options);
@@ -932,6 +936,16 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             /** evenement mouseout sur le marker */
             _marker.on("mouseout", _resetHighLight);
 
+            _marker.on("click", function (e) {
+                /**
+                 * event triggered when an element of the results is clicked for geocoding
+                 *
+                 * @event reverse:onclickresult
+                */
+                self.fire("reverse:onclickresult", {
+                    data : e.target.options.data
+                });
+            });
             this._inputResultsLayer.addLayer(_marker);
         }
     },
@@ -1097,7 +1111,18 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
      * @private
      */
     onReverseGeocodingResultClick : function (e) {
-        logger.log("onReverseGeocodingResultClick", e);
+        // récupération de l'id du résultat survolé
+        var idx = ID.index(e.target.id);
+
+        if (!this._inputResultsLayer) {
+            return;
+        }
+
+        this._inputResultsLayer.eachLayer(function (layer) {
+            if (layer.options.id === parseInt(idx, 10)) {
+                layer.fire("click");
+            }
+        });
     },
 
     /**
@@ -1247,5 +1272,8 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     }
 
 });
+
+/** mix in L.Evented into control */
+L.extend(ReverseGeocoding.prototype, L.Evented.prototype);
 
 export default ReverseGeocoding;

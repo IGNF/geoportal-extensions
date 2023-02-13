@@ -185,14 +185,18 @@ var Controls = {
      * @param {Array}  [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
      * @param {Object}  [options.ReverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
      * @returns {L.geoportalControl.ReverseGeocode} - ReverseGeocode Object
+     * @fires reverse:onclickresult
      * @example
-     *  var iso = L.geoportalControl.ReverseGeocode({
+     *  var reverse = L.geoportalControl.ReverseGeocode({
      *      collapsed : false,
      *      position : "topright",
      *      resources : ["StreetAddress", "PositionOfInterest"],
      *      delimitations : ["Point", "Circle"],
      *      reverseGeocodeOptions : {}
      *  });
+     * reverse.on("reverse:onclickresult", function (e) {
+     *   console.log(e.data):
+     * });
      */
     ReverseGeocode : function (options) {
         return new ReverseGeocoding(options);

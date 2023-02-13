@@ -34,8 +34,13 @@
 
             layer.addTo(map);
 
-            var reverse = L.geoportalControl.ReverseGeocode();
-
+            var reverse = L.geoportalControl.ReverseGeocode({
+              position : "topleft"
+            });
+            // reverse.addEventListener("reverse:onclickresult", (e) => {})
+            reverse.on("reverse:onclickresult", function (e) {
+              console.error(e);
+            })
             map.addControl(reverse);
           }
         </script>
