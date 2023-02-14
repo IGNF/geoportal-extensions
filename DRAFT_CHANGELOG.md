@@ -46,6 +46,7 @@
 * [Added]
 
     - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
 
 * [Changed]
 
