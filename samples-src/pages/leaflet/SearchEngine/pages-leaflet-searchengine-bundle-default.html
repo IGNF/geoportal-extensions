@@ -36,6 +36,13 @@
 
             var search = L.geoportalControl.SearchEngine();
 
+            search.on("searchengine:geocode:click", function (e) {
+              console.error(e.data);
+            });
+            search.on("searchengine:autocomplete:click", function (e) {
+              console.error(e.data);
+            });
+            
             map.addControl(search);
           }
         </script>
