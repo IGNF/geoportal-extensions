@@ -697,6 +697,208 @@
 							<wmts:MatrixHeight>512</wmts:MatrixHeight>
 						</wmts:TileMatrix>
 					</wmts:TileMatrixSet>
+					<wmts:TileMatrixSet>
+						<ows:Identifier>LAMB93</ows:Identifier>
+						<ows:SupportedCRS>EPSG:2154</ows:SupportedCRS>
+						<wmts:TileMatrix>
+							<ows:Identifier>0</ows:Identifier>
+							<wmts:ScaleDenominator>373497230.535336</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>2</wmts:MatrixWidth>
+							<wmts:MatrixHeight>2</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>1</ows:Identifier>
+							<wmts:ScaleDenominator>186705472.692109</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>2</wmts:MatrixWidth>
+							<wmts:MatrixHeight>2</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>2</ows:Identifier>
+							<wmts:ScaleDenominator>93341025.2806979</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>2</wmts:MatrixWidth>
+							<wmts:MatrixHeight>2</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>3</ows:Identifier>
+							<wmts:ScaleDenominator>46667469.2207143</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>3</wmts:MatrixWidth>
+							<wmts:MatrixHeight>3</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>4</ows:Identifier>
+							<wmts:ScaleDenominator>23332959.3004052</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>5</wmts:MatrixWidth>
+							<wmts:MatrixHeight>5</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>5</ows:Identifier>
+							<wmts:ScaleDenominator>11666284.0159381</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>9</wmts:MatrixWidth>
+							<wmts:MatrixHeight>9</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>6</ows:Identifier>
+							<wmts:ScaleDenominator>5833092.87356221</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>16</wmts:MatrixWidth>
+							<wmts:MatrixHeight>16</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>7</ows:Identifier>
+							<wmts:ScaleDenominator>2916534.12495008</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>31</wmts:MatrixWidth>
+							<wmts:MatrixHeight>30</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>8</ows:Identifier>
+							<wmts:ScaleDenominator>1458263.9809887</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>60</wmts:MatrixWidth>
+							<wmts:MatrixHeight>59</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>9</ows:Identifier>
+							<wmts:ScaleDenominator>729131.219681793</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>119</wmts:MatrixWidth>
+							<wmts:MatrixHeight>117</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>10</ows:Identifier>
+							<wmts:ScaleDenominator>364565.417083003</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>236</wmts:MatrixWidth>
+							<wmts:MatrixHeight>232</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>11</ows:Identifier>
+							<wmts:ScaleDenominator>182282.66034504</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>471</wmts:MatrixWidth>
+							<wmts:MatrixHeight>462</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>12</ows:Identifier>
+							<wmts:ScaleDenominator>91141.3181223907</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>941</wmts:MatrixWidth>
+							<wmts:MatrixHeight>922</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>13</ows:Identifier>
+							<wmts:ScaleDenominator>45570.6560487411</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>1881</wmts:MatrixWidth>
+							<wmts:MatrixHeight>1842</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>14</ows:Identifier>
+							<wmts:ScaleDenominator>22785.3272713089</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>3761</wmts:MatrixWidth>
+							<wmts:MatrixHeight>3682</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>15</ows:Identifier>
+							<wmts:ScaleDenominator>11392.663447519</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>7521</wmts:MatrixWidth>
+							<wmts:MatrixHeight>7363</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>16</ows:Identifier>
+							<wmts:ScaleDenominator>5696.3316767776</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>15041</wmts:MatrixWidth>
+							<wmts:MatrixHeight>14724</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>17</ows:Identifier>
+							<wmts:ScaleDenominator>2848.1658269552</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>30080</wmts:MatrixWidth>
+							<wmts:MatrixHeight>29447</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>18</ows:Identifier>
+							<wmts:ScaleDenominator>1424.0829103593</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>60159</wmts:MatrixWidth>
+							<wmts:MatrixHeight>58892</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>19</ows:Identifier>
+							<wmts:ScaleDenominator>712.041454556</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>120317</wmts:MatrixWidth>
+							<wmts:MatrixHeight>117782</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>20</ows:Identifier>
+							<wmts:ScaleDenominator>356.0207274859</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>240633</wmts:MatrixWidth>
+							<wmts:MatrixHeight>235563</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+						<wmts:TileMatrix>
+							<ows:Identifier>21</ows:Identifier>
+							<wmts:ScaleDenominator>178.010363639</wmts:ScaleDenominator>
+							<wmts:TopLeftCorner>0 12000000</wmts:TopLeftCorner>
+							<wmts:TileWidth>256</wmts:TileWidth>
+							<wmts:TileHeight>256</wmts:TileHeight>
+							<wmts:MatrixWidth>481264</wmts:MatrixWidth>
+							<wmts:MatrixHeight>471125</wmts:MatrixHeight>
+						</wmts:TileMatrix>
+					</wmts:TileMatrixSet>
 				</gpp:TileMatrixSets>
 				<gpp:Services>
 					<Server service="GPP:PrintMap" title="Service d'impression" version="1.0.0">
@@ -880,7 +1082,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -1156,7 +1358,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -1298,7 +1500,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -1440,7 +1642,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -1582,7 +1784,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -1709,6 +1911,218 @@
 				</gpp:Layer>
 			</Extension>
 		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="BDParcellaire en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>CADASTRALPARCELS.PARCELS.L93</Name>
+			<Title>BDParcellaire en L93</Title>
+			<Abstract>
+				<![CDATA[Parcelles cadastrales]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>373497231</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,78434.4184124205,104579.224549894</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="CADASTRALPARCELS.PARCELS.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Parcelles cadastrales</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:InspireThematics>
+						<gpp:InspireThematic>Parcelles cadastrales</gpp:InspireThematic>
+					</gpp:InspireThematics>
+					<gpp:BoundingBox maxT="2019-11-25" minT="2019-11-25">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2019-11-25" minT="2019-11-25">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>373497231</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/CADASTRALPARCELS.PARCELS-legend.png" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/BDPARCELLAIRE.png" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>0</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>1</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>2</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>3</wmts:TileMatrix>
+								<wmts:MinTileRow>1</wmts:MinTileRow>
+								<wmts:MaxTileRow>1</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>4</wmts:TileMatrix>
+								<wmts:MinTileRow>2</wmts:MinTileRow>
+								<wmts:MaxTileRow>3</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>5</wmts:TileMatrix>
+								<wmts:MinTileRow>5</wmts:MinTileRow>
+								<wmts:MaxTileRow>7</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDPARCELLAIREr_1-2_image.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
 		<Layer hidden="1" queryable="1">
 			<Server service="OGC:WFS" title="Adresse Premium : Liens Hexa" version="2.0.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wfs" xlink:type="simple"/>
@@ -1724,7 +2138,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -2038,6 +2452,105 @@
 				</gpp:Layer>
 			</Extension>
 		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMS" title="SCANEM40 LAMB93 FXX 2012" version="1.3.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/r/wms" xlink:type="simple"/>
+			</Server>
+			<Name>SCANEM40_PYR_PNG_FXX_LAMB93</Name>
+			<Title>SCANEM40 LAMB93 FXX 2012</Title>
+			<Abstract>
+				<![CDATA[Le produit SCAN Etat-major® 40K est une collection d'images cartographiques numériques en couleurs, obtenues par scannage et assemblage géoréférencé des cartes d'Etat-major au 1 : 40 000. Le produit SCAN Etat-major® 40K se compose d'images numériques sans habillage ni surcharge et d'indications de géoréférencement.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>14286</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>117028572</sld:MaxScaleDenominator>
+			<SRS>IGNF:LAMB93</SRS>
+			<FormatList>
+				<Format current="0">image/jpeg</Format>
+				<Format current="1">image/png</Format>
+				<Format current="0">image/tiff</Format>
+			</FormatList>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">2.5,122880.0,163840.0</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">255,255,255</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="SCANEM40_PYR_PNG_FXX_LAMB93$GEOPORTAIL:OGC:WMS">
+					<gpp:Thematics>
+						<gpp:Thematic>Cartes</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:InspireThematics>
+						<gpp:InspireThematic>Bâtiments</gpp:InspireThematic>
+					</gpp:InspireThematics>
+					<gpp:BoundingBox maxT="2012-05-22" minT="2012-05-22">-6.0888953,41.18441,10.961009,50.9218</gpp:BoundingBox>
+					<gpp:AdditionalCRS>IGNF:LAMB1</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB2</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB3</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB4</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMBE</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM30W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM31W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM32W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:2154</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27561</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27562</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27563</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27564</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27572</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32630</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32631</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32632</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB93</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4171</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4258</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:RGF93G</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:ETRS89GEO</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4326</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:3857</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:WGS84G</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>CRS:84</gpp:AdditionalCRS>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2012-05-22" minT="2012-05-22">-6.0888953,41.18441,10.961009,50.9218</gpp:BoundingBox>
+									<sld:MinScaleDenominator>14286</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>117028572</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>14286</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/ign_carte2.jpg" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_SCANEMr_40K.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/r/wms</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
 		<Layer hidden="1" queryable="1">
 			<Server service="OGC:WFS" title="BDADRESSE 18.2 édition 2018 Monde" version="2.0.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wfs" xlink:type="simple"/>
@@ -2053,7 +2566,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -2412,6 +2925,748 @@
 				</gpp:Layer>
 			</Extension>
 		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Plan IGN v2" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2.L93</Name>
+			<Title>Plan IGN v2</Title>
+			<Abstract>
+				<![CDATA[Cartographie multi-échelles sur le territoire national, issue des bases de données vecteur de l’IGN, mis à jour régulièrement et réalisée selon un processus entièrement automatisé.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>373497231</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,78434.4184124205,104579.224549894</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Plan IGN V2</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2022-01-06" minT="2022-01-06">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-01-06" minT="2022-01-06">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>373497231</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>0</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>1</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>2</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>3</wmts:TileMatrix>
+								<wmts:MinTileRow>1</wmts:MinTileRow>
+								<wmts:MaxTileRow>1</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>4</wmts:TileMatrix>
+								<wmts:MinTileRow>2</wmts:MinTileRow>
+								<wmts:MaxTileRow>3</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>5</wmts:TileMatrix>
+								<wmts:MinTileRow>5</wmts:MinTileRow>
+								<wmts:MaxTileRow>7</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=ADMIN-EXPRESS_1-1.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="PCI vecteur" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>CADASTRALPARCELS.PARCELLAIRE_EXPRESS.L93</Name>
+			<Title>PCI vecteur</Title>
+			<Abstract>
+				<![CDATA[Plan cadastral informatisé vecteur de la DGFIP.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>373497231</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,78434.4184124205,104579.224549894</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="CADASTRALPARCELS.PARCELLAIRE_EXPRESS.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Unités administratives</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2022-01-09" minT="2022-01-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-01-09" minT="2022-01-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>182283</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>373497231</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-01-09" minT="2022-01-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>91142</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>182283</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/CADASTRALPARCELS.PARCELLAIRE_EXPRESS.png" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/CADASTRALPARCELS.PARCELLAIRE_EXPRESS.png" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>0</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>1</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>2</wmts:TileMatrix>
+								<wmts:MinTileRow>0</wmts:MinTileRow>
+								<wmts:MaxTileRow>0</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>3</wmts:TileMatrix>
+								<wmts:MinTileRow>1</wmts:MinTileRow>
+								<wmts:MaxTileRow>1</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>4</wmts:TileMatrix>
+								<wmts:MinTileRow>2</wmts:MinTileRow>
+								<wmts:MaxTileRow>3</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>5</wmts:TileMatrix>
+								<wmts:MinTileRow>5</wmts:MinTileRow>
+								<wmts:MaxTileRow>7</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=ADMIN-EXPRESS_1-1.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=PCI_VECTEUR.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="1">
+			<Server service="OGC:WMTS" title="Limites administratives mises à jour en continu." version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>LIMITES_ADMINISTRATIVES_EXPRESS.LATEST.L93</Name>
+			<Title>Limites administratives mises à jour en continu.</Title>
+			<Abstract>
+				<![CDATA[Limites administratives mises à jour en continu, édition novembre 2021.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>5697</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">1.5949728695,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="LIMITES_ADMINISTRATIVES_EXPRESS.LATEST.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Unités administratives</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2022-01-09" minT="2022-01-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-01-09" minT="2022-01-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>5697</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>5697</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_ADMIN_EXPRESS_3-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Pyramide BDOrtho en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO.L93</Name>
+			<Title>Pyramide BDOrtho en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit BD ORTHO® est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>1425</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.3987432149,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.BDORTHO.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Photographies</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:InspireThematics>
+						<gpp:InspireThematic>Ortho-imagerie</gpp:InspireThematic>
+					</gpp:InspireThematics>
+					<gpp:BoundingBox maxT="2022-02-16" minT="2022-02-16">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-02-16" minT="2022-02-16">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1425</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>1425</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/ign_bdortho_legende.jpg" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/BDORTHO.png" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
 		<Layer hidden="1" queryable="1">
 			<Server service="OGC:WFS" title="BDTOPO V3 22.3 édition 2022" version="2.0.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportailchaine/wps" xlink:type="simple"/>
@@ -2427,7 +3682,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -2579,7 +3834,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -2716,6 +3971,368 @@
 				</gpp:Layer>
 			</Extension>
 		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho RVB express 2022 en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2022.L93</Name>
+			<Title>Ortho RVB express 2022 en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>23332960</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,4899.921453085125,6533.2286041135</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2022.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>ortho-express</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2022-08-09" minT="2022-08-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-08-09" minT="2022-08-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>23332960</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>4</wmts:TileMatrix>
+								<wmts:MinTileRow>2</wmts:MinTileRow>
+								<wmts:MaxTileRow>3</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>5</wmts:TileMatrix>
+								<wmts:MinTileRow>5</wmts:MinTileRow>
+								<wmts:MaxTileRow>7</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho IRC express 2022 en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2022.L93</Name>
+			<Title>Ortho IRC express 2022 en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>23332960</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,4899.921453085125,6533.2286041135</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2022.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>ortho-express</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2022-08-09" minT="2022-08-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-08-09" minT="2022-08-09">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>23332960</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>4</wmts:TileMatrix>
+								<wmts:MinTileRow>2</wmts:MinTileRow>
+								<wmts:MaxTileRow>3</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>0</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>5</wmts:TileMatrix>
+								<wmts:MinTileRow>5</wmts:MinTileRow>
+								<wmts:MaxTileRow>7</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
 		<Layer hidden="0" queryable="0">
 			<Server service="OGC:OPENLS;AutoCompletion" title="Autocomplétion par adresses" version="1.2">
 				<OnlineResource xlink:href="https://wxs.ign.fr/ols/apis/completion" xlink:type="simple"/>
@@ -2754,7 +4371,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -3107,7 +4724,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -3176,7 +4793,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -3891,6 +5508,678 @@
 					<gpp:Keys>
 						<gpp:Key id="cartes">https://wxs.ign.fr/cartes/geoportail/wmts</gpp:Key>
 						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho RVB express 2021 en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2021.L93</Name>
+			<Title>Ortho RVB express 2021 en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2021.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>ortho-express</gpp:Thematic>
+						<gpp:Thematic>ortho</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2022-02-27" minT="2022-02-27">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-02-27" minT="2022-02-27">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho IRC express 2020 en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2020.L93</Name>
+			<Title>Ortho IRC express 2020 en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2020.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Ortho express</gpp:Thematic>
+						<gpp:Thematic>Orthos</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2021-01-22" minT="2021-01-22">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2021-01-22" minT="2021-01-22">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho IRC express 2021 en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2021.L93</Name>
+			<Title>Ortho IRC express 2021 en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2021.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>ortho-express</gpp:Thematic>
+						<gpp:Thematic>ortho</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2021-08-05" minT="2021-08-05">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2021-08-05" minT="2021-08-05">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho RVB express 2020 en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2020.L93</Name>
+			<Title>Ortho RVB express 2020 en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2020.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Ortho express</gpp:Thematic>
+						<gpp:Thematic>Orthos</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2021-01-22" minT="2021-01-22">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2021-01-22" minT="2021-01-22">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
 					</gpp:Keys>
 				</gpp:Layer>
 			</Extension>
@@ -4639,6 +6928,340 @@
 			</Extension>
 		</Layer>
 		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho IRC express en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2019.L93</Name>
+			<Title>Ortho IRC express en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.IRC-EXPRESS.2019.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Orthos</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2020-02-11" minT="2020-02-11">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2020-02-11" minT="2020-02-11">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
+			<Server service="OGC:WMTS" title="Ortho RVB express en L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2019.L93</Name>
+			<Title>Ortho RVB express en L93</Title>
+			<Abstract>
+				<![CDATA[Le produit ORTHO-EXPRESS est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.1993716073,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="ORTHOIMAGERY.ORTHOPHOTOS.ORTHO-EXPRESS.2019.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>Orthos</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:BoundingBox maxT="2020-02-11" minT="2020-02-11">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2020-02-11" minT="2020-02-11">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>713</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>19</wmts:TileMatrix>
+								<wmts:MinTileRow>93192</wmts:MinTileRow>
+								<wmts:MaxTileRow>117780</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>25279</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="0">
 			<Server service="OGC:WMTS" title="SCAN50 Historique de 1950" version="1.0.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
 			</Server>
@@ -4902,14 +7525,177 @@
 				</gpp:Layer>
 			</Extension>
 		</Layer>
+		<Layer hidden="1" queryable="1">
+			<Server service="OGC:WMTS" title="Ortho 20 cm L93" version="1.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
+			</Server>
+			<Name>HR.ORTHOIMAGERY.ORTHOPHOTOS.L93</Name>
+			<Title>Ortho 20 cm L93</Title>
+			<Abstract>
+				<![CDATA[Le produit BD ORTHO® V3 est une collection de mosaïques d'orthophotographies numériques en couleurs ou en Infra Rouge couleurs, rectifiées dans la projection adaptée au territoire couvert. La BD ORTHO® V3 se compose d'images numériques (sans habillage ni surcharge) et d'indications de géoréférencement. Le contenu informationnel permet localement une utilisation jusqu'au 1 :2,000ième pour mettre en valeur le territoire, enrichir la visualisation des données et des projets.]]>
+			</Abstract>
+			<sld:MinScaleDenominator>1425</sld:MinScaleDenominator>
+			<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+			<StyleList>
+				<Style current="1">
+					<Name>normal</Name>
+					<Title>Légende générique</Title>
+				</Style>
+			</StyleList>
+			<DimensionList>
+				<Dimension name="Type" unitSymbol="" units="" userValue="">2D</Dimension>
+				<Dimension name="VisibilityRange" unitSymbol="" units="" userValue="">0.3987432149,1224.94950344805,1633.2660045974</Dimension>
+				<Dimension name="VisibilityMode" unitSymbol="" units="" userValue="">resolution</Dimension>
+				<Dimension name="NoDataValue" unitSymbol="" units="" userValue="">FFFFFF</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="HR.ORTHOIMAGERY.ORTHOPHOTOS.L93$GEOPORTAIL:OGC:WMTS">
+					<gpp:Thematics>
+						<gpp:Thematic>ortho</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:InspireThematics>
+						<gpp:InspireThematic>Ortho-imagerie</gpp:InspireThematic>
+					</gpp:InspireThematics>
+					<gpp:BoundingBox maxT="2022-04-14" minT="2022-04-14">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2022-04-14" minT="2022-04-14">-7.1566963,40.67125,11.578029,51.99477</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1425</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>5833093</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:Legends>
+						<gpp:Legend>
+							<sld:MinScaleDenominator>1425</sld:MinScaleDenominator>
+							<gpp:LegendURL format="format">
+								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
+							</gpp:LegendURL>
+						</gpp:Legend>
+					</gpp:Legends>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/BDORTHO.png" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<wmts:TileMatrixSetLink>
+						<wmts:TileMatrixSet>LAMB93</wmts:TileMatrixSet>
+						<wmts:TileMatrixSetLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>10</wmts:TileMatrix>
+								<wmts:MinTileRow>182</wmts:MinTileRow>
+								<wmts:MaxTileRow>230</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>49</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>11</wmts:TileMatrix>
+								<wmts:MinTileRow>364</wmts:MinTileRow>
+								<wmts:MaxTileRow>460</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>98</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>12</wmts:TileMatrix>
+								<wmts:MinTileRow>728</wmts:MinTileRow>
+								<wmts:MaxTileRow>920</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>197</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>13</wmts:TileMatrix>
+								<wmts:MinTileRow>1456</wmts:MinTileRow>
+								<wmts:MaxTileRow>1840</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>394</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>14</wmts:TileMatrix>
+								<wmts:MinTileRow>2912</wmts:MinTileRow>
+								<wmts:MaxTileRow>3680</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>789</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>15</wmts:TileMatrix>
+								<wmts:MinTileRow>5824</wmts:MinTileRow>
+								<wmts:MaxTileRow>7361</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>1579</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>16</wmts:TileMatrix>
+								<wmts:MinTileRow>11649</wmts:MinTileRow>
+								<wmts:MaxTileRow>14722</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3159</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>17</wmts:TileMatrix>
+								<wmts:MinTileRow>23298</wmts:MinTileRow>
+								<wmts:MaxTileRow>29445</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6319</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>18</wmts:TileMatrix>
+								<wmts:MinTileRow>46596</wmts:MinTileRow>
+								<wmts:MaxTileRow>58890</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12639</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>6</wmts:TileMatrix>
+								<wmts:MinTileRow>11</wmts:MinTileRow>
+								<wmts:MaxTileRow>14</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>3</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>7</wmts:TileMatrix>
+								<wmts:MinTileRow>22</wmts:MinTileRow>
+								<wmts:MaxTileRow>28</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>6</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>8</wmts:TileMatrix>
+								<wmts:MinTileRow>45</wmts:MinTileRow>
+								<wmts:MaxTileRow>57</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>12</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+							<wmts:TileMatrixLimits>
+								<wmts:TileMatrix>9</wmts:TileMatrix>
+								<wmts:MinTileRow>91</wmts:MinTileRow>
+								<wmts:MaxTileRow>115</wmts:MaxTileRow>
+								<wmts:MinTileCol>0</wmts:MinTileCol>
+								<wmts:MaxTileCol>24</wmts:MaxTileCol>
+							</wmts:TileMatrixLimits>
+						</wmts:TileMatrixSetLimits>
+					</wmts:TileMatrixSetLink>
+					<gpp:MetadataURL format="xml">
+						<OnlineResource xlink:href="https://wxs.ign.fr/catalogue/geoportail/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=IGNF_BDORTHOr_2-0.xml" xlink:type="simple"/>
+					</gpp:MetadataURL>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wmts</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
 		<Layer hidden="1" queryable="0">
-			<Server service="OGC:WMS" title="Plan IGN j 1" version="1.3.0">
+			<Server service="OGC:WMS" title="Plan IGN j+1" version="1.3.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/r/wms" xlink:type="simple"/>
 			</Server>
 			<Name>GEOGRAPHICALGRIDSYSTEMS.MAPS.BDUNI.J1</Name>
-			<Title>Plan IGN j 1</Title>
+			<Title>Plan IGN j+1</Title>
 			<Abstract>
-				<![CDATA[Plan IGN j 1]]>
+				<![CDATA[Plan IGN j+1]]>
 			</Abstract>
 			<sld:MinScaleDenominator>2133</sld:MinScaleDenominator>
 			<sld:MaxScaleDenominator>559082265</sld:MaxScaleDenominator>
@@ -4934,7 +7720,7 @@
 			<Extension>
 				<gpp:Layer id="GEOGRAPHICALGRIDSYSTEMS.MAPS.BDUNI.J1$GEOPORTAIL:OGC:WMS">
 					<gpp:Thematics>
-						<gpp:Thematic>Plan IGN J 1</gpp:Thematic>
+						<gpp:Thematic>Plan IGN J+1</gpp:Thematic>
 					</gpp:Thematics>
 					<gpp:BoundingBox maxT="2019-01-23" minT="2019-01-23">-179.5,-75.0,179.5,75.0</gpp:BoundingBox>
 					<gpp:AdditionalCRS>IGNF:LAMB1</gpp:AdditionalCRS>
@@ -5112,7 +7898,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -5259,7 +8045,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -6331,7 +9117,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -6473,7 +9259,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -6661,6 +9447,7 @@
 						<gpp:InspireThematic>Altitude</gpp:InspireThematic>
 					</gpp:InspireThematics>
 					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/alti/rest/elevation.xml</gpp:Key>
 						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/alti/rest/elevation.xml</gpp:Key>
 						<gpp:Key id="calcul">https://wxs.ign.fr/calcul/alti/rest/elevation.xml</gpp:Key>
 					</gpp:Keys>
@@ -6683,6 +9470,7 @@
 						<gpp:InspireThematic>Altitude</gpp:InspireThematic>
 					</gpp:InspireThematics>
 					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/alti/rest/elevationLine.xml</gpp:Key>
 						<gpp:Key id="essentiels">https://wxs.ign.fr/essentiels/alti/rest/elevationLine.xml</gpp:Key>
 						<gpp:Key id="calcul">https://wxs.ign.fr/calcul/alti/rest/elevationLine.xml</gpp:Key>
 					</gpp:Keys>
@@ -7016,6 +9804,240 @@
 				</gpp:Layer>
 			</Extension>
 		</Layer>
+		<Layer hidden="1" queryable="1">
+			<Server service="OGC:WFS" title="Carroyage DFCI" version="2.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wfs" xlink:type="simple"/>
+			</Server>
+			<Name>GEOGRAPHICALGRIDSYSTEM.DFCI:carro_dfci_2x2_l93</Name>
+			<Title>Carroyage DFCI</Title>
+			<Abstract>
+				<![CDATA[Le « carroyage DFCI » est un système de maillage géographique utilisé en France par les acteurs de la Défense des Forêts Contre les Incendies (DFCI). Le territoire métropolitain est couvert par des carrés de 100 km de côté, identifiables par deux lettres. Chaque carré de 100 km est divisé en 25 carrés de 20 km de côté, numérotés par des chiffres pairs de 0 à 8. Chaque carré de 20 km est divisé en 100 carrés de 2 km de côté, numérotés par un groupe composé d'une lettre et d'un chiffre. L'unité élémentaire est un carreau de 2 kilomètres de côté, défini par 6 caractères (exemple : KD42F7). Pour désigner un point à l'intérieur de l'unité élémentaire, la précision est obtenue en découpant ce carré en cinq zones numérotées de 1 à 5.  Il a été créé sur une grille qui s'appuie sur la projection Lambert II étendue. Depuis 2009, il est re-projeté en Lambert 93 avec une légère déformation des angles et des surfaces.  Carroyage DFCI (2 km) : Chaque carré de 20 km est divisé en 100 carrés de 2 km de côté, numérotés par un groupe composé d'une lettre et d'un chiffre. Les carrés de 2 km sont dénommés de A à L (sauf I et J) pour les abscisses, et numérotés de 0 à 9 pour les ordonnées.  Date des données : 7 juin 2016 Source : couches 100, 50, 20 et 2 km : Entente Valablre - PôNT, couche 1 km : avec l'aimable autorisation de Geonov (www.geonov.fr)]]>
+			</Abstract>
+			<SRS>EPSG:2154</SRS>
+			<FormatList>
+				<Format current="1">text/xml</Format>
+				<Format current="0">GML2</Format>
+				<Format current="0">GML2-GZIP</Format>
+				<Format current="0">SHAPE-ZIP</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
+				<Format current="0">csv</Format>
+				<Format current="0">gml3</Format>
+				<Format current="0">gml32</Format>
+				<Format current="0">json</Format>
+			</FormatList>
+			<DimensionList>
+				<Dimension name="GeometricType" unitSymbol="" units="" userValue="">-</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="GEOGRAPHICALGRIDSYSTEM.DFCI:carro_dfci_2x2_l93$GEOPORTAIL:OGC:WFS">
+					<gpp:Constraints>
+						<gpp:Constraint>
+							<gpp:CRS>EPSG:2154</gpp:CRS>
+							<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+							<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+							<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+						</gpp:Constraint>
+					</gpp:Constraints>
+					<gpp:Thematics>
+						<gpp:Thematic>DFCI</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:InspireThematics>
+						<gpp:InspireThematic>Systèmes de maillage géographique</gpp:InspireThematic>
+					</gpp:InspireThematics>
+					<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+					<gpp:AdditionalCRS>EPSG:4171</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4258</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:RGF93G</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:ETRS89GEO</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4326</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:3857</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:WGS84G</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>CRS:84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB1</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB2</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB3</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB4</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMBE</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM30W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM31W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM32W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:2154</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27561</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27562</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27563</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27564</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27572</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32630</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32631</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32632</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB93</gpp:AdditionalCRS>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+						<gpp:Originator name="GEONOV">
+							<gpp:Attribution>Geonov</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/GEONOV/GEONOV.gif</gpp:Logo>
+							<gpp:URL>https://www.geonov.fr/</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+						<gpp:Originator name="PONT_ENTENTE">
+							<gpp:Attribution>Pôle Nouvelles Technologies - PôNT, Portail de l'information géographique pour la DFCI, Réseau Entente pour la forêt Méditerranéenne</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/PONT_ENTENTE/PONT_ENTENTE.gif</gpp:Logo>
+							<gpp:URL>http://www.pont-entente.org/</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wfs</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
+		<Layer hidden="1" queryable="1">
+			<Server service="OGC:WFS" title="Carroyage DFCI" version="2.0.0">
+				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wfs" xlink:type="simple"/>
+			</Server>
+			<Name>GEOGRAPHICALGRIDSYSTEM.DFCI:carro_dfci_1x1_l93</Name>
+			<Title>Carroyage DFCI</Title>
+			<Abstract>
+				<![CDATA[Le « carroyage DFCI » est un système de maillage géographique utilisé en France par les acteurs de la Défense des Forêts Contre les Incendies (DFCI). Le territoire métropolitain est couvert par des carrés de 100 km de côté, identifiables par deux lettres. Chaque carré de 100 km est divisé en 25 carrés de 20 km de côté, numérotés par des chiffres pairs de 0 à 8. Chaque carré de 20 km est divisé en 100 carrés de 2 km de côté, numérotés par un groupe composé d'une lettre et d'un chiffre. L'unité élémentaire est un carreau de 2 kilomètres de côté, défini par 6 caractères (exemple : KD42F7). Pour désigner un point à l'intérieur de l'unité élémentaire, la précision est obtenue en découpant ce carré en cinq zones numérotées de 1 à 5.  Il a été créé sur une grille qui s'appuie sur la projection Lambert II étendue. Depuis 2009, il est re-projeté en Lambert 93 avec une légère déformation des angles et des surfaces.  Carroyage DFCI (2 km) : Chaque carré de 20 km est divisé en 100 carrés de 2 km de côté, numérotés par un groupe composé d'une lettre et d'un chiffre. Les carrés de 2 km sont dénommés de A à L (sauf I et J) pour les abscisses, et numérotés de 0 à 9 pour les ordonnées.  Date des données : 7 juin 2016 Source : couches 100, 50, 20 et 2 km : Entente Valablre - PôNT, couche 1 km : avec l'aimable autorisation de Geonov (www.geonov.fr)]]>
+			</Abstract>
+			<SRS>EPSG:2154</SRS>
+			<FormatList>
+				<Format current="1">text/xml</Format>
+				<Format current="0">GML2</Format>
+				<Format current="0">GML2-GZIP</Format>
+				<Format current="0">SHAPE-ZIP</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
+				<Format current="0">csv</Format>
+				<Format current="0">gml3</Format>
+				<Format current="0">gml32</Format>
+				<Format current="0">json</Format>
+			</FormatList>
+			<DimensionList>
+				<Dimension name="GeometricType" unitSymbol="" units="" userValue="">-</Dimension>
+			</DimensionList>
+			<Extension>
+				<gpp:Layer id="GEOGRAPHICALGRIDSYSTEM.DFCI:carro_dfci_1x1_l93$GEOPORTAIL:OGC:WFS">
+					<gpp:Constraints>
+						<gpp:Constraint>
+							<gpp:CRS>EPSG:2154</gpp:CRS>
+							<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+							<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+							<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+						</gpp:Constraint>
+					</gpp:Constraints>
+					<gpp:Thematics>
+						<gpp:Thematic>DFCI</gpp:Thematic>
+					</gpp:Thematics>
+					<gpp:InspireThematics>
+						<gpp:InspireThematic>Systèmes de maillage géographique</gpp:InspireThematic>
+					</gpp:InspireThematics>
+					<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+					<gpp:AdditionalCRS>EPSG:4171</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4258</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:RGF93G</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:ETRS89GEO</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:4326</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:3857</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:WGS84G</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>CRS:84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB1</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB2</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB3</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB4</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMBE</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM30W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM31W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:UTM32W84</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:2154</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27561</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27562</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27563</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27564</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:27572</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32630</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32631</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>EPSG:32632</gpp:AdditionalCRS>
+					<gpp:AdditionalCRS>IGNF:LAMB93</gpp:AdditionalCRS>
+					<gpp:Originators>
+						<gpp:Originator name="IGN">
+							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
+							<gpp:URL>https://www.ign.fr</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+						<gpp:Originator name="GEONOV">
+							<gpp:Attribution>Geonov</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/GEONOV/GEONOV.gif</gpp:Logo>
+							<gpp:URL>https://www.geonov.fr/</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+						<gpp:Originator name="PONT_ENTENTE">
+							<gpp:Attribution>Pôle Nouvelles Technologies - PôNT, Portail de l'information géographique pour la DFCI, Réseau Entente pour la forêt Méditerranéenne</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/PONT_ENTENTE/PONT_ENTENTE.gif</gpp:Logo>
+							<gpp:URL>http://www.pont-entente.org/</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2017-12-12" minT="2017-12-12">-5.655655,40.220062,10.829581,50.891594</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1000000000</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
+					</gpp:Originators>
+					<gpp:QuickLook>
+						<OnlineResource xlink:href="https://wxs.ign.fr/static/pictures/NOPIC.JPG" xlink:type="simple"/>
+					</gpp:QuickLook>
+					<gpp:Keys>
+						<gpp:Key id="lambert93">https://wxs.ign.fr/lambert93/geoportail/wfs</gpp:Key>
+					</gpp:Keys>
+				</gpp:Layer>
+			</Extension>
+		</Layer>
 		<Layer hidden="0" queryable="0">
 			<Server service="OGC:WMS" title="SCANDEP WM FXX 2011" version="1.3.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/r/wms" xlink:type="simple"/>
@@ -7127,7 +10149,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -7216,7 +10238,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -7396,13 +10418,13 @@
 			</Extension>
 		</Layer>
 		<Layer hidden="1" queryable="0">
-			<Server service="OGC:WMTS" title="Plan IGN j 1" version="1.0.0">
+			<Server service="OGC:WMTS" title="Plan IGN j+1" version="1.0.0">
 				<OnlineResource xlink:href="https://wxs.ign.fr/geoportail/wmts" xlink:type="simple"/>
 			</Server>
 			<Name>GEOGRAPHICALGRIDSYSTEMS.MAPS.BDUNI.J1</Name>
-			<Title>Plan IGN j 1</Title>
+			<Title>Plan IGN j+1</Title>
 			<Abstract>
-				<![CDATA[Plan IGN j 1]]>
+				<![CDATA[Plan IGN j+1]]>
 			</Abstract>
 			<sld:MinScaleDenominator>2133</sld:MinScaleDenominator>
 			<sld:MaxScaleDenominator>559082265</sld:MaxScaleDenominator>
@@ -7424,7 +10446,7 @@
 			<Extension>
 				<gpp:Layer id="GEOGRAPHICALGRIDSYSTEMS.MAPS.BDUNI.J1$GEOPORTAIL:OGC:WMTS">
 					<gpp:Thematics>
-						<gpp:Thematic>Plan IGN J 1</gpp:Thematic>
+						<gpp:Thematic>Plan IGN J+1</gpp:Thematic>
 					</gpp:Thematics>
 					<gpp:BoundingBox maxT="2019-01-23" minT="2019-01-23">-179.5,-75.0,179.5,75.0</gpp:BoundingBox>
 					<gpp:Originators>
@@ -7699,25 +10721,6 @@
 					</gpp:InspireThematics>
 					<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">-179.5,-75.0,179.5,75.0</gpp:BoundingBox>
 					<gpp:Originators>
-						<gpp:Originator name="FEDER">
-							<gpp:Attribution>Fonds européen de développement économique et régional</gpp:Attribution>
-							<gpp:Logo>https://wxs.ign.fr/static/logos/FEDER/FEDER.gif</gpp:Logo>
-							<gpp:URL>http://www.europe-en-france.gouv.fr/</gpp:URL>
-							<gpp:Constraints>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">-179.5,-75.0,179.5,75.0</gpp:BoundingBox>
-									<sld:MinScaleDenominator>136495</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>559082265</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">-1.9662633,42.316307,8.25674,50.18387</gpp:BoundingBox>
-									<sld:MinScaleDenominator>1067</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>1067</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-							</gpp:Constraints>
-						</gpp:Originator>
 						<gpp:Originator name="IGN">
 							<gpp:Attribution>Institut national de l'information géographique et forestière</gpp:Attribution>
 							<gpp:Logo>https://wxs.ign.fr/static/logos/IGN/IGN.gif</gpp:Logo>
@@ -7811,6 +10814,25 @@
 								</gpp:Constraint>
 							</gpp:Constraints>
 						</gpp:Originator>
+						<gpp:Originator name="FEDER">
+							<gpp:Attribution>Fonds européen de développement économique et régional</gpp:Attribution>
+							<gpp:Logo>https://wxs.ign.fr/static/logos/FEDER/FEDER.gif</gpp:Logo>
+							<gpp:URL>http://www.europe-en-france.gouv.fr/</gpp:URL>
+							<gpp:Constraints>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">-179.5,-75.0,179.5,75.0</gpp:BoundingBox>
+									<sld:MinScaleDenominator>136495</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>559082265</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+								<gpp:Constraint>
+									<gpp:CRS>EPSG:4326</gpp:CRS>
+									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">-1.9662633,42.316307,8.25674,50.18387</gpp:BoundingBox>
+									<sld:MinScaleDenominator>1067</sld:MinScaleDenominator>
+									<sld:MaxScaleDenominator>1067</sld:MaxScaleDenominator>
+								</gpp:Constraint>
+							</gpp:Constraints>
+						</gpp:Originator>
 						<gpp:Originator name="FEDER_PAYSDELALOIRE">
 							<gpp:Attribution>Pays-de-la-Loire</gpp:Attribution>
 							<gpp:Logo>https://wxs.ign.fr/static/logos/FEDER_PAYSDELALOIRE/FEDER_PAYSDELALOIRE.gif</gpp:Logo>
@@ -7834,55 +10856,6 @@
 									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">8.509344,41.815296,9.688606,43.08541</gpp:BoundingBox>
 									<sld:MinScaleDenominator>1067</sld:MinScaleDenominator>
 									<sld:MaxScaleDenominator>1067</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-							</gpp:Constraints>
-						</gpp:Originator>
-						<gpp:Originator name="GRAND_EST">
-							<gpp:Attribution>Hauts-de-France</gpp:Attribution>
-							<gpp:Logo>https://wxs.ign.fr/static/logos/GRAND_EST/GRAND_EST.gif</gpp:Logo>
-							<gpp:URL>https://www.grandest.fr/</gpp:URL>
-							<gpp:Constraints>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>1067</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>1067</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>34124</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>34124</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>17062</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>17062</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>4266</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>4266</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>8531</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>8531</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>2133</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>2133</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>68248</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>68248</sld:MaxScaleDenominator>
 								</gpp:Constraint>
 							</gpp:Constraints>
 						</gpp:Originator>
@@ -8082,13 +11055,13 @@
 					</gpp:Originators>
 					<gpp:Legends>
 						<gpp:Legend>
-							<sld:MinScaleDenominator>136495</sld:MinScaleDenominator>
+							<sld:MinScaleDenominator>267</sld:MinScaleDenominator>
 							<gpp:LegendURL format="format">
 								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
 							</gpp:LegendURL>
 						</gpp:Legend>
 						<gpp:Legend>
-							<sld:MinScaleDenominator>267</sld:MinScaleDenominator>
+							<sld:MinScaleDenominator>136495</sld:MinScaleDenominator>
 							<gpp:LegendURL format="format">
 								<OnlineResource xlink:href="https://wxs.ign.fr/static/legends/NOLEGEND.JPG" xlink:type="simple"/>
 							</gpp:LegendURL>
@@ -8325,7 +11298,7 @@
 				<Format current="0">GML2</Format>
 				<Format current="0">GML2-GZIP</Format>
 				<Format current="0">SHAPE-ZIP</Format>
-				<Format current="0">application/gml xml; version=3.2</Format>
+				<Format current="0">application/gml+xml; version=3.2</Format>
 				<Format current="0">csv</Format>
 				<Format current="0">gml3</Format>
 				<Format current="0">gml32</Format>
@@ -8697,55 +11670,6 @@
 								<gpp:Constraint>
 									<gpp:CRS>EPSG:4326</gpp:CRS>
 									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">-61.82342,14.371942,-60.787838,16.521578</gpp:BoundingBox>
-									<sld:MinScaleDenominator>1067</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>1067</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-							</gpp:Constraints>
-						</gpp:Originator>
-						<gpp:Originator name="GRAND_EST">
-							<gpp:Attribution>Hauts-de-France</gpp:Attribution>
-							<gpp:Logo>https://wxs.ign.fr/static/logos/GRAND_EST/GRAND_EST.gif</gpp:Logo>
-							<gpp:URL>https://www.grandest.fr/</gpp:URL>
-							<gpp:Constraints>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>34124</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>34124</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>17062</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>17062</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>4266</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>4266</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>8531</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>8531</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>2133</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>2133</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
-									<sld:MinScaleDenominator>68248</sld:MinScaleDenominator>
-									<sld:MaxScaleDenominator>68248</sld:MaxScaleDenominator>
-								</gpp:Constraint>
-								<gpp:Constraint>
-									<gpp:CRS>EPSG:4326</gpp:CRS>
-									<gpp:BoundingBox maxT="2030-04-14" minT="2020-04-16">5.362788,48.309772,7.6924667,49.58011</gpp:BoundingBox>
 									<sld:MinScaleDenominator>1067</sld:MinScaleDenominator>
 									<sld:MaxScaleDenominator>1067</sld:MaxScaleDenominator>
 								</gpp:Constraint>

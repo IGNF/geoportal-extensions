@@ -1,6 +1,6 @@
 {
     "baseurl" : "../../..",
     "resources" : "../../resources",
-    "apikey" : "essentiels,cartes,calcul,adresse",
+    "apikey" : "essentiels,cartes,calcul,adresse,lambert93",
     "proxy" : "https://localhost/proxy/proxy.php"
 }
