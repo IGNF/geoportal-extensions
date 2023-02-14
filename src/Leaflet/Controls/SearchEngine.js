@@ -801,7 +801,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     }
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function () {
                 // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
                 if (context._suggestedLocations && context._suggestedLocations[i]) {
