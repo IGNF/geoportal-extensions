@@ -801,7 +801,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     }
                 }
             },
-            /** callback onFailure */
+            // callback onFailure
             onFailure : function () {
                 // si on n'a pas réussi à récupérer les coordonnées, on affiche quand même le résultat
                 if (context._suggestedLocations && context._suggestedLocations[i]) {
@@ -1246,6 +1246,15 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         if (this.options.displayMarker) {
             this._setMarker(position, info, this.options.displayInfo, this.options.markerStyle);
         }
+
+        /**
+         * event triggered when an element of the results is clicked for autocompletion
+         *
+         * @event searchengine:autocomplete:click
+         */
+        this.fire("searchengine:autocomplete:click", {
+            data : this._locationsToBeDisplayed[idx]
+        });
     },
 
     // ################################################################### //
@@ -1332,6 +1341,15 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         if (this.options.displayMarker) {
             this._setMarker(position, info, this.options.displayInfo, this.options.markerStyle);
         }
+
+        /**
+         * event triggered when an element of the results is clicked for geocoding
+         *
+         * @event searchengine:geocode:click
+         */
+        this.fire("searchengine:geocode:click", {
+            data : this._geocodedLocations[idx]
+        });
     },
 
     // ################################################################### //
@@ -1457,5 +1475,8 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         }
     }
 });
+
+/** mix in L.Evented into control */
+L.extend(SearchEngine.prototype, L.Evented.prototype);
 
 export default SearchEngine;

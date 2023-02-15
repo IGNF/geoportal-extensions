@@ -163,6 +163,14 @@ var logger = Logger.getLogger("Drawing");
  * });
  */
 var Drawing = (function (Control) {
+    /**
+     * See {@link ol.control.Drawing}
+     * @module Drawing
+     * @alias module:~Controls/Drawing
+     * @param {*} options - options
+     * @example
+     * import Drawing from "src/OpenLayers/Controls/Drawing"
+     */
     function Drawing (options) {
         options = options || {};
 
@@ -490,6 +498,71 @@ var Drawing = (function (Control) {
         return this._exportFormat;
     };
 
+    /**
+     * Sets vector layer to hosts feature.
+     *
+     * @param {ol.layer.Vector} vlayer - vector layer
+     */
+    Drawing.prototype.setLayer = function (vlayer) {
+        if (!vlayer) {
+            this.layer = null;
+            return;
+        }
+
+        if (!(vlayer instanceof VectorLayer)) {
+            logger.log("no valid layer given for hosting drawn features.");
+            return;
+        }
+
+        // ajout du layer de dessin à la carte s'il n'y est pas déjà
+        var layers = this.getMap().getLayers();
+        if (layers) {
+            var found = false;
+            layers.forEach((mapLayer) => {
+                if (mapLayer === vlayer) { // FIXME object comparison
+                    logger.trace("layer already in map. Not adding.");
+                    found = true;
+                }
+            });
+            // si le layer n'est pas sur la carte, on l'ajoute.
+            if (!found) {
+                this.getMap().addLayer(vlayer);
+            }
+            // TODO style par defaut du geoportail !
+            // application des styles ainsi que ceux par defaut de ol sur le layer
+            vlayer.getSource().getFeatures().forEach((feature) => {
+                var featureStyleFunction = feature.getStyleFunction();
+                if (featureStyleFunction) {
+                    var styles = featureStyleFunction(feature, 0);
+                    // var styles = featureStyleFunction.call(feature, 0);
+                    if (styles && styles.length !== 0) {
+                        feature.setStyle(styles[0]);
+                    }
+                }
+            });
+            this.layer = vlayer;
+
+            // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
+            this.getMap().getControls().forEach(
+                (control) => {
+                    if (control instanceof LayerSwitcher) {
+                        // un layer switcher est présent dans la carte
+                        var layerId = this.layer.gpLayerId;
+                        // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
+                        if (control._layers[layerId].title === layerId) {
+                            control.addLayer(
+                                this.layer, {
+                                    title : this.options.layerDescription.title,
+                                    description : this.options.layerDescription.description
+                                }
+                            );
+                        }
+                    }
+                }
+            );
+        }
+    };
+
     // ################################################################### //
     // ######################## initialize control ####################### //
     // ################################################################### //
@@ -762,71 +835,6 @@ var Drawing = (function (Control) {
         layer.gpResultLayerId = "drawing";
         // on le rajoute au controle (et à la carte)
         this.setLayer(layer);
-    };
-
-    /**
-     * Sets vector layer to hosts feature.
-     *
-     * @param {ol.layer.Vector} vlayer - vector layer
-     */
-    Drawing.prototype.setLayer = function (vlayer) {
-        if (!vlayer) {
-            this.layer = null;
-            return;
-        }
-
-        if (!(vlayer instanceof VectorLayer)) {
-            logger.log("no valid layer given for hosting drawn features.");
-            return;
-        }
-
-        // ajout du layer de dessin à la carte s'il n'y est pas déjà
-        var layers = this.getMap().getLayers();
-        if (layers) {
-            var found = false;
-            layers.forEach((mapLayer) => {
-                if (mapLayer === vlayer) { // FIXME object comparison
-                    logger.trace("layer already in map. Not adding.");
-                    found = true;
-                }
-            });
-            // si le layer n'est pas sur la carte, on l'ajoute.
-            if (!found) {
-                this.getMap().addLayer(vlayer);
-            }
-            // TODO style par defaut du geoportail !
-            // application des styles ainsi que ceux par defaut de ol sur le layer
-            vlayer.getSource().getFeatures().forEach((feature) => {
-                var featureStyleFunction = feature.getStyleFunction();
-                if (featureStyleFunction) {
-                    var styles = featureStyleFunction(feature, 0);
-                    // var styles = featureStyleFunction.call(feature, 0);
-                    if (styles && styles.length !== 0) {
-                        feature.setStyle(styles[0]);
-                    }
-                }
-            });
-            this.layer = vlayer;
-
-            // Si un layer switcher est présent dans la carte, on lui affecte des informations pour cette couche
-            this.getMap().getControls().forEach(
-                (control) => {
-                    if (control instanceof LayerSwitcher) {
-                        // un layer switcher est présent dans la carte
-                        var layerId = this.layer.gpLayerId;
-                        // on n'ajoute des informations que s'il n'y en a pas déjà (si le titre est le numéro par défaut)
-                        if (control._layers[layerId].title === layerId) {
-                            control.addLayer(
-                                this.layer, {
-                                    title : this.options.layerDescription.title,
-                                    description : this.options.layerDescription.description
-                                }
-                            );
-                        }
-                    }
-                }
-            );
-        }
     };
 
     /**

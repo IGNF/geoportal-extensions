@@ -139,6 +139,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.18](#extension-geoportail-openlayers-version-3218)
   * [Summary](#summary-41)
   * [Changelog](#changelog-38)
+- [Extension Geoportail OpenLayers, version 3.2.19](#extension-geoportail-openlayers-version-3219)
+  * [Summary](#summary-42)
+  * [Changelog](#changelog-39)
 
 <!-- tocstop -->
 
@@ -1500,6 +1503,32 @@ Utilisation du Geocodage v2
 
     - Ajout des evenements (map) : "render:success" / "render:failure" pour l'application du rendu des styles MapBox
     - Ajout de l'evenement (map) : "editor:loaded" pour le chargement de l'editeur de style
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.19
+
+**17/01/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'access-lib en version 3.2.1
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 

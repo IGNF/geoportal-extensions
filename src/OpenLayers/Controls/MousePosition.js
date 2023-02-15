@@ -118,6 +118,14 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * });
  */
 var MousePosition = (function (Control) {
+    /**
+     * See {@link ol.control.GeoportalMousePosition}
+     * @module MousePosition
+     * @alias module:~Controls/MousePosition
+     * @param {*} options - options
+     * @example
+     * import GeoportalMousePosition from "src/OpenLayers/Controls/MousePosition"
+     */
     function MousePosition (options) {
         options = options || {};
 

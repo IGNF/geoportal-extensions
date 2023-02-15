@@ -72,6 +72,14 @@ var logger = Logger.getLogger("reversegeocoding");
  *  });
  */
 var ReverseGeocode = (function (Control) {
+    /**
+     * See {@link ol.control.ReverseGeocode}
+     * @module ReverseGeocode
+     * @alias module:~Controls/ReverseGeocode
+     * @param {*} options - options
+     * @example
+     * import ReverseGeocode from "src/OpenLayers/Controls/ReverseGeocode"
+     */
     function ReverseGeocode (options) {
         options = options || {};
 

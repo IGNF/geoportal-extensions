@@ -47,7 +47,7 @@
             // 2. Ajout de plusieurs couches différentes.
             var gpMaps = new ol.layer.Tile({
                 source : new ol.source.GeoportalWMTS({
-                    layer: "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
                 })
             });
             map.addLayer(gpMaps);
@@ -205,7 +205,7 @@
                 if ( !this.wtmsLayers )
                 {
                   this.wtmsLayers = [
-                    "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                    "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
                   ];
                 }
                 if ( !this.index )

@@ -1,7 +1,5 @@
 
 
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -13,6 +11,11 @@
 
 * [Added]
 
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
+    - Ajout de méthodes publiques sur les contrôles Iso et Route : 
+      - getGeoJSON() : fournit le tracé au format GeoJSON
+      - getData() : fournit la configuration du calcul
+
 * [Changed]
 
 * [Deprecated]
@@ -21,9 +24,14 @@
 
 * [Fixed]
 
+    - Faute d'ortographe description couche Isocurve
+    - Ajout des modules dans la JSDoc
+    - Mise à jour des clefs des services
+
 * [Security]
 
 ---
+
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -37,7 +45,8 @@
 
 * [Added]
 
-    - Ajout des "@types declaration" pour publication
+    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
 
 * [Changed]
 
@@ -52,6 +61,7 @@
 ---
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -63,8 +73,6 @@
 
 * [Added]
 
-    - Ajout des "@types declaration ts" pour publication
-
 * [Changed]
 
 * [Deprecated]
@@ -72,8 +80,6 @@
 * [Removed]
 
 * [Fixed]
-
-    - Afficher les informations des elements cliqués sans doublons
 
 * [Security]
 

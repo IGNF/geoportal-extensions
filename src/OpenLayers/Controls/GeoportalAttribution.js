@@ -28,6 +28,14 @@ var logger = Logger.getLogger("geoportalattribution");
  * attribution.on("attributions:update", function (e) {});
  */
 var GeoportalAttribution = (function (Attribution) {
+    /**
+     * See {@link ol.control.GeoportalAttribution}
+     * @module GeoportalAttribution
+     * @alias module:~Controls/GeoportalAttribution
+     * @param {*} options - options
+     * @example
+     * import GeoportalAttribution from "src/OpenLayers/Controls/GeoportalAttribution"
+     */
     function GeoportalAttribution (options) {
         options = options || {};
 

@@ -129,6 +129,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
              * Permet de desactiver la visibilité des attributions sur le retrait
              * d'un layer de type overlay.
              * Les attributions ne doivent plus apparaitre si le layer est invisible !
+             * @private
              */
             overlayremove : this._onRemoveLayer,
 
@@ -136,6 +137,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
              * Permet d'activer la visibilité des attributions sur l'ajout
              * d'un layer de type overlay.
              * Les attributions doivent apparaitre si le layer est visible !
+             * @private
              */
             overlayadd : this._onAddLayer,
 
@@ -143,6 +145,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
              * Permet de desactiver la visibilité des attributions sur le retrait
              * d'un layer de type layer.
              * Les attributions ne doivent plus apparaitre si le layer est invisible !
+             * @private
              */
             layerremove : this._onRemoveLayer,
 
@@ -150,12 +153,14 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
              * Permet d'activer la visibilité des attributions sur l'ajout
              * d'un layer de type layer.
              * Les attributions doivent apparaitre si le layer est visible !
+             * @private
              */
             layeradd : this._onAddLayer,
 
             /**
              * Permet d'ajouter des fonctionnalités lors de la creation du layer
              * sur les evenements de fin de mouvemenent (move ou zoom)
+             * @private
              */
             moveend : this._onMoveEndLayer
 

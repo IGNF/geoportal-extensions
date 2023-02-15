@@ -27,6 +27,14 @@ import SourceWMTS from "./SourceWMTS";
  * });
  */
 var LayerWMTS = (function (TileLayer) {
+    /**
+     * See {@link ol.layer.GeoportalWMTS}
+     * @module LayerWMTS
+     * @alias module:~Layers/GeoportalWMTS
+     * @param {*} options - options
+     * @example
+     * import LayerWMTS from "src/OpenLayers/Layers/LayerWMTS"
+     */
     function LayerWMTS (options) {
         if (!(this instanceof LayerWMTS)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
