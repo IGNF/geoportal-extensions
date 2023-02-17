@@ -71,12 +71,11 @@ var AutoLoadConfig = {
             options.timeOut = timeout;
         }
 
-        return options;
         // test d'existance de la varibale globale Gp.Config
-        // if (!Gp.Config) {
-        //     // appel du service
-        //     Gp.Services.getConfig(options);
-        // }
+        if (!Gp.Config) {
+            // appel du service
+            Gp.Services.getConfig(options);
+        }
     }
 };
 
