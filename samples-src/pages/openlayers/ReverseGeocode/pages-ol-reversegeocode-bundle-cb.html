@@ -57,9 +57,11 @@
 
                 // listener sur le calcul
                 reverse.on("reversegeocode:compute", function (e) {
-                  console.warn(e.target.getData());
+                  console.error(e.target.getData());
                 });
-
+                reverse.on("reversegeocode:onclickresult", function (e) {
+                  console.error(e.location);
+                });
                 layerSwitcher = new ol.control.LayerSwitcher({});
                 map.addControl(layerSwitcher);
              };
