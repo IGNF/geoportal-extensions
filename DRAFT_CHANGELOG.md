@@ -26,6 +26,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -33,14 +34,9 @@
 
 ## Summary
 
-Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
-
 ## Changelog
 
 * [Added]
-
-    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat (#351)
-    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#354)
 
 * [Changed]
 
