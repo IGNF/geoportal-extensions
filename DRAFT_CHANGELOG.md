@@ -7,15 +7,17 @@
 
 ## Summary
 
+Ajout d'écouteurs sur les controles de Géocodage direct en inverse
+
 ## Changelog
 
 * [Added]
 
-    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
-    - Ajout d'evenements sur le contrôle ReverseGeocode lors de la selection d'un résultat
-    - Ajout de méthodes publiques sur les contrôles Iso et Route : 
-      - getGeoJSON() : fournit le tracé au format GeoJSON
-      - getData() : fournit la configuration du calcul
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#348)
+    - Ajout d'evenements sur le contrôle ReverseGeocode lors de la selection d'un résultat (#356)
+    - Ajout de méthodes publiques sur les contrôles Iso et Route (#343) : 
+        - getGeoJSON() : fournit le tracé au format GeoJSON
+        - getData() : fournit la configuration du calcul
 
 * [Changed]
 
@@ -26,8 +28,8 @@
 * [Fixed]
 
     - Faute d'ortographe description couche Isocurve
-    - Ajout des modules dans la JSDoc
-    - Mise à jour des clefs des services
+    - Ajout des modules dans la JSDoc (#349)
+    - Mise à jour des clefs des services (#352)
 
 * [Security]
 
@@ -42,12 +44,14 @@
 
 ## Summary
 
+Ajout d'écouteurs sur les contrôles de Géocodage direct et inverses
+
 ## Changelog
 
 * [Added]
 
-    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat
-    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat
+    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat (#351)
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#354)
 
 * [Changed]
 
@@ -75,6 +79,8 @@
 * [Added]
 
 * [Changed]
+
+    - mise à jour du readme
 
 * [Deprecated]
 
