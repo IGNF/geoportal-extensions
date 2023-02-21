@@ -1,6 +1,6 @@
 {
    "bundleDependencies" : [],
-   "version" : "2.2.8",
+   "version" : "2.2.9",
    "types" : "src/Leaflet/index.d.ts",
    "scripts" : {},
    "keywords" : [
@@ -39,7 +39,7 @@
    },
    "peerDependencies" : {},
    "directories" : {},
-   "date" : "17/01/2023",
+   "date" : "21/02/2023",
    "license" : "CECILL-B",
    "bugs" : {},
    "description" : "French Geoportal Extension for Leaflet"
