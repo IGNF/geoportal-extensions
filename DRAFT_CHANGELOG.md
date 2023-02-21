@@ -44,7 +44,7 @@ Ajout d'écouteurs sur les controles de Géocodage direct en inverse
 
 ## Summary
 
-Ajout d'écouteurs sur les contrôles de Géocodage direct et inverses
+Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
 
 ## Changelog
 
