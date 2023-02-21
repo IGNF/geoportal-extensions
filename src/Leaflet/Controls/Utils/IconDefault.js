@@ -3,7 +3,11 @@ import Logger from "../../../Common/Utils/LoggerByDefault";
 
 var logger = Logger.getLogger("icondefault");
 
-/**  cf. http://leafletjs.com/reference.html#icon */
+/**
+ * @classdesc
+ *
+ * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#icon" target="_blank">L.Icon.Default</a> native class.
+ */
 var IconDefault = L.Icon.Default.extend(/** @lends IconDefault.prototype */ {
 
     /**

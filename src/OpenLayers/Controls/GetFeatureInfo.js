@@ -42,6 +42,14 @@ var logger = Logger.getLogger("getfeatureinfo");
  * @param {Number} [options.options.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
  */
 var GetFeatureInfo = (function (Control) {
+    /**
+     * See {@link ol.control.GetFeatureInfo}
+     * @module GetFeatureInfo
+     * @alias module:~Controls/GetFeatureInfo
+     * @param {*} options - options
+     * @example
+     * import GetFeatureInfo from "src/OpenLayers/Controls/GetFeatureInfo"
+     */
     function GetFeatureInfo (options) {
         options = options || {};
         var _options = options.options || {};

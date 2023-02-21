@@ -185,14 +185,18 @@ var Controls = {
      * @param {Array}  [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
      * @param {Object}  [options.ReverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
      * @returns {L.geoportalControl.ReverseGeocode} - ReverseGeocode Object
+     * @fires reverse:onclickresult
      * @example
-     *  var iso = L.geoportalControl.ReverseGeocode({
+     *  var reverse = L.geoportalControl.ReverseGeocode({
      *      collapsed : false,
      *      position : "topright",
      *      resources : ["StreetAddress", "PositionOfInterest"],
      *      delimitations : ["Point", "Circle"],
      *      reverseGeocodeOptions : {}
      *  });
+     * reverse.on("reverse:onclickresult", function (e) {
+     *   console.log(e.data):
+     * });
      */
     ReverseGeocode : function (options) {
         return new ReverseGeocoding(options);
@@ -276,6 +280,8 @@ var Controls = {
      * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
      * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
      * @returns {L.geoportalControl.SearchEngine} - SearchEngine Object
+     * @fires searchengine:autocomplete:click
+     * @fires searchengine:geocode:click
      * @example
      *  var SearchEngine = L.geoportalControl.SearchEngine({
      *      position : "topright",
@@ -292,6 +298,12 @@ var Controls = {
      *      apiKey : "zfgzrgffg57rfg8ar7gr4g5r4",
      *      geocodeOptions : {},
      *      autocompleteOptions : {}
+     *  });
+     *  SearchEngine.on("searchengine:autocomplete:click", function (e) {
+     *   console.log(e.data):
+     *  });
+     *  SearchEngine.on("searchengine:geocode:click", function (e) {
+     *   console.log(e.data):
      *  });
      */
     SearchEngine : function (options) {

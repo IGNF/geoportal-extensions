@@ -683,7 +683,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         var self = this;
         L.Util.extend(options, {
 
-            /** sampling à 200 (iso portail) */
+            // sampling à 200 (iso portail)
             sampling : _sampling,
 
             // callback onSuccess
