@@ -142,6 +142,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.19](#extension-geoportail-openlayers-version-3219)
   * [Summary](#summary-42)
   * [Changelog](#changelog-39)
+- [Extension Geoportail OpenLayers, version 3.2.20](#extension-geoportail-openlayers-version-3220)
+  * [Summary](#summary-43)
+  * [Changelog](#changelog-40)
 
 <!-- tocstop -->
 
@@ -1529,6 +1532,40 @@ Mise à jour de l'access-lib en version 3.2.1
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.20
+
+**21/02/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout d'écouteurs sur les controles de Géocodage direct en inverse
+
+## Changelog
+
+* [Added]
+
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#348)
+    - Ajout d'evenements sur le contrôle ReverseGeocode lors de la selection d'un résultat (#356)
+    - Ajout de méthodes publiques sur les contrôles Iso et Route (#343) : 
+        - getGeoJSON() : fournit le tracé au format GeoJSON
+        - getData() : fournit la configuration du calcul
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Faute d'ortographe description couche Isocurve
+    - Ajout des modules dans la JSDoc (#349)
+    - Mise à jour des clefs des services (#352)
 
 * [Security]
 

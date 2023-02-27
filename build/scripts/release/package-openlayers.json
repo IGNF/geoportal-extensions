@@ -28,7 +28,7 @@
       "sortablejs" : "1.14.0"
    },
    "directories" : {},
-   "version" : "3.2.19",
+   "version" : "3.2.20",
    "scripts" : {},
    "files" : [
       "dist/",
@@ -37,5 +37,5 @@
       "README.md",
       "package.json"
    ],
-   "date" : "17/01/2023"
+   "date" : "21/02/2023"
 }

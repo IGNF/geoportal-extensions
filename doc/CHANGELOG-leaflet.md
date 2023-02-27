@@ -84,6 +84,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.8](#extension-geoportail-leaflet-version-228)
   * [Summary](#summary-24)
   * [Changelog](#changelog-21)
+- [Extension Geoportail Leaflet, version 2.2.9](#extension-geoportail-leaflet-version-229)
+  * [Summary](#summary-25)
+  * [Changelog](#changelog-22)
 
 <!-- tocstop -->
 
@@ -753,6 +756,33 @@ Ajout des déclarations typescript, améliorations et corrections des interfaces
 
     - Survol du profil altimétrique rendu compatible avec les téléphones (af2c669563b248c398aa11932a50839d975dff85i)
     - Corrige la prise en compte des coordonnées du point de départ des isochrones (38d86213848d5b14539fdeaf1e46049c8f9bb73e)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.9
+
+**21/02/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
+
+## Changelog
+
+* [Added]
+
+    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat (#351)
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#354)
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 

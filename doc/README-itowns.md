@@ -370,7 +370,7 @@ Gp.Services.getConfig(...)
 
 ### Versions d'iTowns supportées
 
-La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.37.0** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.37.0 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
+La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.38.2** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.38.2 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
 
 
 ### Navigateurs supportés

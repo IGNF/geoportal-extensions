@@ -62,6 +62,7 @@ var logger = Logger.getLogger("reversegeocoding");
  * @param {String} [options.layerDescription.title = "Saisie (recherche inverse)"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
  * @fires reversegeocode:compute
+ * @fires reversegeocode:onclickresult
  * @example
  *  var iso = ol.control.ReverseGeocode({
  *      "collapsed" : false,
@@ -1112,7 +1113,7 @@ var ReverseGeocode = (function (Control) {
             },
             srs : "CRS:84",
             returnFreeForm : false,
-            maximumResponses : reverseGeocodeOptions.maximumResponses || 25,
+            maximumResponses : reverseGeocodeOptions.maximumResponses || 18,
             timeOut : reverseGeocodeOptions.timeOut || 30000,
             // protocol : reverseGeocodeOptions.protocol || "XHR",
             // callback onSuccess
@@ -1149,10 +1150,10 @@ var ReverseGeocode = (function (Control) {
 
         // on récupère d'éventuels filtres
         if (this._requestGeom.type.toLowerCase() === "circle") {
-            // FIXME : a confirmer !
-            if (this._requestGeom.radius > 1000) {
+            // FIXME : a confirmer en fonction du service !
+            if (this._requestGeom.radius > 500) {
                 logger.log("INFO : initial circle radius (" + this._requestGeom.radius + ") limited to 1000m.");
-                this._requestGeom.radius = 1000;
+                this._requestGeom.radius = 500;
             }
             requestOptions.searchGeometry = this._requestGeom;
         } else if (this._requestGeom.type.toLowerCase() === "polygon") {
@@ -1435,6 +1436,7 @@ var ReverseGeocode = (function (Control) {
         feature.setStyle(this._resultsDefaultStyle);
         feature.setId(i);
         feature.setProperties({
+            location : location,
             popupContent : this._fillPopupContent(location)
         });
         this._resultsFeatures.push(feature);
@@ -1535,6 +1537,23 @@ var ReverseGeocode = (function (Control) {
                 // si l'overlay est déjà créé, on modifie juste sa position
                 this._popupOverlay.setPosition(e.mapBrowserEvent.coordinate);
             }
+
+            /**
+             * event triggered when an element of the results is clicked
+             *
+             * @event reversegeocode:onclickresult
+             * @property {Object} type - event
+             * @property {Object} location - location
+             * @property {Object} target - instance ReverseGeocode
+             * @example
+             * Reverse.on("reverse:onclickresult", function (e) {
+             *   console.log(e.location);
+             * })
+             */
+            this.dispatchEvent({
+                type : "reversegeocode:onclickresult",
+                location : f.getProperties().location
+            });
         } else {
             // si aucun troncon n'est sélectionné (click à côté du tracé),
             // on fait disparaitre la popup si elle existe
@@ -1686,7 +1705,27 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype.onReverseGeocodingResultClick = function (e) {
-        logger.log("onReverseGeocodingResultClick", e);
+        // récupération de l'id du résultat survolé
+        var tagid = e.target.id; // ex ReverseGeocodedLocation_21
+        var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 21
+
+        var f = this._resultsFeaturesSource.getFeatureById(parseInt(idx, 10));
+        /**
+         * event triggered when an element of the results is clicked
+         *
+         * @event reversegeocode:onclickresult
+         * @property {Object} type - event
+         * @property {Object} location - location
+         * @property {Object} target - instance ReverseGeocode
+         * @example
+         * Reverse.on("reversegeocode:onclickresult", function (e) {
+         *   console.log(e.location);
+         * })
+         */
+        this.dispatchEvent({
+            type : "reversegeocode:onclickresult",
+            location : f.getProperties().location
+        });
     };
 
     /**
