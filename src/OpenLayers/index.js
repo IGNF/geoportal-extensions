@@ -107,6 +107,7 @@ import Search from "./Controls/Editor/Search";
 import Editor from "./Controls/Editor";
 
 // Les autoload...
+import "../Common/Utils/AutoLoadConfig";
 import "./CRS/AutoLoadCRS";
 
 // export des services
@@ -166,7 +167,7 @@ export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 /** cf. Gp.Logger */
 export { default as Logger } from "../Common/Utils/LoggerByDefault";
-export { default as AutoLoadConfig } from "../Common/Utils/AutoLoadConfig";
+// export { default as AutoLoadConfig } from "../Common/Utils/AutoLoadConfig";
 
 
 function deepCopy (source, target) {
