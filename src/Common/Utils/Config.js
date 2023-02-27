@@ -36,11 +36,11 @@ var Config = {
      * @returns {Boolean} True si l'autoconf a déjà été chargée, False sinon.
      */
     isConfigLoaded : function () {
-        // var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
-        // if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
-        //     /** ts-syntax */ (this.configuration) = scope.Gp.Config;
-        //     return true;
-        // } 
+        var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
+        if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
+            /** ts-syntax */ (this.configuration) = scope.Gp.Config;
+            return true;
+        } 
         return false;
     },
 
