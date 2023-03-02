@@ -147,7 +147,7 @@ var Config = {
                 // récupération des paramètres du service
                 params.url = layerConf.serviceParams.serverUrl[apiKey];
                 params.version = layerConf.serviceParams.version;
-                params.styles = layerConf.styles[0];
+                params.styles = layerConf.styles[0].name;
                 params.format = layerConf.formats[0].name;
                 params.projection = layerConf.defaultProjection;
 
@@ -180,7 +180,7 @@ var Config = {
                         // params.matrixOrigin = tmsConf.getTopLeftCorner();
                         // params.nativeResolutions = tmsConf.nativeResolutions;
                         params.matrixIds = Object.keys(tmsConf.tileMatrices);
-                        params.tileMatrices = Object.values(tmsConf.tileMatrices);
+                        params.tileMatrices = tmsConf.tileMatrices;
                     }
                 }
 
@@ -203,7 +203,9 @@ var Config = {
                         return;
                     }
                 });
-                break;
+                if (layerKey) {
+                    break;
+                }
             }
         }
         return layerKey;
