@@ -32,7 +32,7 @@ var logger = Logger.getLogger("sourcewmts");
  * });
  */
 var SourceWMTS = (function (WMTSExtended) {
-    function SourceWMTS (options) {
+    function SourceWMTS(options) {
         if (!(this instanceof SourceWMTS)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
@@ -51,13 +51,13 @@ var SourceWMTS = (function (WMTSExtended) {
         }
 
         // Check if configuration is loaded
-        // if (!Config.isConfigLoaded()) {
-        //     throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
-        // }
+        if (!Config.isConfigLoaded()) {
+            throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+        }
 
         var layerId = Config.getLayerId(options.layer, "WMTS");
 
-        if (layerId && Config.configuration.getLayerConf(layerId)) {
+        if (layerId && Config.configuration.layers[layerId]) {
             var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
             // si ssl = false on fait du http
@@ -74,20 +74,20 @@ var SourceWMTS = (function (WMTSExtended) {
             var wmtsSourceOptions = {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
-                url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
+                url: Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
+                    "gp-ol-ext": Pkg.olExtVersion || Pkg.version
                 }, false),
-                version : wmtsParams.version,
-                style : wmtsParams.styles,
-                format : wmtsParams.format,
-                projection : wmtsParams.projection,
-                maxZoom : LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
-                layer : options.layer,
-                matrixSet : wmtsParams.TMSLink,
-                tileGrid : new WMTSTileGrid({
-                    resolutions : wmtsParams.nativeResolutions,
-                    matrixIds : wmtsParams.matrixIds,
-                    origin : [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
+                version: wmtsParams.version,
+                style: wmtsParams.styles,
+                format: wmtsParams.format,
+                projection: wmtsParams.projection,
+                maxZoom: LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
+                layer: options.layer,
+                matrixSet: wmtsParams.TMSLink,
+                tileGrid: new WMTSTileGrid({
+                    resolutions: wmtsParams.nativeResolutions,
+                    matrixIds: wmtsParams.matrixIds,
+                    origin: [wmtsParams.matrixOrigin.x, wmtsParams.matrixOrigin.y]
                 })
                 // ,
                 // attributions : [
@@ -117,6 +117,7 @@ var SourceWMTS = (function (WMTSExtended) {
             logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
             return new WMTSExtended({});
         }
+
     }
 
     // Inherits from ol.source.WMTS

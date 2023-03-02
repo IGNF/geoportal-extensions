@@ -25,7 +25,7 @@ var Config = {
      * @public
      * @type {Object}
      */
-    configuration : null,
+    configuration: null,
 
     /**
      * Controle du chargement de l'autoconf
@@ -35,12 +35,12 @@ var Config = {
      * @public
      * @returns {Boolean} True si l'autoconf a déjà été chargée, False sinon.
      */
-    isConfigLoaded : function () {
+    isConfigLoaded: function () {
         var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
         if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
             /** ts-syntax */ (this.configuration) = scope.Gp.Config;
             return true;
-        } 
+        }
         return false;
     },
 
@@ -53,7 +53,7 @@ var Config = {
      * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
      * @returns {String} Identifiant de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS")
      */
-    getLayerId : function (layerName, service) {
+    getLayerId: function (layerName, service) {
         var layerId = null;
 
         // layer
@@ -122,7 +122,7 @@ var Config = {
      * @returns {Array} params.[nativeResolutions] - Tableau regroupant les résolutions de chaque niveau de la matrice, dans le cas d'une couche WMTS
      * @returns {Array} params.[matrixIds]         - Tableau regroupant les identifiants de chaque niveau de la matrice, dans le cas d'une couche WMTS
      */
-    getLayerParams : function (layerName, service, apiKey) {
+    getLayerParams: function (layerName, service, apiKey) {
         var params = {};
 
         if (this.configuration) {
@@ -134,7 +134,7 @@ var Config = {
                 var layerConf = this.configuration.layers[layerId];
 
                 // controle de la clef
-                var key = layerConf.apiKeys[0];
+                var key = this.getLayerKey(layerId);
                 if (apiKey) {
                     if (apiKey !== key) {
                         logger.error("ERROR different keys (" + apiKey + " !== " + key + ") !?");
@@ -145,43 +145,68 @@ var Config = {
                 apiKey = apiKey || key;
                 params.key = apiKey;
                 // récupération des paramètres du service
-                params.url = layerConf.getServerUrl(apiKey);
-                params.version = layerConf.getServiceParams().version;
-                params.styles = layerConf.getDefaultStyle();
-                params.format = layerConf.getDefaultFormat();
-                params.projection = layerConf.getDefaultProjection();
+                params.url = layerConf.serviceParams.serverUrl[apiKey];
+                params.version = layerConf.serviceParams.version;
+                params.styles = layerConf.styles[0];
+                params.format = layerConf.formats[0].name;
+                params.projection = layerConf.defaultProjection;
 
                 // récupération des infos de la couche
-                params.minScale = layerConf.getMinScaleDenominator();
-                params.maxScale = layerConf.getMaxScaleDenominator();
-                params.extent = layerConf.getBBOX();
-                params.legends = layerConf.getLegends();
-                params.metadata = layerConf.getMetadata();
-                params.originators = layerConf.getOriginators();
-                params.title = layerConf.getTitle();
-                params.description = layerConf.getDescription();
-                params.quicklookUrl = layerConf.getQuicklookUrl();
+                params.minScale = layerConf.globalConstraint.minScaleDenominator;
+                params.maxScale = layerConf.globalConstraint.maxScaleDenominator;
+                params.extent = layerConf.globalConstraint.bbox;
+                params.legends = layerConf.legends;
+                params.title = layerConf.title;
+                params.description = layerConf.description;
+
+                if (service === "WMS") {
+                    params.metadata = layerConf.metadata;
+                }
+
+                // Informations  non disponibles avec les getCap
+                // params.metadata = layerConf.getMetadata();
+                // params.originators = layerConf.getOriginators();
+                // params.quicklookUrl = layerConf.getQuicklookUrl();
 
                 // WMTS : récupération des tileMatrixSetLimits
                 if (layerConf.wmtsOptions) {
                     params.tileMatrixSetLimits = layerConf.wmtsOptions.tileMatrixSetLimits;
+                    // WMTS : récupération des paramètres de la pyramide (TMS)
+                    var TMSLink = layerConf.wmtsOptions.tileMatrixSetLink;
+                    if (TMSLink) {
+                        params.TMSLink = TMSLink;
+                        var tmsConf = this.configuration.tileMatrixSets[TMSLink];
+                        // Get matrix origin : Gp.Point = Object{x:Float, y:Float}
+                        // params.matrixOrigin = tmsConf.getTopLeftCorner();
+                        // params.nativeResolutions = tmsConf.nativeResolutions;
+                        params.matrixIds = Object.keys(tmsConf.tileMatrices);
+                        params.tileMatrices = Object.values(tmsConf.tileMatrices);
+                    }
                 }
 
-                // WMTS : récupération des paramètres de la pyramide (TMS)
-                var TMSLink = layerConf.getTMSID();
-                if (TMSLink) {
-                    params.TMSLink = TMSLink;
-                    var tmsConf = this.configuration.getTMSConf(TMSLink);
-                    // Get matrix origin : Gp.Point = Object{x:Float, y:Float}
-                    params.matrixOrigin = tmsConf.getTopLeftCorner();
-                    params.nativeResolutions = tmsConf.nativeResolutions;
-                    params.matrixIds = tmsConf.matrixIds;
-                    params.tileMatrices = tmsConf.tileMatrices;
-                }
+
             }
         }
 
         return params;
+    },
+
+    getLayerKey: function (layerId) {
+        var layerKey;
+        if (this.configuration && this.configuration.generalOptions) {
+            var resourcesByKey = this.configuration.generalOptions.apiKeys;
+            for (var key in resourcesByKey) {
+                var resourcesArray = resourcesByKey[key];
+                resourcesArray.forEach(function (arrayLayerId) {
+                    if (arrayLayerId === layerId) {
+                        layerKey = key;
+                        return;
+                    }
+                });
+                break;
+            }
+        }
+        return layerKey;
     },
 
     /**
@@ -197,7 +222,7 @@ var Config = {
      * @returns {String} params. -
      * @returns {String} params. -
      */
-    getServiceParams : function (resource, service, apiKeys) {
+    getServiceParams: function (resource, service, apiKeys) {
         var params = {};
 
         if (this.configuration) {
@@ -250,7 +275,7 @@ var Config = {
      * @public
      * @returns {Array} resolutions
      */
-    getResolutions : function () {
+    getResolutions: function () {
         var resolutions = [];
 
         if (this.configuration) {
@@ -268,7 +293,7 @@ var Config = {
      * @param {String} tmsName - tile matrix set name
      * @returns {Object} tile matrix set
      */
-    getTileMatrix : function (tmsName) {
+    getTileMatrix: function (tmsName) {
         var tms = {};
 
         if (this.configuration) {
@@ -292,7 +317,7 @@ var Config = {
      * @returns {Number} params.maxScale   - Dénominateur d'échelle maximum de la couche
      * @returns {Gp.BBox} params.extent    - Etendue de la couche, dans la projection de la couche
      */
-    getGlobalConstraints : function (layerId) {
+    getGlobalConstraints: function (layerId) {
         var params = {};
 
         if (layerId) {

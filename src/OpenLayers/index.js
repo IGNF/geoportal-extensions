@@ -107,7 +107,7 @@ import Search from "./Controls/Editor/Search";
 import Editor from "./Controls/Editor";
 
 // Les autoload...
-import "../Common/Utils/AutoLoadConfig";
+// import "../Common/Utils/AutoLoadConfig";
 import "./CRS/AutoLoadCRS";
 
 // export des services
