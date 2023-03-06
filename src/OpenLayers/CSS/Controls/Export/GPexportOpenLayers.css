@@ -1,0 +1,7 @@
+div[id^=GPexportContainer-] {
+    padding: 5px;
+}
+
+div[id^=GPexportContainer-] > input.GPinputSubmit {
+    color: white;
+}
