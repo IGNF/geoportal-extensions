@@ -1,7 +1,99 @@
+/* main container */
 div[id^=GPexportContainer-] {
     padding: 5px;
 }
 
 div[id^=GPexportContainer-] > input.GPinputSubmit {
     color: white;
+}
+
+/* bouton */
+input[id^=GPexportButton-] {
+    min-width: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* menu */
+.GPexportMenuHidden {
+    visibility: hidden;
+}
+
+.GPexportMenuContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.GPexportMenuContent {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 80px;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.GPexportMenuContent a:hover { background-color: #f1f1f1; }
+
+.GPexportMenuContainer:hover .GPexportMenuContent { display: block; }
+
+/* menu des formats */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+  
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 12px;
+    width: 12px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+  
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+    background-color: #366291;
+}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+.container .checkmark:after {
+    top: 4px;
+    left: 4px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: white;
 }

@@ -70,6 +70,7 @@ class ButtonExport extends Control {
             format : "geojson",
             name : "export",
             title : "Exporter",
+            menu : false,
             onExport : null
         };
 
@@ -84,17 +85,12 @@ class ButtonExport extends Control {
         this.extension = null;
         this.mimeType = null;
 
-        // dom container
+        // dom
         this.container = null;
         this.button = null;
-
-        // dom id / className
-        this.dom = {
-            containerID : "GPexportContainer",
-            containerClass : "",
-            buttonID : "GPexportButton",
-            buttonClass : "GPinputSubmit"
-        };
+        this.menu = null;
+        this.icon = "\u2630 ";
+        this.menuClassHidden = "GPexportMenuHidden";
 
         this.initOptions();
         this.initContainer();
@@ -136,22 +132,26 @@ class ButtonExport extends Control {
      */
     initOptions () {
         if (this.options.control) {
-            // TODO tester l'existance
+            // ...
         }
 
         if (this.options.target) {
-            // TODO tester l'existance
+            // ...
         }
 
         var format = this.options.format;
         (format) ? this.setFormat(format) : this.setFormat("");
 
         if (!this.options.name) {
-            this.options.name = "export";
+            this.setName("export");
         }
 
         if (!this.options.title) {
-            this.options.title = "Exporter";
+            this.setTitle("Exporter");
+        }
+
+        if (this.options.menu === undefined) {
+            this.setMenu(false);
         }
     }
 
@@ -160,30 +160,84 @@ class ButtonExport extends Control {
      * (called by constructor)
      *
      * @private
-     * @todo mettre en place un menu
      */
     initContainer () {
         // TODO
-        // menu des options : nom et format de l'export
+        // menu des options de l'export :
+        // * [ nom ]
+        // * format
+        // https://www.w3schools.com/howto/howto_css_dropdown.asp
+        // https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
-        // utiliser les templates literals avec la substitution ${...}
-        var content = this.stringToHTML(`
-        <input type="button"
-            id="${this._addUID(this.dom.buttonID)}" 
-            class="${this.dom.buttonClass}"
-            value="${this.options.title}"</input>
-        `);
+        // afficher l'icone du menu
+        var title = this.options.title;
+        if (this.options.menu) {
+            title = this.icon + this.options.title;
+        }
 
         var div = document.createElement("div");
-        div.id = this._addUID(this.dom.containerID);
-        div.className = this.dom.containerClass;
+        div.id = this._addUID("GPexportContainer");
+        div.className = "GPexportMenuContainer";
+
+        // bouton Exporter
+        // utiliser les templates literals avec la substitution ${...}
+        var button = this.stringToHTML(`
+            <input type="button"
+                id="${this._addUID("GPexportButton")}" 
+                class="GPinputSubmit"
+                value="${title}">
+        `);
 
         // add event click button
-        this.button = content.firstChild;
+        this.button = button.firstChild;
         if (this.button) {
             this.button.addEventListener("click", (e) => this.onClickButtonExport(e));
         }
-        div.appendChild(content.firstChild);
+        div.appendChild(button.firstChild);
+
+        // menu des options
+        // utiliser les templates literals avec la substitution ${...}
+        var menu = this.stringToHTML(`
+            <div class="GPexportMenuContent ${this.menuClassHidden}">
+                <label class="container">GeoJSON
+                    <input type="radio" 
+                        id="GPmenuFormatGeojson-${this.uid}"
+                        name="format" 
+                        value="geojson" 
+                        checked=true>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">KML
+                    <input type="radio" 
+                        id="GPmenuFormatKml-${this.uid}"
+                        name="format" 
+                        value="kml">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">GPX
+                    <input type="radio" 
+                        id="GPmenuFormatGpx-${this.uid}"
+                        name="format" 
+                        value="gpx">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        `);
+
+        this.menu = menu.firstChild;
+        if (this.menu) {
+            if (this.options.menu) {
+                var className = this.menu.className;
+                this.menu.className = className.replace(this.menuClassHidden, "");
+            }
+            var radios = this.menu.querySelectorAll(`input[type=radio][name="format"]`); // [id$=${this.uid}]
+            radios.forEach((radio) => {
+                radio.addEventListener("change", (e) => {
+                    this.setFormat(e.target.value);
+                });
+            });
+        }
+        div.appendChild(menu.firstChild);
 
         this.container = div;
     }
@@ -415,7 +469,27 @@ class ButtonExport extends Control {
      */
     setTitle (title) {
         this.options.title = title;
-        this.button.value = title;
+        if (this.button) {
+            // afficher l'icone du menu / titre
+            this.button.value = (this.options.menu) ? this.icon + title : title;
+        }
+    }
+
+    /**
+     * ...
+     * @param {Boolean} active - ...
+     * @public
+     */
+    setMenu (active) {
+        this.options.menu = active;
+        if (this.button) {
+            // afficher l'icone du menu / titre
+            this.button.value = (this.options.menu) ? this.icon + this.options.title : this.options.title;
+        }
+        if (this.menu && this.options.menu) {
+            var className = this.menu.className;
+            this.menu.className = className.replace(this.menuClassHidden, "");
+        }
     }
 
 };

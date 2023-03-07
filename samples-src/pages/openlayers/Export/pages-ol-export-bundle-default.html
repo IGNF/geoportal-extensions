@@ -24,7 +24,7 @@
 
 {{#content "js"}}
             <script type="text/javascript">
-
+              var exportRoute;
               window.onload = function () {
                 // on cache l'image de chargement du Géoportail.
                 document.getElementById("map").style.backgroundImage = "none";
@@ -59,7 +59,7 @@
                 });
 
                 // iso + export with config
-                var iso = new ol.control.Isocurve();
+                var iso = new ol.control.Isocurve({draggable:true});
                 map.addControl(iso);
                 var exportIso = new ol.control.Export({
                   control: iso,
@@ -67,6 +67,7 @@
                   format: "kml",
                   name: "export-iso",
                   title : "Exporter",
+                  menu : false,
                   onExport : function (content) {
                     console.log(content);
                   }
@@ -79,12 +80,13 @@
                 // route + export with setters
                 var route = new ol.control.Route();
                 map.addControl(route);
-                var exportRoute = new ol.control.Export({});
+                exportRoute = new ol.control.Export({});
                 exportRoute.setControl(route);
                 exportRoute.setTarget(document.getElementById("btnExportRoute"));
                 exportRoute.setFormat("geojson");
                 exportRoute.setName("export-route");
                 exportRoute.setTitle("Exporter Iti");
+                exportRoute.setMenu(true);
                 exportRoute.render();
                 exportRoute.on("export:compute", (e) => {
                   console.log("Export Route", e);
