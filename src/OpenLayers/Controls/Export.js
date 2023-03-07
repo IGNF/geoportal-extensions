@@ -27,9 +27,9 @@ var logger = Logger.getLogger("export");
  * @constructor
  * @alias ol.control.Export
  * @param {Object} options - options for function call.
- * @param {String} [options.format] - geojson / kml / gpx
- * @param {String} [options.name] - export name
- * @param {String} [options.title] - button name
+ * @param {String} [options.format = "geojson"] - geojson / kml / gpx
+ * @param {String} [options.name = "export"] - export name
+ * @param {String} [options.title = "Exporter"] - button name
  * @param {Function} [options.onExport] - callback
  * @param {DOMElement} [options.target] - target
  * @param {Object} [options.control] - instance of control
@@ -160,7 +160,7 @@ class ButtonExport extends Control {
      * (called by constructor)
      *
      * @private
-     * @todo
+     * @todo mettre en place un menu
      */
     initContainer () {
         // TODO

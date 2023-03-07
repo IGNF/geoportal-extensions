@@ -29,7 +29,7 @@ import Color from "../../Common/Utils/ColorUtils";
 var GeoJSON = (function (olGeoJSON) {
     /**
      * See {@link ol.format.GeoJSONExtended}
-     * @module SearchEngine
+     * @module GeoJSONExtended
      * @alias module:~Formats/GeoJSONExtended
      * @param {*} options - options
      * @example

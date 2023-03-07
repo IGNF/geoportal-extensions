@@ -920,7 +920,7 @@ var Isocurve = (function (Control) {
         this._originPoint.setMap(map);
         // a la sélection d'un nouveau point, on réinitialise aussi le tracé
         var self = this;
-        /** click sur le pointer */
+        // click sur le pointer
         document.getElementById("GPlocationOriginPointerImg_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
             var map = self.getMap();
@@ -949,7 +949,7 @@ var Isocurve = (function (Control) {
             */
             self.dispatchEvent("isocurve:drawstart");
         };
-        /** click sur le label */
+        // click sur le label
         document.getElementById("GPlocationOriginLabel_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
             self._formContainer.className = "";
@@ -962,7 +962,7 @@ var Isocurve = (function (Control) {
             );
             self.dispatchEvent("isocurve:drawend");
         };
-        /** click sur la zone de saisie */
+        // click sur la zone de saisie
         document.getElementById("GPlocationOrigin_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
             /**
