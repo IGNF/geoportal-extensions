@@ -44,27 +44,37 @@
                 });
 
                 // drawing + export into widget but not pluggable
-                var drawing = new ol.control.Drawing();
+                var drawing = new ol.control.Drawing({
+                  tools : {
+                    export : false
+                  }
+                });
                 map.addControl(drawing);
                 var exportDrawing = new ol.control.Export({
                   control: drawing
                 });
                 exportDrawing.render();
+                exportDrawing.on("export:compute", (e) => {
+                  console.log("Export Drawing", e);
+                });
 
                 // iso + export with config
                 var iso = new ol.control.Isocurve();
                 map.addControl(iso);
                 var exportIso = new ol.control.Export({
                   control: iso,
-                  target: document.getElementById("btnExportIso"),
+                  // target: document.getElementById("btnExportIso"),
                   format: "kml",
                   name: "export-iso",
-                  title : "Exporter Iso",
-                  callback : function (content) {
+                  title : "Exporter",
+                  onExport : function (content) {
                     console.log(content);
                   }
                 });
                 exportIso.render();
+                exportIso.on("export:compute", (e) => {
+                  console.log("Export Iso", e);
+                });
 
                 // route + export with setters
                 var route = new ol.control.Route();
@@ -76,6 +86,17 @@
                 exportRoute.setName("export-route");
                 exportRoute.setTitle("Exporter Iti");
                 exportRoute.render();
+                exportRoute.on("export:compute", (e) => {
+                  console.log("Export Route", e);
+                });
+
+                // profil + export but not functional
+                var measureProfil = new ol.control.ElevationPath();
+                map.addControl(measureProfil);
+                var exportProfil = new ol.control.Export({
+                  control: measureProfil
+                });
+                exportProfil.render();
               };
 
             </script>

@@ -1,6 +1,9 @@
 // import CSS
 import "../CSS/Controls/Export/GPexportOpenLayers.css";
 
+// import OpenLayers
+import Control from "ol/control/Control";
+
 // import local
 import ID from "../../Common/Utils/SelectorID";
 import Utils from "../../Common/Utils";
@@ -25,20 +28,23 @@ var logger = Logger.getLogger("export");
  * @alias ol.control.Export
  * @param {Object} options - options for function call.
  * @param {String} [options.format] - geojson / kml / gpx
- * @param {String} [options.name] - name of export
- * @param {Object} [options.callback] - callback
+ * @param {String} [options.name] - export name
+ * @param {String} [options.title] - button name
+ * @param {Function} [options.onExport] - callback
  * @param {DOMElement} [options.target] - target
- * @param {String} [options.control] - instance of control
+ * @param {Object} [options.control] - instance of control
+ * @fires export:compute
  * @example
  * var export = new ButtonExport(options);
  * export.setControl(iso);
  * export.setTarget(<!-- DOMElement -->);
- * export.setName("export-iso");
+ * export.setName("export");
  * export.setFormat("geojson");
+ * export.setTitle("Exporter");
  * export.render();
- * @todo cf. https://javascript.info/static-properties-methods
+ * export.on("export:compute", (data) => { console.log(data); });
  */
-class ButtonExport {
+class ButtonExport extends Control {
 
     /**
      * See {@link ol.control.Export}
@@ -51,6 +57,12 @@ class ButtonExport {
     constructor (options) {
         logger.trace("[constructor] Export", options);
 
+        super({
+            element : null,
+            render : options.render,
+            target : options.target
+        });
+
         // options
         this.options = options || {
             control : null,
@@ -58,7 +70,7 @@ class ButtonExport {
             format : "geojson",
             name : "export",
             title : "Exporter",
-            callback : null
+            onExport : null
         };
 
         if (!(this instanceof ButtonExport)) {
@@ -96,13 +108,13 @@ class ButtonExport {
      * Render DOM
      *
      * @public
-     * */
+     */
     render () {
         // container principal
         if (!this.options.target) {
             if (this.options.control) {
                 // insertion du composant dans le panneau du controle
-                var container = this.options.control._container;
+                var container = this.options.control.getContainer();
                 // ex. GP(iso|route)Panel-
                 this.options.target = container.lastChild;
             }
@@ -148,8 +160,12 @@ class ButtonExport {
      * (called by constructor)
      *
      * @private
+     * @todo
      */
     initContainer () {
+        // TODO
+        // menu des options : nom et format de l'export
+
         // utiliser les templates literals avec la substitution ${...}
         var content = this.stringToHTML(`
         <input type="button"
@@ -211,7 +227,11 @@ class ButtonExport {
      * @todo
      */
     isPluggableControl () {
-        if (this.options.control && typeof this.options.control.getLayer === "function") {
+        // TODO
+        // tester toutes les méthodes des widgets pluggable : getData()
+        if (this.options.control &&
+            typeof this.options.control.getContainer === "function" &&
+            typeof this.options.control.getLayer === "function") {
             return true;
         }
         return false;
@@ -276,7 +296,6 @@ class ButtonExport {
     /**
      * ...
      * @param {*} e - Click
-     * @callback
      */
     onClickButtonExport (e) {
         if (!this.isPluggableControl()) {
@@ -291,8 +310,28 @@ class ButtonExport {
             return;
         }
 
-        if (this.options.callback && typeof this.options.callback === "function") {
-            this.options.callback(content);
+        /**
+         * event triggered when the export is finished
+         *
+         * @event export:compute
+         * @typedef {Object}
+         * @property {Object} type - event
+         * @property {Object} target - instance Export
+         * @property {String} content - export data
+         * @example
+         * Export.on("export:compute", function (e) {
+         *   console.log(e.target);
+         * })
+         */
+        this.dispatchEvent({
+            type : "export:compute",
+            content : content
+        });
+
+        // INFO
+        // la callback annule le download du fichier.
+        if (this.options.onExport && typeof this.options.onExport === "function") {
+            this.options.onExport(content);
             return;
         }
 

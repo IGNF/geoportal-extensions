@@ -300,6 +300,15 @@ var Route = (function (Control) {
     };
 
     /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    Route.prototype.getContainer = function () {
+        return this._container;
+    };
+
+    /**
      * This method is public.
      * It allows to init the control.
      */

@@ -285,6 +285,15 @@ var Isocurve = (function (Control) {
     };
 
     /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    Isocurve.prototype.getContainer = function () {
+        return this._container;
+    };
+
+    /**
      * This method is public.
      * It allows to control the execution of a traitment.
      *

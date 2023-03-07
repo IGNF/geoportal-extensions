@@ -578,6 +578,15 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    ElevationPath.prototype.getContainer = function () {
+        return this._container;
+    };
+
+    /**
      * clean
      */
     ElevationPath.prototype.clean = function () {
@@ -595,46 +604,6 @@ var ElevationPath = (function (Control) {
         this._removeProfile();
         this._removeMeasure();
         this._removeMeasureInteraction(map);
-    };
-
-    /**
-     * Remove measure
-     * @private
-     */
-    ElevationPath.prototype._removeMeasure = function () {
-        // sketch
-        this._lastSketch = null;
-        this._currentSketch = null;
-
-        if (this._measureSource) {
-            // marker
-            if (this._marker) {
-                this._measureSource.removeFeature(this._marker);
-                this._marker = null;
-            }
-
-            // all other features
-            var _features = this._measureSource.getFeatures();
-            for (var i = 0; i < _features.length; i++) {
-                this._measureSource.removeFeature(_features[i]);
-            }
-        }
-    };
-
-    /**
-     * Remove profile
-     * @private
-     */
-    ElevationPath.prototype._removeProfile = function () {
-        // graph
-        this._profile = null;
-
-        // on vide le container
-        if (this._profileContainer) {
-            while (this._profileContainer.firstChild) {
-                this._profileContainer.removeChild(this._profileContainer.firstChild);
-            }
-        }
     };
 
     // ################################################################### //
@@ -1540,6 +1509,46 @@ var ElevationPath = (function (Control) {
 
         if (greaterSlope) {
             this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
+        }
+    };
+
+    /**
+     * Remove measure
+     * @private
+     */
+    ElevationPath.prototype._removeMeasure = function () {
+        // sketch
+        this._lastSketch = null;
+        this._currentSketch = null;
+
+        if (this._measureSource) {
+            // marker
+            if (this._marker) {
+                this._measureSource.removeFeature(this._marker);
+                this._marker = null;
+            }
+
+            // all other features
+            var _features = this._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                this._measureSource.removeFeature(_features[i]);
+            }
+        }
+    };
+
+    /**
+     * Remove profile
+     * @private
+     */
+    ElevationPath.prototype._removeProfile = function () {
+        // graph
+        this._profile = null;
+
+        // on vide le container
+        if (this._profileContainer) {
+            while (this._profileContainer.firstChild) {
+                this._profileContainer.removeChild(this._profileContainer.firstChild);
+            }
         }
     };
 
