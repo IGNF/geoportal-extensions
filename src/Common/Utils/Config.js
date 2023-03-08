@@ -178,9 +178,10 @@ var Config = {
                         var tmsConf = this.configuration.tileMatrixSets[TMSLink];
                         // Get matrix origin : Gp.Point = Object{x:Float, y:Float}
                         // params.matrixOrigin = tmsConf.getTopLeftCorner();
-                        // params.nativeResolutions = tmsConf.nativeResolutions;
                         params.matrixIds = Object.keys(tmsConf.tileMatrices);
                         params.tileMatrices = tmsConf.tileMatrices;
+                        // par défaut on prend les résolutions du pseudoMercator
+                        params.nativeResolutions = tmsConf.nativeResolutions || this.configuration.tileMatrixSets["PM"].nativeResolutions;
                     }
                 }
 
