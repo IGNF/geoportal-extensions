@@ -1,6 +1,6 @@
 # Extension Géoportail pour Leaflet
 
-[![release](https://img.shields.io/badge/release%20-leaflet%202.2.4-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/leaflet-2.2.4)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?filename=build%2Fscripts%2Frelease%2Fpackage-leaflet.json)
 
 <!-- toc -->
 
@@ -51,6 +51,8 @@
 
 <!-- tocstop -->
 
+<a name="readme-top"></a>
+
 L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
@@ -82,7 +84,7 @@ L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes su
 
 * [Configuration de l'accès à la plateforme Géoportail](#config)
 
-
+Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
 <a id="download"/>
 
@@ -92,9 +94,7 @@ Vous pouvez récupérer l'extension Géoportail pour Leaflet soit par [télécha
 
 L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivante :
 
-
 ```
-  <Extension Géoportail pour Leaflet>/
     GpPluginLeaflet.js         (version minifiée du code javascript pour une utilisation en production)
     GpPluginLeaflet.css        (version minifiée des css pour une utilisation en production)
     GpPluginLeaflet-src.js     (version non minifiée du code javascript pour une utilisation en développement)
@@ -102,6 +102,8 @@ L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivant
 ```
 
 Les scripts de Leaflet s'obtiennent sur [la page de téléchargement de Leaflet](http://leafletjs.com/download.html).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="download-direct"/>
 
@@ -111,6 +113,7 @@ Vous pouvez télécharger la dernière version de l'extension Géoportail pour L
 
 L'archive téléchargée (GpLeaflet.zip) comprend l'arborescence décrite ci-dessus.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="download-npm"/>
 
@@ -126,7 +129,6 @@ npm i geoportal-extensions-leaflet
 
 L'arborescence décrite ci-dessus sera alors accessible dans le répertoire `node_modules/geoportal-extensions-leaflet/dist/` de votre projet.
 
-
 #### Accès direct
 
 Vous pouvez aussi choisir d'utiliser des fichiers hébergés en ligne, pour y accéder directement, lors de vos tests par exemple. Cependant, pour une utilisation en production, nous vous conseillons de télécharger ces fichiers et de les héberger vous-même, sur le même serveur qui héberge votre application.
@@ -137,6 +139,8 @@ http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet.c
 http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet-src.js
 http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet-src.css
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="integration"/>
 
@@ -155,6 +159,8 @@ Intégrez l'extension géoportail pour leaflet dans votre page web classiquement
 <script src="chemin/vers/GpPluginLeaflet.js"></script>
 <link rel="stylesheet" href="chemin/vers/GpPluginLeaflet.css" />
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="config"/>
 
@@ -254,6 +260,8 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 </html>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Optimisation du chargement : configuration locale
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
@@ -310,6 +318,8 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Appel de l'extension dans un module ES6
 
 Le module de l'extension expose de multiples exports nommés (dont le module leaflet étendu).
@@ -349,6 +359,8 @@ var map  = L.map(...)
 Gp.Services.getConfig(...)
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Compatibilités
 
 ### Versions de Leaflet supportées
@@ -376,6 +388,7 @@ Firefox    | Versions récentes (28+)
 Edge       | 12+
 Safari     | Versions récentes (6.1+)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Fonctionnalités
 
@@ -423,6 +436,7 @@ L'extension Géoportail pour Leaflet définit par défaut la projection légale 
 L.geoportalCRS.EPSG2154
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMTS"/>
 
@@ -460,6 +474,8 @@ lyr.addTo(map); // ou map.addLayer(lyr);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/nqz6xmpa/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Affichage en Lambert 93 (EPSG:2154)
 
 La plateforme Géoportail diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoportail pour Leaflet pré-définit la projection correspondante accessible via la constante :
@@ -489,6 +505,7 @@ lyr.addTo(map); // ou map.addLayer(lyr);
 
 NB : D'autres systèmes de coordonnées peuvent être définis : [plus d'informations...](#crs)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMS"/>
 
@@ -522,6 +539,7 @@ L.geoportalLayer.WMS({
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/d9402Lba/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="layerswitcher"/>
 
@@ -601,6 +619,8 @@ map.addControl(
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/0t1nLra7/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="geocode"/>
 
 ### Barre de recherche
@@ -640,6 +660,8 @@ map.addControl(searchCtrl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/uLokwebc/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="reverse"/>
 
 ### Adresse ou lieu en un point de la carte
@@ -676,6 +698,8 @@ map.addControl(revCtrl);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/7tohyehs/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="route"/>
 
@@ -714,6 +738,8 @@ map.addControl(routeCtrl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/s30zo9eo/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="isocurve"/>
 
 ### Calculs d'isochrones / isodistances
@@ -750,6 +776,8 @@ map.addControl(isoCtrl);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/z85j92hv/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="mp"/>
 
@@ -794,6 +822,8 @@ map.addControl(mpCtrl);
 
 **Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jLcgeng9/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="ep"/>
 
 ### Profil altimétrique le long d'un traçé
@@ -830,3 +860,5 @@ map.addControl(ep);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/L5ctL3nq/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

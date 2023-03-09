@@ -1,6 +1,6 @@
 # Extension Géoportail pour OpenLayers
 
-[![release](https://img.shields.io/badge/release%20-ol%203.2.11-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/ol-3.2.11)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?filename=build%2Fscripts%2Frelease%2Fpackage-openlayers.json)
 
 <!-- toc -->
 
@@ -70,6 +70,8 @@
 
 <!-- tocstop -->
 
+<a name="readme-top"></a>
+
 L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers dans ses versions 3 et supérieures](https://openlayers.org/) :
 
 * [affichage des couches WMTS Géoportail](#WMTS)
@@ -111,7 +113,7 @@ L'utilisation de l'extension Géoportail pour OpenLayers se fait via les étapes
 
 * [Configuration de l'accès à la plateforme Géoportail](#config)
 
-
+Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
 <a id="download"/>
 
@@ -135,6 +137,7 @@ L'extension Géoportail pour OpenLayers comprend l'arborescence de fichiers suiv
 
 Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLayers](https://openlayers.org/download/).
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="download-direct"/>
 
@@ -144,6 +147,7 @@ Vous pouvez télécharger la dernière version de l'extension Géoportail pour O
 
 L'archive téléchargée (.zip) comprend l'arborescence décrite ci-dessus.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="download-npm"/>
 
@@ -171,6 +175,8 @@ http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLa
 http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLayers-src.css
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="integration"/>
 
 ### Intégration dans une page web
@@ -188,6 +194,8 @@ Intégrez l'extension géoportail pour OpenLayers dans votre page web classiquem
 <script src="chemin/vers/GpPluginOpenLayers.js"></script>
 <link rel="stylesheet" href="chemin/vers/GpPluginOpenLayers.css" />
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="config"/>
 
@@ -286,6 +294,8 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 </html>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Optimisation du chargement : configuration locale
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
@@ -341,6 +351,8 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Appel de l'extension dans un module ES6
 
 Le module de l'extension expose de multiples exports nommés (dont le module openlayers étendu).
@@ -380,6 +392,8 @@ var map = new Ol.Map(...)
 Gp.Services.getConfig(...)
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Compatibilités
 
 ### Versions de OpenLayers supportées
@@ -403,6 +417,8 @@ Firefox    | Versions récentes (28+)
 Edge       | 12+
 Safari     | Versions récentes (6.1+)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Fonctionnalités
 
@@ -452,6 +468,7 @@ NB :
 
 * Les définitions des systèmes de coordonnées du registre IGN-F peuvent être trouvées [ici](https://geodesie.ign.fr/contenu/fichiers/IGNF.xml).
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMTS"/>
 
@@ -498,6 +515,8 @@ var map = new ol.Map({
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/j5rdjt2z/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ##### Affichage en Lambert 93 (EPSG:2154)
 
 La plateforme Géoportail diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoportail pour OpenLayers pré-définit l'alias "EPSG:2154" correspondant à cette projection.
@@ -524,6 +543,8 @@ var map = new ol.Map({
 
 
 NB : D'autres systèmes de coordonnées peuvent être définis et utilisés : [plus d'informations...](#crs)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="sourceWMTS"/>
 
@@ -567,6 +588,8 @@ var map = new ol.Map({
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/sdktaf9r/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ##### Affichage en Lambert 93 (EPSG:2154)
 
 La plateforme Géoportail diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoportail pour OpenLayers pré-définit l'alias "EPSG:2154" correspondant à cette projection.
@@ -597,6 +620,7 @@ var map = new ol.Map({
 
 NB : D'autres systèmes de coordonnées peuvent être définis et utilisés : [plus d'informations...](#crs)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMS"/>
 
@@ -644,6 +668,8 @@ var map = new ol.Map({
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jnfwc7k6/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="sourceWMS"/>
 
 #### Utilisation d'une source WMS Géoportail
@@ -686,6 +712,7 @@ var map = new ol.Map({
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/e36ur78k/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="layerswitcher"/>
 
@@ -753,6 +780,8 @@ map.addControl(lsControl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/5f9wxsof/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="geocode"/>
 
 ### Barre de recherche
@@ -799,6 +828,7 @@ map.addControl(searchControl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/qpcyp8nr/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="route"/>
 
@@ -844,6 +874,8 @@ map.addControl(routeControl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1ngLrhuj/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="isocurve"/>
 
 ### Calculs d'isochrones / isodistances
@@ -887,6 +919,8 @@ map.addControl(isoControl);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jpwf385t/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="mp"/>
 
@@ -937,6 +971,8 @@ map.addControl(mpControl);
 
 **Exemple d'utilisation avec activation de l'édition de coordonnées pour localisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/jrL59w29/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="attributions"/>
 
 ### Affichage dynamique des attributions
@@ -983,6 +1019,8 @@ map.addControl(attControl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/x1jrLavb/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="reverse"/>
 
 ### Adresse ou lieu en un point de la carte
@@ -1026,6 +1064,8 @@ map.addControl(rvControl);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/9y6dgq15/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="drawing"/>
 
@@ -1071,6 +1111,7 @@ map.addControl(drawControl);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/2Lj85jf1/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="layerimport"/>
 
@@ -1117,6 +1158,7 @@ map.addControl(lyrImport);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/u04nvno2/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="ep"/>
 
@@ -1163,6 +1205,8 @@ map.addControl(ep);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="measure"/>
 
 ### Outils de mesures
@@ -1208,6 +1252,7 @@ map.addControl(length);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/cwfsLge7/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="getfeatureinfo"/>
 
@@ -1263,3 +1308,5 @@ map.addControl(getfeatureinfo);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/vg6dz7bn/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
