@@ -26,7 +26,7 @@
             import * as Gp from "{{ baseurl }}/dist/openlayers/GpPluginOpenLayers{{ mode }}.js";
 
             self.Gp.Services.getConfig({
-              serverUrl : "{{ resources }}/AutoConf.js",
+              customConfigFile : "https://github.com/IGNF/geoportal-configuration/blob/main/dist/essentielsConfig.json",
               callbackSuffix : "",
               timeOut : 20000,
               onSuccess : function () {

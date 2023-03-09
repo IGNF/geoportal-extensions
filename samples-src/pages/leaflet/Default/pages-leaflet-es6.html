@@ -25,7 +25,7 @@
     import * as Gp from "{{ baseurl }}/dist/leaflet/GpPluginLeaflet{{ mode }}.js";
 
     self.Gp.Services.getConfig({
-      serverUrl : "{{ resources }}/AutoConf.js",
+      customConfigFile : "https://github.com/IGNF/geoportal-configuration/blob/main/dist/essentielsConfig.json",
       callbackSuffix : "",
       onSuccess : function () {
           // on cache l'image de chargement du Géoportail.
