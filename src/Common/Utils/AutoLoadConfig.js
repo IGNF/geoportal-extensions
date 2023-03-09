@@ -42,7 +42,7 @@ import Gp from "geoportal-access-lib";
     };
 
     if (url) {
-        options.serverUrl = url;
+        options.customConfigFile = url;
         options.callbackSuffix = "";
     }
 
