@@ -587,6 +587,15 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Get layer
+     *
+     * @returns {ol.layer.Vector} layer
+     */
+    ElevationPath.prototype.getLayer = function () {
+        return this._measureVector;
+    };
+
+    /**
      * clean
      */
     ElevationPath.prototype.clean = function () {

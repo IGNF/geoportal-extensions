@@ -276,7 +276,7 @@ var GeoJSON = (function (olGeoJSON) {
     GeoJSON.prototype.writeFeatures = function (features, options) {
         // on met à jour les properties de styles
         features.forEach(function (feature) {
-            var style = feature.getStyle();
+            var style = feature.getStyle() || feature.getStyleFunction();
             if (style) {
                 // style ajouté via une fonction, pour les styles par defaut par ex.
                 if (typeof style === "function") {

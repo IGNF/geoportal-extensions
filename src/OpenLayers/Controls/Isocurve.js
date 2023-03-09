@@ -219,6 +219,7 @@ var Isocurve = (function (Control) {
 
         // application des styles
         layer.setStyle(this._defaultFeatureStyle);
+
         // sauvegarde
         this._geojsonLayer = layer;
     };
@@ -291,6 +292,15 @@ var Isocurve = (function (Control) {
      */
     Isocurve.prototype.getContainer = function () {
         return this._container;
+    };
+
+    /**
+     * Get default style
+     *
+     * @returns {ol.style} style
+     */
+    Isocurve.prototype.getStyle = function () {
+        return this._defaultFeatureStyle;
     };
 
     /**

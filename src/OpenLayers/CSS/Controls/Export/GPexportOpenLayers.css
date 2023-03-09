@@ -10,8 +10,11 @@ div[id^=GPexportContainer-] > input.GPinputSubmit {
 /* bouton */
 input[id^=GPexportButton-] {
     min-width: fit-content;
-    padding-left: 5px;
+    padding-left: 25px;
     padding-right: 5px;
+    background-image: url("img/GPexportSave.svg");
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
 }
 
 /* menu */

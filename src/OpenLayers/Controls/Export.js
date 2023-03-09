@@ -160,6 +160,7 @@ class ButtonExport extends Control {
      * (called by constructor)
      *
      * @private
+     * @todo menu des options
      */
     initContainer () {
         // TODO
@@ -278,11 +279,11 @@ class ButtonExport extends Control {
      * ...
      * @returns {Boolean} - ...
      * @private
-     * @todo
      */
     isPluggableControl () {
-        // TODO
-        // tester toutes les méthodes des widgets pluggable : getData()
+        // tester toutes les méthodes des widgets pluggable
+        // la méthode getData() n'est pas obligatoire car certains widgets
+        // n'ont pas de configuration.
         if (this.options.control &&
             typeof this.options.control.getContainer === "function" &&
             typeof this.options.control.getLayer === "function") {
@@ -310,6 +311,16 @@ class ButtonExport extends Control {
             return result;
         }
 
+        // les styles sont bien transmis pour l'outil de dessin
+        // mais, ce n'est pas toujours le cas pour les autres widgets !?
+        // donc, on y ajoute les styles par defaut...
+        layer.getSource().getFeatures().forEach((feature) => {
+            var style = feature.getStyle();
+            if (!style && typeof this.options.control.getStyle === "function") {
+                feature.setStyle(this.options.control.getStyle());
+            }
+        });
+
         var ClassName = null;
         switch (this.options.format.toUpperCase()) {
             case "KML":
@@ -334,11 +345,13 @@ class ButtonExport extends Control {
             return result;
         }
 
+        // on determine la projection...
+        // sinon, par defaut, webmercator | "EPSG:3857"
         var featProj = layer.getSource().getProjection();
 
         result = ClassName.writeFeatures(layer.getSource().getFeatures(), {
             dataProjection : "EPSG:4326",
-            featureProjection : featProj
+            featureProjection : featProj || "EPSG:3857"
         });
 
         return result;

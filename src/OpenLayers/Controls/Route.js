@@ -309,6 +309,15 @@ var Route = (function (Control) {
     };
 
     /**
+     * Get default style
+     *
+     * @returns {ol.style} style
+     */
+    Route.prototype.getStyle = function () {
+        return this._defaultFeatureStyle;
+    };
+
+    /**
      * This method is public.
      * It allows to init the control.
      */

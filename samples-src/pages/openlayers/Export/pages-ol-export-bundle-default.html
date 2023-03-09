@@ -43,6 +43,9 @@
                   })
                 });
 
+                var importLayer = new ol.control.LayerImport();
+                map.addControl(importLayer);
+
                 // drawing + export into widget but not pluggable
                 var drawing = new ol.control.Drawing({
                   tools : {
