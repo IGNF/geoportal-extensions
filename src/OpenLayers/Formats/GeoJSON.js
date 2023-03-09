@@ -25,6 +25,7 @@ import Color from "../../Common/Utils/ColorUtils";
  * @type {ol.format.GeoJSONExtended}
  * @param {Object} options - Options
  * @param {Object} options.defaultStyle - Styles by default
+ * @param {Object} options.extensions - Add properties to file root
  */
 var GeoJSON = (function (olGeoJSON) {
     /**
@@ -71,7 +72,7 @@ var GeoJSON = (function (olGeoJSON) {
      *
      * @see ol.format.GeoJSON.prototype.readFeatures
      * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
-     * @param {olx.format.ReadOptions=} options - options.
+     * @param {olx.format.ReadOptions=} options - Options.
      * @return {Array.<ol.Feature>} Features.
      */
     GeoJSON.prototype.readFeatures = function (source, options) {
@@ -268,8 +269,8 @@ var GeoJSON = (function (olGeoJSON) {
      * This function overloads ol.format.GeoJSON.writeFeatures ...
      *
      * @see ol.format.GeoJSON.prototype.writeFeatures
-     * @param {Object[]} features - Features.
-     * @param {Object} options - Options.
+     * @param {Array.<ol.Feature>} features - Features.
+     * @param {Object=} options - Options.
      *
      * @return {String} Result.
      */
@@ -426,8 +427,17 @@ var GeoJSON = (function (olGeoJSON) {
             }
         });
 
-        var geoJSONString = olGeoJSON.prototype.writeFeatures.call(this, features, options);
-        return geoJSONString;
+        var geoJSONObject = olGeoJSON.prototype.writeFeaturesObject.call(this, features, options);
+
+        // ajout des properties à la racine du fichier
+        // ex. options : {
+        //   extensions : { /* liste des objets à ajouter */ }
+        // }
+        if (this.options.hasOwnProperty("extensions")) {
+            Object.assign(geoJSONObject, this.options.extensions);
+        }
+
+        return JSON.stringify(geoJSONObject);
     };
 
     return GeoJSON;

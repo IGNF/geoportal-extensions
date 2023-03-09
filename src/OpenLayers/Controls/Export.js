@@ -30,6 +30,7 @@ var logger = Logger.getLogger("export");
  * @param {String} [options.format = "geojson"] - geojson / kml / gpx
  * @param {String} [options.name = "export"] - export name
  * @param {String} [options.title = "Exporter"] - button name
+ * @param {Boolean} [options.menu = false] - displays the format choice menu
  * @param {Function} [options.onExport] - callback
  * @param {DOMElement} [options.target] - target
  * @param {Object} [options.control] - instance of control
@@ -41,10 +42,114 @@ var logger = Logger.getLogger("export");
  * export.setName("export");
  * export.setFormat("geojson");
  * export.setTitle("Exporter");
+ * export.setMenu(false);
  * export.render();
  * export.on("export:compute", (data) => { console.log(data); });
  */
 class ButtonExport extends Control {
+
+    /**
+     * Response to the export of the route calculation
+     * 
+     * @constant
+     * @example
+     * // GeoJSON format
+     * {
+     *   "type":"FeatureCollection",
+     *   "features":[...],
+     *   "configuration":{
+     *     "points":[ [2.588024210134887, 48.84192678293002 ] ],
+     *     "transport":"Voiture",
+     *     "exclusions":[...],
+     *     "computation":"fastest",
+     *     "results":{ <!-- Service --> }
+     * }
+     * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.RouteResponse.html|Service}
+     */
+    static EXPORT_ROUTE = {};
+
+    /**
+     * Response to the export of the isochron calculation
+     * 
+     * @constant
+     * @example
+     * // GeoJSON format
+     * {
+     *    "type":"FeatureCollection",
+     *    "features":[...],
+     *    "configuration":{
+     *       "transport":"Pieton",
+     *       "computation":"time",
+     *       "exclusions":[
+     *         
+     *       ],
+     *       "direction":"departure",
+     *       "point":[ 2.587835382718464, 48.84192678293002 ],
+     *       "results":{
+     *          "message":"",
+     *          "id":"",
+     *          "location":{
+     *             "x":"2.587835382718464",
+     *             "y":"48.84192678293002"
+     *          },
+     *          "srs":"EPSG:4326",
+     *          "geometry":{
+     *             "type":"Polygon",
+     *             "coordinates":[[...]]
+     *          },
+     *         "time":180,
+     *         "distance":""
+     *      }
+     *    }
+     * }
+     * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.IsoCurveResponse.html|Service}
+     */
+    static EXPORT_ISOCHRON = {};
+
+    /**
+     * Response to the export of the profile calculation
+     * 
+     * @constant
+     * @example
+     * // GeoJSON format
+     * {
+     *  "type":"FeatureCollection",
+     *   "features":[
+     *      {
+     *         "type":"Feature",
+     *        "geometry":{
+     *            "type":"LineString",
+     *            "coordinates":[...]
+     *         },
+     *         "properties":null
+     *      }
+     *   ],
+     *   "configuration":{
+     *      "greaterSlope":76,
+     *      "meanSlope":7,
+     *      "distancePlus":84,
+     *      "distanceMinus":48,
+     *     "ascendingElevation":5,
+     *     "descendingElevation":-4,
+     *      "altMin":"92,04",
+     *     "altMax":"96,71",
+     *      "distance":163,
+     *      "unit":"m",
+     *      "points":[
+     *        {
+     *            "z":95.68,
+     *           "lon":2.5874,
+     *            "lat":48.8419,
+     *            "acc":2.5,
+     *            "dist":0,
+     *            "slope":0
+     *         }
+     *      ]
+     *   }
+     *}
+     * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.AltiResponse.html|Service}
+     */
+    static EXPORT_PROFILE = {};
 
     /**
      * See {@link ol.control.Export}
@@ -295,10 +400,12 @@ class ButtonExport extends Control {
     /**
      * ...
      * @param {*} layer - ...
+     * @param {*} data - ...
      * @returns {String} - ...
      * @private
+     * @todo export des metadonnées de calcul et de configuration du widget
      */
-    exportFeatures (layer) {
+    exportFeatures (layer, data) {
         var result = null;
         if (!layer) {
             logger.warn("Impossible to export : no layer is hosting features.");
@@ -311,6 +418,7 @@ class ButtonExport extends Control {
             return result;
         }
 
+        // INFO
         // les styles sont bien transmis pour l'outil de dessin
         // mais, ce n'est pas toujours le cas pour les autres widgets !?
         // donc, on y ajoute les styles par defaut...
@@ -321,20 +429,27 @@ class ButtonExport extends Control {
             }
         });
 
+        // ajouter les metadonnées de calcul et de configuration
+        var options = {};
+        if (data) {
+            // properties ajoutées à la racine :
+            // ex. "configuration" : {}
+            options.extensions = {
+                configuration : data
+            };
+        }
+
         var ClassName = null;
         switch (this.options.format.toUpperCase()) {
             case "KML":
-                ClassName = new KMLExtended({
-                    writeStyles : true
-                });
+                options.writeStyles = true;
+                ClassName = new KMLExtended(options);
                 break;
             case "GPX":
-                ClassName = new GPXExtended({
-                    // readExtensions : function (ext) {/* only extensions nodes from wpt, rte and trk can be processed */ }
-                });
+                ClassName = new GPXExtended(options);
                 break;
             case "GEOJSON":
-                ClassName = new GeoJSONExtended({});
+                ClassName = new GeoJSONExtended(options);
                 break;
             default:
                 break;
@@ -346,7 +461,7 @@ class ButtonExport extends Control {
         }
 
         // on determine la projection...
-        // sinon, par defaut, webmercator | "EPSG:3857"
+        // sinon, par defaut, webmercator ou "EPSG:3857"
         var featProj = layer.getSource().getProjection();
 
         result = ClassName.writeFeatures(layer.getSource().getFeatures(), {
@@ -371,8 +486,9 @@ class ButtonExport extends Control {
         }
 
         var layer = this.options.control.getLayer();
+        var data = (this.options.control.getData !== undefined) ? this.options.control.getData() : {};
 
-        var content = this.exportFeatures(layer);
+        var content = this.exportFeatures(layer, data);
         if (!content || content === "null") {
             return;
         }
