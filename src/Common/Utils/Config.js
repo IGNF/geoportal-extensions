@@ -258,13 +258,13 @@ var Config = {
                 var apiKey = apiKeys[keyIndex] || key;
                 params.key = apiKey;
                 // récupération des paramètres du service
-                params.url = layerConf.getServerUrl(apiKey);
-                params.version = layerConf.getServiceParams().version;
+                params.url = layerConf.serviceParams.serverUrl[apiKey];
+                params.version = layerConf.serviceParams.version;
 
                 // récupération des infos de la couche
-                params.extent = layerConf.getBBOX();
-                params.title = layerConf.getTitle();
-                params.description = layerConf.getDescription();
+                params.extent = layerConf.globalConstraint.bbox;
+                params.title = layerConf.title;
+                params.description = layerConf.description;
             }
         }
 
@@ -326,10 +326,10 @@ var Config = {
         if (layerId) {
             // récupération de l'objet de configuration de la couche
             var layerConf = this.configuration.layers[layerId];
-            params.projection = layerConf.getDefaultProjection();
-            params.minScale = layerConf.getMinScaleDenominator();
-            params.maxScale = layerConf.getMaxScaleDenominator();
-            params.extent = layerConf.getBBOX();
+            params.projection = layerConf.defaultProjection;
+            params.minScale = layerConf.globalConstraint.minScaleDenominator;
+            params.maxScale = layerConf.globalConstraint.maxScaleDenominator;
+            params.extent = layerConf.globalConstraint.bbox;
         }
 
         return params;
