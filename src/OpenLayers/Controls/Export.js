@@ -33,7 +33,7 @@ var logger = Logger.getLogger("export");
  * @param {Boolean} [options.menu = false] - displays the format choice menu
  * @param {Function} [options.onExport] - callback
  * @param {DOMElement} [options.target] - target
- * @param {Object} [options.control] - instance of control
+ * @param {Object} options.control - instance of control
  * @fires export:compute
  * @example
  * var export = new ButtonExport(options);
@@ -57,7 +57,7 @@ class ButtonExport extends Control {
      * {
      *   "type":"FeatureCollection",
      *   "features":[...],
-     *   "configuration":{
+     *   "geoportail:compute":{
      *     "points":[ [2.588024210134887, 48.84192678293002 ] ],
      *     "transport":"Voiture",
      *     "exclusions":[...],
@@ -66,7 +66,7 @@ class ButtonExport extends Control {
      * }
      * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.RouteResponse.html|Service}
      */
-    static EXPORT_ROUTE = {};
+    static EXPORT_ROUTE = {}; // only for jsdoc
 
     /**
      * Response to the export of the isochron calculation
@@ -77,7 +77,7 @@ class ButtonExport extends Control {
      * {
      *    "type":"FeatureCollection",
      *    "features":[...],
-     *    "configuration":{
+     *    "geoportail:compute":{
      *       "transport":"Pieton",
      *       "computation":"time",
      *       "exclusions":[
@@ -104,7 +104,7 @@ class ButtonExport extends Control {
      * }
      * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.IsoCurveResponse.html|Service}
      */
-    static EXPORT_ISOCHRON = {};
+    static EXPORT_ISOCHRON = {}; // only for jsdoc
 
     /**
      * Response to the export of the profile calculation
@@ -114,25 +114,16 @@ class ButtonExport extends Control {
      * // GeoJSON format
      * {
      *  "type":"FeatureCollection",
-     *   "features":[
-     *      {
-     *         "type":"Feature",
-     *        "geometry":{
-     *            "type":"LineString",
-     *            "coordinates":[...]
-     *         },
-     *         "properties":null
-     *      }
-     *   ],
-     *   "configuration":{
+     *   "features":[...],
+     *   "geoportail:compute":{
      *      "greaterSlope":76,
      *      "meanSlope":7,
      *      "distancePlus":84,
      *      "distanceMinus":48,
-     *     "ascendingElevation":5,
-     *     "descendingElevation":-4,
+     *      "ascendingElevation":5,
+     *      "descendingElevation":-4,
      *      "altMin":"92,04",
-     *     "altMax":"96,71",
+     *      "altMax":"96,71",
      *      "distance":163,
      *      "unit":"m",
      *      "points":[
@@ -149,13 +140,13 @@ class ButtonExport extends Control {
      *}
      * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.AltiResponse.html|Service}
      */
-    static EXPORT_PROFILE = {};
+    static EXPORT_PROFILE = {}; // only for jsdoc
 
     /**
      * See {@link ol.control.Export}
      * @module ButtonExport
      * @alias module:~Controls/ButtonExport
-     * @param {*} options - options
+     * @param {Object} [options] - options
      * @example
      * import ButtonExport from "src/OpenLayers/Controls/Export"
      */
@@ -399,8 +390,8 @@ class ButtonExport extends Control {
 
     /**
      * ...
-     * @param {*} layer - ...
-     * @param {*} data - ...
+     * @param {Object} layer - ...
+     * @param {Object} [data] - ...
      * @returns {String} - ...
      * @private
      * @todo export des metadonnées de calcul et de configuration du widget
@@ -423,6 +414,7 @@ class ButtonExport extends Control {
         // mais, ce n'est pas toujours le cas pour les autres widgets !?
         // donc, on y ajoute les styles par defaut...
         layer.getSource().getFeatures().forEach((feature) => {
+            // FIXME cas de feature de type POINT !?
             var style = feature.getStyle();
             if (!style && typeof this.options.control.getStyle === "function") {
                 feature.setStyle(this.options.control.getStyle());
@@ -433,9 +425,9 @@ class ButtonExport extends Control {
         var options = {};
         if (data) {
             // properties ajoutées à la racine :
-            // ex. "configuration" : {}
+            // ex. "geoportail:compute" : {}
             options.extensions = {
-                configuration : data
+                "geoportail:compute" : data
             };
         }
 

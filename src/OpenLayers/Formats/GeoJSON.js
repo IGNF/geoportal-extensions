@@ -24,8 +24,8 @@ import Color from "../../Common/Utils/ColorUtils";
  * @extends {ol.format.GeoJSON}
  * @type {ol.format.GeoJSONExtended}
  * @param {Object} options - Options
- * @param {Object} options.defaultStyle - Styles by default
- * @param {Object} options.extensions - Add properties to file root
+ * @param {Object} [options.defaultStyle] - Styles by default
+ * @param {Object} [options.extensions] - Add properties to file root
  */
 var GeoJSON = (function (olGeoJSON) {
     /**
@@ -72,7 +72,7 @@ var GeoJSON = (function (olGeoJSON) {
      *
      * @see ol.format.GeoJSON.prototype.readFeatures
      * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
-     * @param {olx.format.ReadOptions=} options - Options.
+     * @param {olx.format.ReadOptions} [options] - Options.
      * @return {Array.<ol.Feature>} Features.
      */
     GeoJSON.prototype.readFeatures = function (source, options) {
@@ -270,7 +270,7 @@ var GeoJSON = (function (olGeoJSON) {
      *
      * @see ol.format.GeoJSON.prototype.writeFeatures
      * @param {Array.<ol.Feature>} features - Features.
-     * @param {Object=} options - Options.
+     * @param {Object} [options] - Options.
      *
      * @return {String} Result.
      */
