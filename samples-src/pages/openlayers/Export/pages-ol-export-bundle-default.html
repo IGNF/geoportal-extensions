@@ -90,10 +90,10 @@
                 exportRoute.setName("export-route");
                 exportRoute.setTitle("Exporter Iti");
                 exportRoute.setMenu(true);
-                exportRoute.render();
                 exportRoute.on("export:compute", (e) => {
                   console.log("Export Route", e);
                 });
+                map.addControl(exportRoute); // use OpenLayers mecanism !
 
                 // profil + export but not functional
                 var measureProfil = new ol.control.ElevationPath();

@@ -36,6 +36,7 @@ var logger = Logger.getLogger("export");
  * @param {Object} options.control - instance of control
  * @fires export:compute
  * @example
+ * // without adding to the map
  * var export = new ButtonExport(options);
  * export.setControl(iso);
  * export.setTarget(<!-- DOMElement -->);
@@ -43,104 +44,21 @@ var logger = Logger.getLogger("export");
  * export.setFormat("geojson");
  * export.setTitle("Exporter");
  * export.setMenu(false);
- * export.render();
+ * export.render(); // <-- direct call to render function !
  * export.on("export:compute", (data) => { console.log(data); });
+ *
+ * // with adding to the map
+ * var export = new ButtonExport(options);
+ * export.setControl(iso);
+ * export.setTarget(<!-- DOMElement -->);
+ * export.setName("export");
+ * export.setFormat("geojson");
+ * export.setTitle("Exporter");
+ * export.setMenu(false);
+ * export.on("export:compute", (data) => { console.log(data); });
+ * map.addControl(export); // <-- using the OpenLayers mechanism, don't call to render function !
  */
 class ButtonExport extends Control {
-
-    /**
-     * Response to the export of the route calculation
-     * 
-     * @constant
-     * @example
-     * // GeoJSON format
-     * {
-     *   "type":"FeatureCollection",
-     *   "features":[...],
-     *   "geoportail:compute":{
-     *     "points":[ [2.588024210134887, 48.84192678293002 ] ],
-     *     "transport":"Voiture",
-     *     "exclusions":[...],
-     *     "computation":"fastest",
-     *     "results":{ <!-- Service --> }
-     * }
-     * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.RouteResponse.html|Service}
-     */
-    static EXPORT_ROUTE = {}; // only for jsdoc
-
-    /**
-     * Response to the export of the isochron calculation
-     * 
-     * @constant
-     * @example
-     * // GeoJSON format
-     * {
-     *    "type":"FeatureCollection",
-     *    "features":[...],
-     *    "geoportail:compute":{
-     *       "transport":"Pieton",
-     *       "computation":"time",
-     *       "exclusions":[
-     *         
-     *       ],
-     *       "direction":"departure",
-     *       "point":[ 2.587835382718464, 48.84192678293002 ],
-     *       "results":{
-     *          "message":"",
-     *          "id":"",
-     *          "location":{
-     *             "x":"2.587835382718464",
-     *             "y":"48.84192678293002"
-     *          },
-     *          "srs":"EPSG:4326",
-     *          "geometry":{
-     *             "type":"Polygon",
-     *             "coordinates":[[...]]
-     *          },
-     *         "time":180,
-     *         "distance":""
-     *      }
-     *    }
-     * }
-     * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.IsoCurveResponse.html|Service}
-     */
-    static EXPORT_ISOCHRON = {}; // only for jsdoc
-
-    /**
-     * Response to the export of the profile calculation
-     * 
-     * @constant
-     * @example
-     * // GeoJSON format
-     * {
-     *  "type":"FeatureCollection",
-     *   "features":[...],
-     *   "geoportail:compute":{
-     *      "greaterSlope":76,
-     *      "meanSlope":7,
-     *      "distancePlus":84,
-     *      "distanceMinus":48,
-     *      "ascendingElevation":5,
-     *      "descendingElevation":-4,
-     *      "altMin":"92,04",
-     *      "altMax":"96,71",
-     *      "distance":163,
-     *      "unit":"m",
-     *      "points":[
-     *        {
-     *            "z":95.68,
-     *           "lon":2.5874,
-     *            "lat":48.8419,
-     *            "acc":2.5,
-     *            "dist":0,
-     *            "slope":0
-     *         }
-     *      ]
-     *   }
-     *}
-     * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.AltiResponse.html|Service}
-     */
-    static EXPORT_PROFILE = {}; // only for jsdoc
 
     /**
      * See {@link ol.control.Export}
@@ -154,7 +72,7 @@ class ButtonExport extends Control {
         logger.trace("[constructor] Export", options);
 
         super({
-            element : null,
+            element : document.createElement("div"),
             render : options.render,
             target : options.target
         });
@@ -173,6 +91,106 @@ class ButtonExport extends Control {
         if (!(this instanceof ButtonExport)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
+
+        /**
+         * Response to the export of the route calculation
+         * (only for jsdoc)
+         *
+         * @example
+         * // GeoJSON format
+         * {
+         *   "type":"FeatureCollection",
+         *   "features":[...],
+         *   "geoportail:compute":{
+         *     "points":[ [2.588024210134887, 48.84192678293002 ] ],
+         *     "transport":"Voiture",
+         *     "exclusions":[...],
+         *     "computation":"fastest",
+         *     "results":{ <!-- Service --> }
+         * }
+         *
+         * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.RouteResponse.html|Service}
+         */
+        // eslint-disable-next-line no-undef
+        this.EXPORT_ROUTE = {};
+
+        /**
+         * Response to the export of the isochron calculation
+         * (only for jsdoc)
+         *
+         * @example
+         * // GeoJSON format
+         * {
+         *    "type":"FeatureCollection",
+         *    "features":[...],
+         *    "geoportail:compute":{
+         *       "transport":"Pieton",
+         *       "computation":"time",
+         *       "exclusions":[
+         *
+         *       ],
+         *       "direction":"departure",
+         *       "point":[ 2.587835382718464, 48.84192678293002 ],
+         *       "results":{
+         *          "message":"",
+         *          "id":"",
+         *          "location":{
+         *             "x":"2.587835382718464",
+         *             "y":"48.84192678293002"
+         *          },
+         *          "srs":"EPSG:4326",
+         *          "geometry":{
+         *             "type":"Polygon",
+         *             "coordinates":[[...]]
+         *          },
+         *         "time":180,
+         *         "distance":""
+         *      }
+         *    }
+         * }
+         *
+         * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.IsoCurveResponse.html|Service}
+         */
+        // eslint-disable-next-line no-undef
+        this.EXPORT_ISOCHRON = {};
+
+        /**
+         * Response to the export of the profile calculation
+         * (only for jsdoc)
+         *
+         * @example
+         * // GeoJSON format
+         * {
+         *  "type":"FeatureCollection",
+         *   "features":[...],
+         *   "geoportail:compute":{
+         *      "greaterSlope":76,
+         *      "meanSlope":7,
+         *      "distancePlus":84,
+         *      "distanceMinus":48,
+         *      "ascendingElevation":5,
+         *      "descendingElevation":-4,
+         *      "altMin":"92,04",
+         *      "altMax":"96,71",
+         *      "distance":163,
+         *      "unit":"m",
+         *      "points":[
+         *        {
+         *            "z":95.68,
+         *           "lon":2.5874,
+         *            "lat":48.8419,
+         *            "acc":2.5,
+         *            "dist":0,
+         *            "slope":0
+         *         }
+         *      ]
+         *   }
+         * }
+         *
+         * @see {@link https://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.AltiResponse.html|Service}
+         */
+        // eslint-disable-next-line no-undef
+        this.EXPORT_PROFILE = {};
 
         // id unique
         this.uid = this.options.id || ID.generate();
@@ -394,7 +412,6 @@ class ButtonExport extends Control {
      * @param {Object} [data] - ...
      * @returns {String} - ...
      * @private
-     * @todo export des metadonnées de calcul et de configuration du widget
      */
     exportFeatures (layer, data) {
         var result = null;
@@ -411,12 +428,17 @@ class ButtonExport extends Control {
 
         // INFO
         // les styles sont bien transmis pour l'outil de dessin
-        // mais, ce n'est pas toujours le cas pour les autres widgets !?
+        // mais, ce n'est pas toujours le cas pour certains widgets !?
         // donc, on y ajoute les styles par defaut...
         layer.getSource().getFeatures().forEach((feature) => {
-            // FIXME cas de feature de type POINT !?
             var style = feature.getStyle();
             if (!style && typeof this.options.control.getStyle === "function") {
+                // pour le cas de feature de type POINT
+                // car les points de saisies ne sont pas disponibles dans les styles par defaut.
+                if (feature.getGeometry().getType() === "Point") {
+                    feature.set("marker-symbol", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==");
+                    return;
+                }
                 feature.setStyle(this.options.control.getStyle());
             }
         });
@@ -452,10 +474,18 @@ class ButtonExport extends Control {
             return result;
         }
 
-        // on determine la projection...
-        // sinon, par defaut, webmercator ou "EPSG:3857"
         var featProj = layer.getSource().getProjection();
 
+        // INFO
+        // on determine la projection de la carte
+        // si le composant a été ajouté sur la carte via le mécanisme d'OpenLayer...
+        var map = this.getMap();
+        if (map) {
+            featProj = featProj || map.getView().getProjection();
+        }
+
+        // INFO
+        // par defaut, webmercator ou "EPSG:3857"
         result = ClassName.writeFeatures(layer.getSource().getFeatures(), {
             dataProjection : "EPSG:4326",
             featureProjection : featProj || "EPSG:3857"
@@ -511,7 +541,7 @@ class ButtonExport extends Control {
         }
 
         var link = document.createElement("a");
-        // FIXME : determiner le bon charset !
+        // determiner le bon charset !
         var charset = "utf-8";
         link.setAttribute("href", "data:" + this.mimeType + ";charset=" + charset + "," + encodeURIComponent(content));
         link.setAttribute("download", this.options.name + this.extension);
