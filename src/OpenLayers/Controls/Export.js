@@ -318,8 +318,7 @@ class ButtonExport extends Control {
                     <input type="radio" 
                         id="GPmenuFormatGeojson-${this.uid}"
                         name="format" 
-                        value="geojson" 
-                        checked=true>
+                        value="geojson">
                     <span class="checkmark"></span>
                 </label>
                 <label class="container">KML
@@ -345,8 +344,13 @@ class ButtonExport extends Control {
                 var className = this.menu.className;
                 this.menu.className = className.replace(this.menuClassHidden, "");
             }
-            var radios = this.menu.querySelectorAll(`input[type=radio][name="format"]`); // [id$=${this.uid}]
+            var radios = this.menu.querySelectorAll(`input[type=radio][name="format"]`);
             radios.forEach((radio) => {
+                // radio checked par defaut
+                if (radio.id.toUpperCase().includes(this.options.format.toUpperCase())) {
+                    radio.checked = true;
+                }
+                // ecouteur pour changer de format
                 radio.addEventListener("change", (e) => {
                     this.setFormat(e.target.value);
                 });
@@ -638,8 +642,17 @@ class ButtonExport extends Control {
             this.button.value = (this.options.menu) ? this.icon + this.options.title : this.options.title;
         }
         if (this.menu && this.options.menu) {
+            // afficher le menu
             var className = this.menu.className;
             this.menu.className = className.replace(this.menuClassHidden, "");
+            // format par defaut
+            var radios = this.menu.querySelectorAll(`input[type=radio][name="format"]`);
+            radios.forEach((radio) => {
+                // radio checked par defaut
+                if (radio.id.toUpperCase().includes(this.options.format.toUpperCase())) {
+                    radio.checked = true;
+                }
+            });
         }
     }
 
