@@ -24,8 +24,9 @@ import Parser from "../../Common/Utils/Parser";
  * @extends {ol.format.GPX}
  * @type {ol.format.GPXExtended}
  * @param {Object} options - Options
- * @param {Object} options.defaultStyle - Styles by default
- * @param {function} options.readExtensions - Reading extensions (native)
+ * @param {Object} [options.defaultStyle] - Styles by default
+ * @param {Object} [options.extensions] - Add properties to file root
+ * @param {function} [options.readExtensions] - Reading extensions (native)
  */
 var GPX = (function (olGPX) {
     /**
@@ -168,7 +169,7 @@ var GPX = (function (olGPX) {
      * @param {Object[]} features - Features.
      * @param {Object} options - Options.
      *
-     * @return {String} Result.
+     * @return {String} Result or null.
      */
     GPX.prototype.writeFeatures = function (features, options) {
         // INFO
@@ -305,37 +306,36 @@ var GPX = (function (olGPX) {
             }
         });
 
-        var gpxStringInitial = olGPX.prototype.writeFeatures.call(this, features, options);
+        // nodes
+        var gpxNode = olGPX.prototype.writeFeaturesNode.call(this, features, options);
+        if (gpxNode === null) {
+            return null;
+        }
 
-        var gpxDoc = Parser.parse(gpxStringInitial);
-
-        // au cas où..., si exception...
-        if (gpxDoc === null) {
-            return gpxStringInitial;
+        // on ajoute les extensions à la racine pour les metadonnées de calcul
+        if (this.options.hasOwnProperty("extensions")) {
+            processRootExtensions_(gpxNode, this.options.extensions);
         }
 
         // INFO
         // à chaque fois qu'un style est trouvé dans un feature,
         // on appelle la fonction d'insertion des balises extensions dans le DOM.
-        processExtensions_(gpxDoc, features, {
+        processExtensions_(gpxNode, features, {
             extensions : writeExtensions_
         });
 
         // dom -> string
-        var gpxStringExtended = Parser.toString(gpxDoc);
-
-        // au cas où..., si exception...
+        var gpxStringExtended = Parser.toString(gpxNode);
         if (!gpxStringExtended) {
-            return gpxStringInitial;
+            return null;
         }
 
         // format string
         var gpxStringFormatted = Parser.format(gpxStringExtended);
-
-        // au cas où..., si exception...
         if (gpxStringFormatted === "") {
-            return gpxStringInitial;
+            return null;
         }
+
         return gpxStringFormatted;
     };
 
@@ -494,6 +494,104 @@ var GPX = (function (olGPX) {
     /**
      * ...
      *
+     * @param {*} doc - ...
+     * @param {*} extensions - ...
+     */
+    function processRootExtensions_ (doc, extensions) {
+        // TODO namespace ?
+        var extensionsRoot = document.createElement("extensions");
+        // INFO
+        // convert JSON to XML (dom)
+        // * type string :
+        // { typestring: "string" } -> <typestring>string</typestring>
+        //
+        // * type object :
+        // { typeobject: { typestring1: "string", typestring2: "string" } }
+        // -> <typeobject>
+        //      <typestring1>string</typestring1>
+        //      <typestring2>string</typestring2>
+        //    </typeobject>
+        //
+        // * type array :
+        // { typearray : ["item1", "item2"] }
+        // -> <typearray type="array" index=2>
+        //      <value>item1</value>
+        //      <value>item2</value>
+        //    </typearray>
+        //
+        // * type array of array
+        // -> <typearray type="array" index=1>
+        //      <value type="array" index=2>
+        //          <value>1</value>
+        //          <value>2</value>
+        //      </value>
+        //    </typearray>
+        //
+        // * type array of object
+        // -> <typearray type="array" index=2>
+        //      <value>
+        //          <typestring1>string</typestring1>
+        //          <typestring2>string</typestring2>
+        //      </value>
+        //      <value>
+        //          <typestring1>string</typestring1>
+        //          <typestring2>string</typestring2>
+        //      </value>
+        //    </typearray>
+        function toDOM (node, json) {
+            for (const key in json) {
+                if (Object.hasOwnProperty.call(json, key)) {
+                    var element = json[key] || ""; // au cas où...
+                    var tag = document.createElement(key);
+                    // eslint-disable-next-line valid-typeof
+                    if (typeof element === "string" || typeof element === "number") {
+                        tag.innerHTML = element;
+                        node.appendChild(tag);
+                    } else if (element instanceof Array) {
+                        tag.setAttribute("type", "array");
+                        tag.setAttribute("index", element.length);
+                        for (let index = 0; index < element.length; index++) {
+                            var item = element[index] || ""; // au cas où...
+                            var n = document.createElement("value");
+                            if (typeof item === "string" || typeof item === "number") {
+                                n.innerHTML = item;
+                                tag.appendChild(n);
+                            } else if (item instanceof Array) {
+                                n.setAttribute("type", "array");
+                                n.setAttribute("index", item.length);
+                                for (let i = 0; i < item.length; i++) {
+                                    var value = item[i] || ""; // au cas où...
+                                    var k = document.createElement("value");
+                                    if (typeof value === "string" || typeof value === "number") {
+                                        k.innerHTML = value;
+                                        n.appendChild(k);
+                                    }
+                                }
+                                tag.appendChild(n);
+                            } else if (item instanceof Object) {
+                                tag.appendChild(toDOM(n, item));
+                            } else {
+                                // "Unknown element !"
+                            }
+                        }
+                        node.appendChild(tag);
+                    } else if (element instanceof Object) {
+                        node.appendChild(toDOM(tag, element));
+                    } else {
+                        // "Unknown element !"
+                    }
+                }
+            }
+            return node;
+        }
+        // insertion en 1ere place !
+        var firstChild = doc.firstChild;
+        doc.insertBefore(toDOM(extensionsRoot, extensions), firstChild);
+    };
+
+    /**
+     * ...
+     *
      * @param {Object} feature - ...
      * @param {DOMElement} node - ...
      * @private
@@ -529,8 +627,7 @@ var GPX = (function (olGPX) {
         // On peut y placer nos balises extensions.
 
         var index = -1;
-        var root = doc.documentElement;
-        var nodes = root.childNodes;
+        var nodes = doc.childNodes;
         for (var i = 0; i < nodes.length; i++) {
             var node = nodes[i];
             switch (node.nodeName) {
