@@ -1,4 +1,5 @@
-import { THREE } from "itowns";
+// import { THREE } from "itowns";
+import { EventDispatcher } from "three";
 import Logger from "../../Common/Utils/LoggerByDefault";
 
 var logger = Logger.getLogger("Widget");
@@ -38,7 +39,7 @@ function Widget (options) {
 /*
  * @lends module:Attributions
  */
-Widget.prototype = Object.create(THREE.EventDispatcher.prototype, {});
+Widget.prototype = Object.create(/* THREE */ EventDispatcher.prototype, {});
 
 /**
  * Constructor (alias)
@@ -86,6 +87,16 @@ Widget.prototype.getTarget = function getTarget () {
 };
 
 /**
+ * Return the widget's element div.
+ *
+ * @method
+ * @return {HTMLElement} widget's element div.
+ */
+Widget.prototype.getElement = function getElement () {
+    return this._element;
+};
+
+/**
  * Return the widget's element position.
  *
  * @method
@@ -113,6 +124,26 @@ Widget.prototype.getGlobe = function getGlobe () {
  */
 Widget.prototype.setGlobe = function setGlobe (globe) {
     this._globe = globe;
+};
+
+/**
+ * Get the options associated with the widget.
+ *
+ * @method
+ * @return {Object} options
+ */
+Widget.prototype.getOptions = function getOptions () {
+    return this._options;
+};
+
+/**
+ * Set the options of the control
+ *
+ * @method
+ * @param {Object} options - Options to associate to the widget.
+ */
+Widget.prototype.setOptions = function setOptions (options) {
+    this._options = options;
 };
 
 export default Widget;

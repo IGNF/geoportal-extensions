@@ -1,0 +1,205 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Themes Mapbox</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'édition des themes MapBox</h2>
+            <button id="displayFalse">Hidden</button>
+            <button id="displayTrue">Show</button>
+            <h3>editor-0:</h3><br>
+            <div id="editor-0">
+            </div>
+            <h3>editor-1:</h3><br>
+            <div id="editor-1">
+            </div>
+            <h3>editor-2:</h3><br>
+            <div id="editor-2">
+            </div>
+            <h3>editor-3:</h3><br>
+            <div id="editor-2">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+            var editor0 = new ol.style.Editor({
+                target: document.getElementById("editor-0"),
+                style: "{{ resources }}/data/mapbox/styles/enseignements.json",
+                events : {
+                    "editor:themes:onclicktitle" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor0:themes:onclicktitle", this.getID(), e);
+                        }
+                    }
+                },
+                themes : {
+                    themesSummary : "editor0",
+                    themes : [
+                        {
+                            "name" : "standard0",
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style0.json",
+                            "selected" : true
+                        }
+                    ]
+                },
+                tools : {
+                    themes : true,
+                    layers : true,
+                    collapse : false,
+                    filter : true,
+                    style :true,
+                    legend : true
+                }
+            });
+            // create DOM
+            editor0.createElement();
+
+            var editor1 = new ol.style.Editor({
+                target: document.getElementById("editor-1"),
+                id : "999-000000000000",
+                style: "{{ resources }}/data/mapbox/styles/mapbox.json",
+                events : { // TODO...
+                    "editor:layer:onclickvisibility" : function (e) {console.log(e);},
+                    "editor:layer:onclickremove" : function (e) {console.log(e);},
+                    "editor:layer:onclickclone" : function (e) {console.log(e);},
+                    "editor:legend:onclickedition" : function (e) {console.log(e);},
+                    "editor:style:scale:onchangemax" : function (e) {console.log(e);},
+                    "editor:style:scale:onchangemin" : function (e) {console.log(e);},
+                    "editor:style:oneditjson" : function (e) {console.log(e);},
+                    "editor:filter:oneditjson" : function (e) {console.log(e);},
+                    "editor:themes:onclickimage" : function (e) {console.log(e);},
+                    "editor:themes:onclicktitle" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor1:themes:onclicktitle", this.getID(), e);
+                        }
+                    }
+                },
+                themes : {
+                    themesSummary : "editor1",
+                    themes : [
+                        {
+                            "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer0.png",
+                            "name" : "standard0",
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style0.json"
+                        },
+                        {
+                            "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer1.png",
+                            "name" : "standard1",
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style1.json"
+                        },
+                        {
+                            "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer2.png",
+                            "name" : "standard2",
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style2.json",
+                            "selected" : true
+                        },
+                        {
+                            "thumbnail" : "{{ resources }}/data/mapbox/themes/images/layer3.png",
+                            "name" : "standard3",
+                            "url" : "{{ resources }}/data/mapbox/themes/styles/style3.json"
+                        }
+                    ]
+                },
+                tools : {
+                    themes : {
+                        thumbnails : true,
+                        button : {
+                            visible : true,
+                            type : "checkbox"
+                        }
+                    },
+                    layers : true,
+                    filter : true,
+                    style : true,
+                    legend : true,
+                    title : true,
+                    group : true
+                }
+            });
+            // create DOM
+            editor1.createElement();
+
+            var editor2 = new ol.style.Editor({
+                target: document.getElementById("editor-2"),
+                style: "{{ resources }}/data/mapbox/styles/planign/gris.json",
+                events : {
+                    "editor:themes:onclicktitle" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor2:themes:onclicktitle", this.getID(), e);
+                        }
+                    },
+                    "editor:onloaded" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor2:onloaded", e);
+                        }
+                    }
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    filter : false,
+                    style : false,
+                    legend : true,
+                    sort : true,
+                    group : false,
+                    editable : false
+                }
+            });
+            // create DOM
+            editor2.createElement();
+
+            var editor3 = new ol.style.Editor({
+                target: document.getElementById("editor-3"),
+                style: "{{ resources }}/data/mapbox/styles/planign/accentue.json",
+                events : {
+                    "editor:themes:onclicktitle" : function (e) {
+                        if (this.getID() === e.target.editorID) {
+                            console.log("editor3:themes:onclicktitle", this.getID(), e);
+                        }
+                    },
+                    "editor:onloaded" : function (e) {
+                        if (e.target.editorID === this.getID()) {
+                            console.log("editor3:onloaded", e);
+                        }
+                    }
+                },
+                tools : {
+                    themes : false,
+                    layers : true,
+                    icon : {
+                        image : false,
+                        anchor : "start"
+                    },
+                    pin : false,
+                    type : false,
+                    filter : false,
+                    style : false,
+                    legend : true,
+                    group : true,
+                    editable : false
+                }
+            });
+            // create DOM
+            editor3.createElement();
+
+            document.getElementById("displayTrue").addEventListener("click", function () {
+                editor1.display(true);
+                editor2.display(true);
+                editor3.display(true);
+            });
+            document.getElementById("displayFalse").addEventListener("click", function () {
+                editor1.display(false);
+                editor2.display(false);
+                editor3.display(false);
+            });
+            </script>
+{{/content}}
+{{/extend}}

@@ -17,6 +17,7 @@ var logger = Logger.getLogger("layers");
  *      layer : "ORTHOIMAGERY.ORTHOPHOTOS",
  * }).addTo(map) ;
  */
+/** @type {L.geoportalLayer} */
 var Layers = {
 
     options : {},
@@ -95,7 +96,7 @@ var Layers = {
      * @param {Object} options - options for function call.
      * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
-     * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
+     * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
      * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
      *
      * @returns {L.geoportalLayer.WMS} WMS layer
@@ -166,7 +167,9 @@ var Layers = {
             maxZoom : this.params.maxZoom || 21
         };
 
-        // merge des autres options natives de leaflet
+        // merge des options utilisateur pour le service WMS
+        L.Util.extend(paramsWms, this.settings);
+        // merge des options utilisateur aux options natives de leaflet
         L.Util.extend(paramsNative, this.settings);
 
         return new WMS(
@@ -194,7 +197,7 @@ var Layers = {
      * @param {Object} options - options for function call.
      * @param {String} options.layer - layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
-     * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link http://professionnels.ign.fr/ign/contrats}.
+     * @param {String} [options.apiKey] - free access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
      * @param {Object} [settings] - other options for L.TileLayer function (see {@link http://leafletjs.com/reference.html#tilelayer-options})
      *
      * @returns {L.geoportalLayer.WMTS} WMTS layer
@@ -249,7 +252,7 @@ var Layers = {
             });
         }
 
-        // params du service WMS (par defaut)
+        // params du service WMTS (par defaut)
         var paramsWmts = {
             layer : this.options.layer,
             style : this.params.styles || "normal",
@@ -274,7 +277,9 @@ var Layers = {
             maxZoom : this.params.maxZoom || 21
         };
 
-        // merge des autres options natives de leaflet
+        // merge des options utilisateur pour le service WMTS
+        L.Util.extend(paramsWmts, this.settings);
+        // merge des options utilisateur aux options natives de leaflet
         L.Util.extend(paramsNative, this.settings);
 
         return new WMTS(

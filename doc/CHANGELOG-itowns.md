@@ -61,6 +61,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.3](#extension-geoportail-itowns-version-233)
   * [Summary](#summary-17)
   * [Changelog](#changelog-16)
+- [Extension Geoportail Itowns, version 2.3.4](#extension-geoportail-itowns-version-234)
+  * [Summary](#summary-18)
+  * [Changelog](#changelog-17)
+- [Extension Geoportail Itowns, version 2.3.5](#extension-geoportail-itowns-version-235)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-18)
+- [Extension Geoportail Itowns, version 2.3.6](#extension-geoportail-itowns-version-236)
+  * [Summary](#summary-20)
+  * [Changelog](#changelog-19)
+- [Extension Geoportail Itowns, version 2.3.7](#extension-geoportail-itowns-version-237)
+  * [Summary](#summary-21)
+  * [Changelog](#changelog-20)
+- [Extension Geoportail Itowns, version 2.3.8](#extension-geoportail-itowns-version-238)
+  * [Summary](#summary-22)
+  * [Changelog](#changelog-21)
+- [Extension Geoportail Itowns, version 2.3.9](#extension-geoportail-itowns-version-239)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-22)
+- [Extension Geoportail Itowns, version 2.3.10](#extension-geoportail-itowns-version-2310)
+  * [Summary](#summary-24)
+  * [Changelog](#changelog-23)
 
 <!-- tocstop -->
 
@@ -470,6 +491,191 @@ Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.4
+
+**03/12/2021**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Utilisation de plusieurs clefs
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.5
+
+**13/01/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+- merge feature-accessibilite (#313)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.6
+
+**04/03/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+iTowns version 2.37 et mise à jour des dépendances threejs et proj4
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Mise à jour d'iTowns en version 2.37
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.7
+
+**01/08/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation des bâtiments en 3D.
+
+## Changelog
+
+* [Added]
+
+    - ajout d'un control de visualisation des bâtiments en boite à chaussures (#336)
+
+* [Changed]
+
+    - mise à jour d'iTowns en version 2.28.2 (#336)
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.8
+
+**04/10/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Geoportail
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib geoportal 3.2.0
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.9
+
+**04/10/2022**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.10
+
+**17/01/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Ajout des déclarations typescript
+
+## Changelog
+
+* [Added]
+
+    - Ajout des "@types declaration ts" pour publication (16120e8ac5a36a80cded6cbc53eb8c9c6db37e82)
+
+* [Changed]
+
+    - Mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Afficher les informations des elements cliqués sans doublons (8638fb079e7a6d06f4d8687c4c349309a799489f)
 
 * [Security]
 

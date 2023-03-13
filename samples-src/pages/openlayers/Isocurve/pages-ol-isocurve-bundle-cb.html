@@ -1,0 +1,75 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers Isocurve</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget de calcul isochrone, avec les options par défaut</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+              var map;
+              var iso;
+              var layerSwitcher;
+              window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+
+                // Création de la map
+                map = new ol.Map({
+                  target : "map",
+                  layers : [
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+                    })
+                  ],
+                  view : new ol.View({
+                    center : [288074.8449901076, 6247982.515792289],
+                    zoom : 8
+                  })
+                });
+
+                iso = new ol.control.Isocurve({
+                  isocurveOptions : {
+                    onSuccess : function(e) {
+                      console.warn(e);
+                    },
+                    onFailure : function(e) {
+                      console.warn(e);
+                    }
+                  }
+                });
+                map.addControl(iso);
+
+                // listener sur la saisie des points
+                iso.on("isocurve:drawstart", function (e) {
+                    console.warn(e);
+                });
+                iso.on("isocurve:drawend", function (e) {
+                    console.warn(e);
+                });
+                // listener sur le calcul
+                iso.on("isocurve:compute", function (e) {
+                  console.warn(e.target.getData());
+                });
+
+                layerSwitcher = new ol.control.LayerSwitcher({});
+                map.addControl(layerSwitcher);
+             };
+            </script>
+{{/content}}
+{{/extend}}

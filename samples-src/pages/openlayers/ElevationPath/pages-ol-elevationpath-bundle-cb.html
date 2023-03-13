@@ -1,0 +1,82 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "vendor"}}
+<script src="{{ resources }}/vendor/amCharts-min.js"></script>
+{{/content}}
+
+{{#content "head"}}
+<title>Sample OpenLayers ElevationPath</title>
+{{/content}}
+
+{{#content "style"}}
+<style>
+    div#map {
+        width: 100%;
+        height: 500px;
+        background-image:url("{{ resources }}/geoportail-waiting.gif");
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+</style>
+{{/content}}
+
+{{#content "body"}}
+<h2>profil altimetrique avec l'affichage par défaut</h2>
+<!-- map -->
+<div id="map">
+</div>
+{{/content}}
+
+{{#content "js"}}
+<script type="text/javascript">
+    var map;
+    var elevation;
+    window.onload = function () {
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById("map").style.backgroundImage = "none";
+
+        // Création de la map
+        map = new ol.Map({
+            layers: [
+                new ol.layer.GeoportalWMTS({
+                    layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+                })
+            ],
+            target: 'map',
+            view: new ol.View({
+                center: [288074.8449901076, 6247982.515792289],
+                zoom: 5
+            })
+        });
+
+        elevation = new ol.control.ElevationPath({
+            target: map.getTargetElement(),
+            elevationOptions: {
+                onSuccess: function (e) {
+                    console.warn(e);
+                },
+                onFailure: function (e) {
+                    console.warn(e);
+                }
+            },
+            displayProfileOptions: {
+                apply: ol.control.ElevationPath.DISPLAY_PROFILE_BY_DEFAULT,
+                target: null, // par defaut
+            }
+        });
+        // listener sur la saisie des points
+        elevation.on("elevationpath:drawstart", function (e) {
+            console.warn(e);
+        });
+        elevation.on("elevationpath:drawend", function (e) {
+            console.warn(e);
+        });
+        elevation.on("elevationpath:compute", function (e) {
+            console.warn(e.target.getData());
+        });
+        map.addControl(elevation);
+    };
+</script>
+{{/content}}
+
+{{/extend}}

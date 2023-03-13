@@ -58,7 +58,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
      * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
      *      Each array element (=system) is an object with following properties :
      * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -72,8 +72,8 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
      *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
      *      and "M" or "KM" for metric coordinates
-     * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-     * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+     * @param {Boolean} [options.displayAltitude= true] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
+     * @param {Boolean} [options.displayCoordinates= true] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
      * @param {Boolean} [options.editCoordinates = false] - add edit coordinates options. False by default.
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service

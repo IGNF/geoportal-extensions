@@ -39,7 +39,7 @@
                   target : "map",
                   layers : [
                     new ol.layer.GeoportalWMTS({
-                      layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
                     })
                   ],
                   view : new ol.View({
@@ -49,7 +49,10 @@
                 });
 
                 var mouse = new ol.control.GeoportalMousePosition({
-                    editCoordinates : true
+                    editCoordinates : true,
+                    mapCenterCallback : function (e) {
+                      console.log(this.getMap(), e);
+                    }
                 });
                 map.addControl(mouse);
               };

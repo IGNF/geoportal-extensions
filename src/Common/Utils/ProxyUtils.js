@@ -13,6 +13,7 @@ var ProxyUtils = {
     /**
      * Ajoute un proxy aux url des couches vecteurs si besoin.
      *
+     * @function proxifyUrl
      * @param {String} url - Url to proxify.
      * @param {Object} [proxyOptions] - Object defining proxy options.
      * @param {String} proxyOptions.proxyUrl - Proxy URL.

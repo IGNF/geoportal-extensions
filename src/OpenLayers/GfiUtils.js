@@ -70,8 +70,8 @@ var GfiUtils = {
      * @param {String} content - content to display
      * @param {String} [contentType='text/html'] - content mime-type
      * @param {Object} autoPanOptions - Auto-pan pop-up options
-     * @param {Boolean} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Boolean|Object} [autoPanOptions.autoPan] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas (See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanIntoViewOptions PanIntoViewOptions})
+     * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      * @return {Boolean} displayed - indicates if something has been displayed
      */
@@ -197,50 +197,75 @@ var GfiUtils = {
         var content = document.createElement("div");
         features.forEach(function (f) {
             var props = f.getProperties();
-            if (props.hasOwnProperty("name")) {
-                var nameDiv = document.createElement("div");
-                nameDiv.className = "gp-att-name-div";
-                // nameDiv.appendChild(document.createTextNode(props["name"])) ;
-                nameDiv.insertAdjacentHTML("afterbegin", props["name"]);
-                content.appendChild(nameDiv);
-            }
-            if (props.hasOwnProperty("description")) {
-                var descDiv = document.createElement("div");
-                descDiv.className = "gp-att-description-div";
-                // descDiv.appendChild(document.createTextNode(props["description"])) ;
-                descDiv.insertAdjacentHTML("afterbegin", props["description"]);
-                content.appendChild(descDiv);
-            }
-            var p = null;
-            var others = false;
-            var oDiv = null;
-            var ul = null;
-            var li = null;
-            for (p in props) {
-                if (p === "geometry" || p === "value" || p === "name" || p === "description" || p === "styleUrl") {
-                    continue;
+            // si la properties 'render' est presente,
+            // on ajoute directement le rendu HTML dans la balise principale
+            if (props.hasOwnProperty("render")) {
+                // content.innerHTML = props["render"].trim();
+                // content.appendChild(props["render"]);
+                content.insertAdjacentHTML("beforeend", props["render"]);
+            } else {
+                if (props.hasOwnProperty("name")) {
+                    var nameDiv = document.createElement("div");
+                    nameDiv.className = "gp-att-name-div";
+                    // nameDiv.appendChild(document.createTextNode(props["name"])) ;
+                    nameDiv.insertAdjacentHTML("afterbegin", props["name"]);
+                    content.appendChild(nameDiv);
                 }
-                // FIXME La lecture des extensions GPX n'est pas gérée !
-                if (p === "extensionsNode_" && props[p] === undefined) {
-                    continue;
+                if (props.hasOwnProperty("description")) {
+                    var descDiv = document.createElement("div");
+                    descDiv.className = "gp-att-description-div";
+                    // descDiv.appendChild(document.createTextNode(props["description"])) ;
+                    descDiv.insertAdjacentHTML("afterbegin", props["description"]);
+                    content.appendChild(descDiv);
                 }
-                if (!others) {
-                    oDiv = document.createElement("div");
-                    oDiv.className = "gp-att-others-div";
-                    ul = document.createElement("ul");
-                    others = true;
+                var p = null;
+                var others = false;
+                var oDiv = null;
+                var ul = null;
+                var li = null;
+                // Liste des properties à retirer de la visualisation :
+                var listForbidden = [
+                    // styles
+                    "fill",
+                    "fill-opacity",
+                    "stroke",
+                    "stroke-opacity",
+                    "stroke-width",
+                    "marker-symbol",
+                    "marker-color",
+                    "marker-size",
+                    "geometry", // geometrie
+                    "value",
+                    "name", // déjà traité
+                    "description", // déjà traité
+                    "styleUrl",
+                    "extensionsNode_" // extensions GPX
+                ];
+                for (p in props) {
+                    if (props[p] === undefined) {
+                        continue;
+                    }
+                    if (listForbidden.indexOf(p) !== -1) {
+                        continue;
+                    }
+                    if (!others) {
+                        oDiv = document.createElement("div");
+                        oDiv.className = "gp-att-others-div";
+                        ul = document.createElement("ul");
+                        others = true;
+                    }
+                    li = document.createElement("li");
+                    var span = document.createElement("span");
+                    span.className = "gp-attname-others-span";
+                    span.appendChild(document.createTextNode(p + " : "));
+                    li.appendChild(span);
+                    li.appendChild(document.createTextNode(props[p]));
+                    ul.appendChild(li);
                 }
-                li = document.createElement("li");
-                var span = document.createElement("span");
-                span.className = "gp-attname-others-span";
-                span.appendChild(document.createTextNode(p + " : "));
-                li.appendChild(span);
-                li.appendChild(document.createTextNode(props[p]));
-                ul.appendChild(li);
-            }
-            if (ul) {
-                oDiv.appendChild(ul);
-                content.appendChild(oDiv);
+                if (ul) {
+                    oDiv.appendChild(ul);
+                    content.appendChild(oDiv);
+                }
             }
         }, map);
 
@@ -329,7 +354,7 @@ var GfiUtils = {
      * @param {Array.<String>} [proxyOptions.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing (if not already set in mapOptions).
      * @param {Object} [autoPanOptions] - Auto-pan pop-up options
      * @param {Boolean} [autoPanOptions.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
-     * @param {olx.OverlayPanOptions} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+     * @param {Object} [autoPanOptions.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
      * @param {Number} [autoPanOptions.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
      *
      */
@@ -392,18 +417,13 @@ var GfiUtils = {
 
                     var _res = map.getView().getResolution();
                     var _url = null;
-                    // FIXME
+                    // INFO
                     // en fonction de la version d'openlayers, la méthode est differente :
                     // - getGetFeatureInfoUrl en v5
                     // - getFeatureInfoUrl en v6
-                    // mais, il y'a une surcharge de cette méthode qui pose quelques soucis...
-                    // (cf. src/OpenLayers/Source/WMTS.js), il faudra investiguer dès que nous
-                    // passerons en v6.0.0...
-                    var _getFeatureInfoUrl = (typeof l.getSource().getFeatureInfoUrl === "function")
-                        ? l.getSource().getFeatureInfoUrl : l.getSource().getGetFeatureInfoUrl;
-
                     if (format === "wmts") {
-                        _url = _getFeatureInfoUrl.call(l.getSource(),
+                        // eslint-disable-next-line no-useless-call
+                        _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
                             map.getView().getProjection(), {
@@ -411,7 +431,8 @@ var GfiUtils = {
                             }
                         );
                     } else {
-                        _url = _getFeatureInfoUrl.call(l.getSource(),
+                        // eslint-disable-next-line no-useless-call
+                        _url = l.getSource().getFeatureInfoUrl.call(l.getSource(),
                             olCoordinate,
                             _res,
                             map.getView().getProjection(), {

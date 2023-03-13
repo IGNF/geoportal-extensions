@@ -60,6 +60,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.1.10](#extension-geoportail-leaflet-version-2110)
   * [Summary](#summary-16)
   * [Changelog](#changelog-13)
+- [Extension Geoportail Leaflet, version 2.2.0](#extension-geoportail-leaflet-version-220)
+  * [Summary](#summary-17)
+  * [Changelog](#changelog-14)
+- [Extension Geoportail Leaflet, version 2.2.1](#extension-geoportail-leaflet-version-221)
+  * [Summary](#summary-18)
+  * [Changelog](#changelog-15)
+- [Extension Geoportail Leaflet, version 2.2.2](#extension-geoportail-leaflet-version-222)
+  * [Summary](#summary-19)
+  * [Changelog](#changelog-16)
+- [Extension Geoportail Leaflet, version 2.2.3](#extension-geoportail-leaflet-version-223)
+  * [Summary](#summary-20)
+  * [Changelog](#changelog-17)
+- [Extension Geoportail Leaflet, version 2.2.4](#extension-geoportail-leaflet-version-224)
+  * [Summary](#summary-21)
+  * [Changelog](#changelog-18)
+- [Extension Geoportail Leaflet, version 2.2.5](#extension-geoportail-leaflet-version-225)
+  * [Summary](#summary-22)
+  * [Changelog](#changelog-19)
+- [Extension Geoportail Leaflet, version 2.2.7](#extension-geoportail-leaflet-version-227)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-20)
+- [Extension Geoportail Leaflet, version 2.2.8](#extension-geoportail-leaflet-version-228)
+  * [Summary](#summary-24)
+  * [Changelog](#changelog-21)
+- [Extension Geoportail Leaflet, version 2.2.9](#extension-geoportail-leaflet-version-229)
+  * [Summary](#summary-25)
+  * [Changelog](#changelog-22)
 
 <!-- tocstop -->
 
@@ -519,6 +546,243 @@ Reparation du profil altimétrique
 * [Fixed]
 
     - Correction et réparation du profil altimétrique de Leaflet (#297)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.0
+
+**04/11/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+ =Mise à jour access-lib pour utilisation de l'itinéraire v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.1
+
+**03/12/2021**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Utilisation de plusieurs clefs
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    -  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.2
+
+**13/01/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - merge feature-accessibilite (#313)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.3
+
+**04/03/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Corrections sur l'interface d'ajout des couches WMS/WMTS
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correction des paramètres passés aux couches WMTS/WMS (#319)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.4
+
+**23/03/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.5
+
+**04/10/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Utilisation du Geocodage v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33) 
+    - mise à jour pour utilisation du service de Geocodage v2 (#279)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.7
+
+**30/10/2022**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+  - Calcul d'itinéraire fonctionnel
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.8
+
+**17/01/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout des déclarations typescript, améliorations et corrections des interfaces sur les controles d'itinéraire et d'isochrone
+
+## Changelog
+
+* [Added]
+
+    - Ajout des "@types declaration" pour publication (16120e8ac5a36a80cded6cbc53eb8c9c6db37e82)
+
+* [Changed]
+
+    - Prise en compte des options routeOptions.onSuccess et routeOptions.geometryInInstructions passées à la création du widget (#341)
+    - Mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Survol du profil altimétrique rendu compatible avec les téléphones (af2c669563b248c398aa11932a50839d975dff85i)
+    - Corrige la prise en compte des coordonnées du point de départ des isochrones (38d86213848d5b14539fdeaf1e46049c8f9bb73e)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.2.9
+
+**21/02/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
+
+## Changelog
+
+* [Added]
+
+    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat (#351)
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#354)
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 

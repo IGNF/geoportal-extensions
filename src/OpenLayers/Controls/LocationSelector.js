@@ -10,6 +10,7 @@ import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
@@ -22,6 +23,7 @@ var logger = Logger.getLogger("locationselector");
  * @classdesc
  *
  * LocationSelector component. Enables to select a location, using autocompletion or picking location on the map
+ * @type {ol.control.LocationSelector}
  * @param {Object} [options] - component options
  * @param {String} [options.apiKey] - API key for autocomplete service call, mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -54,6 +56,14 @@ var logger = Logger.getLogger("locationselector");
  *  });
  */
 var LocationSelector = (function (Control) {
+    /**
+     * See {@link ol.control.LocationSelector}
+     * @module LocationSelector
+     * @alias module:~Controls/LocationSelector
+     * @param {*} options - options
+     * @example
+     * import LocationSelector from "src/OpenLayers/Controls/LocationSelector"
+     */
     function LocationSelector (options) {
         options = options || {};
 
@@ -224,14 +234,21 @@ var LocationSelector = (function (Control) {
 
     /**
      * set coordinate
-     * @param {Object} coordinate - Coordinate in the projection map
+     * @param {Object} coordinate - Coordinate in the map projection by default, otherwise, the projection is entered in the following parameter
+     * @param {String} crs - Coordinate projection
      */
-    LocationSelector.prototype.setCoordinate = function (coordinate) {
+    LocationSelector.prototype.setCoordinate = function (coordinate, crs) {
         var map = this.getMap();
-        var crs = map.getView().getProjection();
+        var proj = map.getView().getProjection();
+        // on utilise la projection de la carte
+        if (crs === null) {
+            crs = proj;
+        }
 
         this._setCoordinate(coordinate, crs);
 
+        // on utilise toujours la projection de la carte pour placer le marker
+        coordinate = olTransformProj(coordinate, crs, proj);
         this._setMarker([
             coordinate[0],
             coordinate[1]
@@ -254,19 +271,19 @@ var LocationSelector = (function (Control) {
      * check
      */
     LocationSelector.prototype._checkRightsManagement = function () {
-        // les ressources du service d'autocompletion
-        var _opts = this.options.autocompleteOptions.filterOptions;
-        var _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = [
-                "PositionOfInterest",
-                "StreetAddress"
+        // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
+        var _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
+        // ou celles par défaut sinon.
+        if (!_resources || _resources.length === 0) {
+            _resources = [
+                "StreetAddress",
+                "PositionOfInterest"
             ];
         }
 
         var rightManagement = RightManagement.check({
             key : this.options.apiKey,
-            resources : _res,
+            resources : _resources,
             services : ["AutoCompletion"]
         });
 
@@ -451,7 +468,7 @@ var LocationSelector = (function (Control) {
         };
 
         // on ajoute le texte de l'autocomplétion dans l'input
-        var label = this._suggestedLocations[idx].fullText;
+        var label = GeocodeUtils.getSuggestedLocationFreeform(this._suggestedLocations[idx]);
         this._setLabel(label);
 
         // Info : la position est en EPSG:4326, à transformer dans la projection de la carte
@@ -494,7 +511,7 @@ var LocationSelector = (function (Control) {
      * this method is called by event 'click' on 'GProuteOriginLabel' tag label
      * (cf. this._createRoutePointLabelElement).
      * this point is erased.
-     *
+     *Missing
      * @private
      */
     LocationSelector.prototype.onLocationClearPointClick = function () {

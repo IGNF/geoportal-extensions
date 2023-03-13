@@ -15,8 +15,8 @@ import Register from "../../Common/Utils/Register";
  * (PROTOTYPE)
  *
  * @ignore
- * @module EPSG4326
- * @alias EPSG4326
+ * @module
+ * @alias L.geoportalCRS.EPSG2154
  * @returns {L.Proj.CRS}
  * @example
  *  var map = L.Map('divmap', {
@@ -38,6 +38,7 @@ import Register from "../../Common/Utils/Register";
  *
  *  lyr.addTo(map); // ou map.addLayer(lyr);
  */
+/** @type {L.geoportalCRS.EPSG4326} */
 var EPSG4326 = {
 
     /**

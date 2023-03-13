@@ -34,7 +34,7 @@
                   target : "map",
                   layers : [
                     new ol.layer.GeoportalWMTS({
-                      layer : "GEOGRAPHICALGRIDSYSTEMS.MAPS"
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
                     })
                   ],
                   view : new ol.View({
@@ -73,11 +73,16 @@
                       var coord = evt.coordinate;
                       var props = feature.getProperties();
                       var contents = "";
+                      var length = "30";
                       for (var key in props) {
-                          if (props.hasOwnProperty(key)) {
-                              contents += key + " / " + props[key];
-                              contents += "<br>";
+                        if (props.hasOwnProperty(key)) {
+                          var value = props[key];
+                          if (typeof value === "string") {
+                            value = props[key].substring(0, length);
                           }
+                          contents += key + " / " + value;
+                          contents += "<br>";
+                        }
                       }
                       // Offset the popup so it points at the middle of the marker not the tip
                       popup.setOffset([0, -22]);

@@ -17,7 +17,7 @@ var logger = Logger.getLogger("ElevationPath");
  *
  * Leaflet Control Class to compute and display Profil Elevation.
  *
- * Use {@link module :Controls.ElevationPath L.geoportalControl.ElevationPath()} factory to create instances of that class.
+ * Use {@link module:Controls.ElevationPath L.geoportalControl.ElevationPath()} factory to create instances of that class.
  *
  * **Extends** Leaflet <a href="http://leafletjs.com/reference.html#control" target="_blank">L.Control</a> native class.
  *
@@ -50,12 +50,12 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
     },
 
     /**
-     * constructor
+     * @constructor ElevationPath
      *
      * @private
      * @param {Object} options - ElevationPath control options
      * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
-    * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+     * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
      * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
      * @param {Object} [options.displayProfileOptions = {}] - profile options.
@@ -683,7 +683,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         var self = this;
         L.Util.extend(options, {
 
-            /** sampling à 200 (iso portail) */
+            // sampling à 200 (iso portail)
             sampling : _sampling,
 
             // callback onSuccess

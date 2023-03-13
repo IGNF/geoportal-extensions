@@ -49,13 +49,13 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * @param {Object} options - options for function call.
      * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
-     * @param {String}  [options.position] - position of component into the map, 'topleft' by default
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
-     * @param {Object}  [options.exclusions] - list of exclusions with status
-     * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected
+     * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default
+     * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
+     * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status
+     * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-     * @param {Object}  [options.autocompleteOptions] - options of autocomplete service
-     * @param {Object}  [options.routeOptions] - options of route service
+     * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service
+     * @param {Object}  [options.routeOptions = {}] - options of route service
      * @example
      *  var route = L.geoportalControl.Route({
      *      position : "topright",
@@ -298,8 +298,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             _res = [
                 "StreetAddress",
                 "PositionOfInterest"
-                // "CadastralParcel",
-                // "Administratif"
+                // "CadastralParcel"
             ];
         }
 
@@ -704,21 +703,40 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         var points = this._currentPoints;
 
         // - point de depart
-        var start = points[0].getCoordinate();
+        var start;
+        if (points[0].getCoordinate) {
+            var startCoordinate = points[0].getCoordinate();
+            start = {
+                x : startCoordinate.lon || startCoordinate.lng,
+                y : startCoordinate.lat
+            };
+        }
         points[0].dragging(false);
         logger.log("start", start);
         // - point d'arrivée
-        var end = points[points.length - 1].getCoordinate();
+        var end;
+        if (points[points.length - 1] && points[points.length - 1].getCoordinate) {
+            var endCoordinate = points[points.length - 1].getCoordinate();
+            end = {
+                x : endCoordinate.lon || endCoordinate.lng,
+                y : endCoordinate.lat
+            };
+        }
         points[points.length - 1].dragging(false);
         logger.log("end", end);
         // - les étapes
         var step = [];
         for (var i = 1; i < points.length - 1; i++) {
-            var coordinate = points[i].getCoordinate();
-            points[i].dragging(false);
-            if (coordinate) {
-                logger.log("step", coordinate);
-                step.push(coordinate);
+            if (points[i] && points[i].getCoordinate) {
+                var iCoordinate = points[i].getCoordinate();
+                if (iCoordinate) {
+                    var coordinate = {
+                        x : iCoordinate.lon || iCoordinate.lng,
+                        y : iCoordinate.lat
+                    };
+                    logger.log("step", coordinate);
+                    step.push(coordinate);
+                }
             }
         }
 
@@ -733,6 +751,10 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         this._currentComputation = options.computation;
         this._currentExclusions = options.exclusions;
 
+        if (typeof this.options.routeOptions.geometryInInstructions === "undefined") {
+            this.options.routeOptions.geometryInInstructions = true;
+        }
+
         // mise en place de la patience
         this._displayWaitingContainer();
 
@@ -745,13 +767,16 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             graph : this._currentTransport,
             routePreference : this._currentComputation,
             exclusions : this._currentExclusions,
-            geometryInInstructions : true, // surcharge obligatoire !
+            geometryInInstructions : this.options.routeOptions.geometryInInstructions,
             distanceUnit : "m", // surcharge obligatoire !
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
                 if (results) {
                     context._fillRouteResultsDetails(results);
+                    if (context.options.routeOptions.onSuccess) {
+                        context.options.routeOptions.onSuccess(results);
+                    }
                 }
             },
             // callback onFailure
@@ -1032,12 +1057,14 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             this._fillRouteResultsDetailsGeometry(geometry);
         }
 
-        // existe t il une geometrie pour chaque troncon de route ?
-        var bGeometryInstructions = (instructions && Array.isArray(instructions) && instructions[0].geometry.length !== 0);
+        if (this.options.routeOptions.geometryInInstructions) {
+            // existe t il une geometrie pour chaque troncon de route ?
+            var bGeometryInstructions = (instructions && Array.isArray(instructions) && instructions[0].geometry.length !== 0);
 
-        // Geometries des tronçon
-        if (instructions && bGeometryInstructions) {
-            this._fillRouteResultsDetailsFeatureGeometry(instructions);
+            // Geometries des tronçon
+            if (instructions && bGeometryInstructions) {
+                this._fillRouteResultsDetailsFeatureGeometry(instructions);
+            }
         }
 
         // Emprise
@@ -1096,9 +1123,9 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         var map = this._map;
 
         var _style = {
-            color : "#ff7800",
+            color : "#ED7F10",
             weight : 5,
-            opacity : 0.65
+            opacity : 0.75
         };
 
         this._geojsonRoute = L.geoJson(geometry, {

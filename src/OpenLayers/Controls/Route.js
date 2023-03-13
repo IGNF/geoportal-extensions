@@ -23,6 +23,7 @@ import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LocationSelector from "./LocationSelector";
 import LayerSwitcher from "./LayerSwitcher";
@@ -38,6 +39,7 @@ var logger = Logger.getLogger("route");
  *
  * @constructor
  * @alias ol.control.Route
+ * @type {ol.control.Route}
  * @extends {ol.control.Control}
  * @param {Object} options - route control options
  * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
@@ -56,6 +58,7 @@ var logger = Logger.getLogger("route");
  * @param {String} [options.layerDescription.description = "Itinéraire basé sur un graphe"] - Layer description to be displayed in LayerSwitcher
  * @fires route:drawstart
  * @fires route:drawend
+ * @fires route:compute
  * @example
  *  var route = ol.control.Route({
  *      "collapsed" : true
@@ -85,6 +88,14 @@ var logger = Logger.getLogger("route");
  *  });
  */
 var Route = (function (Control) {
+    /**
+     * See {@link ol.control.Route}
+     * @module Route
+     * @alias module:~Controls/Route
+     * @param {*} options - options
+     * @example
+     * import Route from "src/OpenLayers/Controls/Route"
+     */
     function Route (options) {
         options = options || {};
 
@@ -131,6 +142,30 @@ var Route = (function (Control) {
      */
     Route.prototype.constructor = Route;
 
+    /**
+     * Overwrite OpenLayers setMap method
+     *
+     * @param {ol.Map} map - Map.
+     */
+    Route.prototype.setMap = function (map) {
+        if (map) {
+            // enrichissement du DOM du container
+            this._container = this._initContainer(map);
+
+            // mode "draggable"
+            if (this.draggable) {
+                Draggable.dragElement(
+                    this._panelRouteContainer,
+                    this._panelHeaderRouteContainer,
+                    map.getTargetElement()
+                );
+            }
+        }
+
+        // on appelle la méthode setMap originale d'OpenLayers
+        Control.prototype.setMap.call(this, map);
+    };
+
     // ################################################################### //
     // ##################### public methods ############################## //
     // ################################################################### //
@@ -175,27 +210,173 @@ var Route = (function (Control) {
     };
 
     /**
-     * Overwrite OpenLayers setMap method
+     * Set vector layer where route geometry is drawn
      *
-     * @param {ol.Map} map - Map.
+     * @param {Object} layer - ol.layer.Vector route layer
      */
-    Route.prototype.setMap = function (map) {
-        if (map) {
-            // enrichissement du DOM du container
-            this._container = this._initContainer(map);
+    Route.prototype.setLayer = function (layer) {
+        if (!layer) {
+            this._geojsonSections = null;
+            return;
+        }
 
-            // mode "draggable"
-            if (this.draggable) {
-                Draggable.dragElement(
-                    this._panelRouteContainer,
-                    this._panelHeaderRouteContainer,
-                    map.getTargetElement()
-                );
+        if (!(layer instanceof VectorLayer)) {
+            logger.log("no valid layer given for hosting drawn features.");
+            return;
+        }
+
+        // application des styles
+        layer.setStyle(this._defaultFeatureStyle);
+        // sauvegarde
+        this._geojsonSections = layer;
+    };
+
+    /**
+     * Get vector layer
+     *
+     * @returns {String} geojson - GeoJSON format layer
+     */
+    Route.prototype.getGeoJSON = function () {
+        return JSON.stringify(this._geojsonObject);
+    };
+
+    /**
+     * Set vector layer
+     *
+     * @param {String} geojson - GeoJSON format layer
+     */
+    Route.prototype.setGeoJSON = function (geojson) {
+        try {
+            this._geojsonObject = JSON.parse(geojson);
+        } catch (e) {
+            logger.log("no valid geojson given :" + e.message);
+        }
+    };
+
+    /**
+     * Get route informations
+     *
+     * @returns {Object} data - route informations
+     */
+    Route.prototype.getData = function () {
+        var points = [];
+        for (let index = 0; index < this._currentPoints.length; index++) {
+            const p = this._currentPoints[index];
+            points.push(p.getCoordinate());
+        }
+        var data = {
+            points : points,
+            transport : this._currentTransport,
+            exclusions : this._currentExclusions,
+            computation : this._currentComputation,
+            results : {}
+        };
+        Utils.assign(data.results, this._currentRouteInformations);
+        return data;
+    };
+
+    /**
+     * Set route data
+     *
+     * @param {Object} data - control informations
+     * @param {String} data.transport - transport type
+     * @param {String} data.computation - computation type
+     * @param {Array} data.exclusions - list of exclusions
+     * @param {Array} data.points - list of points : [[lon, lat]]
+     * @param {Object} data.results - service response
+     */
+    Route.prototype.setData = function (data) {
+        this._currentTransport = data.transport;
+        this._currentComputation = data.computation;
+        this._currentExclusions = data.exclusions;
+        for (let index = 0; index < data.points.length; index++) {
+            const c = data.points[index];
+            this._currentPoints[index].clear();
+            if (c) {
+                this._currentPoints[index].setCoordinate(c, "EPSG:4326");
+            }
+        }
+        this._currentRouteInformations = data.results;
+    };
+
+    /**
+     * This method is public.
+     * It allows to init the control.
+     */
+    Route.prototype.init = function () {
+        // points
+        for (let index = 0; index < this._currentPoints.length; index++) {
+            const point = this._currentPoints[index];
+            var id = index + 1;
+            var coordinate = point.getCoordinate();
+            if (coordinate) {
+                var input = document.getElementById("GPlocationOrigin_" + id + "-" + this._uid);
+                input.value = coordinate[1].toFixed(4) + " / " + coordinate[0].toFixed(4);
             }
         }
 
-        // on appelle la méthode setMap originale d'OpenLayers
-        Control.prototype.setMap.call(this, map);
+        // set transport mode
+        var transportdiv;
+        if (this._currentTransport === "Pieton") {
+            transportdiv = document.getElementById("GProuteTransportPedestrian-" + this._uid);
+            if (transportdiv) {
+                transportdiv.checked = "true";
+            }
+        } else {
+            transportdiv = document.getElementById("GProuteTransportCar-" + this._uid);
+            if (transportdiv) {
+                transportdiv.checked = "true";
+            }
+        }
+
+        // set computation mode
+        var computationdiv = document.getElementById("GProuteComputationSelect-" + this._uid);
+        if (computationdiv) {
+            computationdiv.value = this._currentComputation;
+        }
+
+        // set exclusions
+        var tollInput = document.getElementById("GProuteExclusionsToll-" + this._uid);
+        if (tollInput) {
+            if (this._currentExclusions.indexOf("toll") !== -1) {
+                tollInput.checked = false;
+            } else {
+                tollInput.checked = true;
+            }
+        }
+
+        var tunnelInput = document.getElementById("GProuteExclusionsTunnel-" + this._uid);
+        if (tunnelInput) {
+            if (this._currentExclusions.indexOf("tunnel") !== -1) {
+                tunnelInput.checked = false;
+            } else {
+                tunnelInput.checked = true;
+            }
+        }
+
+        var bridgeInput = document.getElementById("GProuteExclusionsBridge-" + this._uid);
+        if (bridgeInput) {
+            if (this._currentExclusions.indexOf("bridge") !== -1) {
+                bridgeInput.checked = false;
+            } else {
+                bridgeInput.checked = true;
+            }
+        }
+
+        var distance = this._currentRouteInformations.totalDistance;
+        var duration = this._currentRouteInformations.totalTime;
+
+        // Détails avec simplifications des troncons
+        var instructions = this._simplifiedInstructions(this._currentRouteInformations.routeInstructions);
+
+        if (instructions) {
+            this._fillRouteResultsDetailsContainer(distance, duration, instructions);
+        }
+
+        // affichage du panneau de details du controle !
+        this._formRouteContainer.className = "GProuteComponentHidden";
+        this._hideWaitingContainer();
+        this._resultsRouteContainer.className = "";
     };
 
     // ################################################################### //
@@ -291,6 +472,9 @@ var Route = (function (Control) {
 
         // la geometrie des troncons
         this._geojsonSections = null;
+
+        // la geometrie des troncons au format GeoJSON
+        this._geojsonObject = null;
 
         // le container de la popup (pour les troncons selectionnés)
         this._popupContent = null;
@@ -882,6 +1066,10 @@ var Route = (function (Control) {
             _timeout = 15000;
         }
 
+        // gestion des callback
+        var bOnFailure = !!(routeOptions.onFailure !== null && typeof routeOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(routeOptions.onSuccess !== null && typeof routeOptions.onSuccess === "function");
+
         // on met en place l'affichage des resultats dans la fenetre de resultats.
         var context = this;
         this._requestRouting({
@@ -901,12 +1089,18 @@ var Route = (function (Control) {
                 if (results) {
                     context._fillRouteResultsDetails(results);
                 }
+                if (bOnSuccess) {
+                    routeOptions.onSuccess.call(context, results);
+                }
             },
             // callback onFailure
             onFailure : function (error) {
                 context._hideWaitingContainer();
                 context._clearRouteResultsDetails();
                 logger.log(error.message);
+                if (bOnFailure) {
+                    routeOptions.onFailure.call(context, error);
+                }
             }
         });
     };
@@ -997,6 +1191,9 @@ var Route = (function (Control) {
      * @private
      */
     Route.prototype.onShowRoutePanelClick = function (e) {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         // clean !
         if (!this._geojsonSections && !this._waiting) {
             this._clear();
@@ -1335,6 +1532,21 @@ var Route = (function (Control) {
         // sauvegarde de l'etat des resultats
         this._currentRouteInformations = results;
 
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event route:compute
+         * @property {Object} type - event
+         * @property {Object} target - instance Route
+         * @example
+         * Route.on("route:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "route:compute"
+        });
+
         // mise à jour du controle !
         this._formRouteContainer.className = "GProuteComponentHidden";
         this._hideWaitingContainer();
@@ -1379,15 +1591,21 @@ var Route = (function (Control) {
 
         // création de l'objet geoJSON
         var geojsonObject = {
-            type : "Feature",
-            crs : {
-                type : "name",
-                properties : {
-                    name : "EPSG:4326"
+            type : "FeatureCollection",
+            features : [
+                {
+                    type : "Feature",
+                    crs : {
+                        type : "name",
+                        properties : {
+                            name : "EPSG:4326"
+                        }
+                    },
+                    geometry : geometry
                 }
-            },
-            geometry : geometry
+            ]
         };
+
         var geojsonformat = new GeoJSON({
             defaultDataProjection : "EPSG:4326"
         });
@@ -1422,7 +1640,7 @@ var Route = (function (Control) {
         var map = this.getMap();
 
         // 1. création de l'objet geoJSON
-        var geojsonObject = {
+        this._geojsonObject = {
             type : "FeatureCollection",
             crs : {
                 type : "name",
@@ -1447,7 +1665,7 @@ var Route = (function (Control) {
                 }
             }
 
-            geojsonObject.features.push({
+            this._geojsonObject.features.push({
                 type : "Feature",
                 geometry : o.geometry,
                 properties : {
@@ -1458,7 +1676,31 @@ var Route = (function (Control) {
             });
         }
 
-        logger.log(geojsonObject);
+        // Ajout des points de depart et arrivée du tracé
+        // INFO
+        //  On fait l'impasse sur les points intermediaires, ça me semble pas très utile...
+        //  On ne transmet pas les styles, ils pourront être ajoutés ulterieusement selon les besoins...
+        this._geojsonObject.features.push({
+            type : "Feature",
+            geometry : {
+                type : "Point",
+                coordinates : this._currentPoints[0].getCoordinate()
+            },
+            properties : {
+                description : "Point de départ"
+            }
+        });
+
+        this._geojsonObject.features.push({
+            type : "Feature",
+            geometry : {
+                type : "Point",
+                coordinates : this._currentPoints[this._currentPoints.length - 1].getCoordinate()
+            },
+            properties : {
+                description : "Point d'arrivée"
+            }
+        });
 
         // Création du format GeoJSON, avec reprojection des géométries
         var geojsonformat = new GeoJSON({
@@ -1466,7 +1708,7 @@ var Route = (function (Control) {
         });
         var mapProj = this.getMap().getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(
-            geojsonObject, {
+            this._geojsonObject, {
                 dataProjection : "EPSG:4326",
                 featureProjection : mapProj
             }
@@ -1779,6 +2021,7 @@ var Route = (function (Control) {
         if (this._geojsonSections != null) {
             map.removeLayer(this._geojsonSections);
             this._geojsonSections = null;
+            this._geojsonObject = null;
         }
         // on retire l'overlay de la popup de la carte
         if (this._popupOverlay != null) {

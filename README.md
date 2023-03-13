@@ -1,10 +1,14 @@
 # Extensions Géoportail
 
+![image](capture-carte.png)
+
+---
+
 [![Build](https://github.com/IGNF/geoportal-extensions/actions/workflows/build.yml/badge.svg)](https://github.com/IGNF/geoportal-extensions/actions/workflows/build.yml)
 [![CeCILL License](https://img.shields.io/badge/licence-CeCILL--B-blue.svg)](https://raw.githubusercontent.com/IGNF/geoportal-extensions/master/LICENCE.md)
 [![DeepScan grade](https://deepscan.io/api/teams/12425/projects/15469/branches/309621/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12425&pid=15469&bid=309621)
 
-Ce projet a pour but de fournir des extensions facilitant l'accès aux ressources de la plateforme Géoportail pour les bibliothèques cartographiques Leaflet, OpenLayers (versions 3 et supérieures) et iTowns.
+Ce projet a pour but de fournir des extensions facilitant l'accès aux ressources de la plateforme [Géoportail](https://www.geoportail.gouv.fr/) pour les bibliothèques cartographiques [Leaflet](https://leafletjs.com/), [OpenLayers](https://openlayers.org/) (versions 3 et supérieures) et [iTowns](http://www.itowns-project.org/).
 
 Ces extensions proposent des classes et widgets utilisables en complément de la bibliothèque cartographique qu'elles étendent, permettant notamment :
 
@@ -22,16 +26,13 @@ Ces extensions proposent des classes et widgets utilisables en complément de la
 
 * ...
 
-## LEAFLET
-
+## <img src="leaflet.svg" height="15px" /> LEAFLET
 Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour Leaflet](doc/README-leaflet.md)
 
-
-## OPENLAYERS
+## <img src="openlayers.svg" height="15px" /> OPENLAYERS
 
 Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour OpenLayers](doc/README-openlayers.md)
 
-
-## ITOWNS
+## <img src="threedotjs.svg" height="15px" /> ITOWNS
 
 Voir le détail des [fonctionnalités proposées par l'extension Géoportail pour iTowns](doc/README-itowns.md)

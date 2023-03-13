@@ -46,21 +46,21 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
     },
 
     /**
-     * constructor
+     * @constructor Isocurve
      *
      * @private
      * @param {Object} options - Isocurve control options
      * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
-     * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
-     * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
-     * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
-     * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
-     * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
+     * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
+     * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
+     * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
+     * @param {Array}   [options.directions = ["departure", "arrival"]] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
      *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-     * @param {Object} [options.isocurveOptions] - isocurve service options.
-     * @param {Object} [options.autocompleteOptions] - autocomplete service options.
+     * @param {Object} [options.isocurveOptions = {}] - isocurve service options.
+     * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options.
      * @example
      *  var iso = L.geoportalControl.Isocurve({
      *      collapsed : false
@@ -181,7 +181,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
      *
      * @private
      */
-    onRemove : function (/* map */) {},
+    onRemove : function (/* map */) { },
 
     // ################################################################### //
     // ####################### init application ########################## //
@@ -741,7 +741,6 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
     onIsoExclusionsChange : function (e) {
         var value = e.target.value;
         var checked = e.target.checked;
-
         if (!value) {
             return;
         }
@@ -749,14 +748,14 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
         var bFound = false;
         var iFound = null;
         for (var i = 0; i < this._currentExclusions.length; i++) {
-            if (this._currentExclusions[i] === value) {
+            if (deepEqual(this._currentExclusions[i], value.toLowerCase())) {
                 iFound = i;
                 bFound = true;
             }
         }
         // on l'ajoute si la valeur n'existe pas et est selectionnée
         if (!bFound && !checked) {
-            this._currentExclusions.push(value);
+            this._currentExclusions.push(value.toLowerCase());
         }
         // on la retire si la valeur existe et est deselectionnée
         if (bFound && checked) {
@@ -809,8 +808,14 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
 
         var self = this;
 
+        var pointCoordinate = self._currentPoint.getCoordinate();
+        var position = {
+            x : pointCoordinate.lon || pointCoordinate.lng,
+            y : pointCoordinate.lat
+        };
+
         this._requestIsoCurve({
-            position : self._currentPoint.getCoordinate(),
+            position : position,
             graph : self._currentTransport,
             exclusions : self._currentExclusions,
             method : self._currentComputation,
@@ -1121,3 +1126,26 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
 });
 
 export default Isocurve;
+
+const deepEqual = function (x, y) {
+    if (x === y) {
+        return true;
+    } else if ((typeof x === "object" && x != null) && (typeof y === "object" && y != null)) {
+        if (Object.keys(x).length !== Object.keys(y).length) {
+            return false;
+        }
+
+        for (var prop in x) {
+            if (y.hasOwnProperty(prop)) {
+                if (!deepEqual(x[prop], y[prop])) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+};

@@ -82,6 +82,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.0.19](#extension-geoportail-openlayers-version-3019)
   * [Summary](#summary-22)
   * [Changelog](#changelog-19)
+- [Extension Geoportail OpenLayers, version 3.1.0](#extension-geoportail-openlayers-version-310)
+  * [Summary](#summary-23)
+  * [Changelog](#changelog-20)
+- [Extension Geoportail OpenLayers, version 3.2.0](#extension-geoportail-openlayers-version-320)
+  * [Summary](#summary-24)
+  * [Changelog](#changelog-21)
+- [Extension Geoportail OpenLayers, version 3.2.1](#extension-geoportail-openlayers-version-321)
+  * [Summary](#summary-25)
+  * [Changelog](#changelog-22)
+- [Extension Geoportail OpenLayers, version 3.2.2](#extension-geoportail-openlayers-version-322)
+  * [Summary](#summary-26)
+  * [Changelog](#changelog-23)
+- [Extension Geoportail OpenLayers, version 3.2.3](#extension-geoportail-openlayers-version-323)
+  * [Summary](#summary-27)
+  * [Changelog](#changelog-24)
+- [Extension Geoportail OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
+  * [Summary](#summary-28)
+  * [Changelog](#changelog-25)
+- [Extension Geoportail OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
+  * [Summary](#summary-29)
+  * [Changelog](#changelog-26)
+- [Extension Geoportail OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
+  * [Summary](#summary-30)
+  * [Changelog](#changelog-27)
+- [Extension Geoportail OpenLayers, version 3.2.7](#extension-geoportail-openlayers-version-327)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-28)
+- [Extension Geoportail OpenLayers, version 3.2.8](#extension-geoportail-openlayers-version-328)
+  * [Summary](#summary-32)
+  * [Changelog](#changelog-29)
+- [Extension Geoportail OpenLayers, version 3.2.9](#extension-geoportail-openlayers-version-329)
+  * [Summary](#summary-33)
+  * [Changelog](#changelog-30)
+- [Extension Geoportail OpenLayers, version 3.2.10](#extension-geoportail-openlayers-version-3210)
+  * [Summary](#summary-34)
+  * [Changelog](#changelog-31)
+- [Extension Geoportail OpenLayers, version 3.2.11](#extension-geoportail-openlayers-version-3211)
+  * [Summary](#summary-35)
+  * [Changelog](#changelog-32)
+- [Extension Geoportail OpenLayers, version 3.2.12](#extension-geoportail-openlayers-version-3212)
+  * [Summary](#summary-36)
+  * [Changelog](#changelog-33)
+- [Extension Geoportail OpenLayers, version 3.2.13](#extension-geoportail-openlayers-version-3213)
+  * [Summary](#summary-37)
+  * [Changelog](#changelog-34)
+- [Extension Geoportail OpenLayers, version 3.2.14](#extension-geoportail-openlayers-version-3214)
+  * [Summary](#summary-38)
+  * [Changelog](#changelog-35)
+- [Extension Geoportail OpenLayers, version 3.2.15](#extension-geoportail-openlayers-version-3215)
+  * [Summary](#summary-39)
+  * [Changelog](#changelog-36)
+- [Extension Geoportail OpenLayers, version 3.2.16](#extension-geoportail-openlayers-version-3216)
+  * [Summary](#summary-40)
+  * [Changelog](#changelog-37)
+- [Extension Geoportail OpenLayers, version 3.2.18](#extension-geoportail-openlayers-version-3218)
+  * [Summary](#summary-41)
+  * [Changelog](#changelog-38)
+- [Extension Geoportail OpenLayers, version 3.2.19](#extension-geoportail-openlayers-version-3219)
+  * [Summary](#summary-42)
+  * [Changelog](#changelog-39)
+- [Extension Geoportail OpenLayers, version 3.2.20](#extension-geoportail-openlayers-version-3220)
+  * [Summary](#summary-43)
+  * [Changelog](#changelog-40)
 
 <!-- tocstop -->
 
@@ -860,6 +923,649 @@ De nouvelles corrections sur le profil alti
 * [Fixed]
 
     - fix sur la vignette du profil altimétrique (#305)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.1.0
+
+**02/08/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'extension Géoportail pour OpenLayers 6.3.1
+
+Upgrade des dependances :
+- openLayers@6.3.1
+- ol-mapbox-style@6.3.2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour de la dépendance openlayers en versio 6.3.1 (#280)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.0
+
+**03/11/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.1
+
+**08/11/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour access-lib pour utilisation de l'itinéraire v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - utilisation de l'itinéraire V2 via geoportal-access-lib 3.0.1 (#312)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.2
+
+**10/11/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'access-lib geoportail en version 3.0.2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - met à jour l'access-lib en version 3.0.2 pour correction géométrie itinéraire
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.3
+
+**10/11/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'access-lib geoportail en version 3.0.3
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - met à jour l'access-lib en version 3.0.3 pour correction géométrie itinéraire
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.4
+
+**03/12/2021**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Utilisation de plusieurs clefs
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+-  possibilité d'utiliser une liste de clés dans le tag data-key : <script src="../../../dist/openlayers/GpPluginOpenLayers-src.js" data-key="cartes,administratif,jhyvi0fgmnuxvfv0zjzorvdn"></script>
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.5
+
+**13/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Changements mineurs sur les problématiques d'accessibilité
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - merge feature-accessibilite (#313)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.6
+
+**17/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+* upgrade d'OpenLayers : 6.9.0
+* upgrade olms : 6.7.0
+
+## Changelog
+
+* [Added]
+
+  * MousePosition : Ajouter un callback au centrage de la carte sur des coordonnées [#315](https://github.com/IGNF/geoportal-extensions/issues/315)
+  
+  * Ajout du mecanisme de desactivation des interactions sur tous les widgets [developpez.com](https://www.developpez.net/forums/d2123362/applications/sig-systeme-d-information-geographique/ign-api-geoportail/utilisation-outils-mesures-gptoolbox-autres-widgets-conflit-fonctionnement/)
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+  * Fix sur l'affichage des pictogrammes du vecteur tuilé
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.7
+
+**28/01/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Evolution de la documentation et correction du layerswitcher
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Mise à jour de la documentation pour l'utilisation de clefs multiples (#318)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correction du drag&drop sur le LayerSwitcher sous Chrome 97 (138aecced48a3f91503b6d3ec33e917d4cb16e04)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.8
+
+**11/02/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+* fonctionnalités sur l'outil de dessins
+* gestion des styles sur les formats GPX et GeoJSON
+* gestion des evenements de fin de traitements sur les widgets
+
+## Changelog
+
+* [Added]
+
+    - gestion des geometries de type *Multi* dans l'outil de dessins
+    - ajout de l'export au format GPX et GeoJSON dans l'outil de dessins
+    - gestion des styles au format GPX et GeoJSON (specification MapBox)
+    - ajoute d'evenements et de callback de fin de traitement pour les widgets ElevationPath, Route, IsoCurve, SearchEngine et ReverseGeocode.
+    ```js
+    // Exemple
+    var iso = new ol.control.Isocurve({
+        isocurveOptions : {
+            // utilisation de la callback du service
+            onSuccess : function(e) {
+                console.warn("Resultat du calcul", e);
+                // {
+                //     distance: null
+                //     geometry: {type: 'Polygon', coordinates: Array(1)}
+                //     id: null
+                //     location: {x: '2.8926909677185058', y: '48.76818760957548'}
+                //     message: null
+                //     srs: "EPSG:4326"
+                //     time: "3600"
+                // }
+            },
+            onFailure : function(e) {
+                console.warn(e);
+            }
+        }
+    });
+    // ou utilisation de l'evenement du widget
+    iso.on("isocurve:compute", function (e) {
+        // interface : getData()
+        console.warn(e.target.getData());
+    });
+    ```
+
+* [Changed]
+
+    - Retrait de la limitation d'affichage des reponses de l'autocompletion sur le Widget *SearchEngine* (cf. <https://www.developpez.net/forums/d2125691/applications/sig-systeme-d-information-geographique/ign-api-geoportail/geoportal-extension-searchengine-autocomplete-maximum-5-reponses/#post11811536>)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.9
+
+**15/02/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+* fonctionnalités sur l'outil de dessins
+* gestion des styles sur les formats GPX et GeoJSON
+* gestion des evenements de fin de traitements sur les widgets
+
+## Changelog
+
+* [Added]
+
+    - gestion des geometries de type *Multi* dans l'outil de dessins
+    - ajout de l'export au format GPX et GeoJSON dans l'outil de dessins
+    - gestion des styles au format GPX et GeoJSON (specification MapBox)
+    - ajoute d'evenements et de callback de fin de traitement pour les widgets ElevationPath, Route, IsoCurve, SearchEngine et ReverseGeocode.
+    ```js
+    // Exemple
+    var iso = new ol.control.Isocurve({
+        isocurveOptions : {
+            // utilisation de la callback du service
+            onSuccess : function(e) {
+                console.warn("Resultat du calcul", e);
+                // {
+                //     distance: null
+                //     geometry: {type: 'Polygon', coordinates: Array(1)}
+                //     id: null
+                //     location: {x: '2.8926909677185058', y: '48.76818760957548'}
+                //     message: null
+                //     srs: "EPSG:4326"
+                //     time: "3600"
+                // }
+            },
+            onFailure : function(e) {
+                console.warn(e);
+            }
+        }
+    });
+    // ou utilisation de l'evenement du widget
+    iso.on("isocurve:compute", function (e) {
+        // interface : getData()
+        console.warn(e.target.getData());
+    });
+    ```
+
+* [Changed]
+
+    - Retrait de la limitation d'affichage des reponses de l'autocompletion sur le Widget *SearchEngine* (cf. <https://www.developpez.net/forums/d2125691/applications/sig-systeme-d-information-geographique/ign-api-geoportail/geoportal-extension-searchengine-autocomplete-maximum-5-reponses/#post11811536>)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.10
+
+**23/03/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - DOM widget d'import : "Tuiles vectorielles" au lieu de "Vecteur tuilé"
+    - utilisation du service isochrone v2, access-lib 3.1.0 (#326)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.11
+
+**31/03/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+    - Ajout du menu des couleurs et de la taille des pictogramme dans l'outil de dessin
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Amélioration du rendu vecteur des formats GPX et GeoJSON
+    - Gestion du nom d'une couche importée dans le gestionnaire et dans l'outil de dessin
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.12
+
+**29/04/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Permettre la saisie sous la tooltip sur les outils de mesures
+    - Correctif du style des elements en cours d'édition lors de l'export / enregistrement des croquis sur l'outil de dessin
+    - Desactivation des interactions à la fermeture de l'outil de dessin [#323](https://github.com/IGNF/geoportal-extensions/issues/323)
+    - Nettoyage des tooltips des outils de mesures
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.13
+
+**11/05/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Fix sur l'outil de dessin
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Exception sur l'export des features en cours d'édition sur l'outil de dessin
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.14
+
+**01/08/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correctifs sur l'editeur de styles MapBox et le controle d'import des données MapBox
+
+## Changelog
+
+* [Added]
+
+    - Ajout d'options de tri dans l'editeur de style MapBox (9dcf64acebacf812b2a2642a47db4b719f3b1e30)
+
+* [Changed]
+
+    - Passage en mode Feature (vs FeatureRender) pour l'import du vecteur tuilé (0a863d90d2d19fe41911b3fddb66c3f104216e90)
+    - mise à jour du Readme (b7bb7fc5b216c04e4bee7bb4ef2f9510dbe23d33)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Fix sur la gestion des imports de type MapBox (#328)
+    - Fix sur les legendes MapBox (#328)
+    - Fix sur le rendu sous FireFox des legendes MapBox (a9eada8fcfc020a603909ee6d0da8d4af2aa4248)
+    - Fix sur le tri alpha des couches MapBox (a9eada8fcfc020a603909ee6d0da8d4af2aa4248)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.15
+
+**27/09/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correction sur la gestion des projections pour les imports WMS
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Pour une couche WMS issue d'un import, on prend en priorité la projection de la carte si elle est gérée par le serveur WMS (#338) 
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.16
+
+**04/10/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Utilisation du Geocodage v2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour  pour utilisation du service de Geocodage v2 (#279)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.18
+
+**18/11/2022**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+    - Ajout des "@types declaration" pour publication
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Ajout des evenements (map) : "render:success" / "render:failure" pour l'application du rendu des styles MapBox
+    - Ajout de l'evenement (map) : "editor:loaded" pour le chargement de l'editeur de style
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.19
+
+**17/01/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de l'access-lib en version 3.2.1
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour access-lib en version 3.2.1 (15f864e905c4549e43b7ec53d4369bbc9683ec2e)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.20
+
+**21/02/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout d'écouteurs sur les controles de Géocodage direct en inverse
+
+## Changelog
+
+* [Added]
+
+    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#348)
+    - Ajout d'evenements sur le contrôle ReverseGeocode lors de la selection d'un résultat (#356)
+    - Ajout de méthodes publiques sur les contrôles Iso et Route (#343) : 
+        - getGeoJSON() : fournit le tracé au format GeoJSON
+        - getData() : fournit la configuration du calcul
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Faute d'ortographe description couche Isocurve
+    - Ajout des modules dans la JSDoc (#349)
+    - Mise à jour des clefs des services (#352)
 
 * [Security]
 

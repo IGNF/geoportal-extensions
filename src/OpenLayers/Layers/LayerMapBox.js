@@ -17,6 +17,7 @@ import Config from "../../Common/Utils/Config";
  * @constructor
  * @extends {ol.layer.VectorTile}
  * @alias ol.layer.GeoportalMapBox
+ * @type {ol.layer.GeoportalMapBox}
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "PLAN.IGN")
  * @param {String} [options.style]    - Style name (e.g. "classique")
@@ -38,6 +39,15 @@ import Config from "../../Common/Utils/Config";
  * });
  */
 var LayerMapBox = (function (VectorTileLayer) {
+    /**
+     * See {@link ol.layer.GeoportalMapBox}
+     * @module LayerMapBox
+     * @alias module:~Layers/GeoportalMapBox
+     * @param {*} options - options
+     * @param {*} [settings] - other settings
+     * @example
+     * import LayerMapBox from "src/OpenLayers/Layers/LayerMapBox"
+     */
     function LayerMapBox (options, settings) {
         if (!(this instanceof LayerMapBox)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -75,57 +85,63 @@ var LayerMapBox = (function (VectorTileLayer) {
             throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers.");
         }
 
-        // Ex. reponse Autoconf
-        // "PLAN.IGN$GEOPORTAIL:GPP:TMS":{
-        //     "hidden":true,
-        //     "queryable":false,
-        //     "serviceParams":{
-        //         "id":"GPP:TMS",
-        //         "version":"1.0.0",
-        //         "serverUrl":{
-        //             "jhyvi0fgmnuxvfv0zjzorvdn":"https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/tms/1.0.0"
-        //         }
-        //     },
-        //     "name":"PLAN.IGN",
-        //     "title":"Plan IGN",
-        //     "description":"Représentation vectorielle des bases de données IGN.",
-        //     "globalConstraint":{
-        //         "crs":null,
-        //         "bbox":{"left":-179.5,"right":179.5,"top":75,"bottom":-75},
-        //         "minScaleDenominator":2133,
-        //         "maxScaleDenominator":559082265,
-        //         "temporalExtent":["2017-05-23","2018-03-23"]
-        //     },
-        //     "formats":[
-        //         {"current":true,"name":"application/x-protobuf"}
-        //     ],
-        //     "styles":[
-        //         {
-        //                 "name":"planign",
-        //                 "title":"Style de base",
-        //                 "current":true,
-        //                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/plan.json"
-        //         },{
-        //                 "name":"gris",
-        //                 "title":"Style en noir et blanc",
-        //                 "current":false,
-        //                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/gris.json"
-        //         },{
-        //                 "name":"sans_toponymes",
-        //                 "title":"Style sans toponymes",
-        //                 "current":false,
-        //                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sans_toponymes.json"
-        //         }
-        //     ],
-        //     "dimensions":{},
-        //     "thematics":[],
-        //     "originators":[],
-        //     "legends":[],
-        //     "metadata":[],
-        //     "apiKeys":["jhyvi0fgmnuxvfv0zjzorvdn"],
-        //     "layerId":"PLAN.IGN$GEOPORTAIL:GPP:TMS",
-        //     "defaultProjection":"EPSG:3857"
-        // }
+        /**
+         * Ex. reponse Autoconf
+         * (only for jsdoc)
+         * @example
+         * "PLAN.IGN$GEOPORTAIL:GPP:TMS":{
+         *     "hidden":true,
+         *     "queryable":false,
+         *     "serviceParams":{
+         *         "id":"GPP:TMS",
+         *         "version":"1.0.0",
+         *         "serverUrl":{
+         *             "jhyvi0fgmnuxvfv0zjzorvdn":"https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/tms/1.0.0"
+         *         }
+         *     },
+         *     "name":"PLAN.IGN",
+         *     "title":"Plan IGN",
+         *     "description":"Représentation vectorielle des bases de données IGN.",
+         *     "globalConstraint":{
+         *         "crs":null,
+         *         "bbox":{"left":-179.5,"right":179.5,"top":75,"bottom":-75},
+         *         "minScaleDenominator":2133,
+         *         "maxScaleDenominator":559082265,
+         *         "temporalExtent":["2017-05-23","2018-03-23"]
+         *     },
+         *     "formats":[
+         *         {"current":true,"name":"application/x-protobuf"}
+         *     ],
+         *     "styles":[
+         *         {
+         *                 "name":"planign",
+         *                 "title":"Style de base",
+         *                 "current":true,
+         *                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/plan.json"
+         *         },{
+         *                 "name":"gris",
+         *                 "title":"Style en noir et blanc",
+         *                 "current":false,
+         *                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/gris.json"
+         *         },{
+         *                 "name":"sans_toponymes",
+         *                 "title":"Style sans toponymes",
+         *                 "current":false,
+         *                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sans_toponymes.json"
+         *         }
+         *     ],
+         *     "dimensions":{},
+         *     "thematics":[],
+         *     "originators":[],
+         *     "legends":[],
+         *     "metadata":[],
+         *     "apiKeys":["jhyvi0fgmnuxvfv0zjzorvdn"],
+         *     "layerId":"PLAN.IGN$GEOPORTAIL:GPP:TMS",
+         *     "defaultProjection":"EPSG:3857"
+         * }
+         */
+        // eslint-disable-next-line no-undef
+        this.RESPONSE_AUTOCONG = null;
 
         // récupération des ressources utiles sur l'autoconf
         var layerId = this.layerName + "$GEOPORTAIL:GPP:TMS";

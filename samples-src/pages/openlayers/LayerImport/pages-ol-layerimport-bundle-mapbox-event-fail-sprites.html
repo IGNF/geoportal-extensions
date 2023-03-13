@@ -1,0 +1,92 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers LayerImport</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+            #zoom-container,
+            #zoom-level {}
+            #info {
+              text-align: center;
+              font-weight: bold;
+              color: red;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget d'import de couches sur un service MapBox</h2>
+            <h3>Gestion des exceptions de chargement des styles</h3>
+            <div id="zoom-container">Niveau de zoom : <span id="zoom-level">?</span></div>
+            <!-- map -->
+            <div id="map">
+            </div>
+            <div id="info">Ouvrir la console pour visualiser l'exception : <span style="font-style: italic;">"Problem fetching sprite from toto.json: Not Found"</span></div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+
+              window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+
+                // Création de la map
+                var map = new ol.Map({
+                  target : "map",
+                  layers : [
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+                    })
+                  ],
+                  view : new ol.View({
+                    center : [288074.8449901076, 6247982.515792289],
+                    zoom : 8
+                  })
+                });
+
+                var layerImport = new ol.control.LayerImport({
+                    collapsed : false,
+                    layerTypes : ["MapBox"],
+                    webServicesOptions : {
+                        proxyUrl : "{{ proxy }}?url=",
+                        noProxyDomains : ["localhost"]
+                    }
+                });
+                map.addControl(layerImport);
+
+                var layerSwitcher = new ol.control.LayerSwitcher({});
+                map.addControl(layerSwitcher);
+
+                var div = document.querySelector("input[id^=GPimportChoiceAltUrl-");
+                div.click();
+                var input = document.querySelector("input[id^=GPimportUrl-]");
+                input.value = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/mapbox/styles/bati_failed_sprites.json";
+
+                var zoomContainer = document.getElementById('zoom-level');
+                map.on('moveend', function (event) {
+                    var map = event.map;
+                    var zoom = map.getView().getZoom();
+                    zoomContainer.innerHTML = zoom;
+                });
+
+                map.on("editor:loaded", function (e) {
+                  console.info(e);
+                })
+                map.on("render:failure", function (e) {
+                  console.error("Exception capturée (render):", e);
+                })
+                map.on("render:success", function (e) {
+                  console.info(e);
+                })
+              };
+
+            </script>
+{{/content}}
+{{/extend}}

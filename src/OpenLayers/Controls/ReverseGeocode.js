@@ -33,6 +33,7 @@ import SelectorID from "../../Common/Utils/SelectorID";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
+import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 // DOM
@@ -47,18 +48,21 @@ var logger = Logger.getLogger("reversegeocoding");
  *
  * @constructor
  * @alias ol.control.ReverseGeocode
+ * @type {ol.control.ReverseGeocode}
  * @extends {ol.control.Control}
  * @param {Object} options - ReverseGeocode control options
  * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
  * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
- * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif". Resources will be displayed in the same order in widget list.
+ * @param {Object}   [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest", "CadastralParcel"]. Possible values are : "StreetAddress", "PositionOfInterest", "CadastralParcel". Resources will be displayed in the same order in widget list.
  * @param {Object}   [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]. Possible values are : "Point", "Circle", "Extent". Delimitations will be displayed in the same order in widget list.
  * @param {Object}  [options.reverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode()} to know all reverse geocode options.
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Saisie (recherche inverse)"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Couche de saisie d'une zone de recherche pour la recherche inverse"] - Layer description to be displayed in LayerSwitcher
+ * @fires reversegeocode:compute
+ * @fires reversegeocode:onclickresult
  * @example
  *  var iso = ol.control.ReverseGeocode({
  *      "collapsed" : false,
@@ -69,6 +73,14 @@ var logger = Logger.getLogger("reversegeocoding");
  *  });
  */
 var ReverseGeocode = (function (Control) {
+    /**
+     * See {@link ol.control.ReverseGeocode}
+     * @module ReverseGeocode
+     * @alias module:~Controls/ReverseGeocode
+     * @param {*} options - options
+     * @example
+     * import ReverseGeocode from "src/OpenLayers/Controls/ReverseGeocode"
+     */
     function ReverseGeocode (options) {
         options = options || {};
 
@@ -191,6 +203,15 @@ var ReverseGeocode = (function (Control) {
         Control.prototype.setMap.call(this, map);
     };
 
+    /**
+     * Get locations data
+     *
+     * @returns {Object} data - locations
+     */
+    ReverseGeocode.prototype.getData = function () {
+        return this._reverseGeocodingLocations;
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //
@@ -291,11 +312,8 @@ var ReverseGeocode = (function (Control) {
 
         // options pour la requête de géocodage inverse
         this._requestOptions = null;
-        // position du géocodage inverse qui sera envoyée dans la requête
-        this._requestPosition = null;
-        // eventuels filtres géométriques saisis par l'utilisateur : cercle ou bbox
-        this._requestCircleFilter = null;
-        this._requestBboxFilter = null;
+        // geometrie de recherche du géocodage inverse qui sera envoyée dans la requête
+        this._requestGeom = null;
         // pour savoir si un calcul est en cours ou non
         this._waiting = false;
         // timer pour cacher la patience après un certain temps
@@ -343,7 +361,7 @@ var ReverseGeocode = (function (Control) {
             var resources = options.resources;
             // on vérifie que la liste des ressources de geocodage est bien un tableau
             if (Array.isArray(resources)) {
-                var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif"];
+                var resourcesList = ["StreetAddress", "PositionOfInterest", "CadastralParcel"];
                 var wrongResourcesIndexes = [];
                 for (i = 0; i < resources.length; i++) {
                     if (resourcesList.indexOf(resources[i]) === -1) {
@@ -393,7 +411,7 @@ var ReverseGeocode = (function (Control) {
 
     /**
      * this method is called by this.initialize() and initialize geocoding type (=resource)
-     * ("StreetAddress", "PositionOfInterest", "CadastralParcel", "Administratif")
+     * ("StreetAddress", "PositionOfInterest", "CadastralParcel")
      *
      * @private
      */
@@ -431,7 +449,7 @@ var ReverseGeocode = (function (Control) {
                 }
             }
             // récupération du type par défaut
-            if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel" || resources[0] === "Administratif") {
+            if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];
             }
         }
@@ -503,26 +521,28 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype._checkRightsManagement = function () {
-        var _resources = [];
-        var _key;
-        var _opts = null;
-
-        // les ressources du service de geocodage
-        _key = this.options.reverseGeocodeOptions.apiKey;
-        _opts = this.options.reverseGeocodeOptions.filterOptions;
+        var _key = this.options.reverseGeocodeOptions.apiKey;
         // on récupère les éventuelles ressources passées en option, soit dans reverseGeocodeOptions :
-        _resources = (_opts) ? _opts.type : [];
-        // soit directement dans options.resources.geocode :
+        var _resources = (this.options.reverseGeocodeOptions.index) ? this.options.reverseGeocodeOptions.index : "";
+        // soit directement dans options.resources :
         if (!_resources || _resources.length === 0) {
             _resources = this.options.resources;
         }
         // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
+        if (!_resources) {
+            _resources = "location";
+        }
+
+        if (_resources === "location") {
             _resources = [
                 "StreetAddress",
-                "PositionOfInterest"
+                "PositionOfInterest",
+                "CadastralParcel"
             ];
+        } else {
+            if (!Array.isArray(_resources)) _resources = [_resources];
         }
+
         var rightManagementGeocode = RightManagement.check({
             key : _key || this.options.apiKey,
             resources : _resources,
@@ -736,6 +756,24 @@ var ReverseGeocode = (function (Control) {
             }
         );
 
+        this._mapInteraction.on(
+            "drawend",
+            (e) => {
+                logger.log("on drawend", e);
+
+                // on récupère le rayon du cercle qui vient d'être tracé
+                if (e.feature && e.feature.getGeometry) {
+                    this._requestGeom = {
+                        type : "Point",
+                        coordinates : [
+                            this._requestPosition.lon,
+                            this._requestPosition.lat
+                        ]
+                    };
+                }
+            }
+        );
+
         map.addInteraction(this._mapInteraction);
         this._setCursor("crosshair", map);
     };
@@ -789,11 +827,14 @@ var ReverseGeocode = (function (Control) {
                 if (e.feature && e.feature.getGeometry) {
                     var radius = e.feature.getGeometry().getRadius();
                     // et on le stocke comme filtre pour la requête
-                    this._requestCircleFilter = {};
-                    this._requestCircleFilter.radius = radius;
+                    this._requestGeom = {};
+                    this._requestGeom.type = "Circle";
+                    this._requestGeom.radius = radius;
                     if (this._requestPosition) {
-                        this._requestCircleFilter.x = this._requestPosition.x;
-                        this._requestCircleFilter.y = this._requestPosition.y;
+                        this._requestGeom.coordinates = [
+                            this._requestPosition.lon,
+                            this._requestPosition.lat
+                        ];
                     }
                     logger.log("circle radius : ", radius);
                 }
@@ -925,8 +966,8 @@ var ReverseGeocode = (function (Control) {
 
         var geoCoordinate = olTransformProj(coordinate, crs, "EPSG:4326");
         this._requestPosition = {
-            x : geoCoordinate[0],
-            y : geoCoordinate[1]
+            lon : geoCoordinate[0],
+            lat : geoCoordinate[1]
         };
         logger.log("position coordinates : ", this._requestPosition);
     };
@@ -963,30 +1004,35 @@ var ReverseGeocode = (function (Control) {
             var startGeoCoordinate = olTransformProj(start, crs, "EPSG:4326");
             var endGeoCoordinate = olTransformProj(end, crs, "EPSG:4326");
 
-            this._requestPosition = {};
-            this._requestBboxFilter = {};
+            var bbox = {};
             // on récupère les valeurs left, right, top et bottom, pour le filtre bbox du service reverseGeocode
             if (startGeoCoordinate[0] < endGeoCoordinate[0]) {
-                this._requestBboxFilter.left = startGeoCoordinate[0];
-                this._requestBboxFilter.right = endGeoCoordinate[0];
+                bbox.left = startGeoCoordinate[0];
+                bbox.right = endGeoCoordinate[0];
             } else {
-                this._requestBboxFilter.left = endGeoCoordinate[0];
-                this._requestBboxFilter.right = startGeoCoordinate[0];
+                bbox.left = endGeoCoordinate[0];
+                bbox.right = startGeoCoordinate[0];
             }
             if (startGeoCoordinate[1] < endGeoCoordinate[1]) {
-                this._requestBboxFilter.bottom = startGeoCoordinate[1];
-                this._requestBboxFilter.top = endGeoCoordinate[1];
+                bbox.bottom = startGeoCoordinate[1];
+                bbox.top = endGeoCoordinate[1];
             } else {
-                this._requestBboxFilter.bottom = endGeoCoordinate[1];
-                this._requestBboxFilter.top = startGeoCoordinate[1];
+                bbox.bottom = endGeoCoordinate[1];
+                bbox.top = startGeoCoordinate[1];
             }
 
-            // ainsi que le centre du rectangle pour le paramètre "position" du service reverseGeocode
-            this._requestPosition.x = (startGeoCoordinate[0] + endGeoCoordinate[0]) / 2;
-            this._requestPosition.y = (startGeoCoordinate[1] + endGeoCoordinate[1]) / 2;
-            logger.log("bbox filter : ", this._requestBboxFilter);
+            this._requestGeom = {
+                type : "Polygon",
+                coordinates : [[
+                    [bbox.left, bbox.top],
+                    [bbox.right, bbox.top],
+                    [bbox.right, bbox.bottom],
+                    [bbox.left, bbox.bottom],
+                    [bbox.left, bbox.top]
+                ]]
+            };
 
-            logger.log("center coordinates : ", this._requestPosition);
+            logger.log("searchGeometry filter : ", this._requestGeom);
         }
     };
 
@@ -1054,6 +1100,10 @@ var ReverseGeocode = (function (Control) {
         if (typeof this.options.ssl !== "boolean") {
             this.options.ssl = true;
         }
+        // gestion des callback
+        var bOnFailure = !!(reverseGeocodeOptions.onFailure !== null && typeof reverseGeocodeOptions.onFailure === "function"); // cast variable to boolean
+        var bOnSuccess = !!(reverseGeocodeOptions.onSuccess !== null && typeof reverseGeocodeOptions.onSuccess === "function");
+
         var requestOptions = {
             apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
             ssl : this.options.ssl,
@@ -1063,14 +1113,17 @@ var ReverseGeocode = (function (Control) {
             },
             srs : "CRS:84",
             returnFreeForm : false,
-            maximumResponses : reverseGeocodeOptions.maximumResponses || 25,
+            maximumResponses : reverseGeocodeOptions.maximumResponses || 18,
             timeOut : reverseGeocodeOptions.timeOut || 30000,
-            protocol : reverseGeocodeOptions.protocol || "XHR",
+            // protocol : reverseGeocodeOptions.protocol || "XHR",
             // callback onSuccess
             onSuccess : function (response) {
                 if (response.locations) {
                     logger.log("reverseGeocode results : ", response.locations);
                     context._displayGeocodedLocations(response.locations);
+                }
+                if (bOnSuccess) {
+                    reverseGeocodeOptions.onSuccess.call(context, response.locations);
                 }
             },
             // callback onFailure
@@ -1088,21 +1141,36 @@ var ReverseGeocode = (function (Control) {
                 // et on réactive l'interaction sur la map
                 context._activateMapInteraction(map);
                 logger.log(error.message);
+
+                if (bOnFailure) {
+                    reverseGeocodeOptions.onFailure.call(context, error);
+                }
             }
         };
 
         // on récupère d'éventuels filtres
-        if (this._currentGeocodingDelimitation.toLowerCase() === "circle" && this._requestCircleFilter) {
-            // FIXME : a confirmer !
-            if (this._requestCircleFilter.radius > 1000) {
-                logger.log("INFO : initial circle radius (" + this._requestCircleFilter.radius + ") limited to 1000m.");
-                this._requestCircleFilter.radius = 1000;
+        if (this._requestGeom.type.toLowerCase() === "circle") {
+            // FIXME : a confirmer en fonction du service !
+            if (this._requestGeom.radius > 500) {
+                logger.log("INFO : initial circle radius (" + this._requestGeom.radius + ") limited to 1000m.");
+                this._requestGeom.radius = 500;
             }
-            requestOptions.filterOptions.circle = this._requestCircleFilter;
+            requestOptions.searchGeometry = this._requestGeom;
+        } else if (this._requestGeom.type.toLowerCase() === "polygon") {
+            requestOptions.searchGeometry = this._requestGeom;
+        } else if (this._requestGeom.type.toLowerCase() === "point") {
+            if (this._currentGeocodingType === "StreetAddress") {
+                requestOptions.searchGeometry = {
+                    type : "Circle",
+                    radius : 50,
+                    coordinates : this._requestGeom.coordinates
+                };
+                requestOptions.maximumResponses = 1;
+            } else {
+                requestOptions.searchGeometry = this._requestGeom;
+            }
         }
-        if (this._currentGeocodingDelimitation.toLowerCase() === "extent" && this._requestBboxFilter) {
-            requestOptions.filterOptions.bbox = this._requestBboxFilter;
-        }
+
         logger.log("reverseGeocode request options : ", requestOptions);
 
         return requestOptions;
@@ -1119,6 +1187,21 @@ var ReverseGeocode = (function (Control) {
         // 1. on vide les résultats précédents
         this._clearResults();
         this._reverseGeocodingLocations = locations;
+
+        /**
+         * event triggered when the compute is finished
+         *
+         * @event reversegeocode:compute
+         * @property {Object} type - event
+         * @property {Object} target - instance ReverseGeocode
+         * @example
+         * ReverseGeocode.on("reversegeocode:compute", function (e) {
+         *   console.log(e.target.getData());
+         * })
+         */
+        this.dispatchEvent({
+            type : "reversegeocode:compute"
+        });
 
         // 2. cache de la patience et du formulaire
         this._formContainer.className = "GPreverseGeocodingComponentHidden";
@@ -1179,45 +1262,27 @@ var ReverseGeocode = (function (Control) {
         switch (location.type) {
             case "StreetAddress":
                 if (attr.street) {
-                    locationDescription += attr.number ? attr.number + " " : "";
+                    locationDescription += attr.housenumber ? attr.housenumber + " " : "";
                     locationDescription += attr.street + ", ";
                 }
-                locationDescription += attr.postalCode + " " + attr.commune;
+                locationDescription += attr.postcode + " " + attr.city;
                 break;
 
             case "PositionOfInterest":
-                if (location.matchType === "City" && attr.commune) {
-                    locationDescription += attr.commune;
-                    locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
-                } else if (location.matchType === "Département" && attr.municipality) {
-                    locationDescription += attr.municipality;
-                    locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
-                } else if (location.matchType === "Toponym" && attr.municipality) {
-                    locationDescription += attr.municipality;
-                    locationDescription += attr.postalCode ? ", " + attr.postalCode : "";
-                    locationDescription += attr.commune ? " " + attr.commune : "";
-                } else {
-                    locationDescription += attr.municipality ? attr.municipality : "";
+                locationDescription += attr.toponym;
+                if (attr.postcode.length === 1) {
+                    locationDescription += ", " + attr.postcode[0];
                 }
-                locationDescription += attr.nature ? " (" + attr.nature + ") " : "";
+                locationDescription += " (" + attr.category.join(",") + ")";
                 break;
 
             case "CadastralParcel":
-                locationDescription += attr.cadastralParcel ? attr.cadastralParcel : "";
-                locationDescription += attr.municipality ? " (" + attr.municipality + ")" : "";
-                break;
-
-            case "Administratif":
-                locationDescription += attr.municipality ? attr.municipality : "";
-                if (attr.inseeDepartment) {
-                    locationDescription += "(Département)";
-                } else if (attr.inseeRegion) {
-                    locationDescription += "(Région)";
-                }
+                locationDescription += attr.id;
+                locationDescription += attr.city ? " (" + attr.city + ")" : "";
                 break;
 
             default:
-                locationDescription += attr.municipality ? attr.municipality : "";
+                locationDescription += attr.city ? attr.city : "";
                 break;
         };
 
@@ -1294,9 +1359,6 @@ var ReverseGeocode = (function (Control) {
                 case "CadastralParcel":
                     geocodeType = "parcelles cadastrales";
                     break;
-                case "Administratif":
-                    geocodeType = "unités administratives";
-                    break;
                 default:
                     break;
             }
@@ -1355,9 +1417,8 @@ var ReverseGeocode = (function (Control) {
      */
     ReverseGeocode.prototype._addResultFeature = function (location, i) {
         var map = this.getMap();
-
         // récupération de la position
-        var position = [location.position.x, location.position.y];
+        var position = [location.position.lon, location.position.lat];
         if (position.length === 0) {
             return;
         }
@@ -1375,6 +1436,7 @@ var ReverseGeocode = (function (Control) {
         feature.setStyle(this._resultsDefaultStyle);
         feature.setId(i);
         feature.setProperties({
+            location : location,
             popupContent : this._fillPopupContent(location)
         });
         this._resultsFeatures.push(feature);
@@ -1394,7 +1456,7 @@ var ReverseGeocode = (function (Control) {
         var attributes = location.placeAttributes;
         for (var attr in attributes) {
             if (attributes.hasOwnProperty(attr)) {
-                if (attr !== "bbox") {
+                if (attr !== "trueGeometry" && attr !== "extraFields" && attr !== "houseNumberInfos" && attr !== "_count") {
                     popupContent += "<li>";
                     popupContent += "<span class=\"gp-attname-others-span\">" + attr.toUpperCase() + " : </span>";
                     popupContent += attributes[attr];
@@ -1475,6 +1537,23 @@ var ReverseGeocode = (function (Control) {
                 // si l'overlay est déjà créé, on modifie juste sa position
                 this._popupOverlay.setPosition(e.mapBrowserEvent.coordinate);
             }
+
+            /**
+             * event triggered when an element of the results is clicked
+             *
+             * @event reversegeocode:onclickresult
+             * @property {Object} type - event
+             * @property {Object} location - location
+             * @property {Object} target - instance ReverseGeocode
+             * @example
+             * Reverse.on("reverse:onclickresult", function (e) {
+             *   console.log(e.location);
+             * })
+             */
+            this.dispatchEvent({
+                type : "reversegeocode:onclickresult",
+                location : f.getProperties().location
+            });
         } else {
             // si aucun troncon n'est sélectionné (click à côté du tracé),
             // on fait disparaitre la popup si elle existe
@@ -1496,11 +1575,13 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype.onShowReverseGeocodingClick = function () {
+        var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showReverseGeocodingInput.checked;
         // info : on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser ol.control.ReverseGeocode.on("change:collapsed", function ) pour s'abonner à cet évènement)
         this.dispatchEvent("change:collapsed");
-        var map = this.getMap();
 
         if (!this._waiting && !this._reverseGeocodingLocations.length) {
             // Cas 1 : input panel (ni en attente, ni sur le panel des résultats)
@@ -1624,7 +1705,27 @@ var ReverseGeocode = (function (Control) {
      * @private
      */
     ReverseGeocode.prototype.onReverseGeocodingResultClick = function (e) {
-        logger.log("onReverseGeocodingResultClick", e);
+        // récupération de l'id du résultat survolé
+        var tagid = e.target.id; // ex ReverseGeocodedLocation_21
+        var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 21
+
+        var f = this._resultsFeaturesSource.getFeatureById(parseInt(idx, 10));
+        /**
+         * event triggered when an element of the results is clicked
+         *
+         * @event reversegeocode:onclickresult
+         * @property {Object} type - event
+         * @property {Object} location - location
+         * @property {Object} target - instance ReverseGeocode
+         * @example
+         * Reverse.on("reversegeocode:onclickresult", function (e) {
+         *   console.log(e.location);
+         * })
+         */
+        this.dispatchEvent({
+            type : "reversegeocode:onclickresult",
+            location : f.getProperties().location
+        });
     };
 
     /**
@@ -1733,10 +1834,8 @@ var ReverseGeocode = (function (Control) {
             this._inputFeatures.clear();
         }
 
-        // on supprime les valeurs stockées (filtres, position)
-        this._requestPosition = null;
-        this._requestCircleFilter = null;
-        this._requestBboxFilter = null;
+        // on supprime les valeurs stockées
+        this._requestGeom = null;
     };
 
     /**

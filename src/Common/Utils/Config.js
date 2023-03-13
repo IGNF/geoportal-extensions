@@ -2,20 +2,43 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 
 var logger = Logger.getLogger("config");
 
+/**
+ * @module Config
+ * @alias [private] Config
+ * @description
+ * ...
+ *
+ * @example
+ * isConfigLoaded();
+ * getLayerId();
+ * getLayerParams();
+ * getServiceParams();
+ * getResolutions();
+ * getGlobalConstraints();
+ * getTileMatrix();
+ */
 var Config = {
 
-    /** autoconf */
+    /**
+     * autoconf
+     *
+     * @public
+     * @type {Object}
+     */
     configuration : null,
 
     /**
      * Controle du chargement de l'autoconf
      *
-     * @returns {Boolean} isConfigLoaded - True si l'autoconf a déjà été chargée, False sinon.
+     * @function isConfigLoaded
+     * @this Config
+     * @public
+     * @returns {Boolean} True si l'autoconf a déjà été chargée, False sinon.
      */
     isConfigLoaded : function () {
         var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
         if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
-            this.configuration = scope.Gp.Config;
+            /** ts-syntax */ (this.configuration) = scope.Gp.Config;
             return true;
         }
         return false;
@@ -24,9 +47,11 @@ var Config = {
     /**
      * Recuperation de l'identifiant d'une couche donnée
      *
+     * @function getLayerId
+     * @public
      * @param {String} layerName - nom de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
-     * @returns {String} layerId - identifiant de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS")
+     * @returns {String} Identifiant de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMTS")
      */
     getLayerId : function (layerName, service) {
         var layerId = null;
@@ -72,6 +97,8 @@ var Config = {
     /**
      * Récupération des paramètres nécessaires à l'affichage d'une couche WMS ou WMTS
      *
+     * @function getLayerParams
+     * @public
      * @param {String} layerName - nom de la couche (par ex. "ORTHOIMAGERY.ORTHOPHOTOS")
      * @param {String} service   - nom du service (par ex. "WMS" ou "WMTS")
      * @param {String} [apiKey]  - Clé de contrat API
@@ -160,15 +187,17 @@ var Config = {
     /**
      * Recuperation des parametres d'un service
      *
+     * @function getServiceParams
+     * @public
      * @param {String} [resource] - "PositionOfInterest", "StreetAddress", "Voiture", "Pieton", ...
      * @param {String} [service] - Geocode, Itineraire, ...
-     * @param {String} [apiKey]  - Clé de contrat API
+     * @param {Array} [apiKeys]  - Clé(s) de contrat API
      * @returns {Object} params - paramètres de la ressource
      * @returns {String} params. -
      * @returns {String} params. -
      * @returns {String} params. -
      */
-    getServiceParams : function (resource, service, apiKey) {
+    getServiceParams : function (resource, service, apiKeys) {
         var params = {};
 
         if (this.configuration) {
@@ -179,15 +208,26 @@ var Config = {
                 // récupération de l'objet de configuration de la couche
                 var layerConf = this.configuration.layers[layerId];
 
-                // controle de la clef
+                // controle de la clef (on prend la première clé disponible qui est censée avoir accès à la ressource)
                 var key = layerConf.apiKeys[0];
-                if (apiKey) {
-                    if (apiKey !== key) {
+                if (apiKeys) {
+                    if (!Array.isArray(apiKeys)) {
+                        apiKeys = [apiKeys];
+                    }
+                    for (var i = 0; i < apiKeys.length; i++) {
+                        if (apiKeys[i] === key) {
+                            var keyIndex = i;
+                            break;
+                        }
+                    }
+                    // si aucune clé du tableau apiKeys ne correspond, on retourne rien => pas de droits pour la ressource
+                    if (typeof keyIndex === "undefined") {
                         return;
                     }
                 }
 
-                apiKey = apiKey || key;
+                // on retourne la première clé qui a effectivement accès à la ressource
+                var apiKey = apiKeys[keyIndex] || key;
                 params.key = apiKey;
                 // récupération des paramètres du service
                 params.url = layerConf.getServerUrl(apiKey);
@@ -206,6 +246,8 @@ var Config = {
     /**
      * Resolution en geographique
      *
+     * @function getResolutions
+     * @public
      * @returns {Array} resolutions
      */
     getResolutions : function () {
@@ -220,8 +262,10 @@ var Config = {
 
     /**
      * Recuperation des parametres TMS de la configuration
-     * @param {String} tmsName - tile matrix set name
      *
+     * @function getTileMatrix
+     * @public
+     * @param {String} tmsName - tile matrix set name
      * @returns {Object} tile matrix set
      */
     getTileMatrix : function (tmsName) {
@@ -239,6 +283,8 @@ var Config = {
     /**
      * Récupération des contraintes générales d'une couche donnée : extent, minScale, maxScale, projection
      *
+     * @function getGlobalConstraints
+     * @public
      * @param {String} layerId - identifiant de la couche
      * @returns {Object} params - contraintes de la couche
      * @returns {String} params.projection - Projection par défaut de la couche

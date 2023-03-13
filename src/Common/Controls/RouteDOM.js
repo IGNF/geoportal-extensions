@@ -1,5 +1,6 @@
 import ID from "../Utils/SelectorID";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
 
 var logger = Logger.getLogger("RouteDOM");
 
@@ -821,7 +822,7 @@ var RouteDOM = {
         var div = document.createElement("div");
         div.id = "AutoCompletedLocation" + id;
         div.className = "GPautoCompleteProposal";
-        div.innerHTML = location.fullText;
+        div.innerHTML = GeocodeUtils.getSuggestedLocationFreeform(location);
 
         container.appendChild(div);
     },
@@ -946,9 +947,12 @@ var RouteDOM = {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteComputationChoice");
 
+        var label = document.createElement("label");
+        label.htmlFor = this._addUID("GProuteComputationSelect");
+        label.innerHTML = "Mode de calcul";
         var span = document.createElement("span");
         span.className = "GProuteModeLabel";
-        span.innerHTML = "Mode de calcul";
+        span.appendChild(label);
         div.appendChild(span);
 
         var select = document.createElement("select");

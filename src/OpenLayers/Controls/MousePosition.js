@@ -14,6 +14,7 @@ import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
+import Interactions from "./Utils/Interactions";
 import Markers from "./Utils/Markers";
 import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
@@ -38,6 +39,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  *
  * @constructor
  * @alias ol.control.GeoportalMousePosition
+ * @type {ol.control.GeoportalMousePosition}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
  * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
@@ -50,6 +52,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @param {Boolean}   [options.displayAltitude = true] - activate (true) or deactivate (false) the altitude panel. True by default
  * @param {Boolean}   [options.displayCoordinates = true] - activate (true) or deactivate (false) the coordinates panel. True by default
  * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
+ * @param {Function} [options.mapCenterCallback] - callback...
  * @param {Array}   [options.systems] - list of projection systems, default are Geographical ("EPSG:4326"), Web Mercator ("EPSG:3857"), Lambert 93 ("EPSG:2154") and extended Lambert 2 ("EPSG:27572").
  *      Each array element (=system) is an object with following properties :
  * @param {String}  options.systems.crs - Proj4 crs alias (from proj4 defs). e.g. : "EPSG:4326". Required
@@ -115,6 +118,14 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * });
  */
 var MousePosition = (function (Control) {
+    /**
+     * See {@link ol.control.GeoportalMousePosition}
+     * @module MousePosition
+     * @alias module:~Controls/MousePosition
+     * @param {*} options - options
+     * @example
+     * import GeoportalMousePosition from "src/OpenLayers/Controls/MousePosition"
+     */
     function MousePosition (options) {
         options = options || {};
 
@@ -250,7 +261,6 @@ var MousePosition = (function (Control) {
     /**
      * Set additional projection system
      *
-     * @method addSystem
      * @param {Object} system - projection system
      * @param {String} system.crs - Proj4 crs alias (from proj4 defs) e.g. "EPSG:4326"
      * @param {String} [system.label] - CRS label to be displayed in control. Default is system.crs alias
@@ -485,7 +495,6 @@ var MousePosition = (function (Control) {
     /**
      * Initialize control (called by MousePosition constructor)
      *
-     * @method _initialize
      * @param {Object} options - control options (set by user)
      * @private
      */
@@ -640,7 +649,6 @@ var MousePosition = (function (Control) {
      * getting coordinates in the requested projection :
      * see this.onMousePositionProjectionSystemChange()
      *
-     * @method _initProjectionSystems
      * @private
      */
     MousePosition.prototype._initProjectionSystems = function () {
@@ -704,7 +712,6 @@ var MousePosition = (function (Control) {
      * getting coordinates in the requested units :
      * see this.onMousePositionProjectionUnitsChange()
      *
-     * @method _initProjectionUnits
      * @private
      */
     MousePosition.prototype._initProjectionUnits = function () {
@@ -776,8 +783,6 @@ var MousePosition = (function (Control) {
     /**
      * this method get label from the current projection units
      *
-     * @method _getCurrentProjectionInformation
-     *
      * @returns {String} projection information
      *
      * @private
@@ -802,7 +807,6 @@ var MousePosition = (function (Control) {
      * this method is called by constructor
      * and check the rights to resources
      *
-     * @method _checkRightsManagement
      * @private
      */
     MousePosition.prototype._checkRightsManagement = function () {
@@ -833,8 +837,6 @@ var MousePosition = (function (Control) {
 
     /**
      * Create control main container (called by MousePosition constructor)
-     *
-     * @method _initContainer
      *
      * @returns {DOMElement} DOM element
      *
@@ -884,7 +886,6 @@ var MousePosition = (function (Control) {
      * this method is called by this.()
      * and it changes the elevation view panel into the dom.
      *
-     * @method _setElevationPanel
      * @param {Boolean} active - true:active, false:disable
      * @private
      */
@@ -909,7 +910,6 @@ var MousePosition = (function (Control) {
      * this method is called by this.()
      * and it changes the coordinate view panel into the dom.
      *
-     * @method _setCoordinatesPanel
      * @param {Boolean} active - true:active, false:disable
      * @private
      */
@@ -926,7 +926,6 @@ var MousePosition = (function (Control) {
      * this method is called by this.()
      * and it changes the settings view panel into the dom.
      *
-     * @method _setSettingsPanel
      * @param {Boolean} active - true:active, false:disable
      * @private
      */
@@ -946,7 +945,6 @@ var MousePosition = (function (Control) {
      * this method is called by this.onMousePositionProjectionSystemChange()
      * when changes to a metric or a geographical units.
      *
-     * @method _setTypeUnitsPanel
      * @param {String} type - Geographical or Metric
      * @private
      */
@@ -994,7 +992,6 @@ var MousePosition = (function (Control) {
     /**
      * degreedecimal
      *
-     * @method _displayDEC
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @return {Object} coordinate - coordinate object : {lat : 48, lng : 2} par exemple
      * @private
@@ -1010,7 +1007,6 @@ var MousePosition = (function (Control) {
     /**
      * degreedecimal2sexagecimal
      *
-     * @method _displayDMS
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @return {Object} coordinate - coordinate object : {lng : "2° 00′ 00″ E", lat : "48° 00′ 00″ N"} par exemple
      * @private
@@ -1026,7 +1022,6 @@ var MousePosition = (function (Control) {
     /**
      * degreedecimal2radian
      *
-     * @method _displayRAD
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @return {Object} coordinate - coordinate object : {lng : "0.02837864", lat : "0.84300269"} par exemple
      * @private
@@ -1045,7 +1040,6 @@ var MousePosition = (function (Control) {
     /**
      * degreedecimal2grade
      *
-     * @method _displayGON
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @return {Object} coordinate - coordinate object : {lng : "4.09545898", lat : "53.68751528"} par exemple
      * @private
@@ -1064,7 +1058,6 @@ var MousePosition = (function (Control) {
     /**
      * meter
      *
-     * @method _displayMeter
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @return {Object} coordinate - coordinate object : {x : "148593.58", y : "6176560.95"} par exemple
      * @private
@@ -1081,7 +1074,6 @@ var MousePosition = (function (Control) {
     /**
      * kilometer
      *
-     * @method _displayKMeter
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @return {Object} coordinate - coordinate object : {x : "214.96", y : "6250.09"} par exemple
      * @private
@@ -1102,7 +1094,6 @@ var MousePosition = (function (Control) {
      * this sends the coordinates to the panel.
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
-     * @method _setCoordinate
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @param {Object} crs - coordinate CRS (ol.proj.Projection)
      * @private
@@ -1157,7 +1148,6 @@ var MousePosition = (function (Control) {
      * this sends the coordinates to the panel.
      * (cf. this.GPdisplayElevation() into the DOM functions)
      *
-     * @method _setElevation
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @private
      */
@@ -1173,7 +1163,6 @@ var MousePosition = (function (Control) {
      * this method is triggered when the mouse or the map is stopped.
      * (cf. onMouseMove and onMapMove)
      *
-     * @method onMoveStopped
      * @param {Array} olCoordinate - ol.Coordinate object [lon, lat]
      * @param {Object} crs - coordinate CRS (ol.proj.Projection)
      * @private
@@ -1189,7 +1178,6 @@ var MousePosition = (function (Control) {
      * the map. The handler sends the coordinates to the panel.
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
-     * @method onMouseMove
      * @param {Object} e - HTMLElement
      * @private
      */
@@ -1217,7 +1205,6 @@ var MousePosition = (function (Control) {
      * the map. The handler sends the coordinates to the panel.
      * (cf. this.GPdisplayCoords() into the DOM functions)
      *
-     * @method onMapMove
      * @private
      */
     MousePosition.prototype.onMapMove = function () {
@@ -1248,7 +1235,6 @@ var MousePosition = (function (Control) {
      * this method is called by this.GPdisplayElevation() in the dom, and
      * it executes a request to the elevation service.
      *
-     * @method onRequestAltitude
      * @param {Object} coordinate - {lat:..., lng:...}
      * @param {Function} callback - callback
      * @private
@@ -1355,13 +1341,14 @@ var MousePosition = (function (Control) {
      * (cf. this._createShowMousePositionPictoElement),
      * and toggles event 'mousemove' on map.
      *
-     * @method onShowMousePositionClick
      * @private
      */
     MousePosition.prototype.onShowMousePositionClick = function () {
         // checked : true - panel close
         // checked : false - panel open
         var map = this.getMap();
+        // on supprime toutes les interactions
+        Interactions.unset(map);
         this.collapsed = this._showMousePositionContainer.checked;
         // on génère nous même l'evenement OpenLayers de changement de propriété
         // (utiliser mousePosition.on("change:collapsed", function(e) ) pour s'abonner à cet évènement)
@@ -1396,7 +1383,6 @@ var MousePosition = (function (Control) {
      * (cf. this._createShowMousePositionPictoElement),
      * and toggles event 'mousemove' on map.
      *
-     * @method onShowMousePositionSettingsClick
      * @param {Object} e - HTMLElement
      * @private
      */
@@ -1420,7 +1406,6 @@ var MousePosition = (function (Control) {
     /**
      * this method is called by event 'click' on input coordinate
      *
-     * @method onMousePositionEditModeClick
      * @param {Boolean} editing - editing mode
      */
     MousePosition.prototype.onMousePositionEditModeClick = function (editing) {
@@ -1466,7 +1451,6 @@ var MousePosition = (function (Control) {
     /**
      * Get coordinate from inputs and select in decimal degrees
      *
-     * @method getCoordinate
      * @param {String} coordType - "Lon" or "Lat"
      * @returns {undefined}
      * @private
@@ -1522,7 +1506,6 @@ var MousePosition = (function (Control) {
     /**
      * locate DMS coordinates on map
      *
-     * @method locateDMSCoordinates
      * @private
      */
     MousePosition.prototype.locateDMSCoordinates = function () {
@@ -1554,7 +1537,6 @@ var MousePosition = (function (Control) {
     /**
      * locate coordinates on map (not DMS)
      *
-     * @method locateCoordinates
      * @private
      */
     MousePosition.prototype.locateCoordinates = function () {
@@ -1611,7 +1593,6 @@ var MousePosition = (function (Control) {
     /**
      * locate coordinates on map
      *
-     * @method locate
      * @private
      */
     MousePosition.prototype.onMousePositionEditModeLocateClick = function () {
@@ -1628,6 +1609,16 @@ var MousePosition = (function (Control) {
         } else {
             this.locateCoordinates();
         }
+
+        // fonction
+        var mapCenterFunction = this.options.mapCenterCallback;
+
+        // execution...
+        if (typeof mapCenterFunction === "function") {
+            var view = this.getMap().getView();
+            var center = view.getCenter();
+            mapCenterFunction.call(this, center);
+        }
     };
 
     /**
@@ -1635,7 +1626,6 @@ var MousePosition = (function (Control) {
      * tag select (cf. this._createMousePositionSettingsElement),
      * and selects the system projection.
      *
-     * @method onMousePositionProjectionSystemChange
      * @param {Object} e - HTMLElement
      * @private
      */
@@ -1649,7 +1639,6 @@ var MousePosition = (function (Control) {
     /**
      * this method selects the current system projection.
      *
-     * @method _setCurrentSystem
      * @param {String} systemCode - inner code (rank in array _projectionSystems)
      * @private
      */
@@ -1687,7 +1676,6 @@ var MousePosition = (function (Control) {
      * tag select (cf. this._createMousePositionSettingsElement),
      * and selects the system projection.
      *
-     * @method onMousePositionProjectionSystemMouseOver
      * @param {Object} e - HTMLElement
      * @private
      */
@@ -1751,7 +1739,6 @@ var MousePosition = (function (Control) {
      * tag select (cf. this._createMousePositionSettingsElement),
      * and selects the units projection.
      *
-     * @method onMousePositionProjectionUnitsChange
      * @param {Object} e - HTMLElement
      * @private
      */

@@ -1,5 +1,6 @@
 import ID from "../Utils/SelectorID";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import GeocodeUtils from "../Utils/GeocodeUtils";
 
 var logger = Logger.getLogger("LocationSelectorDOM");
 
@@ -58,7 +59,7 @@ var LocationSelectorDOM = {
 
         var labelOrigin = document.createElement("label");
         labelOrigin.id = this._addUID("GPlocationOriginLabel_" + id);
-        labelOrigin.htmlFor = "GPlocationOrigin_" + id;
+        labelOrigin.htmlFor = this._addUID("GPlocationOrigin_" + id);
         labelOrigin.innerHTML = text;
         labelOrigin.addEventListener("click", function (e) {
             var i = ID.index(this.id);
@@ -238,7 +239,7 @@ var LocationSelectorDOM = {
 
         var labelOriginPointer = document.createElement("label");
         labelOriginPointer.id = this._addUID("GPlocationOriginPointerImg_" + id);
-        labelOriginPointer.htmlFor = "GPlocationOriginPointer_" + id;
+        labelOriginPointer.htmlFor = this._addUID("GPlocationOriginPointer_" + id);
         labelOriginPointer.className = "GPlocationOriginPointerImg";
         labelOriginPointer.title = "Pointer un lieu sur la carte";
         labelOriginPointer.addEventListener("click", function (e) {
@@ -446,7 +447,7 @@ var LocationSelectorDOM = {
         var div = document.createElement("div");
         div.id = this._addUID("AutoCompletedLocation_" + n);
         div.className = "GPautoCompleteProposal";
-        div.innerHTML = location.fullText;
+        div.innerHTML = GeocodeUtils.getSuggestedLocationFreeform(location);
 
         container.appendChild(div);
     },

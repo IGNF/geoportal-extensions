@@ -1,8 +1,6 @@
 
 
 
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -54,8 +52,6 @@
 
 
 
-
-
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -68,6 +64,8 @@
 * [Added]
 
 * [Changed]
+
+    - mise à jour du readme
 
 * [Deprecated]
 

@@ -16,6 +16,7 @@ var logger = Logger.getLogger("geoportalattribution");
  * @constructor
  * @extends {ol.control.Attribution}
  * @alias ol.control.GeoportalAttribution
+ * @type {ol.control.GeoportalAttribution}
  * @param {Object} options - ol.control.Attribution options (see {@link http://openlayers.org/en/latest/apidoc/ol.control.Attribution.html ol.Control.Attribution})
  * @fires attributions:update
  * @example
@@ -27,6 +28,14 @@ var logger = Logger.getLogger("geoportalattribution");
  * attribution.on("attributions:update", function (e) {});
  */
 var GeoportalAttribution = (function (Attribution) {
+    /**
+     * See {@link ol.control.GeoportalAttribution}
+     * @module GeoportalAttribution
+     * @alias module:~Controls/GeoportalAttribution
+     * @param {*} options - options
+     * @example
+     * import GeoportalAttribution from "src/OpenLayers/Controls/GeoportalAttribution"
+     */
     function GeoportalAttribution (options) {
         options = options || {};
 

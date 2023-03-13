@@ -18,6 +18,9 @@
  <cmt>21/08/2005</cmt>
  <desc>21/08/2005</desc>
  <sym>Waypoint</sym>
+ <extensions>
+    <marker-size>small</marker-size>
+ </extensions>
 </wpt>
 <wpt lat="41.558486000" lon="8.794569000">
  <ele>40.000000</ele>
@@ -25,6 +28,12 @@
  <cmt>21/08/2005</cmt>
  <desc>21/08/2005</desc>
  <sym>Waypoint</sym>
+ <extensions>
+    <fill>#ffffff</fill>
+    <fill-opacity>0.5</fill-opacity>
+    <stroke>#ff0000</stroke>
+    <stroke-width>2</stroke-width>
+ </extensions>
 </wpt>
 <wpt lat="41.558620000" lon="8.795230000">
  <ele>36.000000</ele>
@@ -39,6 +48,34 @@
  <cmt>21/08/2005</cmt>
  <desc>21/08/2005</desc>
  <sym>Waypoint</sym>
+ <extensions>
+    <marker-size>medium</marker-size>
+    <marker-symbol>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAToSURBVFiF3VhdbFNlGH7ec05/F6IUE9GLIYgXXYpXJBBZE0xM9EausIl6ObzBGSHRdnEJ1p+RhnBBNF4YY/xJFigNaIwxLpFYB2WwMWCW0bG1W7eEdUBwQ0fb7fy83nQJjK3nnO90F/okvTnf+7zP+/Q75/ve7wP+R6BGJ4xGo+skSXqFmfcAaAHwFIANAO4CmCai64Zh/OT3+3+Nx+PzjdRumJmOjo71zNwB4B0APguUMjN/vri4mDh27NhcI2poiJloNLqXiL4EEBCg/8XMbx05cuS00zpkh3yKxWKHiOgLAH7BHD4iiuzatcvIZDJnnRTjyEw0Gv2QiD6C8xkmInqxtbVVy2QyvcJJRIm1V+ukkxwrwCCivYlE4gcRslAhBw4ceNzj8RQg9o2YYZaInk0kErN2iZKImtvt/gBrYwQA1gN4X4Roe2ai0eg6IroFa8uvKMo+n+9Ju/uQYleltiGaGnG73eVIJNIfDAa3yLK8Udf1mVwuN55MJneoqmrG91er1ZcBnLJVm51gAKjt7HXhdrvLnZ2d46FQaLcsy80A3LIsN4dCod2dnZ15l8tVaYTOcoh8M0GzgEgk0u/xeEIrjXm93m2RSOSiBZ0Wu4WJmHnaLCAYDG6pN97S0rK5ETrLIWJmg1mALMsbnYzX8ITlimoQMfOPWYCu6zMm4yULOn9brqgGETO3zAJyudx4vfFr164VzXIwc90/ZCWImOk3C0gmkzuq1Wp2pbFyuZxNpVI7zXIQkanOcoiY+d0sQFVVX1dX19ZsNpvWdX0SwKKu65NDQ0Ppw4cPP6dpmtcsBzOn7RZme9P0+XynK5XKZwAeqxenqqqvu7t79wOPNtV+VnDPMAzb5xvbM1NrMb6xy7OJr48ePXrfLkmo0SSijwHcFuFawG0i+lSEKGSm1p4fFOFawEGR9h9weLCKxWLdAN5wkuNBMPPxEydOvC1JksfD7Fsg8riYSdMlFwAosqFqkmQQUcW9sHB/282bcylAX+LbXgCWYT+AFwA84zAPVFWdO9PTM+WWpHcBQCeCAoCJICsMAGAQZGaAGZrLhcubNutbGUVF4rMjxWLR8ZE3Fou1AkjDwX0CM/OVwcHvJwqFomgKDfjO6e0MMpnMVDgc9gIIi+YoTU+fyw4NXXFQBpFh3BFaAJbD6/UeAmClrX8ElXK5dOnixT+c6BuAoUtSoSFm4vG4ZhjGm7DQhD5UhGGoAwMDp1RV1c2jVwHzIsny6WKxOOP4NVvC+fPnZ8Ph8F0Ar1rlFPL5X8bHxuo2pXXADIx4df3kjcnJSWANLs5jsdhJAK+Zxd2bmxv5racnKSBRYeY/oSiDhULhoY3b6dL8CDRN209EL8myvH7VGFW9f6Gv72erOZlJA3GeJWm4ubk5l06ntZXiGj4zANDe3r6nqanpx1Xyc/bq1eOjN26M1cvBTKoEY4IkadiQ5ZF8Pr9gprsmZgCgvb29u6mp6ZHuYKZUupDp7e1ZhVYB0bgEjLr8/tzw8PCiHc2Gv2ZLmJ+fb1MUpdXj8TQvPatWq3f6+/rOPBjHQBnMY4okXX9++/Z8KpUSXtnWbGYAYN++fTsDgUAvEbkMw9AvnDv3ValUugXgHojyMjD6+sTEWBwwGqG3pmYAoK2t7ZNAIPDe1OTUqSuXBr6FouRGR0enAfBaa/+n8S8PPeWMetb8+wAAAABJRU5ErkJggg==</marker-symbol>
+    <marker-color>#ffffff</marker-color>
+ </extensions>
+</wpt>
+<wpt lat="41.559169000" lon="8.859783000">
+ <ele>5.000000</ele>
+ <name>Tivell2</name>
+ <cmt>21/08/2005</cmt>
+ <desc>21/08/2005</desc>
+ <sym>Waypoint</sym>
+ <extensions>
+   <marker-color>#ff0000</marker-color>
+    <marker-size>small</marker-size>
+    <marker-symbol>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAToSURBVFiF3VhdbFNlGH7ec05/F6IUE9GLIYgXXYpXJBBZE0xM9EausIl6ObzBGSHRdnEJ1p+RhnBBNF4YY/xJFigNaIwxLpFYB2WwMWCW0bG1W7eEdUBwQ0fb7fy83nQJjK3nnO90F/okvTnf+7zP+/Q75/ve7wP+R6BGJ4xGo+skSXqFmfcAaAHwFIANAO4CmCai64Zh/OT3+3+Nx+PzjdRumJmOjo71zNwB4B0APguUMjN/vri4mDh27NhcI2poiJloNLqXiL4EEBCg/8XMbx05cuS00zpkh3yKxWKHiOgLAH7BHD4iiuzatcvIZDJnnRTjyEw0Gv2QiD6C8xkmInqxtbVVy2QyvcJJRIm1V+ukkxwrwCCivYlE4gcRslAhBw4ceNzj8RQg9o2YYZaInk0kErN2iZKImtvt/gBrYwQA1gN4X4Roe2ai0eg6IroFa8uvKMo+n+9Ju/uQYleltiGaGnG73eVIJNIfDAa3yLK8Udf1mVwuN55MJneoqmrG91er1ZcBnLJVm51gAKjt7HXhdrvLnZ2d46FQaLcsy80A3LIsN4dCod2dnZ15l8tVaYTOcoh8M0GzgEgk0u/xeEIrjXm93m2RSOSiBZ0Wu4WJmHnaLCAYDG6pN97S0rK5ETrLIWJmg1mALMsbnYzX8ITlimoQMfOPWYCu6zMm4yULOn9brqgGETO3zAJyudx4vfFr164VzXIwc90/ZCWImOk3C0gmkzuq1Wp2pbFyuZxNpVI7zXIQkanOcoiY+d0sQFVVX1dX19ZsNpvWdX0SwKKu65NDQ0Ppw4cPP6dpmtcsBzOn7RZme9P0+XynK5XKZwAeqxenqqqvu7t79wOPNtV+VnDPMAzb5xvbM1NrMb6xy7OJr48ePXrfLkmo0SSijwHcFuFawG0i+lSEKGSm1p4fFOFawEGR9h9weLCKxWLdAN5wkuNBMPPxEydOvC1JksfD7Fsg8riYSdMlFwAosqFqkmQQUcW9sHB/282bcylAX+LbXgCWYT+AFwA84zAPVFWdO9PTM+WWpHcBQCeCAoCJICsMAGAQZGaAGZrLhcubNutbGUVF4rMjxWLR8ZE3Fou1AkjDwX0CM/OVwcHvJwqFomgKDfjO6e0MMpnMVDgc9gIIi+YoTU+fyw4NXXFQBpFh3BFaAJbD6/UeAmClrX8ElXK5dOnixT+c6BuAoUtSoSFm4vG4ZhjGm7DQhD5UhGGoAwMDp1RV1c2jVwHzIsny6WKxOOP4NVvC+fPnZ8Ph8F0Ar1rlFPL5X8bHxuo2pXXADIx4df3kjcnJSWANLs5jsdhJAK+Zxd2bmxv5racnKSBRYeY/oSiDhULhoY3b6dL8CDRN209EL8myvH7VGFW9f6Gv72erOZlJA3GeJWm4ubk5l06ntZXiGj4zANDe3r6nqanpx1Xyc/bq1eOjN26M1cvBTKoEY4IkadiQ5ZF8Pr9gprsmZgCgvb29u6mp6ZHuYKZUupDp7e1ZhVYB0bgEjLr8/tzw8PCiHc2Gv2ZLmJ+fb1MUpdXj8TQvPatWq3f6+/rOPBjHQBnMY4okXX9++/Z8KpUSXtnWbGYAYN++fTsDgUAvEbkMw9AvnDv3ValUugXgHojyMjD6+sTEWBwwGqG3pmYAoK2t7ZNAIPDe1OTUqSuXBr6FouRGR0enAfBaa/+n8S8PPeWMetb8+wAAAABJRU5ErkJggg==</marker-symbol>
+ </extensions>
+</wpt>
+<wpt lat="41.558169000" lon="8.899783000">
+ <ele>5.000000</ele>
+ <name>Tivell3</name>
+ <cmt>21/08/2005</cmt>
+ <desc>21/08/2005</desc>
+ <sym>Waypoint</sym>
+ <extensions>
+    <marker-size>large</marker-size>
+    <marker-symbol>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAToSURBVFiF3VhdbFNlGH7ec05/F6IUE9GLIYgXXYpXJBBZE0xM9EausIl6ObzBGSHRdnEJ1p+RhnBBNF4YY/xJFigNaIwxLpFYB2WwMWCW0bG1W7eEdUBwQ0fb7fy83nQJjK3nnO90F/okvTnf+7zP+/Q75/ve7wP+R6BGJ4xGo+skSXqFmfcAaAHwFIANAO4CmCai64Zh/OT3+3+Nx+PzjdRumJmOjo71zNwB4B0APguUMjN/vri4mDh27NhcI2poiJloNLqXiL4EEBCg/8XMbx05cuS00zpkh3yKxWKHiOgLAH7BHD4iiuzatcvIZDJnnRTjyEw0Gv2QiD6C8xkmInqxtbVVy2QyvcJJRIm1V+ukkxwrwCCivYlE4gcRslAhBw4ceNzj8RQg9o2YYZaInk0kErN2iZKImtvt/gBrYwQA1gN4X4Roe2ai0eg6IroFa8uvKMo+n+9Ju/uQYleltiGaGnG73eVIJNIfDAa3yLK8Udf1mVwuN55MJneoqmrG91er1ZcBnLJVm51gAKjt7HXhdrvLnZ2d46FQaLcsy80A3LIsN4dCod2dnZ15l8tVaYTOcoh8M0GzgEgk0u/xeEIrjXm93m2RSOSiBZ0Wu4WJmHnaLCAYDG6pN97S0rK5ETrLIWJmg1mALMsbnYzX8ITlimoQMfOPWYCu6zMm4yULOn9brqgGETO3zAJyudx4vfFr164VzXIwc90/ZCWImOk3C0gmkzuq1Wp2pbFyuZxNpVI7zXIQkanOcoiY+d0sQFVVX1dX19ZsNpvWdX0SwKKu65NDQ0Ppw4cPP6dpmtcsBzOn7RZme9P0+XynK5XKZwAeqxenqqqvu7t79wOPNtV+VnDPMAzb5xvbM1NrMb6xy7OJr48ePXrfLkmo0SSijwHcFuFawG0i+lSEKGSm1p4fFOFawEGR9h9weLCKxWLdAN5wkuNBMPPxEydOvC1JksfD7Fsg8riYSdMlFwAosqFqkmQQUcW9sHB/282bcylAX+LbXgCWYT+AFwA84zAPVFWdO9PTM+WWpHcBQCeCAoCJICsMAGAQZGaAGZrLhcubNutbGUVF4rMjxWLR8ZE3Fou1AkjDwX0CM/OVwcHvJwqFomgKDfjO6e0MMpnMVDgc9gIIi+YoTU+fyw4NXXFQBpFh3BFaAJbD6/UeAmClrX8ElXK5dOnixT+c6BuAoUtSoSFm4vG4ZhjGm7DQhD5UhGGoAwMDp1RV1c2jVwHzIsny6WKxOOP4NVvC+fPnZ8Ph8F0Ar1rlFPL5X8bHxuo2pXXADIx4df3kjcnJSWANLs5jsdhJAK+Zxd2bmxv5racnKSBRYeY/oSiDhULhoY3b6dL8CDRN209EL8myvH7VGFW9f6Gv72erOZlJA3GeJWm4ubk5l06ntZXiGj4zANDe3r6nqanpx1Xyc/bq1eOjN26M1cvBTKoEY4IkadiQ5ZF8Pr9gprsmZgCgvb29u6mp6ZHuYKZUupDp7e1ZhVYB0bgEjLr8/tzw8PCiHc2Gv2ZLmJ+fb1MUpdXj8TQvPatWq3f6+/rOPBjHQBnMY4okXX9++/Z8KpUSXtnWbGYAYN++fTsDgUAvEbkMw9AvnDv3ValUugXgHojyMjD6+sTEWBwwGqG3pmYAoK2t7ZNAIPDe1OTUqSuXBr6FouRGR0enAfBaa/+n8S8PPeWMetb8+wAAAABJRU5ErkJggg==</marker-symbol>
+ </extensions>
 </wpt>
 <trk>
  <name>circuit_litoral_montagne</name>
@@ -971,7 +1008,184 @@
  <ele>13.000000</ele><time>2005-08-20T14:06:01Z</time>
 </trkpt>
 </trkseg>
-</trk>
 <extensions>
+    <stroke>#ff0000</stroke>
+    <stroke-width>12</stroke-width>
+    <stroke-opacity>0.5</stroke-opacity>
 </extensions>
+</trk>
+<trk>
+ <name>circuit_litoral_montagne 2</name>
+ <number>1</number>
+<trkseg>
+<trkpt lat="41.629386000" lon="8.813782000">
+ <ele>5.000000</ele><time>2005-08-20T07:25:43Z</time>
+</trkpt>
+<trkpt lat="41.629751000" lon="8.812537000">
+ <ele>7.000000</ele><time>2005-08-20T07:27:58Z</time>
+</trkpt>
+<trkpt lat="41.629086000" lon="8.811185000">
+ <ele>17.000000</ele><time>2005-08-20T07:29:50Z</time>
+</trkpt>
+<trkpt lat="41.629193000" lon="8.810391000">
+ <ele>27.000000</ele><time>2005-08-20T07:30:38Z</time>
+</trkpt>
+<trkpt lat="41.629193000" lon="8.810263000">
+ <ele>28.000000</ele><time>2005-08-20T07:30:44Z</time>
+</trkpt>
+<trkpt lat="41.630309000" lon="8.809233000">
+ <ele>50.000000</ele><time>2005-08-20T07:32:43Z</time>
+</trkpt>
+<trkpt lat="41.630094000" lon="8.808310000">
+ <ele>61.000000</ele><time>2005-08-20T07:33:38Z</time>
+</trkpt>
+<trkpt lat="41.630330000" lon="8.807344000">
+ <ele>68.000000</ele><time>2005-08-20T07:34:33Z</time>
+</trkpt>
+<trkpt lat="41.631510000" lon="8.805799000">
+ <ele>91.000000</ele><time>2005-08-20T07:36:32Z</time>
+</trkpt>
+<trkpt lat="41.631532000" lon="8.805521000">
+ <ele>93.000000</ele><time>2005-08-20T07:36:51Z</time>
+</trkpt>
+<trkpt lat="41.629965000" lon="8.804920000">
+ <ele>111.000000</ele><time>2005-08-20T07:40:50Z</time>
+</trkpt>
+<trkpt lat="41.628678000" lon="8.803160000">
+ <ele>110.000000</ele><time>2005-08-20T07:44:11Z</time>
+</trkpt>
+<trkpt lat="41.628098000" lon="8.803353000">
+ <ele>115.000000</ele><time>2005-08-20T07:44:46Z</time>
+</trkpt>
+<trkpt lat="41.626296000" lon="8.804255000">
+ <ele>105.000000</ele><time>2005-08-20T07:46:21Z</time>
+</trkpt>
+<trkpt lat="41.625845000" lon="8.803976000">
+ <ele>106.000000</ele><time>2005-08-20T07:46:52Z</time>
+</trkpt>
+<trkpt lat="41.625867000" lon="8.802967000">
+ <ele>92.000000</ele><time>2005-08-20T07:48:41Z</time>
+</trkpt>
+<trkpt lat="41.624772000" lon="8.802259000">
+ <ele>80.000000</ele><time>2005-08-20T07:50:01Z</time>
+</trkpt>
+<trkpt lat="41.624537000" lon="8.801358000">
+ <ele>54.000000</ele><time>2005-08-20T07:53:30Z</time>
+</trkpt>
+<trkpt lat="41.623185000" lon="8.801229000">
+ <ele>34.000000</ele><time>2005-08-20T07:55:18Z</time>
+</trkpt>
+<trkpt lat="41.622498000" lon="8.797688000">
+ <ele>15.000000</ele><time>2005-08-20T08:00:41Z</time>
+</trkpt>
+<trkpt lat="41.620889000" lon="8.797688000">
+ <ele>32.000000</ele><time>2005-08-20T08:03:31Z</time>
+</trkpt>
+<trkpt lat="41.621168000" lon="8.794362000">
+ <ele>13.000000</ele><time>2005-08-20T08:05:47Z</time>
+</trkpt>
+<trkpt lat="41.619215000" lon="8.791874000">
+ <ele>15.000000</ele><time>2005-08-20T08:07:37Z</time>
+</trkpt>
+<trkpt lat="41.617863000" lon="8.791938000">
+ <ele>18.000000</ele><time>2005-08-20T08:09:12Z</time>
+</trkpt>
+<trkpt lat="41.615996000" lon="8.791509000">
+ <ele>14.000000</ele><time>2005-08-20T08:10:22Z</time>
+</trkpt>
+<trkpt lat="41.613314000" lon="8.791745000">
+ <ele>10.000000</ele><time>2005-08-20T08:12:03Z</time>
+</trkpt>
+<trkpt lat="41.611834000" lon="8.792603000">
+ <ele>15.000000</ele><time>2005-08-20T08:14:16Z</time>
+</trkpt>
+<trkpt lat="41.610031000" lon="8.792410000">
+ <ele>11.000000</ele><time>2005-08-20T08:15:29Z</time>
+</trkpt>
+<trkpt lat="41.607885000" lon="8.793204000">
+ <ele>26.000000</ele><time>2005-08-20T08:19:07Z</time>
+</trkpt>
+<trkpt lat="41.607306000" lon="8.792367000">
+ <ele>12.000000</ele><time>2005-08-20T08:20:52Z</time>
+</trkpt>
+<trkpt lat="41.606727000" lon="8.792346000">
+ <ele>13.000000</ele><time>2005-08-20T08:21:14Z</time>
+</trkpt>
+<trkpt lat="41.606469000" lon="8.791616000">
+ <ele>12.000000</ele><time>2005-08-20T08:21:35Z</time>
+</trkpt>
+<trkpt lat="41.605804000" lon="8.791165000">
+ <ele>14.000000</ele><time>2005-08-20T08:22:06Z</time>
+</trkpt>
+<trkpt lat="41.604903000" lon="8.790200000">
+ <ele>13.000000</ele><time>2005-08-20T08:23:53Z</time>
+</trkpt>
+<trkpt lat="41.600332000" lon="8.787496000">
+ <ele>15.000000</ele><time>2005-08-20T08:26:27Z</time>
+</trkpt>
+<trkpt lat="41.600010000" lon="8.787003000">
+ <ele>12.000000</ele><time>2005-08-20T08:27:22Z</time>
+</trkpt>
+<trkpt lat="41.597500000" lon="8.788269000">
+ <ele>18.000000</ele><time>2005-08-20T08:34:41Z</time>
+</trkpt>
+<trkpt lat="41.597307000" lon="8.788548000">
+ <ele>18.000000</ele><time>2005-08-20T08:35:25Z</time>
+</trkpt>
+<trkpt lat="41.596770000" lon="8.789942000">
+ <ele>5.000000</ele><time>2005-08-20T08:40:44Z</time>
+</trkpt>
+<trkpt lat="41.595054000" lon="8.791552000">
+ <ele>8.000000</ele><time>2005-08-20T08:44:37Z</time>
+</trkpt>
+<trkpt lat="41.595011000" lon="8.792410000">
+ <ele>9.000000</ele><time>2005-08-20T08:45:33Z</time>
+</trkpt>
+<trkpt lat="41.591964000" lon="8.790972000">
+ <ele>46.000000</ele><time>2005-08-20T08:53:25Z</time>
+</trkpt>
+<trkpt lat="41.588981000" lon="8.790243000">
+ <ele>29.000000</ele><time>2005-08-20T08:58:00Z</time>
+</trkpt>
+<trkpt lat="41.587951000" lon="8.790135000">
+ <ele>13.000000</ele><time>2005-08-20T09:00:57Z</time>
+</trkpt>
+<trkpt lat="41.586728000" lon="8.792603000">
+ <ele>7.000000</ele><time>2005-08-20T09:03:28Z</time>
+</trkpt>
+<trkpt lat="41.584947000" lon="8.792667000">
+ <ele>7.000000</ele><time>2005-08-20T09:04:59Z</time>
+</trkpt>
+<trkpt lat="41.583531000" lon="8.797710000">
+ <ele>26.000000</ele><time>2005-08-20T09:08:04Z</time>
+</trkpt>
+<trkpt lat="41.581535000" lon="8.798890000">
+ <ele>62.000000</ele><time>2005-08-20T09:12:23Z</time>
+</trkpt>
+<trkpt lat="41.581063000" lon="8.799727000">
+ <ele>66.000000</ele><time>2005-08-20T09:13:12Z</time>
+</trkpt>
+<trkpt lat="41.579540000" lon="8.801787000">
+ <ele>69.000000</ele><time>2005-08-20T09:14:33Z</time>
+</trkpt>
+<trkpt lat="41.578703000" lon="8.801358000">
+ <ele>67.000000</ele><time>2005-08-20T09:15:32Z</time>
+</trkpt>
+<trkpt lat="41.578252000" lon="8.802173000">
+ <ele>54.000000</ele><time>2005-08-20T09:17:25Z</time>
+</trkpt>
+<trkpt lat="41.577566000" lon="8.802581000">
+ <ele>44.000000</ele><time>2005-08-20T09:18:18Z</time>
+</trkpt>
+<trkpt lat="41.577415000" lon="8.803182000">
+ <ele>37.000000</ele><time>2005-08-20T09:18:48Z</time>
+</trkpt>
+</trkpt>
+</trkseg>
+<extensions>
+    <stroke>#ff00ff</stroke>
+    <stroke-width>3</stroke-width>
+    <stroke-opacity>1</stroke-opacity>
+</extensions>
+</trk>
 </gpx>

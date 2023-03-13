@@ -7,7 +7,7 @@ import Register from "../../Common/Utils/Register";
  *
  * Leaflet Lambert 93 (EPSG:2154) <a href="http://leafletjs.com/reference.html#icrs" target="_blank">ICRS compatible</a> definition.
  *
- * @namespace
+ * @module
  * @alias L.geoportalCRS.EPSG2154
  * @example
  *  var map = L.Map('divmap', {
@@ -20,6 +20,7 @@ import Register from "../../Common/Utils/Register";
  *
  *  lyr.addTo(map); // ou map.addLayer(lyr);
  */
+/** @type {L.geoportalCRS.EPSG2154} */
 var EPSG2154 = {
 
     /**

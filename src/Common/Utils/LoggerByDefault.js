@@ -1,9 +1,21 @@
 import * as Log from "loglevel";
 
+/**
+ * @module LoggerByDefault
+ * @alias [private] LoggerByDefault
+ * @description
+ * ...
+ *
+ * @example
+ * getLogger();
+ * disableAll();
+ * enableAll();
+ */
 var LoggerByDefault = {
     /**
      * creation d'un logger statique
      *
+     * @function getLogger
      * @param {String} [name="default"] - the logger name
      * @returns {Object} logger
      */
@@ -25,7 +37,10 @@ var LoggerByDefault = {
         var logname = name || "default";
         return Log.getLogger(logname);
     },
-    /** desactive tous les loggers */
+    /**
+     * desactive tous les loggers
+     * @function disableAll
+     */
     disableAll : function () {
         var loggers = Log.getLoggers();
         for (const key in loggers) {
@@ -35,7 +50,10 @@ var LoggerByDefault = {
             }
         }
     },
-    /** active tous les loggers */
+    /**
+     * active tous les loggers
+     * @function enableAll
+     */
     enableAll : function () {
         var loggers = Log.getLoggers();
         for (const key in loggers) {

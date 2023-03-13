@@ -25,7 +25,7 @@ var Controls = {
      * @alias L.geoportalControl.LayerSwitcher
      * @param {Object} options - options for function call.
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
      * @param {Array}   [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
      * @param {Object}  [options.layers.layer] - layer object
      * @param {Boolean} [options.layers.display] - display layer in widget layer list
@@ -72,16 +72,16 @@ var Controls = {
      * @param {Object} options - Isocurve control options
      * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-     * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
-     * @param {Object}  [options.exclusions] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
-     * @param {Array}   [options.graphs] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
-     * @param {Array}   [options.methods] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
-     * @param {Array}   [options.directions] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
+     * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].
+     * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. The first element is selected.
+     * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. The first element is selected by default.
+     * @param {Array}   [options.directions = ["departure", "arrival"]] - list of directions to be displayed, by default : ["departure", "arrival"]. The first element is selected by default.
      *      Directions enable to specify if input location point will be used as a departure point ("departure") or as an arrival point ("arrival")
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding
-     * @param {Object} [options.isocurveOptions] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve}
-     * @param {Object} [options.autocompleteOptions] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+     * @param {Object} [options.isocurveOptions = {}] - isocurve service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~isoCurve Gp.Services.isoCurve}
+     * @param {Object} [options.autocompleteOptions = {}] - autocomplete service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
      * @returns {L.geoportalControl.Isocurve} - Isocurve Object
      * @example
      *  var iso = L.geoportalControl.Isocurve({
@@ -110,7 +110,7 @@ var Controls = {
      * @param {Object} options - options for function call.
      * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-     * @param {Boolean} [options.collapsed] - collapse mode, false by default
+     * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Array}   [options.systems] - list of projection systems, GEOGRAPHIC, MERCATOR, LAMB93 and LAMB2E by default
      *      Each array element (=system) is an object with following properties :
@@ -125,8 +125,8 @@ var Controls = {
      * @param {Array}   [options.units] - list of units by system, Geographical and Metric by default
      *      Values may be "DEC" (decimal degrees), "DMS" (sexagecimal), "RAD" (radians) and "GON" (grades) for geographical coordinates,
      *      and "M" or "KM" for metric coordinates
-     * @param {Boolean} [options.displayAltitude] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
-     * @param {Boolean} [options.displayCoordinates] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
+     * @param {Boolean} [options.displayAltitude = true] - active/desactivate the altitude panel, if desactivate, have just the coordinate panel, true by default
+     * @param {Boolean} [options.displayCoordinates = true] - active/desactivate the coordinate panel, if desactivate, have just the altitude panel, true by default
      * @param {Boolean} [options.editCoordinates = false] - If true, coordinates from the MousePosition control can be edited by users to re-center the view. False by default.
      * @param {Object}  [options.altitude] - elevation configuration
      * @param {Object}  [options.altitude.serviceOptions] - options of elevation service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude}
@@ -179,20 +179,24 @@ var Controls = {
      * @param {Object} options - ReverseGeocoding control options
      * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
-     * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
+     * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
-     * @param {Array}  [options.resources] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
-     * @param {Array}  [options.delimitations] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
-     * @param {Object}  [options.ReverseGeocodeOptions] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
+     * @param {Array}  [options.resources =  ["StreetAddress", "PositionOfInterest", "CadastralParcel"]] - resources for geocoding, by default : ["StreetAddress", "PositionOfInterest"]
+     * @param {Array}  [options.delimitations = ["Point", "Circle", "Extent"]] - delimitations for reverse geocoding, by default : ["Point", "Circle", "Extent"]
+     * @param {Object}  [options.ReverseGeocodeOptions = {}] - reverse geocode service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~reverseGeocode Gp.Services.reverseGeocode} to know all reverse geocode options.
      * @returns {L.geoportalControl.ReverseGeocode} - ReverseGeocode Object
+     * @fires reverse:onclickresult
      * @example
-     *  var iso = L.geoportalControl.ReverseGeocode({
+     *  var reverse = L.geoportalControl.ReverseGeocode({
      *      collapsed : false,
      *      position : "topright",
      *      resources : ["StreetAddress", "PositionOfInterest"],
      *      delimitations : ["Point", "Circle"],
      *      reverseGeocodeOptions : {}
      *  });
+     * reverse.on("reverse:onclickresult", function (e) {
+     *   console.log(e.data):
+     * });
      */
     ReverseGeocode : function (options) {
         return new ReverseGeocoding(options);
@@ -212,10 +216,10 @@ var Controls = {
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.disableReverse = false] - whether to enable/disable the reverse geocoding when entering points.
      *   Active by default. But, you can disable it when entering with the "ctrl" key on the keyboard
-     * @param {Object}  [options.exclusions] - list of exclusions with status
-     * @param {Array}   [options.graphs] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
-     * @param {Object}  [options.autocompleteOptions] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
-     * @param {Object}  [options.routeOptions] - options of route service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route}
+     * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status
+     * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"], and the first element is selected.
+     * @param {Object}  [options.autocompleteOptions = {}] - options of autocomplete service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~autoComplete Gp.Services.autoComplete}
+     * @param {Object}  [options.routeOptions = {}] - options of route service. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route}
      * @returns {L.geoportalControl.Route} - Route Object
      * @example
      *  var route = L.geoportalControl.Route({
@@ -262,7 +266,7 @@ var Controls = {
      *
      *       With parameter 'info' : {
      *           type : "PositionOfInterest" | "StreetAddress" | ...
-     *           service : "SuggestedLocation" | "DirectGeocodedLocation"
+     *           service : "SuggestedLocation" | "GeocodedLocation"
      *           fields : { // fields of service response }
      *       }
      *       ```
@@ -276,6 +280,8 @@ var Controls = {
      * @param {Boolean} [options.autocompleteOptions.triggerGeocode = false] - trigger a geocoding request if the autocompletion does not return any suggestions, false by default
      * @param {Number}  [options.autocompleteOptions.triggerDelay = 1000] - waiting time before sending the geocoding request, 1000ms by default
      * @returns {L.geoportalControl.SearchEngine} - SearchEngine Object
+     * @fires searchengine:autocomplete:click
+     * @fires searchengine:geocode:click
      * @example
      *  var SearchEngine = L.geoportalControl.SearchEngine({
      *      position : "topright",
@@ -292,6 +298,12 @@ var Controls = {
      *      apiKey : "zfgzrgffg57rfg8ar7gr4g5r4",
      *      geocodeOptions : {},
      *      autocompleteOptions : {}
+     *  });
+     *  SearchEngine.on("searchengine:autocomplete:click", function (e) {
+     *   console.log(e.data):
+     *  });
+     *  SearchEngine.on("searchengine:geocode:click", function (e) {
+     *   console.log(e.data):
      *  });
      */
     SearchEngine : function (options) {

@@ -290,18 +290,22 @@ Attributions.prototype._inRangeUpdate = function (layersDisplayed, extent) {
  */
 Attributions.prototype._updateAttributionListContainer = function (attributions) {
     var element = document.getElementById(this._addUID("GPAttributionsList"));
-    document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
+    if (document.getElementById(this._addUID("GPAttributionsList"))) {
+        document.getElementById(this._addUID("GPAttributionsList")).parentNode.removeChild(element);
+    }
 
     var ul = this._createAttributionsList();
     attributions.forEach(function (a) {
-        var li = document.createElement("li");
-        var link = document.createElement("a");
-        link.href = a.url;
-        link.innerHTML = a.name + "&nbsp";
-        link.target = "_blank";
-        li.id = a.name.replace(/\s/g, "");
-        li.appendChild(link);
-        ul.appendChild(li);
+        if (a.name) {
+            var li = document.createElement("li");
+            var link = document.createElement("a");
+            link.href = a.url;
+            link.innerHTML = a.name + "&nbsp";
+            link.target = "_blank";
+            li.id = a.name.replace(/\s/g, "");
+            li.appendChild(link);
+            ul.appendChild(li);
+        }
     });
     this._attributionListContainer.appendChild(ul);
 };

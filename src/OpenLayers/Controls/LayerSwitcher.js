@@ -20,6 +20,7 @@ var logger = Logger.getLogger("layerswitcher");
  * @constructor
  * @extends {ol.control.Control}
  * @alias ol.control.LayerSwitcher
+ * @type {ol.control.LayerSwitcher}
  * @param {Object} options - control options
  * @param {Array} [options.layers] - list of layers to be configured. Each array element is an object, with following properties :
  * @param {ol.layer.Layer} [options.layers.layer] - ol.layer.Layer layer to be configured (that has been added to map)
@@ -50,6 +51,14 @@ var logger = Logger.getLogger("layerswitcher");
  * ));
  */
 var LayerSwitcher = (function (Control) {
+    /**
+     * See {@link ol.control.LayerSwitcher}
+     * @module LayerSwitcher
+     * @alias module:~Controls/LayerSwitcher
+     * @param {*} options - options
+     * @example
+     * import LayerSwitcher from "src/OpenLayers/Controls/LayerSwitcher"
+     */
     function LayerSwitcher (options) {
         options = options || {};
         var _options = options.options || {};
@@ -1019,7 +1028,6 @@ var LayerSwitcher = (function (Control) {
     /**
      * Check if map view is out of layer range (in terms of extent and zoom)
      *
-     * @method isInRange
      * @param {Object} layer - the ol.layer object
      * @param {Object} map   - the ol.Map object
      * @returns {Boolean} outOfRange - false if map view is out of layer range
@@ -1047,7 +1055,6 @@ var LayerSwitcher = (function (Control) {
     /**
      * Get layer informations : title, description, quicklookurl, legends, metadata
      *
-     * @method getLayerInfo
      * @param {Object} layer - the ol.layer object
      * @returns {Object} layerInfo - layer informations
      */

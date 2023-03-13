@@ -21,6 +21,8 @@ import LayerSwitcher from "../LayerSwitcher";
 var logger = Logger.getLogger("measures");
 
 /**
+ * @type {ol.control.Measures}
+ * @abstract
  * Measures Tools :
  * - length
  * - aera
@@ -276,7 +278,7 @@ var Measures = {
 
         var mapContainer = map.getTargetElement();
         // au cas où il y'aurait plusieurs container de carte !
-        var overlays = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
+        var overlays = mapContainer.getElementsByClassName("ol-overlaycontainer");
         for (var k = 0; k < overlays.length; k++) {
             var nodes = overlays[k];
             var len = nodes.children.length;
@@ -337,6 +339,7 @@ var Measures = {
 
         this.measureTooltip = new Overlay({
             element : this.measureTooltipElement,
+            stopEvent : false,
             offset : [0, -15],
             positioning : "bottom-center"
         });
@@ -360,6 +363,7 @@ var Measures = {
 
         this.helpTooltip = new Overlay({
             element : this.helpTooltipElement,
+            stopEvent : false,
             offset : [15, 0],
             positioning : "center-left"
         });

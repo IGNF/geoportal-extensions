@@ -14,6 +14,7 @@ import SourceWMTS from "./SourceWMTS";
  * @constructor
  * @extends {ol.layer.Tile}
  * @alias ol.layer.GeoportalWMTS
+ * @type {ol.layer.GeoportalWMTS}
  * @param {Object} options            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
@@ -26,6 +27,14 @@ import SourceWMTS from "./SourceWMTS";
  * });
  */
 var LayerWMTS = (function (TileLayer) {
+    /**
+     * See {@link ol.layer.GeoportalWMTS}
+     * @module LayerWMTS
+     * @alias module:~Layers/GeoportalWMTS
+     * @param {*} options - options
+     * @example
+     * import LayerWMTS from "src/OpenLayers/Layers/LayerWMTS"
+     */
     function LayerWMTS (options) {
         if (!(this instanceof LayerWMTS)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");

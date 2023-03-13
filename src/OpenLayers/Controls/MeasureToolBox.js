@@ -9,12 +9,13 @@ import MeasureToolBoxDOM from "../../Common/Controls/MeasureToolBoxDOM";
 
 var logger = Logger.getLogger("toolbox");
 
-/*
-* MeasureToolBox - Boite à outils (ToolBox) pour les outils de mesures.
-* - distance
-* - aire
-* - azimut
-*/
+/**
+ * @type {ol.control.MeasureToolBox}
+ * MeasureToolBox - Boite à outils (ToolBox) pour les outils de mesures.
+ * - distance
+ * - aire
+ * - azimut
+ */
 var MeasureToolBox = {
 
     /**
@@ -67,6 +68,7 @@ var MeasureToolBox = {
             logger.trace("create toolbox !");
             // creation et ajout de la toolbox sur la map
             var toolboxContainer = this._createToolBoxContainerElement(uid);
+            toolboxContainer.style.pointerEvents = "auto"; // ajout pour ol6
             var overlaysContainer = mapContainer.getElementsByClassName("ol-overlaycontainer-stopevent");
             overlaysContainer[0].appendChild(toolboxContainer);
             // mapContainer.appendChild(toolboxContainer);

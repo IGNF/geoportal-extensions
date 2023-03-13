@@ -1,0 +1,920 @@
+{
+  "version": 8,
+  "name": "BDTOPO",
+  "glyphs": "https://wxs.ign.fr/static/vectorTiles/fonts/{fontstack}/{range}.pbf",
+  "sprite": "",
+  "metadata": {"maputnik:renderer": "ol"},
+  "sources": {
+      "bdtopo": {
+        "type": "vector",
+        "tiles": [
+        "https://wxs.ign.fr/latuile/geoportail/tms/1.0.0/BDTOPO/{z}/{x}/{y}.pbf"
+        ],
+        "scheme": "tms",
+        "url":"https://wxs.ign.fr/latuile/geoportail/tms/1.0.0/BDTOPO/metadata.json"
+      }
+  },
+  "transition": {
+      "duration": 300,
+      "delay": 0
+  },
+    "layers": [
+         {
+            "id": "ligne_orographique",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "ligne_orographique",
+            "paint": {
+              "line-color": "#ffa500",
+              "line-width": 2
+            },
+            "minzoom": 14
+          },
+          {
+            "id": "reservoir_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "reservoir",
+            "paint": {"fill-color": "#1bbfd1"},
+            "minzoom": 14
+          },
+          {
+            "id": "reservoir_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "reservoir",
+            "paint": {"line-color": "#666666"},
+            "minzoom": 14
+          },
+          {
+            "id": "construction_surfacique_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "construction_surfacique",
+            "paint": {"fill-color": "#1bbfd1"},
+            "minzoom": 14
+          },
+          {
+            "id": "construction_surfacique_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "construction_surfacique",
+            "paint": {"line-color": "#666666"},
+            "minzoom": 14
+          },
+          {
+            "id": "construction_lineaire",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "construction_lineaire",
+            "paint": {
+              "line-color": "#9012f6",
+              "line-width": 2
+            },
+            "layout": {"line-join": "bevel"},
+            "minzoom": 14
+          },
+          {
+            "id": "batiment_residentiel_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Résidentiel"
+            ],
+            "paint": {
+              "fill-color": "#ff6dee"
+            }
+          },
+          {
+            "id": "batiment_residentiel_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Résidentiel"
+            ],
+            "paint": {
+              "line-color": "#c421dd"
+            }
+          },
+          {
+            "id": "batiment_annexe_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Annexe"
+            ],
+            "paint": {
+              "fill-color": "#4dc1eb"
+            }
+          },
+          {
+            "id": "batiment_annexe_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Annexe"
+            ],
+            "paint": {
+              "line-color": "#3f42e7"
+            }
+          },
+          {
+            "id": "batiment_agricole_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Agricole"
+            ],
+            "paint": {
+              "fill-color": "#12e759"
+            }
+          },
+          {
+            "id": "batiment_agricole_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Agricole"
+            ],
+            "paint": {
+              "line-color": "#028e17"
+            }
+          },
+          {
+            "id": "batiment_commercial_et_services_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Commercial et services"
+            ],
+            "paint": {
+              "fill-color": "#bcbcbc"
+            }
+          },
+          {
+            "id": "batiment_commercial_et_services_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Commercial et services"
+            ],
+            "paint": {
+              "line-color": "#000000"
+            }
+          },
+          {
+            "id": "batiment_industriel_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Industriel"
+            ],
+            "paint": {
+              "fill-color": "#c03a78"
+            }
+          },
+          {
+            "id": "batiment_industriel_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Industriel"
+            ],
+            "paint": {
+              "line-color": "#6c2727"
+            }
+          },
+          {
+            "id": "batiment_sportif_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Sportif"
+            ],
+            "paint": {
+              "fill-color": "#f3e544"
+            }
+          },
+          {
+            "id": "batiment_sportif_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Sportif"
+            ],
+            "paint": {
+              "line-color": "#b59402"
+            }
+          },
+          {
+            "id": "batiment_religieux_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Religieux"
+            ],
+            "paint": {
+              "fill-color": "#c03a78"
+            }
+          },
+          {
+            "id": "batiment_religieux_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Religieux"
+            ],
+            "paint": {
+              "line-color": "#6c2727"
+            }
+          },
+          {
+            "id": "batiment_indifferencie_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Indifférencié"
+            ],
+            "paint": {
+              "fill-color": "#c03a78"
+            }
+          },
+          {
+            "id": "batiment_indifferencie_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "batiment",
+            "minzoom": 14,
+            "filter": [
+              "==",
+              "usage_1",
+              "Indifférencié"
+            ],
+            "paint": {
+              "line-color": "#6c2727"
+            }
+          },
+          {
+            "id": "cimetiere_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "cimetiere",
+            "minzoom": 14,
+            "paint": {
+              "line-color": "#505050"
+            }
+          },
+          {
+            "id": "cimetiere_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "cimetiere",
+            "minzoom": 14,
+            "paint": {
+              "fill-pattern": "cimetiere"
+            }
+          },
+          {
+            "id": "construction_ponctuelle",
+            "type": "symbol",
+            "source": "bdtopo",
+            "source-layer": "construction_ponctuelle",
+            "minzoom": 14,
+            "layout": {
+              "icon-image": "construction_ponctuelle",
+              "icon-size": 1
+            }
+          },
+        
+          {
+            "id": "piste_d_aerodrome_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "piste_d_aerodrome",
+            "minzoom": 14,
+            "paint": {
+              "fill-color": "#cbcbcb"
+            }
+          },
+          {
+            "id": "piste_d_aerodrome_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "piste_d_aerodrome",
+            "minzoom": 14,
+            "paint": {
+              "line-color": "#000000",
+              "line-width": 1
+            }
+          },
+          {
+            "id": "equipement_de_transport",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "paint": {
+              "line-color": "#000000",
+              "line-width": 1
+            }
+          },
+          {
+            "id": "aerogare",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Aérogare"
+            ],
+            "paint": {
+              "fill-color": "#e53d24"
+            }
+          },
+          {
+            "id": "aire_de_repos_ou_de_service",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Aire de repos ou de service"
+            ],
+            "paint": {
+              "fill-color": "#5499e3"
+            }
+          },
+          {
+            "id": "aire_de_triage",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Aire de triage"
+            ],
+            "paint": {
+              "fill-color": "#839994"
+            }
+          },
+          {
+            "id": "arret_de_voyageur",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Arrêt voyageurs"
+            ],
+            "paint": {
+              "fill-color": "#5428d9"
+            }
+          },
+          {
+            "id": "autre_equipement",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Autre équipement"
+            ],
+            "paint": {
+              "fill-color": "#ca5324"
+            }
+          },
+          {
+            "id": "carrefour",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Carrefour"
+            ],
+            "paint": {
+              "fill-color": "#1dc04e"
+            }
+          },
+          {
+            "id": "gare_fret_uniquement",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Gare fret uniquement"
+            ],
+            "paint": {
+              "fill-color": "#d29f6d"
+            }
+          },
+          {
+            "id": "gare_routiere",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Gare routière"
+            ],
+            "paint": {
+              "fill-color": "#df0f0f"
+            }
+          },
+          {
+            "id": "gare_voyageurs_et_fret",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Gare voyageurs et fret"
+            ],
+            "paint": {
+              "fill-color": "#2943ea"
+            }
+          },
+          {
+            "id": "gare_voyageurs_uniquement",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Gare voyageurs uniquement"
+            ],
+            "paint": {
+              "fill-color": "#712a9c"
+            }
+          },
+          {
+            "id": "parking",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Parking"
+            ],
+            "paint": {
+              "fill-color": "#901d92"
+            }
+          },
+          {
+            "id": "peage",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Péage"
+            ],
+            "paint": {
+              "fill-color": "#6da0de"
+            }
+          },
+          {
+            "id": "gare_maritime",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Gare maritime"
+            ],
+            "paint": {
+              "fill-color": "#233fdd"
+            }
+          },
+          {
+            "id": "port",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Port"
+            ],
+            "paint": {
+              "fill-color": "#367ada"
+            }
+          },
+          {
+            "id": "station_de_metro",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Station de métro"
+            ],
+            "paint": {
+              "fill-color": "#66c4d0"
+            }
+          },
+          {
+            "id": "station_de_tramway",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Station de tramway"
+            ],
+            "paint": {
+              "fill-color": "#b072a9"
+            }
+          },
+          {
+            "id": "tour_de_controle_aerien",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Tour de contrôle aérien"
+            ],
+            "paint": {
+              "fill-color": "#aadd0f"
+            }
+          },
+          {
+            "id": "gare_telepherique",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "equipement_de_transport",
+            "minzoom": 15,
+            "filter": [
+              "==",
+              "nature",
+              "Gare téléphérique"
+            ],
+            "paint": {
+              "fill-color": "#c49c61"
+            }
+          },
+          {
+            "id": "aerodrome_limites",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "aerodrome",
+            "minzoom": 13,
+            "paint": {
+              "line-color": "#000000",
+              "line-width": 1
+            }
+          },
+          {
+            "id": "altiport",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "aerodrome",
+            "minzoom": 13,
+            "filter": [
+              "==",
+              "nature",
+              "Altiport"
+            ],
+            "paint": {
+              "fill-color": "#70d7bf"
+            }
+          },
+          {
+            "id": "aerodrome_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "aerodrome",
+            "minzoom": 13,
+            "filter": [
+              "==",
+              "nature",
+              "Aérodrome"
+            ],
+            "paint": {
+              "fill-color": "#e7c8cd"
+            }
+          },
+          {
+            "id": "heliport_surf",
+            "type": "fill",
+            "source": "bdtopo",
+            "source-layer": "aerodrome",
+            "minzoom": 13,
+            "filter": [
+              "==",
+              "nature",
+              "Héliport"
+            ],
+            "paint": {
+              "fill-color": "#ff9b79"
+            }
+          },
+          {
+            "id": "transport_par_cable_dash",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "transport_par_cable",
+            "minzoom": 1,
+            "paint": {
+              "line-color": "rgba(0, 0, 0, 1)",
+              "line-dasharray": [0.1, 0.8],
+              "line-width": 15
+            }
+          },
+          {
+            "id": "transport_par_cable_line",
+            "type": "line",
+            "source": "bdtopo",
+            "source-layer": "transport_par_cable",
+            "minzoom": 1,
+            "paint": {
+              "line-color": "rgba(0, 0, 0, 1)",
+              "line-width": 2.5
+            }
+          },
+          {
+            "id": "ligne_electrique",
+            "type": "line",
+            "source": "bdtopo",
+            "minzoom": 12,
+            "paint": {"line-color": "#cc00cc"},
+            "layout": {"visibility": "visible"},
+            "source-layer": "ligne_electrique"
+          },
+            {
+              "id": "erp",
+              "type": "symbol",
+              "source": "bdtopo",
+              "source-layer": "erp",
+              "minzoom": 19,
+              "layout": {
+                "icon-image": "erp",
+                "icon-size": 1.5
+              }
+            },
+            {
+              "id": "pylone",
+              "type": "symbol",
+              "source": "bdtopo",
+              "source-layer": "pylone",
+              "minzoom": 14,
+              "layout": {
+                "icon-image": "pylone",
+                "icon-size": 1
+              }
+            },
+            {
+              "id": "terrain_de_sport_surf",
+              "type": "fill",
+              "source": "bdtopo",
+              "source-layer": "terrain_de_sport",
+              "paint": {"fill-color": "#7dff9e"},
+              "minzoom": 14
+            },
+            {
+              "id": "terrain_de_sport_limites",
+              "type": "line",
+              "source": "bdtopo",
+              "source-layer": "terrain_de_sport",
+              "minzoom": 14,
+              "paint": {
+                "line-color": "#0e9652",
+                "line-width": 1
+              }
+            },
+    {
+      "id": "region_limites",
+      "type": "line",
+      "paint": {
+        "line-color": "rgba(0, 0, 0, 1)",
+        "line-width": 2
+      },
+      "source": "bdtopo",
+      "source-layer": "region",
+      "layout": {"line-join": "bevel"}
+    },
+    {
+      "id": "departement_limites",
+      "type": "line",
+      "source": "bdtopo",
+      "source-layer": "departement",
+      "minzoom": 2,
+      "maxzoom": 12,
+      "paint": {
+        "line-width": 0.75,
+        "line-color": "#000000"
+      }
+    },
+    {
+      "id": "epci_limites",
+      "type": "line",
+      "source": "bdtopo",
+      "source-layer": "epci",
+      "paint": {
+        "line-width": 1.8,
+        "line-color": "#1f78b4"
+      },
+      "minzoom": 10,
+      "maxzoom": 13
+    },
+    {
+      "id": "arrondissement_limites",
+      "type": "line",
+      "source": "bdtopo",
+      "source-layer": "arrondissement",
+      "paint": {
+        "line-color": "#666666",
+        "line-dasharray": [18, 6],
+        "line-width": 0.75
+      },
+      "minzoom": 11,
+      "layout": {"line-join": "bevel"}
+    },
+    {
+      "id": "commune_limites",
+      "type": "line",
+      "source": "bdtopo",
+      "source-layer": "commune",
+      "paint": {
+        "line-color": "#999999",
+        "line-dasharray": [2, 4, 6, 4],
+        "line-width": 0.75
+      },
+      "minzoom": 11,
+      "layout": {"line-join": "bevel"}
+    },{
+      "id": "region_labels",
+      "type": "symbol",
+      "source": "bdtopo",
+      "source-layer": "region",
+      "layout": {
+        "text-field": "{nom_officiel}",
+        "text-size": 20,
+        "text-font": ["Ubuntu Regular"]
+      },
+      "minzoom": 1,
+      "maxzoom": 7
+    },
+    {
+      "id": "departement_labels",
+      "type": "symbol",
+      "source": "bdtopo",
+      "source-layer": "departement",
+      "layout": {
+        "text-field": "{nom_officiel}",
+        "text-font": ["Ubuntu Regular"],
+        "text-size": 20
+      },
+      "maxzoom": 10,
+      "minzoom": 7
+    },
+    {
+      "id": "epci_labels",
+      "type": "symbol",
+      "source": "bdtopo",
+      "source-layer": "epci",
+      "layout": {
+        "text-field": "{nom_officiel}",
+        "text-font": ["Ubuntu Bold Italic"],
+        "text-size": 16,
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "icon-text-fit": "none"
+      },
+      "paint": {
+        "text-color": "#1f78b4",
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 5
+      },
+      "minzoom": 10,
+      "maxzoom": 13
+    },
+    {
+      "id": "arrondissement_labels",
+      "type": "symbol",
+      "source": "bdtopo",
+      "source-layer": "arrondissement",
+      "minzoom": 15,
+      "layout": {
+        "text-field": "{nom_officiel}",
+        "text-font": ["Ubuntu Italic"]
+      },
+      "paint": {
+        "text-color": "rgba(0, 0, 0, 1)",
+        "text-halo-width": 1,
+        "text-halo-color": "rgba(255, 255, 255, 1)"
+      }
+    },
+    {
+      "id": "commune_labels",
+      "type": "symbol",
+      "source": "bdtopo",
+      "source-layer": "commune",
+      "minzoom": 12,
+      "layout": {
+        "text-field": "{nom_officiel}",
+        "text-font": ["Ubuntu Regular"]
+      },
+      "paint": {
+        "text-color": "rgba(0, 0, 0, 1)",
+        "text-halo-width": 5,
+        "text-halo-color": "rgba(255, 255, 255, 1)"
+      }
+    }
+    ]
+}

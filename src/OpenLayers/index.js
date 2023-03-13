@@ -68,7 +68,11 @@ import "../Common/Styles";
 import "./Styles";
 
 import GfiUtils from "./GfiUtils";
+
 import KML from "./Formats/KML";
+import GPX from "./Formats/GPX";
+import GeoJSON from "./Formats/GeoJSON";
+
 import WMTS from "./Sources/WMTS";
 import SourceWMTS from "./Layers/SourceWMTS";
 import SourceWMS from "./Layers/SourceWMS";
@@ -100,6 +104,7 @@ import Layer from "./Controls/Editor/Layer";
 import Themes from "./Controls/Editor/Themes";
 import Legend from "./Controls/Editor/Legend";
 import Group from "./Controls/Editor/Group";
+import Search from "./Controls/Editor/Search";
 import Editor from "./Controls/Editor";
 
 // Les autoload...
@@ -199,14 +204,19 @@ Ol.style.editor.Layer = Layer;
 Ol.style.editor.Legend = Legend;
 Ol.style.editor.Group = Group;
 Ol.style.editor.Themes = Themes;
+Ol.style.editor.Search = Search;
 
 // Rajout des propriétés dans le namespace Ol
 Ol.format = Ol.format || {};
 Ol.format.KMLExtended = KML;
+Ol.format.GPXExtended = GPX;
+Ol.format.GeoJSONExtended = GeoJSON;
+
 Ol.source = Ol.source || {};
 Ol.source.WMTSExtended = WMTS;
 Ol.source.GeoportalWMTS = SourceWMTS;
 Ol.source.GeoportalWMS = SourceWMS;
+
 Ol.layer = Ol.layer || {};
 Ol.layer.GeoportalWMTS = LayerWMTS;
 Ol.layer.GeoportalWMS = LayerWMS;

@@ -1,56 +1,66 @@
 # Extension Géoportail pour iTowns
 
-[![release](https://img.shields.io/badge/release%20-itowns%202.2.4-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.3.2)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?display_name=release&filename=build%2Fscripts%2Frelease%2Fpackage-itowns.json)
 
 <!-- toc -->
 
-- [Mise en oeuvre](#mise-en-oeuvre)
-  * [Téléchargement](#téléchargement)
-    + [Téléchargement direct](#téléchargement-direct)
-    + [Récupération avec NPM](#récupération-avec-npm)
-    + [Accès direct](#accès-direct)
-  * [Intégration dans une page web](#intégration-dans-une-page-web)
-  * [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
-    + [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
-  * [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
-- [Compatibilités](#compatibilités)
-  * [Versions d'iTowns supportées](#versions-ditowns-supportées)
-  * [Navigateurs supportés](#navigateurs-supportés)
-  * [Limitations liées aux processeurs graphiques](#limitations-liées-aux-processeurs-graphiques)
-- [Fonctionnalités](#fonctionnalités)
-  * [Systèmes de coordonnées](#systèmes-de-coordonnées)
-  * [Affichage des couches WMTS Géoportail](#affichage-des-couches-wmts-géoportail)
-    + [Utilisation de l'accès privilégié aux couches WMTS Géoportail](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail)
-    + [Exemple d'utilisation](#exemple-dutilisation)
-    + [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns)
-    + [Exemple d'utilisation](#exemple-dutilisation-1)
-  * [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
-    + [Utilisation de l'accès privilégié aux couches WMS Géoportail](#utilisation-de-laccès-privilégié-aux-couches-wms-géoportail)
-    + [Exemple d'utilisation](#exemple-dutilisation-2)
-    + [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
-    + [Exemple d'utilisation](#exemple-dutilisation-3)
-  * [Affichage des couches MNT WMTS Géoportail pour affichage du relief](#affichage-des-couches-mnt-wmts-géoportail-pour-affichage-du-relief)
-    + [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail-pour-afficher-un-mnt)
-    + [Exemple d'utilisation](#exemple-dutilisation-4)
-    + [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-2)
-    + [Exemple d'utilisation](#exemple-dutilisation-5)
-  * [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
-    + [Exemples d'utilisation](#exemples-dutilisation)
-      - [Utilisation simple](#utilisation-simple)
-  * [Coordonnées et altitude en un point de la carte](#coordonnées-et-altitude-en-un-point-de-la-carte)
-    + [Exemples d'utilisation](#exemples-dutilisation-1)
-      - [Utilisation simple](#utilisation-simple-1)
-  * [Affichage dynamique des attributions](#affichage-dynamique-des-attributions)
-    + [Exemples d'utilisation](#exemples-dutilisation-2)
-      - [Utilisation simple](#utilisation-simple-2)
-  * [Affichage d'une mini-vue dynamique](#affichage-dune-mini-vue-dynamique)
-    + [Exemples d'utilisation](#exemples-dutilisation-3)
-      - [Utilisation simple](#utilisation-simple-3)
-  * [Affichage d'une échelle graphique](#affichage-dune-échelle-graphique)
-    + [Exemples d'utilisation](#exemples-dutilisation-4)
-      - [Utilisation simple](#utilisation-simple-4)
-
+- [Extension Géoportail pour iTowns](#extension-géoportail-pour-itowns)
+  - [Mise en oeuvre](#mise-en-oeuvre)
+    - [Téléchargement](#téléchargement)
+      - [Téléchargement direct](#téléchargement-direct)
+      - [Récupération avec NPM](#récupération-avec-npm)
+      - [Accès direct](#accès-direct)
+    - [Intégration dans une page web](#intégration-dans-une-page-web)
+    - [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
+      - [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
+    - [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
+  - [Compatibilités](#compatibilités)
+    - [Versions d'iTowns supportées](#versions-ditowns-supportées)
+    - [Navigateurs supportés](#navigateurs-supportés)
+    - [Limitations liées aux processeurs graphiques](#limitations-liées-aux-processeurs-graphiques)
+  - [Fonctionnalités](#fonctionnalités)
+    - [Systèmes de coordonnées](#systèmes-de-coordonnées)
+    - [Affichage des couches WMTS Géoportail](#affichage-des-couches-wmts-géoportail)
+      - [Utilisation de l'accès privilégié aux couches WMTS Géoportail](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail)
+      - [Exemple d'utilisation](#exemple-dutilisation)
+      - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns)
+      - [Exemple d'utilisation](#exemple-dutilisation-1)
+    - [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
+      - [Utilisation de l'accès privilégié aux couches WMS Géoportail](#utilisation-de-laccès-privilégié-aux-couches-wms-géoportail)
+      - [Exemple d'utilisation](#exemple-dutilisation-2)
+      - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
+      - [Exemple d'utilisation](#exemple-dutilisation-3)
+    - [Affichage des couches MNT WMTS Géoportail pour affichage du relief](#affichage-des-couches-mnt-wmts-géoportail-pour-affichage-du-relief)
+      - [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail-pour-afficher-un-mnt)
+      - [Exemple d'utilisation](#exemple-dutilisation-4)
+      - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-2)
+      - [Exemple d'utilisation](#exemple-dutilisation-5)
+    - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
+      - [Exemples d'utilisation](#exemples-dutilisation)
+        - [Utilisation simple](#utilisation-simple)
+    - [Coordonnées et altitude en un point de la carte](#coordonnées-et-altitude-en-un-point-de-la-carte)
+      - [Exemples d'utilisation](#exemples-dutilisation-1)
+        - [Utilisation simple](#utilisation-simple-1)
+    - [Affichage dynamique des attributions](#affichage-dynamique-des-attributions)
+      - [Exemples d'utilisation](#exemples-dutilisation-2)
+        - [Utilisation simple](#utilisation-simple-2)
+    - [Affichage d'une mini-vue dynamique](#affichage-dune-mini-vue-dynamique)
+      - [Exemples d'utilisation](#exemples-dutilisation-3)
+        - [Utilisation simple](#utilisation-simple-3)
+    - [Affichage d'une échelle graphique](#affichage-dune-échelle-graphique)
+      - [Exemples d'utilisation](#exemples-dutilisation-4)
+        - [Utilisation simple](#utilisation-simple-4)
+    - [Widget d'éxagération du relief](#widget-déxagération-du-relief)
+      - [Exemples d'utilisation](#exemples-dutilisation-5)
+        - [Utilisation simple](#utilisation-simple-5)
+        - [Utilisation avancée](#utilisation-avancée)
+    - [Widget d'affichage des bâtiments](#widget-daffichage-des-bâtiments)
+      - [Exemples d'utilisation](#exemples-dutilisation-6)
+        - [Utilisation simple](#utilisation-simple-6)
+        - [Utilisation avancée](#utilisation-avancée-1)
 <!-- tocstop -->
+
+<a name="readme-top"></a>
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
 
@@ -70,6 +80,7 @@ L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de propos
 
 * [affichage d'une echelle graphique](#scalebar)
 
+* [widget d'exagération du relief](#boostrelief)
 
 ## Mise en oeuvre
 
@@ -81,7 +92,7 @@ L'utilisation de l'extension Géoportail pour iTowns se fait via les étapes sui
 
 * [Configuration de l'accès à la plateforme Géoportail](#config)
 
-
+Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
 <a id="download"/>
 
@@ -106,6 +117,8 @@ L'extension Géoportail pour iTowns comprend l'arborescence de fichiers suivante
 Les scripts d'iTowns s'obtiennent sur [la page de téléchargement d'iTowns](https://github.com/iTowns/itowns/releases).
 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="download-direct"/>
 
 #### Téléchargement direct
@@ -114,6 +127,7 @@ Vous pouvez télécharger la dernière version de l'extension Géoportail pour i
 
 L'archive téléchargée (GpItowns.zip) comprend l'arborescence décrite ci-dessus.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="download-npm"/>
 
@@ -140,6 +154,8 @@ http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src
 http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src.css
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="integration"/>
 
 ### Intégration dans une page web
@@ -158,18 +174,22 @@ Intégrez l'extension géoportail pour iTowns dans votre page web classiquement 
 <link rel="stylesheet" href="chemin/vers/GpPluginItowns.css" />
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="config"/>
 
 ### Configuration de l'accès à la plateforme Géoportail
 
-L'extension Géoportail pour iTowns exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'obtention d'une **clef d'accès** obtenue sur le site [professionnels.ign.fr](http://professionnels.ign.fr/ign/contrats) ayant les droits sur les ressources que vous souhaitez exploiter.
+L'extension Géoportail pour iTowns exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'utilisation d'une ou de plusieurs **clef d'accès** gratuites disponibles sur le site [geoservices.ign.fr](https://geoservices.ign.fr/services-web) ayant les droits sur les ressources que vous souhaitez exploiter.
+
+Vous pouvez ensuite paramétrer l'utilisation de l'extension avec la ou les clefs qui correspondent à vos besoins de deux manières possibles :.
 
 Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension avec cette clef de deux manières possibles :
 
 **Méthode 1** : Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
 ``` html
-<script data-key="VOTRE-CLEF" src="chemin/vers/GpPluginItowns.js"></script>
+<script data-key="CLEF" src="chemin/vers/GpPluginItowns.js"></script>
 ```
 
 Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
@@ -182,7 +202,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script src="itowns.js"></script>
         <!-- Extension Géoportail pour iTowns -->
         <link rel="stylesheet" href="GpPluginItowns.css" />
-        <script src="GpPluginItowns.js" data-key="CLEAPI"></script>
+        <script src="GpPluginItowns.js" data-key="CLEF"></script>
     </head>
     <body>
         <script>
@@ -193,6 +213,15 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
     </body>
 </html>
 ```
+
+Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
+
+``` html
+<script data-key="CLEF-1,CLEF-2,CLEF-3" src="chemin/vers/GpPluginItowns.js"></script>
+```
+
+**Cependant, en cas de clés multiples, le plus simple reste de directement entrer la clé spécifique à utiliser au niveau du paramètre "url" de la couche ou "apiKey" du widget.**
+
 
 **Méthode 2** : A la fin du chargement de la page en utilisant la fonction [Gp.Services.GetConfig()](https://github.com/IGNF/geoportal-access-lib#getConfig) et en conditionnant alors l'utilisation de l'extension à l'exécution de la fonction de rappel onSuccess passée en paramètres de Gp.Services.getConfig() comme sur l'exemple suivant :
 
@@ -210,7 +239,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEAPI',
+                    apiKey: 'CLEF',
                     onSuccess: function (response) {
                         // votre utilisation de l'extension Géoportail pour iTowns
                     }
@@ -221,9 +250,44 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+
+
+``` html
+<html>
+    <head>
+        <!-- Bibliothèque iTowns -->
+        <link rel="stylesheet" href="itowns.css" />
+        <script src="itowns.js"></script>
+        <!-- Extension Géoportail pour iTowns -->
+        <link rel="stylesheet" href="GpPluginItowns.css" />
+        <script src="GpPluginItowns.js"></script>
+    </head>
+    <body>
+        <script>
+            window.onload = function () {
+                Gp.Services.getConfig({
+                    apiKey: 'CLEF-1,CLEF-2,CLEF-3',
+                    onSuccess: function (response) {
+                        // votre utilisation de l'extension Géoportail pour iTowns
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
+```
+
+**Cependant, en cas de clés multiples, le plus simple reste de directement entrer la clé spécifique à utiliser au niveau du paramètre "url" de la couche ou "apiKey" du widget.**
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Optimisation du chargement : configuration locale
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
+
+Si vous souhaitez une autoconfiguration locale unique avec plusieurs clés, c'est possible. Pour cela, enregistrez le contenu de la requête suivante dans un fichier autoconf.json (en remplacant key1, key2, key3... par les clefs génériques que vous souhaitez utiliser) :
+[autoconf multi-clés : https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback](https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback)
 
 Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
 
@@ -274,6 +338,8 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Appel de l'extension dans un module ES6
 
 Le module de l'extension expose de multiples exports nommés (dont le module itowns étendu).
@@ -313,11 +379,13 @@ const globeView = new It.GlobeViewExtended(...)
 Gp.Services.getConfig(...)
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Compatibilités
 
 ### Versions d'iTowns supportées
 
-La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.27.0** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.27.0 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
+La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.38.2** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.38.2 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
 
 
 ### Navigateurs supportés
@@ -338,6 +406,9 @@ Opera      | Versions récentes (19+)
 Le webGL est une technologie qui exploite l'accélération matérielle de la carte graphique de la machine de l'utilisateur. En fonction du matériel de l'utilisateur, iTowns et l'extension Géoportail pour iTowns pourront donc ne pas fonctionner.
 Sur [cette page](https://get.webgl.org/), il est possible de tester en fonction du navigateur et du matériel si le contexte webGL est accessible.
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Fonctionnalités
 
 <a id="crs"/>
@@ -350,8 +421,10 @@ NB :
 
 * Le site [epsg.io](http://epsg.io/) recense un grand nombre de registres de systèmes de coordonnées avec leurs définitions.
 
-* Les définitions des systèmes de coordonnées du registre IGN-F peuvent être trouvées [ici](https://github.com/OSGeo/proj.4/blob/master/nad/IGNF).
+* Les définitions des systèmes de coordonnées du registre IGN-F peuvent être trouvées [ici](https://geodesie.ign.fr/contenu/fichiers/IGNF.xml).
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMTS"/>
 
@@ -531,6 +604,7 @@ var orthoLayer = {
 globeView.addLayer(orthoLayer);
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMS"/>
 
@@ -625,6 +699,8 @@ var regionLayer{
 
 globeView.addLayer(regionLayer);
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="Elevation"/>
 
@@ -754,6 +830,7 @@ var MNTLayer = {
 globeView.addLayer(ElevationLayer);
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="layerswitcher"/>
 
@@ -823,6 +900,9 @@ globeView.addWidget(layerSwitcher);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/b01pLz3m/embedded/result,js,html,css/)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="mp"/>
 
 ### Coordonnées et altitude en un point de la carte
@@ -865,6 +945,9 @@ map.addControl(mpControl);
 **Exemple d'utilisation avec paramétrage des systèmes de coordonnées**
 [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/tmjdezkq/embedded/result,js,html,css/)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="attributions"/>
 
 ### Affichage dynamique des attributions
@@ -902,6 +985,8 @@ globeView.addWidget( attribution );
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/r3or3tz9/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="miniglobe"/>
 
 ### Affichage d'une mini-vue dynamique
@@ -935,6 +1020,8 @@ globeView.addWidget( miniglobe );
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xfq98cr1/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="scalebar"/>
 
 ### Affichage d'une échelle graphique
@@ -967,3 +1054,150 @@ globeView.addWidget( scalebar );
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xwodbsfp/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="boostrelief"/>
+
+### Widget d'éxagération du relief
+
+Ce widget permet d'appliquer des coéfficients d'éxagération du relief, afin de mettre en valeur et de visualiser de manière plus marquée la topographie d'un territoire.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.BoostRelief que l'on peut ensuite ajouter au globe de la manière suivante :
+
+``` javascript
+var boostRelief = new itowns.control.BoostRelief(opts);
+globeView.addWidget( boostrelief );
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+// Ajout de MNT
+var mntLayer = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+});
+
+var mntLayerWorld = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE.SRTM3"
+});
+
+globeView.addLayer(mntLayer);
+globeView.addLayer(mntLayerWorld);
+
+var boostrelief = new itowns.control.BoostRelief({});
+
+globeView.addWidget( boostrelief );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1no0hyp2/embedded/result,js,html,css/)
+
+##### Utilisation avancée
+
+Ajout du widget en paramétrant des coéfficients minimum et maximum, et un pas spécifique pour le slider d'éxagération
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+// Ajout de MNT
+var mntLayer = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+});
+
+var mntLayerWorld = new itowns.layer.GeoportalElevation({
+  layer: "ELEVATION.ELEVATIONGRIDCOVERAGE.SRTM3"
+});
+
+globeView.addLayer(mntLayer);
+globeView.addLayer(mntLayerWorld);
+
+// Coefficients entre x5 et x60, avec un pas de 60
+var boostrelief = new itowns.control.BoostRelief({
+	scale : {
+	    min : 5,
+	    max : 60,
+	    step : 5
+	}
+});
+
+globeView.addWidget( boostrelief );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/szj1n62k/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="buildings"/>
+
+### Widget d'affichage des bâtiments 
+
+Ce widget permet d'afficher en 3D sous forme de boîtes à chaussures en vecteur tuilé les bâtiments issus de la BDTOPO.
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.Buildings que l'on peut ensuite ajouter au globe de la manière suivante :
+
+``` javascript
+var buildings = new itowns.control.Buildings(opts);
+globeView.addWidget( buildings );
+```
+
+#### Exemples d'utilisation
+
+##### Utilisation simple
+
+Ajout du widget sans paramétrage particulier.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+var buildings = new itowns.control.Buildings({});
+
+globeView.addWidget( buildings );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/5yer3df1/embedded/result,js,html,css/)
+
+Par défaut, le MNT "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES" sera ajouté au globe avec la clé "altimetrie" tandis que les bâtiments de la couche vecteur tuilé PLAN.IGN seront affichés à l'initialisation du globe à partir du niveau de zoom 15. Ils seront ajoutés avec la clé "essentiels", et positionnés à leur altitude définie dans la BDTOPO.
+
+##### Utilisation avancée
+
+Ajout du widget en paramétrant le widget pour placer les bâtiments à une altitude de 0, ne pas ajouter de MNT, utiliser la clé "cartes" pour ajouter la couche des bâtiments, et ne pas afficher les bâtiments à l'initialisation du globe. Les bâtiments dans cet exemple ne sont visibles qu'à partir du niveau de zoom 17.
+
+``` javascript
+// Création du globe
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+// Ajout d'une couche (voir plus haut ajout WMTS ou WMS)
+globeView.addLayer(orthoLayer);
+
+var buildings = new itowns.control.Buildings({
+    MNT: false,
+    buildingsOnGround: true,
+    key: "cartes",
+    defaultVisibility: false,
+    minZoom: 17
+});
+
+globeView.addWidget( buildings );
+```
+
+**Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/2vLfh0rq/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

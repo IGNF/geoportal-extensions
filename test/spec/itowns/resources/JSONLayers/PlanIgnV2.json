@@ -1,0 +1,108 @@
+{
+    "type": "color",
+    "id":         "PlanIGN",
+    "fx" :        2.5,
+    "source": {
+        "protocol":   "wmts",
+        "url":        "https://wxs.ign.fr/essentiels/geoportail/wmts",
+        "updateStrategy": {
+            "type": 0,
+            "options": {}
+        },
+        "networkOptions" : {
+            "crossOrigin" : "omit"
+        },
+        "attribution" :  [{
+            "name" : "IGN",
+            "attribution" : "Institut national de l'information géographique et forestière",
+            "url" : "http://www.ign.fr",
+            "constraints" : [{
+                "crs":"EPSG:4326"
+            }]
+        }],
+        "name": "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
+        "format": "image/png",
+        "crs" : "EPSG:3857",
+        "tileMatrixSet": "PM",
+        "tileMatrixSetLimits": {
+          "6" : {
+                "minTileRow": 0,
+                "maxTileRow": 72,
+                "minTileCol":0,
+                "maxTileCol":64
+            },
+            "7" : {
+                "minTileRow": 0,
+                "maxTileRow": 136,
+                "minTileCol":0,
+                "maxTileCol":128
+            },
+            "8" : {
+                "minTileRow": 80,
+                "maxTileRow": 144,
+                "minTileCol":80,
+                "maxTileCol":168
+            },
+            "9" : {
+                "minTileRow": 168,
+                "maxTileRow": 288,
+                "minTileCol":160,
+                "maxTileCol":336
+            },
+            "10" : {
+                "minTileRow": 336,
+                "maxTileRow": 576,
+                "minTileCol": 328,
+                "maxTileCol": 672
+            },
+            "11" : {
+                "minTileRow": 680,
+                "maxTileRow": 1152,
+                "minTileCol":664,
+                "maxTileCol":1344
+            },
+            "12" : {
+                "minTileRow": 1368,
+                "maxTileRow": 2304,
+                "minTileCol":1328,
+                "maxTileCol":2688
+            },
+            "13" : {
+                "minTileRow": 2736,
+                "maxTileRow": 4600,
+                "minTileCol":2656,
+                "maxTileCol":5376
+            },
+            "14" : {
+                "minTileRow": 5472,
+                "maxTileRow": 9200,
+                "minTileCol":5312,
+                "maxTileCol":10744
+            },
+            "15" : {
+                "minTileRow": 10952,
+                "maxTileRow": 18392,
+                "minTileCol":10624,
+                "maxTileCol":21480
+            },
+            "16" : {
+                "minTileRow": 21904,
+                "maxTileRow": 36784,
+                "minTileCol":21248,
+                "maxTileCol":42952
+            },
+            "17" : {
+                "minTileRow": 43816,
+                "maxTileRow": 73568,
+                "minTileCol":42496,
+                "maxTileCol":85904
+            },
+            "18" : {
+                "minTileRow": 87640,
+                "maxTileRow": 147128,
+                "minTileCol":85000,
+                "maxTileCol":171808
+            }
+        }
+    }
+}

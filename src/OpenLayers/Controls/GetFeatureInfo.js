@@ -22,6 +22,7 @@ var logger = Logger.getLogger("getfeatureinfo");
  * @constructor
  * @alias ol.control.GetFeatureInfo
  * @extends {ol.control.Control}
+ * @type {ol.control.GetFeatureInfo}
  * @param {Object} options - control options
  * @param {Array.<Object>} [options.layers] - list of layers which can be requested through the control. Each array element is an object, with following properties :
  * @param {ol.layer.Layer} options.layers.obj - {@link http://openlayers.org/en/latest/apidoc/ol.layer.Layer.html ol.layer.Layer} layer handled by the control (that has been added to map).
@@ -37,10 +38,18 @@ var logger = Logger.getLogger("getfeatureinfo");
  * @param {String} [options.options.proxyUrl] - Proxy URL to avoid cross-domain problems.
  * @param {Array.<String>} [options.options.noProxyDomains] - Proxy will not be used for this list of domain names. Only use if you know what you're doing.
  * @param {Boolean} [options.options.autoPan = true] - Specifies whether the map should auto-pan if the pop-up is rendered outside of the canvas. Defaults to true.
- * @param {olx.OverlayPanOptions} [options.options.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/olx.html#.OverlayPanOptions olx.OverlayPanOptions}.
+ * @param {Object} [options.options.autoPanAnimation] - Used to customize the auto-pan animation. See {@link https://openlayers.org/en/latest/apidoc/module-ol_Overlay.html#~PanOptions PanOptions}.
  * @param {Number} [options.options.autoPanMargin] - Margin (in pixels) between the pop-up and the border of the map when autopanning. Default is 20.
  */
 var GetFeatureInfo = (function (Control) {
+    /**
+     * See {@link ol.control.GetFeatureInfo}
+     * @module GetFeatureInfo
+     * @alias module:~Controls/GetFeatureInfo
+     * @param {*} options - options
+     * @example
+     * import GetFeatureInfo from "src/OpenLayers/Controls/GetFeatureInfo"
+     */
     function GetFeatureInfo (options) {
         options = options || {};
         var _options = options.options || {};
@@ -574,8 +583,10 @@ var GetFeatureInfo = (function (Control) {
             this._eventsHandler["pointermove"] = displayCursor;
             map.on("pointermove", displayCursor);
         } else {
-            map.un("pointermove", this._eventsHandler["pointermove"]);
-            delete this._eventsHandler["pointermove"];
+            if (this._eventsHandler.hasOwnProperty("pointermove")) { // si le widget n'a jamais ete active l'evenement pointermove n'existe pas
+                map.un("pointermove", this._eventsHandler["pointermove"]);
+                delete this._eventsHandler["pointermove"];
+            }
             map.getTargetElement().style.cursor = "";
         }
     };

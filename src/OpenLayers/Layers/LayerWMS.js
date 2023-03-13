@@ -17,7 +17,8 @@ import SourceWMS from "./SourceWMS";
  * @constructor
  * @extends {ol.layer.Tile}
  * @alias ol.layer.GeoportalWMS
- * @param {Object} options            - options for function call.
+ * @type {ol.layer.GeoportalWMS}
+ * @param {Object} GeoportalWMSoptions            - options for function call.
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
@@ -29,6 +30,14 @@ import SourceWMS from "./SourceWMS";
  * });
  */
 var LayerWMS = (function (TileLayer) {
+    /**
+     * See {@link ol.layer.GeoportalWMS}
+     * @module LayerWMS
+     * @alias module:~Layers/GeoportalWMS
+     * @param {*} options - options
+     * @example
+     * import LayerWMS from "src/OpenLayers/Layers/LayerWMS"
+     */
     function LayerWMS (options) {
         if (!(this instanceof LayerWMS)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
