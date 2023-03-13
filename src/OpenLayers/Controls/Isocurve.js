@@ -23,6 +23,8 @@ import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
+import ButtonExport from "./Export";
+
 // DOM
 import IsoDOM from "../../Common/Controls/IsoDOM";
 
@@ -42,6 +44,7 @@ var logger = Logger.getLogger("isocurve");
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
+ * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
  * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
  * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
@@ -62,6 +65,7 @@ var logger = Logger.getLogger("isocurve");
  *  var iso = ol.control.Isocurve({
  *      "collapsed" : false,
  *      "draggable" : true,
+ *      "export"    : false,
  *      "methods" : ["time", "distance"],
  *      "exclusions" : {
  *         "toll" : true,
@@ -143,6 +147,13 @@ var Isocurve = (function (Control) {
         if (map) {
             // enrichissement du DOM du container lors de l'ajout à la carte
             this._container = this._initContainer(map);
+
+            // ajout d'un bouton d'export
+            if (this.options.export) {
+                var opts = Utils.assign({ control : this }, this.options.export);
+                this.export = new ButtonExport(opts);
+                this.export.render();
+            }
 
             // mode "draggable"
             if (this.draggable) {
@@ -424,6 +435,7 @@ var Isocurve = (function (Control) {
         this.options = {
             collapsed : true,
             draggable : false,
+            export : false,
             methods : ["time", "distance"],
             graphs : ["Voiture", "Pieton"],
             exclusions : {
@@ -487,6 +499,9 @@ var Isocurve = (function (Control) {
         // la géométrie
         this._geojsonLayer = null;
         this._geojsonObject = null;
+
+        // bouton export
+        this.export = null;
 
         // si un calcul est en cours ou non
         this._waiting = false;

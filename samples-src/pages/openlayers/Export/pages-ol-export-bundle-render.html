@@ -56,7 +56,7 @@
                 var exportDrawing = new ol.control.Export({
                   control: drawing
                 });
-                map.addControl(exportDrawing);
+                exportDrawing.render();
                 exportDrawing.on("export:compute", (e) => {
                   console.log("Export Drawing", e);
                 });
@@ -75,7 +75,7 @@
                     console.log(content);
                   }
                 });
-                map.addControl(exportIso);
+                exportIso.render();
                 exportIso.on("export:compute", (e) => {
                   console.log("Export Iso", e);
                 });
@@ -90,10 +90,10 @@
                 exportRoute.setName("export-route");
                 exportRoute.setTitle("Exporter Iti");
                 exportRoute.setMenu(true);
+                exportRoute.render();
                 exportRoute.on("export:compute", (e) => {
                   console.log("Export Route", e);
                 });
-                map.addControl(exportRoute);
 
                 // profil
                 var measureProfil = new ol.control.ElevationPath();
@@ -101,7 +101,7 @@
                 var exportProfil = new ol.control.Export({
                   control: measureProfil
                 });
-                map.addControl(measureProfil);
+                exportProfil.render();
                 exportProfil.on("export:compute", (e) => {
                   console.log("Export Profil", e);
                 });

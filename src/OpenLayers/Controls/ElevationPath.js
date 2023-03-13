@@ -30,10 +30,10 @@ import Interactions from "./Utils/Interactions";
 import MeasureToolBox from "./MeasureToolBox";
 import Measures from "./Measures/Measures";
 import LayerSwitcher from "./LayerSwitcher";
+import ButtonExport from "./Export";
 // DOM
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
-
 var logger = Logger.getLogger("elevationpath");
 
 /**
@@ -49,6 +49,7 @@ var logger = Logger.getLogger("elevationpath");
  * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
  * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
@@ -74,6 +75,7 @@ var logger = Logger.getLogger("elevationpath");
  * @example
  *
  * var measure = new ol.control.ElevationPath({
+ *    export : false,
  *    stylesOptions : {
  *     draw : {
  *       finish : new ol.style.Stroke({
@@ -527,6 +529,13 @@ var ElevationPath = (function (Control) {
             if (!this.options.target) {
                 MeasureToolBox.add(map, this);
             }
+
+            // ajout d'un bouton d'export
+            if (this.options.export) {
+                var opts = Utils.assign({ control : this }, this.options.export);
+                this.export = new ButtonExport(opts);
+                this.export.render();
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -635,6 +644,7 @@ var ElevationPath = (function (Control) {
             render : null,
             active : false,
             apiKey : null,
+            export : false,
             elevationOptions : {},
             layerDescription : {
                 title : "Profil altimétrique",
@@ -668,6 +678,9 @@ var ElevationPath = (function (Control) {
 
         // gestion de l'affichage du profil
         var _profile = options.displayProfileOptions || {};
+
+        // bouton export
+        this.export = null;
 
         // gestion de la fonction du profil
         var displayFunction = _profile.apply;
