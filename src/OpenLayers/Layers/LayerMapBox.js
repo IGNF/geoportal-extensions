@@ -89,14 +89,14 @@ var LayerMapBox = (function (VectorTileLayer) {
          * Ex. reponse Autoconf
          * (only for jsdoc)
          * @example
-         * "PLAN.IGN$GEOPORTAIL:GPP:TMS":{
+         * "PLAN.IGN::GEOPORTAIL:GPP:TMS":{
          *     "hidden":true,
          *     "queryable":false,
          *     "serviceParams":{
          *         "id":"GPP:TMS",
          *         "version":"1.0.0",
          *         "serverUrl":{
-         *             "jhyvi0fgmnuxvfv0zjzorvdn":"https://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/tms/1.0.0"
+         *             "essentiels":"https://wxs.ign.fr/essentiels/geoportail/tms/1.0.0"
          *         }
          *     },
          *     "name":"PLAN.IGN",
@@ -136,7 +136,7 @@ var LayerMapBox = (function (VectorTileLayer) {
          *     "legends":[],
          *     "metadata":[],
          *     "apiKeys":["jhyvi0fgmnuxvfv0zjzorvdn"],
-         *     "layerId":"PLAN.IGN$GEOPORTAIL:GPP:TMS",
+         *     "layerId":"PLAN.IGN::GEOPORTAIL:GPP:TMS",
          *     "defaultProjection":"EPSG:3857"
          * }
          */
@@ -144,7 +144,7 @@ var LayerMapBox = (function (VectorTileLayer) {
         this.RESPONSE_AUTOCONG = null;
 
         // récupération des ressources utiles sur l'autoconf
-        var layerId = this.layerName + "$GEOPORTAIL:GPP:TMS";
+        var layerId = this.layerName + "::GEOPORTAIL:GPP:TMS";
 
         var layerCfg = Config.configuration.layers[layerId];
         if (!layerCfg) {
