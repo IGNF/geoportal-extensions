@@ -89,7 +89,7 @@ var LayerMapBox = (function (VectorTileLayer) {
          * Ex. reponse Autoconf
          * (only for jsdoc)
          * @example
-         * "PLAN.IGN::GEOPORTAIL:GPP:TMS":{
+         * "PLAN.IGN$GEOPORTAIL:GPP:TMS":{
          *     "hidden":true,
          *     "queryable":false,
          *     "serviceParams":{
@@ -144,7 +144,7 @@ var LayerMapBox = (function (VectorTileLayer) {
         this.RESPONSE_AUTOCONG = null;
 
         // récupération des ressources utiles sur l'autoconf
-        var layerId = this.layerName + "::GEOPORTAIL:GPP:TMS";
+        var layerId = this.layerName + "$GEOPORTAIL:GPP:TMS";
 
         var layerCfg = Config.configuration.layers[layerId];
         if (!layerCfg) {
