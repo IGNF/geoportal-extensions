@@ -280,9 +280,10 @@ var LayerMapBox = (function (VectorTileLayer) {
             var key = vectorTileJson.on("change", function () {
                 if (vectorTileJson.getState() === "ready") {
                     var doc = vectorTileJson.getTileJSON();
-                    if (doc) {
-                        self.set("mapbox-extensions", doc);
+                    if (!doc) {
+                        return;
                     }
+                    self.set("mapbox-extensions", doc);
                     var tiles = Array.isArray(doc.tiles) ? doc.tiles : [doc.tiles];
                     // protocole : http ou https
                     for (var i = 0; i < styleSource.tiles.length; i++) {

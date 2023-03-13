@@ -12,6 +12,14 @@
 
 * [Added]
 
+    - Ajout simplifié d'une couche vecteur tuilé IGN :
+    ```js
+    var LayerMapBox = new ol.layer.GeoportalMapBox({
+        layer  : "PLAN.IGN",
+        style  : "gris"
+    });
+    ```
+
 * [Changed]
 
 * [Deprecated]
@@ -23,8 +31,6 @@
 * [Security]
 
 ---
-
-
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -49,7 +55,6 @@
 * [Security]
 
 ---
-
 
 
 # Extension Geoportail Itowns, version __VERSION__
