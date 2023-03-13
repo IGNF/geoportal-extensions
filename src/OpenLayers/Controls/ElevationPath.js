@@ -72,6 +72,7 @@ var logger = Logger.getLogger("elevationpath");
  * @fires elevationpath:drawstart
  * @fires elevationpath:drawend
  * @fires elevationpath:compute
+ * @fires export:compute
  * @example
  *
  * var measure = new ol.control.ElevationPath({
@@ -535,6 +536,13 @@ var ElevationPath = (function (Control) {
                 var opts = Utils.assign({ control : this }, this.options.export);
                 this.export = new ButtonExport(opts);
                 this.export.render();
+                var self = this;
+                this.export.on("export:compute", (e) => {
+                    self.dispatchEvent({
+                        type : "export:compute",
+                        content : e.content
+                    });
+                });
             }
         }
 

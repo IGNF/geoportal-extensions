@@ -61,6 +61,7 @@ var logger = Logger.getLogger("isocurve");
  * @fires isocurve:drawstart
  * @fires isocurve:drawend
  * @fires isocurve:compute
+ * @fires export:compute
  * @example
  *  var iso = ol.control.Isocurve({
  *      "collapsed" : false,
@@ -153,6 +154,13 @@ var Isocurve = (function (Control) {
                 var opts = Utils.assign({ control : this }, this.options.export);
                 this.export = new ButtonExport(opts);
                 this.export.render();
+                var self = this;
+                this.export.on("export:compute", (e) => {
+                    self.dispatchEvent({
+                        type : "export:compute",
+                        content : e.content
+                    });
+                });
             }
 
             // mode "draggable"

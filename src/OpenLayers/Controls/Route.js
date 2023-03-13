@@ -61,6 +61,7 @@ var logger = Logger.getLogger("route");
  * @fires route:drawstart
  * @fires route:drawend
  * @fires route:compute
+ * @fires export:compute
  * @example
  *  var route = ol.control.Route({
  *      "collapsed" : true
@@ -160,6 +161,13 @@ var Route = (function (Control) {
                 var opts = Utils.assign({ control : this }, this.options.export);
                 this.export = new ButtonExport(opts);
                 this.export.render();
+                var self = this;
+                this.export.on("export:compute", (e) => {
+                    self.dispatchEvent({
+                        type : "export:compute",
+                        content : e.content
+                    });
+                });
             }
 
             // mode "draggable"
