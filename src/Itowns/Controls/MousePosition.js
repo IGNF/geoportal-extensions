@@ -3,7 +3,6 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import Gp from "geoportal-access-lib";
 import GlobeViewExtended from "../GlobeViewExtended";
 import Utils from "../../Common/Utils";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
 import Widget from "./Widget";
@@ -73,7 +72,7 @@ var logger = Logger.getLogger("MousePosition");
  *      units : ["DEC", "DMS"]
  *  });
  */
-function MousePosition (options) {
+function MousePosition(options) {
     options = options || {};
 
     if (!(this instanceof MousePosition)) {
@@ -93,11 +92,11 @@ function MousePosition (options) {
 
     Widget.call(
         this, {
-            name : "MousePosition",
-            element : container,
-            target : options.target,
-            position : options.position
-        }
+        name: "MousePosition",
+        element: container,
+        target: options.target,
+        position: options.position
+    }
     );
 };
 
@@ -329,9 +328,6 @@ MousePosition.prototype.displayAltitude = function (displayAltitude) {
     if (displayAltitude === undefined) {
         return;
     }
-    if (typeof this._noRightManagement === "undefined") {
-        this._checkRightsManagement();
-    }
     this.options.displayAltitude = displayAltitude;
     this._setElevationPanel(displayAltitude);
 };
@@ -396,17 +392,17 @@ MousePosition.prototype._initialize = function (options) {
     if (options.altitude) {
         var altitude = options.altitude;
         this.options.altitude = {
-            triggerDelay : (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
-            responseDelay : (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
-            serviceOptions : altitude.serviceOptions || {},
-            noDataValue : (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
-            noDataValueTolerance : (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
+            triggerDelay: (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
+            responseDelay: (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
+            serviceOptions: altitude.serviceOptions || {},
+            noDataValue: (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
+            noDataValueTolerance: (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
         };
     } else {
         this.options.altitude = {
-            triggerDelay : 200,
-            responseDelay : 500,
-            serviceOptions : {}
+            triggerDelay: 200,
+            responseDelay: 500,
+            serviceOptions: {}
         };
     }
 
@@ -452,12 +448,6 @@ MousePosition.prototype._initialize = function (options) {
         // reactivate the display of coordinates, to not display an empty panel
         this.options.displayCoordinates = true;
     }
-
-    // rights management on resources and services
-    // if we want an altitude calculation, we check the alti resources rights...
-    if (this.options.displayAltitude) {
-        this._checkRightsManagement();
-    }
 };
 
 /**
@@ -475,32 +465,32 @@ MousePosition.prototype._initProjectionSystems = function () {
 
     // available projection systems vy default
     var projectionSystemsByDefault = [{
-        label : "Géographique",
-        crs : "EPSG:4326",
-        type : "Geographical"
+        label: "Géographique",
+        crs: "EPSG:4326",
+        type: "Geographical"
     }, {
-        label : "Mercator",
-        crs : "EPSG:3857",
-        type : "Metric"
+        label: "Mercator",
+        crs: "EPSG:3857",
+        type: "Metric"
     }, {
-        label : "Lambert 93",
-        crs : "EPSG:2154",
-        type : "Metric",
-        geoBBox : {
-            left : -9.86,
-            bottom : 41.15,
-            right : 10.38,
-            top : 51.56
+        label: "Lambert 93",
+        crs: "EPSG:2154",
+        type: "Metric",
+        geoBBox: {
+            left: -9.86,
+            bottom: 41.15,
+            right: 10.38,
+            top: 51.56
         }
     }, {
-        label : "Lambert II étendu",
-        crs : "EPSG:27572",
-        type : "Metric",
-        geoBBox : {
-            left : -4.87,
-            bottom : 42.33,
-            right : 8.23,
-            top : 51.14
+        label: "Lambert II étendu",
+        crs: "EPSG:27572",
+        type: "Metric",
+        geoBBox: {
+            left: -4.87,
+            bottom: 42.33,
+            right: 8.23,
+            top: 51.14
         }
     }];
 
@@ -534,31 +524,31 @@ MousePosition.prototype._initProjectionUnits = function () {
 
     // available units systems by default
     var projectionUnitsByDefault = {
-        Geographical : [{
-            code : "DEC",
-            label : "degrés décimaux",
-            convert : this._displayDEC
+        Geographical: [{
+            code: "DEC",
+            label: "degrés décimaux",
+            convert: this._displayDEC
         }, {
-            code : "DMS",
-            label : "degrés sexagésimaux",
-            convert : this._displayDMS
+            code: "DMS",
+            label: "degrés sexagésimaux",
+            convert: this._displayDMS
         }, {
-            code : "RAD",
-            label : "radians",
-            convert : this._displayRAD
+            code: "RAD",
+            label: "radians",
+            convert: this._displayRAD
         }, {
-            code : "GON",
-            label : "grades",
-            convert : this._displayGON
+            code: "GON",
+            label: "grades",
+            convert: this._displayGON
         }],
-        Metric : [{
-            code : "M",
-            label : "mètres",
-            convert : this._displayMeter
+        Metric: [{
+            code: "M",
+            label: "mètres",
+            convert: this._displayMeter
         }, {
-            code : "KM",
-            label : "kilomètres",
-            convert : this._displayKMeter
+            code: "KM",
+            label: "kilomètres",
+            convert: this._displayKMeter
         }]
     };
 
@@ -589,30 +579,6 @@ MousePosition.prototype._initProjectionUnits = function () {
     // in case of...
     if (typeof this._projectionUnits === "object" && Object.keys(this._projectionUnits).length === 0) {
         this._projectionUnits = projectionUnitsByDefault;
-    }
-};
-
-/**
- * this method is called by constructor
- * and check the rights to resources
- *
- * @method _checkRightsManagement
- * @private
- */
-MousePosition.prototype._checkRightsManagement = function () {
-    var rightManagement = RightManagement.check({
-        key : this.options.apiKey,
-        resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-        services : ["Elevation"]
-    });
-
-    this._noRightManagement = !rightManagement;
-
-    // retrieves the usefull infos
-    // on this control, we do not care about the ressource bescause it is unique
-    // Ex : the API key from the autoconfiguration if it has not been given
-    if (!this.options.apiKey) {
-        this.options.apiKey = rightManagement.key;
     }
 };
 
@@ -687,13 +653,8 @@ MousePosition.prototype._setElevationPanel = function (active) {
         div = document.getElementById("GPmousePositionAltitude-" + this._uid);
         div.style.display = "none";
     } else {
-        if (this._noRightManagement) {
-            div = document.getElementById("GPmousePositionAlt-" + this._uid);
-            div.innerHTML = "No rights!";
-        } else {
-            div = document.getElementById("GPmousePositionAltitude-" + this._uid);
-            div.style.display = "";
-        }
+        div = document.getElementById("GPmousePositionAltitude-" + this._uid);
+        div.style.display = "";
     }
 };
 
@@ -976,16 +937,16 @@ MousePosition.prototype.onMouseMove = function (e) {
     var position = this.getGlobe().getCoordinateFromMouseEvent(e);
     if (!position) {
         this.GPdisplayCoords({
-            lon : "---",
-            lat : "---"
+            lon: "---",
+            lat: "---"
         });
         this.GPresetElevation();
         return;
     }
 
     var coordinate = {
-        lon : position.x,
-        lat : position.y
+        lon: position.x,
+        lat: position.y
     };
 
     this._setCoordinate(coordinate);
@@ -1057,21 +1018,14 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
         return;
     }
 
-    // if we don not have the rights on the requested resource, we just stop !
-    if (this._noRightManagement) {
-        logger.warn("contract key configuration has no rights to load geoportal elevation ");
-        document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "No rights!";
-        return;
-    }
-
     // we retrieve the service options...
     var options = this.options.altitude.serviceOptions || {};
 
     // ... and the coordinates...
     options.zonly = true;
     options.positions = [{
-        lon : coordinate.lon,
-        lat : coordinate.lat
+        lon: coordinate.lon,
+        lat: coordinate.lat
     }];
 
     // ... and the callbacks
@@ -1095,7 +1049,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     };
     // in the case of the API key is not given as option of the service,
     // we use the key of the autoconf, or the key given in the control options
-    options.apiKey = options.apiKey || this.options.apiKey;
+    options.apiKey = "calcul";
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
     // true par défaut (https)
