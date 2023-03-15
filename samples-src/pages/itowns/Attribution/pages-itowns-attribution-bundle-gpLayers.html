@@ -1,0 +1,94 @@
+{{#extend "layout-itowns-sample-bundle"}}
+
+{{#content "head"}}
+    <script> var apiKey = "{{ apikey }}"; </script>
+    <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
+    <title>Sample itowns attributions</title>
+{{/content}}
+
+{{#content "style"}}
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            overflow:hidden;
+            height:100%;
+        }
+
+        #viewerDiv {
+            margin : auto auto;
+            width: 100%;
+            height: 70%;
+            padding: 0;
+        }
+    </style>
+{{/content}}
+
+{{#content "body"}}
+    <h2>Ajout d'un contrôle des attributions : Attributions</h2>
+    <!-- map -->
+    <div id="viewerDiv"></div>
+    <div id="miniGlobeViewerDiv"></div>
+{{/content}}
+
+{{#content "js"}}
+    <script type="text/javascript">
+    var createMap = function() {
+        const positionOnGlobe = {
+            coord: new itowns.Coordinates('EPSG:4326', 2.3465, 48.88, 0),
+            zoom: 10,
+            tilt: 45,
+            heading: 0
+        };
+
+        const viewerDiv = document.getElementById("viewerDiv");
+        globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+        globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+
+            // ajout des couches
+            // Couche MNT Geoportail (WMTS)
+            globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
+                layer: "ELEVATION.ELEVATIONGRIDCOVERAGE"
+            }));
+
+            // Couche WMTS Geoportail
+            globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
+                layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+            }));
+
+            // Couche WMS Geoportail
+            globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
+                layer: "LIMITES_ADMINISTRATIVES_EXPRESS.LATEST",
+                itownsParams: {
+                    opacity: 0.5
+                }
+            }));
+
+            // eslint-disable-next-line no-console
+            console.info("Globe initialized");
+            var attribution = new Gp.itownsExtended.control.Attributions({
+                options: {
+                    // collapsed : true
+                }
+            });
+            globeView.addWidget(attribution);
+            attribution.addEventListener("attributions:update", function (e) {
+                console.warn(e);
+            });
+        });
+    }
+
+    Gp.Services.getConfig({
+        // callbackSuffix : '',
+        apiKey : "{{ apikey }}",
+        timeOut : 20000,
+        onSuccess : createMap
+    });
+    </script>
+{{/content}}
+
+{{/extend}}

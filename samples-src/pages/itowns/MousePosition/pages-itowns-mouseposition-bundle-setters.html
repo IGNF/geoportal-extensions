@@ -1,0 +1,165 @@
+{{#extend "layout-itowns-sample-bundle"}}
+
+{{#content "head"}}
+<script> var apiKey = "{{ apikey }}"; </script>
+<script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
+<title>Sample itowns MousePosition</title>
+{{/content}}
+
+{{#content "style"}}
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    #viewerDiv {
+        margin: auto auto;
+        width: 100%;
+        height: 70%;
+        padding: 0;
+    }
+</style>
+{{/content}}
+
+{{#content "body"}}
+<h2>Ajout d'un contrôle d'affichage des coordonnées de la souris : MousePosition</h2>
+<!-- map -->
+<div id="viewerDiv"></div>
+
+<input type="button" onclick="addSystems()" value="Add new systems" />
+<input type="button" onclick="removeSystem()" value="Remove 'EPSG:4326' system" />
+<input type="button" onclick="displayCoordinates()" value="Add/hide coordinates panel" />
+<input type="button" onclick="displayAltitude()" value="Add/hide elevation panel" />
+<input type="button" onclick="increaseTriggerDelay()" value="Increase altitude triggerDelay" />
+<input type="button" onclick="addUnits()" value="Set units 'DEC' and 'DMS' only" />
+<input type="button" onclick="setCollapsed()" value="Collapse MousePosition control" />
+{{/content}}
+
+{{#content "js"}}
+<script type="text/javascript">
+    var mousePosition = null;
+
+    window.onload = function () {
+
+        addSystems = function () {
+            mousePosition.addSystems([
+                {
+                    crs: "EPSG:32620",
+                    label: "UTM 20N (Guadeloupe, Martinique)",
+                    type: "Metric",
+                    geoBBox: { left: -66.00, bottom: 0.00, right: -60.00, top: 84.00 }
+                },
+                {
+                    crs: "EPSG:4326",
+                    label: "Geographiques2",
+                    type: "Geographical"
+                }
+            ]);
+        }
+
+        removeSystem = function () {
+            mousePosition.removeSystem("EPSG:4326");
+        }
+
+        displayCoordinates = function () {
+            if (typeof this.coordDisplayed === 'undefined') {
+                this.coordDisplayed = true;
+            }
+            this.coordDisplayed = !this.coordDisplayed;
+            mousePosition.displayCoordinates(this.coordDisplayed);
+        }
+
+        displayAltitude = function () {
+            if (typeof this.altDisplayed === 'undefined') {
+                this.altDisplayed = false;
+            }
+            this.altDisplayed = !this.altDisplayed;
+            mousePosition.displayAltitude(this.altDisplayed);
+        }
+
+        increaseTriggerDelay = function () {
+            if (typeof this.triggerDelay === 'undefined') {
+                this.triggerDelay = 0;
+            }
+            this.triggerDelay += 1000;
+            mousePosition.setAltitudeOptions({
+                triggerDelay: this.triggerDelay
+            });
+        }
+
+        addUnits = function () {
+            mousePosition.setUnits(["DEC", "DMS"]);
+        }
+
+        setCollapsed = function () {
+            if (typeof this.collapsed === 'undefined') {
+                this.collapsed = false;
+            }
+            this.collapsed = !this.collapsed;
+            mousePosition.setCollapsed(this.collapsed);
+        }
+    }
+
+    var createMap = function () {
+        /* global itowns,document,GuiTools*/
+        const positionOnGlobe = {
+            coord: new itowns.Coordinates('EPSG:4326', 2.3465, 48.88, 0),
+            zoom: 10,
+            tilt: 45,
+            heading: 0
+        };
+
+        // iTowns namespace defined here
+        const viewerDiv = document.getElementById('viewerDiv');
+        const globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+        function createWMTSSourceFromConfig(config) {
+            config.source = new itowns.WMTSSource(config.source);
+            return config;
+        };
+
+        function addColorLayerFromConfig(config) {
+            var layer = new itowns.ColorLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+
+        function addElevationLayerFromConfig(config) {
+            var layer = new itowns.ElevationLayer(config.id, config);
+            globeView.addLayer(layer);
+        };
+
+        globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
+            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/Ortho.json').then(createWMTSSourceFromConfig).then(addColorLayerFromConfig);
+
+            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+            itowns.Fetcher.json('{{ resources }}/itowns/JSONLayers/IGN_MNT_HIGHRES.json').then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+
+            mousePosition = new Gp.itownsExtended.control.MousePosition({
+                collapsed: false,
+                displayCoordinates: true,
+                displayAltitude: true
+            });
+            globeView.addWidget(mousePosition);
+
+            var attribution = new Gp.itownsExtended.control.Attributions({});
+            globeView.addWidget(attribution);
+        });
+
+    }
+
+    Gp.Services.getConfig({
+        // callbackSuffix : '',
+        apiKey: "{{ apikey }}",
+        timeOut: 20000,
+        onSuccess: createMap
+    });
+</script>
+{{/content}}
+
+{{/extend}}

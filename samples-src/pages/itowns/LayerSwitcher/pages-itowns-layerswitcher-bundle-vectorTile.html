@@ -3,7 +3,7 @@
 {{#content "head"}}
 <script> var apiKey = "{{ apikey }}"; </script>
 <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
-<title>Sample itowns Vecteur Tuilé</title>
+<title>Sample itowns LayerSwitcher</title>
 {{/content}}
 
 {{#content "style"}}
@@ -28,7 +28,7 @@
 {{/content}}
 
 {{#content "body"}}
-<h2>Ajout d'une couche des bâtiments en vecteur tuilé</h2>
+<h2>Ajout d'un contrôle de gestion des couches : LayerSwitcher</h2>
 <!-- map -->
 <div id="viewerDiv"></div>
 <div id="miniGlobeViewerDiv"></div>
@@ -64,32 +64,42 @@
                 ssl: true
             }));
 
-            // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
-
-            // Define the source of the building data : those are vector tiled data from the geoportail.
-            const buildingsSource = new itowns.VectorTilesSource({
-                style: 'https://wxs.ign.fr/essentiels/static/vectorTiles/styles/PLAN.IGN/standard.json',
-                // We only want to display buildings related data.
-                filter: (layer) => {
-                    return layer['source-layer'].includes('bati_surf')
-                        && layer.paint["fill-color"];
+            // Ajout couche Vecteur tuilé par itowns (fx: 2.5 => transparent)
+            var mvtSource = new itowns.VectorTilesSource({
+                style: '../../resources/data/mapbox/styles/planign/standard.json',
+                zoom: {
+                    min: 2,
+                    max: 16,
                 },
             });
 
-            // Create a FeatureGeometryLayer to support building data.
-            var buildingsLayer = new itowns.FeatureGeometryLayer('VTBuilding', {
-                source: buildingsSource,
-                zoom: { min: 15 },
-                accurate: false,
-                style: new itowns.Style({
-                    fill: {
-                        base_altitude: (p) => p.alti_sol || 0,
-                        extrusion_height: (p) => p.hauteur || 0,
-                    }
-                })
+            var mvtSourceEcole = new itowns.VectorTilesSource({
+                style: '../../resources/data/mapbox/styles/enseignements.json',
+                sprite: '../../resources/data/mapbox/styles/pictos-enseignements/sprites-etablissements'
             });
 
-            globeView.addLayer(buildingsLayer);
+            var mvtLayer = new itowns.ColorLayer('PlanIGN', {
+                //FIXME wait for next itowns release to remove this
+                isValidData: function () {
+                    return false;
+                },
+                noTextureParentOutsideLimit: true,
+                addLabelLayer: true,
+                source: mvtSource
+            });
+
+            var mvtLayerEcole = new itowns.ColorLayer('Ecoles', {
+                //FIXME wait for next itowns release to remove this
+                isValidData: function () {
+                    return false;
+                },
+                noTextureParentOutsideLimit: true,
+                addLabelLayer: true,
+                source: mvtSourceEcole
+            });
+
+            globeView.addLayer(mvtLayer);
+            globeView.addLayer(mvtLayerEcole);
 
             // ajout du control
             var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({

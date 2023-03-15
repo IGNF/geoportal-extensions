@@ -3,7 +3,7 @@
 {{#content "head"}}
 <script> var apiKey = "{{ apikey }}"; </script>
 <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
-<title>Sample itowns Vecteur Tuilé</title>
+<title>Sample iTowns LayerSwitcher et ajout simplifié de couches</title>
 {{/content}}
 
 {{#content "style"}}
@@ -28,7 +28,7 @@
 {{/content}}
 
 {{#content "body"}}
-<h2>Ajout d'une couche des bâtiments en vecteur tuilé</h2>
+<h2>Ajout simplifié de couches géoportail Vecteur Tuilé</h2>
 <!-- map -->
 <div id="viewerDiv"></div>
 <div id="miniGlobeViewerDiv"></div>
@@ -44,19 +44,11 @@
             tilt: 45,
             heading: 0
         };
-
         // iTowns namespace defined here
         const viewerDiv = document.getElementById('viewerDiv');
         const globeView = new Gp.itownsExtended.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
         globeView.listen(Gp.itownsExtended.GlobeViewExtended.EVENTS.GLOBE_INITIALIZED, () => {
-
-            // ajout des couches
-            // Couche MNT Geoportail (WMTS)
-            globeView.addLayer(new Gp.itownsExtended.layer.GeoportalElevation({
-                layer: "ELEVATION.ELEVATIONGRIDCOVERAGE",
-                ssl: true
-            }));
 
             // Couche WMTS Geoportail
             globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
@@ -64,32 +56,19 @@
                 ssl: true
             }));
 
-            // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
+            // Couche Vecteur tuilé Geoportail
 
-            // Define the source of the building data : those are vector tiled data from the geoportail.
-            const buildingsSource = new itowns.VectorTilesSource({
-                style: 'https://wxs.ign.fr/essentiels/static/vectorTiles/styles/PLAN.IGN/standard.json',
-                // We only want to display buildings related data.
-                filter: (layer) => {
-                    return layer['source-layer'].includes('bati_surf')
-                        && layer.paint["fill-color"];
-                },
-            });
+            var vectorTileLayer = new Gp.itownsExtended.layer.VectorTileLayer({
+                layer: "PLAN.IGN",
+                id: "MVT",
+                url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+                zoom: {
+                    min: 0,
+                    max: 13
+                }
+            })
 
-            // Create a FeatureGeometryLayer to support building data.
-            var buildingsLayer = new itowns.FeatureGeometryLayer('VTBuilding', {
-                source: buildingsSource,
-                zoom: { min: 15 },
-                accurate: false,
-                style: new itowns.Style({
-                    fill: {
-                        base_altitude: (p) => p.alti_sol || 0,
-                        extrusion_height: (p) => p.hauteur || 0,
-                    }
-                })
-            });
-
-            globeView.addLayer(buildingsLayer);
+            globeView.addLayer(vectorTileLayer);
 
             // ajout du control
             var layerSwitcher = new Gp.itownsExtended.control.LayerSwitcher({
@@ -125,8 +104,9 @@
     }
 
     Gp.Services.getConfig({
-        // callbackSuffix : '',
-        apiKey: "{{ apikey }}",
+        callbackSuffix: '',
+        customConfigFile: "https://raw.githubusercontent.com/IGNF/geoportal-configuration/main/dist/essentielsConfig.json",
+        // apiKey: "{{ apikey }}",
         timeOut: 20000,
         onSuccess: createMap
     });
