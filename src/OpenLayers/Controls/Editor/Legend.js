@@ -382,6 +382,7 @@ Legend.prototype._getValues = function (type, value) {
             break;
         case "background":
             _color = this._extract(value["background-color"]);
+            _opacity = this._extract(value["background-opacity"]);
             break;
         case "fill":
             _color = this._extract(value["fill-color"]);
@@ -470,9 +471,6 @@ Legend.prototype._setValues = function (type, values) {
                     .replace("%style%", _style);
             }
             break;
-        case "background":
-            div.style["background-color"] = _color;
-            break;
         case "line":
             svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
@@ -488,6 +486,10 @@ Legend.prototype._setValues = function (type, values) {
                 .replace("%stroke%", (_stroke.indexOf("rgb") === 0) ? _stroke : Color.hexToRgba(_stroke, 1))
                 .replace("%width%", _width * factor);
             break;
+        // case "background":
+        //     div.style["background-color"] = _color;
+        //     break;
+        case "background":
         case "fill":
             svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
@@ -522,6 +524,9 @@ Legend.prototype._setValues = function (type, values) {
 Legend.prototype._extract = function (value) {
     var result = null;
     if (typeof value === "string") {
+        result = value;
+    }
+    if (typeof value === "number") {
         result = value;
     }
     if (Array.isArray(value)) {
