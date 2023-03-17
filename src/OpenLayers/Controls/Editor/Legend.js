@@ -85,12 +85,12 @@ Legend.prototype.constructor = Legend;
 
 Legend.PROPERTIES = {
     line : [
-        "line-cap",
+        "__line-cap",
         "line-color",
-        "line-dasharray",
-        "line-join",
+        "__line-dasharray",
+        "__line-join",
         "line-opacity",
-        "line-pattern",
+        "__line-pattern",
         "line-width"
     ],
     fill : [
@@ -107,31 +107,23 @@ Legend.PROPERTIES = {
     circle : [
         "circle-color",
         "circle-opacity",
-        "circle-radius",
         "circle-stroke-color",
         "circle-stroke-opacity",
         "circle-stroke-width"
     ],
     icon : [
-        "icon-anchor",
         "icon-color",
         "icon-image",
-        "icon-offset",
         "icon-opacity",
-        "icon-padding",
-        "icon-size"
+        "__icon-size"
     ],
     text : [
-        "text-anchor",
+        "__text-anchor",
         "text-color",
         "text-field",
-        "text-font",
-        "text-justify",
-        "text-max-width",
-        "text-offset",
-        "text-opacity",
-        "text-padding",
-        "text-size"
+        "__text-font",
+        "__text-opacity",
+        "__text-size"
     ]
 };
 
