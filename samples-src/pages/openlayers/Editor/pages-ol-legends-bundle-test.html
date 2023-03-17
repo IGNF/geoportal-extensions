@@ -490,12 +490,18 @@
             var legend92 = new ol.style.editor.Legend({
                 id: 92,
                 target: document.getElementById("92"),
+                sprites : {
+                    url : "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn.png",
+                    size : { w : 484, h : 710 },
+                    json : {
+                        "Marais" :{"x":272,"y":0,"width":212,"height":140,"pixelRatio":1}
+                    }
+                },
                 obj: {
-                    "title" : "test fill-pattern, not yet implemented...",
+                    "title" : "test fill-pattern...",
                     "paint": {
-                        "fill-color": "rgb(217, 217, 217)",
                         "fill-opacity": 0.7,
-                        "fill-pattern": "sprites"
+                        "fill-pattern": "Marais"
                     }
                 },
             });
@@ -597,6 +603,26 @@
                 },
             });
             legend36.add();
+
+            var legend46 = new ol.style.editor.Legend({
+                id: 46,
+                target: document.getElementById("46"),
+                sprites : {
+                    url : "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn.png",
+                    size : { w : 484, h : 710 },
+                    json : {
+                        "Sable": {"x": 227, "y": 426, "width": 212, "height": 140, "pixelRatio": 1}
+                    }
+                },
+                obj: {
+                    "title" : "test background-pattern...",
+                    "paint": {
+                        "background-pattern" : "Sable",
+                        "background-opacity" : 0.5
+                    }
+                },
+            });
+            legend46.add();
 
             ///////////////////
             // TEST SYMBOL

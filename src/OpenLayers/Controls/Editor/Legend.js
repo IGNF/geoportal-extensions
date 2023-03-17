@@ -471,8 +471,7 @@ Legend.prototype._renderThumbnail = function (type, values) {
             if (values.image) {
                 // FIXME on reste dans le paradigme d'utilisation du SVG...,
                 // mais probleme de ratio de l'image !?
-                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>";
-                svg = template
+                svg = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>"
                     .replace("%x%", this.options.sprites.json[values.image].x)
                     .replace("%y%", this.options.sprites.json[values.image].y)
                     .replace(/%w%/g, this.options.sprites.json[values.image].width)
@@ -508,10 +507,22 @@ Legend.prototype._renderThumbnail = function (type, values) {
             break;
         case "background":
         case "fill":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
-            div.style["background"] = svg
-                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
-                .replace("%opacity%", values.opacity || 1);
+            if (values.pattern) {
+                svg = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>"
+                    .replace("%x%", this.options.sprites.json[values.pattern].x)
+                    .replace("%y%", this.options.sprites.json[values.pattern].y)
+                    .replace(/%w%/g, this.options.sprites.json[values.pattern].width)
+                    .replace(/%h%/g, this.options.sprites.json[values.pattern].height)
+                    .replace("%W%", this.options.sprites.size.w)
+                    .replace("%H%", this.options.sprites.size.h)
+                    .replace("%URL%", this.options.sprites.url);
+                div.innerHTML = svg;
+            } else {
+                svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
+                div.style["background"] = svg
+                    .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                    .replace("%opacity%", values.opacity || 1);
+            }
             break;
         default:
             logger.warn("type not found, no thumbnail...");
