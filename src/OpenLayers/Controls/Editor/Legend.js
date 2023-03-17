@@ -455,7 +455,7 @@ Legend.prototype._renderThumbnail = function (type, values) {
 
     // valeur par defaut
     if (!values.color) {
-        values.color = "#000000";
+        values.color = "#FFFFFF";
     }
     // en fonction du type, on y ajoute le style
     switch (type) {
@@ -518,10 +518,12 @@ Legend.prototype._renderThumbnail = function (type, values) {
                     .replace("%URL%", this.options.sprites.url);
                 div.innerHTML = svg;
             } else {
-                svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
+                var fstrokecolor = values["outline-color"] || "#FFFFFF";
+                svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' stroke='%stroke-color%' stroke-width='3' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
                 div.style["background"] = svg
                     .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
-                    .replace("%opacity%", values.opacity || 1);
+                    .replace("%opacity%", values.opacity || 1)
+                    .replace("%stroke-color%", (fstrokecolor.indexOf("rgb") === 0) ? fstrokecolor : Color.hexToRgba(fstrokecolor, 1));
             }
             break;
         default:
