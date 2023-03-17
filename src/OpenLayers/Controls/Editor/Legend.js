@@ -79,6 +79,69 @@ function Legend (options) {
  */
 Legend.prototype.constructor = Legend;
 
+// ################################################################### //
+// ########################## CONSTANTES ############################# //
+// ################################################################### //
+
+Legend.LINE_ATTRIBUTES = [
+    "line-cap",
+    "line-color",
+    "line-dasharray",
+    "line-join",
+    "line-opacity",
+    "line-pattern",
+    "line-width"
+];
+
+Legend.FILL_ATTRIBUTES = [
+    "fill-color",
+    "fill-opacity",
+    "fill-outline-color",
+    "fill-pattern"
+];
+
+Legend.BACKGROUND_ATTRIBUTES = [
+    "background-color",
+    "background-opacity",
+    "background-pattern"
+];
+
+Legend.CIRCLE_ATTRIBUTES = [
+    "circle-color",
+    "circle-opacity",
+    "circle-radius",
+    "circle-stroke-color",
+    "circle-stroke-opacity",
+    "circle-stroke-width"
+];
+
+Legend.ICON_ATTRIBUTES = [
+    "icon-anchor",
+    "icon-color",
+    "icon-image",
+    "icon-offset",
+    "icon-opacity",
+    "icon-padding",
+    "icon-size"
+];
+
+Legend.TEXT_ATTRIBUTES = [
+    "text-anchor",
+    "text-color",
+    "text-field",
+    "text-font",
+    "text-justify",
+    "text-max-width",
+    "text-offset",
+    "text-opacity",
+    "text-padding",
+    "text-size"
+];
+
+// ################################################################### //
+// ########################## init methods ########################### //
+// ################################################################### //
+
 /**
  * Initialize component
  * (called by constructor)
@@ -114,7 +177,7 @@ Legend.prototype._initialize = function () {
     var _editable = this.options.obj.editable;
     this.editable = (typeof _editable !== "undefined") ? _editable : false;
 
-    // liste des caractéristiques de la legende
+    // liste des caractéristiques de la legende par defaut
     this.legendRender = {
         type : "fill",
         values : {
@@ -231,6 +294,7 @@ Legend.prototype._initContainer = function () {
     }
 
     // legende avec un style indeterminé ou non géré !?
+    // on prend celle par defaut
     if (!bFound) {
         this.legendRender = this._getProperties("fill", style);
         params = {
@@ -250,13 +314,18 @@ Legend.prototype._initContainer = function () {
     this.container = div;
 };
 
+// ################################################################### //
+// ##################### private methods ############################# //
+// ################################################################### //
+
 /**
 * ...
 *
 * @param {Object} type - fill, line, circle, text, icon...
-* @param {Object} value - see example
+* @param {Object} values - see example
 * @returns {Object} - see this.legendRender
 *
+* @fixme refactoriser : plus générique !
 * @private
 * @example
 * // type simple for fill, line or circle type:
@@ -317,8 +386,8 @@ Legend.prototype._initContainer = function () {
 * // },
 *
 */
-Legend.prototype._getProperties = function (type, value) {
-    logger.trace("_getProperties():", type, value);
+Legend.prototype._getProperties = function (type, values) {
+    logger.trace("_getProperties():", type, values);
 
     var _color = null; // couleur remplissage
     var _stroke = null; // couleur trait
@@ -331,11 +400,11 @@ Legend.prototype._getProperties = function (type, value) {
         // il existe 2 type de symbole :
         // - texte
         // - icone avec ou sans texte
-        var _textValue = value["text-field"];
-        var _iconValue = value["icon-image"];
+        var _textValue = values["text-field"];
+        var _iconValue = values["icon-image"];
         type = (_textValue && _iconValue) ? "icon" : (_textValue) ? "text" : (_iconValue) ? "icon" : "unknow";
         if (type === "unknow") {
-            logger.warn("_getValues() - Type inconnu :", type, value);
+            logger.warn("_getValues() - Type inconnu :", type, values);
             // on force le type texte !?
             type = "text";
         }
@@ -343,41 +412,41 @@ Legend.prototype._getProperties = function (type, value) {
 
     switch (type) {
         case "line":
-            _color = this._getValue(value["line-color"]);
-            _width = this._getValue(value["line-width"]);
-            _opacity = this._getValue(value["line-opacity"]);
+            _color = this._getValue(values["line-color"]);
+            _width = this._getValue(values["line-width"]);
+            _opacity = this._getValue(values["line-opacity"]);
             break;
         case "text":
             // FIXME c'est plus complexe !?
-            _color = this._getValue(value["text-color"]);
+            _color = this._getValue(values["text-color"]);
             break;
         case "icon":
             var bfound = false;
-            if (value["icon-image"] && this.options.sprites && Object.keys(this.options.sprites).length) {
-                if (this.options.sprites.json && this.options.sprites.json[value["icon-image"]]) {
+            if (values["icon-image"] && this.options.sprites && Object.keys(this.options.sprites).length) {
+                if (this.options.sprites.json && this.options.sprites.json[values["icon-image"]]) {
                     bfound = true;
                 }
             }
             if (bfound) {
-                _icon = value["icon-image"];
+                _icon = values["icon-image"];
             } else {
                 // FIXME  c'est plus complexe !?
-                _color = this._getValue(value["icon-color"]);
+                _color = this._getValue(values["icon-color"]);
             }
             break;
         case "circle":
-            _color = this._getValue(value["circle-color"]);
-            _stroke = this._getValue(value["circle-stroke-color"]);
-            _opacity = this._getValue(value["circle-opacity"]);
-            _width = this._getValue(value["circle-stroke-width"]);
+            _color = this._getValue(values["circle-color"]);
+            _stroke = this._getValue(values["circle-stroke-color"]);
+            _opacity = this._getValue(values["circle-opacity"]);
+            _width = this._getValue(values["circle-stroke-width"]);
             break;
         case "background":
-            _color = this._getValue(value["background-color"]);
-            _opacity = this._getValue(value["background-opacity"]);
+            _color = this._getValue(values["background-color"]);
+            _opacity = this._getValue(values["background-opacity"]);
             break;
         case "fill":
-            _color = this._getValue(value["fill-color"]);
-            _opacity = this._getValue(value["fill-opacity"]);
+            _color = this._getValue(values["fill-color"]);
+            _opacity = this._getValue(values["fill-opacity"]);
             break;
         default:
             return;
@@ -393,6 +462,18 @@ Legend.prototype._getProperties = function (type, value) {
             icon : _icon
         }
     };
+};
+
+/**
+ * ...
+ * @param {*} type ...
+ * @param {*} value ...
+ *
+ * @private
+ * @todo
+ */
+Legend.prototype._isPropertySupported = function (type, value) {
+    // TODO
 };
 
 /**
@@ -529,6 +610,10 @@ Legend.prototype._getValue = function (value) {
     }
     return result;
 };
+
+// ################################################################### //
+// ######################### DOM methods ############################# //
+// ################################################################### //
 
 /**
 * Create a Graphical Legend Icon
