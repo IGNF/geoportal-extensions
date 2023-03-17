@@ -83,60 +83,57 @@ Legend.prototype.constructor = Legend;
 // ########################## CONSTANTES ############################# //
 // ################################################################### //
 
-Legend.LINE_ATTRIBUTES = [
-    "line-cap",
-    "line-color",
-    "line-dasharray",
-    "line-join",
-    "line-opacity",
-    "line-pattern",
-    "line-width"
-];
-
-Legend.FILL_ATTRIBUTES = [
-    "fill-color",
-    "fill-opacity",
-    "fill-outline-color",
-    "fill-pattern"
-];
-
-Legend.BACKGROUND_ATTRIBUTES = [
-    "background-color",
-    "background-opacity",
-    "background-pattern"
-];
-
-Legend.CIRCLE_ATTRIBUTES = [
-    "circle-color",
-    "circle-opacity",
-    "circle-radius",
-    "circle-stroke-color",
-    "circle-stroke-opacity",
-    "circle-stroke-width"
-];
-
-Legend.ICON_ATTRIBUTES = [
-    "icon-anchor",
-    "icon-color",
-    "icon-image",
-    "icon-offset",
-    "icon-opacity",
-    "icon-padding",
-    "icon-size"
-];
-
-Legend.TEXT_ATTRIBUTES = [
-    "text-anchor",
-    "text-color",
-    "text-field",
-    "text-font",
-    "text-justify",
-    "text-max-width",
-    "text-offset",
-    "text-opacity",
-    "text-padding",
-    "text-size"
-];
+Legend.PROPERTIES = {
+    line : [
+        "line-cap",
+        "line-color",
+        "line-dasharray",
+        "line-join",
+        "line-opacity",
+        "line-pattern",
+        "line-width"
+    ],
+    fill : [
+        "fill-color",
+        "fill-opacity",
+        "fill-outline-color",
+        "fill-pattern"
+    ],
+    background : [
+        "background-color",
+        "background-opacity",
+        "background-pattern"
+    ],
+    circle : [
+        "circle-color",
+        "circle-opacity",
+        "circle-radius",
+        "circle-stroke-color",
+        "circle-stroke-opacity",
+        "circle-stroke-width"
+    ],
+    icon : [
+        "icon-anchor",
+        "icon-color",
+        "icon-image",
+        "icon-offset",
+        "icon-opacity",
+        "icon-padding",
+        "icon-size"
+    ],
+    text : [
+        "text-anchor",
+        "text-color",
+        "text-field",
+        "text-font",
+        "text-justify",
+        "text-max-width",
+        "text-offset",
+        "text-opacity",
+        "text-padding",
+        "text-size"
+    ]
+};
 
 // ################################################################### //
 // ########################## init methods ########################### //
@@ -184,8 +181,7 @@ Legend.prototype._initialize = function () {
             width : 1,
             stroke : "#FFFFFF",
             color : "#000000",
-            opacity : 1,
-            icon : null
+            opacity : 1
         }
     };
 
@@ -294,16 +290,16 @@ Legend.prototype._initContainer = function () {
     }
 
     // legende avec un style indeterminé ou non géré !?
-    // on prend celle par defaut
     if (!bFound) {
-        this.legendRender = this._getProperties("fill", style);
+        // on prend la legende par defaut
         params = {
             edit : this.editable,
-            title : title,
+            title : "",
             type : this.legendRender.type,
             values : this.legendRender.values
         };
         div.appendChild(this._createElementIconLegend(params));
+        logger.warn("legend type unknown, default legend used...");
     }
 
     // ajout mode edition graphique de la legende
@@ -322,10 +318,9 @@ Legend.prototype._initContainer = function () {
 * ...
 *
 * @param {Object} type - fill, line, circle, text, icon...
-* @param {Object} values - see example
-* @returns {Object} - see this.legendRender
+* @param {Object} values - ...
+* @returns {Object} - ...
 *
-* @fixme refactoriser : plus générique !
 * @private
 * @example
 * // type simple for fill, line or circle type:
@@ -387,93 +382,51 @@ Legend.prototype._initContainer = function () {
 *
 */
 Legend.prototype._getProperties = function (type, values) {
-    logger.trace("_getProperties():", type, values);
-
-    var _color = null; // couleur remplissage
-    var _stroke = null; // couleur trait
-    var _width = null; // epaisseur
-    var _opacity = null; // opacité
-    var _icon = null;
-
-    // cas particulier : determiner pour un symbole complexe
+    // cas particulier du symbole complexe
+    // il existe 2plusieurs type pour un symbole :
+    // - text
+    // - icon
+    // - icon with text
     if (type === "symbol") {
-        // il existe 2 type de symbole :
-        // - texte
-        // - icone avec ou sans texte
-        var _textValue = values["text-field"];
-        var _iconValue = values["icon-image"];
-        type = (_textValue && _iconValue) ? "icon" : (_textValue) ? "text" : (_iconValue) ? "icon" : "unknow";
+        var isTextValue = values["text-field"];
+        var isIconValue = values["icon-image"];
+        type = (isTextValue && isIconValue) ? "icon" : (isTextValue) ? "text" : (isIconValue) ? "icon" : "unknow";
         if (type === "unknow") {
-            logger.warn("_getValues() - Type inconnu :", type, values);
-            // on force le type texte !?
-            type = "text";
+            logger.warn("type unknow !?");
+            return;
         }
     }
 
-    switch (type) {
-        case "line":
-            _color = this._getValue(values["line-color"]);
-            _width = this._getValue(values["line-width"]);
-            _opacity = this._getValue(values["line-opacity"]);
-            break;
-        case "text":
-            // FIXME c'est plus complexe !?
-            _color = this._getValue(values["text-color"]);
-            break;
-        case "icon":
-            var bfound = false;
-            if (values["icon-image"] && this.options.sprites && Object.keys(this.options.sprites).length) {
-                if (this.options.sprites.json && this.options.sprites.json[values["icon-image"]]) {
-                    bfound = true;
+    var valuesSupported = {};
+    for (const key in values) {
+        if (Object.hasOwnProperty.call(values, key)) {
+            const val = values[key];
+            if (Legend.PROPERTIES[type].includes(key)) {
+                var prop = key.replace(type, "").slice(1);
+                var value = this._getValue(val);
+                if (value) {
+                    // cas particulier des sprites
+                    if (prop === "pattern" || prop === "image") {
+                        if (!this.options.sprites ||
+                            !this.options.sprites.json ||
+                            !this.options.sprites.json[value]) {
+                            var k = type + ":" + prop;
+                            logger.warn("sprites mandatory for key ", k);
+                            break;
+                        }
+                    }
+                    valuesSupported[prop] = value;
                 }
-            }
-            if (bfound) {
-                _icon = values["icon-image"];
             } else {
-                // FIXME  c'est plus complexe !?
-                _color = this._getValue(values["icon-color"]);
+                logger.warn("property not supported : ", key);
             }
-            break;
-        case "circle":
-            _color = this._getValue(values["circle-color"]);
-            _stroke = this._getValue(values["circle-stroke-color"]);
-            _opacity = this._getValue(values["circle-opacity"]);
-            _width = this._getValue(values["circle-stroke-width"]);
-            break;
-        case "background":
-            _color = this._getValue(values["background-color"]);
-            _opacity = this._getValue(values["background-opacity"]);
-            break;
-        case "fill":
-            _color = this._getValue(values["fill-color"]);
-            _opacity = this._getValue(values["fill-opacity"]);
-            break;
-        default:
-            return;
+        }
     }
 
     return {
         type : type,
-        values : {
-            color : _color || this.legendRender.values.color,
-            stroke : _stroke || this.legendRender.values.stroke,
-            width : _width || this.legendRender.values.width,
-            opacity : _opacity || this.legendRender.values.opacity,
-            icon : _icon
-        }
+        values : valuesSupported
     };
-};
-
-/**
- * ...
- * @param {*} type ...
- * @param {*} value ...
- *
- * @private
- * @todo
- */
-Legend.prototype._isPropertySupported = function (type, value) {
-    // TODO
 };
 
 /**
@@ -495,91 +448,75 @@ Legend.prototype._renderThumbnail = function (type, values) {
         return false;
     }
 
-    // les valeurs
-    var _color = values.color || this.legendRender.values.color; // couleur remplissage
-    var _stroke = values.stroke || this.legendRender.values.stroke; // couleur trait
-    var _width = values.width || this.legendRender.values.width; // epaisseur
-    var _opacity = values.opacity || this.legendRender.values.opacity; // opacité
-    var _icon = values.icon || this.legendRender.values.icon; // nom de l'icone
-    var _style = "";
-
     // SVG
     var svg = null;
     // facteur grossissement (x10) pour le trait
     var factor = 3;
 
+    // valeur par defaut
+    if (!values.color) {
+        values.color = "#000000";
+    }
     // en fonction du type, on y ajoute le style
     switch (type) {
         case "text":
-            _style = "font-size: 5em;font-weight: bold;";
+            var styleText = "font-size: 5em;font-weight: bold;";
             svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><text x='50' y='50' fill='%color%' fill-opacity='%opacity%'  text-anchor='middle' dominant-baseline='central' style='%style%'> T </text></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity)
-                .replace("%style%", _style);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%opacity%", values.opacity || 1)
+                .replace("%style%", styleText);
             break;
         case "icon":
-            if (_icon) {
+            if (values.image) {
                 // FIXME on reste dans le paradigme d'utilisation du SVG...,
                 // mais probleme de ratio de l'image !?
                 var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>";
                 svg = template
-                    .replace("%x%", this.options.sprites.json[_icon].x)
-                    .replace("%y%", this.options.sprites.json[_icon].y)
-                    .replace(/%w%/g, this.options.sprites.json[_icon].width)
-                    .replace(/%h%/g, this.options.sprites.json[_icon].height)
+                    .replace("%x%", this.options.sprites.json[values.image].x)
+                    .replace("%y%", this.options.sprites.json[values.image].y)
+                    .replace(/%w%/g, this.options.sprites.json[values.image].width)
+                    .replace(/%h%/g, this.options.sprites.json[values.image].height)
                     .replace("%W%", this.options.sprites.size.w)
                     .replace("%H%", this.options.sprites.size.h)
                     .replace("%URL%", this.options.sprites.url);
                 div.innerHTML = svg;
             } else {
-                _style = "fill: transparent;stroke-width: 10;";
+                var styleTextIcon = "fill: transparent;stroke-width: 10;";
                 svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";
                 div.style["background"] = svg
-                    .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                    .replace("%style%", _style);
+                    .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                    .replace("%style%", styleTextIcon);
             }
             break;
         case "line":
             svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity)
-                .replace("%width%", _width * factor);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%opacity%", values.opacity || 1)
+                .replace("%width%", (values.width || 0) * factor);
             break;
         case "circle":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke%' stroke-width='%width%' stroke-opacity='%opacity%' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
+            var cstrockcolor = values["stroke-color"] || "#FFFFFF";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke-color%' stroke-width='%stroke-width%' stroke-opacity='%strock-opacity%' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity)
-                .replace("%stroke%", (_stroke.indexOf("rgb") === 0) ? _stroke : Color.hexToRgba(_stroke, 1))
-                .replace("%width%", _width * factor);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%opacity%", values.opacity || 1)
+                .replace("%stroke-color%", (cstrockcolor.indexOf("rgb") === 0) ? cstrockcolor : Color.hexToRgba(cstrockcolor, 1))
+                .replace("%stroke-opacity%", values["stroke-opacity"] || 1)
+                .replace("%stroke-width%", (values["stroke-width"] || 0) * factor);
             break;
-        // case "background":
-        //     div.style["background-color"] = _color;
-        //     break;
         case "background":
         case "fill":
             svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%opacity%", values.opacity || 1);
             break;
         default:
+            logger.warn("type not found, no thumbnail...");
             return false;
     }
-
-    // save
-    this.legendRender = {
-        type : type,
-        values : {
-            color : _color,
-            stroke : _stroke,
-            width : _width,
-            opacity : _opacity,
-            icon : _icon
-        }
-    };
 
     return true;
 };
@@ -657,45 +594,27 @@ Legend.prototype._createElementIconLegend = function (params) {
         }
     }
 
-    // couleur remplissage
-    var color = params.values.color;
-    // couleur trait
-    var stroke = params.values.stroke;
-    // epaisseur
-    var width = params.values.width;
-    // opacité
-    var opacity = params.values.opacity;
-
     // type de legende
     var type = params.type;
 
-    // si la couleur n'est pas definie, c'est que le type de syntaxe
-    // est non implementé ou non reconnu pour le moment...
-    if (!color) {
-        // className
-        div.className += " legend-not-implemented";
+    // TODO className
+    // div.className += " legend-not-implemented";
+
+    // ajout du style sur la div de rendu
+    if (this._renderThumbnail(type, params.values)) {
+        // className possibles :
+        // " legend-text"
+        // " legend-icon"
+        // " legend-background"
+        // " legend-line"
+        // " legend-line-not-editable"
+        // " legend-circle"
+        // " legend-circle-not-editable"
+        // " legend-fill"
+        // " legend-fill-not-editable"
+        div.className += (params.edit) ? " legend-" + type : " legend-" + type + "-not-editable";
     } else {
-        // ajout du style sur la div de rendu
-        if (this._renderThumbnail(type, {
-            color : color,
-            stroke : stroke,
-            width : width,
-            opacity : opacity
-        })) {
-            // className possibles :
-            // " legend-text"
-            // " legend-icon"
-            // " legend-background"
-            // " legend-line"
-            // " legend-line-not-editable"
-            // " legend-circle"
-            // " legend-circle-not-editable"
-            // " legend-fill"
-            // " legend-fill-not-editable"
-            div.className += (params.edit) ? " legend-" + type : " legend-" + type + "-not-editable";
-        } else {
-            div.className += " legend-unknow";
-        }
+        div.className += " legend-unknow";
     }
 
     container.appendChild(div);
@@ -788,16 +707,16 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputLineColor.setAttribute("data-id", "line-color");
         if (inputLineColor.addEventListener) {
             inputLineColor.addEventListener("change", function (e) {
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputLineColor.attachEvent) {
             inputLineColor.attachEvent("onchange", function (e) {
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
@@ -828,18 +747,18 @@ Legend.prototype._createElementEditionLegend = function (params) {
             inputLineWidth.addEventListener("change", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     width : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputLineWidth.attachEvent) {
             inputLineWidth.attachEvent("onchange", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     width : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
@@ -870,18 +789,18 @@ Legend.prototype._createElementEditionLegend = function (params) {
             inputLineOpacity.addEventListener("change", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputLineOpacity.attachEvent) {
             inputLineOpacity.attachEvent("onchange", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
@@ -907,16 +826,16 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputFillColor.setAttribute("data-id", "fill-color");
         if (inputFillColor.addEventListener) {
             inputFillColor.addEventListener("change", function (e) {
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputFillColor.attachEvent) {
             inputFillColor.attachEvent("onchange", function (e) {
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
@@ -946,17 +865,17 @@ Legend.prototype._createElementEditionLegend = function (params) {
         if (inputFillOpacity.addEventListener) {
             inputFillOpacity.addEventListener("change", function (e) {
                 e.target.title = e.target.value;
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputFillOpacity.attachEvent) {
             inputFillOpacity.attachEvent("onchange", function (e) {
                 e.target.title = e.target.value;
-                self._renderThumbnail(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }

@@ -322,10 +322,10 @@
             });
             legend31.add();
 
-            var legend31 = new ol.style.editor.Legend({
-                id: 31,
-                position: 31,
-                target: document.getElementById("31"),
+            var legend41 = new ol.style.editor.Legend({
+                id: 41,
+                position: 41,
+                target: document.getElementById("41"),
                 obj: {
                     "title" : "test line-pattern, not yet implemented...",
                     "layout": {
@@ -339,8 +339,27 @@
                     }
                 },
             });
-            legend31.add();
+            legend41.add();
     
+            var legend51 = new ol.style.editor.Legend({
+                id: 51,
+                position: 51,
+                target: document.getElementById("51"),
+                obj: {
+                    "title" : "test line-dasharray, not yet implemented...",
+                    "layout": {
+                        "line-dasharray": [], 
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                         "line-color" : "#2BB3E1",
+                         "line-width" : 1,
+                         "line-opacity" : 0.5
+                    }
+                },
+            });
+            legend51.add();
+
             /////////////
             // TEST FILL
             /////////////
@@ -460,7 +479,7 @@
                 obj: {
                     "title" : "test fill-outline, not yet implemented...",
                     "paint": {
-                        "fill-color": "rgba(217, 217, 217, 1)",
+                        "fill-color": "rgb(217, 217, 217)",
                         "fill-opacity": 0.7,
                         "fill-outline-color": "red"
                     }
@@ -474,7 +493,7 @@
                 obj: {
                     "title" : "test fill-pattern, not yet implemented...",
                     "paint": {
-                        "fill-color": "rgba(217, 217, 217, 1)",
+                        "fill-color": "rgb(217, 217, 217)",
                         "fill-opacity": 0.7,
                         "fill-pattern": "sprites"
                     }
@@ -513,7 +532,7 @@
                          "circle-opacity": 0.5,
                          "circle-color": "#2BB3E1",
                          "circle-stroke-width": 2,
-                         "circle-stroke-color": "rgba(255, 0, 0, 1)"
+                         "circle-stroke-color": "rgb(255, 0, 0)"
                     }
                 },
             });
@@ -529,7 +548,7 @@
                          "circle-opacity": 0.5,
                          "circle-color": "#2BB3E1",
                          "circle-stroke-width": 2,
-                         "circle-stroke-color": "rgba(255, 0, 0, 1)"
+                         "circle-stroke-color": "rgb(255, 0, 0)"
                     }
                 },
             });
@@ -587,10 +606,17 @@
             var legend14 = new ol.style.editor.Legend({
                 id: 14,
                 target: document.getElementById("14"),
+                sprites : {
+                    url : "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn.png",
+                    size : { w : 484, h : 710 },
+                    json : {
+                        "Refugenongard" : {"x":213,"y":310,"width":39,"height":36,"pixelRatio":1}
+                    }
+                },
                 obj: {
                     "title" : "test icon-image...",
                     "layout": {
-                        "icon-image" : "..."
+                        "icon-image" : "Refugenongard"
                     }
                 },
             });
@@ -600,9 +626,9 @@
                 id: 24,
                 target: document.getElementById("24"),
                 obj: {
-                    "title" : "test icon (on sprite), not correctly implemented...",
+                    "title" : "test icon-image, no sprites...",
                     "layout": {
-                        "icon-image" : "onSpriteIcons.png"
+                        "icon-image" : "Refugenongard"
                     }
                 },
             });
@@ -612,7 +638,7 @@
                 id: 34,
                 target: document.getElementById("34"),
                 obj: {
-                    "title" : "test icon-color...",
+                    "title" : "test icon-color, no sprites...",
                     "layout": {
                         "icon-image" : "..."
                     },
@@ -628,7 +654,7 @@
                 id: 44,
                 target: document.getElementById("44"),
                 obj: {
-                    "title" : "test icon-color, not yet implemented...",
+                    "title" : "test icon editable, not yet implemented...",
                     "editable" : true,
                     "layout": {
                         "icon-image" : "..."
@@ -660,9 +686,13 @@
                 id: 25,
                 target: document.getElementById("25"),
                 obj: {
-                    "title" : "test text (non reconnu comme texte ou icone)...",
+                    "title" : "test text-size, not yet implemented...",
+                    "layout": {
+                        "text-field" : "..."
+                    },
                     "paint": {
-                        "text-size" : "3px"
+                        "text-size" : "3px",
+                        "text-color" : "#FF0000"
                     }
                 },
             });
