@@ -87,7 +87,7 @@ Legend.PROPERTIES = {
     line : [
         "__line-cap",
         "line-color",
-        "__line-dasharray",
+        "line-dasharray",
         "__line-join",
         "line-opacity",
         "__line-pattern",
@@ -315,9 +315,14 @@ Legend.prototype._initContainer = function () {
 *
 * @private
 * @example
-* // type simple for fill, line or circle type:
+* // type simple for fill, line or circle type with string :
 * // "paint": {
 * //     "fill-color": "#2BB3E1"
+* // }
+*
+* // type simple for fill, line or circle type with array :
+* // "paint": {
+* //     "line-dasharray": [2,10]
 * // }
 *
 * // TODO type complexe : not yet implemented !
@@ -481,10 +486,13 @@ Legend.prototype._renderThumbnail = function (type, values) {
             }
             break;
         case "line":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' /></svg>\")";
+            var lstrockedasharray = (Array.isArray(values["dasharray"])) ? values["dasharray"].join(" ") : 0;
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='100' x2='100' y2='0' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' stroke-dasharray='%dasharray%' /></svg>\")";
+            // svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' stroke-dasharray='%dasharray%' /></svg>\")";
             div.style["background"] = svg
                 .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
                 .replace("%opacity%", values.opacity || 1)
+                .replace("%dasharray%", lstrockedasharray)
                 .replace("%width%", (values.width || 0) * factor);
             break;
         case "circle":
@@ -536,19 +544,27 @@ Legend.prototype._getValue = function (value) {
     var result = null;
     if (typeof value === "string") {
         result = value;
-    }
-    if (typeof value === "number") {
+    } else if (typeof value === "number") {
         result = value;
-    }
-    if (Array.isArray(value)) {
-        result = null;
-    }
-    if (typeof value === "object") {
+    } else if (Array.isArray(value)) {
+        // cas d'un tableau de valeurs numériques : [1,2,3]
+        var isNumber = true;
+        value.forEach(v => {
+            if (typeof v !== "number") {
+                isNumber = false;
+            }
+        });
+        if (isNumber) {
+            result = value;
+        }
+    } else if (typeof value === "object") {
         result = null;
         if ("stops" in value) {
             var lastStopsValue = value.stops.slice(-1);
             result = lastStopsValue[0][1];
         }
+    } else {
+        logger.warn("value not supported !");
     }
     return result;
 };
