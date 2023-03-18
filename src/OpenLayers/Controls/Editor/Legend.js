@@ -83,6 +83,9 @@ Legend.prototype.constructor = Legend;
 // ########################## CONSTANTES ############################# //
 // ################################################################### //
 
+/**
+ * List of supported properties
+ */
 Legend.PROPERTIES = {
     line : [
         "line-color",
@@ -304,53 +307,17 @@ Legend.prototype._initContainer = function () {
 // ################################################################### //
 
 /**
-* ...
+* Get properties supported
 *
 * @param {Object} type - fill, line, circle, text, icon...
-* @param {Object} values - ...
-* @returns {Object} - ...
+* @param {Object} values - raw values from the JSON file
+* @returns {Object} - { type : (fill | line | circle | symbol), values : valuesSupported }
 *
 * @private
 * @example
-* // type simple for fill, line or circle type with string :
-* // "paint": {
-* //     "fill-color": "#2BB3E1"
-* // }
 *
-* // type simple for fill, line or circle type with array :
-* // "paint": {
-* //     "line-dasharray": [2,10]
-* // }
-*
-* // TODO type complexe : not yet implemented !
-* // "paint": {
-* //     "fill-color": [
-* //          "match",
-* //          ["get","symbo"],
-* //          "ZONE_BOISEE","#A7DA81",
-* //          "ZONE_MANGROVE","#7E8AB5",
-* //          "#A7DA81"
-* //      ]
-* // }
-*
-* // TODO other type complexe : not yet implemented !
-* // "paint": {
-* //     "fill-color": {
-* //        "base": 1,
-* //        "stops": [
-* //        [
-* //          15.5,
-* //         "#f2eae2"
-* //        ],
-* //        [
-* //          16,
-* //          "#dfdbd7"
-* //        ]
-* //        ]
-* //     }
-* // }
-*
-* // TODO symbol with text (1) / symbol without text (2) / text (3)
+* // TODO
+* // symbol with text (1) / symbol without text (2) / text (3)
 * // "layout":{
 * //      "icon-image":"{maki}-11",          <!--- IT'S A SYMBOL (1) (2)-->
 * //      "text-font":[
@@ -424,7 +391,7 @@ Legend.prototype._getProperties = function (type, values) {
 };
 
 /**
-* ...
+* Render thumbnail (SVG)
 *
 * @param {Object} type - fill, line, circle, text, ...
 * @param {Object} values - {"color":..., "width":..., "stroke":...., "opacity":...}
@@ -532,10 +499,50 @@ Legend.prototype._renderThumbnail = function (type, values) {
 };
 
 /**
- * ...
+ * Get value
  *
- * @param {*} value - value
- * @returns {String} extract value
+ * @param {*} value - value of a property (ex. "#2BB3E1")
+ * @returns {*} return a verified value (ex. color": "#2BB3E1")
+ *
+ * @private
+ * @example
+ * // type simple for fill, line or circle type with string :
+ * // "paint": {
+ * //     "fill-color": "#2BB3E1"
+ * // }
+ *
+ * // type simple for fill, line or circle type with array :
+ * // "paint": {
+ * //     "line-dasharray": [2,10]
+ * // }
+ *
+ * // TODO type complexe : not yet implemented !
+ * // "paint": {
+ * //     "fill-color": [
+ * //          "match",
+ * //          ["get","symbo"],
+ * //          "ZONE_BOISEE","#A7DA81",
+ * //          "ZONE_MANGROVE","#7E8AB5",
+ * //          "#A7DA81"
+ * //      ]
+ * // }
+ *
+ * // other type complexe :
+ * // "paint": {
+ * //     "fill-color": {
+ * //        "base": 1,
+ * //        "stops": [
+ * //        [
+ * //          15.5,
+ * //         "#f2eae2"
+ * //        ],
+ * //        [
+ * //          16,
+ * //          "#dfdbd7"
+ * //        ]
+ * //        ]
+ * //     }
+ * // }
  */
 Legend.prototype._getValue = function (value) {
     var result = null;
@@ -600,7 +607,7 @@ Legend.prototype._getValue = function (value) {
 *           style="background: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='rgba(255, 255, 255, 1)' fill-opacity='1' /></svg>&quot;);">
 *       </div>
 *       <span class="GPEditorMapBoxLegendTitle">vide...</span>
-</div>
+* </div>
 */
 Legend.prototype._createElementIconLegend = function (params) {
     // contexte
@@ -924,6 +931,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
 
 /**
  * Add element into target DOM
+ *
  * @returns {Object} - Legend instance
  */
 Legend.prototype.add = function () {
