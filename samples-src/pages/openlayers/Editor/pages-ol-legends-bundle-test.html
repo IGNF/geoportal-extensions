@@ -46,16 +46,16 @@
                         <td>
                             <ul>
                                 <li class="disable">paint/line-blur</li>
-                                <li>layout/line-cap</li>
+                                <li class="disable">layout/line-cap</li>
                                 <li class="use">paint/line-color</li>
-                                <li>paint/line-dasharray</li>
+                                <li class="use">paint/line-dasharray</li>
                                 <li class="disable">paint/line-gap-width</li>
                                 <li class="disable">paint/line-gradient</li>
-                                <li>layout/line-join</li>
+                                <li class="disable">layout/line-join</li>
                                 <li class="disable">layout/line-miter-limit</li>
                                 <li class="disable">paint/line-offset</li>
                                 <li class="use">paint/line-opacity</li>
-                                <li class="use">paint/line-pattern</li>
+                                <li class="disable">paint/line-pattern</li>
                                 <li class="disable">layout/line-round-limit</li>
                                 <li class="disable">layout/line-sort-key</li>
                                 <li class="disable">paint/line-translate</li>
@@ -66,7 +66,7 @@
                             </ul>
                         </td>
                         <td>
-                            <u>
+                            <ul>
                                 <li class="disable">paint/fill-antialias</li>
                                 <li class="use">paint/fill-color</li>
                                 <li class="use">paint/fill-opacity</li>
@@ -76,10 +76,10 @@
                                 <li class="disable">paint/fill-translate</li>
                                 <li class="disable">paint/fill-translate-anchor</li>
                                 <li class="use">layout/visibility</li>
-                            </u>
+                            </ul>
                         </td>
                         <td>
-                            <u>
+                            <ul>
                                 <li class="disable">paint/circle-blur</li>
                                 <li class="use">paint/circle-color</li>
                                 <li class="use">paint/circle-opacity</li>
@@ -93,10 +93,10 @@
                                 <li class="disable">paint/circle-translate</li>
                                 <li class="disable">paint/circle-translate-anchor</li>
                                 <li class="use">layout/visibility</li>
-                            </u>
+                            </ul>
                         </td>
                         <td>
-                            <u>
+                            <ul>
                                 <li class="disable">layout/icon-allow-overlap</li>
                                 <li class="disable">layout/icon-anchor</li>
                                 <li class="use">paint/icon-color</li>
@@ -118,10 +118,10 @@
                                 <li class="disable">layout/icon-text-fit-padding</li>
                                 <li class="disable">paint/icon-translate</li>
                                 <li class="disable">paint/icon-translate-anchor</li>
-                            </u>
+                            </ul>
                         </td>
                         <td>
-                            <u>
+                            <ul>
                                 <li class="disable">layout/text-allow-overlap</li>
                                 <li class="disable">layout/text-anchor</li>
                                 <li class="use">paint/text-color</li>
@@ -151,15 +151,15 @@
                                 <li class="disable">paint/text-translate-anchor</li>
                                 <li class="disable">layout/text-variable-anchor</li>
                                 <li class="disable">layout/ext-writing-mode</li>
-                            </u>
+                            </ul>
                         </td>
                         <td>
-                            <u>
+                            <ul>
                                 <li class="use">paint/background-color</li>
                                 <li class="use">paint/background-opacity</li>
                                 <li class="use">paint/background-pattern</li>
                                 <li class="use">layout/visibility</li>
-                            </u>
+                            </ul>
                         </td>
                     </tr>
                 </table>
@@ -302,49 +302,10 @@
                 }
             });
 
-            // property to implemented !
             var legend31 = new ol.style.editor.Legend({
                 id: 31,
                 position: 31,
                 target: document.getElementById("31"),
-                obj: {
-                    "title" : "test line-join, not yet implemented...",
-                    "layout": {
-                        "line-join": "bevel", 
-                        "visibility": "visible"
-                    },
-                    "paint": {
-                         "line-color" : "#2BB3E1",
-                         "line-width" : 1,
-                         "line-opacity" : 0.5
-                    }
-                },
-            });
-            legend31.add();
-
-            var legend41 = new ol.style.editor.Legend({
-                id: 41,
-                position: 41,
-                target: document.getElementById("41"),
-                obj: {
-                    "title" : "test line-pattern, not yet implemented...",
-                    "layout": {
-                        "visibility": "visible"
-                    },
-                    "paint": {
-                         "line-color" : "#2BB3E1",
-                         "line-width" : 1,
-                         "line-opacity" : 0.5,
-                         "line-pattern": "sprites"
-                    }
-                },
-            });
-            legend41.add();
-    
-            var legend51 = new ol.style.editor.Legend({
-                id: 51,
-                position: 51,
-                target: document.getElementById("51"),
                 obj: {
                     "title" : "test line-dasharray...",
                     "layout": {
@@ -358,7 +319,35 @@
                     }
                 },
             });
-            legend51.add();
+            legend31.add();
+
+            var legend41 = new ol.style.editor.Legend({
+                id: 41,
+                position: 41,
+                target: document.getElementById("41"),
+                obj: {
+                    "title" : "test line-color (object)...",
+                    "layout": {
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                        "line-width": 10,
+                        "line-color": {
+                            "stops": [
+                                [
+                                    17,
+                                    "#695657"
+                                ],
+                                [
+                                    18,
+                                    "#FFFFFF"
+                                ]
+                            ]
+                        }
+                    }
+                },
+            });
+            legend41.add();
 
             /////////////
             // TEST FILL
@@ -408,10 +397,20 @@
                 id: 42,
                 target: document.getElementById("42"),
                 obj: {
-                    "title" : "test fill (object), not yet implemented...",
+                    "title" : "test fill (object)...",
                     "paint": {
+                        "fill-width": 10,
                         "fill-color": {
-                            color : "#A7DA81"
+                            "stops": [
+                                [
+                                    17,
+                                    "#A7DA81"
+                                ],
+                                [
+                                    18,
+                                    "#FFFFFF"
+                                ]
+                            ]
                         }
                     }
                 },

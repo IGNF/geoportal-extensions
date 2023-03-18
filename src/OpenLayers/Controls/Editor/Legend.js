@@ -85,12 +85,9 @@ Legend.prototype.constructor = Legend;
 
 Legend.PROPERTIES = {
     line : [
-        "__line-cap",
         "line-color",
         "line-dasharray",
-        "__line-join",
         "line-opacity",
-        "__line-pattern",
         "line-width"
     ],
     fill : [
@@ -380,7 +377,7 @@ Legend.prototype._initContainer = function () {
 */
 Legend.prototype._getProperties = function (type, values) {
     // cas particulier du symbole complexe
-    // il existe 2plusieurs type pour un symbole :
+    // il existe plusieurs types pour un symbole :
     // - text
     // - icon
     // - icon with text
@@ -487,13 +484,13 @@ Legend.prototype._renderThumbnail = function (type, values) {
             break;
         case "line":
             var lstrockedasharray = (Array.isArray(values["dasharray"])) ? values["dasharray"].join(" ") : 0;
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='100' x2='100' y2='0' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' stroke-dasharray='%dasharray%' /></svg>\")";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='100' x2='100' y2='0' stroke='%color%' stroke-width='%stroke-width%' stroke-opacity='%stroke-opacity%' stroke-dasharray='%stroke-dasharray%' /></svg>\")";
             // svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' stroke-dasharray='%dasharray%' /></svg>\")";
             div.style["background"] = svg
                 .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
-                .replace("%opacity%", values.opacity || 1)
-                .replace("%dasharray%", lstrockedasharray)
-                .replace("%width%", (values.width || 0) * factor);
+                .replace("%stroke-opacity%", values.opacity || 1)
+                .replace("%stroke-dasharray%", lstrockedasharray)
+                .replace("%stroke-width%", (values.width || 0) * factor);
             break;
         case "circle":
             var cstrockcolor = values["stroke-color"] || "#FFFFFF";
@@ -560,6 +557,19 @@ Legend.prototype._getValue = function (value) {
     } else if (typeof value === "object") {
         result = null;
         if ("stops" in value) {
+            // on realise un ordre inversé sur les zooms
+            value.stops.sort((a, b) => {
+                var numA = a[0];
+                var numB = b[0];
+                if (numA > numB) {
+                    return -1;
+                }
+                if (numA < numB) {
+                    return 1;
+                }
+                return 0;
+            });
+            // et, on prend le plus petit zoom
             var lastStopsValue = value.stops.slice(-1);
             result = lastStopsValue[0][1];
         }
