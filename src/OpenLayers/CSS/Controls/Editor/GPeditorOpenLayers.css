@@ -464,8 +464,8 @@ LEGEND
 .legend-background {}
 .legend-fill ,
 .legend-line {
-    margin: auto;
-    padding: 5px;
+    /* margin: auto;
+    padding: 5px; */
 }
 .legend-icon {}
 .legend-text {}

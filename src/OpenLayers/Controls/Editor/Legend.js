@@ -79,6 +79,58 @@ function Legend (options) {
  */
 Legend.prototype.constructor = Legend;
 
+// ################################################################### //
+// ########################## CONSTANTES ############################# //
+// ################################################################### //
+
+/**
+ * List of supported properties
+ */
+Legend.PROPERTIES = {
+    line : [
+        "line-color",
+        "line-dasharray",
+        "line-opacity",
+        "line-width"
+    ],
+    fill : [
+        "fill-color",
+        "fill-opacity",
+        "fill-outline-color",
+        "fill-pattern"
+    ],
+    background : [
+        "background-color",
+        "background-opacity",
+        "background-pattern"
+    ],
+    circle : [
+        "circle-color",
+        "circle-opacity",
+        "circle-stroke-color",
+        "circle-stroke-opacity",
+        "circle-stroke-width"
+    ],
+    icon : [
+        "icon-color",
+        "icon-image",
+        "icon-opacity",
+        "__icon-size"
+    ],
+    text : [
+        "__text-anchor",
+        "text-color",
+        "text-field",
+        "__text-font",
+        "__text-opacity",
+        "__text-size"
+    ]
+};
+
+// ################################################################### //
+// ########################## init methods ########################### //
+// ################################################################### //
+
 /**
  * Initialize component
  * (called by constructor)
@@ -114,15 +166,14 @@ Legend.prototype._initialize = function () {
     var _editable = this.options.obj.editable;
     this.editable = (typeof _editable !== "undefined") ? _editable : false;
 
-    // liste des caractéristiques de la legende
+    // liste des caractéristiques de la legende par defaut
     this.legendRender = {
         type : "fill",
         values : {
             width : 1,
             stroke : "#FFFFFF",
             color : "#000000",
-            opacity : 1,
-            icon : null
+            opacity : 1
         }
     };
 
@@ -172,83 +223,75 @@ Legend.prototype._initContainer = function () {
     var div = document.createElement("div");
     div.className = this.name.container;
 
+    // INFO
     // on recherche les informations dans le tag 'paint' en priorité, mais pour
     // les icones ou textes, les informations peuvent se trouver aussi dans le tag 'layout'...
-    var _bfoundStyle = false;
-    var _style = {};
-    if (_obj.paint && _obj.layout) {
-        _bfoundStyle = true;
-        Object.assign(_style, _obj.paint, _obj.layout);
-    } else if (_obj.paint) {
-        _bfoundStyle = true;
-        Object.assign(_style, _obj.paint);
-    } else if (_obj.layout) {
-        _bfoundStyle = true;
-        Object.assign(_style, _obj.layout);
-    } else {
-        _bfoundStyle = false;
+    // on fusionnne paint et layout par facilité
+    var style = Object.assign({}, _obj.paint, _obj.layout);
+
+    // liste des properties mapbox
+    // ex. fill-color
+    var keys = Object.keys(style);
+    if (keys.length === 0) {
+        logger.info("tag 'paint' or 'layout' is empty !");
+        return;
     }
 
-    if (_bfoundStyle) {
-        var keys = Object.keys(_style);
-        if (keys.length === 0) {
-            logger.info("tag 'paint' or 'layout' is empty !");
-        }
+    // FIXME
+    // - gestion de type plus complexe : texte avec/sans symbole ou symbole !
+    // - pour les textes ou icones, les info peuvent être aussi dans le tag 'layout' !
 
-        // FIXME
-        // - gestion de type plus complexe : texte avec/sans symbole ou symbole !
-        // - pour les textes ou icones, les info peuvent être aussi dans le tag 'layout' !
-        var params = {};
-        var bFound = false;
-        for (var i = 0; i < keys.length; i++) {
-            var _key = keys[i];
-            if (/fill-/.test(_key) ||
-                /line-/.test(_key) ||
-                /circle-/.test(_key) ||
-                /background-/.test(_key) ||
-                /text-/.test(_key) || // FIXME not yet implemented...
-                /icon-/.test(_key) // FIXME not yet implemented...
-            ) {
-                // style geré & trouvé
-                bFound = true;
+    var params = {};
+    var bFound = false;
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        // recherche du type
+        // ex. fill
+        if (/fill-/.test(key) ||
+            /line-/.test(key) ||
+            /circle-/.test(key) ||
+            /background-/.test(key) ||
+            /text-/.test(key) ||
+            /icon-/.test(key)
+        ) {
+            // style geré & trouvé
+            bFound = true;
 
-                var _title = _obj.title || "";
+            var title = _obj.title || "";
 
-                // le type texte ou icone est difficile à trouver, on le gère en
-                // symbole...
-                var _type = _key.split("-")[0];
-                if (_type === "text" || _type === "icon") {
-                    _type = "symbol";
-                }
-
-                if (this._getValues(_type, _style)) {
-                    params = {
-                        edit : this.editable,
-                        title : _title,
-                        type : this.legendRender.type,
-                        values : this.legendRender.values
-                    };
-                    div.appendChild(this._createElementIconLegend(params));
-                }
-
-                // on stoppe la recherche
-                break;
+            // INFO
+            // le type texte ou icone est difficile à trouver car les 2 types cohabitent,
+            // on le gère en symbole...
+            var type = key.split("-")[0];
+            if (type === "text" || type === "icon") {
+                type = "symbol";
             }
+
+            this.legendRender = this._getProperties(type, style);
+            params = {
+                edit : this.editable,
+                title : title,
+                type : this.legendRender.type,
+                values : this.legendRender.values
+            };
+            div.appendChild(this._createElementIconLegend(params));
+
+            // on stoppe la recherche
+            break;
         }
     }
 
     // legende avec un style indeterminé ou non géré !?
     if (!bFound) {
-        if (this._getValues("fill", _style)) {
-            params = {
-                edit : this.editable,
-                title : _obj.title || "",
-                type : this.legendRender.type,
-                values : this.legendRender.values
-            };
-
-            div.appendChild(this._createElementIconLegend(params));
-        }
+        // on prend la legende par defaut
+        params = {
+            edit : this.editable,
+            title : "",
+            type : this.legendRender.type,
+            values : this.legendRender.values
+        };
+        div.appendChild(this._createElementIconLegend(params));
+        logger.warn("legend type unknown, default legend used...");
     }
 
     // ajout mode edition graphique de la legende
@@ -259,49 +302,22 @@ Legend.prototype._initContainer = function () {
     this.container = div;
 };
 
+// ################################################################### //
+// ##################### private methods ############################# //
+// ################################################################### //
+
 /**
-* ...
+* Get properties supported
 *
 * @param {Object} type - fill, line, circle, text, icon...
-* @param {Object} value - see example
-* @returns {Boolean} - see this.legendRender
+* @param {Object} values - raw values from the JSON file
+* @returns {Object} - { type : (fill | line | circle | symbol), values : valuesSupported }
 *
 * @private
 * @example
-* // type simple for fill, line or circle type:
-* // "paint": {
-* //     "fill-color": "#2BB3E1"
-* // }
 *
-* // TODO type complexe : not yet implemented !
-* // "paint": {
-* //     "fill-color": [
-* //          "match",
-* //          ["get","symbo"],
-* //          "ZONE_BOISEE","#A7DA81",
-* //          "ZONE_MANGROVE","#7E8AB5",
-* //          "#A7DA81"
-* //      ]
-* // }
-*
-* // TODO other type complexe : not yet implemented !
-* // "paint": {
-* //     "fill-color": {
-* //        "base": 1,
-* //        "stops": [
-* //        [
-* //          15.5,
-* //         "#f2eae2"
-* //        ],
-* //        [
-* //          16,
-* //          "#dfdbd7"
-* //        ]
-* //        ]
-* //     }
-* // }
-*
-* // TODO symbol with text (1) / symbol without text (2) / text (3)
+* // TODO
+* // symbol with text (1) / symbol without text (2) / text (3)
 * // "layout":{
 * //      "icon-image":"{maki}-11",          <!--- IT'S A SYMBOL (1) (2)-->
 * //      "text-font":[
@@ -326,88 +342,56 @@ Legend.prototype._initContainer = function () {
 * // },
 *
 */
-Legend.prototype._getValues = function (type, value) {
-    logger.trace("_getValues():", type, value);
-
-    var _color = null; // couleur remplissage
-    var _stroke = null; // couleur trait
-    var _width = null; // epaisseur
-    var _opacity = null; // opacité
-    var _icon = null;
-
-    // cas particulier : determiner pour un symbole complexe
+Legend.prototype._getProperties = function (type, values) {
+    // cas particulier du symbole complexe
+    // il existe plusieurs types pour un symbole :
+    // - text
+    // - icon
+    // - icon with text
     if (type === "symbol") {
-        // il existe 2 type de symbole :
-        // - texte
-        // - icone avec ou sans texte
-        var _textValue = value["text-field"];
-        var _iconValue = value["icon-image"];
-        type = (_textValue && _iconValue) ? "icon" : (_textValue) ? "text" : (_iconValue) ? "icon" : "unknow";
+        var isTextValue = values["text-field"];
+        var isIconValue = values["icon-image"];
+        type = (isTextValue && isIconValue) ? "icon" : (isTextValue) ? "text" : (isIconValue) ? "icon" : "unknow";
         if (type === "unknow") {
-            logger.warn("_getValues() - Type inconnu :", type, value);
-            // on force le type texte !?
-            type = "text";
+            logger.warn("type unknow !?");
+            return;
         }
     }
 
-    switch (type) {
-        case "line":
-            _color = this._extract(value["line-color"]);
-            _width = this._extract(value["line-width"]);
-            _opacity = this._extract(value["line-opacity"]);
-            break;
-        case "text":
-            // FIXME c'est plus complexe !?
-            _color = this._extract(value["text-color"]);
-            break;
-        case "icon":
-            var bfound = false;
-            if (value["icon-image"] && this.options.sprites && Object.keys(this.options.sprites).length) {
-                if (this.options.sprites.json && this.options.sprites.json[value["icon-image"]]) {
-                    bfound = true;
+    var valuesSupported = {};
+    for (const key in values) {
+        if (Object.hasOwnProperty.call(values, key)) {
+            const val = values[key];
+            if (Legend.PROPERTIES[type].includes(key)) {
+                var prop = key.replace(type, "").slice(1);
+                var value = this._getValue(val);
+                if (value) {
+                    // cas particulier des sprites
+                    if (prop === "pattern" || prop === "image") {
+                        if (!this.options.sprites ||
+                            !this.options.sprites.json ||
+                            !this.options.sprites.json[value]) {
+                            var k = type + ":" + prop;
+                            logger.warn("sprites mandatory for key ", k);
+                            break;
+                        }
+                    }
+                    valuesSupported[prop] = value;
                 }
-            }
-            if (bfound) {
-                _icon = value["icon-image"];
             } else {
-                // FIXME  c'est plus complexe !?
-                _color = this._extract(value["icon-color"]);
+                logger.warn("property not supported : ", key);
             }
-            break;
-        case "circle":
-            _color = this._extract(value["circle-color"]);
-            _stroke = this._extract(value["circle-stroke-color"]);
-            _opacity = this._extract(value["circle-opacity"]);
-            _width = this._extract(value["circle-stroke-width"]);
-            break;
-        case "background":
-            _color = this._extract(value["background-color"]);
-            break;
-        case "fill":
-            _color = this._extract(value["fill-color"]);
-            _opacity = this._extract(value["fill-opacity"]);
-            break;
-        default:
-            // return false;
+        }
     }
 
-    // save
-    this.legendRender = {
+    return {
         type : type,
-        values : {
-            color : _color || this.legendRender.values.color,
-            stroke : _stroke || this.legendRender.values.stroke,
-            width : _width || this.legendRender.values.width,
-            opacity : _opacity || this.legendRender.values.opacity,
-            icon : _icon
-        }
+        values : valuesSupported
     };
-
-    return true;
 };
 
 /**
-* ...
+* Render thumbnail (SVG)
 *
 * @param {Object} type - fill, line, circle, text, ...
 * @param {Object} values - {"color":..., "width":..., "stroke":...., "opacity":...}
@@ -417,7 +401,7 @@ Legend.prototype._getValues = function (type, value) {
 * @example
 * (...)
 */
-Legend.prototype._setValues = function (type, values) {
+Legend.prototype._renderThumbnail = function (type, values) {
     // div de rendu de la legende
     var div = this.rendercontainer;
 
@@ -425,117 +409,186 @@ Legend.prototype._setValues = function (type, values) {
         return false;
     }
 
-    // les valeurs
-    var _color = values.color || this.legendRender.values.color; // couleur remplissage
-    var _stroke = values.stroke || this.legendRender.values.stroke; // couleur trait
-    var _width = values.width || this.legendRender.values.width; // epaisseur
-    var _opacity = values.opacity || this.legendRender.values.opacity; // opacité
-    var _icon = values.icon || this.legendRender.values.icon; // nom de l'icone
-    var _style = "";
-
     // SVG
     var svg = null;
     // facteur grossissement (x10) pour le trait
     var factor = 3;
 
+    // valeur par defaut
+    if (!values.color) {
+        values.color = "#FFFFFF";
+    }
     // en fonction du type, on y ajoute le style
     switch (type) {
         case "text":
-            _style = "font-size: 5em;font-weight: bold;";
+            var styleText = "font-size: 5em;font-weight: bold;";
             svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><text x='50' y='50' fill='%color%' fill-opacity='%opacity%'  text-anchor='middle' dominant-baseline='central' style='%style%'> T </text></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity)
-                .replace("%style%", _style);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%opacity%", values.opacity || 1)
+                .replace("%style%", styleText);
             break;
         case "icon":
-            if (_icon) {
+            if (values.image) {
                 // FIXME on reste dans le paradigme d'utilisation du SVG...,
                 // mais probleme de ratio de l'image !?
-                var template = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>";
-                svg = template
-                    .replace("%x%", this.options.sprites.json[_icon].x)
-                    .replace("%y%", this.options.sprites.json[_icon].y)
-                    .replace(/%w%/g, this.options.sprites.json[_icon].width)
-                    .replace(/%h%/g, this.options.sprites.json[_icon].height)
+                svg = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>"
+                    .replace("%x%", this.options.sprites.json[values.image].x)
+                    .replace("%y%", this.options.sprites.json[values.image].y)
+                    .replace(/%w%/g, this.options.sprites.json[values.image].width)
+                    .replace(/%h%/g, this.options.sprites.json[values.image].height)
                     .replace("%W%", this.options.sprites.size.w)
                     .replace("%H%", this.options.sprites.size.h)
                     .replace("%URL%", this.options.sprites.url);
                 div.innerHTML = svg;
             } else {
-                _style = "fill: transparent;stroke-width: 10;";
+                var styleTextIcon = "fill: transparent;stroke-width: 10;";
                 svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M 50,20 80,82.5 20,82.5 z' stroke='%color%' style='%style%'/></svg>\")";
                 div.style["background"] = svg
-                    .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                    .replace("%style%", _style);
+                    .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                    .replace("%style%", styleTextIcon);
             }
             break;
-        case "background":
-            div.style["background-color"] = _color;
-            break;
         case "line":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' /></svg>\")";
+            var lstrockedasharray = (Array.isArray(values["dasharray"])) ? values["dasharray"].join(" ") : 0;
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><line x1='0' y1='100' x2='100' y2='0' stroke='%color%' stroke-width='%stroke-width%' stroke-opacity='%stroke-opacity%' stroke-dasharray='%stroke-dasharray%' /></svg>\")";
+            // svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0 99 L99 0 L100 1 L1 100' stroke='%color%' stroke-width='%width%' stroke-opacity='%opacity%' stroke-dasharray='%dasharray%' /></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity)
-                .replace("%width%", _width * factor);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%stroke-opacity%", values.opacity || 1)
+                .replace("%stroke-dasharray%", lstrockedasharray)
+                .replace("%stroke-width%", (values.width || 0) * factor);
             break;
         case "circle":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke%' stroke-width='%width%' stroke-opacity='%opacity%' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
+            var cstrockcolor = values["stroke-color"] || "#FFFFFF";
+            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' stroke='%stroke-color%' stroke-width='%stroke-width%' stroke-opacity='%strock-opacity%' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
             div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity)
-                .replace("%stroke%", (_stroke.indexOf("rgb") === 0) ? _stroke : Color.hexToRgba(_stroke, 1))
-                .replace("%width%", _width * factor);
+                .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                .replace("%opacity%", values.opacity || 1)
+                .replace("%stroke-color%", (cstrockcolor.indexOf("rgb") === 0) ? cstrockcolor : Color.hexToRgba(cstrockcolor, 1))
+                .replace("%stroke-opacity%", values["stroke-opacity"] || 1)
+                .replace("%stroke-width%", (values["stroke-width"] || 0) * factor);
             break;
+        case "background":
         case "fill":
-            svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
-            div.style["background"] = svg
-                .replace("%color%", (_color.indexOf("rgb") === 0) ? _color : Color.hexToRgba(_color, 1))
-                .replace("%opacity%", _opacity);
+            if (values.pattern) {
+                svg = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' width='27px' height='27px' x='0' y='0' viewBox='%x% %y% %w% %h%'><image width='%W%px' height='%H%px' href='%URL%'/></svg>"
+                    .replace("%x%", this.options.sprites.json[values.pattern].x)
+                    .replace("%y%", this.options.sprites.json[values.pattern].y)
+                    .replace(/%w%/g, this.options.sprites.json[values.pattern].width)
+                    .replace(/%h%/g, this.options.sprites.json[values.pattern].height)
+                    .replace("%W%", this.options.sprites.size.w)
+                    .replace("%H%", this.options.sprites.size.h)
+                    .replace("%URL%", this.options.sprites.url);
+                div.innerHTML = svg;
+            } else {
+                var fstrokecolor = values["outline-color"] || "#FFFFFF";
+                svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' stroke='%stroke-color%' stroke-width='3' fill='%color%' fill-opacity='%opacity%' /></svg>\")";
+                div.style["background"] = svg
+                    .replace("%color%", (values.color.indexOf("rgb") === 0) ? values.color : Color.hexToRgba(values.color, 1))
+                    .replace("%opacity%", values.opacity || 1)
+                    .replace("%stroke-color%", (fstrokecolor.indexOf("rgb") === 0) ? fstrokecolor : Color.hexToRgba(fstrokecolor, 1));
+            }
             break;
         default:
+            logger.warn("type not found, no thumbnail...");
             return false;
     }
-
-    // save
-    this.legendRender = {
-        type : type,
-        values : {
-            color : _color,
-            stroke : _stroke,
-            width : _width,
-            opacity : _opacity,
-            icon : _icon
-        }
-    };
 
     return true;
 };
 
 /**
- * ...
+ * Get value
  *
- * @param {*} value - value
- * @returns {String} extract value
+ * @param {*} value - value of a property (ex. "#2BB3E1")
+ * @returns {*} return a verified value (ex. color": "#2BB3E1")
+ *
+ * @private
+ * @example
+ * // type simple for fill, line or circle type with string :
+ * // "paint": {
+ * //     "fill-color": "#2BB3E1"
+ * // }
+ *
+ * // type simple for fill, line or circle type with array :
+ * // "paint": {
+ * //     "line-dasharray": [2,10]
+ * // }
+ *
+ * // TODO type complexe : not yet implemented !
+ * // "paint": {
+ * //     "fill-color": [
+ * //          "match",
+ * //          ["get","symbo"],
+ * //          "ZONE_BOISEE","#A7DA81",
+ * //          "ZONE_MANGROVE","#7E8AB5",
+ * //          "#A7DA81"
+ * //      ]
+ * // }
+ *
+ * // other type complexe :
+ * // "paint": {
+ * //     "fill-color": {
+ * //        "base": 1,
+ * //        "stops": [
+ * //        [
+ * //          15.5,
+ * //         "#f2eae2"
+ * //        ],
+ * //        [
+ * //          16,
+ * //          "#dfdbd7"
+ * //        ]
+ * //        ]
+ * //     }
+ * // }
  */
-Legend.prototype._extract = function (value) {
+Legend.prototype._getValue = function (value) {
     var result = null;
     if (typeof value === "string") {
         result = value;
-    }
-    if (Array.isArray(value)) {
-        result = null;
-    }
-    if (typeof value === "object") {
+    } else if (typeof value === "number") {
+        result = value;
+    } else if (Array.isArray(value)) {
+        // cas d'un tableau de valeurs numériques : [1,2,3]
+        var isNumber = true;
+        value.forEach(v => {
+            if (typeof v !== "number") {
+                isNumber = false;
+            }
+        });
+        if (isNumber) {
+            result = value;
+        }
+    } else if (typeof value === "object") {
         result = null;
         if ("stops" in value) {
+            // on realise un ordre inversé sur les zooms
+            value.stops.sort((a, b) => {
+                var numA = a[0];
+                var numB = b[0];
+                if (numA > numB) {
+                    return -1;
+                }
+                if (numA < numB) {
+                    return 1;
+                }
+                return 0;
+            });
+            // et, on prend le plus petit zoom
             var lastStopsValue = value.stops.slice(-1);
             result = lastStopsValue[0][1];
         }
+    } else {
+        logger.warn("value not supported !");
     }
     return result;
 };
+
+// ################################################################### //
+// ######################### DOM methods ############################# //
+// ################################################################### //
 
 /**
 * Create a Graphical Legend Icon
@@ -554,7 +607,7 @@ Legend.prototype._extract = function (value) {
 *           style="background: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><rect x='0' y='0' width='100' height='100' rx='5' ry='5' fill='rgba(255, 255, 255, 1)' fill-opacity='1' /></svg>&quot;);">
 *       </div>
 *       <span class="GPEditorMapBoxLegendTitle">vide...</span>
-</div>
+* </div>
 */
 Legend.prototype._createElementIconLegend = function (params) {
     // contexte
@@ -579,45 +632,27 @@ Legend.prototype._createElementIconLegend = function (params) {
         }
     }
 
-    // couleur remplissage
-    var _color = params.values.color;
-    // couleur trait
-    var _stroke = params.values.stroke;
-    // epaisseur
-    var _width = params.values.width;
-    // opacité
-    var _opacity = params.values.opacity;
-
     // type de legende
-    var _type = params.type;
+    var type = params.type;
 
-    // si la couleur n'est pas definie, c'est que le type de syntaxe
-    // est non implementé ou non reconnu pour le moment...
-    if (!_color) {
-        // className
-        div.className += " legend-not-implemented";
+    // TODO className
+    // div.className += " legend-not-implemented";
+
+    // ajout du style sur la div de rendu
+    if (this._renderThumbnail(type, params.values)) {
+        // className possibles :
+        // " legend-text"
+        // " legend-icon"
+        // " legend-background"
+        // " legend-line"
+        // " legend-line-not-editable"
+        // " legend-circle"
+        // " legend-circle-not-editable"
+        // " legend-fill"
+        // " legend-fill-not-editable"
+        div.className += (params.edit) ? " legend-" + type : " legend-" + type + "-not-editable";
     } else {
-        // ajout du style qur la div de rendu
-        if (this._setValues(_type, {
-            color : _color,
-            stroke : _stroke,
-            width : _width,
-            opacity : _opacity
-        })) {
-            // className possibles :
-            // " legend-text"
-            // " legend-icon"
-            // " legend-background"
-            // " legend-line"
-            // " legend-line-not-editable"
-            // " legend-circle"
-            // " legend-circle-not-editable"
-            // " legend-fill"
-            // " legend-fill-not-editable"
-            div.className += (params.edit) ? " legend-" + _type : " legend-" + _type + "-not-editable";
-        } else {
-            div.className += " legend-unknow";
-        }
+        div.className += " legend-unknow";
     }
 
     container.appendChild(div);
@@ -678,8 +713,23 @@ Legend.prototype._createElementEditionLegend = function (params) {
 
     // on ne traite que l'edition du mode 'traits' ou 'surfaciques'
     // mode 'line'
-    if (params.type === "line") {
-        // couleur du trait
+    switch (params.type) {
+        case "line":
+            createLineColor.call(self);
+            createLineWidth.call(self);
+            createLineOpacity.call(self);
+            break;
+        case "background":
+        case "fill":
+            createFillColor.call(self);
+            createFillOpacity.call(self);
+            break;
+        default:
+            break;
+    }
+
+    // couleur du trait
+    function createLineColor () {
         var linecolor = document.createElement("div");
         linecolor.className = "legend-styling-div";
         var lLineColor = document.createElement("label");
@@ -695,24 +745,26 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputLineColor.setAttribute("data-id", "line-color");
         if (inputLineColor.addEventListener) {
             inputLineColor.addEventListener("change", function (e) {
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputLineColor.attachEvent) {
             inputLineColor.attachEvent("onchange", function (e) {
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
         linecolor.appendChild(lLineColor);
         linecolor.appendChild(inputLineColor);
         container.appendChild(linecolor);
+    }
 
-        // epaisseur du trait
+    // epaisseur du trait
+    function createLineWidth () {
         var linewidth = document.createElement("div");
         linewidth.className = "legend-styling-div";
         var lLineWidth = document.createElement("label");
@@ -733,26 +785,28 @@ Legend.prototype._createElementEditionLegend = function (params) {
             inputLineWidth.addEventListener("change", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     width : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputLineWidth.attachEvent) {
             inputLineWidth.attachEvent("onchange", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     width : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
         linewidth.appendChild(lLineWidth);
         linewidth.appendChild(inputLineWidth);
         container.appendChild(linewidth);
+    }
 
-        // opacité du trait
+    // opacité du trait
+    function createLineOpacity () {
         var lineopacity = document.createElement("div");
         lineopacity.className = "legend-styling-div";
         var lLineOpacity = document.createElement("label");
@@ -773,18 +827,18 @@ Legend.prototype._createElementEditionLegend = function (params) {
             inputLineOpacity.addEventListener("change", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputLineOpacity.attachEvent) {
             inputLineOpacity.attachEvent("onchange", function (e) {
                 logger.trace(e);
                 e.target.title = e.target.value;
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
@@ -792,9 +846,9 @@ Legend.prototype._createElementEditionLegend = function (params) {
         lineopacity.appendChild(inputLineOpacity);
         container.appendChild(lineopacity);
     }
-    // mode 'fill'
-    if (params.type === "fill") {
-        // couleur de remplissage
+
+    // couleur de remplissage
+    function createFillColor () {
         var fillcolor = document.createElement("div");
         fillcolor.className = "legend-styling-div";
         var lFillColor = document.createElement("label");
@@ -810,24 +864,26 @@ Legend.prototype._createElementEditionLegend = function (params) {
         inputFillColor.setAttribute("data-id", "fill-color");
         if (inputFillColor.addEventListener) {
             inputFillColor.addEventListener("change", function (e) {
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputFillColor.attachEvent) {
             inputFillColor.attachEvent("onchange", function (e) {
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     color : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
         fillcolor.appendChild(lFillColor);
         fillcolor.appendChild(inputFillColor);
         container.appendChild(fillcolor);
+    }
 
-        // opacité du remplissage
+    // opacité du remplissage
+    function createFillOpacity () {
         var fillopacity = document.createElement("div");
         fillopacity.className = "legend-styling-div";
         var lFillOpacity = document.createElement("label");
@@ -847,17 +903,17 @@ Legend.prototype._createElementEditionLegend = function (params) {
         if (inputFillOpacity.addEventListener) {
             inputFillOpacity.addEventListener("change", function (e) {
                 e.target.title = e.target.value;
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         } else if (inputFillOpacity.attachEvent) {
             inputFillOpacity.attachEvent("onchange", function (e) {
                 e.target.title = e.target.value;
-                self._setValues(params.type, {
+                self._renderThumbnail(params.type, Object.assign(params.values, {
                     opacity : e.target.value
-                });
+                }));
                 self.onChangeValueLegendMapBox(e);
             });
         }
@@ -875,6 +931,7 @@ Legend.prototype._createElementEditionLegend = function (params) {
 
 /**
  * Add element into target DOM
+ *
  * @returns {Object} - Legend instance
  */
 Legend.prototype.add = function () {
