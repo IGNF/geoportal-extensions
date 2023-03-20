@@ -95,6 +95,7 @@ import ElevationPath from "./Controls/ElevationPath";
 import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
+import ButtonExport from "./Controls/Export";
 
 // import Proj4 from "proj4";
 
@@ -238,6 +239,7 @@ Ol.control.MeasureAzimuth = MeasureAzimuth;
 Ol.control.DefaultMarkers = Markers;
 Ol.control.ElevationPath = ElevationPath;
 Ol.control.LocationSelector = LocationSelector;
+Ol.control.Export = ButtonExport;
 
 // Expose extensions openlayers extended
 export {

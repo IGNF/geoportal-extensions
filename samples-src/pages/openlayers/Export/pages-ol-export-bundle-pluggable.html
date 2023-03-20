@@ -1,0 +1,103 @@
+{{#extend "ol-sample-bundle-layout"}}
+
+{{#content "head"}}
+        <title>Sample openlayers</title>
+{{/content}}
+
+{{#content "style"}}
+        <style>
+            div#map {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Ajout du widget Export</h2>
+            <!-- map -->
+            <div id="map">
+              <div id="btnExportIso"></div>
+              <div id="btnExportRoute"></div>
+            </div>
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+              var exportRoute;
+              window.onload = function () {
+                // on cache l'image de chargement du Géoportail.
+                document.getElementById("map").style.backgroundImage = "none";
+
+                // Création de la map
+                var map = new ol.Map({
+                  target : "map",
+                  layers : [
+                    new ol.layer.GeoportalWMTS({
+                      layer : "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+                    })
+                  ],
+                  view : new ol.View({
+                    center : [288074.8449901076, 6247982.515792289],
+                    zoom : 18
+                  })
+                });
+
+                var importLayer = new ol.control.LayerImport({draggable:true});
+                map.addControl(importLayer);
+
+                // drawing : ???
+                var drawing = new ol.control.Drawing({
+                  draggable:true,
+                  tools : {
+                    export : true // outil interne !
+                  }
+                });
+                map.addControl(drawing);
+
+                // iso
+                var iso = new ol.control.Isocurve({
+                  draggable:true,
+                  export : {
+                    format: "kml",
+                    name: "export-iso",
+                    title : "Exporter",
+                    menu : false,
+                    onExport : function (content) {
+                      console.log(content);
+                    }
+                  }
+                });
+                map.addControl(iso);
+                iso.on("export:compute", (e) => {
+                  console.log("Export Iso", e);
+                });
+
+                // route
+                var route = new ol.control.Route({
+                  draggable:true,
+                  export : {
+                    format: "gpx",
+                    name: "export-route",
+                    title : "Exporter Iti",
+                    menu : true,
+                  }
+                });
+                map.addControl(route);
+                route.on("export:compute", (e) => {
+                  console.log("Export Route", e);
+                });
+
+                // profil
+                var profil = new ol.control.ElevationPath({
+                  export : true
+                });
+                map.addControl(profil);
+                profil.on("export:compute", (e) => {
+                  console.log("Export Profil", e);
+                });
+              };
+
+            </script>
+{{/content}}
+{{/extend}}

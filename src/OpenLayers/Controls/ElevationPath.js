@@ -30,10 +30,10 @@ import Interactions from "./Utils/Interactions";
 import MeasureToolBox from "./MeasureToolBox";
 import Measures from "./Measures/Measures";
 import LayerSwitcher from "./LayerSwitcher";
+import ButtonExport from "./Export";
 // DOM
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
-
 var logger = Logger.getLogger("elevationpath");
 
 /**
@@ -49,6 +49,7 @@ var logger = Logger.getLogger("elevationpath");
  * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
+ * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
  * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
@@ -71,9 +72,11 @@ var logger = Logger.getLogger("elevationpath");
  * @fires elevationpath:drawstart
  * @fires elevationpath:drawend
  * @fires elevationpath:compute
+ * @fires export:compute
  * @example
  *
  * var measure = new ol.control.ElevationPath({
+ *    export : false,
  *    stylesOptions : {
  *     draw : {
  *       finish : new ol.style.Stroke({
@@ -527,6 +530,20 @@ var ElevationPath = (function (Control) {
             if (!this.options.target) {
                 MeasureToolBox.add(map, this);
             }
+
+            // ajout d'un bouton d'export
+            if (this.options.export) {
+                var opts = Utils.assign({ control : this }, this.options.export);
+                this.export = new ButtonExport(opts);
+                this.export.render();
+                var self = this;
+                this.export.on("export:compute", (e) => {
+                    self.dispatchEvent({
+                        type : "export:compute",
+                        content : e.content
+                    });
+                });
+            }
         }
 
         // on appelle la méthode setMap originale d'OpenLayers
@@ -578,6 +595,24 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    ElevationPath.prototype.getContainer = function () {
+        return this._container;
+    };
+
+    /**
+     * Get layer
+     *
+     * @returns {ol.layer.Vector} layer
+     */
+    ElevationPath.prototype.getLayer = function () {
+        return this._measureVector;
+    };
+
+    /**
      * clean
      */
     ElevationPath.prototype.clean = function () {
@@ -595,46 +630,6 @@ var ElevationPath = (function (Control) {
         this._removeProfile();
         this._removeMeasure();
         this._removeMeasureInteraction(map);
-    };
-
-    /**
-     * Remove measure
-     * @private
-     */
-    ElevationPath.prototype._removeMeasure = function () {
-        // sketch
-        this._lastSketch = null;
-        this._currentSketch = null;
-
-        if (this._measureSource) {
-            // marker
-            if (this._marker) {
-                this._measureSource.removeFeature(this._marker);
-                this._marker = null;
-            }
-
-            // all other features
-            var _features = this._measureSource.getFeatures();
-            for (var i = 0; i < _features.length; i++) {
-                this._measureSource.removeFeature(_features[i]);
-            }
-        }
-    };
-
-    /**
-     * Remove profile
-     * @private
-     */
-    ElevationPath.prototype._removeProfile = function () {
-        // graph
-        this._profile = null;
-
-        // on vide le container
-        if (this._profileContainer) {
-            while (this._profileContainer.firstChild) {
-                this._profileContainer.removeChild(this._profileContainer.firstChild);
-            }
-        }
     };
 
     // ################################################################### //
@@ -657,6 +652,7 @@ var ElevationPath = (function (Control) {
             render : null,
             active : false,
             apiKey : null,
+            export : false,
             elevationOptions : {},
             layerDescription : {
                 title : "Profil altimétrique",
@@ -690,6 +686,9 @@ var ElevationPath = (function (Control) {
 
         // gestion de l'affichage du profil
         var _profile = options.displayProfileOptions || {};
+
+        // bouton export
+        this.export = null;
 
         // gestion de la fonction du profil
         var displayFunction = _profile.apply;
@@ -1540,6 +1539,46 @@ var ElevationPath = (function (Control) {
 
         if (greaterSlope) {
             this._addElevationPathInformationsItem("Plus forte pente : " + this._data.greaterSlope.toLocaleString() + " %");
+        }
+    };
+
+    /**
+     * Remove measure
+     * @private
+     */
+    ElevationPath.prototype._removeMeasure = function () {
+        // sketch
+        this._lastSketch = null;
+        this._currentSketch = null;
+
+        if (this._measureSource) {
+            // marker
+            if (this._marker) {
+                this._measureSource.removeFeature(this._marker);
+                this._marker = null;
+            }
+
+            // all other features
+            var _features = this._measureSource.getFeatures();
+            for (var i = 0; i < _features.length; i++) {
+                this._measureSource.removeFeature(_features[i]);
+            }
+        }
+    };
+
+    /**
+     * Remove profile
+     * @private
+     */
+    ElevationPath.prototype._removeProfile = function () {
+        // graph
+        this._profile = null;
+
+        // on vide le container
+        if (this._profileContainer) {
+            while (this._profileContainer.firstChild) {
+                this._profileContainer.removeChild(this._profileContainer.firstChild);
+            }
         }
     };
 

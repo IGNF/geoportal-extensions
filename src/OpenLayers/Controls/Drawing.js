@@ -181,11 +181,11 @@ var Drawing = (function (Control) {
         this._initialize(options);
 
         // init control DOM container
-        var container = this._container = this._initContainer();
+        this._container = this._initContainer();
 
         // call ol.control.Control constructor
         Control.call(this, {
-            element : container,
+            element : this._container,
             target : options.target,
             render : options.render
         });
@@ -561,6 +561,24 @@ var Drawing = (function (Control) {
                 }
             );
         }
+    };
+
+    /**
+     * Get vector layer
+     *
+     * @returns {Object} layer - isocurve layer
+     */
+    Drawing.prototype.getLayer = function () {
+        return this.layer;
+    };
+
+    /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    Drawing.prototype.getContainer = function () {
+        return this._container;
     };
 
     // ################################################################### //
