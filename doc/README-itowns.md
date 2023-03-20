@@ -30,11 +30,16 @@
       - [Exemple d'utilisation](#exemple-dutilisation-2)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
       - [Exemple d'utilisation](#exemple-dutilisation-3)
+    - [Affichage des couches Vecteur Tuilé Géoportail](#affichage-des-couches-vecteur-tuilé-géoportail)
+      - [Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoportail](#Utilisation-de-laccès-privilégié-aux-couches-vecteur-tuilé-géoportail)
+      - [Exemple d'utilisation](#exemple-dutilisation-4)
+      - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
+      - [Exemple d'utilisation](#exemple-dutilisation-5)
     - [Affichage des couches MNT WMTS Géoportail pour affichage du relief](#affichage-des-couches-mnt-wmts-géoportail-pour-affichage-du-relief)
       - [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail-pour-afficher-un-mnt)
-      - [Exemple d'utilisation](#exemple-dutilisation-4)
+      - [Exemple d'utilisation](#exemple-dutilisation-6)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-2)
-      - [Exemple d'utilisation](#exemple-dutilisation-5)
+      - [Exemple d'utilisation](#exemple-dutilisation-7)
     - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
       - [Exemples d'utilisation](#exemples-dutilisation)
         - [Utilisation simple](#utilisation-simple)
@@ -698,6 +703,69 @@ var regionLayer{
 }
 
 globeView.addLayer(regionLayer);
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="VT"/>
+
+### Affichage des couches Vecteur Tuilé Géoportail
+
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches Vecteur Tuilé Géoportail.
+
+1 - Via l'accès privilégié aux couches Vecteur Tuilé Géoportail fourni par l'extension Géoportail pour iTowns.
+
+2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+
+#### Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoportail
+
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.VectorTileLayer](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.VectorTileLayer.html), de la manière suivante :
+
+``` javascript
+new itowns.layer.VectorTileLayer(options);
+```
+Cette fonction retourne un objet **itowns.layer.VectorTileLayer**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
+
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail Vecteur Tuilé.
+
+#### Exemple d'utilisation
+
+``` javascript
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+globeView.addLayer(new itowns.layer.VectorTileLayer({
+    layer: "PLAN.IGN",
+    id : "MVT",
+    url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    itownsParams : {
+        opacity : 0.5
+    }
+}));
+```
+
+#### Utilisation directe de la librairie iTowns
+
+Il est possible d'ajouter une couche Vecteur Tuilé Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+
+#### Exemple d'utilisation
+
+``` javascript
+var view = new itowns.GlobeView(viewerDiv, placement);
+
+var mvtSource = new itowns.VectorTilesSource({
+    style: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    // application de filtres
+    filter: (layer) => !layer['source-layer'].includes('oro_') && !layer['source-layer'].includes('parcellaire'),
+}
+
+var mvtLayer = new itowns.ColorLayer('MVT', {
+    source: mvtSource,
+    effect_type: itowns.colorLayerEffects.removeLightColor,
+    effect_parameter: 2.5,
+    addLabelLayer: true,
+}
+
+view.addLayer(mvtLayer);
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

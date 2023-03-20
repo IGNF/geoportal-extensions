@@ -31,6 +31,7 @@
         - [Exemple d'utilisation](#exemple-dutilisation-2)
       - [Utilisation d'une source WMS Géoportail](#utilisation-dune-source-wms-géoportail)
         - [Exemple d'utilisation](#exemple-dutilisation-3)
+    - [Affichage d'une couche Vecteur Tuilé Géoportail](#affichage-dune-couche-vecteur-tuilé-géoportail)
     - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
       - [Exemples d'utilisation](#exemples-dutilisation)
         - [Utilisation simple](#utilisation-simple)
@@ -77,6 +78,8 @@ L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes �
 * [affichage des couches WMTS Géoportail](#WMTS)
 
 * [affichage des couches WMS Géoportail](#WMS)
+
+* [affichage d'une couche Vecteur Tuilé Géoportail](#VT)
 
 * [affichage dynamique des attributions](#attributions)
 
@@ -711,6 +714,57 @@ var map = new ol.Map({
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/e36ur78k/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="VT"/>
+
+### Affichage d'une couche Vecteur Tuilé Géoportail
+
+L'affichage se fait par la création d'une nouvelle instance de la classe [ol.layer.GeoportalMapBox](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.layer.GeoportalMapBox.html), de la manière suivante :
+
+``` javascript
+new ol.layer.GeoportalMapBox(options);
+```
+
+Cette fonction retourne un objet **ol.layer.GeoportalMapBox**, qui hérite de l'objet OpenLayers *ol.layer.VectorTile*, qui peut ainsi être interprété par la librairie OpenLayers pour l'ajout dans la carte.
+
+**Exemple d'utilisation:**
+
+Affichage de la couche *PLAN.IGN* du Géoportail avec le style *classique* sur une carte en EPSG:4326.
+
+``` javascript
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+      new ol.layer.GeoportalMapBox({
+        layer  : "PLAN.IGN",
+        style  : "classique"
+      })
+    ],
+    view: new ol.View({
+      center: [2, 46],
+      zoom: 12,
+      projection: "EPSG:4326"
+    })
+});
+```
+
+Il est possible d'y ajouter des options :
+
+``` javascript
+var LayerMapBox = new ol.layer.GeoportalMapBox({
+     layer  : "PLAN.IGN",
+     style  : "classique",
+     source : "plan_ign", // cas de plusieurs sources
+     ssl: true
+}, {
+     opacity: 0.7,
+     visible: true,
+     declutter: true
+     ...
+});
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
