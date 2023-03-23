@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.2.20
- * @date 21/02/2023
+ * @version 3.2.21
+ * @date 23/03/2023
  *
  */
 
@@ -3869,8 +3869,8 @@ LEGEND
 .legend-background {}
 .legend-fill ,
 .legend-line {
-    margin: auto;
-    padding: 5px;
+    /* margin: auto;
+    padding: 5px; */
 }
 .legend-icon {}
 .legend-text {}
@@ -4864,3 +4864,105 @@ div[id^=GPtoolbox-measure-main]:hover button[id^=GPtoolbox-measure-button] {
     background-color: rgba(0,60,136,0.7);
 }
 
+/* main container */
+div[id^=GPexportContainer-] {
+    padding: 5px;
+}
+
+div[id^=GPexportContainer-] > input.GPinputSubmit {
+    color: white;
+}
+
+/* bouton */
+input[id^=GPexportButton-] {
+    min-width: fit-content;
+    padding-left: 25px;
+    padding-right: 5px;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgoKPHN2ZwogICB3aWR0aD0iMy43MDM5OTk4bW0iCiAgIGhlaWdodD0iMy43MDA5OTk3bW0iCiAgIHZpZXdCb3g9Ii0xIC0xIDUuNzA0NjIgNS42OTk5OTk2IgogICB2ZXJzaW9uPSIxLjEiCiAgIGlkPSJzdmc0MTciCiAgIHhtbDpzcGFjZT0icHJlc2VydmUiCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnMKICAgICBpZD0iZGVmczQxNCIgLz48ZwogICAgIGlkPSJsYXllcjEiCiAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTM4LjcwNDI5OSwtNTYuNDk2NzQ0KSI+PGcKICAgICAgIHN0cm9rZS1saW5lam9pbj0icm91bmQiCiAgICAgICBzdHJva2U9IiNmZmZmZmYiCiAgICAgICBzdHJva2UtbGluZWNhcD0icm91bmQiCiAgICAgICBzdHJva2Utd2lkdGg9IjMiCiAgICAgICBmaWxsPSJub25lIgogICAgICAgaWQ9Imc2MDQiCiAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjI2NDU4MzMzLDAsMCwwLjI2NDU4MzMzLDM2LjU4NjYsNTQuMzkzNjkpIj48cGF0aAogICAgICAgICBkPSJtIDY4OCwzMjYuNCB2IDggaCAyMCB2IC04IG0gLTEwLC0xNCB2IDE0IgogICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjYwODYsMCwwLDAuNTU5NSwtNDA5LjgsLTE2NikiCiAgICAgICAgIGlkPSJwYXRoNjAwIiAvPjxwYXRoCiAgICAgICAgIGQ9Im0gNjkzLDMyMS40IDUsNSA1LC01IgogICAgICAgICB0cmFuc2Zvcm09Im1hdHJpeCgwLjYwODYsMCwwLDAuNTU5NSwtNDA5LjgsLTE2NikiCiAgICAgICAgIGlkPSJwYXRoNjAyIiAvPjwvZz48L2c+PC9zdmc+Cg==);
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+}
+
+/* menu */
+.GPexportMenuHidden {
+    visibility: hidden;
+}
+
+.GPexportMenuContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.GPexportMenuContent {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 80px;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.GPexportMenuContent a:hover { background-color: #f1f1f1; }
+
+.GPexportMenuContainer:hover .GPexportMenuContent { display: block; }
+
+/* menu des formats */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+  
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 12px;
+    width: 12px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+  
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+    background-color: #366291;
+}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+.container .checkmark:after {
+    top: 4px;
+    left: 4px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: white;
+}
