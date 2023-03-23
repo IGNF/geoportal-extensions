@@ -22,6 +22,8 @@
 
 * [Changed]
 
+    - GFI : ignore la propriété "icon" lors de la construction de la pop-up (05bbfa0ab8ccd09b32954aabad421b00f6faec35)
+
 * [Deprecated]
 
 * [Removed]
