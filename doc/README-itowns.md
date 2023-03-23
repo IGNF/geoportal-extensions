@@ -1,6 +1,6 @@
 # Extension Géoportail pour iTowns
 
-[![release](https://img.shields.io/badge/release%20-itowns%202.3.6-brightgreen.svg?style=flat)](https://github.com/IGNF/geoportal-extensions/releases/tag/itowns-2.3.6)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?display_name=release&filename=build%2Fscripts%2Frelease%2Fpackage-itowns.json)
 
 <!-- toc -->
 
@@ -30,11 +30,16 @@
       - [Exemple d'utilisation](#exemple-dutilisation-2)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
       - [Exemple d'utilisation](#exemple-dutilisation-3)
+    - [Affichage des couches Vecteur Tuilé Géoportail](#affichage-des-couches-vecteur-tuilé-géoportail)
+      - [Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoportail](#Utilisation-de-laccès-privilégié-aux-couches-vecteur-tuilé-géoportail)
+      - [Exemple d'utilisation](#exemple-dutilisation-4)
+      - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
+      - [Exemple d'utilisation](#exemple-dutilisation-5)
     - [Affichage des couches MNT WMTS Géoportail pour affichage du relief](#affichage-des-couches-mnt-wmts-géoportail-pour-affichage-du-relief)
       - [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail-pour-afficher-un-mnt)
-      - [Exemple d'utilisation](#exemple-dutilisation-4)
+      - [Exemple d'utilisation](#exemple-dutilisation-6)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-2)
-      - [Exemple d'utilisation](#exemple-dutilisation-5)
+      - [Exemple d'utilisation](#exemple-dutilisation-7)
     - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
       - [Exemples d'utilisation](#exemples-dutilisation)
         - [Utilisation simple](#utilisation-simple)
@@ -54,11 +59,13 @@
       - [Exemples d'utilisation](#exemples-dutilisation-5)
         - [Utilisation simple](#utilisation-simple-5)
         - [Utilisation avancée](#utilisation-avancée)
-    - [Widget d'affichage des bâtiments en 3D](#widget-daffichage-des-bâtiments)
+    - [Widget d'affichage des bâtiments](#widget-daffichage-des-bâtiments)
       - [Exemples d'utilisation](#exemples-dutilisation-6)
         - [Utilisation simple](#utilisation-simple-6)
         - [Utilisation avancée](#utilisation-avancée-1)
 <!-- tocstop -->
+
+<a name="readme-top"></a>
 
 L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
 
@@ -90,7 +97,7 @@ L'utilisation de l'extension Géoportail pour iTowns se fait via les étapes sui
 
 * [Configuration de l'accès à la plateforme Géoportail](#config)
 
-
+Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
 <a id="download"/>
 
@@ -115,6 +122,8 @@ L'extension Géoportail pour iTowns comprend l'arborescence de fichiers suivante
 Les scripts d'iTowns s'obtiennent sur [la page de téléchargement d'iTowns](https://github.com/iTowns/itowns/releases).
 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="download-direct"/>
 
 #### Téléchargement direct
@@ -123,6 +132,7 @@ Vous pouvez télécharger la dernière version de l'extension Géoportail pour i
 
 L'archive téléchargée (GpItowns.zip) comprend l'arborescence décrite ci-dessus.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="download-npm"/>
 
@@ -149,6 +159,8 @@ http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src
 http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src.css
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="integration"/>
 
 ### Intégration dans une page web
@@ -166,6 +178,8 @@ Intégrez l'extension géoportail pour iTowns dans votre page web classiquement 
 <script src="chemin/vers/GpPluginItowns.js"></script>
 <link rel="stylesheet" href="chemin/vers/GpPluginItowns.css" />
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="config"/>
 
@@ -271,6 +285,8 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 
 **Cependant, en cas de clés multiples, le plus simple reste de directement entrer la clé spécifique à utiliser au niveau du paramètre "url" de la couche ou "apiKey" du widget.**
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 #### Optimisation du chargement : configuration locale
 
 Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
@@ -327,6 +343,8 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Appel de l'extension dans un module ES6
 
 Le module de l'extension expose de multiples exports nommés (dont le module itowns étendu).
@@ -366,6 +384,8 @@ const globeView = new It.GlobeViewExtended(...)
 Gp.Services.getConfig(...)
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Compatibilités
 
 ### Versions d'iTowns supportées
@@ -391,6 +411,9 @@ Opera      | Versions récentes (19+)
 Le webGL est une technologie qui exploite l'accélération matérielle de la carte graphique de la machine de l'utilisateur. En fonction du matériel de l'utilisateur, iTowns et l'extension Géoportail pour iTowns pourront donc ne pas fonctionner.
 Sur [cette page](https://get.webgl.org/), il est possible de tester en fonction du navigateur et du matériel si le contexte webGL est accessible.
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Fonctionnalités
 
 <a id="crs"/>
@@ -405,6 +428,8 @@ NB :
 
 * Les définitions des systèmes de coordonnées du registre IGN-F peuvent être trouvées [ici](https://geodesie.ign.fr/contenu/fichiers/IGNF.xml).
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMTS"/>
 
@@ -584,6 +609,7 @@ var orthoLayer = {
 globeView.addLayer(orthoLayer);
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="WMS"/>
 
@@ -678,6 +704,71 @@ var regionLayer{
 
 globeView.addLayer(regionLayer);
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="VT"/>
+
+### Affichage des couches Vecteur Tuilé Géoportail
+
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches Vecteur Tuilé Géoportail.
+
+1 - Via l'accès privilégié aux couches Vecteur Tuilé Géoportail fourni par l'extension Géoportail pour iTowns.
+
+2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
+
+#### Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoportail
+
+L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.VectorTileLayer](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.VectorTileLayer.html), de la manière suivante :
+
+``` javascript
+new itowns.layer.VectorTileLayer(options);
+```
+Cette fonction retourne un objet **itowns.layer.VectorTileLayer**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
+
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail Vecteur Tuilé.
+
+#### Exemple d'utilisation
+
+``` javascript
+const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
+
+globeView.addLayer(new itowns.layer.VectorTileLayer({
+    layer: "PLAN.IGN",
+    id : "MVT",
+    url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    itownsParams : {
+        opacity : 0.5
+    }
+}));
+```
+
+#### Utilisation directe de la librairie iTowns
+
+Il est possible d'ajouter une couche Vecteur Tuilé Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+
+#### Exemple d'utilisation
+
+``` javascript
+var view = new itowns.GlobeView(viewerDiv, placement);
+
+var mvtSource = new itowns.VectorTilesSource({
+    style: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    // application de filtres
+    filter: (layer) => !layer['source-layer'].includes('oro_') && !layer['source-layer'].includes('parcellaire'),
+}
+
+var mvtLayer = new itowns.ColorLayer('MVT', {
+    source: mvtSource,
+    effect_type: itowns.colorLayerEffects.removeLightColor,
+    effect_parameter: 2.5,
+    addLabelLayer: true,
+}
+
+view.addLayer(mvtLayer);
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="Elevation"/>
 
@@ -807,6 +898,7 @@ var MNTLayer = {
 globeView.addLayer(ElevationLayer);
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="layerswitcher"/>
 
@@ -876,6 +968,9 @@ globeView.addWidget(layerSwitcher);
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/b01pLz3m/embedded/result,js,html,css/)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="mp"/>
 
 ### Coordonnées et altitude en un point de la carte
@@ -918,6 +1013,9 @@ map.addControl(mpControl);
 **Exemple d'utilisation avec paramétrage des systèmes de coordonnées**
 [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/tmjdezkq/embedded/result,js,html,css/)
 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="attributions"/>
 
 ### Affichage dynamique des attributions
@@ -955,6 +1053,8 @@ globeView.addWidget( attribution );
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/r3or3tz9/embedded/result,js,html,css/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="miniglobe"/>
 
 ### Affichage d'une mini-vue dynamique
@@ -987,6 +1087,8 @@ globeView.addWidget( miniglobe );
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xfq98cr1/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="scalebar"/>
 
@@ -1021,8 +1123,7 @@ globeView.addWidget( scalebar );
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/xwodbsfp/embedded/result,js,html,css/)
 
-
------------------------------------------
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="boostrelief"/>
 
@@ -1069,7 +1170,6 @@ globeView.addWidget( boostrelief );
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/1no0hyp2/embedded/result,js,html,css/)
 
-
 ##### Utilisation avancée
 
 Ajout du widget en paramétrant des coéfficients minimum et maximum, et un pas spécifique pour le slider d'éxagération
@@ -1107,7 +1207,7 @@ globeView.addWidget( boostrelief );
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/szj1n62k/embedded/result,js,html,css/)
 
------------------------------------------
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="buildings"/>
 
@@ -1167,3 +1267,5 @@ globeView.addWidget( buildings );
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/2vLfh0rq/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -102,7 +102,32 @@
                         return result;
                     }
                     var kml = new ol.format.KMLExtended({
-                        writeStyles : true
+                        writeStyles : true,
+                        extensions : {
+                            root : {
+                                typestring : "string",
+                                typenumber : 22,
+                                typefloat : 1.22,
+                                typeobject : {
+                                    typestringone : "string1",
+                                    typestringtwo : null
+                                },
+                                typearray : ["item1", "item2"],
+                                typearrayofobject : [
+                                    {
+                                        typestringone : "string1",
+                                                typestringtwo : null
+                                    },
+                                    {
+                                        typestringone : "string1",
+                                        typestringtwo : "string2"
+                                    },
+                                ],
+                                typearrayofarray : [
+                                    [1, 2], null, [1, 3], null, [1, 4]
+                                ]
+                            }
+                        }
                     });
 
                     result = kml.writeFeatures(layer.getSource().getFeatures(), {

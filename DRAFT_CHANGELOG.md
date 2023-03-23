@@ -1,5 +1,6 @@
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -7,19 +8,24 @@
 
 ## Summary
 
-Ajout d'écouteurs sur les controles de Géocodage direct en inverse
+Amélioration du traitement pour les couches vecteur tuilé (documentation, légendes, ajout simplifié)
 
 ## Changelog
 
 * [Added]
 
-    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#348)
-    - Ajout d'evenements sur le contrôle ReverseGeocode lors de la selection d'un résultat (#356)
-    - Ajout de méthodes publiques sur les contrôles Iso et Route (#343) : 
-        - getGeoJSON() : fournit le tracé au format GeoJSON
-        - getData() : fournit la configuration du calcul
+    - Ajout simplifié d'une couche vecteur tuilé IGN :
+    ```js
+    var LayerMapBox = new ol.layer.GeoportalMapBox({
+        layer  : "PLAN.IGN",
+        style  : "gris"
+    });
+    ```
 
 * [Changed]
+
+    - GFI : ignore la propriété "icon" lors de la construction de la pop-up (05bbfa0ab8ccd09b32954aabad421b00f6faec35)
+    - Vecteur tuilé : évolution sur la construction et l'affichage des légendes (#362)
 
 * [Deprecated]
 
@@ -27,14 +33,9 @@ Ajout d'écouteurs sur les controles de Géocodage direct en inverse
 
 * [Fixed]
 
-    - Faute d'ortographe description couche Isocurve
-    - Ajout des modules dans la JSDoc (#349)
-    - Mise à jour des clefs des services (#352)
-
 * [Security]
 
 ---
-
 
 
 # Extension Geoportail Leaflet, version __VERSION__
@@ -44,14 +45,9 @@ Ajout d'écouteurs sur les controles de Géocodage direct en inverse
 
 ## Summary
 
-Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
-
 ## Changelog
 
 * [Added]
-
-    - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat (#351)
-    - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#354)
 
 * [Changed]
 
@@ -64,7 +60,6 @@ Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
 * [Security]
 
 ---
-
 
 
 # Extension Geoportail Itowns, version __VERSION__
@@ -80,7 +75,7 @@ Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
 
 * [Changed]
 
-    - mise à jour du readme
+    - mise à jour du readme pour ajout couche VT (d61ebdd223d1f1516e1877209190b298f18f71d0)
 
 * [Deprecated]
 

@@ -23,6 +23,8 @@ import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
+import ButtonExport from "./Export";
+
 // DOM
 import IsoDOM from "../../Common/Controls/IsoDOM";
 
@@ -42,6 +44,7 @@ var logger = Logger.getLogger("isocurve");
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
+ * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
  * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
  * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
@@ -58,10 +61,12 @@ var logger = Logger.getLogger("isocurve");
  * @fires isocurve:drawstart
  * @fires isocurve:drawend
  * @fires isocurve:compute
+ * @fires export:compute
  * @example
  *  var iso = ol.control.Isocurve({
  *      "collapsed" : false,
  *      "draggable" : true,
+ *      "export"    : false,
  *      "methods" : ["time", "distance"],
  *      "exclusions" : {
  *         "toll" : true,
@@ -144,6 +149,20 @@ var Isocurve = (function (Control) {
             // enrichissement du DOM du container lors de l'ajout à la carte
             this._container = this._initContainer(map);
 
+            // ajout d'un bouton d'export
+            if (this.options.export) {
+                var opts = Utils.assign({ control : this }, this.options.export);
+                this.export = new ButtonExport(opts);
+                this.export.render();
+                var self = this;
+                this.export.on("export:compute", (e) => {
+                    self.dispatchEvent({
+                        type : "export:compute",
+                        content : e.content
+                    });
+                });
+            }
+
             // mode "draggable"
             if (this.draggable) {
                 Draggable.dragElement(
@@ -219,6 +238,7 @@ var Isocurve = (function (Control) {
 
         // application des styles
         layer.setStyle(this._defaultFeatureStyle);
+
         // sauvegarde
         this._geojsonLayer = layer;
     };
@@ -282,6 +302,24 @@ var Isocurve = (function (Control) {
         this._originPoint.clear();
         this._originPoint.setCoordinate(data.point, "EPSG:4326");
         this._currentIsoResults = data.results;
+    };
+
+    /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    Isocurve.prototype.getContainer = function () {
+        return this._container;
+    };
+
+    /**
+     * Get default style
+     *
+     * @returns {ol.style} style
+     */
+    Isocurve.prototype.getStyle = function () {
+        return this._defaultFeatureStyle;
     };
 
     /**
@@ -405,6 +443,7 @@ var Isocurve = (function (Control) {
         this.options = {
             collapsed : true,
             draggable : false,
+            export : false,
             methods : ["time", "distance"],
             graphs : ["Voiture", "Pieton"],
             exclusions : {
@@ -468,6 +507,9 @@ var Isocurve = (function (Control) {
         // la géométrie
         this._geojsonLayer = null;
         this._geojsonObject = null;
+
+        // bouton export
+        this.export = null;
 
         // si un calcul est en cours ou non
         this._waiting = false;
@@ -911,7 +953,7 @@ var Isocurve = (function (Control) {
         this._originPoint.setMap(map);
         // a la sélection d'un nouveau point, on réinitialise aussi le tracé
         var self = this;
-        /** click sur le pointer */
+        // click sur le pointer
         document.getElementById("GPlocationOriginPointerImg_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
             var map = self.getMap();
@@ -940,7 +982,7 @@ var Isocurve = (function (Control) {
             */
             self.dispatchEvent("isocurve:drawstart");
         };
-        /** click sur le label */
+        // click sur le label
         document.getElementById("GPlocationOriginLabel_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
             self._formContainer.className = "";
@@ -953,7 +995,7 @@ var Isocurve = (function (Control) {
             );
             self.dispatchEvent("isocurve:drawend");
         };
-        /** click sur la zone de saisie */
+        // click sur la zone de saisie
         document.getElementById("GPlocationOrigin_1-" + this._uid).onclick = function () {
             self._clearGeojsonLayer();
             /**

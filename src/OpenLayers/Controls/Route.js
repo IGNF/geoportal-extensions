@@ -26,6 +26,7 @@ import Draggable from "../../Common/Utils/Draggable";
 import Interactions from "./Utils/Interactions";
 // import local with ol dependencies
 import LocationSelector from "./LocationSelector";
+import ButtonExport from "./Export";
 import LayerSwitcher from "./LayerSwitcher";
 // DOM
 import RouteDOM from "../../Common/Controls/RouteDOM";
@@ -46,6 +47,7 @@ var logger = Logger.getLogger("route");
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
+ * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
  * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of resources, by default : ["Voiture", "Pieton"]. The first element is selected.
  * @param {Object} [options.routeOptions = {}] - route service options. see {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~route Gp.Services.route()} to know all route options.
@@ -59,10 +61,12 @@ var logger = Logger.getLogger("route");
  * @fires route:drawstart
  * @fires route:drawend
  * @fires route:compute
+ * @fires export:compute
  * @example
  *  var route = ol.control.Route({
  *      "collapsed" : true
  *      "draggable" : true,
+ *      "export"    : false,
  *      "exclusions" : {
  *         "toll" : true,
  *         "bridge" : false,
@@ -151,6 +155,20 @@ var Route = (function (Control) {
         if (map) {
             // enrichissement du DOM du container
             this._container = this._initContainer(map);
+
+            // ajout d'un bouton d'export
+            if (this.options.export) {
+                var opts = Utils.assign({ control : this }, this.options.export);
+                this.export = new ButtonExport(opts);
+                this.export.render();
+                var self = this;
+                this.export.on("export:compute", (e) => {
+                    self.dispatchEvent({
+                        type : "export:compute",
+                        content : e.content
+                    });
+                });
+            }
 
             // mode "draggable"
             if (this.draggable) {
@@ -300,6 +318,24 @@ var Route = (function (Control) {
     };
 
     /**
+     * Get container
+     *
+     * @returns {DOMElement} container
+     */
+    Route.prototype.getContainer = function () {
+        return this._container;
+    };
+
+    /**
+     * Get default style
+     *
+     * @returns {ol.style} style
+     */
+    Route.prototype.getStyle = function () {
+        return this._defaultFeatureStyle;
+    };
+
+    /**
      * This method is public.
      * It allows to init the control.
      */
@@ -396,6 +432,7 @@ var Route = (function (Control) {
         this.options = {
             collapsed : true,
             draggable : false,
+            export : false,
             graphs : ["Voiture", "Pieton"],
             exclusions : {
                 toll : false,
@@ -475,6 +512,9 @@ var Route = (function (Control) {
 
         // la geometrie des troncons au format GeoJSON
         this._geojsonObject = null;
+
+        // bouton export
+        this.export = null;
 
         // le container de la popup (pour les troncons selectionnés)
         this._popupContent = null;
