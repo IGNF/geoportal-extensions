@@ -145,6 +145,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.20](#extension-geoportail-openlayers-version-3220)
   * [Summary](#summary-43)
   * [Changelog](#changelog-40)
+- [Extension Geoportail OpenLayers, version 3.2.21](#extension-geoportail-openlayers-version-3221)
+  * [Summary](#summary-44)
+  * [Changelog](#changelog-41)
 
 <!-- tocstop -->
 
@@ -1566,6 +1569,41 @@ Ajout d'écouteurs sur les controles de Géocodage direct en inverse
     - Faute d'ortographe description couche Isocurve
     - Ajout des modules dans la JSDoc (#349)
     - Mise à jour des clefs des services (#352)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.21
+
+**23/03/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Amélioration du traitement pour les couches vecteur tuilé (documentation, légendes, ajout simplifié)
+
+## Changelog
+
+* [Added]
+
+    - Ajout simplifié d'une couche vecteur tuilé IGN :
+    ```js
+    var LayerMapBox = new ol.layer.GeoportalMapBox({
+        layer  : "PLAN.IGN",
+        style  : "gris"
+    });
+    ```
+
+* [Changed]
+
+    - GFI : ignore la propriété "icon" lors de la construction de la pop-up (05bbfa0ab8ccd09b32954aabad421b00f6faec35)
+    - Vecteur tuilé : évolution sur la construction et l'affichage des légendes (#362)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
