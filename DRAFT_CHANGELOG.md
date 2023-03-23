@@ -8,6 +8,8 @@
 
 ## Summary
 
+Amélioration du traitement pour les couches vecteur tuilé (documentation, légendes, ajout simplifié)
+
 ## Changelog
 
 * [Added]
@@ -23,6 +25,7 @@
 * [Changed]
 
     - GFI : ignore la propriété "icon" lors de la construction de la pop-up (05bbfa0ab8ccd09b32954aabad421b00f6faec35)
+    - Vecteur tuilé : évolution sur la construction et l'affichage des légendes (#362)
 
 * [Deprecated]
 
@@ -72,7 +75,7 @@
 
 * [Changed]
 
-    - mise à jour du readme
+    - mise à jour du readme pour ajout couche VT (d61ebdd223d1f1516e1877209190b298f18f71d0)
 
 * [Deprecated]
 
