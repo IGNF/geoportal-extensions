@@ -239,7 +239,8 @@ var GfiUtils = {
                     "name", // déjà traité
                     "description", // déjà traité
                     "styleUrl",
-                    "extensionsNode_" // extensions GPX
+                    "extensionsNode_", // extensions GPX
+                    "icon" // ajouté par la 3D en cas de switch
                 ];
                 for (p in props) {
                     if (props[p] === undefined) {
