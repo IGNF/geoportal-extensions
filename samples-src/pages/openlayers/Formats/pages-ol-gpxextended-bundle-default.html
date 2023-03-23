@@ -37,6 +37,29 @@
                         source : new ol.source.Vector({
                             url: _url,
                             format: new ol.format.GPXExtended({
+                                extensions : {
+                                    typestring : "string",
+                                    typenumber : 22,
+                                    typefloat : 1.22,
+                                    typeobject : {
+                                        typestringone : "string1",
+                                        typestringtwo : null
+                                    },
+                                    typearray : ["item1", "item2"],
+                                    typearrayofobject : [
+                                        {
+                                            typestringone : "string1",
+                                            typestringtwo : null
+                                        },
+                                        {
+                                            typestringone : "string1",
+                                            typestringtwo : "string2"
+                                        },
+                                    ],
+                                    typearrayofarray : [
+                                        [1, 2], null, [1, 3], null, [1, 4]
+                                    ]
+                                },
                                 readExtensions : function (feature, node) {
                                     console.warn(feature, node);
                                 },
@@ -125,7 +148,31 @@
                         console.log("Impossible to export : no features found.");
                         return result;
                     }
-                    var gpx = new ol.format.GPXExtended({});
+                    var gpx = new ol.format.GPXExtended({
+                        extensions : {
+                            typestring : "string",
+                            typenumber : 22,
+                            typefloat : 1.22,
+                            typeobject : {
+                                typestringone : "string1",
+                                typestringtwo : null
+                            },
+                            typearray : ["item1", "item2"],
+                            typearrayofobject : [
+                                {
+                                    typestringone : "string1",
+                                    typestringtwo : null
+                                },
+                                {
+                                    typestringone : "string1",
+                                    typestringtwo : "string2"
+                                },
+                            ],
+                            typearrayofarray : [
+                                [1, 2], null, [1, 3], null, [1, 4]
+                            ]
+                        }
+                    });
 
                     result = gpx.writeFeatures(layer.getSource().getFeatures(), {
                         dataProjection : "EPSG:4326",

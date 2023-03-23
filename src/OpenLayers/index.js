@@ -78,6 +78,7 @@ import SourceWMTS from "./Layers/SourceWMTS";
 import SourceWMS from "./Layers/SourceWMS";
 import LayerWMTS from "./Layers/LayerWMTS";
 import LayerWMS from "./Layers/LayerWMS";
+import LayerMapBox from "./Layers/LayerMapBox";
 import LayerSwitcher from "./Controls/LayerSwitcher";
 import GetFeatureInfo from "./Controls/GetFeatureInfo";
 import SearchEngine from "./Controls/SearchEngine";
@@ -94,6 +95,7 @@ import ElevationPath from "./Controls/ElevationPath";
 import MeasureLength from "./Controls/Measures/MeasureLength";
 import MeasureArea from "./Controls/Measures/MeasureArea";
 import MeasureAzimuth from "./Controls/Measures/MeasureAzimuth";
+import ButtonExport from "./Controls/Export";
 
 // import Proj4 from "proj4";
 
@@ -221,7 +223,7 @@ Ol.source.GeoportalWMS = SourceWMS;
 Ol.layer = Ol.layer || {};
 Ol.layer.GeoportalWMTS = LayerWMTS;
 Ol.layer.GeoportalWMS = LayerWMS;
-
+Ol.layer.GeoportalMapBox = LayerMapBox;
 Ol.control = Ol.control || {};
 Ol.control.LayerSwitcher = LayerSwitcher;
 Ol.control.GeoportalAttribution = GeoportalAttribution;
@@ -239,6 +241,7 @@ Ol.control.MeasureAzimuth = MeasureAzimuth;
 Ol.control.DefaultMarkers = Markers;
 Ol.control.ElevationPath = ElevationPath;
 Ol.control.LocationSelector = LocationSelector;
+Ol.control.Export = ButtonExport;
 
 // Expose extensions openlayers extended
 export {

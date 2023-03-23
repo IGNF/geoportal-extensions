@@ -1710,18 +1710,7 @@ var ReverseGeocode = (function (Control) {
         var idx = tagid.substring(tagid.indexOf("_") + 1); // ex. 21
 
         var f = this._resultsFeaturesSource.getFeatureById(parseInt(idx, 10));
-        /**
-         * event triggered when an element of the results is clicked
-         *
-         * @event reversegeocode:onclickresult
-         * @property {Object} type - event
-         * @property {Object} location - location
-         * @property {Object} target - instance ReverseGeocode
-         * @example
-         * Reverse.on("reversegeocode:onclickresult", function (e) {
-         *   console.log(e.location);
-         * })
-         */
+
         this.dispatchEvent({
             type : "reversegeocode:onclickresult",
             location : f.getProperties().location

@@ -9,47 +9,265 @@
             body {
                 margin: unset;
             }
+            table {
+                width: 100%;
+            }
+            .disable {
+                color: darkgray;
+            }
+            .use {
+                font-weight: bold;
+            }
+            .tg  {border-collapse:collapse;border-spacing:0;}
+            .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+            overflow:hidden;padding:10px 10px;word-break:normal;}
+            .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+            font-weight:normal;overflow:hidden;padding:10px 10px;word-break:normal;}
+            .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
         </style>
 {{/content}}
 
 {{#content "body"}}
             <h2>Ajout du widget d'édition des legendes MapBox</h2>
-            <button id="displayFalse">Hidden</button>
-            <button id="displayTrue">Show</button>
-            <div id="legend"></div>
+
+            <div id="options">
+                <table class="tg">
+                    <thead>
+                        <tr>
+                          <th>line</th>
+                          <th>fill</th>
+                          <th>circle</th>
+                          <th>symbol:icon</th>
+                          <th>symbol:text</th>
+                          <th>background</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li class="disable">paint/line-blur</li>
+                                <li class="disable">layout/line-cap</li>
+                                <li class="use">paint/line-color</li>
+                                <li class="use">paint/line-dasharray</li>
+                                <li class="disable">paint/line-gap-width</li>
+                                <li class="disable">paint/line-gradient</li>
+                                <li class="disable">layout/line-join</li>
+                                <li class="disable">layout/line-miter-limit</li>
+                                <li class="disable">paint/line-offset</li>
+                                <li class="use">paint/line-opacity</li>
+                                <li class="disable">paint/line-pattern</li>
+                                <li class="disable">layout/line-round-limit</li>
+                                <li class="disable">layout/line-sort-key</li>
+                                <li class="disable">paint/line-translate</li>
+                                <li class="disable">paint/line-translate-anchor</li>
+                                <li class="disable">paint/line-trim-offset</li>
+                                <li class="use">paint/line-width</li>
+                                <li class="use">layout/visibility</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li class="disable">paint/fill-antialias</li>
+                                <li class="use">paint/fill-color</li>
+                                <li class="use">paint/fill-opacity</li>
+                                <li class="use">paint/fill-outline-color</li>
+                                <li class="use">paint/fill-pattern</li>
+                                <li class="disable">layout/fill-sort-key</li>
+                                <li class="disable">paint/fill-translate</li>
+                                <li class="disable">paint/fill-translate-anchor</li>
+                                <li class="use">layout/visibility</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li class="disable">paint/circle-blur</li>
+                                <li class="use">paint/circle-color</li>
+                                <li class="use">paint/circle-opacity</li>
+                                <li class="disable">paint/circle-pitch-alignment</li>
+                                <li class="disable">paint/circle-pitch-scale</li>
+                                <li class="disable">paint/circle-radius</li>
+                                <li class="disable">layout/circle-sort-key</li>
+                                <li class="use">paint/circle-stroke-color</li>
+                                <li class="use">paint/circle-stroke-opacity</li>
+                                <li class="use">paint/circle-stroke-width</li>
+                                <li class="disable">paint/circle-translate</li>
+                                <li class="disable">paint/circle-translate-anchor</li>
+                                <li class="use">layout/visibility</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li class="disable">layout/icon-allow-overlap</li>
+                                <li class="disable">layout/icon-anchor</li>
+                                <li class="use">paint/icon-color</li>
+                                <li class="disable">paint/icon-halo-blur</li>
+                                <li class="disable">paint/icon-halo-color</li>
+                                <li class="disable">paint/icon-halo-width</li>
+                                <li class="disable">layout/icon-ignore-placement</li>
+                                <li class="use">layout/icon-image</li>
+                                <li class="disable">layout/icon-keep-upright</li>
+                                <li class="disable">layout/icon-offset</li>
+                                <li>paint/icon-opacity</li>
+                                <li class="disable">layout/icon-optional</li>
+                                <li class="disable">layout/icon-padding</li>
+                                <li class="disable">layout/icon-pitch-alignment</li>
+                                <li class="disable">layout/icon-rotate</li>
+                                <li class="disable">layout/icon-rotation-alignment</li>
+                                <li>layout/icon-size</li>
+                                <li class="disable">layout/icon-text-fit</li>
+                                <li class="disable">layout/icon-text-fit-padding</li>
+                                <li class="disable">paint/icon-translate</li>
+                                <li class="disable">paint/icon-translate-anchor</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li class="disable">layout/text-allow-overlap</li>
+                                <li class="disable">layout/text-anchor</li>
+                                <li class="use">paint/text-color</li>
+                                <li class="use">layout/text-field</li>
+                                <li>layout/text-font</li>
+                                <li class="disable">paint/text-halo-blur</li>
+                                <li class="disable">paint/text-halo-color</li>
+                                <li class="disable">paint/text-halo-width</li>
+                                <li class="disable">layout/text-ignore-placement</li>
+                                <li class="disable">layout/text-justify</li>
+                                <li class="disable">layout/text-keep-upright</li>
+                                <li class="disable">layout/text-letter-spacing</li>
+                                <li class="disable">layout/text-line-height</li>
+                                <li class="disable">layout/text-max-angle</li>
+                                <li class="disable">layout/text-max-width</li>
+                                <li class="disable">layout/text-offset</li>
+                                <li>paint/text-opacity</li>
+                                <li class="disable">layout/text-optional</li>
+                                <li class="disable">layout/text-padding</li>
+                                <li class="disable">layout/text-pitch-alignment</li>
+                                <li class="disable">layout/text-radial-offset</li>
+                                <li class="disable">layout/text-rotate</li>
+                                <li class="disable">layout/text-rotation-alignment</li>
+                                <li>layout/text-size</li>
+                                <li class="disable">layout/text-transform</li>
+                                <li class="disable">paint/text-translate</li>
+                                <li class="disable">paint/text-translate-anchor</li>
+                                <li class="disable">layout/text-variable-anchor</li>
+                                <li class="disable">layout/ext-writing-mode</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li class="use">paint/background-color</li>
+                                <li class="use">paint/background-opacity</li>
+                                <li class="use">paint/background-pattern</li>
+                                <li class="use">layout/visibility</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="legend">
+                <p><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/">cf. Spécifications</a></p>
+                <table class="tg">
+                    <thead>
+                      <tr>
+                        <th><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#line">line</a></th>
+                        <th><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#fill">fill</a></th>
+                        <th><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#circle">circle</a></th>
+                        <th><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#symbol">symbol:icon</a></th>
+                        <th><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#symbol">symbol:text</a></th>
+                        <th><a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/#background">background</a></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td id="11" class="tg-0pky"></td>
+                        <td id="12" class="tg-0pky"></td>
+                        <td id="13" class="tg-0pky"></td>
+                        <td id="14" class="tg-0pky"></td>
+                        <td id="15" class="tg-0pky"></td>
+                        <td id="16" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="21" class="tg-0pky"></td>
+                        <td id="22" class="tg-0pky"></td>
+                        <td id="23" class="tg-0pky"></td>
+                        <td id="24" class="tg-0pky"></td>
+                        <td id="25" class="tg-0pky"></td>
+                        <td id="26" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="31" class="tg-0pky"></td>
+                        <td id="32" class="tg-0pky"></td>
+                        <td id="33" class="tg-0pky"></td>
+                        <td id="34" class="tg-0pky"></td>
+                        <td id="35" class="tg-0pky"></td>
+                        <td id="36" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="41" class="tg-0pky"></td>
+                        <td id="42" class="tg-0pky"></td>
+                        <td id="43" class="tg-0pky"></td>
+                        <td id="44" class="tg-0pky"></td>
+                        <td id="45" class="tg-0pky"></td>
+                        <td id="46" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="51" class="tg-0pky"></td>
+                        <td id="52" class="tg-0pky"></td>
+                        <td id="53" class="tg-0pky"></td>
+                        <td id="54" class="tg-0pky"></td>
+                        <td id="55" class="tg-0pky"></td>
+                        <td id="56" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="61" class="tg-0pky"></td>
+                        <td id="62" class="tg-0pky"></td>
+                        <td id="63" class="tg-0pky"></td>
+                        <td id="64" class="tg-0pky"></td>
+                        <td id="65" class="tg-0pky"></td>
+                        <td id="66" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="71" class="tg-0pky"></td>
+                        <td id="72" class="tg-0pky"></td>
+                        <td id="73" class="tg-0pky"></td>
+                        <td id="74" class="tg-0pky"></td>
+                        <td id="75" class="tg-0pky"></td>
+                        <td id="76" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="81" class="tg-0pky"></td>
+                        <td id="82" class="tg-0pky"></td>
+                        <td id="83" class="tg-0pky"></td>
+                        <td id="84" class="tg-0pky"></td>
+                        <td id="85" class="tg-0pky"></td>
+                        <td id="86" class="tg-0pky"></td>
+                      </tr>
+                      <tr>
+                        <td id="91" class="tg-0pky"></td>
+                        <td id="92" class="tg-0pky"></td>
+                        <td id="93" class="tg-0pky"></td>
+                        <td id="94" class="tg-0pky"></td>
+                        <td id="95" class="tg-0pky"></td>
+                        <td id="96" class="tg-0pky"></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
 {{/content}}
 
 {{#content "js"}}
             <script type="text/javascript">
 
-            // legend vide
-            var legend0 = new ol.style.editor.Legend({
-                id: 0,
-                target: document.getElementById("legend")
-            });
-            legend0.add();
-
-            // legend vide et target par defaut
-            var legend1 = new ol.style.editor.Legend();
-            legend1.add();
+            /////////////
+            // TEST LINE
+            /////////////
 
             // legend simple
-            var legend21 = new ol.style.editor.Legend({
-                id: 21,
+            var legend11 = new ol.style.editor.Legend({
+                id: 11,
+                target: document.getElementById("11"),
                 obj: {
-                    "title" : "test fill...",
-                    "paint": {
-                         "fill-color" : "#2BB3E1",
-                         "fill-opacity" : 0.5
-                    }
-                },
-            });
-            legend21.add();
-
-            var legend22 = new ol.style.editor.Legend({
-                id: 22,
-                obj: {
-                    "title" : "test line...",
+                    "title" : "test line-color...",
                     "paint": {
                          "line-color" : "#2BB3E1",
                          "line-width" : 1,
@@ -57,99 +275,109 @@
                     }
                 },
             });
+            legend11.add();
+
+            // legende editable
+            var legend21 = new ol.style.editor.Legend({
+                id: 21,
+                position: 21,
+                target: document.getElementById("21"),
+                obj: {
+                    "title" : "test line editable...",
+                    "editable" : true,
+                    "paint": {
+                         "line-color" : "#2BB3E1",
+                         "line-width" : 10,
+                         "line-opacity" : 0.5
+                    }
+                },
+            });
+            legend21.add();
+            eventbus.addEventListener("editor:legend:onclickvisibility", function (e) {
+                console.log("Add a listener on event 'editor:legend:onclickvisibility' : switch display !", e);
+                if (e.target.data.position === 21) {
+                    console.log("Event on position 21 !");
+                    var b = legend5.display();
+                    legend5.display(!b);
+                }
+            });
+
+            var legend31 = new ol.style.editor.Legend({
+                id: 31,
+                position: 31,
+                target: document.getElementById("31"),
+                obj: {
+                    "title" : "test line-dasharray...",
+                    "layout": {
+                        "line-dasharray": [10,10], 
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                         "line-color" : "#FF0000",
+                         "line-width" : 2,
+                         "line-opacity" : 1
+                    }
+                },
+            });
+            legend31.add();
+
+            var legend41 = new ol.style.editor.Legend({
+                id: 41,
+                position: 41,
+                target: document.getElementById("41"),
+                obj: {
+                    "title" : "test line-color (object)...",
+                    "layout": {
+                        "visibility": "visible"
+                    },
+                    "paint": {
+                        "line-width": 10,
+                        "line-color": {
+                            "stops": [
+                                [
+                                    17,
+                                    "#695657"
+                                ],
+                                [
+                                    18,
+                                    "#FFFFFF"
+                                ]
+                            ]
+                        }
+                    }
+                },
+            });
+            legend41.add();
+
+            /////////////
+            // TEST FILL
+            /////////////
+
+            // legend vide
+            var legend12 = new ol.style.editor.Legend({
+                id: 12,
+                target: document.getElementById("12")
+            });
+            legend12.add();
+
+            // legend simple
+            var legend22 = new ol.style.editor.Legend({
+                id: 22,
+                target: document.getElementById("22"),
+                obj: {
+                    "title" : "test fill-color...",
+                    "paint": {
+                         "fill-color" : "#2BB3E1",
+                         "fill-opacity" : 0.5
+                    }
+                },
+            });
             legend22.add();
 
-            var legend23 = new ol.style.editor.Legend({
-                id: 23,
-                obj: {
-                    "title" : "test circle...",
-                    "paint": {
-                         "circle-radius": 5,
-                         "circle-opacity": 0.5,
-                         "circle-color": "#2BB3E1",
-                         "circle-stroke-width": 2,
-                         "circle-stroke-color": "rgba(255, 0, 0, 1)"
-                    }
-                },
-            });
-            legend23.add();
-
-            var legend24 = new ol.style.editor.Legend({
-                id: 24,
-                obj: {
-                    "title" : "test background...",
-                    "paint": {
-                         "background-color" : "#2BB3E1"
-                    }
-                },
-            });
-            legend24.add();
-
-            var legend25 = new ol.style.editor.Legend({
-                id: 25,
-                obj: {
-                    "title" : "test text...",
-                    "layout": {
-                        "text-field" : "..."
-                    },
-                    "paint": {
-                         "text-color" : "#2BB3E1"
-                    }
-                },
-            });
-            legend25.add();
-
-            var legend26 = new ol.style.editor.Legend({
-                id: 26,
-                obj: {
-                    "title" : "test icon...",
-                    "layout": {
-                        "icon-image" : "..."
-                    },
-                    "paint": {
-                        "icon-color": "#A7DA81"
-                    }
-                },
-            });
-            legend26.add();
-
-            var legend27 = new ol.style.editor.Legend({
-                id: 27,
-                obj: {
-                    "title" : "test text (non reconnu comme texte ou icone)...",
-                    "paint": {
-                        "text-size" : "3px"
-                    }
-                },
-            });
-            legend27.add();
-
-            var legend28 = new ol.style.editor.Legend({
-                id: 28,
-                obj: {
-                    "title" : "test text (on layout)...",
-                    "layout": {
-                        "text-field" : "..."
-                    }
-                },
-            });
-            legend28.add();
-
-            var legend29 = new ol.style.editor.Legend({
-                id: 29,
-                obj: {
-                    "title" : "test icon (on sprite), not correctly implemented...",
-                    "layout": {
-                        "icon-image" : "onSpriteIcons.png"
-                    }
-                },
-            });
-            legend29.add();
-
             // legend complexe
-            var legend3 = new ol.style.editor.Legend({
-                id: 3,
-                target: document.getElementById("legend"),
+            var legend32 = new ol.style.editor.Legend({
+                id: 32,
+                target: document.getElementById("32"),
                 obj: {
                     "title" : "test fill (array), not yet implemented...",
                     paint : {
@@ -163,25 +391,35 @@
                     }
                 },
             });
-            legend3.add();
+            legend32.add();
 
-            var legend4 = new ol.style.editor.Legend({
-                id: 4,
-                target: document.getElementById("legend"),
+            var legend42 = new ol.style.editor.Legend({
+                id: 42,
+                target: document.getElementById("42"),
                 obj: {
-                    "title" : "test fill (object), not yet implemented...",
+                    "title" : "test fill (object)...",
                     "paint": {
+                        "fill-width": 10,
                         "fill-color": {
-                            color : "#A7DA81"
+                            "stops": [
+                                [
+                                    17,
+                                    "#A7DA81"
+                                ],
+                                [
+                                    18,
+                                    "#FFFFFF"
+                                ]
+                            ]
                         }
                     }
                 },
             });
-            legend4.add();
+            legend42.add();
 
-            var legend41 = new ol.style.editor.Legend({
-                id: 41,
-                target: document.getElementById("legend"),
+            var legend52 = new ol.style.editor.Legend({
+                id: 52,
+                target: document.getElementById("52"),
                 obj: {
                     "title" : "test fill (stops), not yet implemented...",
                     "paint": {
@@ -201,49 +439,12 @@
                     }
                 },
             });
-            legend41.add();
+            legend52.add();
 
-            var legend5 = new ol.style.editor.Legend({
-                id: 5,
-                position : 5,
-                obj: {
-                    "title" : "test line editable...",
-                    "editable" : true,
-                    "paint": {
-                         "line-color" : "#2BB3E1",
-                         "line-width" : 1,
-                         "line-opacity" : 0.5
-                    }
-                },
-            });
-            legend5.add();
-            eventbus.addEventListener("editor:legend:onclickvisibility", function (e) {
-                console.log("Add a listener on event 'editor:legend:onclickvisibility' : switch display !", e);
-                if (e.target.data.position === 5) {
-                    console.log("Event on position 5 !");
-                    var b = legend5.display();
-                    legend5.display(!b);
-                }
-            });
-
-            var legend6 = new ol.style.editor.Legend({
-                id: 6,
-                obj: {
-                    "title" : "test circle editable, not yet implemented...",
-                    "editable" : true,
-                    "paint": {
-                         "circle-radius": 5,
-                         "circle-opacity": 0.5,
-                         "circle-color": "#2BB3E1",
-                         "circle-stroke-width": 2,
-                         "circle-stroke-color": "rgba(255, 0, 0, 1)"
-                    }
-                },
-            });
-            legend6.add();
-
-            var legend7 = new ol.style.editor.Legend({
-                id: 7,
+            // legende editable
+            var legend62 = new ol.style.editor.Legend({
+                id: 62,
+                target: document.getElementById("62"),
                 obj: {
                     "title" : "test fill editable...",
                     "editable" : true,
@@ -253,10 +454,12 @@
                     }
                 },
             });
-            legend7.add();
+            legend62.add();
 
-            var legend8 = new ol.style.editor.Legend({
-                id: 8,
+            // type inconnu
+            var legend72 = new ol.style.editor.Legend({
+                id: 72,
+                target: document.getElementById("72"),
                 obj: {
                     "title" : "test type non reconnu..., par defaut, fill...",
                     "editable" : true,
@@ -266,25 +469,286 @@
                     }
                 },
             });
-            legend8.add();
+            legend72.add();
 
-            document.getElementById("displayTrue").addEventListener("click", function () {
-                legend3.display(true);
-                legend4.display(true);
-                legend5.display(true);
-                legend6.display(true);
-                legend7.display(true);
-                legend8.display(true);
+            var legend82 = new ol.style.editor.Legend({
+                id: 82,
+                target: document.getElementById("82"),
+                obj: {
+                    "title" : "test fill-outline...",
+                    "paint": {
+                        "fill-color": "rgb(217, 217, 217)",
+                        "fill-opacity": 0.7,
+                        "fill-outline-color": "#FF0000"
+                    }
+                },
             });
+            legend82.add();
 
-            document.getElementById("displayFalse").addEventListener("click", function () {
-                legend3.display(false);
-                legend4.display(false);
-                legend5.display(false);
-                legend6.display(false);
-                legend7.display(false);
-                legend8.display(false);
+            var legend92 = new ol.style.editor.Legend({
+                id: 92,
+                target: document.getElementById("92"),
+                sprites : {
+                    url : "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn.png",
+                    size : { w : 484, h : 710 },
+                    json : {
+                        "Marais" :{"x":272,"y":0,"width":212,"height":140,"pixelRatio":1}
+                    }
+                },
+                obj: {
+                    "title" : "test fill-pattern...",
+                    "paint": {
+                        "fill-opacity": 0.7,
+                        "fill-pattern": "Marais"
+                    }
+                },
             });
+            legend92.add();
+
+            /////////////
+            // TEST CIRCLE
+            /////////////
+
+            // legend simple
+            var legend13 = new ol.style.editor.Legend({
+                id: 13,
+                target: document.getElementById("13"),
+                obj: {
+                    "title" : "test circle-color...",
+                    "paint": {
+                         "circle-radius": 5,
+                         "circle-opacity": 0.5,
+                         "circle-color": "#2BB3E1"
+                    }
+                },
+            });
+            legend13.add();
+
+            // legende editable
+            var legend23 = new ol.style.editor.Legend({
+                id: 23,
+                target: document.getElementById("23"),
+                obj: {
+                    "title" : "test circle editable, not yet implemented...",
+                    "editable" : true,
+                    "paint": {
+                         "circle-radius": 5,
+                         "circle-opacity": 0.5,
+                         "circle-color": "#2BB3E1",
+                         "circle-stroke-width": 2,
+                         "circle-stroke-color": "rgb(255, 0, 0)"
+                    }
+                },
+            });
+            legend23.add();
+
+            var legend33 = new ol.style.editor.Legend({
+                id: 33,
+                target: document.getElementById("33"),
+                obj: {
+                    "title" : "test circle-stroke...",
+                    "paint": {
+                         "circle-radius": 5,
+                         "circle-opacity": 0.5,
+                         "circle-color": "#2BB3E1",
+                         "circle-stroke-width": 2,
+                         "circle-stroke-color": "rgb(255, 0, 0)"
+                    }
+                },
+            });
+            legend33.add();
+
+            ///////////////////
+            // TEST BACKGROUND
+            ///////////////////
+
+            var legend16 = new ol.style.editor.Legend({
+                id: 16,
+                target: document.getElementById("16"),
+                obj: {
+                    "title" : "test background-color...",
+                    "paint": {
+                        "background-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend16.add();
+
+            var legend26 = new ol.style.editor.Legend({
+                id: 26,
+                target: document.getElementById("26"),
+                obj: {
+                    "title" : "test background-opacity...",
+                    "paint": {
+                        "background-color" : "#FF0000",
+                        "background-opacity" : 0.5
+                    }
+                },
+            });
+            legend26.add();
+
+            // legende editable
+            var legend36 = new ol.style.editor.Legend({
+                id: 36,
+                target: document.getElementById("36"),
+                obj: {
+                    "title" : "test background editable...",
+                    "editable" : true,
+                    "paint": {
+                        "background-color" : "#2BB3E1",
+                        "background-opacity" : 0.5
+                    }
+                },
+            });
+            legend36.add();
+
+            var legend46 = new ol.style.editor.Legend({
+                id: 46,
+                target: document.getElementById("46"),
+                sprites : {
+                    url : "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn.png",
+                    size : { w : 484, h : 710 },
+                    json : {
+                        "Sable": {"x": 227, "y": 426, "width": 212, "height": 140, "pixelRatio": 1}
+                    }
+                },
+                obj: {
+                    "title" : "test background-pattern...",
+                    "paint": {
+                        "background-pattern" : "Sable",
+                        "background-opacity" : 0.5
+                    }
+                },
+            });
+            legend46.add();
+
+            ///////////////////
+            // TEST SYMBOL
+            ///////////////////
+
+            // icone
+            var legend14 = new ol.style.editor.Legend({
+                id: 14,
+                target: document.getElementById("14"),
+                sprites : {
+                    url : "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sprite/PlanIgn.png",
+                    size : { w : 484, h : 710 },
+                    json : {
+                        "Refugenongard" : {"x":213,"y":310,"width":39,"height":36,"pixelRatio":1}
+                    }
+                },
+                obj: {
+                    "title" : "test icon-image...",
+                    "layout": {
+                        "icon-image" : "Refugenongard"
+                    }
+                },
+            });
+            legend14.add();
+
+            var legend24 = new ol.style.editor.Legend({
+                id: 24,
+                target: document.getElementById("24"),
+                obj: {
+                    "title" : "test icon-image, no sprites...",
+                    "layout": {
+                        "icon-image" : "Refugenongard"
+                    }
+                },
+            });
+            legend24.add();
+
+            var legend34 = new ol.style.editor.Legend({
+                id: 34,
+                target: document.getElementById("34"),
+                obj: {
+                    "title" : "test icon-color, no sprites...",
+                    "layout": {
+                        "icon-image" : "..."
+                    },
+                    "paint": {
+                        "icon-color": "#A7DA81"
+                    }
+                },
+            });
+            legend34.add();
+
+            // legende editable
+            var legend44 = new ol.style.editor.Legend({
+                id: 44,
+                target: document.getElementById("44"),
+                obj: {
+                    "title" : "test icon editable, not yet implemented...",
+                    "editable" : true,
+                    "layout": {
+                        "icon-image" : "..."
+                    },
+                    "paint": {
+                        "icon-color": "#A7DA81"
+                    }
+                },
+            });
+            legend44.add();
+
+            // texte
+            var legend15 = new ol.style.editor.Legend({
+                id: 15,
+                target: document.getElementById("15"),
+                obj: {
+                    "title" : "test text-color...",
+                    "layout": {
+                        "text-field" : "..."
+                    },
+                    "paint": {
+                         "text-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend15.add();
+
+            var legend25 = new ol.style.editor.Legend({
+                id: 25,
+                target: document.getElementById("25"),
+                obj: {
+                    "title" : "test text-size, not yet implemented...",
+                    "layout": {
+                        "text-field" : "..."
+                    },
+                    "paint": {
+                        "text-size" : "3px",
+                        "text-color" : "#FF0000"
+                    }
+                },
+            });
+            legend25.add();
+
+            var legend35 = new ol.style.editor.Legend({
+                id: 35,
+                target: document.getElementById("35"),
+                obj: {
+                    "title" : "test text (on layout)...",
+                    "layout": {
+                        "text-field" : "..."
+                    }
+                },
+            });
+            legend35.add();
+
+            var legend45 = new ol.style.editor.Legend({
+                id: 45,
+                target: document.getElementById("45"),
+                obj: {
+                    "title" : "test text editable, not yet implemented...",
+                    "editable" : true,
+                    "layout": {
+                        "text-field" : "..."
+                    },
+                    "paint": {
+                         "text-color" : "#2BB3E1"
+                    }
+                },
+            });
+            legend45.add();
 
             </script>
 {{/content}}

@@ -24,12 +24,13 @@ import Color from "../../Common/Utils/ColorUtils";
  * @extends {ol.format.GeoJSON}
  * @type {ol.format.GeoJSONExtended}
  * @param {Object} options - Options
- * @param {Object} options.defaultStyle - Styles by default
+ * @param {Object} [options.defaultStyle] - Styles by default
+ * @param {Object} [options.extensions] - Add properties to file root
  */
 var GeoJSON = (function (olGeoJSON) {
     /**
      * See {@link ol.format.GeoJSONExtended}
-     * @module SearchEngine
+     * @module GeoJSONExtended
      * @alias module:~Formats/GeoJSONExtended
      * @param {*} options - options
      * @example
@@ -71,7 +72,7 @@ var GeoJSON = (function (olGeoJSON) {
      *
      * @see ol.format.GeoJSON.prototype.readFeatures
      * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
-     * @param {olx.format.ReadOptions=} options - options.
+     * @param {olx.format.ReadOptions} [options] - Options.
      * @return {Array.<ol.Feature>} Features.
      */
     GeoJSON.prototype.readFeatures = function (source, options) {
@@ -268,15 +269,15 @@ var GeoJSON = (function (olGeoJSON) {
      * This function overloads ol.format.GeoJSON.writeFeatures ...
      *
      * @see ol.format.GeoJSON.prototype.writeFeatures
-     * @param {Object[]} features - Features.
-     * @param {Object} options - Options.
+     * @param {Array.<ol.Feature>} features - Features.
+     * @param {Object} [options] - Options.
      *
      * @return {String} Result.
      */
     GeoJSON.prototype.writeFeatures = function (features, options) {
         // on met à jour les properties de styles
         features.forEach(function (feature) {
-            var style = feature.getStyle();
+            var style = feature.getStyle() || feature.getStyleFunction();
             if (style) {
                 // style ajouté via une fonction, pour les styles par defaut par ex.
                 if (typeof style === "function") {
@@ -426,8 +427,17 @@ var GeoJSON = (function (olGeoJSON) {
             }
         });
 
-        var geoJSONString = olGeoJSON.prototype.writeFeatures.call(this, features, options);
-        return geoJSONString;
+        var geoJSONObject = olGeoJSON.prototype.writeFeaturesObject.call(this, features, options);
+
+        // ajout des properties à la racine du fichier
+        // ex. options : {
+        //   extensions : { /* liste des objets à ajouter */ }
+        // }
+        if (this.options.hasOwnProperty("extensions")) {
+            Object.assign(geoJSONObject, this.options.extensions);
+        }
+
+        return JSON.stringify(geoJSONObject);
     };
 
     return GeoJSON;
