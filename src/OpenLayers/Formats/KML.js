@@ -56,6 +56,8 @@ var KML = (function (olKML) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
+        this.source = null;
+
         // call constructor
         olKML.call(this,
             options
@@ -101,30 +103,6 @@ var KML = (function (olKML) {
      *
      */
     KML.prototype.constructor = KML;
-
-    /**
-     * ...
-     *
-     * @param {*} kmlNode - ...
-     * @param {*} extensions - ...
-     */
-    function _processRootExtensions (kmlNode, extensions) {
-        var extendDataElement = document.createElementNS(kmlNode.namespaceURI, "ExtendedData");
-        // on boucle sur toutes les clefs
-        for (const key in extensions) {
-            if (Object.hasOwnProperty.call(extensions, key)) {
-                const value = extensions[key];
-                var dataElement = document.createElementNS(kmlNode.namespaceURI, "Data");
-                dataElement.setAttribute("name", key);
-                var data = document.createTextNode(JSON.stringify(value));
-                dataElement.appendChild(data);
-                extendDataElement.appendChild(dataElement);
-            }
-        }
-        // insertion en 1ere place !
-        var firstChild = kmlNode.firstChild;
-        kmlNode.insertBefore(extendDataElement, firstChild);
-    };
 
     /**
      * Fonction de lecture du KML avec fonction de traitement en fonction du type
@@ -312,11 +290,11 @@ var KML = (function (olKML) {
 
         // on ajoute les extensions à la racine pour les metadonnées de calcul
         if (this.options.hasOwnProperty("extensions")) {
-            _processRootExtensions(kmlNode, this.options.extensions);
+            _writeRootExtensions(kmlNode, this.options.extensions);
         }
 
         // On ajoute les styles étendus
-        var kmlStringExtended = this._writeExtendStylesFeatures(kmlNode, features, options);
+        var kmlStringExtended = _writeExtendStylesFeatures.call(this, kmlNode, features, options);
 
         // On realise un formattage du KML
         var kmlStringFormatted = Parser.format(kmlStringExtended);
@@ -338,7 +316,7 @@ var KML = (function (olKML) {
      *
      * @private
      */
-    KML.prototype._writeExtendStylesFeatures = function (kmlNode, features, options) {
+    function _writeExtendStylesFeatures (kmlNode, features, options) {
         /**
          * C'est un Label !
          * On va donc y ajouter qq styles sur le Label (police, halo, ...) :
@@ -489,7 +467,7 @@ var KML = (function (olKML) {
         };
 
         // On ajoute les styles étendus dans le DOM
-        _kmlRead(kmlNode, features, {
+        _kmlRead.call(this, kmlNode, features, {
             labelStyle : __createExtensionStyleLabel,
             iconStyle : __createHotSpotStyleIcon,
             iconLabelStyle : __createStyleToFeatureIconLabel,
@@ -506,32 +484,45 @@ var KML = (function (olKML) {
     };
 
     /**
+     * ...
+     *
+     * @param {*} kmlNode - ...
+     * @param {*} extensions - ...
+     */
+    function _writeRootExtensions (kmlNode, extensions) {
+        var extendDataElement = document.createElementNS(kmlNode.namespaceURI, "ExtendedData");
+        // on boucle sur toutes les clefs
+        for (const key in extensions) {
+            if (Object.hasOwnProperty.call(extensions, key)) {
+                const value = extensions[key];
+                var dataElement = document.createElementNS(kmlNode.namespaceURI, "Data");
+                dataElement.setAttribute("name", key);
+                var data = document.createTextNode(JSON.stringify(value));
+                dataElement.appendChild(data);
+                extendDataElement.appendChild(dataElement);
+            }
+        }
+        // insertion en 1ere place !
+        var firstChild = kmlNode.firstChild;
+        kmlNode.insertBefore(extendDataElement, firstChild);
+    };
+
+    /**
      * Read Extend for Features.
      * This function overloads ol.format.KML.readFeatures ...
      *
      * @see ol.format.KML.prototype.readFeatures
-     * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
+     * @param {Document|Node} source - Source.
      * @param {olx.format.ReadOptions=} options - options.
      * @return {Array.<ol.Feature>} Features.
      */
     KML.prototype.readFeatures = function (source, options) {
-        // KML.prototype._parentReadFeatures = ol.format.KML.prototype.readFeatures;
         logger.log("overload : ol.format.KML.readFeatures");
-        var features = this._readExtendStylesFeatures(source, options);
-        logger.trace("Styles étendus", features);
+        // Dom
+        this.source = source;
 
-        // la gestion des styles est deplacée au niveau des extensions
-        // qui ont besoin de lire un KML (ex. Drawing) ...
-        //
-        // features.forEach(function (feature) {
-        //     var featureStyleFunction = feature.getStyleFunction();
-        //     if (featureStyleFunction) {
-        //         var styles = featureStyleFunction.call(feature, 0);
-        //         if (styles && styles.length !== 0) {
-        //             feature.setStyle(styles[0]);
-        //         }
-        //     }
-        // });
+        var features = _readExtendStylesFeatures.call(this, source, options);
+        logger.trace("Styles étendus", features);
 
         return features;
     };
@@ -546,7 +537,7 @@ var KML = (function (olKML) {
      *
      * @private
      */
-    KML.prototype._readExtendStylesFeatures = function (source, options) {
+    function _readExtendStylesFeatures (source, options) {
         var features = olKML.prototype.readFeatures.call(this, source, options);
 
         var kmlDoc = null;
@@ -922,7 +913,7 @@ var KML = (function (olKML) {
         };
 
         // On lit les styles étendus et on les ajoute aux features
-        _kmlRead(kmlDoc, features, {
+        _kmlRead.call(this, kmlDoc, features, {
             labelStyle : this.options.showPointNames ? __getExtensionStyleToFeatureLabel : null,
             iconStyle : __getHotSpotStyleToFeatureIcon,
             iconLabelStyle : this.options.showPointNames ? __getStyleToFeatureIconLabel : __getHotSpotStyleToFeatureIcon,
@@ -930,6 +921,40 @@ var KML = (function (olKML) {
         });
 
         return features;
+    };
+
+    /**
+     * ...
+     * @param {*} key ...
+     * @returns {Object} json
+     */
+    KML.prototype.readRootExtensions = function (key) {
+        var value = {};
+        // Rechercher le tag avec la clef : geoportail:compute
+        // <ExtendedData>
+        //   <Data name="geoportail:compute">{...}</Data>
+        // </ExtendedData>
+        var firstNodeLevelKml = this.source.childNodes[0]; // kml
+        var childNodesLevel = firstNodeLevelKml.childNodes;
+        for (var i = 0; i < childNodesLevel.length; i++) {
+            var node1 = childNodesLevel[i];
+            if (node1.nodeName === "ExtendedData") {
+                var childNodesExtended = node1.childNodes;
+                for (var j = 0; j < childNodesExtended.length; j++) {
+                    var node2 = childNodesExtended[j];
+                    if (node2.nodeName === "Data") {
+                        var name = node2.attributes[0];
+                        if (name && name.nodeName === "name") {
+                            if (name.nodeValue === key) {
+                                value = JSON.parse(node2.textContent);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return value;
     };
 
     return KML;

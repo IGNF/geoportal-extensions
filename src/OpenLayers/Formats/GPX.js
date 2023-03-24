@@ -62,6 +62,8 @@ var GPX = (function (olGPX) {
             this.options.defaultStyle = {};
         }
 
+        this.source = null;
+
         // call constructor
         olGPX.call(this,
             this.options
@@ -100,7 +102,7 @@ var GPX = (function (olGPX) {
      * This function overloads ol.format.GPX.readFeatures ...
      *
      * @see ol.format.GPX.prototype.readFeatures
-     * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
+     * @param {Document|Node} source - Source.
      * @param {olx.format.ReadOptions=} options - options.
      * @return {Array.<ol.Feature>} Features.
      */
@@ -109,6 +111,9 @@ var GPX = (function (olGPX) {
         // le travail de lecture des extensions du format est porté
         // par la callback des options : readExtensions
         var features = olGPX.prototype.readFeatures.call(this, source, options);
+
+        // Dom
+        this.source = source;
 
         // INFO
         // on applique les styles par defaut definis avec l'option defaultStyle
@@ -314,7 +319,7 @@ var GPX = (function (olGPX) {
 
         // on ajoute les extensions à la racine pour les metadonnées de calcul
         if (this.options.hasOwnProperty("extensions")) {
-            processRootExtensions_(gpxNode, this.options.extensions);
+            writeRootExtensions_(gpxNode, this.options.extensions);
         }
 
         // INFO
@@ -493,11 +498,48 @@ var GPX = (function (olGPX) {
 
     /**
      * ...
+     * @param {*} key ...
+     * @returns {Object} json
+     * @todo
+     */
+    GPX.prototype.readRootExtensions = function (key) {
+        var value = {};
+        // Rechercher :
+        // <extensions xmlns="http://www.w3.org/1999/xhtml">
+        //    <data name="geoportail:compute">{...}</data>
+        // </extensions>
+
+        var firstNodeLevelGpx = this.source.childNodes[0]; // gpx
+        var childNodesLevel = firstNodeLevelGpx.childNodes;
+        for (var i = 0; i < childNodesLevel.length; i++) {
+            var node1 = childNodesLevel[i];
+            if (node1.nodeName === "extensions") {
+                var childNodesExtensions = node1.childNodes;
+                for (var j = 0; j < childNodesExtensions.length; j++) {
+                    var node2 = childNodesExtensions[j];
+                    if (node2.nodeName === "data") {
+                        var name = node2.attributes[0];
+                        if (name && name.nodeName === "name") {
+                            if (name.nodeValue === key) {
+                                value = JSON.parse(node2.textContent);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return value;
+    };
+
+    /**
+     * ...
      *
      * @param {*} doc - ...
      * @param {*} extensions - ...
+     * @param {Boolean} [xml=false] - write tag xml or json
      */
-    function processRootExtensions_ (doc, extensions) {
+    function writeRootExtensions_ (doc, extensions, xml) {
         // TODO namespace ?
         var extensionsRoot = document.createElement("extensions");
         // INFO
@@ -584,9 +626,30 @@ var GPX = (function (olGPX) {
             }
             return node;
         }
+
+        if (xml) {
+            // structure xml
+            toDOM(extensionsRoot, extensions);
+        } else {
+            // structure json par defaut
+            // ex.
+            // <extensions xmlns="http://www.w3.org/1999/xhtml">
+            //    <data name="geoportail:compute">{...}</data>
+            // </extensions>
+            for (const key in extensions) {
+                if (Object.hasOwnProperty.call(extensions, key)) {
+                    const value = extensions[key];
+                    var dataElement = document.createElement("data");
+                    dataElement.setAttribute("name", key);
+                    var data = document.createTextNode(JSON.stringify(value));
+                    dataElement.appendChild(data);
+                    extensionsRoot.appendChild(dataElement);
+                }
+            }
+        }
         // insertion en 1ere place !
         var firstChild = doc.firstChild;
-        doc.insertBefore(toDOM(extensionsRoot, extensions), firstChild);
+        doc.insertBefore(extensionsRoot, firstChild);
     };
 
     /**

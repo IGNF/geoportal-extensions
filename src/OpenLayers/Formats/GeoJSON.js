@@ -49,6 +49,8 @@ var GeoJSON = (function (olGeoJSON) {
             this.options.defaultStyle = {};
         }
 
+        this.source = null;
+
         // call constructor
         olGeoJSON.call(this, this.options);
     }
@@ -71,12 +73,19 @@ var GeoJSON = (function (olGeoJSON) {
      * This function overloads ol.format.GeoJSON.readFeatures ...
      *
      * @see ol.format.GeoJSON.prototype.readFeatures
-     * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
+     * @param {Object|String} source - Source.
      * @param {olx.format.ReadOptions} [options] - Options.
      * @return {Array.<ol.Feature>} Features.
      */
     GeoJSON.prototype.readFeatures = function (source, options) {
         var features = olGeoJSON.prototype.readFeatures.call(this, source, options);
+
+        // String ou Object
+        if (typeof source === "string") {
+            this.source = JSON.parse(source);
+        } else if (source !== null) {
+            this.source = source;
+        }
 
         features.forEach((feature) => {
             var featureStyleFunction = feature.getStyleFunction();
@@ -438,6 +447,15 @@ var GeoJSON = (function (olGeoJSON) {
         }
 
         return JSON.stringify(geoJSONObject);
+    };
+
+    /**
+     * ...
+     * @param {*} key ...
+     * @returns {Object} json
+     */
+    GeoJSON.prototype.readRootExtensions = function (key) {
+        return this.source[key];
     };
 
     return GeoJSON;

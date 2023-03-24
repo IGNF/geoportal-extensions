@@ -22,22 +22,32 @@
             </div>
             <!-- export -->
             <button id="export">Exporter</button>
+            <button id="view">Afficher</button>
 {{/content}}
 
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                var layer;
+                var sampleLayer;
+                var exportLayer;
+                var exportFormat;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
-                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/geojson/map.geojson";
+                    exportFormat = new ol.format.GeoJSONExtended();
+                    var exportUrl = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/geojson/export-route.geojson";
+                    var exportLayer = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: exportUrl,
+                            format: exportFormat
+                        })
+                    });
                     
                     // 2 méthodes pour le style par defaut :
                     // - fonction de style vai option.style de ol.layer.Vector
                     // - style via option.defaultStyle de ol.format.GeoJSONExtended
-
+                    
                     // FIXME :
                     // via la fonction, ça ne marche pas !?
                     var defaultStyle = new ol.style.Style({
@@ -57,9 +67,10 @@
                         })
                     });
 
-                    layer = new ol.layer.Vector({
+                    var sampleUrl = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/geojson/map.geojson";
+                    sampleLayer = new ol.layer.Vector({
                         source : new ol.source.Vector({
-                            url: _url,
+                            url: sampleUrl,
                             format: new ol.format.GeoJSONExtended(
                                 {
                                     defaultStyle: new ol.style.Style({
@@ -90,13 +101,14 @@
                         target : "map",
                         view : new ol.View({
                             center : [261213, 6250943],
-                            zoom : 6
+                            zoom : 10
                         }),
                         layers : [
                             new ol.layer.GeoportalWMS({
                                 layer : "ORTHOIMAGERY.ORTHOPHOTOS"
                             }),
-                            layer
+                            sampleLayer,
+                            exportLayer
                         ]
                     });
 
@@ -191,7 +203,24 @@
                     link.setAttribute("download", "sample.geojson");
                     link.click();
                 });
-           </script>
+                document.getElementById("view").addEventListener("click", function () {
+                    var key = "geoportail:compute";
+                    var result = exportFormat.readRootExtensions(key);
+                    var contents = "";
+                    var length = "30";
+                    for (var key in result) {
+                        if (result.hasOwnProperty(key)) {
+                            var value = result[key];
+                            if (typeof value === "string") {
+                                value = result[key].substring(0, length);
+                            }
+                            contents += "* " + key + " : " + value;
+                            contents += "\n";
+                        }
+                    }
+                    alert(contents);
+                });
+            </script>
 {{/content}}
-
+options
 {{/extend}}
