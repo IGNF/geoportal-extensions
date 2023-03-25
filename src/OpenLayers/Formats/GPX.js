@@ -505,24 +505,32 @@ var GPX = (function (olGPX) {
     GPX.prototype.readRootExtensions = function (key) {
         var value = {};
         // Rechercher :
-        // <extensions xmlns="http://www.w3.org/1999/xhtml">
-        //    <data name="geoportail:compute">{...}</data>
-        // </extensions>
+        // <metadata>
+        //   <extensions xmlns="http://www.w3.org/1999/xhtml">
+        //     <data name="geoportail:compute">{...}</data>
+        //   </extensions>
+        // </metadata>
 
         var firstNodeLevelGpx = this.source.childNodes[0]; // gpx
-        var childNodesLevel = firstNodeLevelGpx.childNodes;
-        for (var i = 0; i < childNodesLevel.length; i++) {
-            var node1 = childNodesLevel[i];
-            if (node1.nodeName === "extensions") {
-                var childNodesExtensions = node1.childNodes;
-                for (var j = 0; j < childNodesExtensions.length; j++) {
-                    var node2 = childNodesExtensions[j];
-                    if (node2.nodeName === "data") {
-                        var name = node2.attributes[0];
-                        if (name && name.nodeName === "name") {
-                            if (name.nodeValue === key) {
-                                value = JSON.parse(node2.textContent);
-                                break;
+        var searchChildNodesMeta = firstNodeLevelGpx.childNodes; // search metadata
+        for (var k = 0; k < searchChildNodesMeta.length; k++) {
+            var nodeMeta = searchChildNodesMeta[k];
+            if (nodeMeta.nodeName === "metadata") {
+                var searchChildNodesExt = nodeMeta.childNodes; // search extensions
+                for (var i = 0; i < searchChildNodesExt.length; i++) {
+                    var nodeExt = searchChildNodesExt[i];
+                    if (nodeExt.nodeName === "extensions") {
+                        var searchChildNodesData = nodeExt.childNodes; // search data
+                        for (var j = 0; j < searchChildNodesData.length; j++) {
+                            var nodeData = searchChildNodesData[j];
+                            if (nodeData.nodeName === "data") {
+                                var name = nodeData.attributes[0];
+                                if (name && name.nodeName === "name") {
+                                    if (name.nodeValue === key) {
+                                        value = JSON.parse(nodeData.textContent);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -541,6 +549,7 @@ var GPX = (function (olGPX) {
      */
     function writeRootExtensions_ (doc, extensions, xml) {
         // TODO namespace ?
+        var metadata = document.createElement("metadata");
         var extensionsRoot = document.createElement("extensions");
         // INFO
         // convert JSON to XML (dom)
@@ -633,9 +642,11 @@ var GPX = (function (olGPX) {
         } else {
             // structure json par defaut
             // ex.
-            // <extensions xmlns="http://www.w3.org/1999/xhtml">
-            //    <data name="geoportail:compute">{...}</data>
-            // </extensions>
+            // <metadata>
+            //   <extensions xmlns="http://www.w3.org/1999/xhtml">
+            //     <data name="geoportail:compute">{...}</data>
+            //   </extensions>
+            // </metadata>
             for (const key in extensions) {
                 if (Object.hasOwnProperty.call(extensions, key)) {
                     const value = extensions[key];
@@ -647,9 +658,10 @@ var GPX = (function (olGPX) {
                 }
             }
         }
+        metadata.appendChild(extensionsRoot);
         // insertion en 1ere place !
         var firstChild = doc.firstChild;
-        doc.insertBefore(extensionsRoot, firstChild);
+        doc.insertBefore(metadata, firstChild);
     };
 
     /**
