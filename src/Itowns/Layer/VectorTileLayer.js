@@ -50,7 +50,7 @@ function VectorTileLayer (options) {
 
     var layerId = Config.getLayerId(options.layer, "TMS");
 
-    if (layerId && Config.configuration.getLayerConf(layerId)) {
+    if (layerId && Config.getLayerParams(options.layer)) {
         var config = {};
         var tmsParams = Config.getLayerParams(options.layer, "TMS", options.apiKey);
 

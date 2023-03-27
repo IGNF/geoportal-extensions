@@ -55,7 +55,7 @@ function LayerWMS (options) {
 
     var layerId = Config.getLayerId(options.layer, "WMS");
 
-    if (layerId && Config.configuration.getLayerConf(layerId)) {
+    if (layerId && Config.getLayerParams(options.layer)) {
         var config = {};
         var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 

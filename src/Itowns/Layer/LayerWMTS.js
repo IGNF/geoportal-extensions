@@ -55,7 +55,7 @@ function LayerWMTS (options) {
 
     var layerId = Config.getLayerId(options.layer, "WMTS");
 
-    if (layerId && Config.configuration.getLayerConf(layerId)) {
+    if (layerId && Config.getLayerParams(options.layer)) {
         var config = {};
         var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
 
