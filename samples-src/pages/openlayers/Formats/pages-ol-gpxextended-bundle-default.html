@@ -12,6 +12,9 @@
                 width: 100%;
                 height: 500px;
             }
+            #viewer {
+                width: 100%;
+            }
         </style>
 {{/content}}
 
@@ -21,8 +24,11 @@
             <div id="map">
             </div>
             <!-- export -->
-            <button id="export">Exporter</button>
-            <button id="view">Afficher</button>
+            <button id="export" title="Exporter la couche de dessin">Exporter</button>
+            <button id="view" title="Afficher les métadonnées de la couche de calcul">Afficher</button>
+            <div>
+                <textarea id="viewer" rows="10" cols="50"></textarea>
+            </div>
 {{/content}}
 
 {{#content "js"}}
@@ -101,7 +107,7 @@
                         target : "map",
                         view : new ol.View({
                             center : [855168, 5099802],
-                            zoom : 6
+                            zoom : 4
                         }),
                         layers : [
                             new ol.layer.GeoportalWMS({
@@ -112,7 +118,22 @@
                         ]
                     });
 
-                    var layerSwitcher = new ol.control.LayerSwitcher({});
+                    var layerSwitcher = new ol.control.LayerSwitcher({
+                        layers : [
+                            {
+                                layer : sampleLayer,
+                                config : {
+                                    title : "Couche de dessin à exporter"
+                                }
+                            },
+                            {
+                                layer : exportLayer,
+                                config : {
+                                    title : "Calcul d'itineraire"
+                                }
+                            }
+                        ]
+                    });
                     map.addControl(layerSwitcher);
 
                     var popup = new ol.Overlay.Popup();
@@ -197,6 +218,8 @@
                         featureProjection : "EPSG:3857"// layer.getSource().getProjection()
                     });
 
+                    document.getElementById("viewer").textContent = result;
+
                     var link = document.createElement("a");
                     var charset = "utf-8";
                     link.setAttribute("href", "data:application/gpx+xml;charset=" + charset + "," + encodeURIComponent(result));
@@ -218,7 +241,7 @@
                             contents += "\n";
                         }
                     }
-                    alert(contents);
+                    document.getElementById("viewer").textContent = contents;
                 });
             </script>
 {{/content}}

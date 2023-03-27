@@ -130,13 +130,21 @@ var KML = (function (olKML) {
      * });
      */
     function _kmlRead (kmlNode, features, process) {
-        var firstNodeLevel = kmlNode.childNodes;
+        var firstNodeLevel = (kmlNode.nodeName === "#document") ? kmlNode.childNodes[0].childNodes : kmlNode.childNodes;
 
         // Si le DOM contient un seul objet, le noeud est directement un PlaceMark
         // sinon, c'est un ensemble de noeuds PlaceMark contenus dans le noeud Document.
         var nodes = firstNodeLevel;
-        if (firstNodeLevel.length === 1 && firstNodeLevel[0].nodeName === "Document") {
-            nodes = firstNodeLevel[0].childNodes;
+        for (var ik = 0; ik < firstNodeLevel.length; ik++) {
+            const element = firstNodeLevel[ik];
+            if (element.nodeName === "Document") {
+                nodes = element.childNodes;
+                break;
+            }
+            if (element.nodeName === "Placemark") {
+                nodes = [element];
+                break;
+            }
         }
 
         // On recherche les PlaceMark de type Point ayant un Style...
@@ -372,7 +380,7 @@ var KML = (function (olKML) {
                 var _font = "Sans"; // TODO
 
                 if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
-                    var labelextend = kmlNode.createElement("LabelStyleSimpleExtensionGroup");
+                    var labelextend = document.createElementNS(kmlNode.namespaceURI, "LabelStyleSimpleExtensionGroup");
                     labelextend.setAttribute("fontFamily", _font);
                     labelextend.setAttribute("haloColor", _haloColor);
                     labelextend.setAttribute("haloRadius", _haloRadius);
@@ -432,7 +440,7 @@ var KML = (function (olKML) {
                 }
 
                 if (style && style.getElementsByTagName("hotSpot").length === 0) {
-                    var hotspot = kmlNode.createElement("hotSpot");
+                    var hotspot = document.createElementNS(kmlNode.namespaceURI, "hotSpot");
                     hotspot.setAttribute("x", x);
                     hotspot.setAttribute("y", y);
                     hotspot.setAttribute("xunits", xunits);
@@ -460,7 +468,7 @@ var KML = (function (olKML) {
 
             var labelName = feature.getProperties().name;
             if (labelName) {
-                var name = kmlNode.createElement("name");
+                var name = document.createElement("name");
                 name.innerHTML = labelName;
                 tags.appendChild(name);
             }
