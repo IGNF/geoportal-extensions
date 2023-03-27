@@ -180,19 +180,7 @@
                 document.getElementById("view").addEventListener("click", function () {
                     var key = "geoportail:compute";
                     var result = exportFormat.readRootExtensions(key);
-                    var contents = "";
-                    var length = "30";
-                    for (var key in result) {
-                        if (result.hasOwnProperty(key)) {
-                            var value = result[key];
-                            if (typeof value === "string") {
-                                value = result[key].substring(0, length);
-                            }
-                            contents += "* " + key + " : " + value;
-                            contents += "\n";
-                        }
-                    }
-                    document.getElementById("viewer").textContent = contents;
+                    document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
                 });
             </script>
 {{/content}}
