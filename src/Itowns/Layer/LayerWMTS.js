@@ -70,6 +70,10 @@ function LayerWMTS (options) {
             wmtsParams.tileMatrixSetLimits = undefined;
         }
 
+        // les originators ne sont pas renvoyés dans la configuration, on prend donc ceux donnés par l'utilisateur
+        if (options.itownsParams && options.itownsParams.source && options.itownsParams.source.attribution) {
+            wmtsParams.originators = options.itownsParams.source.attribution;
+        }
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";

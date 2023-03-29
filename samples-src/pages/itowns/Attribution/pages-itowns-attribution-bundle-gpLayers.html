@@ -1,42 +1,42 @@
 {{#extend "layout-itowns-sample-bundle"}}
 
 {{#content "head"}}
-    <script> var apiKey = "{{ apikey }}"; </script>
-    <script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
-    <title>Sample itowns attributions</title>
+<script> var apiKey = "{{ apikey }}"; </script>
+<script src="{{ baseurl }}/samples-src/resources/itowns/layers.js"></script>
+<title>Sample itowns attributions</title>
 {{/content}}
 
 {{#content "style"}}
-    <style>
-        html {
-            height: 100%;
-        }
+<style>
+    html {
+        height: 100%;
+    }
 
-        body {
-            margin: 0;
-            overflow:hidden;
-            height:100%;
-        }
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+    }
 
-        #viewerDiv {
-            margin : auto auto;
-            width: 100%;
-            height: 70%;
-            padding: 0;
-        }
-    </style>
+    #viewerDiv {
+        margin: auto auto;
+        width: 100%;
+        height: 70%;
+        padding: 0;
+    }
+</style>
 {{/content}}
 
 {{#content "body"}}
-    <h2>Ajout d'un contrôle des attributions : Attributions</h2>
-    <!-- map -->
-    <div id="viewerDiv"></div>
-    <div id="miniGlobeViewerDiv"></div>
+<h2>Ajout d'un contrôle des attributions : Attributions</h2>
+<!-- map -->
+<div id="viewerDiv"></div>
+<div id="miniGlobeViewerDiv"></div>
 {{/content}}
 
 {{#content "js"}}
-    <script type="text/javascript">
-    var createMap = function() {
+<script type="text/javascript">
+    var createMap = function () {
         const positionOnGlobe = {
             coord: new itowns.Coordinates('EPSG:4326', 2.3465, 48.88, 0),
             zoom: 10,
@@ -57,14 +57,88 @@
 
             // Couche WMTS Geoportail
             globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
-                layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                itownsParams: {
+                    source: {
+                        attribution: [
+                            {
+                                "name": "IGN Monde",
+                                "url": "https://www.ign.fr/",
+                                "constraints": [
+                                    {
+                                        "crs": "EPSG:4326",
+                                        "bbox": {
+                                            "left": -180,
+                                            "right": 180,
+                                            "top": 90,
+                                            "bottom": -90
+                                        },
+                                        "minScaleDenominator": 2,
+                                        "maxScaleDenominator": 800000,
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Region IDF",
+                                "url": "https://www.iledefrance.fr",
+                                "constraints": [
+                                    {
+                                        "crs": "EPSG:4326",
+                                        "bbox": {
+                                            "left": 1.5,
+                                            "right": 3,
+                                            "top": 49,
+                                            "bottom": 48
+                                        },
+                                        "minScaleDenominator": 10000,
+                                        "maxScaleDenominator": 450000,
+                                    }
+                                ]
+                            }]
+                    }
+                }
             }));
 
             // Couche WMS Geoportail
             globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMS({
                 layer: "LIMITES_ADMINISTRATIVES_EXPRESS.LATEST",
                 itownsParams: {
-                    opacity: 0.5
+                    opacity: 0.5,
+                    source: {
+                        attribution: [
+                            {
+                                "name": "Region Corse",
+                                "constraints": [
+                                    {
+                                        "crs": "EPSG:4326",
+                                        "bbox": {
+                                            "left": 8,
+                                            "right": 10,
+                                            "top": 43,
+                                            "bottom": 41
+                                        },
+                                        "minScaleDenominator": 10000,
+                                        "maxScaleDenominator": 450000,
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Guyane",
+                                "constraints": [
+                                    {
+                                        "crs": "EPSG:4326",
+                                        "bbox": {
+                                            "left": -55,
+                                            "right": -50,
+                                            "top": 6.5,
+                                            "bottom": 1.6
+                                        },
+                                        "minScaleDenominator": 10,
+                                        "maxScaleDenominator": 5000000,
+                                    }
+                                ]
+                            }]
+                    }
                 }
             }));
 
@@ -84,11 +158,11 @@
 
     Gp.Services.getConfig({
         // callbackSuffix : '',
-        apiKey : "{{ apikey }}",
-        timeOut : 20000,
-        onSuccess : createMap
+        apiKey: "{{ apikey }}",
+        timeOut: 20000,
+        onSuccess: createMap
     });
-    </script>
+</script>
 {{/content}}
 
 {{/extend}}

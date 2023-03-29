@@ -65,6 +65,11 @@ function LayerWMS (options) {
             wmsParams.extent = new ItExtent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top);
         }
 
+        // les originators ne sont pas renvoyés dans la configuration, on prend donc ceux donnés par l'utilisateur
+        if (options.itownsParams && options.itownsParams.source && options.itownsParams.source.attribution) {
+            wmsParams.originators = options.itownsParams.source.attribution;
+        }
+
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";

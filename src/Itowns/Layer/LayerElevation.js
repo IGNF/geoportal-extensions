@@ -66,7 +66,10 @@ function LayerElevation (options) {
             wmtsParams.projection = "EPSG:4326";
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
-
+        // les originators ne sont pas renvoyés dans la configuration, on prend donc ceux donnés par l'utilisateur
+        if (options.itownsParams && options.itownsParams.source && options.itownsParams.source.attribution) {
+            wmtsParams.originators = options.itownsParams.source.attribution;
+        }
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
         var protocol = (ctx)
