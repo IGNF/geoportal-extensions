@@ -112,8 +112,12 @@ var GPX = (function (olGPX) {
         // par la callback des options : readExtensions
         var features = olGPX.prototype.readFeatures.call(this, source, options);
 
-        // Dom
-        this.source = source;
+        // String ou Dom
+        if (typeof source === "string") {
+            this.source = Parser.parse(source);
+        } else if (source !== null) {
+            this.source = source;
+        }
 
         // INFO
         // on applique les styles par defaut definis avec l'option defaultStyle

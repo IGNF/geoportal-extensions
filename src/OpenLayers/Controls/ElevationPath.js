@@ -591,7 +591,9 @@ var ElevationPath = (function (Control) {
      *   }
      */
     ElevationPath.prototype.getData = function () {
-        return this._data;
+        return Utils.assign({
+            type : "elevationpath"
+        }, this._data);
     };
 
     /**

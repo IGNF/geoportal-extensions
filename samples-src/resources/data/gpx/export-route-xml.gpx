@@ -2,6 +2,7 @@
 	<metadata xmlns="http://www.w3.org/1999/xhtml">
 		<extensions xmlns="http://www.w3.org/1999/xhtml">
 			<geoportail:compute>
+				<type>route</type>
 				<points type="array" index="7">
 					<value type="array" index="2">
 						<value>2.5877529997344015</value>

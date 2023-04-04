@@ -526,8 +526,13 @@ var KML = (function (olKML) {
      */
     KML.prototype.readFeatures = function (source, options) {
         logger.log("overload : ol.format.KML.readFeatures");
-        // Dom
-        this.source = source;
+
+        // String ou Dom
+        if (typeof source === "string") {
+            this.source = Parser.parse(source);
+        } else if (source !== null) {
+            this.source = source;
+        }
 
         var features = _readExtendStylesFeatures.call(this, source, options);
         logger.trace("Styles étendus", features);
@@ -942,7 +947,7 @@ var KML = (function (olKML) {
         // <ExtendedData>
         //   <Data name="geoportail:compute">{...}</Data>
         // </ExtendedData>
-        var firstNodeLevelKml = this.source.childNodes[0]; // kml
+        var firstNodeLevelKml = (this.source.nodeName === "#document") ? this.source.childNodes[0] : this.source;
         var childNodesLevel = firstNodeLevelKml.childNodes;
         for (var i = 0; i < childNodesLevel.length; i++) {
             var node1 = childNodesLevel[i];

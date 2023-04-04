@@ -272,6 +272,7 @@ var Isocurve = (function (Control) {
      */
     Isocurve.prototype.getData = function () {
         var data = {
+            type : "isocurve",
             transport : this._currentTransport,
             computation : this._currentComputation,
             exclusions : this._currentExclusions,

@@ -283,6 +283,7 @@ var Route = (function (Control) {
             points.push(p.getCoordinate());
         }
         var data = {
+            type : "route",
             points : points,
             transport : this._currentTransport,
             exclusions : this._currentExclusions,

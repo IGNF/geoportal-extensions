@@ -51,6 +51,9 @@ import KMLExtended from "../Formats/KML";
 import GeoJSONExtended from "../Formats/GeoJSON";
 import GPXExtended from "../Formats/GPX";
 import LayerSwitcher from "./LayerSwitcher";
+import Route from "./Route";
+import Isocurve from "./Isocurve";
+import ElevationPath from "./ElevationPath";
 
 var logger = Logger.getLogger("layerimport");
 
@@ -1604,9 +1607,39 @@ var LayerImport = (function (Control) {
                 style : vectorStyle
             });
 
-            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
+            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. 
             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
             map.addLayer(vectorLayer);
+
+            // cette couche est elle une couche de calcul ?
+            var configControl = vectorFormat.readRootExtensions("geoportail:compute");
+            if (Object.keys(configControl).length) {
+                // identifier le type de calcul :
+                // * route
+                // * isocurve
+                // * elevationpath
+                var authorizedControls = {
+                    route : Route,
+                    isocurve : Isocurve,
+                    elevationpath : ElevationPath
+                };
+                // le nom du type de calcul
+                var nameControl = configControl.type;
+                if (nameControl) {
+                    // la classe du controle
+                    var classControl = authorizedControls[nameControl];
+                    if (classControl) {
+                        // recherche et initialiser le controle
+                        this.getMap().getControls().forEach((control) => {
+                            if (control instanceof classControl) {
+                                control.setData(configControl);
+                                control.setLayer(vectorLayer);
+                                control.init();
+                            }
+                        });
+                    }
+                }
+            }
 
             // TODO : appeler fonction commune
             // zoom sur l'étendue des entités récupérées (si possible)
