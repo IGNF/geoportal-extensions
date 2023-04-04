@@ -201,7 +201,14 @@ var LayerMapBox = (function (VectorTileLayer) {
         // création d'une ol.layer.VectorTile avec les options récupérées ci-dessus.
         VectorTileLayer.call(this, layerVectorTileOptions);
 
-        // récuperation du style
+        // on surcharge les originators (non récupérés depuis configuration de la couche)
+        if (options.olParams && !layerCfg.originators) {
+            source._originators = options.olParams.attributions;
+        }
+        // add originators to layer source (to be updated by Originators control)
+        this._originators = source.originators;
+        
+            // récuperation du style
         this.setStyleMapBox();
     }
 

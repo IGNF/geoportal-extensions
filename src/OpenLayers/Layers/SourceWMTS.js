@@ -103,6 +103,10 @@ var SourceWMTS = (function (WMTSExtended) {
             // returns a WMTS object, that inherits from WMTSExtended.
             WMTSExtended.call(this, wmtsSourceOptions);
 
+            // on surcharge les originators (non récupérés depuis configuration de la couche)
+            if (options.olParams && !wmtsParams.originators) {
+                wmtsParams.originators = options.olParams.attributions;
+            }
             // add originators to layer source (to be updated by Originators control)
             this._originators = wmtsParams.originators;
 

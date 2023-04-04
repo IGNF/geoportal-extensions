@@ -272,7 +272,7 @@ var LayerUtils = {
                             image.className = "";
                             container.appendChild(image);
                         }
-                        image.src = logo; // FIXME : mixContent !
+                        image.src = logo;
                         image.title = text || name;
                         image.style.height = "30px";
                         image.style.width = "30px";

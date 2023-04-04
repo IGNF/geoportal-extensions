@@ -88,6 +88,11 @@ var SourceWMS = (function (TileWMSSource) {
             // returns a WMS object, that inherits from ol.source.TileWMS.
             TileWMSSource.call(this, wmsSourceOptions);
 
+            // on surcharge les originators (non récupérés depuis configuration de la couche)
+            if (options.olParams && !wmsParams.originators) {
+                wmsParams.originators = options.olParams.attributions;
+            }
+
             // save originators (to be updated by Originators control)
             this._originators = wmsParams.originators;
 
