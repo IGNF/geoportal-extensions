@@ -1375,7 +1375,8 @@ var Isocurve = (function (Control) {
                 coordinates : this._originPoint.getCoordinate()
             },
             properties : {
-                description : "Point d'origine"
+                description : "Point d'origine",
+                "marker-symbol" : this.options.markerOpts.url
             }
         });
         var geojsonformat = new GeoJSON({

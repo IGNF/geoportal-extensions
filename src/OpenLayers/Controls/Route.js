@@ -1717,10 +1717,7 @@ var Route = (function (Control) {
             });
         }
 
-        // Ajout des points de depart et arrivée du tracé
-        // INFO
-        //  On fait l'impasse sur les points intermediaires, ça me semble pas très utile...
-        //  On ne transmet pas les styles, ils pourront être ajoutés ulterieusement selon les besoins...
+        // Ajout du point de depart du tracé
         this._geojsonObject.features.push({
             type : "Feature",
             geometry : {
@@ -1728,10 +1725,32 @@ var Route = (function (Control) {
                 coordinates : this._currentPoints[0].getCoordinate()
             },
             properties : {
-                description : "Point de départ"
+                description : "Point de départ",
+                "marker-symbol" : this.options.markersOpts.departure.url
             }
         });
 
+        // Ajout des points d'étapes
+        for (var j = 1; j < this._currentPoints.length - 1; j++) {
+            if (this._currentPoints[j] && this._currentPoints[j].getCoordinate) {
+                var coordinates = this._currentPoints[j].getCoordinate();
+                if (coordinates) {
+                    this._geojsonObject.features.push({
+                        type : "Feature",
+                        geometry : {
+                            type : "Point",
+                            coordinates : coordinates
+                        },
+                        properties : {
+                            description : "Point d'étape",
+                            "marker-symbol" : this.options.markersOpts.stages.url
+                        }
+                    });
+                }
+            }
+        }
+
+        // Ajout du point d'arrivée du tracé
         this._geojsonObject.features.push({
             type : "Feature",
             geometry : {
@@ -1739,7 +1758,8 @@ var Route = (function (Control) {
                 coordinates : this._currentPoints[this._currentPoints.length - 1].getCoordinate()
             },
             properties : {
-                description : "Point d'arrivée"
+                description : "Point d'arrivée",
+                "marker-symbol" : this.options.markersOpts.arrival.url
             }
         });
 
