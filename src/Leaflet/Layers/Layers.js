@@ -176,7 +176,7 @@ var Layers = {
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
                 paramsNative : paramsNative,
                 paramsWms : paramsWms,
-                originators : this.params.originators || [],
+                originators : this.params.originators || this.settings.originators || [],
                 legends : this.params.legends || [],
                 metadata : this.params.metadata || [],
                 title : this.params.title || null,
@@ -286,7 +286,7 @@ var Layers = {
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
                 paramsNative : paramsNative,
                 paramsWmts : paramsWmts,
-                originators : this.params.originators || [],
+                originators : this.params.originators || this.settings.originators || [],
                 legends : this.params.legends || [],
                 metadata : this.params.metadata || [],
                 title : this.params.title || "",
