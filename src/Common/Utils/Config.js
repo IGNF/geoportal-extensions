@@ -37,8 +37,8 @@ var Config = {
      */
     isConfigLoaded: function () {
         var scope = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
-        if (scope.Gp && scope.Gp.Config && Object.keys(scope.Gp.Config).length !== 0) {
-            /** ts-syntax */ (this.configuration) = scope.Gp.Config;
+        if (scope.Gp && scope.Gp.Services && scope.Gp.Services.Config && Object.keys(scope.Gp.Services.Config).length !== 0) {
+            /** ts-syntax */ (this.configuration) = scope.Gp.Services.Config;
             return true;
         }
         return false;

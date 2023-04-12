@@ -54,7 +54,7 @@ var SourceWMS = (function (TileWMSSource) {
 
         var layerId = Config.getLayerId(options.layer, "WMS");
 
-        if (layerId && Config.configuration.getLayerConf(layerId)) {
+        if (layerId && Config.configuration.layers[layerId]) {
             var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
 
             // si ssl = false on fait du http
