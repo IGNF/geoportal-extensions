@@ -130,7 +130,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         this._noRightManagement = false;
 
         // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
+        // this._checkRightsManagement();
     },
 
     /**
