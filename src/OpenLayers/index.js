@@ -169,7 +169,9 @@ export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 /** cf. Gp.Logger */
 export { default as Logger } from "../Common/Utils/LoggerByDefault";
-// export { default as AutoLoadConfig } from "../Common/Utils/AutoLoadConfig";
+/** cf Gp.Config */
+export { default as Config } from "../Common/Utils/Config";
+
 
 
 function deepCopy (source, target) {

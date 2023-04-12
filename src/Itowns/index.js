@@ -101,6 +101,7 @@ export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 export { default as Logger } from "../Common/Utils/LoggerByDefault";
+export { default as Config } from "../Common/Utils/Config";
 
 function deepCopy (source, target) {
     // Implementing Tail Call Elimination
