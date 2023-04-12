@@ -433,6 +433,7 @@ var ReverseGeocode = (function (Control) {
 
         // options utilisateur
         if (Array.isArray(resources) && resources.length) {
+            /*
             // vérification des droits
             var noRightsIndexes = [];
             for (var i = 0; i < resources.length; i++) {
@@ -448,6 +449,7 @@ var ReverseGeocode = (function (Control) {
                     resources.splice(noRightsIndexes[j], 1);
                 }
             }
+            */
             // récupération du type par défaut
             if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];
