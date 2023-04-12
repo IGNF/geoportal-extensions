@@ -1472,12 +1472,12 @@ var Route = (function (Control) {
         if (!options.endPoint) {
             return;
         }
-
+        /*
         // on ne fait pas de requête si aucun droit !
         if (this._noRightManagement || !this._resources["Itineraire"]) {
             return;
         }
-
+        
         // gestion des droits !
         var resources = this._resources["Itineraire"].resources;
         if (!resources || (typeof resources === "object" && Object.keys(resources).length === 0)) {
@@ -1500,10 +1500,10 @@ var Route = (function (Control) {
             logger.log("no rights for this service !?");
             return;
         }
-
+        */
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey || key;
+        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle (calcul par défaut)
+        options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)
