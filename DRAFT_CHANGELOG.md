@@ -13,6 +13,8 @@
 
 * [Added]
 
+    - Widget d'export des tracés et calculs des contôles d'itiberaire, d'isochrone et de profil altimétrique.
+
 * [Changed]
 
 * [Deprecated]

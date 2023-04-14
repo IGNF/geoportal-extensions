@@ -40,8 +40,12 @@ var logger = Logger.getLogger("export");
  * @param {Object} options.control - instance of control
  * @fires export:compute
  * @example
- * // without adding to the map
- * var export = new ButtonExport(options);
+ * // pluggued widget Export into control Isocurve
+ * var iso = new ol.control.Isocurve();
+ * map.addControl(iso);
+ * 
+ * // method : call render()
+ * var export = new ButtonExport();
  * export.setControl(iso);
  * export.setTarget(<!-- DOMElement -->);
  * export.setName("export");
@@ -51,8 +55,8 @@ var logger = Logger.getLogger("export");
  * export.render(); // <-- direct call to render function !
  * export.on("export:compute", (data) => { console.log(data); });
  *
- * // with adding to the map
- * var export = new ButtonExport(options);
+ * // method : call map.addControl()
+ * var export = new ButtonExport();
  * export.setControl(iso);
  * export.setTarget(<!-- DOMElement -->);
  * export.setName("export");
@@ -61,6 +65,27 @@ var logger = Logger.getLogger("export");
  * export.setMenu(false);
  * export.on("export:compute", (data) => { console.log(data); });
  * map.addControl(export); // <-- using the OpenLayers mechanism, don't call to render function !
+ * 
+ * // use control options instead of setters
+ * var export = new ButtonExport({
+ *   control : iso,
+ *   target : <!-- DOMElement -->,
+ *   name : "export",
+ *   format : "geojson",
+ *   title : "Exporter",
+ *   menu : false
+ * });
+ * map.addControl(export);
+ * 
+ * // method with passing option into the control Isocurve
+ * var iso = new ol.control.Isocurve({ export : true });
+ * // with control options :
+ * var iso = new ol.control.Isocurve({ export : {
+ *   name : "export",
+ *   format : "geojson",
+ *   title : "Exporter",
+ *   menu : false
+ * }});
  */
 class ButtonExport extends Control {
 
