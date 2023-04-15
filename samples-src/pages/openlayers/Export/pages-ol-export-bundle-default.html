@@ -62,7 +62,8 @@
                 });
                 map.addControl(drawing);
                 var exportDrawing = new ol.control.Export({
-                  control: drawing
+                  control: drawing,
+                  format : "kml"
                 });
                 map.addControl(exportDrawing);
                 exportDrawing.on("export:compute", (e) => {
@@ -110,7 +111,7 @@
                 var exportProfil = new ol.control.Export({
                   control: measureProfil,
                   name: "export-profil", 
-                  format : "kml",
+                  format : "geojson",
                   menu: false
                 });
                 map.addControl(exportProfil);

@@ -6,6 +6,9 @@ import CircleStyle from "ol/style/Circle";
 import IconStyle from "ol/style/Icon";
 import FillStyle from "ol/style/Fill";
 import StrokeStyle from "ol/style/Stroke";
+// import Geometry
+import LineString from "ol/geom/LineString";
+import Polygon from "ol/geom/Polygon";
 // import local
 import Color from "../../Common/Utils/ColorUtils";
 import Parser from "../../Common/Utils/Parser";
@@ -124,7 +127,8 @@ var GPX = (function (olGPX) {
         // sauf sur les features qui possèdent des extensions.
         // les features avec extensions sont traité au préalable
         // dans la callback des options : readExtensions
-        features.forEach(feature => {
+        features.forEach(function (feature, index, array) {
+            feature.setId(index+1);
             // HACK : enregistrement de la description de la balise 'desc' du format GPX
             var value = feature.getProperties().desc;
             if (value) {
@@ -187,7 +191,7 @@ var GPX = (function (olGPX) {
         // d'extensions
 
         // on met à jour les properties de styles
-        features.forEach(function (feature) {
+        features.forEach(function (feature, index, array) {
             // HACK : enregistrement de la description dans la balise 'desc' du format GPX
             var value = feature.getProperties().description;
             if (value) {
@@ -313,6 +317,19 @@ var GPX = (function (olGPX) {
                     }
                 }
             }
+
+            // Le type surfacique n'existe pas au format GPX,
+            // on doit ajouter un lineaire à la place
+            var type = feature.getGeometry().getType();
+            if (type === "Polygon") {
+                // creation d'une copie pour ne pas modifier les features de carte
+                var f = feature.clone();
+                f.setGeometry(new LineString(feature.getGeometry().getCoordinates()));
+                features.push(f);
+                // feature à supprimer de l'export
+                array.splice(index, 1);
+            }
+
         });
 
         // nodes
@@ -463,6 +480,9 @@ var GPX = (function (olGPX) {
         // styles en fonction du type de geometrie
         var type = feature.getGeometry().getType();
         switch (type) {
+            case "MultiPoint":
+                // not yet implemented !
+                break;
             case "Point":
                 // representer un point de depart ou d'arrivée
                 if (marker) {
@@ -483,10 +503,19 @@ var GPX = (function (olGPX) {
                 }
                 break;
 
-            case "LineString":
             case "MultiLineString":
+                // not yet implemented !
+                break;
+            case "LineString":
                 if (stroke) {
                     options["stroke"] = new StrokeStyle(stroke);
+                }
+                // cas particulier où une geometrie de type lineaire posséde un style surface,
+                // on transforme la geometrie
+                if (fill) {
+                    options["fill"] = new FillStyle(fill);
+                    var f = feature.clone();
+                    feature.setGeometry(new Polygon([f.getGeometry().getCoordinates()]));
                 }
                 break;
 

@@ -443,10 +443,11 @@ class ButtonExport extends Control {
      * ...
      * @param {Object} layer - ...
      * @param {Object} [data] - ...
+     * @param {Object} [style] - ...
      * @returns {String} - ...
      * @private
      */
-    exportFeatures (layer, data) {
+    exportFeatures (layer, data, style) {
         var result = null;
         if (!layer) {
             logger.warn("Impossible to export : no layer is hosting features.");
@@ -471,7 +472,9 @@ class ButtonExport extends Control {
         });
 
         // ajouter les metadonnées de calcul et de configuration
-        var options = {};
+        var options = {
+            defaultStyle : style
+        };
         if (data) {
             // properties ajoutées à la racine :
             // ex. "geoportail:compute" : {}
@@ -484,6 +487,7 @@ class ButtonExport extends Control {
         switch (this.options.format.toUpperCase()) {
             case "KML":
                 options.writeStyles = true;
+                options.showPointNames = true;
                 ClassName = new KMLExtended(options);
                 break;
             case "GPX":
@@ -511,9 +515,11 @@ class ButtonExport extends Control {
             featProj = featProj || map.getView().getProjection();
         }
 
+        var features = layer.getSource().getFeatures();
+
         // INFO
         // par defaut, webmercator ou "EPSG:3857"
-        result = ClassName.writeFeatures(layer.getSource().getFeatures(), {
+        result = ClassName.writeFeatures(features, {
             dataProjection : "EPSG:4326",
             featureProjection : featProj || "EPSG:3857"
         });
@@ -536,8 +542,9 @@ class ButtonExport extends Control {
 
         var layer = this.options.control.getLayer();
         var data = (this.options.control.getData !== undefined) ? this.options.control.getData() : {};
-
-        var content = this.exportFeatures(layer, data);
+        var style = (this.options.control.getStyle !== undefined) ? this.options.control.getStyle() : {};
+        
+        var content = this.exportFeatures(layer, data, style);
         if (!content || content === "null") {
             return;
         }

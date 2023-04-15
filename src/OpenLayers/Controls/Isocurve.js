@@ -5,7 +5,7 @@ import Control from "ol/control/Control";
 import { unByKey as olObservableUnByKey } from "ol/Observable";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import GeoJSON from "ol/format/GeoJSON";
+// import GeoJSON from "ol/format/GeoJSON";
 import {
     Fill,
     Style
@@ -24,6 +24,7 @@ import Interactions from "./Utils/Interactions";
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
 import ButtonExport from "./Export";
+import GeoJSONExtended from "../Formats/GeoJSON";
 
 // DOM
 import IsoDOM from "../../Common/Controls/IsoDOM";
@@ -1389,8 +1390,9 @@ var Isocurve = (function (Control) {
                 "marker-symbol" : this.options.markerOpts.url
             }
         });
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : this._defaultFeatureStyle
         });
         var mapProj = map.getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(

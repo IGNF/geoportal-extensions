@@ -1613,7 +1613,7 @@ var LayerImport = (function (Control) {
 
             // cette couche est elle une couche de calcul ?
             var configControl = vectorFormat.readRootExtensions("geoportail:compute");
-            if (Object.keys(configControl).length) {
+            if (Object.keys(configControl).length !== 0) {
                 // identifier le type de calcul :
                 // * route
                 // * isocurve

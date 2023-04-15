@@ -6,7 +6,7 @@ import { unByKey as olObservableUnByKey } from "ol/Observable";
 import Overlay from "ol/Overlay";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import GeoJSON from "ol/format/GeoJSON";
+// import GeoJSON from "ol/format/GeoJSON";
 import { pointerMove as eventPointerMove } from "ol/events/condition";
 import { Select as SelectInteraction } from "ol/interaction";
 import {
@@ -28,6 +28,7 @@ import Interactions from "./Utils/Interactions";
 import LocationSelector from "./LocationSelector";
 import ButtonExport from "./Export";
 import LayerSwitcher from "./LayerSwitcher";
+import GeoJSONExtended from "../Formats/GeoJSON";
 // DOM
 import RouteDOM from "../../Common/Controls/RouteDOM";
 
@@ -1657,8 +1658,10 @@ var Route = (function (Control) {
             ]
         };
 
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : style
+
         });
         var features = geojsonformat.readFeatures(
             geojsonObject, {
@@ -1774,8 +1777,9 @@ var Route = (function (Control) {
         });
 
         // Création du format GeoJSON, avec reprojection des géométries
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : style
         });
         var mapProj = this.getMap().getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(
