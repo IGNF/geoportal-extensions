@@ -17,6 +17,8 @@
 
 * [Changed]
 
+    - Mise à jour doc elevationPathControl
+
 * [Deprecated]
 
 * [Removed]
