@@ -614,6 +614,7 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.prototype.setData = function (data) {
         // not yet implemented !
+        this._data = data;
     };
 
     /**
@@ -642,6 +643,21 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.prototype.setLayer = function (layer) {
         // not yet implemented !
+        if (!layer) {
+            this._measureVector = null;
+            return;
+        }
+
+        if (!(layer instanceof VectorLayer)) {
+            logger.log("no valid layer given for hosting drawn features.");
+            return;
+        }
+
+        // application des styles
+        layer.setStyle(this._drawStyleFinish);
+        // sauvegarde
+        this._measureVector = layer;
+        this._measureSource = layer.getSource();
     };
 
     /**
@@ -680,6 +696,11 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.prototype.init = function () {
         // not yet implemented !
+        
+        this._showContainer.checked = true;
+        this._panelContainer.style.display = "block";
+        this._displayProfile(this._data);
+        this._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
     };
 
     // ################################################################### //
@@ -1275,7 +1296,11 @@ var ElevationPath = (function (Control) {
             if (result) {
                 self._panelContainer.style.display = "block";
                 // self._panelContainer.style.visibility = "visible";
-                self._displayProfile(result.elevations);
+                if (self._data) {
+                    self._data = {};
+                }
+                self._data = self._computeElevationMeasure(result.elevations);
+                self._displayProfile(self._data);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
                 self._measureDraw.setActive(true);
@@ -1363,6 +1388,9 @@ var ElevationPath = (function (Control) {
         var _unit = "m";
 
         var _sketchPoints = this._getSketchCoords();
+        if (! _sketchPoints) {
+            return;
+        }
         // section actuelle du sketch sur laquelle on est
         var _currentSection = 0;
         // longueur cumulée des sections précédentes
@@ -1491,14 +1519,6 @@ var ElevationPath = (function (Control) {
     ElevationPath.prototype._displayProfile = function (elevations) {
         logger.trace("ElevationPath::_displayProfile", elevations);
 
-        // data
-        if (this._data) {
-            this._data = {};
-        }
-
-        // sauvegarde des données
-        var data = this._data = this._computeElevationMeasure(elevations);
-
         this._updateInfoContainer();
 
         // container
@@ -1515,7 +1535,7 @@ var ElevationPath = (function (Control) {
         var displayFunction = this.options.displayProfileOptions.apply;
 
         // execution...
-        displayFunction.call(this, data, container, context);
+        displayFunction.call(this, elevations, container, context);
 
         var opts = this.options.displayProfileOptions;
         var element = document.getElementById("GPelevationPathPanelInfo-" + this._uid);

@@ -202,7 +202,7 @@ class ButtonExport extends Control {
          *      "points":[
          *        {
          *            "z":95.68,
-         *           "lon":2.5874,
+         *            "lon":2.5874,
          *            "lat":48.8419,
          *            "acc":2.5,
          *            "dist":0,
