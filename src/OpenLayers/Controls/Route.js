@@ -91,9 +91,9 @@ var logger = Logger.getLogger("route");
  *      "autocompleteOptions" : {},
  *      "routeOptions" : {}
  *  });
- * 
+ *
  *  // if you want to pluggued the control Export with options :
- *  var route = new ol.control.Route({ 
+ *  var route = new ol.control.Route({
  *    export : {
  *      name : "export",
  *      format : "geojson",
@@ -1744,9 +1744,9 @@ var Route = (function (Control) {
         });
 
         // Ajout des points d'étapes
-        for (var j = 1; j < this._currentPoints.length - 1; j++) {
-            if (this._currentPoints[j] && this._currentPoints[j].getCoordinate) {
-                var coordinates = this._currentPoints[j].getCoordinate();
+        for (var k = 1; k < this._currentPoints.length - 1; k++) {
+            if (this._currentPoints[k] && this._currentPoints[k].getCoordinate) {
+                var coordinates = this._currentPoints[k].getCoordinate();
                 if (coordinates) {
                     this._geojsonObject.features.push({
                         type : "Feature",

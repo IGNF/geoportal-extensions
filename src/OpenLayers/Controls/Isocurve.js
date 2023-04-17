@@ -82,9 +82,9 @@ var logger = Logger.getLogger("isocurve");
  *      "isocurveOptions" : {},
  *      "autocompleteOptions" : {}
  *  });
- * 
+ *
  *  // if you want to pluggued the control Export with options :
- *  var iso = new ol.control.Isocurve({ 
+ *  var iso = new ol.control.Isocurve({
  *    export : {
  *      name : "export",
  *      format : "geojson",

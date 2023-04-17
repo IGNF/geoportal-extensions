@@ -1607,7 +1607,7 @@ var LayerImport = (function (Control) {
                 style : vectorStyle
             });
 
-            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. 
+            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
             map.addLayer(vectorLayer);
 

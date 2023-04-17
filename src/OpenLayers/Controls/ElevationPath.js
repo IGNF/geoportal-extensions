@@ -91,7 +91,7 @@ var logger = Logger.getLogger("elevationpath");
  * });
  *
  * // if you want to pluggued the control Export with options :
- * var measure = new ol.control.ElevationPath({ 
+ * var measure = new ol.control.ElevationPath({
  *    export : {
  *      name : "export",
  *      format : "geojson",
@@ -99,7 +99,7 @@ var logger = Logger.getLogger("elevationpath");
  *      menu : false
  *    }
  * });
- * 
+ *
  * Exemples :
  * - displayProfileOptions.apply : null
  * - displayProfileOptions.apply : function (elevations, container, context) {  // do some stuff... }
@@ -607,6 +607,16 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Set profile data
+     *
+     * @param {*} data - ...
+     * @todo
+     */
+    ElevationPath.prototype.setData = function (data) {
+        // not yet implemented !
+    };
+
+    /**
      * Get container
      *
      * @returns {DOMElement} container
@@ -622,6 +632,25 @@ var ElevationPath = (function (Control) {
      */
     ElevationPath.prototype.getLayer = function () {
         return this._measureVector;
+    };
+
+    /**
+     * Set layer
+     *
+     * @param {Object} layer - ol.layer.Vector profil layer
+     * @todo
+     */
+    ElevationPath.prototype.setLayer = function (layer) {
+        // not yet implemented !
+    };
+
+    /**
+     * Get default style
+     *
+     * @returns {ol.style} style
+     */
+    ElevationPath.prototype.getStyle = function () {
+        return this._drawStyleFinish;
     };
 
     /**
@@ -642,6 +671,15 @@ var ElevationPath = (function (Control) {
         this._removeProfile();
         this._removeMeasure();
         this._removeMeasureInteraction(map);
+    };
+
+    /**
+     * This method is public.
+     * It allows to init the control.
+     * @todo
+     */
+    ElevationPath.prototype.init = function () {
+        // not yet implemented !
     };
 
     // ################################################################### //

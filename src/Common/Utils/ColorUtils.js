@@ -5,39 +5,64 @@
  * ...
  *
  * @example
+ * arrayTorgba();
+ * arrayToHex();
  * rgbaToHex();
  * hexToRgba();
  * isHex();
  * isRGB();
  */
 var ColorUtils = {
+
     /**
-     * Converts rgba String to #RRGGBBAA
-     * (Code adapted from : https://gist.github.com/mstssk/afda4ce9e5c335fd79cd)
+     * Number to hex conversion
      *
-     * @function rgbaToHex
-     * @param {String} rgba - A color of RGB or RGBA format.
-     * @returns {Object} hex and opacity formated values
+     * @param {Number} number - 0-255
+     * @returns {String} hex value
      */
-    rgbaToHex : function (rgba) {
-        // number to hex conversion
-        function hex (number) {
-            if (number > 255) {
-                throw new Error("'" + number + "'' is greater than 255(0xff);");
-            }
-            var str = Number(number).toString(16);
-            return ("0" + str).slice(-2);
+    hex : function (number) {
+        if (number > 255) {
+            throw new Error("'" + number + "'' is greater than 255(0xff);");
         }
-        var regex = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(0?.?\d+)\s*)?\)/;
-        var parsed = regex.exec(rgba);
-        if (!parsed) {
-            throw new Error("Invalid format: " + rgba);
+        var str = Number(number).toString(16);
+        return ("0" + str).slice(-2);
+    },
+
+    /**
+     * Converts an array ([255,255,255,1]) to rgba string
+     *
+     * @function arrayToRgba
+     * @param {Array} values - array of values
+     * @returns {String} A color of RGB or RGBA format
+     */
+    arrayToRgba : function (values) {
+        if (!Array.isArray(values)) {
+            throw new Error("Not an array !");
         }
-        var red = parsed[1];
-        var green = parsed[2];
-        var blue = parsed[3];
-        var alpha = parsed[4];
-        var elems = [hex(red), hex(green), hex(blue)];
+        var red = values[0];
+        var green = values[1];
+        var blue = values[2];
+        var alpha = values[3] || 1;
+        var result = "rgba(" + red + ", " + green + ", " + blue + ", " + parseFloat(alpha) + ")";
+        return result;
+    },
+
+    /**
+     * Converts an array ([255,255,255,1]) to #RRGGBBAA
+     *
+     * @function arrayToHex
+     * @param {Array} values - array of values
+     * @returns {Object}  hex and opacity formated values
+     */
+    arrayToHex : function (values) {
+        if (!Array.isArray(values)) {
+            throw new Error("Not an array !");
+        }
+        var red = values[0];
+        var green = values[1];
+        var blue = values[2];
+        var alpha = values[3];
+        var elems = [this.hex(red), this.hex(green), this.hex(blue)];
         var result = {};
         result.hex = "#" + elems.join("");
         if (alpha) {
@@ -48,7 +73,35 @@ var ColorUtils = {
     },
 
     /**
-     * Converts hex color and opacity value to rgba String.
+     * Converts rgba string to #RRGGBBAA
+     * (Code adapted from : https://gist.github.com/mstssk/afda4ce9e5c335fd79cd)
+     *
+     * @function rgbaToHex
+     * @param {String} rgba - A color of RGB or RGBA format.
+     * @returns {Object} hex and opacity formated values
+     */
+    rgbaToHex : function (rgba) {
+        var regex = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(0?.?\d+)\s*)?\)/;
+        var parsed = regex.exec(rgba);
+        if (!parsed) {
+            throw new Error("Invalid format: " + rgba);
+        }
+        var red = parsed[1];
+        var green = parsed[2];
+        var blue = parsed[3];
+        var alpha = parsed[4];
+        var elems = [this.hex(red), this.hex(green), this.hex(blue)];
+        var result = {};
+        result.hex = "#" + elems.join("");
+        if (alpha) {
+            // elems.push(hex(alpha));
+            result.opacity = parseFloat(alpha);
+        }
+        return result;
+    },
+
+    /**
+     * Converts hex color and opacity value to rgba string.
      * (Code adapted from : http://stackoverflow.com/a/5624139)
      *
      * @function hexToRgba

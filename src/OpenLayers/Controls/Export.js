@@ -4,10 +4,6 @@ import "../CSS/Controls/Export/GPexportOpenLayers.css";
 // import OpenLayers
 import Control from "ol/control/Control";
 
-// import Style
-import Style from "ol/style/Style";
-import IconStyle from "ol/style/Icon";
-
 // import local
 import ID from "../../Common/Utils/SelectorID";
 import Utils from "../../Common/Utils";
@@ -43,7 +39,7 @@ var logger = Logger.getLogger("export");
  * // pluggued widget Export into control Isocurve
  * var iso = new ol.control.Isocurve();
  * map.addControl(iso);
- * 
+ *
  * // method : call render()
  * var export = new ButtonExport();
  * export.setControl(iso);
@@ -65,7 +61,7 @@ var logger = Logger.getLogger("export");
  * export.setMenu(false);
  * export.on("export:compute", (data) => { console.log(data); });
  * map.addControl(export); // <-- using the OpenLayers mechanism, don't call to render function !
- * 
+ *
  * // use control options instead of setters
  * var export = new ButtonExport({
  *   control : iso,
@@ -76,7 +72,7 @@ var logger = Logger.getLogger("export");
  *   menu : false
  * });
  * map.addControl(export);
- * 
+ *
  * // method with passing option into the control Isocurve
  * var iso = new ol.control.Isocurve({ export : true });
  * // with control options :
@@ -543,7 +539,7 @@ class ButtonExport extends Control {
         var layer = this.options.control.getLayer();
         var data = (this.options.control.getData !== undefined) ? this.options.control.getData() : {};
         var style = (this.options.control.getStyle !== undefined) ? this.options.control.getStyle() : {};
-        
+
         var content = this.exportFeatures(layer, data, style);
         if (!content || content === "null") {
             return;

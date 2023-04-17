@@ -7,7 +7,9 @@ import IconStyle from "ol/style/Icon";
 import FillStyle from "ol/style/Fill";
 import StrokeStyle from "ol/style/Stroke";
 // import Geometry
+import MultiLineString from "ol/geom/MultiLineString";
 import LineString from "ol/geom/LineString";
+import MultiPolygon from "ol/geom/MultiPolygon";
 import Polygon from "ol/geom/Polygon";
 // import local
 import Color from "../../Common/Utils/ColorUtils";
@@ -127,8 +129,9 @@ var GPX = (function (olGPX) {
         // sauf sur les features qui possèdent des extensions.
         // les features avec extensions sont traité au préalable
         // dans la callback des options : readExtensions
+        var self = this;
         features.forEach(function (feature, index, array) {
-            feature.setId(index+1);
+            feature.setId(index + 1);
             // HACK : enregistrement de la description de la balise 'desc' du format GPX
             var value = feature.getProperties().desc;
             if (value) {
@@ -139,29 +142,34 @@ var GPX = (function (olGPX) {
             var styleFunction = (feature, resolution) => {
                 var style = null;
 
-                if (Object.keys(this.options.defaultStyle).length === 0) {
+                if (Object.keys(self.options.defaultStyle).length === 0) {
                     return [];
                 }
 
                 var type = feature.getGeometry().getType();
                 switch (type) {
+                    case "MultiPoint":
                     case "Point":
-                        if (this.options.defaultStyle.getImage()) {
+                        if (self.options.defaultStyle.getImage()) {
                             style = new Style({
-                                image : this.options.defaultStyle.getImage()
+                                image : self.options.defaultStyle.getImage()
                             });
                         }
                         break;
                     case "LineString":
                     case "MultiLineString":
                         var options = {};
-                        if (this.options.defaultStyle.getFill()) {
-                            options.fill = this.options.defaultStyle.getFill();
+                        if (self.options.defaultStyle.getFill()) {
+                            options.fill = self.options.defaultStyle.getFill();
                         }
-                        if (this.options.defaultStyle.getStroke()) {
-                            options.stroke = this.options.defaultStyle.getStroke();
+                        if (self.options.defaultStyle.getStroke()) {
+                            options.stroke = self.options.defaultStyle.getStroke();
                         }
                         style = new Style(options);
+                        break;
+                    default:
+                        // eslint-disable-next-line no-console
+                        console.warn("type unknown !");
                         break;
                 }
                 return [style];
@@ -208,6 +216,8 @@ var GPX = (function (olGPX) {
                         style = styles[0];
                     } else {
                         // au cas où...
+                        // eslint-disable-next-line no-console
+                        console.warn("style null !");
                         return;
                     }
                 }
@@ -226,10 +236,16 @@ var GPX = (function (olGPX) {
                         colorFill = Color.rgbaToHex(fill.getColor());
                         feature.set("fill", colorFill.hex);
                         feature.set("fill-opacity", colorFill.opacity);
-                    } else {
+                    } else if (Array.isArray(fill.getColor())) {
+                        colorFill = Color.arrayToHex(fill.getColor());
+                        feature.set("fill", colorFill.hex);
+                        feature.set("fill-opacity", colorFill.opacity);
+                    } else if (Color.isHex(fill.getColor())) {
                         colorFill = fill.getColor();
                         feature.set("fill", colorFill);
                         feature.set("fill-opacity", 1);
+                    } else {
+                        // error !
                     }
                 }
                 var stroke = style.getStroke();
@@ -239,10 +255,16 @@ var GPX = (function (olGPX) {
                         colorStroke = Color.rgbaToHex(stroke.getColor());
                         feature.set("stroke", colorStroke.hex);
                         feature.set("stroke-opacity", colorStroke.opacity);
-                    } else {
+                    } else if (Array.isArray(fill.getColor())) {
+                        colorStroke = Color.arrayToHex(stroke.getColor());
+                        feature.set("stroke", colorStroke.hex);
+                        feature.set("stroke-opacity", colorStroke.opacity);
+                    } else if (Color.isHex(stroke.getColor())) {
                         colorStroke = stroke.getColor();
                         feature.set("stroke", colorStroke);
                         feature.set("stroke-opacity", 1);
+                    } else {
+                        // error !
                     }
                     feature.set("stroke-width", stroke.getWidth());
                 }
@@ -329,7 +351,14 @@ var GPX = (function (olGPX) {
                 // feature à supprimer de l'export
                 array.splice(index, 1);
             }
-
+            else if (type === "MultiPolygon") {
+                // creation d'une copie pour ne pas modifier les features de carte
+                var f = feature.clone();
+                f.setGeometry(new MultiLineString(feature.getGeometry().getCoordinates()));
+                features.push(f);
+                // feature à supprimer de l'export
+                array.splice(index, 1);
+            }
         });
 
         // nodes
@@ -389,6 +418,8 @@ var GPX = (function (olGPX) {
         }
 
         if (!_node) {
+            // eslint-disable-next-line no-console
+            console.warn("node not found !");
             return;
         }
 
@@ -481,8 +512,6 @@ var GPX = (function (olGPX) {
         var type = feature.getGeometry().getType();
         switch (type) {
             case "MultiPoint":
-                // not yet implemented !
-                break;
             case "Point":
                 // representer un point de depart ou d'arrivée
                 if (marker) {
@@ -504,15 +533,25 @@ var GPX = (function (olGPX) {
                 break;
 
             case "MultiLineString":
-                // not yet implemented !
+                if (stroke) {
+                    options["stroke"] = new StrokeStyle(stroke);
+                }
+                // cas particulier où une geometrie de type lineaire posséde uniquement un style surface,
+                // on transforme la geometrie
+                if (fill && !stroke) {
+                    options["fill"] = new FillStyle(fill);
+                    var f = feature.clone();
+                    feature.setGeometry(new MultiPolygon([f.getGeometry().getCoordinates()]));
+                }
                 break;
+
             case "LineString":
                 if (stroke) {
                     options["stroke"] = new StrokeStyle(stroke);
                 }
-                // cas particulier où une geometrie de type lineaire posséde un style surface,
+                // cas particulier où une geometrie de type lineaire posséde uniquement un style surface,
                 // on transforme la geometrie
-                if (fill) {
+                if (fill && !stroke) {
                     options["fill"] = new FillStyle(fill);
                     var f = feature.clone();
                     feature.setGeometry(new Polygon([f.getGeometry().getCoordinates()]));
@@ -520,6 +559,8 @@ var GPX = (function (olGPX) {
                 break;
 
             default:
+                // eslint-disable-next-line no-console
+                console.warn("type unknown !");
                 break;
         }
         // si aucun style disponible, on utilisera le style par defaut defini
@@ -752,9 +793,12 @@ var GPX = (function (olGPX) {
                         }
                     }
                     break;
+                case "metadata":
+                    break;
                 default:
                     // on ne devrait jamais passer à ce niveau !?
-                    // sauf si OpenLayers ajoute le noeud "metadata"...
+                    // eslint-disable-next-line no-console
+                    console.warn("nodename unknown :", node.nodeName);
                     break;
             }
         }
