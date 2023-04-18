@@ -18,6 +18,7 @@
 * [Changed]
 
     - Mise à jour doc elevationPathControl
+    - transmission paramètre outputFormat pour mousePosition OpenLayers
 
 * [Deprecated]
 
