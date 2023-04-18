@@ -1275,7 +1275,7 @@ var MousePosition = (function (Control) {
         }
 
         // format de sortie si spécifié
-        var _outputFormat = options.outputFormat || "xml";
+        var _outputFormat = options.outputFormat || "json";
 
         // ainsi que les coordonnées
         var _zonly = true;

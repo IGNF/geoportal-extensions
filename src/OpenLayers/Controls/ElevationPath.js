@@ -91,7 +91,7 @@ var logger = Logger.getLogger("elevationpath");
  * });
  *
  * // if you want to pluggued the control Export with options :
- * var measure = new ol.control.ElevationPath({ 
+ * var measure = new ol.control.ElevationPath({
  *    export : {
  *      name : "export",
  *      format : "geojson",
@@ -99,7 +99,7 @@ var logger = Logger.getLogger("elevationpath");
  *      menu : false
  *    }
  * });
- * 
+ *
  * Exemples :
  * - displayProfileOptions.apply : null
  * - displayProfileOptions.apply : function (elevations, container, context) {  // do some stuff... }
@@ -663,7 +663,9 @@ var ElevationPath = (function (Control) {
             active : false,
             apiKey : null,
             export : false,
-            elevationOptions : {},
+            elevationOptions : {
+                outputFormat : 'json'
+            },
             layerDescription : {
                 title : "Profil altimétrique",
                 description : "Mon profil altimétrique"

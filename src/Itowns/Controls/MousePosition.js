@@ -395,10 +395,14 @@ MousePosition.prototype._initialize = function (options) {
     this.options.systems = options.systems || [];
     if (options.altitude) {
         var altitude = options.altitude;
+        // on surcharge l'outputFormat pour du json si non spécifié par utilisateur
+        (altitude.serviceOptions && !altitude.serviceOptions.outputFormat) ? altitude.serviceOptions.outputFormat : "json";
         this.options.altitude = {
             triggerDelay : (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
             responseDelay : (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
-            serviceOptions : altitude.serviceOptions || {},
+            serviceOptions : altitude.serviceOptions || {
+                outputFormat : "json"
+            },
             noDataValue : (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
             noDataValueTolerance : (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
         };
@@ -406,7 +410,9 @@ MousePosition.prototype._initialize = function (options) {
         this.options.altitude = {
             triggerDelay : 200,
             responseDelay : 500,
-            serviceOptions : {}
+            serviceOptions : {
+                outputFormat : "json"
+            }
         };
     }
 
