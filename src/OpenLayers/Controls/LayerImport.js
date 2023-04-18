@@ -1609,12 +1609,11 @@ var LayerImport = (function (Control) {
 
             // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
-            map.addLayer(vectorLayer);
 
             // cette couche est elle une couche de calcul ?
             var configControl = vectorFormat.readRootExtensions("geoportail:compute");
             if (Object.keys(configControl).length !== 0) {
-                // identifier le type de calcul :
+                // identifier le type de calcul authorisé :
                 // * route
                 // * isocurve
                 // * elevationpath
@@ -1629,6 +1628,8 @@ var LayerImport = (function (Control) {
                     // la classe du controle
                     var classControl = authorizedControls[nameControl];
                     if (classControl) {
+                        // on est bien sur une couche de calcul authorisé !
+                        vectorLayer.gpResultLayerId = "layerimport:COMPUTE";
                         // recherche et initialiser le controle
                         this.getMap().getControls().forEach((control) => {
                             if (control instanceof classControl) {
@@ -1640,6 +1641,8 @@ var LayerImport = (function (Control) {
                     }
                 }
             }
+
+            map.addLayer(vectorLayer);
 
             // TODO : appeler fonction commune
             // zoom sur l'étendue des entités récupérées (si possible)
