@@ -587,6 +587,7 @@ var ElevationPath = (function (Control) {
      * @returns {Object} data - elevations
      * @example
      * {
+     *        type // "elevationpath"
      *        greaterSlope // pente max
      *        meanSlope  // pente moyenne
      *        distancePlus // distance cumulée positive
@@ -596,8 +597,8 @@ var ElevationPath = (function (Control) {
      *        altMin // altitude min
      *        altMax // altitude max
      *        distance // distance totale
-     *        unit : // unité des mesures de distance
-     *        points : // elevations
+     *        unit // unité des mesures de distance
+     *        points // elevations
      *   }
      */
     ElevationPath.prototype.getData = function () {
@@ -609,11 +610,23 @@ var ElevationPath = (function (Control) {
     /**
      * Set profile data
      *
-     * @param {*} data - ...
-     * @todo
+     * @param {*} data - elevations
+     * @example
+     * {
+     *        greaterSlope // pente max
+     *        meanSlope  // pente moyenne
+     *        distancePlus // distance cumulée positive
+     *        distanceMinus // distance cumulée négative
+     *        ascendingElevation // dénivelé cumulée positive
+     *        descendingElevation // dénivelé cumulée négative
+     *        altMin // altitude min
+     *        altMax // altitude max
+     *        distance // distance totale
+     *        unit // unité des mesures de distance
+     *        points // elevations
+     * }
      */
     ElevationPath.prototype.setData = function (data) {
-        // not yet implemented !
         this._data = data;
     };
 
@@ -639,10 +652,8 @@ var ElevationPath = (function (Control) {
      * Set layer
      *
      * @param {Object} layer - ol.layer.Vector profil layer
-     * @todo
      */
     ElevationPath.prototype.setLayer = function (layer) {
-        // not yet implemented !
         if (!layer) {
             this._measureVector = null;
             return;
@@ -692,11 +703,8 @@ var ElevationPath = (function (Control) {
     /**
      * This method is public.
      * It allows to init the control.
-     * @todo
      */
     ElevationPath.prototype.init = function () {
-        // not yet implemented !
-        
         this._showContainer.checked = true;
         this._panelContainer.style.display = "block";
         this._displayProfile(this._data);
