@@ -1274,6 +1274,9 @@ var MousePosition = (function (Control) {
             _timeout = 15000;
         }
 
+        // format de sortie si spécifié
+        var _outputFormat = options.outputFormat || "json";
+
         // ainsi que les coordonnées
         var _zonly = true;
         var _positions = [{
@@ -1328,6 +1331,7 @@ var MousePosition = (function (Control) {
             ssl : _ssl,
             timeOut : _timeout,
             scope : _scope,
+            outputFormat : _outputFormat,
             rawResponse : _rawResponse,
             onSuccess : _onSuccess,
             onFailure : _onFailure,

@@ -398,11 +398,15 @@ MousePosition.prototype._initialize = function (options) {
             noDataValue: (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
             noDataValueTolerance: (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
         };
+        // on surcharge l'outputFormat pour du json si non spécifié par utilisateur
+        this.options.altitude.serviceOptions.outputFormat = (altitude.serviceOptions && altitude.serviceOptions.outputFormat) ? altitude.serviceOptions.outputFormat : "json";
     } else {
         this.options.altitude = {
-            triggerDelay: 200,
-            responseDelay: 500,
-            serviceOptions: {}
+            triggerDelay : 200,
+            responseDelay : 500,
+            serviceOptions : {
+                outputFormat : "json"
+            }
         };
     }
 

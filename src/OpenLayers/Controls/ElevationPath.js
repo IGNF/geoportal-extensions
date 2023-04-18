@@ -49,8 +49,8 @@ var logger = Logger.getLogger("elevationpath");
  * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
- * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
- * @param {Object} [options.elevationPathOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
+ * @param {Boolean|Object} [options.export = false] - Specify if button "Export" is displayed. For the use of the options of the "Export" control, see {@link ol.control.Export}
+ * @param {Object} [options.elevationOptions = {}] - elevation path service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} for available options
  * @param {Object} [options.layerDescription = {}] - Layer informations to be displayed in LayerSwitcher widget (only if a LayerSwitcher is also added to the map)
  * @param {String} [options.layerDescription.title = "Profil altimétrique"] - Layer title to be displayed in LayerSwitcher
  * @param {String} [options.layerDescription.description = "Mon profil altimétrique"] - Layer description to be displayed in LayerSwitcher
@@ -87,6 +87,16 @@ var logger = Logger.getLogger("elevationpath");
  *    }
  *    displayProfileOptions : {
  *       apply : ol.control.ElevationPath.DISPLAY_PROFILE_RAW,
+ *    }
+ * });
+ *
+ * // if you want to pluggued the control Export with options :
+ * var measure = new ol.control.ElevationPath({
+ *    export : {
+ *      name : "export",
+ *      format : "geojson",
+ *      title : "Exporter",
+ *      menu : false
  *    }
  * });
  *
@@ -653,7 +663,9 @@ var ElevationPath = (function (Control) {
             active : false,
             apiKey : null,
             export : false,
-            elevationOptions : {},
+            elevationOptions : {
+                outputFormat : 'json'
+            },
             layerDescription : {
                 title : "Profil altimétrique",
                 description : "Mon profil altimétrique"
