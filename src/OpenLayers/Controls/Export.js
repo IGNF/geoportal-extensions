@@ -39,7 +39,7 @@ var logger = Logger.getLogger("export");
  * // pluggued widget Export into control Isocurve
  * var iso = new ol.control.Isocurve();
  * map.addControl(iso);
- * 
+ *
  * // method : call render()
  * var export = new ButtonExport();
  * export.setControl(iso);
@@ -61,7 +61,7 @@ var logger = Logger.getLogger("export");
  * export.setMenu(false);
  * export.on("export:compute", (data) => { console.log(data); });
  * map.addControl(export); // <-- using the OpenLayers mechanism, don't call to render function !
- * 
+ *
  * // use control options instead of setters
  * var export = new ButtonExport({
  *   control : iso,
@@ -72,7 +72,7 @@ var logger = Logger.getLogger("export");
  *   menu : false
  * });
  * map.addControl(export);
- * 
+ *
  * // method with passing option into the control Isocurve
  * var iso = new ol.control.Isocurve({ export : true });
  * // with control options :
