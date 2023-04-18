@@ -90,9 +90,9 @@ var logger = Logger.getLogger("route");
  *      "autocompleteOptions" : {},
  *      "routeOptions" : {}
  *  });
- * 
+ *
  *  // if you want to pluggued the control Export with options :
- *  var route = new ol.control.Route({ 
+ *  var route = new ol.control.Route({
  *    export : {
  *      name : "export",
  *      format : "geojson",
