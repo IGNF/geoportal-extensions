@@ -31,6 +31,7 @@ import MeasureToolBox from "./MeasureToolBox";
 import Measures from "./Measures/Measures";
 import LayerSwitcher from "./LayerSwitcher";
 import ButtonExport from "./Export";
+import GeoJSONExtended from "../Formats/GeoJSON";
 // DOM
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
@@ -672,6 +673,27 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Get vector layer
+     *
+     * @returns {String} geojson - GeoJSON format layer
+     */
+    ElevationPath.prototype.getGeoJSON = function () {
+        var features = this._measureVector.getSource().getFeatures();
+
+        var Format = new GeoJSONExtended({
+            defaultStyle : this._drawStyleFinish
+        });
+        // INFO
+        // par defaut, webmercator ou "EPSG:3857"
+        var geojson = Format.writeFeatures(features, {
+            dataProjection : "EPSG:4326",
+            featureProjection : "EPSG:3857"
+        });
+
+        return geojson;
+    };
+
+    /**
      * Get default style
      *
      * @returns {ol.style} style
@@ -679,6 +701,7 @@ var ElevationPath = (function (Control) {
     ElevationPath.prototype.getStyle = function () {
         return this._drawStyleFinish;
     };
+
 
     /**
      * clean
@@ -703,8 +726,13 @@ var ElevationPath = (function (Control) {
     /**
      * This method is public.
      * It allows to init the control.
+     * @fixme
      */
     ElevationPath.prototype.init = function () {
+        // FIXME
+        // le panneau du profil ne peut pas afficher un profil si il est caché
+        // car le profil est calculé en fonction de la taille du panneau (clientHeight / clientWidth),
+        // et ces valeurs sont à 0 !?
         this._showContainer.checked = true;
         this._panelContainer.style.display = "block";
         this._displayProfile(this._data);
@@ -1003,7 +1031,7 @@ var ElevationPath = (function (Control) {
         });
 
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
-        this._measureVector.gpResultLayerId = "measure";
+        this._measureVector.gpResultLayerId = "measure:profil";
 
         map.addLayer(this._measureVector);
 

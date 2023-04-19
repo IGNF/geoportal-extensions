@@ -1618,18 +1618,35 @@ var LayerImport = (function (Control) {
                 // * isocurve
                 // * elevationpath
                 var authorizedControls = {
-                    route : Route,
-                    isocurve : Isocurve,
-                    elevationpath : ElevationPath
+                    route : {class : Route, name : "itineraire"},
+                    isocurve : {class : Isocurve, name : "isocurve"},
+                    elevationpath : {class : ElevationPath, name : "profil altimetrique"}
                 };
-                // le nom du type de calcul
-                var nameControl = configControl.type;
-                if (nameControl) {
+                // information à transmettre à la couche
+                var typeControl = configControl.type;
+                var graphControl = configControl.transport;
+                if (typeControl) {
                     // la classe du controle
-                    var classControl = authorizedControls[nameControl];
+                    var nameControl = authorizedControls[typeControl].name;
+                    var titleControl = (graphControl) ? nameControl + " (" + graphControl + ")" : nameControl;
+                    var classControl = authorizedControls[typeControl].class;
                     if (classControl) {
                         // on est bien sur une couche de calcul authorisé !
                         vectorLayer.gpResultLayerId = "layerimport:COMPUTE";
+                        // on transmet les infomations utiles
+                        vectorLayer.set("control", typeControl);
+                        vectorLayer.set("name", nameControl);
+                        vectorLayer.set("graph", graphControl);
+                        vectorLayer.set("data", configControl);
+                        vectorLayer.set("title", titleControl);
+                        var formatGeoJSON = new GeoJSONExtended({
+                            defaultStyle : vectorStyle
+                        });
+                        var geojson = formatGeoJSON.writeFeatures(features, {
+                            dataProjection : "EPSG:4326",
+                            featureProjection : "EPSG:3857"
+                        });
+                        vectorLayer.set("geojson", geojson);
                         // recherche et initialiser le controle
                         this.getMap().getControls().forEach((control) => {
                             if (control instanceof classControl) {
