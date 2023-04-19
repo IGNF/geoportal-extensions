@@ -13,7 +13,7 @@
 
 * [Added]
 
-    - Widget d'export des tracés et calculs des contôles d'itiberaire, d'isochrone et de profil altimétrique.
+    - Widget d'export des tracés et calculs des contôles d'itineraire, d'isochrone et de profil altimétrique.
 
 * [Changed]
 
@@ -25,6 +25,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Fix sur le profil altimétrique qui permet de construire le profil même si le panneau d'affichage est masqué (calcul en arrière plan).
 
 * [Security]
 
