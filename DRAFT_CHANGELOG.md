@@ -33,6 +33,9 @@
 
 * [Changed]
 
+    - Mise à jour doc elevationPathControl (#365)
+    - transmission paramètre outputFormat=json par défaut pour mousePosition et elevationPath OpenLayers (#365)
+
 * [Deprecated]
 
 * [Removed]
@@ -40,6 +43,7 @@
 * [Fixed]
 
     - Fix sur le format KML avec l'affichage des labels
+    - Fix sur le profil altimétrique qui permet de construire le profil même si le panneau d'affichage est masqué (calcul en arrière plan).
 
 * [Security]
 
@@ -84,6 +88,7 @@
 * [Changed]
 
     - mise à jour du readme pour ajout couche VT (d61ebdd223d1f1516e1877209190b298f18f71d0)
+    - outputFormat = json par défaut pour alti mouseposition (#365)) 
 
 * [Deprecated]
 

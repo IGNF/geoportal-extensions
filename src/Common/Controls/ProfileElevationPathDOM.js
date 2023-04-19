@@ -165,8 +165,12 @@ var ProfileElevationPathDOM = {
         container.appendChild(widgetDiv);
 
         // Détermination des tailles en pixels des éléments du widget
-        const widgetHeigth = container.clientHeight - margin.top - margin.bottom;
-        const widgetWidth = container.clientWidth - margin.left - margin.right;
+        var clientWidth = window.getComputedStyle(container).getPropertyValue("width").replace(/px/, "");
+        var clientHeight = window.getComputedStyle(container).getPropertyValue("height").replace(/px/, "");
+        const widgetHeigth = clientHeight - margin.top - margin.bottom;
+        const widgetWidth = clientWidth - margin.left - margin.right;
+        // const widgetHeigth = container.clientHeight - margin.top - margin.bottom;
+        // const widgetWidth = container.clientWidth - margin.left - margin.right;
 
         const zLabelWidth = 17;
         const zGradWidth = this._getTextWidth(Math.round(maxZ).toLocaleString() + ",88", container, "400 10 Verdana");
@@ -183,7 +187,7 @@ var ProfileElevationPathDOM = {
         const elevationSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         elevationSvg.id = "profileElevationByDefaultSvg";
         elevationSvg.setAttribute("style", "display: block; margin: auto; overflow: visible; position: absolute; left: 10px;");
-        elevationSvg.setAttribute("viewBox", `0 0 ${container.clientWidth} ${container.clientHeight}`);
+        elevationSvg.setAttribute("viewBox", `0 0 ${clientWidth} ${clientHeight}`);
         elevationSvg.setAttribute("width", "100%");
         elevationSvg.setAttribute("height", "100%");
 
@@ -765,8 +769,10 @@ var ProfileElevationPathDOM = {
             left : 40
         };
 
-        var width = container.clientWidth - margin.left - margin.right;
-        var height = container.clientHeight - margin.top - margin.bottom;
+        var widgetWidth = window.getComputedStyle(container).getPropertyValue("width");
+        var widgetHeigth = window.getComputedStyle(container).getPropertyValue("height")
+        var width = widgetWidth.replace(/px/, "") - margin.left - margin.right;
+        var height = widgetHeigth.replace(/px/, "") - margin.top - margin.bottom;
 
         var x = d3.scale.linear()
             .range([0, width]);
