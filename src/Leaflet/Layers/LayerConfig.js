@@ -28,7 +28,7 @@ var LayerConfig = {
         }
 
         // gestion des parametres
-        params = Config.getLayerParams(options.layer, options.service, options.key);
+        params = Config.configuration.getLayerParams(options.layer, options.service);
 
         if (!params || Object.keys(params).length === 0) {
             logger.warn("WARNING AUTOCONF_FAILED : params not found ?!");

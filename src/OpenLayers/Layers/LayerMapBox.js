@@ -141,12 +141,12 @@ var LayerMapBox = (function (VectorTileLayer) {
          * }
          */
         // eslint-disable-next-line no-undef
-        this.RESPONSE_AUTOCONG = null;
+        this.RESPONSE_AUTOCONF = null;
 
         // récupération des ressources utiles sur l'autoconf
         var layerId = this.layerName + "$GEOPORTAIL:GPP:TMS";
 
-        var layerCfg = Config.configuration.layers[layerId];
+        var layerCfg = Config.configuration.getLayerConf(layerId);
         if (!layerCfg) {
             throw new Error("ERROR : Layer ID not found into the catalogue !?");
         }

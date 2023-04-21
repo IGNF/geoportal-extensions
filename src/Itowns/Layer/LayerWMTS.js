@@ -53,11 +53,11 @@ function LayerWMTS (options) {
         throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
     }
 
-    var layerId = Config.getLayerId(options.layer, "WMTS");
+    var layerId = Config.configuration.getLayerId(options.layer, "WMTS");
 
-    if (layerId && Config.getLayerParams(options.layer)) {
+    if (layerId && Config.configuration.getLayerParams(options.layer, "WMTS")) {
         var config = {};
-        var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
+        var wmtsParams = Config.configuration.getLayerParams(options.layer, "WMTS");
 
         if (wmtsParams.projection === "EPSG:3857") {
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");

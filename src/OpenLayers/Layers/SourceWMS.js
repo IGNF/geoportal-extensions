@@ -3,8 +3,8 @@ import Gp from "geoportal-access-lib";
 import TileWMSSource from "ol/source/TileWMS";
 // import local
 import Utils from "../../Common/Utils";
-import Config from "../../Common/Utils/Config";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import Config from "../../Common/Utils/Config";
 // package.json (extract version)
 import Pkg from "../../../package.json";
 
@@ -52,10 +52,10 @@ var SourceWMS = (function (TileWMSSource) {
             throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
         }
 
-        var layerId = Config.getLayerId(options.layer, "WMS");
+        var layerId = Config.configuration.getLayerId(options.layer, "WMS");
 
-        if (layerId && Config.configuration.layers[layerId]) {
-            var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
+        if (layerId && Config.configuration.getLayerConf(layerId)) {
+            var wmsParams = Config.configuration.getLayerParams(options.layer, "WMS");
 
             // si ssl = false on fait du http
             // par défaut, ssl = true, on fait du https

@@ -78,8 +78,8 @@ var LayerWMTS = (function (TileLayer) {
         // c'est que l'identifiant de la couche n'a pas été trouvé. on passe donc la recherche des paramètres.
         if (wmtsSource.getLayer() !== undefined) {
             // récupération des autres paramètres nécessaires à la création de la layer
-            var layerId = Config.getLayerId(options.layer, "WMTS");
-            var globalConstraints = Config.getGlobalConstraints(layerId);
+            var layerId = Config.configuration.getLayerId(options.layer, "WMTS");
+            var globalConstraints = Config.configuration.getGlobalConstraints(layerId);
             if (globalConstraints && globalConstraints.projection) {
                 /* INFO : désactivation temporaire de l'étendue, car certaines étendues (trop grandes ?)
                 provoquent quelques bugs d'affichage (zoom > 16 par exemple) */

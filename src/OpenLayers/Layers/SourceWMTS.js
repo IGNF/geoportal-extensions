@@ -5,9 +5,9 @@ import WMTSTileGrid from "ol/tilegrid/WMTS";
 import WMTSExtended from "../Sources/WMTS";
 // import local
 import Utils from "../../Common/Utils";
-import Config from "../../Common/Utils/Config";
 import LayerUtils from "../../Common/Utils/LayerUtils";
 import Logger from "../../Common/Utils/LoggerByDefault";
+import Config from "../../Common/Utils/Config";
 // package.json (extract version)
 import Pkg from "../../../package.json";
 
@@ -55,10 +55,10 @@ var SourceWMTS = (function (WMTSExtended) {
             throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
         }
 
-        var layerId = Config.getLayerId(options.layer, "WMTS");
+        var layerId = Config.configuration.getLayerId(options.layer, "WMTS");
 
-        if (layerId && Config.configuration.layers[layerId]) {
-            var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
+        if (layerId && Config.configuration.getLayerConf(layerId)) {
+            var wmtsParams = Config.configuration.getLayerParams(options.layer, "WMTS");
 
             // si ssl = false on fait du http
             // par défaut, ssl = true, on fait du https

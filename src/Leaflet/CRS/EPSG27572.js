@@ -69,7 +69,7 @@ var EPSG27572 = {
         var resolutions = [];
         // resolutions issues de l'autoconf
         if (Config.isConfigLoaded()) {
-            var o = Config.getTileMatrix("LAMB2E");
+            var o = Config.configuration.getTMSConf("LAMB2E");
             if (o && Object.keys(o).length) {
                 resolutions = o.nativeResolutions;
             }

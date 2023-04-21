@@ -53,11 +53,11 @@ function LayerWMS (options) {
         throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
     }
 
-    var layerId = Config.getLayerId(options.layer, "WMS");
+    var layerId = Config.configuration.getLayerId(options.layer, "WMS");
 
-    if (layerId && Config.getLayerParams(options.layer)) {
+    if (layerId && Config.configuration.getLayerParams(options.layer, "WMS")) {
         var config = {};
-        var wmsParams = Config.getLayerParams(options.layer, "WMS", options.apiKey);
+        var wmsParams = Config.configuration.getLayerParams(options.layer, "WMS");
 
         if (wmsParams.projection === "EPSG:3857") {
             wmsParams.extent = new ItExtent("EPSG:4326", wmsParams.extent.left, wmsParams.extent.right, wmsParams.extent.bottom, wmsParams.extent.top).as("EPSG:3857");

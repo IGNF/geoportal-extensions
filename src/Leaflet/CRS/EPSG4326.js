@@ -77,11 +77,10 @@ var EPSG4326 = {
      */
     _getResolutions : function () {
         var resolutions = [];
-        // FIXME resolutions issues de l'autoconf
-        // mais pas celle du TMS WGS84G
-
+        // resolutions issues de l'autoconf
         if (Config.isConfigLoaded()) {
-            resolutions = Config.getResolutions();
+            var o = Config.configuration.getTMSConf("IGNF:WGS84G");
+            resolutions = o.nativeResolutions;
         }
 
         if (resolutions.length) {

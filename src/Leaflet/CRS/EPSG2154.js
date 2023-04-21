@@ -61,7 +61,7 @@ var EPSG2154 = {
         var resolutions = [];
         // resolutions issues de l'autoconf
         if (Config.isConfigLoaded()) {
-            var o = Config.getTileMatrix("LAMB93");
+            var o = Config.configuration.getTMSConf("LAMB93");
             resolutions = o.nativeResolutions;
         }
 
