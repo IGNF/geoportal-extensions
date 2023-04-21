@@ -268,11 +268,39 @@ jobs:
           git commit -m "update CHANGELOG for ${{ env.LIBRARY }}"
           git push --force
 
+  publish_samples:
+    if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    needs: [create_release, publish_package]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: IGNF/geoportal-extensions-leaflet-samples
+          ref: master
+          token : ${{ secrets.ADMIN_GEOPORTAL_TOKEN }}
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo ${GITHUB_REF##*/})
+                
+      - name: Update package.json
+        run: |
+          sed -i -e "s/\"geoportal-extensions-leaflet\": \".*\"/\"geoportal-extensions-leaflet\": \"${{ steps.get_version.outputs.VERSION }}\"/" package.json
+                
+      - name: Publish
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -A
+          git commit -m "update geoportal-extensions-leaflet release v${{ steps.get_version.outputs.VERSION }}"
+          git push
+
   # TODO not yet implemented !
   rollback:
     if: false # always skip job !
-    # if: failure()
-    # if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
+    # if: failure()
+    # if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
     needs: [create_release, publish_package, changelog]
     runs-on: ubuntu-latest
     steps:
