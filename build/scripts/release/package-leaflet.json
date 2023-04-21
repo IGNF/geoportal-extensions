@@ -1,20 +1,14 @@
 {
-   "bundleDependencies" : [],
-   "date" : "05/04/2023",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "types" : "src/Leaflet/index.d.ts",
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "leaflet-draw" : "1.0.4",
-      "leaflet" : "1.7.1",
-      "proj4" : "2.7.5",
-      "node-fetch" : "^2.6.1",
-      "loglevel" : "1.6.6",
-      "proj4leaflet" : "1.0.2",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz"
-   },
+   "peerDependencies" : {},
+   "directories" : {},
+   "description" : "French Geoportal Extension for Leaflet",
+   "version" : "2.2.9",
+   "bugs" : {},
    "name" : "geoportal-extensions-leaflet",
+   "types" : "src/Leaflet/index.d.ts",
+   "scripts" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "devDependencies" : {},
    "keywords" : [
       "geoportail",
       "plugin",
@@ -23,8 +17,13 @@
       "publish"
    ],
    "main" : "dist/GpPluginLeaflet-src.js",
-   "directories" : {},
-   "version" : "2.2.9",
+   "date" : "05/04/2023",
+   "bundleDependencies" : [],
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "license" : "CECILL-B",
    "files" : [
       "dist/",
       "src/",
@@ -32,15 +31,16 @@
       "README.md",
       "package.json"
    ],
-   "bugs" : {},
-   "description" : "French Geoportal Extension for Leaflet",
-   "license" : "CECILL-B",
-   "devDependencies" : {},
-   "scripts" : {},
-   "peerDependencies" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "module" : "src/Leaflet/index.js"
+   "module" : "src/Leaflet/index.js",
+   "dependencies" : {
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
+      "proj4" : "2.7.5",
+      "sortablejs" : "1.8.4",
+      "leaflet-draw" : "1.0.4",
+      "loglevel" : "1.6.6",
+      "proj4leaflet" : "1.0.2",
+      "xmldom" : "^0.1.27",
+      "leaflet" : "1.7.1",
+      "node-fetch" : "^2.6.1"
+   }
 }
