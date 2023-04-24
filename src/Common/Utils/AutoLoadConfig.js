@@ -37,6 +37,7 @@ import Gp from "geoportal-access-lib";
 
     var options = {
         apiKey : key,
+        sync : true,
         onSuccess : success,
         onFailure : error
     };
@@ -51,7 +52,7 @@ import Gp from "geoportal-access-lib";
     }
 
     // test d'existance de la varibale globale Gp.Config
-    if (!Gp.Config) {
+    if (!window.Gp) {
         // appel du service
         Gp.Services.getConfig(options);
     }

@@ -125,6 +125,9 @@ var Protocols = Gp.Protocols;
 var servicesDate = Gp.servicesDate;
 var servicesVersion = Gp.servicesVersion;
 
+// HACK !?
+export const Config = (window.Gp) ? window.Gp.Config : {};
+
 export {
     /** Services
     * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Services.html|geoportal-access-lib}
@@ -169,8 +172,6 @@ export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 /** cf. Gp.Logger */
 export { default as Logger } from "../Common/Utils/LoggerByDefault";
-
-
 
 function deepCopy (source, target) {
     // Implementing Tail Call Elimination
