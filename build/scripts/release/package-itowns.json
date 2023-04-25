@@ -1,39 +1,13 @@
 {
    "name" : "geoportal-extensions-itowns",
-   "types" : "src/Itowns/index.d.ts",
-   "date" : "05/04/2023",
-   "bundleDependencies" : [],
    "license" : "CECILL-B",
-   "main" : "dist/GpPluginItowns-src.js",
-   "author" : "IGNF",
-   "version" : "2.3.10",
+   "peerDependencies" : {},
    "description" : "French Geoportal Extensions for iTowns",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "repository" : {
       "url" : "https://github.com/IGNF/geoportal-extensions.git",
       "type" : "git"
    },
-   "bugs" : {},
-   "dependencies" : {
-      "loglevel" : "1.6.7",
-      "sortablejs" : "1.14.0",
-      "proj4" : "2.7.5",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "three" : "0.137.5",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
-      "itowns" : "2.38.2"
-   },
-   "directories" : {},
-   "scripts" : {},
-   "devDependencies" : {},
-   "peerDependencies" : {},
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
+   "module" : "src/Itowns/index.js",
    "files" : [
       "dist/",
       "src/",
@@ -41,5 +15,31 @@
       "README.md",
       "package.json"
    ],
-   "module" : "src/Itowns/index.js"
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "directories" : {},
+   "version" : "2.3.10",
+   "date" : "05/04/2023",
+   "author" : "IGNF",
+   "bundleDependencies" : [],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "main" : "dist/GpPluginItowns-src.js",
+   "scripts" : {},
+   "dependencies" : {
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
+      "three" : "0.137.5",
+      "itowns" : "2.38.2",
+      "xmldom" : "^0.1.27",
+      "loglevel" : "1.6.7",
+      "sortablejs" : "1.14.0",
+      "node-fetch" : "^2.6.1",
+      "proj4" : "2.7.5"
+   },
+   "bugs" : {},
+   "devDependencies" : {},
+   "types" : "src/Itowns/index.d.ts"
 }

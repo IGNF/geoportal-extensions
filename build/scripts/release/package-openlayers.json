@@ -1,7 +1,9 @@
 {
-   "peerDependencies" : {},
+   "devDependencies" : {},
    "date" : "05/04/2023",
    "scripts" : {},
+   "name" : "geoportal-extensions-openlayers",
+   "directories" : {},
    "files" : [
       "dist/",
       "src/",
@@ -10,32 +12,30 @@
       "package.json"
    ],
    "module" : "src/OpenLayers/index.js",
-   "directories" : {},
-   "types" : "src/OpenLayers/index.d.ts",
-   "bugs" : {},
-   "version" : "3.2.21",
-   "devDependencies" : {},
-   "license" : "CECILL-B",
-   "name" : "geoportal-extensions-openlayers",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
+   "license" : "CECILL-B",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "bugs" : {},
+   "peerDependencies" : {},
    "dependencies" : {
       "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
-      "sortablejs" : "1.14.0",
-      "proj4" : "2.7.5",
-      "node-fetch" : "^2.6.1",
-      "eventbusjs" : "0.2.0",
+      "xmldom" : "^0.1.27",
       "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "ol" : "6.9.0",
       "loglevel" : "1.6.6",
-      "xmldom" : "^0.1.27"
+      "eventbusjs" : "0.2.0",
+      "sortablejs" : "1.14.0",
+      "node-fetch" : "^2.6.1",
+      "ol" : "6.9.0",
+      "proj4" : "2.7.5"
    },
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   }
+   "version" : "3.2.21",
+   "types" : "src/OpenLayers/index.d.ts"
 }
