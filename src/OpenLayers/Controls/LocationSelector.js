@@ -11,7 +11,6 @@ import Gp from "geoportal-access-lib";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 // DOM
@@ -178,12 +177,6 @@ var LocationSelector = (function (Control) {
         /** ressources du services d'autocompletion (ayant droit!) */
         this._resources = {};
 
-        /** a t on des droits sur les ressources du service ? */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        //this._checkRightsManagement();
-
         // listener key for event click on map
         this.listenerKey = null;
     };
@@ -268,43 +261,6 @@ var LocationSelector = (function (Control) {
     // ################################################################### //
 
     /**
-     * check
-     */
-    LocationSelector.prototype._checkRightsManagement = function () {
-        // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
-        var _resources = (this.options.autocompleteOptions) ? this.options.autocompleteOptions.type : [];
-        // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest"
-            ];
-        }
-
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : _resources,
-            services : ["AutoCompletion"]
-        });
-
-        // pas de droit !
-        if (!rightManagement) {
-            this._noRightManagement = true;
-            return;
-        }
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement.key;
-        }
-
-        Utils.assign(this._resources, rightManagement);
-    };
-
-    /**
      * initialize component container
      *
      * @returns {DOMElement} DOM element
@@ -378,13 +334,6 @@ var LocationSelector = (function (Control) {
     LocationSelector.prototype.onAutoCompleteSearchText = function (e) {
         var value = e.target.value;
         if (!value) {
-            return;
-        }
-
-        // aucun droits !
-        // on evite une requête...
-        if (this._noRightManagement) {
-            logger.log("no rights for this service !?");
             return;
         }
 

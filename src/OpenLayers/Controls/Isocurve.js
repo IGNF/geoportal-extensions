@@ -542,12 +542,6 @@ var Isocurve = (function (Control) {
         // }
         this._resources = {};
 
-        // gestion des droits sur les ressources
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        //this._checkRightsManagement();
-
         // listener key for event click on map
         this.listenerKey = null;
     };
@@ -775,69 +769,6 @@ var Isocurve = (function (Control) {
         if (Array.isArray(serviceOptions.exclusions)) {
             this._currentExclusions = serviceOptions.exclusions;
         }
-    };
-
-    /**
-     * Check rights to resources (called by this.initialize())
-     *
-     * @private
-     */
-    Isocurve.prototype._checkRightsManagement = function () {
-        // var _opts = null;
-        // var _res = [];
-        // var _key = null;
-// 
-        // // les ressources du service du calcul d'isocurve
-        // _key = this.options.isocurveOptions.apiKey;
-        // _opts = this.options.isocurveOptions.filterOptions;
-        // _res = (_opts) ? _opts.type : [];
-        // if (!_res || _res.length === 0) {
-        //     _res = ["Voiture", "Pieton"];
-        // }
-// 
-        // var rightManagementIsocurve = RightManagement.check({
-        //     key : _key || this.options.apiKey,
-        //     resources : _res,
-        //     services : ["Isochrone"]
-        // });
-        // logger.log("rightManagementIsocurve", rightManagementIsocurve);
-// 
-        // // les ressources du service d'autocompletion
-        // _key = this.options.autocompleteOptions.apiKey;
-        // _opts = this.options.autocompleteOptions.filterOptions;
-        // _res = (_opts) ? _opts.type : [];
-        // if (!_res || _res.length === 0) {
-        //     _res = [
-        //         "PositionOfInterest",
-        //         "StreetAddress"
-        //     ];
-        // }
-
-        // var rightManagementAutoComplete = RightManagement.check({
-        //     key : _key || this.options.apiKey,
-        //     resources : _res,
-        //     services : ["AutoCompletion"]
-        // });
-        // logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
-// 
-        // // au cas où pas de droit !
-        // if (!rightManagementIsocurve && !rightManagementAutoComplete) {
-        //     this._noRightManagement = true;
-        // }
-// 
-        // // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
-        // // pour chaque service...
-        // if (rightManagementAutoComplete) {
-        //     this._resources["AutoCompletion"] = {};
-        //     this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-        //     this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        // }
-// 
-        // if (rightManagementIsocurve) {
-        //     this._resources["Isocurve"] = {};
-        //     this._resources["Isocurve"]["resources"] = rightManagementIsocurve["Isochrone"];
-        //     this._resources["Isocurve"]["key"] = rightManagementIsocurve["key"];
-        // }
     };
 
     // ################################################################### //

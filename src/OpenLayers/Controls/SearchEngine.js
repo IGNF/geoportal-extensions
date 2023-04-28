@@ -11,7 +11,6 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Markers from "./Utils/Markers";
 import Interactions from "./Utils/Interactions";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
 import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
@@ -289,19 +288,6 @@ var SearchEngine = (function (Control) {
         this._popupContent = null;
         this._popupDiv = this._initPopupDiv();
         this._popupOverlay = null;
-
-        // ressources des services d'autocompletion et de geocodage
-        this._servicesRightManagement = {};
-
-        /*
-         * Droit sur les ressources sur les services.
-         * Par defaut, on n'en s'occupe pas
-         * sauf si l'autoconfiguration est chargée !
-         */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        //this._checkRightsManagement();
 
         // trigger geocode
         this._triggerHandler = null;
@@ -618,120 +604,6 @@ var SearchEngine = (function (Control) {
         container.appendChild(divTable);
 
         return container;
-    };
-
-    // ################################################################### //
-    // ##################### methods rights management ################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources and services
-     *
-     * @private
-     */
-    SearchEngine.prototype._checkRightsManagement = function () {
-        // INFORMATION
-        // l'autoconfiguration n'est utile que pour récupérer la clef si elle
-        // n'est pas renseignée, et pour vérifier les droits sur les ressources
-        // et les services.
-
-        // si l'autoconfiguration n'est pas chargée,
-        // il est toujours possible de requeter le service avec une clef API,
-        // mais les droits sur les ressources ne sont pas garantis, on risque
-        // d'obtenir des erreurs 403 forbidden..., la responsabilité revient
-        // à l'utilisateur (message d'information)...
-        // par contre, sans clef API renseignée au niveau du controle,
-        // l'utilisateur doit la renseigner au niveau des services...,
-        // sinon, Exception du service
-
-        // si l'autoconfiguration est chargée,
-        // si une clef API est renseignée au niveau controle, on controle
-        // le mapping entre le contrat et la clef...
-        // on obtient la liste des ressources ayant droits,
-        // si on ne trouve pas de ressources ou certaines ressources ne sont
-        // pas disponible, on previent l'utilisateur (message d'information).
-
-        var _resources = null;
-        var _key = null;
-
-        // les ressources du service d'autocompletion
-        _key = this.options.autocompleteOptions.apiKey;
-        // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
-        _resources = (this.options.autocompleteOptions.type) ? this.options.autocompleteOptions.type : [];
-        // soit dans options.resources.autocomplete
-        if (!_resources || _resources.length === 0) {
-            _resources = this.options.resources.autocomplete;
-        }
-        // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest"
-            ];
-        }
-        var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["AutoCompletion"]
-        });
-        logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
-
-        // les ressources du service de geocodage_checkRightsManagement
-        // on récupère les éventuelles ressources passées en option, soit dans geocodeOptions :
-        _resources = (this.options.geocodeOptions.index) ? this.options.geocodeOptions.index : "";
-        // soit directement dans options.resources.geocode :
-        if (!_resources || _resources.length === 0) {
-            _resources = this.options.resources.geocode;
-        }
-        // ou celles par défaut sinon.
-        if (!_resources) {
-            _resources = "location";
-        }
-
-        if (_resources === "location") {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest",
-                "CadastralParcel"
-            ];
-        } else {
-            if (!Array.isArray(_resources)) _resources = [_resources];
-        }
-
-        var rightManagementGeocode = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["Geocode"]
-        });
-        logger.log("rightManagementGeocode", rightManagementGeocode);
-
-        // aucun droit !
-        if (!rightManagementAutoComplete && !rightManagementGeocode) {
-            this._noRightManagement = true;
-            return;
-        }
-
-        // on recupère les informations utiles
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            if (rightManagementGeocode) {
-                this.options.apiKey = rightManagementGeocode.key;
-            } else {
-                this.options.apiKey = rightManagementAutoComplete.key;
-            }
-        }
-
-        // les ressources par services ayant droit doivent servir pour les
-        // appels aux services
-        if (rightManagementAutoComplete) {
-            this._servicesRightManagement["AutoCompletion"] = rightManagementAutoComplete["AutoCompletion"];
-        }
-
-        if (rightManagementGeocode) {
-            this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
-        }
     };
 
     // ################################################################### //
