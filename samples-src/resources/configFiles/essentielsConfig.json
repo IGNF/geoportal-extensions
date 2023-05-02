@@ -11,7 +11,9 @@
         "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2$GEOPORTAIL:OGC:WMS",
         "LIMITES_ADMINISTRATIVES_EXPRESS.LATEST$GEOPORTAIL:OGC:WMS",
         "ORTHOIMAGERY.ORTHOPHOTOS$GEOPORTAIL:OGC:WMS",
-        "ORTHOIMAGERY.ORTHOPHOTOS.GRAPHE-MOSAIQUAGE$GEOPORTAIL:OGC:WMS"
+        "ORTHOIMAGERY.ORTHOPHOTOS.GRAPHE-MOSAIQUAGE$GEOPORTAIL:OGC:WMS",
+        "PLAN.IGN$GEOPORTAIL:GPP:TMS",
+        "ADMIN_EXPRESS$GEOPORTAIL:GPP:TMS"
       ]
     }
   },
@@ -1228,6 +1230,132 @@
           "current": false
         }
       ]
+    },
+    "ADMIN_EXPRESS$GEOPORTAIL:GPP:TMS": {
+      "hidden": true,
+      "queryable": false,
+      "serviceParams": {
+        "id": "GPP:TMS",
+        "version": "1.0.0",
+        "serverUrl": {
+          "essentiels": "https://wxs.ign.fr/essentiels/geoportail/tms/1.0.0/"
+        }
+      },
+      "name": "ADMIN_EXPRESS",
+      "title": "ADMIN_EXPRESS",
+      "description": "Limites administratives des collectivités territoriales. Régions, départements, cantons, communes, arrondissements (pour Paris, Lyon et Marseille) et établissements publics de coopération intercommunale (EPCI)",
+      "formats": [
+        {
+          "current": true,
+          "name": "application/x-protobuf"
+        }
+      ],
+      "styles": [
+        {
+          "name": "adminexpress",
+          "title": "Style adminexpress",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/ADMINEXPRESS/adminexpress.json"
+        }
+      ],
+      "globalConstraint": {
+        "crs": null,
+        "bbox": {
+          "left": -724011.531917197,
+          "right": 1095801.237496279,
+          "top": 6672646.821182753,
+          "bottom": 5009377.0856973175
+        },
+        "minScaleDenominator": null,
+        "maxScaleDenominator": null
+      },
+      "quicklookUrl": "https://wxs.ign.fr/static/pictures/ign_carte2.jpg",
+      "layerId": "ADMIN_EXPRESS$GEOPORTAIL:GPP:TMS",
+      "defaultProjection": "EPSG:3857"
+    },
+    "PLAN.IGN$GEOPORTAIL:GPP:TMS": {
+      "hidden": true,
+      "queryable": false,
+      "serviceParams": {
+        "id": "GPP:TMS",
+        "version": "1.0.0",
+        "serverUrl": {
+          "essentiels": "https://wxs.ign.fr/essentiels/geoportail/tms/1.0.0/"
+        }
+      },
+      "name": "PLAN.IGN",
+      "title": "Plan IGN",
+      "description": "BDUni tuilée",
+      "formats": [
+        {
+          "current": true,
+          "name": "application/x-protobuf"
+        }
+      ],
+      "styles": [
+        {
+          "name": "standard",
+          "title": "Style standard",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
+        },
+        {
+          "name": "classique",
+          "title": "Style classique",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/classique.json"
+        },
+        {
+          "name": "transparent",
+          "title": "Style transparent",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/transparent.json"
+        },
+        {
+          "name": "accentue",
+          "title": "Style accentue",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/accentue.json"
+        },
+        {
+          "name": "attenue",
+          "title": "Style attenue",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/attenue.json"
+        },
+        {
+          "name": "gris",
+          "title": "Style en noir et blanc",
+          "current": false,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/gris.json"
+        },
+        {
+          "name": "epure",
+          "title": "Style epure",
+          "current": true,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/epure.json"
+        },
+        {
+          "name": "sans_toponymes",
+          "title": "Style sans toponymes",
+          "current": false,
+          "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/sans_toponymes.json"
+        }
+      ],
+      "globalConstraint": {
+        "crs": null,
+        "bbox": {
+          "left": -724011.531917197,
+          "right": 1095801.237496279,
+          "top": 6672646.821182753,
+          "bottom": 5009377.0856973175
+        },
+        "minScaleDenominator": null,
+        "maxScaleDenominator": null
+      },
+      "quicklookUrl": "https://wxs.ign.fr/static/pictures/ign_carte2.jpg",
+      "layerId": "PLAN.IGN$GEOPORTAIL:GPP:TMS",
+      "defaultProjection": "EPSG:3857"
     }
   },
   "tileMatrixSets": {
