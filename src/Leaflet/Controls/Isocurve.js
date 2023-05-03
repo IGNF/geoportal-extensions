@@ -1,7 +1,6 @@
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Gp from "geoportal-access-lib";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import LocationSelector from "./LocationSelector";
 import IsoDOM from "../../Common/Controls/IsoDOM";
@@ -147,12 +146,6 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
          * }
          */
         this._resources = {};
-
-        /** aucun droits sur les ressources */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        // this._checkRightsManagement();
     },
 
     /**
@@ -326,70 +319,6 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
     // ################################################################### //
     // ############################## other init ######################### //
     // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var _opts = null;
-        var _res = [];
-        var _key = null;
-
-        // les ressources du service du calcul d'isochrone
-        _key = this.options.isocurveOptions.apiKey;
-        _opts = this.options.isocurveOptions.filterOptions;
-        _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = ["Voiture", "Pieton"];
-        }
-
-        var rightManagementIsochrone = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["Isochrone"]
-        });
-        logger.log("rightManagementIsochrone", rightManagementIsochrone);
-
-        // les ressources du service d'autocompletion
-        _key = this.options.autocompleteOptions.apiKey;
-        _opts = this.options.autocompleteOptions.filterOptions;
-        _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = [
-                "PositionOfInterest",
-                "StreetAddress"
-            ];
-        }
-
-        var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["AutoCompletion"]
-        });
-        logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
-
-        // au cas où pas de droit !
-        if (!rightManagementIsochrone && !rightManagementAutoComplete) {
-            this._noRightManagement = true;
-        }
-
-        // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
-        // pour chaque service...
-        if (rightManagementAutoComplete) {
-            this._resources["AutoCompletion"] = {};
-            this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-            this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        }
-
-        if (rightManagementIsochrone) {
-            this._resources["Isochrone"] = {};
-            this._resources["Isochrone"]["resources"] = rightManagementIsochrone["Isochrone"];
-            this._resources["Isochrone"]["key"] = rightManagementIsochrone["key"];
-        }
-    },
 
     /**
      * this method is called by the constructor.
@@ -797,12 +726,6 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
             return;
         }
 
-        // oups, aucun droits !
-        // on evite donc une requête inutile ...
-        if (this._noRightManagement) {
-            return;
-        }
-
         // mise en place de la patience
         this._displayWaitingContainer();
 
@@ -869,45 +792,13 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
             return;
         }
 
-        // ni si on n'a aucun droit
-        if (this._noRightManagement) {
-            return;
-        }
-
-        // gestion des droits !
-        var services = this._resources["Isochrone"];
-        if (!services) {
-            return;
-        }
-        var resources = services.resources;
-        if (!resources ||
-            (typeof resources === "object" && Object.keys(resources).length === 0)) {
-            return;
-        }
-
         var options = {};
         // on recupere les parametres de saisie et les callbacks
         L.Util.extend(options, settings);
         // ainsi que les options du service
         L.Util.extend(options, this.options.isocurveOptions);
 
-        // la ressource donne elle des droits ?
-        var bFound = false;
-        for (var i = 0; i < resources.length; i++) {
-            if (resources[i] === options.graph) {
-                bFound = true;
-            }
-        }
-        // on fait quoi ?
-        if (!bFound) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
-        // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        var key = this._resources["Isochrone"]["key"];
-        options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey || key;
+        options.apiKey = this.options.isocurveOptions.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)

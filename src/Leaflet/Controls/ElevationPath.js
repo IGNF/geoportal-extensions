@@ -3,7 +3,6 @@ import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import PositionFormater from "./Utils/PositionFormater";
 import IconDefault from "./Utils/IconDefault";
@@ -125,12 +124,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
         // data elevations
         this._data = {};
-
-        // aucun droits sur les ressources
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        // this._checkRightsManagement();
     },
 
     /**
@@ -174,36 +167,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * @private
      */
     onRemove : function (/* map */) {},
-
-    // ################################################################### //
-    // ########################## init resources ######################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services : ["ElevationLine"]
-        });
-
-        if (!rightManagement) {
-            this._noRightManagement = true;
-        }
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement.key;
-        }
-    },
 
     // ################################################################### //
     // ####################### init application ########################## //
@@ -636,11 +599,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         // les coordonnées sont obligatoires
         if (!this._geometry) {
             logger.log("missing position");
-            return;
-        }
-
-        // oups, aucun droits !
-        if (this._noRightManagement) {
             return;
         }
 

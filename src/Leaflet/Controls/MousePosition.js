@@ -1,7 +1,6 @@
 import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
@@ -172,20 +171,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
         /** Edition des coordonnées en cours ou non */
         this._isEditing = false;
-
-        /**
-         * Droit sur le ressource alti.
-         * Par defaut, on n'en s'occupe pas
-         * sauf si l'autoconfiguration est chargée !
-         */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        // si l'on souhaite un calcul d'altitude, on verifie
-        // les droits sur les ressources d'alti...
-        if (this.options.displayAltitude) {
-            this._checkRightsManagement();
-        }
 
         // on transmet les options au controle
         L.Util.setOptions(this, this.options);
@@ -401,30 +386,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         // au cas où...
         if (Object.keys(this._projectionUnits).length === 0) {
             this._projectionUnits = projectionUnitsByDefault;
-        }
-    },
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services : ["Elevation"]
-        });
-
-        this._noRightManagement = !rightManagement;
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = (rightManagement) ? rightManagement.key : null;
         }
     },
 

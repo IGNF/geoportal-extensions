@@ -2,7 +2,6 @@
 import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import SearchEngineUtils from "../../Common/Utils/SearchEngineUtils";
 import GeocodeUtils from "../../Common/Utils/GeocodeUtils";
@@ -165,19 +164,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         /** marker */
         this._marker = null;
 
-        /** ressources des services d'autocompletion et de geocodage */
-        this._servicesRightManagement = {};
-
-        /**
-         * Droit sur les ressources sur les services.
-         * Par defaut, on n'en s'occupe pas
-         * sauf si l'autoconfiguration est chargée !
-         */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
-
         // trigger geocode
         this._triggerHandler = null;
     },
@@ -222,114 +208,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         if (this._marker != null) {
             map.removeLayer(this._marker);
             this._marker = null;
-        }
-    },
-
-    // ################################################################### //
-    // ##################### methods rights management ################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources and services
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        // INFORMATION
-        // l'autoconfiguration n'est utile que pour récupérer la clef si elle
-        // n'est pas renseignée, et pour vérifier les droits sur les ressources
-        // et les services.
-
-        // si l'autoconfiguration n'est pas chargée,
-        // il est toujours possible de requeter le service avec une clef API,
-        // mais les droits sur les ressources ne sont pas garantis, on risque
-        // d'obtenir des erreurs 403 forbidden..., la responsabilité revient
-        // à l'utilisateur (message d'information)...
-        // par contre, sans clef API renseignée au niveau du controle,
-        // l'utilisateur doit la renseigner au niveau des services...,
-        // sinon, Exception du service
-
-        // si l'autoconfiguration est chargée,
-        // si une clef API est renseignée au niveau controle, on controle
-        // le mapping entre le contrat et la clef...
-        // on obtient la liste des ressources ayant droits,
-        // si on ne trouve pas de ressources ou certaines ressources ne sont
-        // pas disponible, on previent l'utilisateur (message d'information).
-
-        var _resources = null;
-        var _key = null;
-
-        // les ressources du service de geocodage
-        // on prend celles des options du services en priorité
-        _key = this.options.geocodeOptions.apiKey;
-        // on récupère les éventuelles ressources passées en option, soit dans geocodeOptions :
-        _resources = (this.options.geocodeOptions.index) ? this.options.geocodeOptions.index : "";
-        // soit directement dans options.resources.geocodage :
-        if (!_resources) {
-            _resources = this.options.resources.geocodage;
-        }
-        // ou celles par défaut sinon.
-        if (!_resources) {
-            _resources = "location";
-        }
-
-        if (_resources === "location") {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest",
-                "CadastralParcel"
-            ];
-        } else {
-            if (!Array.isArray(_resources)) _resources = [_resources];
-        }
-
-        var rightManagementGeocode = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["Geocode"]
-        });
-
-        // les ressources du service d'autocompletion
-        // on prend celles des options du services en priorité
-        _key = this.options.autocompleteOptions.apiKey;
-        // on récupère les éventuelles ressources passées en option, soit dans autocompleteOptions
-        _resources = (this.options.autocompleteOptions.type) ? this.options.autocompleteOptions.type : [];
-        // soit dans options.resources.autocomplete
-        if (!_resources || _resources.length === 0) {
-            _resources = this.options.resources.autocomplete;
-        }
-        // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest"
-            ];
-        }
-
-        var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["AutoCompletion"]
-        });
-
-        // au cas où pas de droit !
-        if (!rightManagementGeocode && !rightManagementAutoComplete) {
-            this._noRightManagement = true;
-        }
-
-        // je reconstruis differement la structure pour la gestion des clefs differentes
-        // pour chaque service...
-        if (rightManagementAutoComplete) {
-            this._servicesRightManagement["AutoCompletion"] = {};
-            this._servicesRightManagement["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-            this._servicesRightManagement["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        }
-
-        if (rightManagementGeocode) {
-            this._servicesRightManagement["Geocode"] = {};
-            this._servicesRightManagement["Geocode"]["resources"] = rightManagementGeocode["Geocode"];
-            this._servicesRightManagement["Geocode"]["key"] = rightManagementGeocode["key"];
         }
     },
 
@@ -587,42 +465,16 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         logger.log(settings);
 
-        // on ne fait pas de requête si aucun droit !
-        if (this._noRightManagement) {
-            logger.log("no rights for all service !?");
-            return;
-        }
-
-        // gestion des droits !
-        if (!this._servicesRightManagement["AutoCompletion"]) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
         var options = {};
         // on recupere les options du service
         L.Util.extend(options, this.options.autocompleteOptions.serviceOptions);
         // ainsi que la recherche et les callbacks
         L.Util.extend(options, settings);
 
-        var resources = this._servicesRightManagement["AutoCompletion"].resources;
-        if (!resources || Object.keys(resources).length === 0) {
-            return;
-        }
-
-        // au cas où les options du services ne sont pas renseignées, on y ajoute
-        // les tables de ressources
-        if (L.Util.isArray(resources)) {
-            options.type = resources;
-        }
-
-        // gestion de la clef !
-        var key = this._servicesRightManagement["AutoCompletion"]["key"];
-
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey : options.apiKey || this.options.apiKey || key
+            apiKey : options.apiKey || this.options.apiKey
         });
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
@@ -688,18 +540,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
 
         logger.log(settings);
 
-        // on ne fait pas de requête si aucun droit !
-        if (this._noRightManagement) {
-            logger.log("no rights for all service !?");
-            return;
-        }
-
-        // gestion des droits !
-        if (!this._servicesRightManagement["Geocode"]) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
         var options = {};
         // on recupere les options du service
         L.Util.extend(options, this.options.geocodeOptions);
@@ -716,13 +556,10 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
             }
         }
 
-        // gestion de la clef !
-        var key = this._servicesRightManagement["Geocode"]["key"];
-
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey : options.apiKey || this.options.apiKey || key
+            apiKey : options.apiKey || this.options.apiKey
         });
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
@@ -1095,12 +932,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
             return;
         }
 
-        // aucun droits !
-        // on evite une requête...
-        if (this._noRightManagement) {
-            return;
-        }
-
         // on sauvegarde le localisant
         this._currentGeocodingLocation = value;
 
@@ -1129,22 +960,19 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
                     // on sauvegarde l'etat des résultats
                     context._suggestedLocations = results.suggestedLocations;
                     context._locationsToBeDisplayed = [];
-                    if (context._servicesRightManagement["Geocode"] && context._servicesRightManagement["Geocode"]["key"]) {
-                        // on vérifie qu'on n'a pas récupéré des coordonnées nulles (par ex recherche par code postal)
-                        for (var i = 0; i < context._suggestedLocations.length; i++) {
-                            var ilocation = context._suggestedLocations[i];
-                            if (ilocation.position && ilocation.position.x === 0 && ilocation.position.y === 0 && ilocation.fullText) {
-                                // si les coordonnées sont nulles, il faut relancer une requête de géocodage avec l'attribut "fullText" récupéré
-                                context._getGeocodeCoordinatesFromFullText(ilocation, i);
-                            } else {
-                                // sinon on peut afficher normalement le résultat dans la liste
-                                context._locationsToBeDisplayed.push(ilocation);
-                            }
-                        };
-                    } else {
-                        // si on n'a aucun droit d'accès au géocodage, on affiche la liste telle quelle (pas d'autre option pour les coordonnées nulles)
-                        context._locationsToBeDisplayed = context._suggestedLocations;
-                    }
+
+                    // on vérifie qu'on n'a pas récupéré des coordonnées nulles (par ex recherche par code postal)
+                    for (var i = 0; i < context._suggestedLocations.length; i++) {
+                        var ilocation = context._suggestedLocations[i];
+                        if (ilocation.position && ilocation.position.x === 0 && ilocation.position.y === 0 && ilocation.fullText) {
+                            // si les coordonnées sont nulles, il faut relancer une requête de géocodage avec l'attribut "fullText" récupéré
+                            context._getGeocodeCoordinatesFromFullText(ilocation, i);
+                        } else {
+                            // sinon on peut afficher normalement le résultat dans la liste
+                            context._locationsToBeDisplayed.push(ilocation);
+                        }
+                    };
+
                     // on affiche les résultats qui n'ont pas des coordonnées nulles
                     context._fillAutoCompletedLocationListContainer(context._locationsToBeDisplayed);
                     // on annule eventuellement une requete de geocodage en cours car on obtient des
@@ -1275,12 +1103,6 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         logger.log(e);
         var value = e.target[0].value;
         if (!value) {
-            return;
-        }
-
-        // aucun droits !
-        // on evite une requête...
-        if (this._noRightManagement) {
             return;
         }
 
