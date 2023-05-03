@@ -152,7 +152,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
         this._noRightManagement = false;
 
         // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
+        // this._checkRightsManagement();
     },
 
     /**

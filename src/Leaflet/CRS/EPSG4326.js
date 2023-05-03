@@ -79,7 +79,7 @@ var EPSG4326 = {
         var resolutions = [];
         // resolutions issues de l'autoconf
         if (Config.isConfigLoaded()) {
-            var o = Config.configuration.getTMSConf("IGNF:WGS84G");
+            var o = Config.configuration.getTMSConf("WGS84G");
             resolutions = o.nativeResolutions;
         }
 

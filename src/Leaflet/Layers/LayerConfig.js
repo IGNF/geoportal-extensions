@@ -21,12 +21,6 @@ var LayerConfig = {
     get : function (options) {
         var params = {};
 
-        // Gestion de l'autoconf
-        if (!Config.isConfigLoaded()) {
-            logger.warn("WARNING AUTOCONF_MISSING : contract key configuration has to be loaded to load Geoportal layers !");
-            return;
-        }
-
         // gestion des parametres
         params = Config.configuration.getLayerParams(options.layer, options.service);
 

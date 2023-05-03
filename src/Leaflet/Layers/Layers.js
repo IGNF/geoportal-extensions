@@ -139,17 +139,22 @@ var Layers = {
 
         // url du service
         var serviceUrl = null;
-        if (this.params.key || this.options.apiKey) {
-            // url de l'autoconf ou le service par defaut
-            serviceUrl = this.params.url || L.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
-                key : this.params.key || this.options.apiKey
+
+        if (this.options.apiKey) {
+            // si une clé Api est fournie, on la prend pour construire l'url
+            serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
+                key : this.options.apiKey
             });
+        } else if (this.params.url) {
+            // sinon on prend la première clé disponible pour la couche dans la Config
+            serviceUrl = this.params.url;
         } else {
-            // pas d'autoconf, ni de clef API !
+            // pas de Config, ni de clef API !
             // on évite l'exception en envoyant les requêtes vers localhost...
             serviceUrl = L.Util.template(this.serviceUrl, {
                 layer : this.options.layer
             });
+            
         }
 
         // params du service WMS (par defaut)
@@ -238,18 +243,24 @@ var Layers = {
         this._initParams("WMTS");
         logger.log(this.params);
 
-        // url du service (par defaut)
+        // url du service
         var serviceUrl = null;
-        if (this.params.key || this.options.apiKey) {
-            serviceUrl = this.params.url || L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
-                key : this.params.key || this.options.apiKey
+        
+        if (this.options.apiKey) {
+            // si une clé Api est fournie, on la prend pour construire l'url
+            serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
+                key : this.options.apiKey
             });
+        } else if (this.params.url) {
+            // sinon on prend la première clé disponible pour la couche dans la Config
+            serviceUrl = this.params.url;
         } else {
-            // FIXME pas d'autoconf, ni clef API !
-            // on évite l'exception en envoyant les requêtes vers localhost
+            // pas de Config, ni de clef API !
+            // on évite l'exception en envoyant les requêtes vers localhost...
             serviceUrl = L.Util.template(this.serviceUrl, {
                 layer : this.options.layer
             });
+            
         }
 
         // params du service WMTS (par defaut)
