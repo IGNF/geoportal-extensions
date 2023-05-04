@@ -28,7 +28,7 @@ var logger = Logger.getLogger("searchengine");
  * @type {ol.control.SearchEngine}
  * @alias ol.control.SearchEngine
  * @param {Object}  options - control options
- * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key. The key "calcul" is used by default.
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - collapse mode, true by default
  *       Value possible : auto or zoom level.
@@ -649,7 +649,7 @@ var SearchEngine = (function (Control) {
         }
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut.
         options.apiKey = options.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
@@ -752,7 +752,7 @@ var SearchEngine = (function (Control) {
         }
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut
         options.apiKey = options.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
@@ -1078,13 +1078,6 @@ var SearchEngine = (function (Control) {
             return;
         }
 
-        // aucun droits !
-        // on evite une requête...
-        if (this._noRightManagement) {
-            logger.log("no rights for this service !");
-            return;
-        }
-
         // on sauvegarde le localisant
         this._currentGeocodingLocation = value;
 
@@ -1329,13 +1322,6 @@ var SearchEngine = (function (Control) {
     SearchEngine.prototype.onGeocodingSearchSubmit = function (e) {
         var value = e.target[0].value;
         if (!value) {
-            return;
-        }
-
-        // aucun droits !
-        // on evite une requête...
-        if (this._noRightManagement) {
-            logger.log("no rights for this service !");
             return;
         }
 

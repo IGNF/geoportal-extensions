@@ -49,7 +49,7 @@ var Isocurve = L.Control.extend(/** @lends L.geoportalControl.Isocurve.prototype
      *
      * @private
      * @param {Object} options - Isocurve control options
-     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services). The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked), by default : ["toll":false, "tunnel":false, "bridge":false].

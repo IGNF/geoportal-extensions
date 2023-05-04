@@ -1051,8 +1051,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     options.onFailure = function (error) {
         logger.error("[getAltitude] " + error.message);
     };
-    // in the case of the API key is not given as option of the service,
-    // we use the key of the autoconf, or the key given in the control options
+    // we use the key "calcul" 
     options.apiKey = "calcul";
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

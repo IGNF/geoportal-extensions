@@ -53,7 +53,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      *
      * @private
      * @param {Object} options - ElevationPath control options
-     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services). The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
      * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
@@ -609,7 +609,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         L.Util.extend(options, this.options.elevationPathOptions);
 
         // au cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle, sinon la clé "calcul" est utilisée par défaut.
         L.Util.extend(options, {
             apiKey : options.apiKey || this.options.apiKey
         });

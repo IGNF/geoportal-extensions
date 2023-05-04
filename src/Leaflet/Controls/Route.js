@@ -46,7 +46,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * @constructor Route
      * @private
      * @param {Object} options - options for function call.
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
@@ -900,7 +900,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
         L.Util.extend(options, settings);
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut
         L.Util.extend(options, {
             apiKey : this.options.routeOptions.apiKey || this.options.apiKey
         });

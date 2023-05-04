@@ -54,7 +54,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @alias MousePosition
      * @extends {L.Control}
      * @param {Object} options - options for function call.
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
      * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
@@ -504,10 +504,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             div.style.display = "none";
         }
 
-        if (active && this._noRightManagement) {
-            div = L.DomUtil.get(this._addUID("GPmousePositionAlt"));
-            div.innerHTML = "no right !";
-        }
     },
 
     /**
@@ -879,10 +875,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @private
      */
     onMoveStopped : function (oLatLng) {
-        // si pas de droit, on ne met pas à jour l'affichage !
-        if (this._noRightManagement) {
-            return;
-        }
         this._setElevation(oLatLng);
     },
 
@@ -961,12 +953,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             return;
         }
 
-        // si on n'a pas les droits sur la ressource, pas la peine de
-        // continuer !
-        if (this._noRightManagement) {
-            return;
-        }
-
         logger.log(coordinate);
 
         var options = {};
@@ -1001,7 +987,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         });
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut
         L.Util.extend(options, {
             apiKey : options.apiKey || this.options.apiKey
         });

@@ -41,7 +41,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @type {ol.control.GeoportalMousePosition}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
- * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key. The key "calcul" is used by default.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
@@ -1261,7 +1261,7 @@ var MousePosition = (function (Control) {
         };
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut.
         var _apiKey = options.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

@@ -62,7 +62,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @alias SearchEngine
      * @extends {L.Control}
      * @param {Object} options - control options
-     * @param {String} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String} [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.collapsed] - collapse mode, false by default
      * @param {String} [options.position] - position of component into the map, 'topleft' by default
@@ -77,7 +77,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
      * @param {String}  [options.placeholder] - set placeholder in search bar. Default is "Rechercher un lieu, une adresse".
      * @param {Boolean}  [options.displayMarker] - set a marker on search result, defaults to true.
      * @param {String|Object}  [options.markerStyle] - set a marker style. Currently possible values are "blue" (default value), "orange", "red" and "green". But you can use an L.Icon object (see {@link http://leafletjs.com/reference-1.2.0.html#icon L.Icon }).
-     * @param {Sting} [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {Sting} [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {String} [options.resources.geocode] - resources geocoding, by default : "location"
      * @param {Object} [options.resources.autocomplete] - resources to be used by autocompletion service, by default : ["StreetAddress", "PositionOfInterest"]
      * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
@@ -472,7 +472,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         L.Util.extend(options, settings);
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut.
         L.Util.extend(options, {
             apiKey : options.apiKey || this.options.apiKey
         });
@@ -557,7 +557,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         }
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut.
         L.Util.extend(options, {
             apiKey : options.apiKey || this.options.apiKey
         });

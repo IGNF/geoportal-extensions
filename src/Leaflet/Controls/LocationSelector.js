@@ -1,7 +1,6 @@
 import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import LocationSelectorDOM from "../../Common/Controls/LocationSelectorDOM";
 import PositionFormater from "./Utils/PositionFormater";
@@ -126,12 +125,6 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         /** ressources du services d'autocompletion et geocodage inverse (ayant droit!) */
         this._resources = {};
-
-        /** a t on des droits sur les ressources du service ? */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
 
         // creation du DOM dans le constructeur uniquement si ce composant
         // est appelé par un autre composant graphique
@@ -275,75 +268,6 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         container.appendChild(results);
 
         return container;
-    },
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources and services
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var _resources = null;
-        var _key = null;
-
-        // les ressources du service du calcul inverse de geocodage
-        _key = this.options.reverseGeocodeOptions.apiKey;
-        _resources = (this.options.reverseGeocodeOptions.index) ? this.options.reverseGeocodeOptions.index : "";
-        if (!_resources) {
-            _resources = "StreetAddress";
-        }
-        if (_resources === "location") {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest",
-                "CadastralParcel"
-            ];
-        } else {
-            if (!Array.isArray(_resources)) _resources = [_resources];
-        }
-
-        var rightManagementRerverse = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["ReverseGeocode"]
-        });
-
-        // les ressources du service d'autocompletion
-        _key = this.options.autocompleteOptions.apiKey;
-        _resources = (this.options.autocompleteOptions.type) ? this.options.autocompleteOptions.type : [];
-        // ou celles par défaut sinon.
-        if (!_resources || _resources.length === 0) {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest"
-            ];
-        }
-
-        var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["AutoCompletion"]
-        });
-
-        // au cas où pas de droit !
-        if (!rightManagementRerverse && !rightManagementAutoComplete) {
-            this._noRightManagement = true;
-        }
-
-        // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
-        // pour chaque service...
-        if (rightManagementAutoComplete) {
-            this._resources["AutoCompletion"] = {};
-            this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-            this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        }
-
-        if (rightManagementRerverse) {
-            this._resources["ReverseGeocode"] = {};
-            this._resources["ReverseGeocode"]["resources"] = rightManagementRerverse["ReverseGeocode"];
-            this._resources["ReverseGeocode"]["key"] = rightManagementRerverse["key"];
-        }
     },
 
     // ################################################################### //
@@ -564,26 +488,6 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         logger.log(settings);
 
-        // on ne fait pas de requête si aucun droit !
-        if (this._noRightManagement) {
-            logger.log("no rights for all service !?");
-            return;
-        }
-
-        // gestion des droits !
-        if (!this._resources["AutoCompletion"]) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
-        var resources = this._resources["AutoCompletion"].resources;
-        if (!resources || Object.keys(resources).length === 0) {
-            return;
-        }
-
-        // gestion de la clef !
-        var key = this._resources["AutoCompletion"]["key"];
-
         var options = {};
         // on recupere les options du service
         L.Util.extend(options, this.options.autocompleteOptions);
@@ -591,9 +495,9 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         L.Util.extend(options, settings);
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // celle renseignée au niveau du controle ou la clé "calcul" par défaut
         L.Util.extend(options, {
-            apiKey : options.apiKey || this.options.apiKey || key
+            apiKey : options.apiKey || this.options.apiKey
         });
 
         logger.log(options);
@@ -663,26 +567,6 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
             return;
         }
 
-        // on ne fait pas de requête si aucun droit !
-        if (this._noRightManagement) {
-            logger.log("no rights for all service !?");
-            return;
-        }
-
-        // gestion des droits !
-        if (!this._resources["ReverseGeocode"]) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
-        var resources = this._resources["ReverseGeocode"].resources;
-        if (!resources || Object.keys(resources).length === 0) {
-            return;
-        }
-
-        // gestion de la clef !
-        var key = this._resources["ReverseGeocode"]["key"];
-
         var options = {};
         // on recupere les options du service
         L.Util.extend(options, this.options.reverseGeocodeOptions);
@@ -698,9 +582,9 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         });
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle
         L.Util.extend(options, {
-            apiKey : options.apiKey || this.options.apiKey || key
+            apiKey : options.apiKey || this.options.apiKey
         });
 
         logger.log(options);
@@ -788,13 +672,6 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
 
         var value = e.target.value;
         if (!value) {
-            return;
-        }
-
-        // aucun droits !
-        // on evite une requête...
-        if (this._noRightManagement) {
-            logger.log("no rights for this service !?");
             return;
         }
 
@@ -975,7 +852,7 @@ var LocationSelector = L.Control.extend(/** @lends LocationSelector.prototype */
         // si le geocodage inverse est desactivé,
         // on transmet les coordonnées au panneau,
         // sinon, on transmet la reponse du service
-        if (this.options.disableReverse || this._noRightManagement) {
+        if (this.options.disableReverse) {
             // on transmet les coordonnées au panneau, puis on place le marker
             this._displayResultOfCoordinate(oLatLng);
         } else {

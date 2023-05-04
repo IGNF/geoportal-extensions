@@ -7,7 +7,7 @@ var logger = Logger.getLogger("layer-config");
 /**
  * @classdesc
  *
- * Configuration des couches Geoportail via l'appel du service d'autoconfiguration
+ * Configuration des couches Geoportail via l'appel de la configuration.
  * @private
  */
 var LayerConfig = {
@@ -25,7 +25,7 @@ var LayerConfig = {
         params = Config.configuration.getLayerParams(options.layer, options.service);
 
         if (!params || Object.keys(params).length === 0) {
-            logger.warn("WARNING AUTOCONF_FAILED : params not found ?!");
+            logger.warn("WARNING CONFIG_FAILED : params not found ?!");
             return;
         }
 

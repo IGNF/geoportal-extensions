@@ -24,7 +24,7 @@ var logger = Logger.getLogger("locationselector");
  * LocationSelector component. Enables to select a location, using autocompletion or picking location on the map
  * @type {ol.control.LocationSelector}
  * @param {Object} [options] - component options
- * @param {String} [options.apiKey] - API key for autocomplete service call, mandatory if autoconf service has not been charged in advance
+ * @param {String} [options.apiKey] - API key for autocomplete service call. The key "calcul" is used by default.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.displayInfo = true] - whether to display info in a popup or not (not implemented yet) Default is true
  * @param {Object} [options.tag] - tag options
@@ -753,7 +753,7 @@ var LocationSelector = (function (Control) {
         }
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut.
         options.apiKey = options.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

@@ -45,7 +45,7 @@ var logger = Logger.getLogger("elevationpath");
  * @type {ol.control.ElevationPath}
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
- * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services). The key "calcul" is used by default.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean|Object} [options.export = false] - Specify if button "Export" is displayed. For the use of the options of the "Export" control, see {@link ol.control.Export}

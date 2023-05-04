@@ -50,7 +50,7 @@ var logger = Logger.getLogger("reversegeocoding");
  * @type {ol.control.ReverseGeocode}
  * @extends {ol.control.Control}
  * @param {Object} options - ReverseGeocode control options
- * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key for services call (reverse geocode service). The key "calcul" is used by default.
  * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable

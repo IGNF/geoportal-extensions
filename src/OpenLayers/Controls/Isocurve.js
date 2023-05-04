@@ -40,7 +40,7 @@ var logger = Logger.getLogger("isocurve");
  * @type {ol.control.Isocurve}
  * @extends {ol.control.Control}
  * @param {Object} options - Isocurve control options
- * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services). The key "calcul" is used by default.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
@@ -1006,13 +1006,6 @@ var Isocurve = (function (Control) {
             return;
         }
 
-        // oups, aucun droits !
-        // on evite donc une requête inutile ...
-        if (this._noRightManagement) {
-            logger.log("[Isocurve] no rights for this service");
-            return;
-        }
-
         // on recupere les éventuelles options du service passées par l'utilisateur
         var options = this.options.isocurveOptions || {};
 
@@ -1214,41 +1207,6 @@ var Isocurve = (function (Control) {
         if (!options.position) {
             return;
         }
-        // ni si on n'a aucun droit
-        // if (this._noRightManagement || !this._resources["Isocurve"]) {
-        //     logger.log("no rights for this service");
-        //     return;
-        // }
-// 
-        // // gestion des droits !
-        // var resources = this._resources["Isocurve"].resources;
-        // if (!resources || (typeof resources === "object" && Object.keys(resources).length === 0)) {
-        //     logger.log("no rights for this service");
-        //     return;
-        // }
-
-        // la ressource donne elle des droits ?
-        // var bFound = false;
-        // for (var i = 0; i < resources.length; i++) {
-        //     if (resources[i] === options.graph) {
-        //         bFound = true;
-        //     }
-        // }
-        // // on fait quoi ?
-        // if (!bFound) {
-        //     logger.log("no rights for this service !?");
-        //     return;
-        // }
-
-        // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        // var key = this._resources["Isocurve"]["key"];
-
-        // var config = AutoLoadConfig.autoloadconfig();
-        // options.apiKey = this.options.isocurveOptions.apiKey || config.apiKey;
-        // if (config.timeOut) {
-        //     options.timeout = config.timeOut;
-        // }
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)

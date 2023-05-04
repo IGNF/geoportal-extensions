@@ -55,7 +55,7 @@ var LayerWMTS = (function (TileLayer) {
 
         // Check if configuration is loaded
         if (!Config.isConfigLoaded()) {
-            throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+            throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers.");
         }
 
         // création de la source WMTS
@@ -101,14 +101,14 @@ var LayerWMTS = (function (TileLayer) {
                 // puis, selon l'unité de la projection, on calcule la résolution correspondante
                 if (p && p.getUnits()) {
                     if (p.getUnits() === "m") {
-                        /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans l'autoconf !
+                        /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans la configuration !
                          * on les arrondit respectivement à l'unité inférieure et supérieure
                          * pour que les couches soient bien disponibles aux niveaux de zoom correspondants */
                         // info : 1 pixel = 0.00028 m
                         layerTileOptions.minResolution = (globalConstraints.minScale - 1) * 0.00028;
                         layerTileOptions.maxResolution = (globalConstraints.maxScale + 1) * 0.00028;
                     } else if (p.getUnits() === "degrees") {
-                        /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans l'autoconf !
+                        /* fixme : fix temporaire pour gérer les min/max scaledenominator qui sont arrondis dans la configuration !
                          * on les arrondit respectivement à l'unité inférieure et supérieure
                          * pour que les couches soient bien disponibles aux niveaux de zoom correspondants */
                         // info : 6378137 * 2 * pi / 360 = rayon de la terre (ellipsoide WGS84)

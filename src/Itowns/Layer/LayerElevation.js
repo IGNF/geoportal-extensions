@@ -51,7 +51,7 @@ function LayerElevation (options) {
 
     // Check if configuration is loaded
     if (!Config.isConfigLoaded()) {
-        throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+        throw new Error("ERROR : Configuration has to be loaded");
     }
 
     var layerId = Config.configuration.getLayerId(options.layer, "WMTS");

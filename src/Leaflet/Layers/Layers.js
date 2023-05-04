@@ -69,7 +69,7 @@ var Layers = {
             service = "WMTS";
         }
 
-        // Gestion de l'autoconf
+        // Récupération de la configuration
         this.params = LayerConfig.get({
             key : this.options.apiKey,
             layer : this.options.layer,
@@ -133,7 +133,7 @@ var Layers = {
         // env d'execution : browser ou non ?
         this._initContext();
 
-        // gestion de l'autoconf
+        // Récupération de la configuration
         this._initParams("WMS");
         logger.log(this.params);
 
@@ -239,7 +239,7 @@ var Layers = {
         // env d'execution : browser ou non ?
         this._initContext();
 
-        // gestion de l'autoconf
+        // Récupération de la configuration
         this._initParams("WMTS");
         logger.log(this.params);
 

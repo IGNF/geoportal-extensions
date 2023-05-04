@@ -10,7 +10,7 @@
 var Config = {
 
     /**
-     * autoconf
+     * Config
      *
      * @public
      * @type {Object}

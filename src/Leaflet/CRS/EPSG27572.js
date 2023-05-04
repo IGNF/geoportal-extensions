@@ -49,7 +49,6 @@ var EPSG27572 = {
         if (!this.instance) {
             var crs = new L.Proj.CRS("EPSG:27572",
                 Register.get("EPSG:27572"), {
-                    // FIXME issue de l'autoconf cf. nativeResolutions
                     resolutions : this._getResolutions(),
                     origin : this._getOrigin()
                 });
@@ -67,7 +66,7 @@ var EPSG27572 = {
      */
     _getResolutions : function () {
         var resolutions = [];
-        // resolutions issues de l'autoconf
+        // resolutions issues de la configuration
         if (Config.isConfigLoaded()) {
             var o = Config.configuration.getTMSConf("LAMB2E");
             if (o && Object.keys(o).length) {

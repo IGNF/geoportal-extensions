@@ -42,7 +42,7 @@ var logger = Logger.getLogger("route");
  * @type {ol.control.Route}
  * @extends {ol.control.Control}
  * @param {Object} options - route control options
- * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services). The key "calcul" is used by default.
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
@@ -1408,7 +1408,7 @@ var Route = (function (Control) {
         }
         
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle (calcul par défaut)
+        // on utilise celle renseignée au niveau du controle (calcul par défaut)
         options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

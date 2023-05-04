@@ -86,64 +86,95 @@ var LayerMapBox = (function (VectorTileLayer) {
         }
 
         /**
-         * Ex. reponse Autoconf
+         * Ex. configuration object for TMS Layer
          * (only for jsdoc)
          * @example
-         * "PLAN.IGN$GEOPORTAIL:GPP:TMS":{
-         *     "hidden":true,
-         *     "queryable":false,
-         *     "serviceParams":{
-         *         "id":"GPP:TMS",
-         *         "version":"1.0.0",
-         *         "serverUrl":{
-         *             "essentiels":"https://wxs.ign.fr/essentiels/geoportail/tms/1.0.0"
-         *         }
+         * "PLAN.IGN$GEOPORTAIL:GPP:TMS": {
+         *   "hidden": true,
+         *   "queryable": false,
+         *   "serviceParams": {
+         *     "id": "GPP:TMS",
+         *     "version": "1.0.0",
+         *     "serverUrl": {
+         *       "cartes": "https://wxs.ign.fr/cartes/geoportail/tms/1.0.0/"
+         *     }
+         *   },
+         *   "name": "PLAN.IGN",
+         *   "title": "Plan IGN",
+         *   "description": "BDUni tuilée",
+         *   "formats": [
+         *     {
+         *       "current": true,
+         *       "name": "application/x-protobuf"
+         *     }
+         *   ],
+         *   "styles": [
+         *     {
+         *       "name": "standard",
+         *       "title": "Style standard",
+         *       "current": true,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
          *     },
-         *     "name":"PLAN.IGN",
-         *     "title":"Plan IGN",
-         *     "description":"Représentation vectorielle des bases de données IGN.",
-         *     "globalConstraint":{
-         *         "crs":null,
-         *         "bbox":{"left":-179.5,"right":179.5,"top":75,"bottom":-75},
-         *         "minScaleDenominator":2133,
-         *         "maxScaleDenominator":559082265,
-         *         "temporalExtent":["2017-05-23","2018-03-23"]
+         *     {
+         *       "name": "classique",
+         *       "title": "Style classique",
+         *       "current": true,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/classique.json"
          *     },
-         *     "formats":[
-         *         {"current":true,"name":"application/x-protobuf"}
-         *     ],
-         *     "styles":[
-         *         {
-         *                 "name":"planign",
-         *                 "title":"Style de base",
-         *                 "current":true,
-         *                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/plan.json"
-         *         },{
-         *                 "name":"gris",
-         *                 "title":"Style en noir et blanc",
-         *                 "current":false,
-         *                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/gris.json"
-         *         },{
-         *                 "name":"sans_toponymes",
-         *                 "title":"Style sans toponymes",
-         *                 "current":false,
-         *                 "url":"https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/sans_toponymes.json"
-         *         }
-         *     ],
-         *     "dimensions":{},
-         *     "thematics":[],
-         *     "originators":[],
-         *     "legends":[],
-         *     "metadata":[],
-         *     "apiKeys":["jhyvi0fgmnuxvfv0zjzorvdn"],
-         *     "layerId":"PLAN.IGN::GEOPORTAIL:GPP:TMS",
-         *     "defaultProjection":"EPSG:3857"
+         *     {
+         *       "name": "transparent",
+         *       "title": "Style transparent",
+         *       "current": true,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/transparent.json"
+         *     },
+         *     {
+         *       "name": "accentue",
+         *       "title": "Style accentue",
+         *       "current": true,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/accentue.json"
+         *     },
+         *     {
+         *       "name": "attenue",
+         *       "title": "Style attenue",
+         *       "current": true,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/attenue.json"
+         *     },
+         *     {
+         *       "name": "gris",
+         *       "title": "Style en noir et blanc",
+         *       "current": false,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/gris.json"
+         *     },
+         *     {
+         *       "name": "epure",
+         *       "title": "Style epure",
+         *       "current": true,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/epure.json"
+         *     },
+         *     {
+         *       "name": "sans_toponymes",
+         *       "title": "Style sans toponymes",
+         *       "current": false,
+         *       "url": "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/sans_toponymes.json"
+         *     }
+         *   ],
+         *   "globalConstraint": {
+         *     "crs": null,
+         *     "bbox": {
+         *       "left": -724011.531917197,
+         *       "right": 1095801.237496279,
+         *       "top": 6672646.821182753,
+         *       "bottom": 5009377.0856973175
+         *     },
+         *     "minScaleDenominator": null,
+         *     "maxScaleDenominator": null
+         *   },
+         *   "quicklookUrl": "https://wxs.ign.fr/static/pictures/ign_carte2.jpg",
+         *   "layerId": "PLAN.IGN$GEOPORTAIL:GPP:TMS",
+         *   "defaultProjection": "EPSG:3857"
          * }
          */
-        // eslint-disable-next-line no-undef
-        this.RESPONSE_AUTOCONF = null;
-
-        // récupération des ressources utiles sur l'autoconf
+        // récupération des ressources utiles depuis la configuration
         var layerId = this.layerName + "$GEOPORTAIL:GPP:TMS";
 
         var layerCfg = Config.configuration.getLayerConf(layerId);
