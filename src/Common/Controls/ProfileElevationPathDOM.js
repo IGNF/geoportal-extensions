@@ -231,7 +231,7 @@ var ProfileElevationPathDOM = {
         const guidesZ = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
         const gradZyOffsetPx = pathHeight / numZguides;
-        let pxPerMZ = pathHeight / (maxGraphZ - minGraphZ);
+        let pxPerMZ;
         // Traitement du cas altitude max = altitude min
         if (maxZ === minZ) {
             pxPerMZ = pathHeight / 0.2;
