@@ -1,20 +1,12 @@
 {
-   "dependencies" : {
-      "leaflet-draw" : "1.0.4",
-      "loglevel" : "1.6.6",
-      "sortablejs" : "1.8.4",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
-      "node-fetch" : "^2.6.1",
-      "proj4leaflet" : "1.0.2",
-      "proj4" : "2.7.5",
-      "leaflet" : "1.7.1",
-      "xmldom" : "^0.1.27"
-   },
-   "devDependencies" : {},
    "directories" : {},
-   "license" : "CECILL-B",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "peerDependencies" : {},
+   "bundleDependencies" : [],
+   "devDependencies" : {},
+   "description" : "French Geoportal Extension for Leaflet",
+   "bugs" : {},
+   "name" : "geoportal-extensions-leaflet",
+   "main" : "dist/GpPluginLeaflet-src.js",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -22,15 +14,7 @@
       "leaflet",
       "publish"
    ],
-   "main" : "dist/GpPluginLeaflet-src.js",
-   "module" : "src/Leaflet/index.js",
-   "scripts" : {},
-   "bundleDependencies" : [],
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "bugs" : {},
+   "license" : "CECILL-B",
    "files" : [
       "dist/",
       "src/",
@@ -38,9 +22,25 @@
       "README.md",
       "package.json"
    ],
-   "types" : "src/Leaflet/index.d.ts",
-   "date" : "05/04/2023",
+   "dependencies" : {
+      "proj4" : "2.7.5",
+      "xmldom" : "^0.1.27",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
+      "loglevel" : "1.6.6",
+      "node-fetch" : "^2.6.1",
+      "proj4leaflet" : "1.0.2",
+      "leaflet-draw" : "1.0.4",
+      "leaflet" : "1.7.1",
+      "sortablejs" : "1.8.4"
+   },
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "version" : "2.2.9",
-   "description" : "French Geoportal Extension for Leaflet",
-   "name" : "geoportal-extensions-leaflet"
+   "module" : "src/Leaflet/index.js",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "types" : "src/Leaflet/index.d.ts",
+   "scripts" : {},
+   "date" : "05/04/2023"
 }
