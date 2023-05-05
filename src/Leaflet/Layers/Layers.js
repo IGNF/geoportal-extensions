@@ -154,7 +154,6 @@ var Layers = {
             serviceUrl = L.Util.template(this.serviceUrl, {
                 layer : this.options.layer
             });
-            
         }
 
         // params du service WMS (par defaut)
@@ -245,7 +244,7 @@ var Layers = {
 
         // url du service
         var serviceUrl = null;
-        
+
         if (this.options.apiKey) {
             // si une clé Api est fournie, on la prend pour construire l'url
             serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
@@ -260,7 +259,6 @@ var Layers = {
             serviceUrl = L.Util.template(this.serviceUrl, {
                 layer : this.options.layer
             });
-            
         }
 
         // params du service WMTS (par defaut)

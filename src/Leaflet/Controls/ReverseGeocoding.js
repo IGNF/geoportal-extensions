@@ -239,7 +239,6 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 
         // options utilisateur
         if (Array.isArray(resources) && resources.length) {
-
             // récupération du type par défaut
             if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];

@@ -15,7 +15,6 @@ import Gp from "geoportal-access-lib";
 // import local
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import AutoLoadConfig from "../../Common/Utils/AutoLoadConfig";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";

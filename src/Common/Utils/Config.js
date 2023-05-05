@@ -15,7 +15,7 @@ var Config = {
      * @public
      * @type {Object}
      */
-    configuration: {},
+    configuration : {},
 
     /**
      * Check if the configuration is loaded

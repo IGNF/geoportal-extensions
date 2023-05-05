@@ -503,7 +503,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             div = L.DomUtil.get(this._addUID("GPmousePositionAltitude"));
             div.style.display = "none";
         }
-
     },
 
     /**

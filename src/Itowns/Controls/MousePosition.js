@@ -72,7 +72,7 @@ var logger = Logger.getLogger("MousePosition");
  *      units : ["DEC", "DMS"]
  *  });
  */
-function MousePosition(options) {
+function MousePosition (options) {
     options = options || {};
 
     if (!(this instanceof MousePosition)) {
@@ -92,11 +92,11 @@ function MousePosition(options) {
 
     Widget.call(
         this, {
-        name: "MousePosition",
-        element: container,
-        target: options.target,
-        position: options.position
-    }
+            name : "MousePosition",
+            element : container,
+            target : options.target,
+            position : options.position
+        }
     );
 };
 
@@ -392,11 +392,11 @@ MousePosition.prototype._initialize = function (options) {
     if (options.altitude) {
         var altitude = options.altitude;
         this.options.altitude = {
-            triggerDelay: (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
-            responseDelay: (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
-            serviceOptions: altitude.serviceOptions || {},
-            noDataValue: (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
-            noDataValueTolerance: (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
+            triggerDelay : (altitude.triggerDelay !== undefined) ? altitude.triggerDelay : 200,
+            responseDelay : (altitude.responseDelay !== undefined) ? altitude.responseDelay : 500,
+            serviceOptions : altitude.serviceOptions || {},
+            noDataValue : (altitude.noDataValue !== undefined) ? altitude.noDataValue : -99999,
+            noDataValueTolerance : (altitude.noDataValueTolerance !== undefined) ? altitude.noDataValueTolerance : 90000
         };
         // on surcharge l'outputFormat pour du json si non spécifié par utilisateur
         this.options.altitude.serviceOptions.outputFormat = (altitude.serviceOptions && altitude.serviceOptions.outputFormat) ? altitude.serviceOptions.outputFormat : "json";
@@ -469,32 +469,32 @@ MousePosition.prototype._initProjectionSystems = function () {
 
     // available projection systems vy default
     var projectionSystemsByDefault = [{
-        label: "Géographique",
-        crs: "EPSG:4326",
-        type: "Geographical"
+        label : "Géographique",
+        crs : "EPSG:4326",
+        type : "Geographical"
     }, {
-        label: "Mercator",
-        crs: "EPSG:3857",
-        type: "Metric"
+        label : "Mercator",
+        crs : "EPSG:3857",
+        type : "Metric"
     }, {
-        label: "Lambert 93",
-        crs: "EPSG:2154",
-        type: "Metric",
-        geoBBox: {
-            left: -9.86,
-            bottom: 41.15,
-            right: 10.38,
-            top: 51.56
+        label : "Lambert 93",
+        crs : "EPSG:2154",
+        type : "Metric",
+        geoBBox : {
+            left : -9.86,
+            bottom : 41.15,
+            right : 10.38,
+            top : 51.56
         }
     }, {
-        label: "Lambert II étendu",
-        crs: "EPSG:27572",
-        type: "Metric",
-        geoBBox: {
-            left: -4.87,
-            bottom: 42.33,
-            right: 8.23,
-            top: 51.14
+        label : "Lambert II étendu",
+        crs : "EPSG:27572",
+        type : "Metric",
+        geoBBox : {
+            left : -4.87,
+            bottom : 42.33,
+            right : 8.23,
+            top : 51.14
         }
     }];
 
@@ -528,31 +528,31 @@ MousePosition.prototype._initProjectionUnits = function () {
 
     // available units systems by default
     var projectionUnitsByDefault = {
-        Geographical: [{
-            code: "DEC",
-            label: "degrés décimaux",
-            convert: this._displayDEC
+        Geographical : [{
+            code : "DEC",
+            label : "degrés décimaux",
+            convert : this._displayDEC
         }, {
-            code: "DMS",
-            label: "degrés sexagésimaux",
-            convert: this._displayDMS
+            code : "DMS",
+            label : "degrés sexagésimaux",
+            convert : this._displayDMS
         }, {
-            code: "RAD",
-            label: "radians",
-            convert: this._displayRAD
+            code : "RAD",
+            label : "radians",
+            convert : this._displayRAD
         }, {
-            code: "GON",
-            label: "grades",
-            convert: this._displayGON
+            code : "GON",
+            label : "grades",
+            convert : this._displayGON
         }],
-        Metric: [{
-            code: "M",
-            label: "mètres",
-            convert: this._displayMeter
+        Metric : [{
+            code : "M",
+            label : "mètres",
+            convert : this._displayMeter
         }, {
-            code: "KM",
-            label: "kilomètres",
-            convert: this._displayKMeter
+            code : "KM",
+            label : "kilomètres",
+            convert : this._displayKMeter
         }]
     };
 
@@ -941,16 +941,16 @@ MousePosition.prototype.onMouseMove = function (e) {
     var position = this.getGlobe().getCoordinateFromMouseEvent(e);
     if (!position) {
         this.GPdisplayCoords({
-            lon: "---",
-            lat: "---"
+            lon : "---",
+            lat : "---"
         });
         this.GPresetElevation();
         return;
     }
 
     var coordinate = {
-        lon: position.x,
-        lat: position.y
+        lon : position.x,
+        lat : position.y
     };
 
     this._setCoordinate(coordinate);
@@ -1028,8 +1028,8 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     // ... and the coordinates...
     options.zonly = true;
     options.positions = [{
-        lon: coordinate.lon,
-        lat: coordinate.lat
+        lon : coordinate.lon,
+        lat : coordinate.lat
     }];
 
     // ... and the callbacks
@@ -1051,7 +1051,7 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     options.onFailure = function (error) {
         logger.error("[getAltitude] " + error.message);
     };
-    // we use the key "calcul" 
+    // we use the key "calcul"
     options.apiKey = "calcul";
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

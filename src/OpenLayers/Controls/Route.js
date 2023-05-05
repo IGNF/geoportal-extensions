@@ -1406,7 +1406,7 @@ var Route = (function (Control) {
         if (!options.endPoint) {
             return;
         }
-        
+
         // cas où la clef API n'est pas renseignée dans les options du service,
         // on utilise celle renseignée au niveau du controle (calcul par défaut)
         options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey;

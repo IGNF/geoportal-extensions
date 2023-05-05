@@ -4,17 +4,6 @@ import Gp from "geoportal-access-lib";
     var scripts = document.getElementsByTagName("script");
 
     var key = scripts[scripts.length - 1].getAttribute("data-key");
-    // in case of several keys
-    /*if (key) {
-        var splitKeys = key.split(/;|,|\|/);
-        if (splitKeys.length > 1) {
-            var keys = [];
-            for (var i = 0; i < splitKeys.length; i++) {
-                keys.push(splitKeys[i]);
-            }
-            key = keys;
-        }
-    }*/
     var url = scripts[scripts.length - 1].getAttribute("data-url");
     var timeout = scripts[scripts.length - 1].getAttribute("data-timeout");
 

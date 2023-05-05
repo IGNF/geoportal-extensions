@@ -657,7 +657,7 @@ var ElevationPath = (function (Control) {
             apiKey : null,
             export : false,
             elevationOptions : {
-                outputFormat : 'json'
+                outputFormat : "json"
             },
             layerDescription : {
                 title : "Profil altimétrique",

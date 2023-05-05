@@ -238,8 +238,8 @@ var LayerMapBox = (function (VectorTileLayer) {
         }
         // add originators to layer source (to be updated by Originators control)
         this._originators = source.originators;
-        
-            // récuperation du style
+
+        // récuperation du style
         this.setStyleMapBox();
     }
 

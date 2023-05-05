@@ -32,7 +32,7 @@ var logger = Logger.getLogger("sourcewmts");
  * });
  */
 var SourceWMTS = (function (WMTSExtended) {
-    function SourceWMTS(options) {
+    function SourceWMTS (options) {
         if (!(this instanceof SourceWMTS)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
@@ -74,20 +74,20 @@ var SourceWMTS = (function (WMTSExtended) {
             var wmtsSourceOptions = {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
-                url: Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext": Pkg.olExtVersion || Pkg.version
+                url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
+                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
                 }, false),
-                version: wmtsParams.version,
-                style: wmtsParams.styles,
-                format: wmtsParams.format,
-                projection: wmtsParams.projection,
-                maxZoom: LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
-                layer: options.layer,
-                matrixSet: wmtsParams.TMSLink,
-                tileGrid: new WMTSTileGrid({
-                    resolutions: wmtsParams.nativeResolutions,
-                    matrixIds: wmtsParams.matrixIds,
-                    origin: [wmtsParams.tileMatrices[0].topLeftCorner.x, wmtsParams.tileMatrices[0].topLeftCorner.y]
+                version : wmtsParams.version,
+                style : wmtsParams.styles,
+                format : wmtsParams.format,
+                projection : wmtsParams.projection,
+                maxZoom : LayerUtils.getZoomLevelFromScaleDenominator(wmtsParams.minScale),
+                layer : options.layer,
+                matrixSet : wmtsParams.TMSLink,
+                tileGrid : new WMTSTileGrid({
+                    resolutions : wmtsParams.nativeResolutions,
+                    matrixIds : wmtsParams.matrixIds,
+                    origin : [wmtsParams.tileMatrices[0].topLeftCorner.x, wmtsParams.tileMatrices[0].topLeftCorner.y]
                 })
                 // ,
                 // attributions : [
@@ -121,7 +121,6 @@ var SourceWMTS = (function (WMTSExtended) {
             logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");
             return new WMTSExtended({});
         }
-
     }
 
     // Inherits from ol.source.WMTS
