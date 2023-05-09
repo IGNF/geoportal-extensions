@@ -6,7 +6,7 @@ import CircleStyle from "ol/style/Circle";
 import IconStyle from "ol/style/Icon";
 import FillStyle from "ol/style/Fill";
 import StrokeStyle from "ol/style/Stroke";
-import TextStyle from "ol/style/Text"; 
+import TextStyle from "ol/style/Text";
 // import local
 import Color from "../../Common/Utils/ColorUtils";
 
@@ -190,12 +190,12 @@ var GeoJSON = (function (olGeoJSON) {
                     circleStroke["width"] = feature.get("circle-stroke-width") || 1;
                 }
                 var circleFill = null;
-                if (feature.get("circle-fill")||
+                if (feature.get("circle-fill") ||
                     feature.get("circle-fill-opacity")) {
                     circleFill = {};
                     circleFill["color"] = Color.hexToRgba(feature.get("circle-fill"), feature.get("circle-fill-opacity") || 1);
                 }
-                
+
                 // properties :
                 // "name" -> text
                 var label = (feature.get("name")) ? true : false;
@@ -227,7 +227,7 @@ var GeoJSON = (function (olGeoJSON) {
                         // Label
                         if (label) {
                             var optionsText = {};
-                            
+
                             if (stroke) {
                                 optionsText["stroke"] = new StrokeStyle(stroke);
                             }
@@ -241,8 +241,8 @@ var GeoJSON = (function (olGeoJSON) {
                                 // on applique un style par defaut sur le label 
                                 // pour un marker ou un cercle
                                 if (marker || isCircle) {
-                                    var styleText = this.options.defaultStyle.getText();
-                                    if (styleText) {
+                                    if (this.options.defaultStyle.getText() && feature.get("name")) {
+                                        var styleText = this.options.defaultStyle.getText().clone();
                                         styleText.setText(feature.get("name"));
                                         options["text"] = styleText;
                                     }
@@ -299,7 +299,7 @@ var GeoJSON = (function (olGeoJSON) {
                                     opts["image"] = this.options.defaultStyle.getImage();
                                 }
                                 if (this.options.defaultStyle.getText() && feature.get("name")) {
-                                    var styleText = this.options.defaultStyle.getText();
+                                    var styleText = this.options.defaultStyle.getText().clone();
                                     styleText.setText(feature.get("name"));
                                     opts["text"] = styleText;
                                 }
@@ -316,7 +316,7 @@ var GeoJSON = (function (olGeoJSON) {
                                     optsCircle.stroke = this.options.defaultStyle.getStroke();
                                 }
                                 if (this.options.defaultStyle.getText() && feature.get("name")) {
-                                    var styleText = this.options.defaultStyle.getText();
+                                    var styleText = this.options.defaultStyle.getText().clone();
                                     styleText.setText(feature.get("name"));
                                     optsc.text = styleText;
                                 }

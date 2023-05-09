@@ -412,7 +412,8 @@ var LayerImport = (function (Control) {
             this.options.vectorStyleOptions.GPX.defaultStyle = new Style({
                 image : LayerImport.DefaultStyles.image,
                 stroke : LayerImport.DefaultStyles.stroke,
-                fill : LayerImport.DefaultStyles.fill
+                fill : LayerImport.DefaultStyles.fill,
+                text : LayerImport.DefaultStyles.text
             });
         }
         if (options.vectorStyleOptions && options.vectorStyleOptions.GeoJSON && options.vectorStyleOptions.GeoJSON.defaultStyle) {
@@ -423,7 +424,8 @@ var LayerImport = (function (Control) {
             this.options.vectorStyleOptions.GeoJSON.defaultStyle = new Style({
                 image : LayerImport.DefaultStyles.image,
                 stroke : LayerImport.DefaultStyles.stroke,
-                fill : LayerImport.DefaultStyles.fill
+                fill : LayerImport.DefaultStyles.fill,
+                text : LayerImport.DefaultStyles.text
             });
         }
         // FIXME tester les styles par defaut sur une couche vecteur tuilé sans style !
@@ -618,13 +620,15 @@ var LayerImport = (function (Control) {
         this._defaultGPXStyle = new Style({
             image : gpxDefaultStyles.image,
             stroke : gpxDefaultStyles.stroke,
-            fill : gpxDefaultStyles.fill
+            fill : gpxDefaultStyles.fill,
+            text : gpxDefaultStyles.text
         });
         var geoJSONDefaultStyles = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
         this._defaultGeoJSONStyle = new Style({
             image : geoJSONDefaultStyles.image,
             stroke : geoJSONDefaultStyles.stroke,
-            fill : geoJSONDefaultStyles.fill
+            fill : geoJSONDefaultStyles.fill,
+            text : geoJSONDefaultStyles.text
         });
         var MapBoxDefaultStyles = this.options.vectorStyleOptions.MapBox.defaultStyle;
         this._defaultMapBoxStyle = new Style({
