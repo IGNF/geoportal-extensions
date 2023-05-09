@@ -428,6 +428,7 @@ var DrawingDOM = {
          * TODO : finir de remplir la div pour tous les styles éditables.
          */
         switch (options.geomType.toLowerCase()) {
+            case "point&text":
             case "point":
                 li = this._createMarkersChooser({
                     className : "gp-styling-option",
@@ -447,15 +448,16 @@ var DrawingDOM = {
                     defaultValue : options.initValues.markerSize * 10
                 });
                 ul.appendChild(li);
+                li = this._createStylingElement({
+                    type : "color",
+                    className : "gp-styling-option",
+                    label : this.options.labels.markerColor,
+                    id : this._addUID("markerColor"),
+                    defaultValue : options.initValues.markerColor
+                });
+                ul.appendChild(li);
                 if (options.initValues.markerCustom) {
-                    li = this._createStylingElement({
-                        type : "color",
-                        className : "gp-styling-option",
-                        label : this.options.labels.markerColor,
-                        id : this._addUID("markerColor"),
-                        defaultValue : options.initValues.markerColor
-                    });
-                    ul.appendChild(li);
+                    // FIXME que faire des icones customisés ?
                 }
                 break;
             case "text":
@@ -473,6 +475,18 @@ var DrawingDOM = {
                     label : this.options.labels.strokeColor,
                     id : this._addUID("strokeColor"),
                     defaultValue : options.initValues.strokeColor
+                });
+                ul.appendChild(li);
+                li = this._createStylingElement({
+                    type : "range",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeWidth,
+                    title : "1 à 10 pixels",
+                    id : this._addUID("strokeWidth"),
+                    min : 1,
+                    max : 10,
+                    step : 1,
+                    defaultValue : options.initValues.strokeWidth
                 });
                 ul.appendChild(li);
                 break;

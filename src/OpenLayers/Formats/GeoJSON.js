@@ -6,6 +6,7 @@ import CircleStyle from "ol/style/Circle";
 import IconStyle from "ol/style/Icon";
 import FillStyle from "ol/style/Fill";
 import StrokeStyle from "ol/style/Stroke";
+import TextStyle from "ol/style/Text"; 
 // import local
 import Color from "../../Common/Utils/ColorUtils";
 
@@ -174,26 +175,79 @@ var GeoJSON = (function (olGeoJSON) {
                     fill["color"] = Color.hexToRgba(feature.get("fill"), feature.get("fill-opacity") || 1);
                 }
 
-                // styles en fonction du type de geometrie
+                // properties :
+                // "circle-fill"
+                // "circle-stroke"
+                // "circle-stroke-width"
+                // "circle-radius"
+                var circleRadius = feature.get("circle-radius") || 6;
+                var circleStroke = null;
+                if (feature.get("circle-stroke") ||
+                    feature.get("circle-stroke-opacity") ||
+                    feature.get("circle-stroke-width")) {
+                    circleStroke = {};
+                    circleStroke["color"] = Color.hexToRgba(feature.get("circle-stroke"), feature.get("circle-stroke-opacity") || 1);
+                    circleStroke["width"] = feature.get("circle-stroke-width") || 1;
+                }
+                var circleFill = null;
+                if (feature.get("circle-fill")||
+                    feature.get("circle-fill-opacity")) {
+                    circleFill = {};
+                    circleFill["color"] = Color.hexToRgba(feature.get("circle-fill"), feature.get("circle-fill-opacity") || 1);
+                }
+                
+                // properties :
+                // "name" -> text
+                var label = (feature.get("name")) ? true : false;
+
+                // options du Style en fonction du type de geometrie
                 var type = feature.getGeometry().getType();
                 switch (type) {
+                    case "Circle":
                     case "Point":
                     case "MultiPoint":
                         // Cercle
+                        var isCircle = false;
                         var optionsCircle = {};
-                        if (stroke) {
-                            optionsCircle["stroke"] = new StrokeStyle(stroke);
+                        if (circleStroke) {
+                            optionsCircle["stroke"] = new StrokeStyle(circleStroke);
                         }
-                        if (fill) {
-                            optionsCircle["fill"] = new FillStyle(fill);
+                        if (circleFill) {
+                            optionsCircle["fill"] = new FillStyle(circleFill);
                         }
                         if (Object.keys(optionsCircle).length !== 0) {
-                            optionsCircle["radius"] = 6; // param fixe
+                            isCircle = true;
+                            optionsCircle["radius"] = circleRadius;
                             options["image"] = new CircleStyle(optionsCircle);
                         }
-                        // Ponctuel ou label
+                        // Ponctuel
                         if (marker) {
                             options["image"] = new IconStyle(marker);
+                        }
+                        // Label
+                        if (label) {
+                            var optionsText = {};
+                            
+                            if (stroke) {
+                                optionsText["stroke"] = new StrokeStyle(stroke);
+                            }
+                            if (fill) {
+                                optionsText["fill"] = new FillStyle(fill);
+                            }
+                            if (Object.keys(optionsText).length !== 0) {
+                                optionsText["text"] = feature.get("name");
+                                options["text"] = new TextStyle(optionsText);
+                            } else {
+                                // on applique un style par defaut sur le label 
+                                // pour un marker ou un cercle
+                                if (marker || isCircle) {
+                                    var styleText = this.options.defaultStyle.getText();
+                                    if (styleText) {
+                                        styleText.setText(feature.get("name"));
+                                        options["text"] = styleText;
+                                    }
+                                }
+                            }
                         }
                         break;
 
@@ -235,12 +289,43 @@ var GeoJSON = (function (olGeoJSON) {
                         switch (type) {
                             case "Point":
                             case "MultiPoint":
-                            case "Circle":
+                                // on n'a aucune information sur le type de style à appliquer sur un "Point" :
+                                // * label ou 
+                                // * marker ou 
+                                // * marker avec label
+                                // donc, c'est en fonction des styles par defaut...
+                                var opts = {};
                                 if (this.options.defaultStyle.getImage()) {
-                                    style = new Style({
-                                        image : this.options.defaultStyle.getImage()
-                                    });
+                                    opts["image"] = this.options.defaultStyle.getImage();
                                 }
+                                if (this.options.defaultStyle.getText() && feature.get("name")) {
+                                    var styleText = this.options.defaultStyle.getText();
+                                    styleText.setText(feature.get("name"));
+                                    opts["text"] = styleText;
+                                }
+                                style = new Style(opts);
+                                break;
+                            case "Circle":
+                                var optsc = {};
+
+                                var optsCircle = {};
+                                if (this.options.defaultStyle.getFill()) {
+                                    optsCircle.fill = this.options.defaultStyle.getFill();
+                                }
+                                if (this.options.defaultStyle.getStroke()) {
+                                    optsCircle.stroke = this.options.defaultStyle.getStroke();
+                                }
+                                if (this.options.defaultStyle.getText() && feature.get("name")) {
+                                    var styleText = this.options.defaultStyle.getText();
+                                    styleText.setText(feature.get("name"));
+                                    optsc.text = styleText;
+                                }
+                                if (Object.keys(optsCircle).length !== 0) {
+                                    // FIXME param radius ?
+                                    optsCircle.radius = 3;
+                                    optsc.image = new CircleStyle(optsCircle)
+                                }
+                                style = new Style(optsc);
                                 break;
                             case "Polygon":
                             case "MultiPolygon":
@@ -298,12 +383,15 @@ var GeoJSON = (function (olGeoJSON) {
                         return;
                     }
                 }
-                // convertir le style en properties
-                // * stroke
-                // * fill
-                // * image :
-                //      * un marker ou un label
-                //      * un cercle si fill et/ou stroke est present !
+                // convertir le style en properties en fonction du type de Feature
+                // * LineString : stroke
+                // * Polygon : fill / stroke
+                // * Point : image / text 
+                //      * un marker avec ou sans un label
+                //      * un cercle (*)
+                //      * un label
+                // (*) le cercle : fill / stroke / radius
+
                 var fill = style.getFill();
                 if (fill) {
                     var colorFill = fill.getColor();
@@ -387,6 +475,16 @@ var GeoJSON = (function (olGeoJSON) {
                         if (srcImage) {
                             feature.set("marker-symbol", srcImage);
                         }
+                        // INFO
+                        // cas particulier où un objet est transformé :
+                        //  * un cercle est transformé en icone
+                        //  > les attributs du cercle sont à supprimer !
+                        feature.unset("circle-fill");
+                        feature.unset("circle-fill-opacity");
+                        feature.unset("circle-stroke");
+                        feature.unset("circle-stroke-width");
+                        feature.unset("circle-stroke-opacity");
+                        feature.unset("circle-radius");
                     } else {
                         var fillImg = image.getFill();
                         if (fillImg) {
@@ -402,11 +500,11 @@ var GeoJSON = (function (olGeoJSON) {
                             }
                             if (Color.isRGB(colorFillImg)) {
                                 var oColorFillImg = Color.rgbaToHex(colorFillImg);
-                                feature.set("fill", oColorFillImg.hex);
-                                feature.set("fill-opacity", oColorFillImg.opacity);
+                                feature.set("circle-fill", oColorFillImg.hex);
+                                feature.set("circle-fill-opacity", oColorFillImg.opacity);
                             } else {
-                                feature.set("fill", colorFillImg);
-                                feature.set("fill-opacity", 1);
+                                feature.set("circle-fill", colorFillImg);
+                                feature.set("circle-fill-opacity", 1);
                             }
                         }
                         var strokeImg = image.getStroke();
@@ -423,14 +521,16 @@ var GeoJSON = (function (olGeoJSON) {
                             }
                             if (Color.isRGB(colorStrokeImg)) {
                                 var oColorStrokeImg = Color.rgbaToHex(colorStrokeImg);
-                                feature.set("stroke", oColorStrokeImg.hex);
-                                feature.set("stroke-opacity", oColorStrokeImg.opacity);
+                                feature.set("circle-stroke", oColorStrokeImg.hex);
+                                feature.set("circle-stroke-opacity", oColorStrokeImg.opacity);
                             } else {
-                                feature.set("stroke", colorStrokeImg);
-                                feature.set("stroke-opacity", 1);
+                                feature.set("circle-stroke", colorStrokeImg);
+                                feature.set("circle-stroke-opacity", 1);
                             }
-                            feature.set("stroke-width", strokeImg.getWidth());
+                            feature.set("circle-stroke-width", strokeImg.getWidth());
                         }
+                        var radius = image.getRadius();
+                        feature.set("circle-radius", radius);
                     }
                 }
             }

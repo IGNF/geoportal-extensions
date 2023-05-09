@@ -253,6 +253,7 @@ var Drawing = (function (Control) {
     Drawing.DefaultStyles = {
         textFillColor : "#000000",
         textStrokeColor : "#FFFFFF",
+        textStrokeWidth : 6, 
         // INFO : cette option n'est pas surchargeable via les options du constructeur !
         textIcon1x1 : {
             src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
@@ -1124,44 +1125,12 @@ var Drawing = (function (Control) {
             var geom = seEv.selected[0].getGeometry();
             var style = seEv.selected[0].getStyle();
             if (geom instanceof Point || geom instanceof MultiPoint) {
-                // on determine si c'est un marker ou un label.
-                var _label = seEv.selected[0].getProperties().name;
-                if (style && style.getText() && _label) {
-                    geomType = "Text";
-                    if (style.getText().getStroke() &&
-                            style.getText().getStroke().getColor()) {
-                        valuesColor = style.getText().getStroke().getColor();
-                        if (Array.isArray(valuesColor)) { // FIXME Array !?
-                            valuesColor = "rgba(" + valuesColor.join() + ")";
-                        } else {
-                            initValues.strokeColor = valuesColor;
-                        }
-                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
-                            hex : valuesColor,
-                            opacity : 1
-                        };
-                        initValues.strokeColor = hexColor.hex;
-                        initValues.strokeOpacity = hexColor.opacity;
-                    }
-                    if (style.getText().getFill() && style.getText().getFill().getColor()) {
-                        valuesColor = style.getText().getFill().getColor();
-                        if (Array.isArray(valuesColor)) {
-                            valuesColor = "rgba(" + valuesColor.join() + ")";
-                        } else {
-                            initValues.fillColor = valuesColor;
-                        }
-                        hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
-                            hex : valuesColor,
-                            opacity : 1
-                        };
-                        initValues.fillColor = hexColor.hex;
-                        initValues.fillOpacity = hexColor.opacity;
-                    }
-                    initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor;
-                    initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor;
-                } else if (style && style.getImage()) {
+                // on determine si c'est un marker (ou cercle), un label ou les 2.
+                if (style && style.getImage()) {
                     geomType = "Point";
-                    if (style.getImage().getSrc()) {
+                    // on traite un marker
+                    // mais si c'est un cercle !?
+                    if (typeof style.getImage().getSrc === "function") {
                         initValues.markerSrc = style.getImage().getSrc();
                         initValues.markerSize = style.getImage().getScale() || 1;
                         initValues.markerAnchor = style.getImage().getAnchor();
@@ -1188,6 +1157,47 @@ var Drawing = (function (Control) {
                         initValues.markerAnchor = this.options.markersList[0].anchor;
                     }
                     initValues.markerCustom = !(this._getsMarkersOptionsFromSrc(initValues.markerSrc));
+                }
+                if (style && style.getText()) {
+                    var _label = seEv.selected[0].getProperties().name;
+                    if (_label) {
+                        // test si on a un marker avec un label
+                        geomType = (geomType === "Point") ? "Point&Text" : "Text";
+                        if (style.getText().getStroke() && style.getText().getStroke().getColor()) {
+                            valuesColor = style.getText().getStroke().getColor();
+                            if (Array.isArray(valuesColor)) { // FIXME Array !?
+                                valuesColor = "rgba(" + valuesColor.join() + ")";
+                            } else {
+                                initValues.strokeColor = valuesColor;
+                            }
+                            hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                                hex : valuesColor,
+                                opacity : 1
+                            };
+                            initValues.strokeColor = hexColor.hex;
+                            initValues.strokeOpacity = hexColor.opacity;
+                        }
+                        if (style.getText().getStroke() && style.getText().getStroke().getWidth()) {
+                            initValues.strokeWidth = style.getText().getStroke().getWidth();
+                        }
+                        if (style.getText().getFill() && style.getText().getFill().getColor()) {
+                            valuesColor = style.getText().getFill().getColor();
+                            if (Array.isArray(valuesColor)) {
+                                valuesColor = "rgba(" + valuesColor.join() + ")";
+                            } else {
+                                initValues.fillColor = valuesColor;
+                            }
+                            hexColor = Color.isRGB(valuesColor) ? Color.rgbaToHex(valuesColor) : {
+                                hex : valuesColor,
+                                opacity : 1
+                            };
+                            initValues.fillColor = hexColor.hex;
+                            initValues.fillOpacity = hexColor.opacity;
+                        }
+                        initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor;
+                        initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.textStrokeWidth;
+                        initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor;
+                    }
                 }
             } else if (geom instanceof LineString || geom instanceof MultiLineString) {
                 geomType = "Line";
@@ -1281,6 +1291,7 @@ var Drawing = (function (Control) {
                     case "text":
                         if (setDefault) {
                             dtObj.options.defaultStyles.textStrokeColor = strokeColorElem.value;
+                            dtObj.options.defaultStyles.textStrokeWidth = strokeWidthElem.value;
                             dtObj.options.defaultStyles.textFillColor = fillColorElem.value;
                         } else {
                             seEv.selected[0].setStyle(new Style({
@@ -1293,12 +1304,13 @@ var Drawing = (function (Control) {
                                     }),
                                     stroke : new Stroke({
                                         color : strokeColorElem.value,
-                                        width : 3
+                                        width : parseInt(strokeWidthElem.value, 10)
                                     })
                                 })
                             }));
                         }
                         break;
+                    case "point&text":
                     case "point":
                         // FIXME cas où le marker n'est pas dans la liste ?
                         // si le marker n'existe pas dans le liste, on ne souhaite donc que changer la couleur du
@@ -1309,6 +1321,7 @@ var Drawing = (function (Control) {
                         if (markerChecked) {
                             markerSelected = dtObj._getsMarkersOptionsFromSrc(markerChecked.value);
                             markerSelected.scale = scale;
+                            markerSelected.color = markerColorElem.value;
                         }
                         if (setDefault) {
                             dtObj.options.defaultStyles.markerSize = scale;
@@ -1327,14 +1340,36 @@ var Drawing = (function (Control) {
                                     dtObj.options.markersList.splice(0, 0, markerSelected);
                                 }
                             }
+                            if (geomType.toLowerCase() === "point&text") {
+                                dtObj.options.defaultStyles.textStrokeColor = initValues.strokeColor;
+                                dtObj.options.defaultStyles.textStrokeWidth = initValues.strokeWidth;
+                                dtObj.options.defaultStyles.textFillColor = initValues.fillColor;
+                            }
                         } else {
+                            var text = {};
+                            if (geomType.toLowerCase() === "point&text") {
+                                text = {
+                                    text : new Text({
+                                        font : "16px sans",
+                                        textAlign : "left",
+                                        text : style.getText().getText(),
+                                        fill : new Fill({
+                                            color : initValues.fillColor
+                                        }),
+                                        stroke : new Stroke({
+                                            color : initValues.strokeColor,
+                                            width : parseInt(initValues.strokeWidth, 10)
+                                        })
+                                    })
+                                }
+                            }
                             if (markerSelected) {
-                                seEv.selected[0].setStyle(new Style({
+                                seEv.selected[0].setStyle(new Style(Object.assign({
                                     image : new Icon(dtObj._getIconStyleOptions(markerSelected))
-                                }));
+                                }, text)));
                             } else {
                                 // FIXME anchor !?
-                                seEv.selected[0].setStyle(new Style({
+                                seEv.selected[0].setStyle(new Style(Object.assign({
                                     image : new Icon({
                                         src : initValues.markerSrc, // on garde le pictogramme initial !
                                         color : markerColorElem.value, // on recupère la couleur !
@@ -1344,7 +1379,7 @@ var Drawing = (function (Control) {
                                         anchorYUnits : "pixels",
                                         scale : scale
                                     })
-                                }));
+                                }, text)));
                             }
                         }
                         break;
@@ -1466,8 +1501,8 @@ var Drawing = (function (Control) {
                 // pour les autres, c'est un attribut du feature
                 // choix à faire entre description (KML et GeoJSON) ou desc (GPX)
                 var featProps = seEv.selected[0].getProperties();
-                if (featProps && featProps.hasOwnProperty("description")) {
-                    _textValue = featProps["description"];
+                if (featProps && (featProps.hasOwnProperty("description") || featProps.hasOwnProperty("desc"))) {
+                    _textValue = featProps["description"] || featProps["desc"];
                 }
                 if (featProps && featProps.hasOwnProperty("measure")) {
                     _measure = featProps["measure"];
