@@ -1,13 +1,39 @@
 {
-   "devDependencies" : {},
-   "main" : "dist/GpPluginItowns-src.js",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "bundleDependencies" : [],
-   "scripts" : {},
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
    "author" : "IGNF",
+   "name" : "geoportal-extensions-itowns",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "version" : "2.3.10",
+   "description" : "French Geoportal Extensions for iTowns",
+   "scripts" : {},
+   "directories" : {},
+   "peerDependencies" : {},
+   "bugs" : {},
+   "dependencies" : {
+      "loglevel" : "1.6.7",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
+      "itowns" : "2.38.2",
+      "three" : "0.137.5",
+      "sortablejs" : "1.14.0",
+      "node-fetch" : "^2.6.1",
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.5"
+   },
+   "types" : "src/Itowns/index.d.ts",
+   "bundleDependencies" : [],
+   "module" : "src/Itowns/index.js",
+   "main" : "dist/GpPluginItowns-src.js",
+   "date" : "05/04/2023",
+   "devDependencies" : {},
    "files" : [
       "dist/",
       "src/",
@@ -15,31 +41,5 @@
       "README.md",
       "package.json"
    ],
-   "dependencies" : {
-      "three" : "0.137.5",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
-      "itowns" : "2.38.2",
-      "sortablejs" : "1.14.0",
-      "loglevel" : "1.6.7",
-      "proj4" : "2.7.5"
-   },
-   "module" : "src/Itowns/index.js",
-   "directories" : {},
-   "bugs" : {},
-   "types" : "src/Itowns/index.d.ts",
-   "date" : "05/04/2023",
-   "license" : "CECILL-B",
-   "version" : "2.3.10",
-   "peerDependencies" : {},
-   "name" : "geoportal-extensions-itowns",
-   "description" : "French Geoportal Extensions for iTowns",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html"
+   "license" : "CECILL-B"
 }
