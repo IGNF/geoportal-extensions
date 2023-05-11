@@ -25,6 +25,11 @@ var logger = Logger.getLogger("sourcewmts");
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
+ * @param {Array} [options.legends]   - Legends objects associated to the layer
+ * @param {Array} [options.metadata]   - Metadata objects associated to the layer
+ * @param {String} [options.title]   - title of the layer
+ * @param {String} [options.description]   - description of the layer
+ * @param {String} [options.quicklookUrl]   - quicklookUrl of the layer
  * @param {Object} [options.olParams] - other options for ol.source.WMTS function (see {@link http://openlayers.org/en/latest/apidoc/ol.source.WMTS.html ol.source.WMTS})
  * @example
  * var sourceWMTS = new ol.source.GeoportalWMTS({
@@ -67,10 +72,6 @@ var SourceWMTS = (function (WMTSExtended) {
             // save originators (to be updated by Originators control)
             this._originators = wmtsParams.originators;
 
-            // save legends and metadata (to be added to LayerSwitcher control)
-            this._legends = wmtsParams.legends;
-            this._metadata = wmtsParams.metadata;
-
             var wmtsSourceOptions = {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
@@ -89,12 +90,6 @@ var SourceWMTS = (function (WMTSExtended) {
                     matrixIds : wmtsParams.matrixIds,
                     origin : [wmtsParams.tileMatrices[0].topLeftCorner.x, wmtsParams.tileMatrices[0].topLeftCorner.y]
                 })
-                // ,
-                // attributions : [
-                //     new ol.Attribution({
-                //         html : "<a class='gp-control-attribution-link' target='_blank' href='http://www.ign.fr'><img class='gp-control-attribution-image' src='http://wxs.ign.fr/static/logos/IGN/IGN.gif' title='Institut national de l\'information géographique et forestière' style='height: 30px; width: 30px;'></a>"
-                //     })
-                // ]
             };
 
             // récupération des autres paramètres passés par l'utilisateur
@@ -111,11 +106,11 @@ var SourceWMTS = (function (WMTSExtended) {
             this._originators = wmtsParams.originators;
 
             // add legends and metadata (to be added to LayerSwitcher control)
-            this._legends = wmtsParams.legends;
-            this._metadata = wmtsParams.metadata;
-            this._description = wmtsParams.description;
-            this._title = wmtsParams.title;
-            this._quicklookUrl = wmtsParams.quicklookUrl;
+            this._legends = options.legends || wmtsParams.legends;
+            this._metadata = options.metadata || wmtsParams.metadata;
+            this._description = options.description || wmtsParams.description;
+            this._title = options.title || wmtsParams.title;
+            this._quicklookUrl = options.quicklookUrl || wmtsParams.quicklookUrl;
         } else {
             // If layer is not in Gp.Config
             logger.log("[source WMTS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");

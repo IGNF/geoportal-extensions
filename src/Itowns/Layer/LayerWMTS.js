@@ -24,6 +24,11 @@ var logger = Logger.getLogger("wmtsLayer");
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
+ * @param {Array} [options.legends]   - Overloads the default legends objects associated to the layer
+ * @param {Array} [options.metadata]   - Overloads the default Metadata objects associated to the layer
+ * @param {String} [options.title]   - Overloads the default title of the layer
+ * @param {String} [options.description]   - Overloads the default description of the layer
+ * @param {String} [options.quicklookUrl]   - Overloads the default quicklookUrl of the layer
  * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
  * var geoportalWMTS = new itowns.layer.GeoportalWMTS({
@@ -74,6 +79,7 @@ function LayerWMTS (options) {
         if (options.itownsParams && options.itownsParams.source && options.itownsParams.source.attribution) {
             wmtsParams.originators = options.itownsParams.source.attribution;
         }
+
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https
         var protocol = options.ssl === false ? "http://" : "https://";
@@ -112,11 +118,12 @@ function LayerWMTS (options) {
         Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        config.legends = wmtsParams.legends;
-        config.metadata = wmtsParams.metadata;
-        config.description = wmtsParams.description;
-        config.title = wmtsParams.title;
-        config.quicklookUrl = wmtsParams.quicklookUrl;
+        // we take in priority the explicit options given by the user
+        config.legends = options.legends || wmtsParams.legends;
+        config.metadata = options.metadata || wmtsParams.metadata;
+        config.description = options.description || wmtsParams.description;
+        config.title = options.title || wmtsParams.title;
+        config.quicklookUrl = options.quicklookUrl || wmtsParams.quicklookUrl;
 
         return new ItColorLayer(config.id, config);
     } else {

@@ -22,6 +22,11 @@ var logger = Logger.getLogger("sourcewms");
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
+ * @param {Array} [options.legends]   - Legends objects associated to the layer
+ * @param {Array} [options.metadata]   - Metadata objects associated to the layer
+ * @param {String} [options.title]   - title of the layer
+ * @param {String} [options.description]   - description of the layer
+ * @param {String} [options.quicklookUrl]   - quicklookUrl of the layer
  * @param {Object} [options.olParams] - other options for ol.source.TileWMS function (see {@link http://openlayers.org/en/latest/apidoc/ol.source.TileWMS.html ol.source.TileWMS})
  * @example
  * var sourceWMS = new ol.source.GeoportalWMS({
@@ -97,11 +102,11 @@ var SourceWMS = (function (TileWMSSource) {
             this._originators = wmsParams.originators;
 
             // save legends and metadata (to be added to LayerSwitcher control)
-            this._legends = wmsParams.legends;
-            this._metadata = wmsParams.metadata;
-            this._title = wmsParams.title;
-            this._description = wmsParams.description;
-            this._quicklookUrl = wmsParams.quicklookUrl;
+            this._legends = options.legends || wmsParams.legends;
+            this._metadata = options.metadata || wmsParams.metadata;
+            this._title = options.title || wmsParams.title;
+            this._description = options.description || wmsParams.description;
+            this._quicklookUrl = options.quicklookUrl || wmsParams.quicklookUrl;
         } else {
             // If layer is not in Gp.Config
             logger.log("[source WMS] ERROR : " + options.layer + " cannot be found in Geoportal Configuration. Make sure that this resource is included in your contract key.");

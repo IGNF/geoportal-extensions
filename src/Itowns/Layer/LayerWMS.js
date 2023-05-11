@@ -24,6 +24,11 @@ var logger = Logger.getLogger("wmsLayer");
  * @param {String} options.layer      - Layer name (e.g. "ORTHOIMAGERY.ORTHOPHOTOS")
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
+ * @param {Array} [options.legends]   - Overloads the default legends objects associated to the layer
+ * @param {Array} [options.metadata]   - Overloads the default Metadata objects associated to the layer
+ * @param {String} [options.title]   - Overloads the default title of the layer
+ * @param {String} [options.description]   - Overloads the default description of the layer
+ * @param {String} [options.quicklookUrl]   - Overloads the default quicklookUrl of the layer
  * @param {Object} [options.itownsParams] - other options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
  * var geoportalWMS = new itowns.layer.GeoportalWMS({
@@ -110,11 +115,12 @@ function LayerWMS (options) {
         Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        config.legends = wmsParams.legends;
-        config.metadata = wmsParams.metadata;
-        config.description = wmsParams.description;
-        config.title = wmsParams.title;
-        config.quicklookUrl = wmsParams.quicklookUrl;
+        // we take in priority the explicit options given by the user
+        config.legends = options.legends || wmsParams.legends;
+        config.metadata = options.metadata || wmsParams.metadata;
+        config.description = options.description || wmsParams.description;
+        config.title = options.title || wmsParams.title;
+        config.quicklookUrl = options.quicklookUrl || wmsParams.quicklookUrl;
 
         return new ItColorLayer(config.id, config);
     } else {

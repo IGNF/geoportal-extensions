@@ -98,6 +98,11 @@ var Layers = {
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
      * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
      * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
+     * @param {Array} [settings.legends]   - Overloads the default legends objects associated to the layer
+     * @param {Array} [settings.metadata]   - Overloads the default Metadata objects associated to the layer
+     * @param {String} [settings.title]   - Overloads the default title of the layer
+     * @param {String} [settings.description]   - Overloads the default description of the layer
+     * @param {String} [settings.quicklookUrl]   - Overloads the default quicklookUrl of the layer
      *
      * @returns {L.geoportalLayer.WMS} WMS layer
      *
@@ -181,11 +186,11 @@ var Layers = {
                 paramsNative : paramsNative,
                 paramsWms : paramsWms,
                 originators : this.params.originators || this.settings.originators || [],
-                legends : this.params.legends || [],
-                metadata : this.params.metadata || [],
-                title : this.params.title || null,
-                description : this.params.description || null,
-                quicklookUrl : this.params.quicklookUrl || null
+                legends : this.settings.originators || this.params.legends || [],
+                metadata : this.settings.metadata || this.params.metadata || [],
+                title : this.settings.title || this.params.title || "",
+                description : this.settings.description || this.params.description || "",
+                quicklookUrl : this.settings.quicklookUrl || this.params.quicklookUrl || ""
             }
         );
     },
@@ -296,11 +301,11 @@ var Layers = {
                 paramsNative : paramsNative,
                 paramsWmts : paramsWmts,
                 originators : this.params.originators || this.settings.originators || [],
-                legends : this.params.legends || [],
-                metadata : this.params.metadata || [],
-                title : this.params.title || "",
-                description : this.params.description || "",
-                quicklookUrl : this.params.quicklookUrl || ""
+                legends : this.settings.originators || this.params.legends || [],
+                metadata : this.settings.metadata || this.params.metadata || [],
+                title : this.settings.title || this.params.title || "",
+                description : this.settings.description || this.params.description || "",
+                quicklookUrl : this.settings.quicklookUrl || this.params.quicklookUrl || ""
             }
         );
     }
