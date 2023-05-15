@@ -13,7 +13,7 @@
 
 * [Added]
 
-    - Widget d'export des tracés et calculs des contôles d'itineraire, d'isochrone et de profil altimétrique.
+    - Widget d'export des tracés et calculs des contrôles d'itineraire, d'isochrone et de profil altimétrique.
 
 * [Changed]
 
@@ -63,6 +63,8 @@
 > Release Extension Geoportail itowns
 
 ## Summary
+
+Requete du service alti via les widgets de mousePosition et de profil alti
 
 ## Changelog
 
