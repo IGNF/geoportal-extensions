@@ -10,9 +10,23 @@
 		<time>2005-08-21T16:07:29Z</time>
 		<bounds minlat="41.536388" minlon="8.787003" maxlat="41.635265" maxlon="8.941197" />
 	</metadata>
+	<wpt lat="41.602507000" lon="8.807880000">
+		<ele>15.000000</ele>
+		<name>label uniquement</name>
+		<cmt>21/08/2005</cmt>
+		<desc>21/08/2005</desc>
+		<sym>Waypoint</sym>
+		<extensions>
+			<stroke>#ff00ff</stroke>
+			<stroke-width>3</stroke-width>
+			<stroke-opacity>1</stroke-opacity>
+			<fill>#ffffff</fill>
+			<fill-opacity>1</fill-opacity>
+		</extensions>
+	</wpt>
 	<wpt lat="41.622507000" lon="8.797880000">
 		<ele>15.000000</ele>
-		<name>003</name>
+		<name>icone small avec label</name>
 		<cmt>21/08/2005</cmt>
 		<desc>21/08/2005</desc>
 		<sym>Waypoint</sym>
@@ -22,7 +36,7 @@
 	</wpt>
 	<wpt lat="41.558486000" lon="8.794569000">
 		<ele>40.000000</ele>
-		<name>004</name>
+		<name>cercle avec label</name>
 		<cmt>21/08/2005</cmt>
 		<desc>21/08/2005</desc>
 		<sym>Waypoint</sym>
@@ -36,14 +50,13 @@
 	</wpt>
 	<wpt lat="41.558620000" lon="8.795230000">
 		<ele>36.000000</ele>
-		<name>005</name>
 		<cmt>21/08/2005</cmt>
-		<desc>21/08/2005</desc>
+		<desc>icone par defaut sans label</desc>
 		<sym>Waypoint</sym>
 	</wpt>
 	<wpt lat="41.557169000" lon="8.809783000">
 		<ele>5.000000</ele>
-		<name>Tivell</name>
+		<name>icone medium avec label</name>
 		<cmt>21/08/2005</cmt>
 		<desc>21/08/2005</desc>
 		<sym>Waypoint</sym>
@@ -55,7 +68,7 @@
 	</wpt>
 	<wpt lat="41.559169000" lon="8.859783000">
 		<ele>5.000000</ele>
-		<name>Tivell2</name>
+		<name>icone small red avec label</name>
 		<cmt>21/08/2005</cmt>
 		<desc>21/08/2005</desc>
 		<sym>Waypoint</sym>
@@ -67,7 +80,7 @@
 	</wpt>
 	<wpt lat="41.558169000" lon="8.899783000">
 		<ele>5.000000</ele>
-		<name>Tivell3</name>
+		<name>icone large avec label</name>
 		<cmt>21/08/2005</cmt>
 		<desc>21/08/2005</desc>
 		<sym>Waypoint</sym>

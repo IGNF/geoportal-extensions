@@ -5,9 +5,11 @@ import {
     Icon,
     Stroke,
     Style,
-    Text
+    Text,
+    Circle
 } from "ol/style";
 // import local
+import Color from "../../Common/Utils/ColorUtils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Parser from "../../Common/Utils/Parser";
 import Utils from "../../Common/Utils";
@@ -56,14 +58,29 @@ var KML = (function (olKML) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
         }
 
+        options = options || {};
+
+        // INFO
+        // source DOM (Document ou Node)
         this.source = null;
 
-        // call constructor
-        olKML.call(this,
-            options
-        );
+        // INFO
+        // gestion des extensions
+        this.extensions = options.extensions || null;
 
-        this.options = options || {};
+        // INFO
+        // defaultStyle est un tableau d'objet de type Style
+        if (options.defaultStyle && !Array.isArray(options.defaultStyle)) {
+            options.defaultStyle = [options.defaultStyle];
+        }
+
+        if (options.defaultStyle === null || typeof options.defaultStyle === "undefined") {
+            options.defaultStyle = [];
+        }
+
+        // call constructor
+        olKML.call(this, options);
+
     }
 
     // Inherits
@@ -249,7 +266,7 @@ var KML = (function (olKML) {
                             var labelDescription = features[index].getProperties().description;
                             var value = labelName || labelDescription;
                             logger.trace(value);
-
+                            
                             // C'est uniquement un Label !
                             if (!iconStyle && labelStyle) {
                                 var fctLabel = process.labelStyle;
@@ -297,8 +314,8 @@ var KML = (function (olKML) {
         }
 
         // on ajoute les extensions à la racine pour les metadonnées de calcul
-        if (this.options.hasOwnProperty("extensions")) {
-            _writeRootExtensions(kmlNode, this.options.extensions);
+        if (this.hasOwnProperty("extensions")) {
+            _writeRootExtensions(kmlNode, this.extensions);
         }
 
         // On ajoute les styles étendus
@@ -325,6 +342,25 @@ var KML = (function (olKML) {
      * @private
      */
     function _writeExtendStylesFeatures (kmlNode, features, options) {
+
+        // RGB Colors (RRGGBB) To KML Colors (AABBGGRR)
+        function __convertRGBColorsToKML (data, opacity) {
+            var strColor = data.toString(16);
+
+            if (strColor.charAt(0) === "#") {
+                strColor = strColor.slice(1);
+            }
+
+            opacity = opacity || 1;
+            opacity = parseInt(opacity * 255, 10);
+            opacity = opacity.toString(16);
+            var color = opacity;
+            color = color + strColor.substr(4, 2);
+            color = color + strColor.substr(2, 2);
+            color = color + strColor.substr(0, 2);
+            return color.toLowerCase();
+        }
+
         /**
          * C'est un Label !
          * On va donc y ajouter qq styles sur le Label (police, halo, ...) :
@@ -336,7 +372,7 @@ var KML = (function (olKML) {
          * @example
          *      <LabelStyleSimpleExtensionGroup fontFamily="Arial" haloColor="16777215" haloRadius="2" haloOpacity="1"/>
          */
-        var __createExtensionStyleLabel = function (feature, style) {
+        var __createExtendedStyleLabel = function (feature, style) {
             logger.trace("label with style :", style);
 
             if (!feature) {
@@ -348,24 +384,6 @@ var KML = (function (olKML) {
                 return;
             }
 
-            // RGB Colors (RRGGBB) To KML Colors (AABBGGRR)
-            function __convertRGBColorsToKML (data) {
-                var strColor = data.toString(16);
-
-                if (strColor.charAt(0) === "#") {
-                    strColor = strColor.slice(1);
-                }
-
-                var opacity = 1;
-                opacity = parseInt(opacity * 255, 10);
-                opacity = opacity.toString(16);
-                var color = opacity;
-                color = color + strColor.substr(4, 2);
-                color = color + strColor.substr(2, 2);
-                color = color + strColor.substr(0, 2);
-                return color.toLowerCase();
-            }
-
             // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
             if (feature.getStyle() instanceof Style) {
                 var fTextStyle = feature.getStyle().getText().getStroke();
@@ -374,18 +392,34 @@ var KML = (function (olKML) {
                     return;
                 }
 
-                var _haloColor = __convertRGBColorsToKML(fTextStyle.getColor()) || __convertRGBColorsToKML("#FFFFFF"); // KML Colors : 64FFFFFF (blanc)
+                var _haloColor = __convertRGBColorsToKML("#FFFFFF"); // Par defaut
+                var color = fTextStyle.getColor();
+                // array ?
+                if (Array.isArray(color)) {
+                    var cf = "rgba(";
+                    cf += color[0] + ",";
+                    cf += color[1] + ",";
+                    cf += color[2] + ",";
+                    cf += color[3] + ")";
+                    color = cf;
+                }
+                if (Color.isRGB(color)) {
+                    var colorHex = Color.rgbaToHex(color);
+                    _haloColor = __convertRGBColorsToKML(colorHex.hex, colorHex.opacity);
+                } else {
+                    _haloColor = __convertRGBColorsToKML(color);
+                }
                 var _haloRadius = fTextStyle.getWidth() || "0";
-                var _haloOpacity = "1"; // TODO
-                var _font = "Sans"; // TODO
+                var _haloOpacity = "1"; // TODO lire param
+                var _font = "Sans"; // TODO lire param
 
                 if (style && style.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
-                    var labelextend = document.createElementNS(kmlNode.namespaceURI, "LabelStyleSimpleExtensionGroup");
-                    labelextend.setAttribute("fontFamily", _font);
-                    labelextend.setAttribute("haloColor", _haloColor);
-                    labelextend.setAttribute("haloRadius", _haloRadius);
-                    labelextend.setAttribute("haloOpacity", _haloOpacity);
-                    style.appendChild(labelextend);
+                    var labelExtended = document.createElementNS(kmlNode.namespaceURI, "LabelStyleSimpleExtensionGroup");
+                    labelExtended.setAttribute("fontFamily", _font);
+                    labelExtended.setAttribute("haloColor", _haloColor);
+                    labelExtended.setAttribute("haloRadius", _haloRadius);
+                    labelExtended.setAttribute("haloOpacity", _haloOpacity);
+                    style.appendChild(labelExtended);
                 }
             }
         };
@@ -406,7 +440,7 @@ var KML = (function (olKML) {
          *      <hotSpot x="0.5"  y="1" xunits="fraction" yunits="fraction"/>
          *  </IconStyle></Style>
          */
-        var __createHotSpotStyleIcon = function (feature, style) {
+        var __createExtendedStyleIcon = function (feature, style) {
             logger.trace("marker with style (hotspot):", style);
 
             if (!feature) {
@@ -421,40 +455,97 @@ var KML = (function (olKML) {
                     return;
                 }
 
-                var x = 0;
-                var y = 0;
-                var xunits = "pixels";
-                var yunits = "pixels";
+                if (fImageStyle instanceof Icon) {
 
-                var size = fImageStyle.getSize();
-                var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
-
-                if (anchor.length) {
-                    x = anchor[0];
-                    y = anchor[1];
-                    if (yunits === "fraction") {
-                        y = (y === 1) ? 0 : 1 - y; // cf. fixme contribution à faire !
-                    } else {
-                        y = (yunits === "pixels" && y === size[1]) ? 0 : size[1] - y; // cf. fixme contribution à faire !
+                    var x = 0;
+                    var y = 0;
+                    var xunits = "pixels";
+                    var yunits = "pixels";
+    
+                    var size = fImageStyle.getSize();
+                    var anchor = fImageStyle.getAnchor(); // pixels ! but anchor_ in the current unit !
+    
+                    if (anchor.length) {
+                        x = anchor[0];
+                        y = anchor[1];
+                        if (yunits === "fraction") {
+                            y = (y === 1) ? 0 : 1 - y; // cf. fixme contribution à faire !
+                        } else {
+                            y = (yunits === "pixels" && y === size[1]) ? 0 : size[1] - y; // cf. fixme contribution à faire !
+                        }
+                    }
+    
+                    if (style && style.getElementsByTagName("hotSpot").length === 0) {
+                        var hotspot = document.createElementNS(kmlNode.namespaceURI, "hotSpot");
+                        hotspot.setAttribute("x", x);
+                        hotspot.setAttribute("y", y);
+                        hotspot.setAttribute("xunits", xunits);
+                        hotspot.setAttribute("yunits", yunits);
+                        style.appendChild(hotspot);
                     }
                 }
 
-                if (style && style.getElementsByTagName("hotSpot").length === 0) {
-                    var hotspot = document.createElementNS(kmlNode.namespaceURI, "hotSpot");
-                    hotspot.setAttribute("x", x);
-                    hotspot.setAttribute("y", y);
-                    hotspot.setAttribute("xunits", xunits);
-                    hotspot.setAttribute("yunits", yunits);
-                    style.appendChild(hotspot);
+                if (fImageStyle instanceof Circle) {
+                    var strokeColor = null;
+                    var strokeWidth = null;
+                    if (fImageStyle.getStroke()) {
+                        strokeWidth = fImageStyle.getStroke().getWidth();
+                        strokeColor = fImageStyle.getStroke().getColor();
+                        // array ?
+                        if (Array.isArray(strokeColor)) {
+                            var cf = "rgba(";
+                            cf += strokeColor[0] + ",";
+                            cf += strokeColor[1] + ",";
+                            cf += strokeColor[2] + ",";
+                            cf += strokeColor[3] + ")";
+                            strokeColor = cf;
+                        }
+                        if (Color.isRGB(strokeColor)) {
+                            var colorHex = Color.rgbaToHex(strokeColor);
+                            strokeColor = __convertRGBColorsToKML(colorHex.hex, colorHex.opacity);
+                        } else {
+                            strokeColor = __convertRGBColorsToKML(strokeColor);
+                        }
+                    }
+
+                    var fillColor = null;
+                    if (fImageStyle.getFill()) {
+                        fillColor = fImageStyle.getFill().getColor();
+                        // array ?
+                        if (Array.isArray(fillColor)) {
+                            var cf = "rgba(";
+                            cf += fillColor[0] + ",";
+                            cf += fillColor[1] + ",";
+                            cf += fillColor[2] + ",";
+                            cf += fillColor[3] + ")";
+                            fillColor = cf;
+                        }
+                        if (Color.isRGB(fillColor)) {
+                            var colorHex = Color.rgbaToHex(fillColor);
+                            fillColor = __convertRGBColorsToKML(colorHex.hex, colorHex.opacity);
+                        } else {
+                            fillColor = __convertRGBColorsToKML(fillColor);
+                        }
+                    }
+
+                    if (style && style.getElementsByTagName("IconStyleSimpleExtensionGroup").length === 0) {
+                        var iconExtended = document.createElementNS(kmlNode.namespaceURI, "IconStyleSimpleExtensionGroup");
+                        iconExtended.setAttribute("type", "circle"); // FIXME type circle only !
+                        iconExtended.setAttribute("radius", fImageStyle.getRadius());
+                        iconExtended.setAttribute("fillColor", fillColor);
+                        iconExtended.setAttribute("strokeColor", strokeColor);
+                        iconExtended.setAttribute("strokeWidth", strokeWidth);
+                        style.appendChild(iconExtended);
+                    }
                 }
             }
         };
 
         // TODO
-        var __createStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
+        var __createExtendedStyleToIconLabel = function (feature, iconStyle, labelStyle) {
             logger.trace("write an icon with a label");
-            __createHotSpotStyleIcon(feature, iconStyle);
-            __createExtensionStyleLabel(feature, labelStyle);
+            __createExtendedStyleIcon(feature, iconStyle);
+            __createExtendedStyleLabel(feature, labelStyle);
         };
 
         // TODO
@@ -476,9 +567,9 @@ var KML = (function (olKML) {
 
         // On ajoute les styles étendus dans le DOM
         _kmlRead.call(this, kmlNode, features, {
-            labelStyle : __createExtensionStyleLabel,
-            iconStyle : __createHotSpotStyleIcon,
-            iconLabelStyle : __createStyleToFeatureIconLabel,
+            labelStyle : __createExtendedStyleLabel,
+            iconStyle : __createExtendedStyleIcon,
+            iconLabelStyle : __createExtendedStyleToIconLabel,
             nameData : __setNameData
         });
 
@@ -574,11 +665,24 @@ var KML = (function (olKML) {
             return features;
         }
 
+        // KML Colors (AABBGGRR) To RGB Colors (RRGGBB)
+        function __convertKMLColorsToRGB (data) {
+            var color = "";
+            color = color + data.substr(6, 2);
+            color = color + data.substr(4, 2);
+            color = color + data.substr(2, 2);
+            var hex = parseInt(color, 16).toString(16);
+            var comp = "";
+            var len = hex.length || 0;
+            for (var i = 0; i < (6 - len); i++) {
+                comp += "0";
+            }
+            hex = "#" + comp + hex;
+            return hex.toString(16);
+        } 
+
         /**
          * Gestion des styles étendus sur le Label
-         * - ajout d'un icone par defaut (1x1p transparent) sur les labels
-         * s'il n'existe pas !
-         * - lecture des styles étendus des labels
          *
          * @param {Object} feature - ol feature
          * @param {DOMElement} style - style
@@ -605,35 +709,20 @@ var KML = (function (olKML) {
          *  </Point>
          * </Placemark>
          */
-        var __getExtensionStyleToFeatureLabel = function (feature, style) {
+        var __getExtendedStyleToFeatureLabel = function (feature, style) {
             logger.trace("label with style :", style);
 
             if (!feature) {
                 return;
             }
 
-            // KML Colors (AABBGGRR) To RGB Colors (RRGGBB)
-            function __convertKMLColorsToRGB (data) {
-                var color = "";
-                color = color + data.substr(6, 2);
-                color = color + data.substr(4, 2);
-                color = color + data.substr(2, 2);
-                var hex = parseInt(color, 16).toString(16);
-                var comp = "";
-                var len = hex.length || 0;
-                for (var i = 0; i < (6 - len); i++) {
-                    comp += "0";
-                }
-                hex = "#" + comp + hex;
-                return hex.toString(16);
-            }
-
             var _text = feature.getProperties().name || "---";
             var _color = __convertKMLColorsToRGB("ff000000"); // "#000000"
             var _colorHalo = "#FFFFFF";
             var _radiusHalo = 0;
-            var _font = "Sans"; // TODO
-            var _fontSize = "16px"; // TODO
+            var _opacityHalo = 1; // TODO
+            var _font = "Sans";
+            var _fontSize = "16px";
 
             // On recherche les balises du Style
             var bLabelStyleSimpleExtensionGroup = false;
@@ -655,7 +744,10 @@ var KML = (function (olKML) {
                         for (var l = 0; l < attributs.length; l++) {
                             switch (attributs[l].nodeName) {
                                 case "fontFamily":
-                                    // TODO
+                                    _font = attributs[l].nodeValue;
+                                    break;
+                                case "fontSize":
+                                    _fontSize = attributs[l].nodeValue;
                                     break;
                                 case "haloColor":
                                     _colorHalo = __convertKMLColorsToRGB(attributs[l].nodeValue);
@@ -664,7 +756,11 @@ var KML = (function (olKML) {
                                     _radiusHalo = parseInt(attributs[l].nodeValue, 10);
                                     break;
                                 case "haloOpacity":
-                                    // TODO
+                                    _opacityHalo = parseFloat(attributs[l].nodeValue);
+                                    // TODO opacité !
+                                    // if (_opacityHalo !== 1) {
+                                    //     _colorHalo = Color.hexToRgba(_colorHalo, _opacityHalo);
+                                    // }
                                     break;
                                 default:
                             }
@@ -683,6 +779,9 @@ var KML = (function (olKML) {
 
             // On reconstruit le style !
             feature.setStyle(new Style({
+                // INFO
+                // on ajoute une image magique 1x1 pixel invisible
+                // afin d'eviter l'affichage d'une punaise google !
                 image : new Icon({
                     src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
                     size : [51, 38],
@@ -708,7 +807,9 @@ var KML = (function (olKML) {
         };
 
         /**
-         * Gestion de la balise kml:hostSpot sur les styles d'un Marker
+         * Gestion des styles étendus sur un Marker / Cercle
+         *
+         * > correctif sur la balise kml:hostSpot
          * - problème avec 'hotspot y === 0' (?)
          *
          * @param {Object} feature - ol feature
@@ -728,12 +829,24 @@ var KML = (function (olKML) {
          *     <coordinates>2,48</coordinates>
          *   </Point>
          * </Placemark>
+         * ou
+         * <Placemark>
+         *   <Style>
+         *     <IconStyle>
+         *       <IconStyleSimpleExtensionGroup type="circle" radius="15" fillColor="7f3737a0" strokeColor="cc000000" strokeWidth="2"/>
+         *     </IconStyle>
+         *   </Style>
+         *   <Point>
+         *     <coordinates>2,48</coordinates>
+         *   </Point>
          */
-        var __getHotSpotStyleToFeatureIcon = function (feature, style) {
+        var __getExtendedStyleToFeatureIcon = function (feature, style) {
             logger.trace("hotspot :", style);
 
+            // marker
             var _src = null;
             var _scale = null;
+            var _color = __convertKMLColorsToRGB("ffffffff");
 
             var _bSizeIcon = false;
             var _sizeW = 51;
@@ -745,10 +858,20 @@ var KML = (function (olKML) {
             var _anchorY = 38;
             var _anchorYUnits = "pixels";
 
+            // cercle
+            var _circleType = null;
+            var _circleRadius = 5;
+            var _circleFillColor = "#000000";
+            var _circleStrokeColor = "#ffffff";
+            var _circleStrokeWidth = 1;
+
             var styles = style.childNodes;
+            var bIconStyleSimpleExtensionGroup = false;
+            var bIconStyle = false;
             for (var k = 0; k < styles.length; k++) {
                 switch (styles[k].nodeName) {
                     case "Icon":
+                        bIconStyle = true;
                         var nodes = styles[k].childNodes;
                         for (var i = 0; i < nodes.length; i++) {
                             switch (nodes[i].nodeName) {
@@ -791,30 +914,85 @@ var KML = (function (olKML) {
                     case "scale":
                         _scale = parseFloat(styles[k].textContent);
                         break;
+                    case "color":
+                        _color = __convertKMLColorsToRGB(styles[k].textContent);
+                        break;
+                    case "IconStyleSimpleExtensionGroup":
+                        bIconStyleSimpleExtensionGroup = true;
+                        var attributs = styles[k].attributes;
+                        for (var l = 0; l < attributs.length; l++) {
+                            // type="circle" radius="15" fillColor="7f3737a0" strokeColor="cc000000" strokeWidth="2"
+                            switch (attributs[l].nodeName) {
+                                case "type":
+                                    _circleType = attributs[l].nodeValue;
+                                    break;
+                                case "radius":
+                                    _circleRadius = parseInt(attributs[l].nodeValue, 10);
+                                    break;
+                                case "fillColor":
+                                    var fillColorValue = attributs[l].nodeValue;
+                                    var fillOpacity = Math.round((Color.num(fillColorValue.substr(0, 2)) / 255) * 10) / 10;
+                                    var fillColorHexa = __convertKMLColorsToRGB(fillColorValue);
+                                    _circleFillColor = Color.hexToRgba(fillColorHexa, fillOpacity);
+                                    break;
+                                case "strokeColor":
+                                    var strokeColorValue = attributs[l].nodeValue;
+                                    var strokeOpacity = Math.round((Color.num(strokeColorValue.substr(0, 2)) / 255) * 10) / 10;
+                                    var strokeColorHexa = __convertKMLColorsToRGB(strokeColorValue);
+                                    _circleStrokeColor = Color.hexToRgba(strokeColorHexa, strokeOpacity);
+                                    break;
+                                case "strokeWidth":
+                                    _circleStrokeWidth = parseInt(attributs[l].nodeValue, 10);
+                                    break;
+                                default:
+                            }
+                        }
+                        break;
                     default:
                         // on ne traite pas les autres informations ...
                 }
             }
 
-            var _options = {
-                src : _src,
-                crossOrigin : "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
-                scale : _scale || 1 // FIXME !?
-            };
+            var StyleInstance = null;
+            if (bIconStyle) {
+                var optionsIcon = {
+                    src : _src || "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
+                    color : _color,
+                    crossOrigin : "anonymous", // cf. https://gis.stackexchange.com/questions/121555/wms-server-with-cors-enabled/147403#147403
+                    scale : _scale || 1
+                };
+    
+                if (_bSizeIcon) {
+                    Utils.mergeParams(optionsIcon, {
+                        size : [_sizeW, _sizeH]
+                    });
+                }
+    
+                if (_bHotSpot) {
+                    Utils.mergeParams(optionsIcon, {
+                        anchor : [_anchorX, _anchorY],
+                        anchorOrigin : "bottom-left",
+                        anchorXUnits : _anchorXUnits || "pixels",
+                        anchorYUnits : _anchorYUnits || "pixels"
+                    });
+                }
 
-            if (_bSizeIcon) {
-                Utils.mergeParams(_options, {
-                    size : [_sizeW, _sizeH]
-                });
+                StyleInstance = new Icon(optionsIcon);
             }
+            
+            if (bIconStyleSimpleExtensionGroup && _circleType === "circle") {
+                var optionsCircle = {
+                    radius : _circleRadius,
+                    fill : new Fill({
+                        color : _circleFillColor
+                    }),
+                    stroke : new Stroke({
+                        color : _circleStrokeColor,
+                        width : _circleStrokeWidth
+                    })
+                };
 
-            if (_bHotSpot) {
-                Utils.mergeParams(_options, {
-                    anchor : [_anchorX, _anchorY],
-                    anchorOrigin : "bottom-left",
-                    anchorXUnits : _anchorXUnits || "pixels",
-                    anchorYUnits : _anchorYUnits || "pixels"
-                });
+                StyleInstance = new Circle(optionsCircle);
             }
 
             // existe il déjà le style du label ?
@@ -828,7 +1006,7 @@ var KML = (function (olKML) {
                     var _style = (_styles.length === 1) ? _styles[0] : _styles[_styles.length - 1];
                     // on écrase l'icone magic du label !
                     feature.setStyle(new Style({
-                        image : new Icon(_options),
+                        image : StyleInstance,
                         text : _style.getText()
                     }));
                 }
@@ -912,24 +1090,27 @@ var KML = (function (olKML) {
             });
         };
 
-        /** TODO
-        * @param {Object} feature - ol feature
-        * @param {DOMElement} iconStyle - icon style
-        * @param {DOMElement} labelStyle - label style
-        *
-        *
-        */
-        var __getStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
+        /** 
+         * TODO
+         * ...
+         *
+         * @param {Object} feature - ol feature
+         * @param {DOMElement} iconStyle - icon style
+         * @param {DOMElement} labelStyle - label style
+         * @example
+         * ...
+         */
+        var __getExtendedStyleToFeatureIconLabel = function (feature, iconStyle, labelStyle) {
             logger.trace("display icon and label");
-            __getExtensionStyleToFeatureLabel(feature, labelStyle);
-            __getHotSpotStyleToFeatureIcon(feature, iconStyle);
+            __getExtendedStyleToFeatureLabel(feature, labelStyle);
+            __getExtendedStyleToFeatureIcon(feature, iconStyle);
         };
 
         // On lit les styles étendus et on les ajoute aux features
         _kmlRead.call(this, kmlDoc, features, {
-            labelStyle : this.options.showPointNames ? __getExtensionStyleToFeatureLabel : null,
-            iconStyle : __getHotSpotStyleToFeatureIcon,
-            iconLabelStyle : this.options.showPointNames ? __getStyleToFeatureIconLabel : __getHotSpotStyleToFeatureIcon,
+            labelStyle : this.showPointNames_ ? __getExtendedStyleToFeatureLabel : null,
+            iconStyle : __getExtendedStyleToFeatureIcon,
+            iconLabelStyle : this.showPointNames_ ? __getExtendedStyleToFeatureIconLabel : __getExtendedStyleToFeatureIcon,
             extendedData : __getExtendedData
         });
 

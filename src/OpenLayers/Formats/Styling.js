@@ -197,9 +197,9 @@ var Styling = {
         var options = {};
 
         // properties :
-        // "marker-size" -> icon / label
-        // "marker-symbol" -> icon / label
-        // "marker-color" -> icon / label
+        // "marker-size" -> icon
+        // "marker-symbol" -> icon
+        // "marker-color" -> icon
         var marker = null;
         if (feature.get("marker-color") ||
             feature.get("marker-size") ||
@@ -243,9 +243,9 @@ var Styling = {
         }
 
         // properties :
-        // "stroke" -> line / polygon / circle
-        // "stroke-opacity" -> line / polygon / circle
-        // "stroke-width" -> line / polygon / circle
+        // "stroke" -> line / polygon / label
+        // "stroke-opacity" -> line / polygon / label
+        // "stroke-width" -> line / polygon  / label
         var stroke = null;
         if (feature.get("stroke") ||
             feature.get("stroke-opacity") ||
@@ -256,8 +256,8 @@ var Styling = {
         }
 
         // properties :
-        // "fill" -> polygon / circle
-        // "fill-opacity" -> polygon / circle
+        // "fill" -> polygon / label
+        // "fill-opacity" -> polygon / label
         var fill = null;
         if (feature.get("fill") ||
             feature.get("fill-opacity")) {

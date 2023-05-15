@@ -395,6 +395,10 @@ var DrawingDOM = {
         if (options.title) {
             inputElem.title = options.title;
         }
+        // si options.type == "checkbox"
+        if (options.checked !== undefined) {
+            inputElem.checked = options.checked
+        }
         // si options.type == "range"
         if (options.min !== undefined) {
             inputElem.min = options.min;
@@ -427,7 +431,8 @@ var DrawingDOM = {
         /*
          * TODO : finir de remplir la div pour tous les styles éditables.
          */
-        switch (options.geomType.toLowerCase()) {
+        var geomType = options.geomType.toLowerCase();
+        switch (geomType) {
             case "point&text":
             case "point":
                 li = this._createMarkersChooser({
@@ -458,6 +463,17 @@ var DrawingDOM = {
                 ul.appendChild(li);
                 if (options.initValues.markerCustom) {
                     // FIXME que faire des icones customisés ?
+                }
+                if (geomType === "point&text") {
+                    li = this._createStylingElement({
+                        type : "checkbox",
+                        className : "gp-styling-option",
+                        label : this.options.labels.labelDisplay,
+                        id : this._addUID("labelDisplay"),
+                        checked : options.initValues.labelDisplay,
+                        defaultValue : options.initValues.labelDisplay
+                    });
+                    ul.appendChild(li);
                 }
                 break;
             case "text":

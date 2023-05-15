@@ -29,6 +29,16 @@ var ColorUtils = {
     },
 
     /**
+     * Hexa to number conversion
+     *
+     * @param {*} hexa 00-FF
+     * @returns {Number} number value
+     */
+    num : function (hexa) {
+        return parseInt(hexa, 16);
+    },
+
+    /**
      * Converts an array ([255,255,255,1]) to rgba string
      *
      * @function arrayToRgba

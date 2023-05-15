@@ -242,7 +242,8 @@ var Drawing = (function (Control) {
         fillColor : "Couleur de remplissage : ",
         fillOpacity : "Opacité du remplissage : ",
         markerSize : "Taille du pictogramme : ",
-        markerColor : "Couleur du pictogramme : "
+        markerColor : "Couleur du pictogramme : ",
+        labelDisplay : "Afficher le label : "
     };
 
     /**
@@ -266,7 +267,9 @@ var Drawing = (function (Control) {
         strokeColor : "#ffcc33",
         strokeWidth : 4,
         markerSize : 1,
-        markerColor : "#ffcc33"
+        markerColor : "#ffcc33",
+        // INFO : cette option n'est pas surchargeable via les options du constructeur !
+        labelDisplay : true
     };
 
     /**
@@ -520,7 +523,7 @@ var Drawing = (function (Control) {
         if (layers) {
             var found = false;
             layers.forEach((mapLayer) => {
-                if (mapLayer === vlayer) { // FIXME object comparison
+                if (mapLayer === vlayer) {
                     logger.trace("layer already in map. Not adding.");
                     found = true;
                 }
@@ -529,15 +532,18 @@ var Drawing = (function (Control) {
             if (!found) {
                 this.getMap().addLayer(vlayer);
             }
-            // TODO style par defaut du geoportail !
+            // style par defaut du geoportail !
             // application des styles ainsi que ceux par defaut de ol sur le layer
             vlayer.getSource().getFeatures().forEach((feature) => {
+                var style = feature.getStyle();
+                if (typeof style !== "function") {
+                    return;
+                }
                 var featureStyleFunction = feature.getStyleFunction();
-                if (featureStyleFunction) {
-                    var styles = featureStyleFunction(feature, 0);
-                    // var styles = featureStyleFunction.call(feature, 0);
+                 if (featureStyleFunction) {
+                    var styles = featureStyleFunction.call(this, feature, 0);
                     if (styles && styles.length !== 0) {
-                        feature.setStyle(styles[0]);
+                        feature.setStyle((Array.isArray(styles)) ? styles[0] : styles);
                     }
                 }
             });
@@ -1125,8 +1131,13 @@ var Drawing = (function (Control) {
             var geom = seEv.selected[0].getGeometry();
             var style = seEv.selected[0].getStyle();
             if (geom instanceof Point || geom instanceof MultiPoint) {
+                // INFO
                 // on determine si c'est un marker (ou cercle), un label ou les 2.
-                if (style && style.getImage()) {
+                // un label a un pixel transparent comme icone
+                if (style && 
+                    style.getImage() && 
+                    typeof style.getImage().getSrc === "function" &&
+                    style.getImage().getSrc() !== this.options.defaultStyles.textIcon1x1.src) {
                     geomType = "Point";
                     // on traite un marker
                     // mais si c'est un cercle !?
@@ -1159,8 +1170,8 @@ var Drawing = (function (Control) {
                     initValues.markerCustom = !(this._getsMarkersOptionsFromSrc(initValues.markerSrc));
                 }
                 if (style && style.getText()) {
-                    var _label = seEv.selected[0].getProperties().name;
-                    if (_label) {
+                    var labelName = seEv.selected[0].getProperties().name;
+                    if (labelName) {
                         // test si on a un marker avec un label
                         geomType = (geomType === "Point") ? "Point&Text" : "Text";
                         if (style.getText().getStroke() && style.getText().getStroke().getColor()) {
@@ -1197,6 +1208,15 @@ var Drawing = (function (Control) {
                         initValues.strokeColor = initValues.hasOwnProperty("strokeColor") ? initValues.strokeColor : this.options.defaultStyles.textStrokeColor;
                         initValues.strokeWidth = initValues.hasOwnProperty("strokeWidth") ? initValues.strokeWidth : this.options.defaultStyles.textStrokeWidth;
                         initValues.fillColor = initValues.hasOwnProperty("fillColor") ? initValues.fillColor : this.options.defaultStyles.textFillColor;
+                        // Par defaut, pour un marker avec un label, on affiche le label si le tag "name" est renseigné.
+                        if (geomType === "Point&Text") {
+                            var value = style.getText().getText();
+                            if (!value) {
+                                style.getText().setText(labelName);
+                            }
+                            var checked = seEv.selected[0].get("checked");
+                            initValues.labelDisplay = (checked === undefined) ? this.options.defaultStyles.labelDisplay : checked;
+                        }
                     }
                 }
             } else if (geom instanceof LineString || geom instanceof MultiLineString) {
@@ -1311,6 +1331,7 @@ var Drawing = (function (Control) {
                         }
                         break;
                     case "point&text":
+                        var labelDisplay = document.querySelector("input[type='checkbox']");
                     case "point":
                         // FIXME cas où le marker n'est pas dans la liste ?
                         // si le marker n'existe pas dans le liste, on ne souhaite donc que changer la couleur du
@@ -1344,15 +1365,17 @@ var Drawing = (function (Control) {
                                 dtObj.options.defaultStyles.textStrokeColor = initValues.strokeColor;
                                 dtObj.options.defaultStyles.textStrokeWidth = initValues.strokeWidth;
                                 dtObj.options.defaultStyles.textFillColor = initValues.fillColor;
+                                dtObj.options.defaultStyles.labelDisplay = initValues.labelDisplay;
                             }
                         } else {
                             var text = {};
                             if (geomType.toLowerCase() === "point&text") {
+                                seEv.selected[0].set("checked", labelDisplay.checked);
                                 text = {
                                     text : new Text({
                                         font : "16px sans",
                                         textAlign : "left",
-                                        text : style.getText().getText(),
+                                        text : (labelDisplay.checked) ? seEv.selected[0].get("name") : "",
                                         fill : new Fill({
                                             color : initValues.fillColor
                                         }),
@@ -1361,7 +1384,7 @@ var Drawing = (function (Control) {
                                             width : parseInt(initValues.strokeWidth, 10)
                                         })
                                     })
-                                }
+                                };
                             }
                             if (markerSelected) {
                                 seEv.selected[0].setStyle(new Style(Object.assign({
@@ -1892,6 +1915,8 @@ var Drawing = (function (Control) {
                             deEv.feature.setProperties(obj);
 
                             deEv.feature.setStyle(new Style({
+                                // HACK : on ajoute un icone invisible de 1x1 pixel afin d'eviter
+                                // l'affichage d'une punaise google !
                                 image : new Icon(context._getIconStyleOptions(context.options.defaultStyles.textIcon1x1)),
                                 text : new Text({
                                     textAlign : "left",
