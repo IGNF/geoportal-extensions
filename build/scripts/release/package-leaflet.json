@@ -1,25 +1,33 @@
 {
-   "bugs" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "name" : "geoportal-extensions-leaflet",
-   "version" : "2.2.9",
-   "directories" : {},
+   "date" : "05/04/2023",
+   "main" : "dist/GpPluginLeaflet-src.js",
    "repository" : {
       "type" : "git",
       "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
+   "description" : "French Geoportal Extension for Leaflet",
+   "name" : "geoportal-extensions-leaflet",
+   "module" : "src/Leaflet/index.js",
+   "version" : "2.2.9",
+   "bundleDependencies" : [],
    "dependencies" : {
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
+      "node-fetch" : "^2.6.1",
+      "leaflet" : "1.7.1",
       "proj4leaflet" : "1.0.2",
-      "leaflet-draw" : "1.0.4",
-      "sortablejs" : "1.8.4",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
       "xmldom" : "^0.1.27",
       "loglevel" : "1.6.6",
-      "leaflet" : "1.7.1",
+      "sortablejs" : "1.8.4",
       "proj4" : "2.7.5",
-      "node-fetch" : "^2.6.1"
+      "leaflet-draw" : "1.0.4"
    },
-   "scripts" : {},
+   "peerDependencies" : {},
+   "devDependencies" : {},
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
+   "bugs" : {},
+   "directories" : {},
+   "license" : "CECILL-B",
+   "types" : "src/Leaflet/index.d.ts",
    "files" : [
       "dist/",
       "src/",
@@ -27,20 +35,12 @@
       "README.md",
       "package.json"
    ],
+   "scripts" : {},
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "leaflet",
       "publish"
-   ],
-   "main" : "dist/GpPluginLeaflet-src.js",
-   "description" : "French Geoportal Extension for Leaflet",
-   "module" : "src/Leaflet/index.js",
-   "peerDependencies" : {},
-   "devDependencies" : {},
-   "types" : "src/Leaflet/index.d.ts",
-   "bundleDependencies" : [],
-   "date" : "05/04/2023",
-   "license" : "CECILL-B"
+   ]
 }
