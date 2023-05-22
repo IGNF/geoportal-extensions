@@ -17,11 +17,11 @@
 		<desc>21/08/2005</desc>
 		<sym>Waypoint</sym>
 		<extensions>
-			<stroke>#ff00ff</stroke>
-			<stroke-width>3</stroke-width>
-			<stroke-opacity>1</stroke-opacity>
-			<fill>#ffffff</fill>
-			<fill-opacity>1</fill-opacity>
+			<label-stroke>#ff00ff</label-stroke>
+			<label-stroke-width>3</label-stroke-width>
+			<label-stroke-opacity>1</label-stroke-opacity>
+			<label-fill>#ffffff</label-fill>
+			<label-fill-opacity>1</label-fill-opacity>
 		</extensions>
 	</wpt>
 	<wpt lat="41.622507000" lon="8.797880000">

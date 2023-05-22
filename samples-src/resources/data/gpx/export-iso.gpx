@@ -355,6 +355,7 @@
 		<rtept lat="48.84220389800001" lon="2.582288565"/>
 		<rtept lat="48.84220389800001" lon="2.5822865119999996"/>
 		<extensions>
+			<type>Polygon</type>
 			<fill>#00b798</fill>
 			<fill-opacity>0.7</fill-opacity>
 		</extensions>

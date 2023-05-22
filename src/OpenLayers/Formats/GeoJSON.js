@@ -104,6 +104,7 @@ var GeoJSON = (function (olGeoJSON) {
                     var styleFunction = Styling.defineStyleFunctionByDefault(this.options.defaultStyle);
                     if (styleFunction) {
                         feature.setStyle(styleFunction);
+                        Styling.definePropertiesFromStyle(feature);
                     }
                 }
             }

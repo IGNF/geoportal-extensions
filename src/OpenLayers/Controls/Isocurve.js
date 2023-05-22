@@ -8,6 +8,7 @@ import VectorSource from "ol/source/Vector";
 // import GeoJSON from "ol/format/GeoJSON";
 import {
     Fill,
+    Stroke,
     Style
 } from "ol/style";
 // import geoportal library access
@@ -532,6 +533,10 @@ var Isocurve = (function (Control) {
         this._defaultFeatureStyle = new Style({
             fill : new Fill({
                 color : "rgba(0, 183, 152, 0.7)"
+            }),
+            stroke : new Stroke({
+                color : "rgba(0, 183, 152, 0)",
+                width : 1
             })
         });
 

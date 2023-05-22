@@ -81,20 +81,6 @@ var GPX = (function (olGPX) {
     GPX.prototype.constructor = GPX;
 
     /**
-     * Balises autorisées selon la specification "simplestyle"
-     */
-    GPX.SIMPLESTYLE_TAGS = [
-        "fill",
-        "fill-opacity",
-        "stroke",
-        "stroke-opacity",
-        "stroke-width",
-        "marker-symbol",
-        "marker-color",
-        "marker-size"
-    ];
-
-    /**
      * Read Extend Styles for Features.
      * This function overloads ol.format.GPX.readFeatures ...
      *
@@ -171,19 +157,23 @@ var GPX = (function (olGPX) {
             Styling.definePropertiesFromStyle(feature);
 
             // HACK : Le type surfacique n'existe pas au format GPX,
-            // on doit ajouter un lineaire à la place
+            // on doit la transformer en un lineaire.
+            // Par contre, on garde un trace de la transformation :
+            // * le style surfacique
+            // * le type de geometrie initiale
             var type = feature.getGeometry().getType();
             if (type === "Polygon") {
                 // creation d'une copie pour ne pas modifier les features de carte
                 var f = feature.clone();
+                f.set("type", type);
                 f.setGeometry(new LineString(feature.getGeometry().getCoordinates()));
                 features.push(f);
                 // feature à supprimer de l'export
                 array.splice(index, 1);
-            }
-            else if (type === "MultiPolygon") {
+            } else if (type === "MultiPolygon") {
                 // creation d'une copie pour ne pas modifier les features de carte
                 var f = feature.clone();
+                f.set("type", type);
                 f.setGeometry(new MultiLineString(feature.getGeometry().getCoordinates()));
                 features.push(f);
                 // feature à supprimer de l'export
@@ -268,9 +258,8 @@ var GPX = (function (olGPX) {
 
         // cas particulier du format GPX :
         // il n'existe pas de surfacique sur ce format, mais il est possible de forcer
-        // la transformation pour des besoins particuliers comme la lecture d'un fichier
-        // de calcul isochrone.
-        Styling.APPLY_CONVERT_GEOM.ToPolygon = true;
+        // la transformation en polygone pour des besoins particuliers de visualisation
+        Styling.APPLY_CONVERT_GEOM_GPX = true;
         var style = Styling.defineStyleFromProperties(feature);
         if (style) {
             feature.setStyle(style);

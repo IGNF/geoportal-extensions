@@ -25,7 +25,8 @@
             </div>
             <!-- export -->
             <button id="export" title="Exporter la couche de dessin">Exporter</button>
-            <button id="view" title="Afficher les métadonnées de la couche de calcul">Afficher</button>
+            <button id="viewIti" title="Afficher les métadonnées de la couche de calcul">Afficher Iti</button>
+            <button id="viewIso" title="Afficher les métadonnées de la couche de calcul">Afficher Iso</button>
             <div>
                 <textarea id="viewer" rows="10" cols="50"></textarea>
             </div>
@@ -35,8 +36,8 @@
             <script type="text/javascript">
                 var map;
                 var sampleLayer;
-                var exportLayer;
-                var exportFormat;
+                var exportLayerRoute, exportLayerIso;
+                var exportFormatRoute, exportFormatIso;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
@@ -105,15 +106,22 @@
                         })
                     });
 
-                    exportFormat = new ol.format.GPXExtended();
-                    var exportUrl = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/export-route-json.gpx";
-                    var exportLayer = new ol.layer.Vector({
+                    exportFormatRoute = new ol.format.GPXExtended();
+                    var exportUrlRoute = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/export-route-json.gpx";
+                    exportLayerRoute = new ol.layer.Vector({
                         source : new ol.source.Vector({
-                            url: exportUrl,
-                            format: exportFormat
+                            url: exportUrlRoute,
+                            format: exportFormatRoute
                         })
                     });
-                        
+                    exportFormatIso = new ol.format.GPXExtended();
+                    var exportUrlIso = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/export-iso.gpx";
+                    exportLayerIso = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: exportUrlIso,
+                            format: exportFormatIso
+                        })
+                    });
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
@@ -125,11 +133,15 @@
                                 layer : "ORTHOIMAGERY.ORTHOPHOTOS"
                             }),
                             sampleLayer,
-                            exportLayer
+                            exportLayerRoute,
+                            exportLayerIso
                         ]
                     });
 
                     var layerSwitcher = new ol.control.LayerSwitcher({
+                        options : {
+                            collapsed : false
+                        },
                         layers : [
                             {
                                 layer : sampleLayer,
@@ -138,9 +150,15 @@
                                 }
                             },
                             {
-                                layer : exportLayer,
+                                layer : exportLayerRoute,
                                 config : {
                                     title : "Calcul d'itineraire"
+                                }
+                            },
+                            {
+                                layer : exportLayerIso,
+                                config : {
+                                    title : "Calcul d'isochrone"
                                 }
                             }
                         ]
@@ -237,9 +255,14 @@
                     link.setAttribute("download", "sample.gpx");
                     link.click();
                 });
-                document.getElementById("view").addEventListener("click", function () {
+                document.getElementById("viewIti").addEventListener("click", function () {
                     var key = "geoportail:compute";
-                    var result = exportFormat.readRootExtensions(key);
+                    var result = exportFormatRoute.readRootExtensions(key);
+                    document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
+                });
+                document.getElementById("viewIso").addEventListener("click", function () {
+                    var key = "geoportail:compute";
+                    var result = exportFormatIso.readRootExtensions(key);
                     document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
                 });
             </script>

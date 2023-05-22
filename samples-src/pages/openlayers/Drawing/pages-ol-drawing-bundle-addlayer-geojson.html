@@ -15,6 +15,15 @@
                 background-position:center center;
                 background-repeat:no-repeat;
             }
+            div[id^=GPdrawing-] {
+                top: 190px;
+                left: 9px;
+            }
+            div[id^=GPdrawingPanel-] {
+                top: 0px;
+                left: 0px;
+                position: absolute;
+            }
         </style>
 {{/content}}
 
@@ -23,13 +32,14 @@
             <h2>(Choix du format d'export)</h2>
             <!-- map -->
             <div id="map" tabindex="0"></div>
-            <button id="btn-associate-layer" class="">Association de la couche GeoJSON</button>
+            <div id="btnExport"></div>
+            <!-- <button id="btn-associate-layer" class="">Association de la couche GeoJSON</button> -->
             <label for="formats-select">Format d'export:</label>
             <select name="formats" id="formats-select">
                 <option value="">--Choix du format--</option>
                 <option value="kml">KML</option>
                 <option value="gpx">GPX</option>
-                <option value="geojson">GEOJSON</option>
+                <option value="geojson" selected>GEOJSON</option>
             </select>
 {{/content}}
 
@@ -38,6 +48,9 @@
                 var m_map;
                 var m_vector;
                 var m_drawing;
+                var m_layerImport;
+                var m_layerSwitcher;
+                var m_exportDrawing;
                 var m_url;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
@@ -70,10 +83,7 @@
                                     }),
                                     image: new ol.style.Icon({
                                         src: "data:image/png;base64,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",
-                                        anchor: [17,48],
-                                        anchorOrigin : "top-left",
-                                        anchorXUnits : "pixels",
-                                        anchorYUnits : "pixels"
+                                        anchor: [0.5, 1]
                                     })
                                 })
                              })
@@ -90,23 +100,26 @@
                             m_vector
                         ],
                         view : new ol.View({
-                            center : [288074.8449901076, 6247982.515792289],
-                            zoom : 10
+                            center : [260900, 6250900],
+                            zoom : 12
                         })
                     });
 
-                    m_drawing = new ol.control.Drawing({
-                        // tools : {
-                        //     export : false
-                        // }
-                    });
-                    m_map.addControl(m_drawing);
+                    m_layerSwitcher = new ol.control.LayerSwitcher();
+                    m_map.addControl(m_layerSwitcher);
 
-                    // var exportDrawing = new ol.control.Export({
-                    //     control: m_drawing,
-                    //     format : "geojson"
-                    // });
-                    // exportDrawing.render();
+                    m_layerImport = new ol.control.LayerImport();
+                    m_map.addControl(m_layerImport);
+
+                    m_drawing = new ol.control.Drawing({});
+                    m_map.addControl(m_drawing);
+                    m_drawing.setLayer(m_vector);
+
+                    m_exportDrawing = new ol.control.Export();
+                    m_exportDrawing.setTarget(document.getElementById("btnExport"));
+                    m_exportDrawing.setControl(m_drawing);
+                    m_exportDrawing.setName("exportFromGeoJSON");
+                    m_map.addControl(m_exportDrawing);
 
                     var popup = new ol.Overlay.Popup();
                     m_map.addOverlay(popup);
@@ -148,12 +161,13 @@
                         }
                     });
 
-                    document.getElementById('btn-associate-layer').addEventListener("click", function() {
-                        m_drawing.setLayer(m_vector);
-                    });
+                    // document.getElementById('btn-associate-layer').addEventListener("click", function() {
+                    //     m_drawing.setLayer(m_vector);
+                    // });
 
                     document.getElementById('formats-select').addEventListener("change", function(e) {
-                        m_drawing.setExportFormat(e.target.value);
+                        // m_drawing.setExportFormat(e.target.value);
+                        m_exportDrawing.setFormat(e.target.value);
                     });
 
                 };

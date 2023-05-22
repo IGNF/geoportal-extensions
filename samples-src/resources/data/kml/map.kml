@@ -25,10 +25,9 @@
 		<Placemark>
 			<description>Ceci est un cercle</description>
 			<Style>
-				<IconStyle>
-					<color>ff000000</color>
-					<IconStyleSimpleExtensionGroup type="circle" radius="5" fillColor="7f3737a0" strokeColor="cc000000" strokeWidth="1"/>
-				</IconStyle>
+				<LabelStyle>
+					<ObjectSimpleExtensionGroup type="circle" radius="15" fillColor="7f3737a0" strokeColor="cc000000" strokeWidth="5"/>
+				</LabelStyle>
 			</Style>
 			<Point>
 				<coordinates>2.4053628548039057,48.886131681603956</coordinates>
@@ -47,6 +46,7 @@
 			</Point>
 		</Placemark>
 		<Placemark>
+			<description>Ceci est un icone</description>
 			<Style>
 				<IconStyle>
 					<scale>1.1875</scale>
@@ -63,6 +63,7 @@
 			</Point>
 		</Placemark>
 		<Placemark>
+			<description>Ceci est un icone (style par defaut)</description>
 			<Point>
 				<coordinates>2.385362854803906,48.896131681603975</coordinates>
 			</Point>
@@ -73,17 +74,15 @@
 				<LabelStyle>
 					<color>ff000000</color>
 					<LabelStyleSimpleExtensionGroup fontFamily="Sans" haloColor="ffffffff" haloRadius="10" haloOpacity="1"/>
+					<ObjectSimpleExtensionGroup type="circle" radius="15" fillColor="7f3737a0" strokeColor="cc000000" strokeWidth="2"/>
 				</LabelStyle>
-				<IconStyle>
-					<color>ff000000</color>
-					<IconStyleSimpleExtensionGroup type="circle" radius="5" fillColor="7f3737a0" strokeColor="cc000000" strokeWidth="2"/>
-				</IconStyle>
 			</Style>
 			<Point>
 				<coordinates>2.4053628548039057,48.906131681603966</coordinates>
 			</Point>
 		</Placemark>
 		<Placemark>
+			<description>Ceci est un lineaire</description>
 			<Style>
 				<LineStyle>
 					<color>ff9b2299</color>
@@ -93,8 +92,14 @@
 			<LineString>
 				<coordinates>2.2988891601562718,48.830825619641985 2.2741699218750218,48.845287792226486 2.2748565673828343,48.86403720372047 2.2751998901367188,48.872618928290024 2.285671234130859,48.8778124150092 2.2961425781249996,48.883005362568866 2.3081588745117188,48.88887500189762 2.319831848144553,48.894743952279924 2.351417541503928,48.90061221373509 2.381629943847656,48.884134192869226 2.420082092285179,48.86652153850778 2.4180221557617188,48.84393214092012 2.397079467773437,48.83918707235517 2.4001693725586164,48.830599615064585</coordinates>
 			</LineString>
+			<ExtendedData>
+				<Data name="geometryType">
+					<value>LineString</value>
+				</Data>
+			</ExtendedData>
 		</Placemark>
 		<Placemark>
+			<description>Ceci est un icone</description>
 			<Style>
 				<IconStyle>
 					<scale>1.1875</scale>
@@ -112,6 +117,7 @@
 			</Point>
 		</Placemark>
 		<Placemark>
+			<description>Ceci est une surface</description>
 			<Style>
 				<LineStyle>
 					<color>cc000000</color>
@@ -130,6 +136,7 @@
 			</Polygon>
 		</Placemark>
 		<Placemark>
+		    <description>Ceci est un icone</description>
 			<Style>
 				<IconStyle>
 					<scale>1.78125</scale>
@@ -147,6 +154,7 @@
 			</Point>
 		</Placemark>
 		<Placemark>
+			<description>Ceci est une surface (style par defaut)</description>
 			<Polygon>
 				<outerBoundaryIs>
 					<LinearRing>

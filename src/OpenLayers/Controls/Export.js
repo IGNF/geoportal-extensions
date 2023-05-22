@@ -96,14 +96,7 @@ class ButtonExport extends Control {
     constructor (options) {
         logger.trace("[constructor] Export", options);
 
-        super({
-            element : document.createElement("div"),
-            render : options.render,
-            target : options.target
-        });
-
-        // options
-        this.options = options || {
+        options = options || {
             control : null,
             target : null,
             format : "geojson",
@@ -112,6 +105,12 @@ class ButtonExport extends Control {
             menu : false,
             onExport : null
         };
+
+        super({
+            element : document.createElement("div"),
+            render : options.render,
+            target : options.target
+        });
 
         if (!(this instanceof ButtonExport)) {
             throw new TypeError("ERROR CLASS_CONSTRUCTOR");
@@ -218,7 +217,7 @@ class ButtonExport extends Control {
         this.EXPORT_PROFILE = {};
 
         // id unique
-        this.uid = this.options.id || ID.generate();
+        this.uid = options.id || ID.generate();
 
         // export
         this.extension = null;
@@ -231,7 +230,7 @@ class ButtonExport extends Control {
         this.icon = "\u2630 ";
         this.menuClassHidden = "GPexportMenuHidden";
 
-        this.initOptions();
+        this.initOptions(options);
         this.initContainer();
     }
 
@@ -267,9 +266,13 @@ class ButtonExport extends Control {
      * Initialize options
      * (called by constructor)
      *
+     * @param {Object} options - options
      * @private
      */
-    initOptions () {
+    initOptions (options) {
+        // options
+        this.options = options;
+
         if (this.options.control) {
             // ...
         }
