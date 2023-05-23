@@ -397,7 +397,7 @@ var DrawingDOM = {
         }
         // si options.type == "checkbox"
         if (options.checked !== undefined) {
-            inputElem.checked = options.checked
+            inputElem.checked = options.checked;
         }
         // si options.type == "range"
         if (options.min !== undefined) {
@@ -453,14 +453,16 @@ var DrawingDOM = {
                     defaultValue : options.initValues.markerSize * 10
                 });
                 ul.appendChild(li);
-                li = this._createStylingElement({
-                    type : "color",
-                    className : "gp-styling-option",
-                    label : this.options.labels.markerColor,
-                    id : this._addUID("markerColor"),
-                    defaultValue : options.initValues.markerColor
-                });
-                ul.appendChild(li);
+                // EVOL
+                // proposer une palette de couleur pour peindre un pictogramme monochrome
+                // li = this._createStylingElement({
+                //     type : "color",
+                //     className : "gp-styling-option",
+                //     label : this.options.labels.markerColor,
+                //     id : this._addUID("markerColor"),
+                //     defaultValue : options.initValues.markerColor
+                // });
+                // ul.appendChild(li);
                 if (options.initValues.markerCustom) {
                     // FIXME que faire des icones customisés ?
                 }

@@ -254,7 +254,7 @@ var Drawing = (function (Control) {
     Drawing.DefaultStyles = {
         textFillColor : "#000000",
         textStrokeColor : "#FFFFFF",
-        textStrokeWidth : 6, 
+        textStrokeWidth : 6,
         // INFO : cette option n'est pas surchargeable via les options du constructeur !
         textIcon1x1 : {
             src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
@@ -540,7 +540,7 @@ var Drawing = (function (Control) {
                     return;
                 }
                 var featureStyleFunction = feature.getStyleFunction();
-                 if (featureStyleFunction) {
+                if (featureStyleFunction) {
                     var styles = featureStyleFunction.call(this, feature, 0);
                     if (styles && styles.length !== 0) {
                         feature.setStyle((Array.isArray(styles)) ? styles[0] : styles);
@@ -1134,8 +1134,8 @@ var Drawing = (function (Control) {
                 // INFO
                 // on determine si c'est un marker (ou cercle), un label ou les 2.
                 // un label a un pixel transparent comme icone
-                if (style && 
-                    style.getImage() && 
+                if (style &&
+                    style.getImage() &&
                     typeof style.getImage().getSrc === "function" &&
                     style.getImage().getSrc() !== this.options.defaultStyles.textIcon1x1.src) {
                     geomType = "Point";
@@ -1306,7 +1306,7 @@ var Drawing = (function (Control) {
                 var strokeColorElem = document.getElementById(dtObj._addUID("strokeColor"));
                 var strokeWidthElem = document.getElementById(dtObj._addUID("strokeWidth"));
                 var markerSizeElem = document.getElementById(dtObj._addUID("markerSize"));
-                var markerColorElem = document.getElementById(dtObj._addUID("markerColor"));
+                // var markerColorElem = document.getElementById(dtObj._addUID("markerColor"));
                 switch (geomType.toLowerCase()) {
                     case "text":
                         if (setDefault) {
@@ -1331,8 +1331,8 @@ var Drawing = (function (Control) {
                         }
                         break;
                     case "point&text":
-                        var labelDisplay = document.querySelector("input[type='checkbox']");
                     case "point":
+                        var labelDisplay = document.querySelector("input[type='checkbox']");
                         // FIXME cas où le marker n'est pas dans la liste ?
                         // si le marker n'existe pas dans le liste, on ne souhaite donc que changer la couleur du
                         // pictogramme ou la taille..., on garde donc le picto initial.
@@ -1342,7 +1342,7 @@ var Drawing = (function (Control) {
                         if (markerChecked) {
                             markerSelected = dtObj._getsMarkersOptionsFromSrc(markerChecked.value);
                             markerSelected.scale = scale;
-                            markerSelected.color = markerColorElem.value;
+                            // markerSelected.color = markerColorElem.value;
                         }
                         if (setDefault) {
                             dtObj.options.defaultStyles.markerSize = scale;
@@ -1395,7 +1395,7 @@ var Drawing = (function (Control) {
                                 seEv.selected[0].setStyle(new Style(Object.assign({
                                     image : new Icon({
                                         src : initValues.markerSrc, // on garde le pictogramme initial !
-                                        color : markerColorElem.value, // on recupère la couleur !
+                                        // color : markerColorElem.value, // on recupère la couleur !
                                         anchor : initValues.markerAnchor, // on garde la position initial !
                                         anchorOrigin : "top-left",
                                         anchorXUnits : "pixels",
