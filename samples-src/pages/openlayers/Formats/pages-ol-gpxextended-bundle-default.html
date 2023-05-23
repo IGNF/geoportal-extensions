@@ -25,6 +25,7 @@
             </div>
             <!-- export -->
             <button id="export" title="Exporter la couche de dessin">Exporter</button>
+            <input type="checkbox" id="sort" title="trier les elements par leur ID (number)">trier</input>
             <button id="viewIti" title="Afficher les métadonnées de la couche de calcul">Afficher Iti</button>
             <button id="viewIso" title="Afficher les métadonnées de la couche de calcul">Afficher Iso</button>
             <div>
@@ -214,7 +215,9 @@
                         console.log("Impossible to export : no features found.");
                         return result;
                     }
+                    var sort = document.getElementById("sort");
                     var gpx = new ol.format.GPXExtended({
+                        orderBy : (sort.checked) ? "number" : null,
                         extensions : {
                             root : {
                                 typestring : "string",

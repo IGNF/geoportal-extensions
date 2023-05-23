@@ -320,10 +320,23 @@ var Route = (function (Control) {
         this._currentComputation = data.computation;
         this._currentExclusions = data.exclusions;
         for (let index = 0; index < data.points.length; index++) {
+            var id = (index + 1) + "-" + this._uid;
+            // clean sans déclencher les evenements associés
+            document.getElementById("GPlocationOriginLabel_" + id).click();
+            var divPoint = document.getElementById("GPlocationPoint_" + id);
+            var inputPoint = document.getElementById("GPlocationOrigin_" + id);
+            var inputCoords = document.getElementById("GPlocationOriginCoords_" + id);
+            var inputPointer = document.getElementById("GPlocationOriginPointer_" + id);
+            inputPointer.checked = true;
             const c = data.points[index];
-            this._currentPoints[index].clear();
             if (c) {
+                divPoint.className = "GPflexInput GPlocationStageFlexInput";
+                // ajout des nouvelles coordonnnées
                 this._currentPoints[index].setCoordinate(c, "EPSG:4326");
+            } else {
+                inputCoords.value = "";
+                inputPointer.checked = false;
+                inputPoint.value = "";
             }
         }
         this._currentRouteInformations = data.results;

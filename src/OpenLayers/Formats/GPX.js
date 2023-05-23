@@ -22,6 +22,7 @@ import Parser from "../../Common/Utils/Parser";
  * @type {ol.format.GPXExtended}
  * @param {Object} options - Options
  * @param {Object} [options.defaultStyle] - Styles by default
+ * @param {String} [options.orderBy] - Sort by key the feature before writing. By default, no sorting
  * @param {Object} [options.extensions] - Add properties to file root
  * @param {function} [options.readExtensions] - Reading extensions (native)
  */
@@ -164,22 +165,35 @@ var GPX = (function (olGPX) {
             var type = feature.getGeometry().getType();
             if (type === "Polygon") {
                 // creation d'une copie pour ne pas modifier les features de carte
-                var f = feature.clone();
-                f.set("type", type);
-                f.setGeometry(new LineString(feature.getGeometry().getCoordinates()));
-                features.push(f);
+                var fp = feature.clone();
+                fp.set("type", type);
+                fp.setGeometry(new LineString(feature.getGeometry().getCoordinates()));
+                features.push(fp);
                 // feature à supprimer de l'export
                 array.splice(index, 1);
             } else if (type === "MultiPolygon") {
                 // creation d'une copie pour ne pas modifier les features de carte
-                var f = feature.clone();
-                f.set("type", type);
-                f.setGeometry(new MultiLineString(feature.getGeometry().getCoordinates()));
-                features.push(f);
+                var fm = feature.clone();
+                fm.set("type", type);
+                fm.setGeometry(new MultiLineString(feature.getGeometry().getCoordinates()));
+                features.push(fm);
                 // feature à supprimer de l'export
                 array.splice(index, 1);
             }
         });
+
+        // tri des features en fonction de la balise "number" || "id" || "order"
+        if (this.options.orderBy !== undefined) {
+            var key = this.options.orderBy;
+            if (key) {
+                var sortFct = function (a, b) {
+                    var cmpA = a.get(key) || 0;
+                    var cmpB = b.get(key) || 0;
+                    return cmpA.toString().localeCompare(cmpB.toString(), undefined, { numeric : true });
+                };
+                features.sort(sortFct);
+            }
+        }
 
         // nodes
         var gpxNode = olGPX.prototype.writeFeaturesNode.call(this, features, options);
