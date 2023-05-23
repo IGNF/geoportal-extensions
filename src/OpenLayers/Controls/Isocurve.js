@@ -312,7 +312,14 @@ var Isocurve = (function (Control) {
         this._currentComputation = data.computation;
         this._currentExclusions = data.exclusions;
         this._currentDirection = data.direction;
-        this._originPoint.clear();
+        // INFO
+        // > this._originPoint.clear();
+        // l'utilisation de cette méthode declenche des evenements qui retirent la couche en cours !
+        // (cf. _createIsoPanelFormPointElement),
+        var inputPointer = document.getElementById("GPlocationOriginPointer_" + 1 + "-" + this._uid);
+        inputPointer.checked = true;
+        var inputCoords = document.getElementById("GPlocationOriginCoords_" + 1 + "-" + this._uid);
+        inputCoords.value = "";
         this._originPoint.setCoordinate(data.point, "EPSG:4326");
         this._currentIsoResults = data.results;
     };
