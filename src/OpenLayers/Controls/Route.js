@@ -316,27 +316,38 @@ var Route = (function (Control) {
      * @param {Object} data.results - service response
      */
     Route.prototype.setData = function (data) {
+        // INFO
+        // transmettre toutes les informations necessaires pour reconstruire le panneau de resultats
         this._currentTransport = data.transport;
         this._currentComputation = data.computation;
         this._currentExclusions = data.exclusions;
-        for (let index = 0; index < data.points.length; index++) {
-            var id = (index + 1) + "-" + this._uid;
-            // clean sans déclencher les evenements associés
-            document.getElementById("GPlocationOriginLabel_" + id).click();
-            var divPoint = document.getElementById("GPlocationPoint_" + id);
-            var inputPoint = document.getElementById("GPlocationOrigin_" + id);
-            var inputCoords = document.getElementById("GPlocationOriginCoords_" + id);
-            var inputPointer = document.getElementById("GPlocationOriginPointer_" + id);
-            inputPointer.checked = true;
-            const c = data.points[index];
+        // INFO
+        // nettoyer les points du calcul précedent
+        for (var i = 0; i < this._currentPoints.length; i++) {
+            var point = this._currentPoints[i];
+            if (point.getCoordinate()) {
+                // clean de l'objet sans declencher les evenements qui suppriment la couche précedente !
+                // /!\ point.clear()
+                point.clearResults();
+                // clean du dom
+                var id = (i + 1) + "-" + this._uid;
+                document.getElementById("GPlocationOriginCoords_" + id).value = "";
+                document.getElementById("GPlocationOrigin_" + id).value = "";
+                document.getElementById("GPlocationPoint_" + id).style.cssText = "";
+                if (i > 0 && i < 6) {
+                    // on masque les points intermediaires
+                    document.getElementById("GPlocationPoint_" + id).className = "GPflexInput GPlocationStageFlexInputHidden";
+                }
+                document.getElementById("GPlocationOriginPointer_" + id).checked = false;
+                document.getElementById("GPlocationOrigin_" + id).className = "GPlocationOriginVisible";
+                document.getElementById("GPlocationOriginCoords_" + id).className = "GPlocationOriginHidden";
+            }
+        }
+        // ajout des nouvelles coordonnnées
+        for (var j = 0; j < data.points.length; j++) {
+            const c = data.points[j];
             if (c) {
-                divPoint.className = "GPflexInput GPlocationStageFlexInput";
-                // ajout des nouvelles coordonnnées
-                this._currentPoints[index].setCoordinate(c, "EPSG:4326");
-            } else {
-                inputCoords.value = "";
-                inputPointer.checked = false;
-                inputPoint.value = "";
+                this._currentPoints[j].setCoordinate(c, "EPSG:4326");
             }
         }
         this._currentRouteInformations = data.results;
@@ -365,7 +376,12 @@ var Route = (function (Control) {
      * It allows to init the control.
      */
     Route.prototype.init = function () {
-        // points
+        // INFO
+        // reconstruire le panneau de resultats sans lancer de calcul
+        // * construire la liste des points (cf. RouteDOM._createRoutePanelFormElement())
+        // * construire les resultats
+
+        // init points
         for (let index = 0; index < this._currentPoints.length; index++) {
             const point = this._currentPoints[index];
             var id = index + 1;
@@ -373,8 +389,15 @@ var Route = (function (Control) {
             if (coordinate) {
                 var input = document.getElementById("GPlocationOrigin_" + id + "-" + this._uid);
                 input.value = coordinate[1].toFixed(4) + " / " + coordinate[0].toFixed(4);
+                if (index > 0 && index < 6) {
+                    document.getElementById("GPlocationPoint_" + id + "-" + this._uid).className = "GPflexInput GPlocationStageFlexInput";
+                }
             }
         }
+
+        // add points into panel
+        var points = document.getElementsByClassName("GPlocationPoint-" + this._uid);
+        this._addRouteResultsStagesValuesElement(points);
 
         // set transport mode
         var transportdiv;
