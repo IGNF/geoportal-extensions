@@ -1114,6 +1114,7 @@ var KML = (function (olKML) {
 
             var StyleInstance = null;
             if (bIconStyle) {
+                // une image magique 1x1 pixel invisible
                 var optionsIcon = {
                     src : _src || "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=",
                     color : _color,
