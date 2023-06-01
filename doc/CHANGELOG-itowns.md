@@ -82,6 +82,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.3.10](#extension-geoportail-itowns-version-2310)
   * [Summary](#summary-24)
   * [Changelog](#changelog-23)
+- [Extension Geoportail Itowns, version 2.3.11](#extension-geoportail-itowns-version-2311)
+  * [Summary](#summary-25)
+  * [Changelog](#changelog-24)
 
 <!-- tocstop -->
 
@@ -676,6 +679,33 @@ Ajout des déclarations typescript
 * [Fixed]
 
     - Afficher les informations des elements cliqués sans doublons (8638fb079e7a6d06f4d8687c4c349309a799489f)
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.3.11
+
+**01/06/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Requete du service alti via les widgets de mousePosition et de profil alti
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour du readme (4e4b4cbb0bba52890f5a2acd191fb71efbb72f5f et d61ebdd223d1f1516e1877209190b298f18f71d0)
+    - outputFormat = json par défaut pour alti mouseposition (#365) 
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
