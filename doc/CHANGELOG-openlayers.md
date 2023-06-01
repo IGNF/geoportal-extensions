@@ -148,6 +148,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.2.21](#extension-geoportail-openlayers-version-3221)
   * [Summary](#summary-44)
   * [Changelog](#changelog-41)
+- [Extension Geoportail OpenLayers, version 3.2.22](#extension-geoportail-openlayers-version-3222)
+  * [Summary](#summary-45)
+  * [Changelog](#changelog-42)
 
 <!-- tocstop -->
 
@@ -1604,6 +1607,53 @@ Amélioration du traitement pour les couches vecteur tuilé (documentation, lég
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.2.22
+
+**01/06/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+- Ajout du widget *Export*
+- Import des couches de calculs (itineraire, isochrone et profil altimétrique)
+
+## Changelog
+
+* [Added]
+
+    - Widget d'export des tracés et des calculs au format GPX, KML et GeoJSON sur les contôles d'itineraire, d'isochrone et de profil altimétrique (#363) :
+
+        ``` js
+        // exemple
+        var route = new ol.control.Route();
+        map.addControl(route);
+        var exportRoute = new ol.control.Export({
+            control : route,
+            format : "GPX"
+        });
+        map.addControl(exportRoute);
+        ```
+
+    - Import des couches de calculs (itineraire, isochrone et profil altimétrique) au format GPX, KML et GeoJSON (#363).
+    - Widget d'export des tracés et calculs des contrôles d'itineraire, d'isochrone et de profil altimétrique (#357).
+
+* [Changed]
+
+    - Mise à jour doc elevationPathControl (#365)
+    - transmission paramètre outputFormat=json par défaut pour mousePosition et elevationPath OpenLayers (#365)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Fix sur le format KML avec l'affichage des labels
+    - Fix sur le profil altimétrique qui permet de construire le profil même si le panneau d'affichage est masqué (calcul en arrière plan).
 
 * [Security]
 
