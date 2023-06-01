@@ -167,7 +167,8 @@ Feature.prototype.setPropertyMarker = function () {
                 this.set("marker-color", colorIcon.hex);
             }
             var scaleIcon = image.getScale();
-            switch (scaleIcon) {
+            switch (Math.round(scaleIcon * 2) / 2) {
+                case 0:
                 case 0.5:
                     this.set("marker-size", "small");
                     break;
@@ -175,6 +176,7 @@ Feature.prototype.setPropertyMarker = function () {
                     this.set("marker-size", "medium");
                     break;
                 case 1.5:
+                case 2:
                     this.set("marker-size", "large");
                     break;
                 default:
