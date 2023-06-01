@@ -430,13 +430,27 @@ var KML = (function (olKML) {
 
             // Si pas de style defini, c'est donc que l'on va utiliser celui par defaut...
             if (feature.getStyle() instanceof Style) {
-                var fTextStyle = feature.getStyle().getText().getStroke();
-                if (!fTextStyle) {
+                var textStyle = feature.getStyle().getText();
+                if (!textStyle) {
                     return;
                 }
-                if (fTextStyle instanceof Stroke) {
+
+                var _fontFamily = "Sans";
+                var _fontSize = "16px";
+                var _font = textStyle.getFont();
+                if (_font) {
+                    var splits = _font.split(" ", 2);
+                    _fontSize = splits[0];
+                    _fontFamily = splits[1];
+                }
+
+                var strokeTextStyle = feature.getStyle().getText().getStroke();
+                if (!strokeTextStyle) {
+                    return;
+                }
+                if (strokeTextStyle instanceof Stroke) {
                     var _haloColor = __convertRGBColorsToKML("#FFFFFF"); // Par defaut
-                    var color = fTextStyle.getColor();
+                    var color = strokeTextStyle.getColor();
                     // array ?
                     if (Array.isArray(color)) {
                         var cf = "rgba(";
@@ -452,13 +466,13 @@ var KML = (function (olKML) {
                     } else {
                         _haloColor = __convertRGBColorsToKML(color);
                     }
-                    var _haloRadius = fTextStyle.getWidth() || "0";
+                    var _haloRadius = strokeTextStyle.getWidth() || "0";
                     var _haloOpacity = "1"; // TODO lire param
-                    var _font = "Sans"; // TODO lire param
 
                     if (node && node.getElementsByTagName("LabelStyleSimpleExtensionGroup").length === 0) {
                         var labelExtended = document.createElementNS(kmlNode.namespaceURI, "LabelStyleSimpleExtensionGroup");
-                        labelExtended.setAttribute("fontFamily", _font);
+                        labelExtended.setAttribute("fontSize", _fontSize);
+                        labelExtended.setAttribute("fontFamily", _fontFamily);
                         labelExtended.setAttribute("haloColor", _haloColor);
                         labelExtended.setAttribute("haloRadius", _haloRadius);
                         labelExtended.setAttribute("haloOpacity", _haloOpacity);
@@ -1256,6 +1270,7 @@ var KML = (function (olKML) {
         _processKml.call(this, kmlDoc, features, {
             lineStringStyle : __getStyleToDefaultFeature,
             polygonStyle : __getStyleToDefaultFeature,
+            pointStyle : __getStyleToDefaultFeature,
             labelStyle : this.showPointNames_ ? __getExtendedStyleToFeatureLabel : null,
             iconStyle : __getExtendedStyleToFeatureIcon,
             iconLabelStyle : this.showPointNames_ ? __getExtendedStyleToFeatureIconLabel : __getExtendedStyleToFeatureIcon,
