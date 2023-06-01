@@ -54,7 +54,8 @@
                 });
                 map.addControl(drawing);
                 var exportDrawing = new ol.control.Export({
-                  control: drawing
+                  control: drawing,
+                  format : "kml"
                 });
                 exportDrawing.render();
                 exportDrawing.on("export:compute", (e) => {

@@ -1,0 +1,3930 @@
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="OpenLayers">
+	<metadata xmlns="http://www.w3.org/1999/xhtml">
+		<extensions xmlns="http://www.w3.org/1999/xhtml">
+			<geoportail:compute>
+				<type>route</type>
+				<points type="array" index="7">
+					<value type="array" index="2">
+						<value>2.5877529997344015</value>
+						<value>48.84050412161184</value>
+					</value>
+					<value></value>
+					<value></value>
+					<value></value>
+					<value></value>
+					<value></value>
+					<value type="array" index="2">
+						<value>2.424470549423338</value>
+						<value>48.84586375242972</value>
+					</value>
+				</points>
+				<transport>Voiture</transport>
+				<exclusions type="array" index="0"></exclusions>
+				<computation>fastest</computation>
+				<results>
+					<totaltime>857.7</totaltime>
+					<totaldistance>14488.3</totaldistance>
+					<bbox>
+						<left>2.424473</left>
+						<right>2.587755</right>
+						<top>48.845872</top>
+						<bottom>48.825745</bottom>
+					</bbox>
+					<routegeometry></routegeometry>
+					<routeinstructions type="array" index="22">
+						<value>
+							<duration>6.3</duration>
+							<distance>109.3</distance>
+							<code></code>
+							<instruction>Départ sur AV BLAISE PASCAL</instruction>
+							<geometry>
+								<coordinates type="array" index="2">
+									<value type="array" index="2">
+										<value>2.587755</value>
+										<value>48.840481</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.586265</value>
+										<value>48.840419</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>25.3</duration>
+							<distance>246</distance>
+							<code></code>
+							<instruction>Tourner à gauche sur BD COPERNIC</instruction>
+							<geometry>
+								<coordinates type="array" index="8">
+									<value type="array" index="2">
+										<value>2.586265</value>
+										<value>48.840419</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.586268</value>
+										<value>48.84035</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.586187</value>
+										<value>48.840106</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585973</value>
+										<value>48.839422</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585748</value>
+										<value>48.838748</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585685</value>
+										<value>48.838557</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585633</value>
+										<value>48.838434</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58556</value>
+										<value>48.838259</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>8.1</duration>
+							<distance>56.9</distance>
+							<code></code>
+							<instruction>Tourner à droite</instruction>
+							<geometry>
+								<coordinates type="array" index="10">
+									<value type="array" index="2">
+										<value>2.58556</value>
+										<value>48.838259</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585482</value>
+										<value>48.838307</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585437</value>
+										<value>48.838326</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585314</value>
+										<value>48.838348</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585258</value>
+										<value>48.838347</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585187</value>
+										<value>48.838335</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585129</value>
+										<value>48.838327</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.585032</value>
+										<value>48.838292</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58497</value>
+										<value>48.838243</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.584925</value>
+										<value>48.838189</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>25.7</duration>
+							<distance>202.9</distance>
+							<code></code>
+							<instruction>Tourner légèrement à droite sur BD BLAISE PASCAL</instruction>
+							<geometry>
+								<coordinates type="array" index="20">
+									<value type="array" index="2">
+										<value>2.584925</value>
+										<value>48.838189</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.584772</value>
+										<value>48.83818</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.584669</value>
+										<value>48.838179</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.584213</value>
+										<value>48.838172</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.583698</value>
+										<value>48.838144</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.583461</value>
+										<value>48.838128</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.583083</value>
+										<value>48.838091</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582885</value>
+										<value>48.838066</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582684</value>
+										<value>48.83804</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582555</value>
+										<value>48.838024</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582517</value>
+										<value>48.838019</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582431</value>
+										<value>48.838021</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582376</value>
+										<value>48.838028</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582322</value>
+										<value>48.838042</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582312</value>
+										<value>48.838047</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582289</value>
+										<value>48.83806</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582263</value>
+										<value>48.838069</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582236</value>
+										<value>48.838078</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582208</value>
+										<value>48.838085</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582196</value>
+										<value>48.838086</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>5.8</duration>
+							<distance>57.1</distance>
+							<code></code>
+							<instruction>Tourner à gauche sur BD DU RU DE NESLE</instruction>
+							<geometry>
+								<coordinates type="array" index="20">
+									<value type="array" index="2">
+										<value>2.582196</value>
+										<value>48.838086</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582178</value>
+										<value>48.838089</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582148</value>
+										<value>48.838092</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58212</value>
+										<value>48.838094</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582091</value>
+										<value>48.838093</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582061</value>
+										<value>48.838089</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582031</value>
+										<value>48.838085</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582004</value>
+										<value>48.838078</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581977</value>
+										<value>48.83807</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581951</value>
+										<value>48.83806</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581926</value>
+										<value>48.838048</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581918</value>
+										<value>48.838044</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581905</value>
+										<value>48.838035</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581883</value>
+										<value>48.83802</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581866</value>
+										<value>48.838004</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58186</value>
+										<value>48.838</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581843</value>
+										<value>48.837986</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58175</value>
+										<value>48.837932</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581635</value>
+										<value>48.837881</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581551</value>
+										<value>48.83784</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>4.300000000000001</duration>
+							<distance>42</distance>
+							<code></code>
+							<instruction>Continuer à gauche sur BD DU RU DE NESLE</instruction>
+							<geometry>
+								<coordinates type="array" index="14">
+									<value type="array" index="2">
+										<value>2.581551</value>
+										<value>48.83784</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581648</value>
+										<value>48.837834</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581709</value>
+										<value>48.837827</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581758</value>
+										<value>48.837816</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581865</value>
+										<value>48.837781</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581882</value>
+										<value>48.837765</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581903</value>
+										<value>48.837751</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581925</value>
+										<value>48.837737</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58195</value>
+										<value>48.837726</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581975</value>
+										<value>48.837716</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582001</value>
+										<value>48.837707</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582029</value>
+										<value>48.8377</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582059</value>
+										<value>48.837695</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582063</value>
+										<value>48.837695</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>12.3</duration>
+							<distance>227.6</distance>
+							<code></code>
+							<instruction>Continuer légèrement à droite sur BD DU RU DE NESLE</instruction>
+							<geometry>
+								<coordinates type="array" index="12">
+									<value type="array" index="2">
+										<value>2.582063</value>
+										<value>48.837695</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582136</value>
+										<value>48.837582</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582243</value>
+										<value>48.837281</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58227</value>
+										<value>48.837145</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582312</value>
+										<value>48.837035</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582369</value>
+										<value>48.836883</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582401</value>
+										<value>48.836788</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582442</value>
+										<value>48.836674</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582522</value>
+										<value>48.836442</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.58266</value>
+										<value>48.836071</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582719</value>
+										<value>48.835924</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582776</value>
+										<value>48.835706</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>28.5</duration>
+							<distance>357.5</distance>
+							<code></code>
+							<instruction>Sur la bifurcation, prendre légèrement à droite</instruction>
+							<geometry>
+								<coordinates type="array" index="16">
+									<value type="array" index="2">
+										<value>2.582776</value>
+										<value>48.835706</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582752</value>
+										<value>48.835566</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582727</value>
+										<value>48.835513</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582679</value>
+										<value>48.835438</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582592</value>
+										<value>48.835367</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582487</value>
+										<value>48.83532</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.582099</value>
+										<value>48.835228</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581721</value>
+										<value>48.835182</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581463</value>
+										<value>48.835164</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581428</value>
+										<value>48.835161</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.581</value>
+										<value>48.83514</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.580934</value>
+										<value>48.835138</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.580259</value>
+										<value>48.835121</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.579644</value>
+										<value>48.835096</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.578844</value>
+										<value>48.835082</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.578332</value>
+										<value>48.835033</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>16.8</duration>
+							<distance>582.3</distance>
+							<code></code>
+							<instruction>Continuer tout droit</instruction>
+							<geometry>
+								<coordinates type="array" index="10">
+									<value type="array" index="2">
+										<value>2.578332</value>
+										<value>48.835033</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.578</value>
+										<value>48.835051</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.577928</value>
+										<value>48.835055</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.577775</value>
+										<value>48.835062</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.577694</value>
+										<value>48.835066</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.577686</value>
+										<value>48.835067</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.575886</value>
+										<value>48.835164</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.573963</value>
+										<value>48.835266</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.572078</value>
+										<value>48.83537</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.570404</value>
+										<value>48.835453</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>365.90000000000003</duration>
+							<distance>8026.6</distance>
+							<code></code>
+							<instruction>Sur la bifurcation, prendre lègèrement à gauche</instruction>
+							<geometry>
+								<coordinates type="array" index="239">
+									<value type="array" index="2">
+										<value>2.570404</value>
+										<value>48.835453</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.570022</value>
+										<value>48.835471</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.569177</value>
+										<value>48.835517</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.56824</value>
+										<value>48.835566</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.565146</value>
+										<value>48.835722</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.56508</value>
+										<value>48.835727</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.562902</value>
+										<value>48.835844</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.562883</value>
+										<value>48.835844</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.562477</value>
+										<value>48.835862</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.560521</value>
+										<value>48.835965</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.558564</value>
+										<value>48.836068</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.556832</value>
+										<value>48.836159</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.556599</value>
+										<value>48.836171</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.555571</value>
+										<value>48.836227</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.555563</value>
+										<value>48.836227</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.552589</value>
+										<value>48.836386</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.552375</value>
+										<value>48.836407</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.55086</value>
+										<value>48.836476</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.549121</value>
+										<value>48.836564</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.547806</value>
+										<value>48.836632</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.547593</value>
+										<value>48.836643</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.547377</value>
+										<value>48.836654</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.545428</value>
+										<value>48.836756</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.545042</value>
+										<value>48.836766</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.544116</value>
+										<value>48.836767</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543866</value>
+										<value>48.836753</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543697</value>
+										<value>48.836743</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543534</value>
+										<value>48.836736</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543424</value>
+										<value>48.836727</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543179</value>
+										<value>48.836705</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.542849</value>
+										<value>48.836667</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.542332</value>
+										<value>48.836592</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.541893</value>
+										<value>48.836501</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.541496</value>
+										<value>48.836417</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.541177</value>
+										<value>48.836335</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.540804</value>
+										<value>48.836228</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.540425</value>
+										<value>48.836105</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.540141</value>
+										<value>48.836007</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.539624</value>
+										<value>48.835817</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.539063</value>
+										<value>48.835595</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.538299</value>
+										<value>48.835271</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.53777</value>
+										<value>48.835037</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.53744</value>
+										<value>48.834891</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.536451</value>
+										<value>48.834427</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.536008</value>
+										<value>48.834213</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.535997</value>
+										<value>48.834208</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.534875</value>
+										<value>48.833641</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.534487</value>
+										<value>48.833431</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.534236</value>
+										<value>48.833299</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.533746</value>
+										<value>48.833027</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.533297</value>
+										<value>48.83278</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.532865</value>
+										<value>48.832533</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.5328</value>
+										<value>48.832491</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.53275</value>
+										<value>48.83246</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.532117</value>
+										<value>48.832082</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.531503</value>
+										<value>48.831707</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.530915</value>
+										<value>48.83133</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.529758</value>
+										<value>48.830548</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.528889</value>
+										<value>48.829926</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.528638</value>
+										<value>48.829735</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527675</value>
+										<value>48.828995</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527586</value>
+										<value>48.82893</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527284</value>
+										<value>48.828707</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527051</value>
+										<value>48.828534</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526699</value>
+										<value>48.828292</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526632</value>
+										<value>48.82825</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526372</value>
+										<value>48.828087</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526022</value>
+										<value>48.82789</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.52579</value>
+										<value>48.827774</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.525595</value>
+										<value>48.827673</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.525271</value>
+										<value>48.827521</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524992</value>
+										<value>48.827407</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524781</value>
+										<value>48.827324</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524622</value>
+										<value>48.827264</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524443</value>
+										<value>48.827202</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524342</value>
+										<value>48.827166</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524115</value>
+										<value>48.827093</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524061</value>
+										<value>48.827076</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523969</value>
+										<value>48.827042</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523901</value>
+										<value>48.82702</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523651</value>
+										<value>48.826944</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523326</value>
+										<value>48.826858</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.522963</value>
+										<value>48.826786</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.522599</value>
+										<value>48.826713</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.522176</value>
+										<value>48.826639</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.521683</value>
+										<value>48.826571</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.521249</value>
+										<value>48.826529</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.520796</value>
+										<value>48.826503</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.520088</value>
+										<value>48.826477</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.519645</value>
+										<value>48.82647</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.518953</value>
+										<value>48.826491</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.518183</value>
+										<value>48.826528</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.51757</value>
+										<value>48.826561</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.517134</value>
+										<value>48.826592</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.516745</value>
+										<value>48.826618</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.516167</value>
+										<value>48.826651</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.515645</value>
+										<value>48.826682</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.515126</value>
+										<value>48.826714</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.514597</value>
+										<value>48.826753</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.513967</value>
+										<value>48.826799</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.513242</value>
+										<value>48.826865</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.512625</value>
+										<value>48.826921</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.511961</value>
+										<value>48.826984</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.511305</value>
+										<value>48.82705</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.510706</value>
+										<value>48.827117</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.510038</value>
+										<value>48.827196</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.509313</value>
+										<value>48.827292</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.508595</value>
+										<value>48.827385</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.507891</value>
+										<value>48.827487</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.507223</value>
+										<value>48.827586</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.506724</value>
+										<value>48.827669</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.505912</value>
+										<value>48.827788</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.505342</value>
+										<value>48.827889</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.505055</value>
+										<value>48.827951</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.504568</value>
+										<value>48.82805</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.504162</value>
+										<value>48.828135</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.503727</value>
+										<value>48.828215</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.503041</value>
+										<value>48.828365</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.50241</value>
+										<value>48.828522</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.501693</value>
+										<value>48.828701</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.501212</value>
+										<value>48.828825</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.500596</value>
+										<value>48.828999</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.500103</value>
+										<value>48.82914</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.499397</value>
+										<value>48.82935</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.499058</value>
+										<value>48.829449</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.498762</value>
+										<value>48.829539</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.498279</value>
+										<value>48.829672</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.497767</value>
+										<value>48.829803</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.497378</value>
+										<value>48.829904</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.497033</value>
+										<value>48.829968</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496784</value>
+										<value>48.830017</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496554</value>
+										<value>48.830065</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496286</value>
+										<value>48.830114</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496034</value>
+										<value>48.830157</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.49576</value>
+										<value>48.830202</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.49551</value>
+										<value>48.830238</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.495219</value>
+										<value>48.830278</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494947</value>
+										<value>48.830312</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494677</value>
+										<value>48.830341</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494362</value>
+										<value>48.830372</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494112</value>
+										<value>48.83039</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493841</value>
+										<value>48.830409</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493571</value>
+										<value>48.830424</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493314</value>
+										<value>48.830433</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493006</value>
+										<value>48.830441</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.492709</value>
+										<value>48.830445</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.492444</value>
+										<value>48.830447</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.492158</value>
+										<value>48.830448</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491895</value>
+										<value>48.830444</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491612</value>
+										<value>48.83044</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491348</value>
+										<value>48.830433</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491084</value>
+										<value>48.830424</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.490817</value>
+										<value>48.830412</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.490486</value>
+										<value>48.830397</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.490161</value>
+										<value>48.830378</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.48959</value>
+										<value>48.830342</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.489454</value>
+										<value>48.830331</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.489071</value>
+										<value>48.830301</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.488692</value>
+										<value>48.830269</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.488274</value>
+										<value>48.830232</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.487878</value>
+										<value>48.830193</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.487494</value>
+										<value>48.830153</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.487143</value>
+										<value>48.830116</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.486706</value>
+										<value>48.830072</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.486369</value>
+										<value>48.830034</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.486072</value>
+										<value>48.829995</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.485754</value>
+										<value>48.829954</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.485357</value>
+										<value>48.829901</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.484984</value>
+										<value>48.82985</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.484595</value>
+										<value>48.829797</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.484202</value>
+										<value>48.829739</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.483832</value>
+										<value>48.82968</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.483449</value>
+										<value>48.829626</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.483073</value>
+										<value>48.82957</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.482754</value>
+										<value>48.829525</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.482401</value>
+										<value>48.829475</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.481982</value>
+										<value>48.829421</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.481591</value>
+										<value>48.829368</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.481251</value>
+										<value>48.829321</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.480918</value>
+										<value>48.829279</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.480096</value>
+										<value>48.829169</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479857</value>
+										<value>48.829138</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479589</value>
+										<value>48.829099</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479326</value>
+										<value>48.829061</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479047</value>
+										<value>48.82902</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.478807</value>
+										<value>48.828985</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.478544</value>
+										<value>48.828945</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.478271</value>
+										<value>48.828904</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477978</value>
+										<value>48.82886</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477755</value>
+										<value>48.828827</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477524</value>
+										<value>48.828795</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477301</value>
+										<value>48.828761</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.47706</value>
+										<value>48.828726</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476845</value>
+										<value>48.828695</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476674</value>
+										<value>48.828669</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476584</value>
+										<value>48.828659</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476349</value>
+										<value>48.828626</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476109</value>
+										<value>48.828591</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.475851</value>
+										<value>48.828553</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.47558</value>
+										<value>48.828516</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.475266</value>
+										<value>48.828473</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474979</value>
+										<value>48.828435</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474708</value>
+										<value>48.828396</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474428</value>
+										<value>48.828356</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474144</value>
+										<value>48.828317</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473838</value>
+										<value>48.828272</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473605</value>
+										<value>48.82824</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473373</value>
+										<value>48.828207</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473163</value>
+										<value>48.828178</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472967</value>
+										<value>48.82815</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472756</value>
+										<value>48.828121</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472532</value>
+										<value>48.828088</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472322</value>
+										<value>48.828055</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472108</value>
+										<value>48.828021</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471883</value>
+										<value>48.827985</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471687</value>
+										<value>48.827952</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471473</value>
+										<value>48.827916</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471256</value>
+										<value>48.827879</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471054</value>
+										<value>48.827841</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.47084</value>
+										<value>48.827803</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470639</value>
+										<value>48.827765</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470445</value>
+										<value>48.827727</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470282</value>
+										<value>48.827693</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470159</value>
+										<value>48.827667</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470003</value>
+										<value>48.827636</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469837</value>
+										<value>48.827599</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469688</value>
+										<value>48.827565</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469529</value>
+										<value>48.827528</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46938</value>
+										<value>48.827492</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469217</value>
+										<value>48.82745</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469048</value>
+										<value>48.827407</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468872</value>
+										<value>48.827361</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468684</value>
+										<value>48.827311</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468507</value>
+										<value>48.827262</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468329</value>
+										<value>48.827213</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468176</value>
+										<value>48.827169</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468056</value>
+										<value>48.827134</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467908</value>
+										<value>48.82709</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467757</value>
+										<value>48.827045</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>223.8</duration>
+							<distance>4481.5</distance>
+							<code></code>
+							<instruction>Sur la bifurcation, prendre lègèrement à gauche</instruction>
+							<geometry>
+								<coordinates type="array" index="113">
+									<value type="array" index="2">
+										<value>2.552375</value>
+										<value>48.836407</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.55086</value>
+										<value>48.836476</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.549121</value>
+										<value>48.836564</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.547806</value>
+										<value>48.836632</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.547593</value>
+										<value>48.836643</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.547377</value>
+										<value>48.836654</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.545428</value>
+										<value>48.836756</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.545042</value>
+										<value>48.836766</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.544116</value>
+										<value>48.836767</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543866</value>
+										<value>48.836753</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543697</value>
+										<value>48.836743</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543534</value>
+										<value>48.836736</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543424</value>
+										<value>48.836727</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.543179</value>
+										<value>48.836705</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.542849</value>
+										<value>48.836667</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.542332</value>
+										<value>48.836592</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.541893</value>
+										<value>48.836501</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.541496</value>
+										<value>48.836417</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.541177</value>
+										<value>48.836335</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.540804</value>
+										<value>48.836228</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.540425</value>
+										<value>48.836105</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.540141</value>
+										<value>48.836007</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.539624</value>
+										<value>48.835817</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.539063</value>
+										<value>48.835595</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.538299</value>
+										<value>48.835271</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.53777</value>
+										<value>48.835037</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.53744</value>
+										<value>48.834891</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.536451</value>
+										<value>48.834427</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.536008</value>
+										<value>48.834213</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.535997</value>
+										<value>48.834208</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.534875</value>
+										<value>48.833641</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.534487</value>
+										<value>48.833431</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.534236</value>
+										<value>48.833299</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.533746</value>
+										<value>48.833027</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.533297</value>
+										<value>48.83278</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.532865</value>
+										<value>48.832533</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.5328</value>
+										<value>48.832491</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.53275</value>
+										<value>48.83246</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.532117</value>
+										<value>48.832082</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.531503</value>
+										<value>48.831707</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.530915</value>
+										<value>48.83133</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.529758</value>
+										<value>48.830548</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.528889</value>
+										<value>48.829926</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.528638</value>
+										<value>48.829735</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527675</value>
+										<value>48.828995</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527586</value>
+										<value>48.82893</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527284</value>
+										<value>48.828707</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.527051</value>
+										<value>48.828534</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526699</value>
+										<value>48.828292</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526632</value>
+										<value>48.82825</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526372</value>
+										<value>48.828087</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.526022</value>
+										<value>48.82789</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.52579</value>
+										<value>48.827774</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.525595</value>
+										<value>48.827673</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.525271</value>
+										<value>48.827521</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524992</value>
+										<value>48.827407</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524781</value>
+										<value>48.827324</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524622</value>
+										<value>48.827264</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524443</value>
+										<value>48.827202</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524342</value>
+										<value>48.827166</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524115</value>
+										<value>48.827093</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.524061</value>
+										<value>48.827076</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523969</value>
+										<value>48.827042</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523901</value>
+										<value>48.82702</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523651</value>
+										<value>48.826944</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.523326</value>
+										<value>48.826858</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.522963</value>
+										<value>48.826786</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.522599</value>
+										<value>48.826713</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.522176</value>
+										<value>48.826639</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.521683</value>
+										<value>48.826571</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.521249</value>
+										<value>48.826529</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.520796</value>
+										<value>48.826503</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.520088</value>
+										<value>48.826477</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.519645</value>
+										<value>48.82647</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.518953</value>
+										<value>48.826491</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.518183</value>
+										<value>48.826528</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.51757</value>
+										<value>48.826561</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.517134</value>
+										<value>48.826592</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.516745</value>
+										<value>48.826618</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.516167</value>
+										<value>48.826651</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.515645</value>
+										<value>48.826682</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.515126</value>
+										<value>48.826714</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.514597</value>
+										<value>48.826753</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.513967</value>
+										<value>48.826799</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.513242</value>
+										<value>48.826865</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.512625</value>
+										<value>48.826921</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.511961</value>
+										<value>48.826984</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.511305</value>
+										<value>48.82705</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.510706</value>
+										<value>48.827117</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.510038</value>
+										<value>48.827196</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.509313</value>
+										<value>48.827292</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.508595</value>
+										<value>48.827385</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.507891</value>
+										<value>48.827487</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.507223</value>
+										<value>48.827586</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.506724</value>
+										<value>48.827669</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.505912</value>
+										<value>48.827788</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.505342</value>
+										<value>48.827889</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.505055</value>
+										<value>48.827951</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.504568</value>
+										<value>48.82805</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.504162</value>
+										<value>48.828135</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.503727</value>
+										<value>48.828215</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.503041</value>
+										<value>48.828365</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.50241</value>
+										<value>48.828522</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.501693</value>
+										<value>48.828701</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.501212</value>
+										<value>48.828825</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.500596</value>
+										<value>48.828999</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.500103</value>
+										<value>48.82914</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.499397</value>
+										<value>48.82935</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.499058</value>
+										<value>48.829449</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.498762</value>
+										<value>48.829539</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.498279</value>
+										<value>48.829672</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.497767</value>
+										<value>48.829803</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.497378</value>
+										<value>48.829904</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>89.30000000000001</duration>
+							<distance>2220.9</distance>
+							<code></code>
+							<instruction>Sur la bifurcation, prendre lègèrement à gauche</instruction>
+							<geometry>
+								<coordinates type="array" index="111">
+									<value type="array" index="2">
+										<value>2.497378</value>
+										<value>48.829904</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.497033</value>
+										<value>48.829968</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496784</value>
+										<value>48.830017</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496554</value>
+										<value>48.830065</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496286</value>
+										<value>48.830114</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.496034</value>
+										<value>48.830157</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.49576</value>
+										<value>48.830202</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.49551</value>
+										<value>48.830238</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.495219</value>
+										<value>48.830278</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494947</value>
+										<value>48.830312</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494677</value>
+										<value>48.830341</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494362</value>
+										<value>48.830372</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.494112</value>
+										<value>48.83039</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493841</value>
+										<value>48.830409</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493571</value>
+										<value>48.830424</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493314</value>
+										<value>48.830433</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.493006</value>
+										<value>48.830441</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.492709</value>
+										<value>48.830445</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.492444</value>
+										<value>48.830447</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.492158</value>
+										<value>48.830448</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491895</value>
+										<value>48.830444</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491612</value>
+										<value>48.83044</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491348</value>
+										<value>48.830433</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.491084</value>
+										<value>48.830424</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.490817</value>
+										<value>48.830412</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.490486</value>
+										<value>48.830397</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.490161</value>
+										<value>48.830378</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.48959</value>
+										<value>48.830342</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.489454</value>
+										<value>48.830331</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.489071</value>
+										<value>48.830301</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.488692</value>
+										<value>48.830269</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.488274</value>
+										<value>48.830232</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.487878</value>
+										<value>48.830193</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.487494</value>
+										<value>48.830153</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.487143</value>
+										<value>48.830116</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.486706</value>
+										<value>48.830072</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.486369</value>
+										<value>48.830034</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.486072</value>
+										<value>48.829995</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.485754</value>
+										<value>48.829954</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.485357</value>
+										<value>48.829901</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.484984</value>
+										<value>48.82985</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.484595</value>
+										<value>48.829797</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.484202</value>
+										<value>48.829739</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.483832</value>
+										<value>48.82968</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.483449</value>
+										<value>48.829626</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.483073</value>
+										<value>48.82957</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.482754</value>
+										<value>48.829525</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.482401</value>
+										<value>48.829475</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.481982</value>
+										<value>48.829421</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.481591</value>
+										<value>48.829368</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.481251</value>
+										<value>48.829321</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.480918</value>
+										<value>48.829279</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.480096</value>
+										<value>48.829169</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479857</value>
+										<value>48.829138</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479589</value>
+										<value>48.829099</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479326</value>
+										<value>48.829061</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.479047</value>
+										<value>48.82902</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.478807</value>
+										<value>48.828985</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.478544</value>
+										<value>48.828945</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.478271</value>
+										<value>48.828904</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477978</value>
+										<value>48.82886</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477755</value>
+										<value>48.828827</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477524</value>
+										<value>48.828795</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.477301</value>
+										<value>48.828761</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.47706</value>
+										<value>48.828726</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476845</value>
+										<value>48.828695</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476674</value>
+										<value>48.828669</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476584</value>
+										<value>48.828659</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476349</value>
+										<value>48.828626</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.476109</value>
+										<value>48.828591</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.475851</value>
+										<value>48.828553</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.47558</value>
+										<value>48.828516</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.475266</value>
+										<value>48.828473</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474979</value>
+										<value>48.828435</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474708</value>
+										<value>48.828396</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474428</value>
+										<value>48.828356</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.474144</value>
+										<value>48.828317</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473838</value>
+										<value>48.828272</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473605</value>
+										<value>48.82824</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473373</value>
+										<value>48.828207</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.473163</value>
+										<value>48.828178</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472967</value>
+										<value>48.82815</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472756</value>
+										<value>48.828121</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472532</value>
+										<value>48.828088</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472322</value>
+										<value>48.828055</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.472108</value>
+										<value>48.828021</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471883</value>
+										<value>48.827985</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471687</value>
+										<value>48.827952</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471473</value>
+										<value>48.827916</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471256</value>
+										<value>48.827879</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.471054</value>
+										<value>48.827841</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.47084</value>
+										<value>48.827803</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470639</value>
+										<value>48.827765</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470445</value>
+										<value>48.827727</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470282</value>
+										<value>48.827693</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470159</value>
+										<value>48.827667</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.470003</value>
+										<value>48.827636</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469837</value>
+										<value>48.827599</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469688</value>
+										<value>48.827565</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469529</value>
+										<value>48.827528</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46938</value>
+										<value>48.827492</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469217</value>
+										<value>48.82745</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.469048</value>
+										<value>48.827407</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468872</value>
+										<value>48.827361</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468684</value>
+										<value>48.827311</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468507</value>
+										<value>48.827262</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468329</value>
+										<value>48.827213</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468176</value>
+										<value>48.827169</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.468056</value>
+										<value>48.827134</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467908</value>
+										<value>48.82709</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467757</value>
+										<value>48.827045</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>46.400000000000006</duration>
+							<distance>443.7</distance>
+							<code></code>
+							<instruction>Sur la bifurcation, prendre légèrement à droite</instruction>
+							<geometry>
+								<coordinates type="array" index="26">
+									<value type="array" index="2">
+										<value>2.467757</value>
+										<value>48.827045</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467561</value>
+										<value>48.827022</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467249</value>
+										<value>48.826955</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.467016</value>
+										<value>48.826897</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.466792</value>
+										<value>48.82684</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.466447</value>
+										<value>48.826753</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.465894</value>
+										<value>48.826612</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.465225</value>
+										<value>48.826414</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464969</value>
+										<value>48.826333</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46425</value>
+										<value>48.826096</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464014</value>
+										<value>48.826012</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463383</value>
+										<value>48.825792</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463275</value>
+										<value>48.82576</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463178</value>
+										<value>48.825745</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463028</value>
+										<value>48.825751</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46297</value>
+										<value>48.82576</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462871</value>
+										<value>48.825795</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462832</value>
+										<value>48.825815</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462797</value>
+										<value>48.825834</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462737</value>
+										<value>48.825884</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462697</value>
+										<value>48.825938</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462668</value>
+										<value>48.825996</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462662</value>
+										<value>48.826055</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462673</value>
+										<value>48.826107</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462695</value>
+										<value>48.826158</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462745</value>
+										<value>48.826223</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>8.5</duration>
+							<distance>153.4</distance>
+							<code></code>
+							<instruction>Continuer tout droit sur RTE DE LA FERME</instruction>
+							<geometry>
+								<coordinates type="array" index="8">
+									<value type="array" index="2">
+										<value>2.462745</value>
+										<value>48.826223</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462962</value>
+										<value>48.82634</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463631</value>
+										<value>48.826701</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463662</value>
+										<value>48.826717</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463951</value>
+										<value>48.826871</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463979</value>
+										<value>48.826885</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464223</value>
+										<value>48.827018</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464361</value>
+										<value>48.8271</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>4</duration>
+							<distance>26.3</distance>
+							<code></code>
+							<instruction>Tourner à droite sur CAR DE BEAUTE</instruction>
+							<geometry>
+								<coordinates type="array" index="11">
+									<value type="array" index="2">
+										<value>2.464361</value>
+										<value>48.8271</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464383</value>
+										<value>48.827085</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46441</value>
+										<value>48.827075</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464444</value>
+										<value>48.827068</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464478</value>
+										<value>48.827065</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464514</value>
+										<value>48.827069</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464548</value>
+										<value>48.827076</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464579</value>
+										<value>48.827089</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464603</value>
+										<value>48.827103</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464621</value>
+										<value>48.827126</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46463</value>
+										<value>48.827156</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>1.2</duration>
+							<distance>7.4</distance>
+							<code></code>
+							<instruction>À la fin de la route, prendre à gauche sur CAR DE BEAUTE</instruction>
+							<geometry>
+								<coordinates type="array" index="5">
+									<value type="array" index="2">
+										<value>2.46463</value>
+										<value>48.827156</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464629</value>
+										<value>48.827169</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464623</value>
+										<value>48.827185</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46461</value>
+										<value>48.827204</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464598</value>
+										<value>48.827218</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>2.8</duration>
+							<distance>18.3</distance>
+							<code></code>
+							<instruction>Continuer à gauche sur CAR DE BEAUTE</instruction>
+							<geometry>
+								<coordinates type="array" index="8">
+									<value type="array" index="2">
+										<value>2.464598</value>
+										<value>48.827218</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.46458</value>
+										<value>48.827233</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464558</value>
+										<value>48.827247</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464524</value>
+										<value>48.827262</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464493</value>
+										<value>48.827272</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464464</value>
+										<value>48.827272</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464419</value>
+										<value>48.827268</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464382</value>
+										<value>48.827258</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>115.6</duration>
+							<distance>2017</distance>
+							<code></code>
+							<instruction>À la fin de la route, prendre à droite sur AV DU TREMBLAY</instruction>
+							<geometry>
+								<coordinates type="array" index="51">
+									<value type="array" index="2">
+										<value>2.464382</value>
+										<value>48.827258</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464279</value>
+										<value>48.827369</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.464154</value>
+										<value>48.827502</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463964</value>
+										<value>48.827697</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463774</value>
+										<value>48.827874</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463497</value>
+										<value>48.828098</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.463156</value>
+										<value>48.828365</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.462423</value>
+										<value>48.828918</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.461745</value>
+										<value>48.829398</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.461643</value>
+										<value>48.82947</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.461525</value>
+										<value>48.829554</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.461074</value>
+										<value>48.829851</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.459959</value>
+										<value>48.830595</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.459054</value>
+										<value>48.831212</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.458708</value>
+										<value>48.831437</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.457309</value>
+										<value>48.832341</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.457251</value>
+										<value>48.832376</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.457197</value>
+										<value>48.832412</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.45709</value>
+										<value>48.832485</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.456806</value>
+										<value>48.832674</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.456394</value>
+										<value>48.832954</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.455513</value>
+										<value>48.8336</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.455165</value>
+										<value>48.833868</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.454982</value>
+										<value>48.834022</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.454936</value>
+										<value>48.834063</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.454808</value>
+										<value>48.834177</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.454483</value>
+										<value>48.834477</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.454055</value>
+										<value>48.834892</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.453754</value>
+										<value>48.835184</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.453446</value>
+										<value>48.835514</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.453226</value>
+										<value>48.835768</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.45316</value>
+										<value>48.835842</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.453122</value>
+										<value>48.835882</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.452936</value>
+										<value>48.836105</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.452751</value>
+										<value>48.836344</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.452581</value>
+										<value>48.836579</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.4524</value>
+										<value>48.836838</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.45205</value>
+										<value>48.837366</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.451953</value>
+										<value>48.837515</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.45182</value>
+										<value>48.837726</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.451637</value>
+										<value>48.837993</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.4513</value>
+										<value>48.838504</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.451248</value>
+										<value>48.838583</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.45101</value>
+										<value>48.838945</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.45079</value>
+										<value>48.839277</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.450545</value>
+										<value>48.839645</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.450282</value>
+										<value>48.840037</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.450045</value>
+										<value>48.840393</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.449138</value>
+										<value>48.841777</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44914</value>
+										<value>48.84194</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44915</value>
+										<value>48.842045</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>41.3</duration>
+							<distance>728.5</distance>
+							<code></code>
+							<instruction>Tourner lègèrement à gauche sur AV DE NOGENT</instruction>
+							<geometry>
+								<coordinates type="array" index="29">
+									<value type="array" index="2">
+										<value>2.44915</value>
+										<value>48.842045</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.448909</value>
+										<value>48.842246</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.448834</value>
+										<value>48.842328</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.448729</value>
+										<value>48.842448</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.448599</value>
+										<value>48.84259</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44849</value>
+										<value>48.84271</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44841</value>
+										<value>48.842787</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44828</value>
+										<value>48.842906</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.448139</value>
+										<value>48.843024</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447962</value>
+										<value>48.843167</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447782</value>
+										<value>48.843303</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447613</value>
+										<value>48.843412</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447411</value>
+										<value>48.843532</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447305</value>
+										<value>48.843592</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447193</value>
+										<value>48.843644</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.447093</value>
+										<value>48.843679</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44696</value>
+										<value>48.843721</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.446806</value>
+										<value>48.843765</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.446545</value>
+										<value>48.843831</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.446277</value>
+										<value>48.843885</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.446019</value>
+										<value>48.843932</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.445879</value>
+										<value>48.843955</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.445617</value>
+										<value>48.843988</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.445287</value>
+										<value>48.844019</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.442774</value>
+										<value>48.844243</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.442346</value>
+										<value>48.844284</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.441015</value>
+										<value>48.8444</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.440746</value>
+										<value>48.84442</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.44052</value>
+										<value>48.84444</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>7.5</duration>
+							<distance>129.3</distance>
+							<code></code>
+							<instruction>Continuer tout droit sur AV DE NOGENT</instruction>
+							<geometry>
+								<coordinates type="array" index="7">
+									<value type="array" index="2">
+										<value>2.44052</value>
+										<value>48.84444</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.440334</value>
+										<value>48.844453</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.440172</value>
+										<value>48.844467</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.439995</value>
+										<value>48.844481</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.439714</value>
+										<value>48.844503</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.439489</value>
+										<value>48.844521</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.438767</value>
+										<value>48.844585</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration>131.4</duration>
+							<distance>1056.1</distance>
+							<code></code>
+							<instruction>Continuer tout droit sur AV DE PARIS</instruction>
+							<geometry>
+								<coordinates type="array" index="22">
+									<value type="array" index="2">
+										<value>2.438767</value>
+										<value>48.844585</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.438614</value>
+										<value>48.8446</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.43838</value>
+										<value>48.844622</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.438173</value>
+										<value>48.844644</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.437958</value>
+										<value>48.844664</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.436429</value>
+										<value>48.844804</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.436247</value>
+										<value>48.84482</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.435121</value>
+										<value>48.844925</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.434554</value>
+										<value>48.844981</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.432141</value>
+										<value>48.845192</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.431575</value>
+										<value>48.845239</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.430991</value>
+										<value>48.845291</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.430652</value>
+										<value>48.845322</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.42882</value>
+										<value>48.845487</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.428412</value>
+										<value>48.845524</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.428222</value>
+										<value>48.84554</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.427482</value>
+										<value>48.845606</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.42698</value>
+										<value>48.845649</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.426305</value>
+										<value>48.845709</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.426247</value>
+										<value>48.845713</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.426141</value>
+										<value>48.845723</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.424473</value>
+										<value>48.845872</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+						<value>
+							<duration></duration>
+							<distance></distance>
+							<code></code>
+							<instruction>Arrivée sur AV DE PARIS</instruction>
+							<geometry>
+								<coordinates type="array" index="2">
+									<value type="array" index="2">
+										<value>2.424473</value>
+										<value>48.845872</value>
+									</value>
+									<value type="array" index="2">
+										<value>2.424473</value>
+										<value>48.845872</value>
+									</value>
+								</coordinates>
+								<type>LineString</type>
+							</geometry>
+						</value>
+					</routeinstructions>
+				</results>
+			</geoportail:compute>
+		</extensions>
+	</metadata>
+	<rte>
+		<rtept lat="48.837695" lon="2.582063"/>
+		<rtept lat="48.837582" lon="2.582136"/>
+		<rtept lat="48.83728099999999" lon="2.582243"/>
+		<rtept lat="48.837144999999964" lon="2.58227"/>
+		<rtept lat="48.837034999999986" lon="2.582312"/>
+		<rtept lat="48.836883" lon="2.582369"/>
+		<rtept lat="48.83678800000001" lon="2.582401"/>
+		<rtept lat="48.836674000000016" lon="2.582442"/>
+		<rtept lat="48.836442000000005" lon="2.582522"/>
+		<rtept lat="48.836071000000004" lon="2.58266"/>
+		<rtept lat="48.835924000000006" lon="2.582719"/>
+		<rtept lat="48.83570599999999" lon="2.582776"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.838189" lon="2.584925"/>
+		<rtept lat="48.838179999999994" lon="2.584772"/>
+		<rtept lat="48.838179" lon="2.584669"/>
+		<rtept lat="48.838171999999986" lon="2.584213"/>
+		<rtept lat="48.838144" lon="2.583698"/>
+		<rtept lat="48.83812800000001" lon="2.583461"/>
+		<rtept lat="48.83809099999996" lon="2.583083"/>
+		<rtept lat="48.838066" lon="2.582885"/>
+		<rtept lat="48.83804000000001" lon="2.582684"/>
+		<rtept lat="48.83802399999999" lon="2.582555"/>
+		<rtept lat="48.838019" lon="2.582517"/>
+		<rtept lat="48.838021" lon="2.582431"/>
+		<rtept lat="48.83802800000001" lon="2.5823759999999996"/>
+		<rtept lat="48.838042" lon="2.582322"/>
+		<rtept lat="48.83804700000002" lon="2.582312"/>
+		<rtept lat="48.838059999999984" lon="2.5822889999999994"/>
+		<rtept lat="48.83806899999999" lon="2.5822630000000006"/>
+		<rtept lat="48.838077999999996" lon="2.582236"/>
+		<rtept lat="48.83808500000001" lon="2.582208"/>
+		<rtept lat="48.838086000000004" lon="2.582196"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.83825900000002" lon="2.58556"/>
+		<rtept lat="48.838306999999986" lon="2.585482"/>
+		<rtept lat="48.838325999999995" lon="2.585437"/>
+		<rtept lat="48.838347999999996" lon="2.585314"/>
+		<rtept lat="48.838347" lon="2.5852579999999996"/>
+		<rtept lat="48.838335" lon="2.585187"/>
+		<rtept lat="48.83832699999999" lon="2.585129"/>
+		<rtept lat="48.838291999999996" lon="2.585032"/>
+		<rtept lat="48.838243000000006" lon="2.58497"/>
+		<rtept lat="48.838189" lon="2.584925"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.840419" lon="2.5862649999999996"/>
+		<rtept lat="48.84035" lon="2.586268"/>
+		<rtept lat="48.84010599999999" lon="2.586187"/>
+		<rtept lat="48.83942200000001" lon="2.585973"/>
+		<rtept lat="48.83874800000001" lon="2.585748"/>
+		<rtept lat="48.83855700000001" lon="2.585685"/>
+		<rtept lat="48.83843400000001" lon="2.5856330000000005"/>
+		<rtept lat="48.83825900000002" lon="2.58556"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.84048100000001" lon="2.587755"/>
+		<rtept lat="48.840419" lon="2.5862649999999996"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<wpt lat="48.84050412161184" lon="2.5877529997344015">
+		<desc>Point de départ</desc>
+		<extensions>
+			<marker-symbol>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==</marker-symbol>
+		</extensions>
+	</wpt>
+	<rte>
+		<rtept lat="48.83570599999999" lon="2.582776"/>
+		<rtept lat="48.835566" lon="2.5827519999999997"/>
+		<rtept lat="48.83551299999999" lon="2.582727"/>
+		<rtept lat="48.83543800000004" lon="2.582679"/>
+		<rtept lat="48.83536699999999" lon="2.5825919999999996"/>
+		<rtept lat="48.835319999999996" lon="2.582487"/>
+		<rtept lat="48.835228" lon="2.582099"/>
+		<rtept lat="48.835182" lon="2.581721"/>
+		<rtept lat="48.83516399999996" lon="2.5814630000000003"/>
+		<rtept lat="48.835161" lon="2.581428"/>
+		<rtept lat="48.83513999999997" lon="2.5809999999999995"/>
+		<rtept lat="48.835138" lon="2.5809339999999996"/>
+		<rtept lat="48.835121000000015" lon="2.580259"/>
+		<rtept lat="48.83509600000002" lon="2.5796439999999996"/>
+		<rtept lat="48.835082" lon="2.578844"/>
+		<rtept lat="48.83503300000001" lon="2.578332"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.83784" lon="2.581551"/>
+		<rtept lat="48.83783399999999" lon="2.5816479999999995"/>
+		<rtept lat="48.83782700000003" lon="2.581709"/>
+		<rtept lat="48.837816000000004" lon="2.581758"/>
+		<rtept lat="48.83778100000001" lon="2.581865"/>
+		<rtept lat="48.83776500000002" lon="2.581882"/>
+		<rtept lat="48.837751" lon="2.581903"/>
+		<rtept lat="48.837737000000004" lon="2.581925"/>
+		<rtept lat="48.837726" lon="2.5819500000000004"/>
+		<rtept lat="48.837716" lon="2.581975"/>
+		<rtept lat="48.837706999999995" lon="2.582001"/>
+		<rtept lat="48.837699999999984" lon="2.5820289999999995"/>
+		<rtept lat="48.837695" lon="2.5820590000000005"/>
+		<rtept lat="48.837695" lon="2.582063"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.838086000000004" lon="2.582196"/>
+		<rtept lat="48.838089" lon="2.582178"/>
+		<rtept lat="48.83809200000002" lon="2.582148"/>
+		<rtept lat="48.83809400000001" lon="2.58212"/>
+		<rtept lat="48.83809300000004" lon="2.5820909999999997"/>
+		<rtept lat="48.838089" lon="2.5820609999999995"/>
+		<rtept lat="48.83808500000001" lon="2.582031"/>
+		<rtept lat="48.838077999999996" lon="2.5820040000000004"/>
+		<rtept lat="48.838070000000016" lon="2.581977"/>
+		<rtept lat="48.838059999999984" lon="2.5819509999999997"/>
+		<rtept lat="48.838047999999986" lon="2.581926"/>
+		<rtept lat="48.838044" lon="2.581918"/>
+		<rtept lat="48.83803499999996" lon="2.581905"/>
+		<rtept lat="48.83802" lon="2.581883"/>
+		<rtept lat="48.83800400000001" lon="2.581866"/>
+		<rtept lat="48.837999999999994" lon="2.58186"/>
+		<rtept lat="48.83798599999997" lon="2.581843"/>
+		<rtept lat="48.83793200000002" lon="2.58175"/>
+		<rtept lat="48.83788100000001" lon="2.581635"/>
+		<rtept lat="48.83784" lon="2.581551"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.842044999999985" lon="2.44915"/>
+		<rtept lat="48.84224599999999" lon="2.448909"/>
+		<rtept lat="48.84232800000001" lon="2.448834"/>
+		<rtept lat="48.84244799999999" lon="2.448729"/>
+		<rtept lat="48.84259" lon="2.4485990000000006"/>
+		<rtept lat="48.84270999999998" lon="2.44849"/>
+		<rtept lat="48.84278699999999" lon="2.44841"/>
+		<rtept lat="48.84290599999997" lon="2.44828"/>
+		<rtept lat="48.843024000000014" lon="2.448139"/>
+		<rtept lat="48.843166999999994" lon="2.447962"/>
+		<rtept lat="48.84330299999999" lon="2.447782"/>
+		<rtept lat="48.843412" lon="2.447613"/>
+		<rtept lat="48.84353200000001" lon="2.447411"/>
+		<rtept lat="48.843592" lon="2.447305"/>
+		<rtept lat="48.84364399999998" lon="2.447193"/>
+		<rtept lat="48.84367900000001" lon="2.447093"/>
+		<rtept lat="48.843721000000016" lon="2.44696"/>
+		<rtept lat="48.84376499999999" lon="2.446806"/>
+		<rtept lat="48.843830999999994" lon="2.4465449999999995"/>
+		<rtept lat="48.84388500000003" lon="2.446277"/>
+		<rtept lat="48.843931999999995" lon="2.446019"/>
+		<rtept lat="48.843954999999994" lon="2.445879"/>
+		<rtept lat="48.843988000000024" lon="2.445617"/>
+		<rtept lat="48.844019" lon="2.4452869999999995"/>
+		<rtept lat="48.84424299999998" lon="2.4427739999999996"/>
+		<rtept lat="48.844284000000044" lon="2.442346"/>
+		<rtept lat="48.84440000000001" lon="2.4410150000000006"/>
+		<rtept lat="48.844420000000014" lon="2.440746"/>
+		<rtept lat="48.84444000000002" lon="2.44052"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.84444000000002" lon="2.44052"/>
+		<rtept lat="48.84445299999999" lon="2.440334"/>
+		<rtept lat="48.84446700000001" lon="2.440172"/>
+		<rtept lat="48.844481" lon="2.439995"/>
+		<rtept lat="48.844503" lon="2.439714"/>
+		<rtept lat="48.844521000000015" lon="2.439489"/>
+		<rtept lat="48.84458500000002" lon="2.438767"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.84458500000002" lon="2.438767"/>
+		<rtept lat="48.84460000000004" lon="2.4386139999999994"/>
+		<rtept lat="48.844622000000015" lon="2.43838"/>
+		<rtept lat="48.84464400000002" lon="2.438173"/>
+		<rtept lat="48.84466400000002" lon="2.437958"/>
+		<rtept lat="48.84480400000001" lon="2.436429"/>
+		<rtept lat="48.84482" lon="2.436247"/>
+		<rtept lat="48.84492499999999" lon="2.435121"/>
+		<rtept lat="48.84498099999999" lon="2.434554"/>
+		<rtept lat="48.84519199999997" lon="2.4321410000000006"/>
+		<rtept lat="48.84523899999999" lon="2.431575"/>
+		<rtept lat="48.84529100000003" lon="2.430991"/>
+		<rtept lat="48.84532200000001" lon="2.430652"/>
+		<rtept lat="48.84548700000002" lon="2.42882"/>
+		<rtept lat="48.84552400000001" lon="2.428412"/>
+		<rtept lat="48.84554" lon="2.4282219999999994"/>
+		<rtept lat="48.845606000000004" lon="2.427482"/>
+		<rtept lat="48.84564900000001" lon="2.42698"/>
+		<rtept lat="48.845709" lon="2.426305"/>
+		<rtept lat="48.84571299999999" lon="2.4262470000000005"/>
+		<rtept lat="48.84572300000002" lon="2.4261410000000003"/>
+		<rtept lat="48.845871999999986" lon="2.4244730000000003"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<wpt lat="48.84586375242972" lon="2.424470549423338">
+		<desc>Point d'arrivée</desc>
+		<extensions>
+			<marker-symbol>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAQxSURBVFiF3ZldaBxVFMd/d2ayTRtjQpo2mlilWBEMshoj+FAERZIHIdA3iw+V1icRREFIQAKNgsUHQfBFwZI2WgWxqYUiVTDBBj9ILC5Nu2tjdjemsR+mSZNNNvsxO8eHTTRuk+zMnQmCf9iHnXvO+Z//nDvn3rmjRIT/C6zAI4ZVFRbtKDpQNCM0AvXANIo/EC4inMbmLBFZDJJaBVaZJ9Sd2HQCrwDbXHikgfewOMKPMh9ECsGIeVx1IHxEsQJeMY3iEMNy2m8aht8AtKpOhH70hADUI/TTqjr9puKvMsUE3vabxCp0MSJHdJ31xRSnVj9BVPcfOCj26U45PTHFh30c/am1EaaxuF+nKejd1WLX2gwhAPXL8T3De2XCqooKbuCu/eoiTZ6dXtch75WxaMeNENOyOXx8kHOpGMPOIudSMQ4fH8S0bBcs25Z5PMF7ZVpVL3BgQxvTsvn6+kVq6sK3jc3NRGhraKZgl9t9HGNEXvCSmvfKKJrL2nQfHVpTCEBNXZjuo0OB8JTAu5jiXmtjPL3vLl/jbnlKoNPN6spaVFbt8jXulqcEOmKSZS0yi5O+xt3ylEBHTLSsxbf913yNu+UpgU4DKE/Sc3AvczORNcfmZiL0HNwbCE8JvItxWDvJ1SjYFm0NzZzpG2RpIYbIIksLMc70Dbpsy+54SqCzzlQAY8B9Xsk8YAJ4gBHJe3HyXpkRyaN407OfN7zlVQjobjTv4BgQ1/ItjzjV9Oo46okZEBuhS8u3PDoZEDf7t9vg903zBLBfP8C/4cAnD87teclIGyFlLoVyllWh8vmQYRgVAOI4OQmFciKSFZFsMpmck1UC/Il5VNViEgHu9StkQYyb7bNNH1wrmDm3PgqWUHLBhl+SyeRV/6czLepJDAbw8fos4HTNb+/9PFv9u3YMU/X6f38/L98B7/gJ8U2uasiPEADTcRqDOozoBn7WcbzqmFOvpnYM+uTPpvP5SDBiimvP8xRPKV3DFpV7fX7HyYyD44M96xicmpqaSgd3TDQsv6J4zYvLx5nqsz/kK29qcyq5kFpafD+RSMSKf4P+CvCY+hJFRzmzmB2KPTvb+JnX8CsdzDGM8/F4/PrqseC/AggvZlGXtyipXc8kLcbCy6mdrg/6lBIbR41DYXR8cjIqIoW17IIXc17+nHnEOnS3VfhiHQt5d7HmVMK2Nn6+DHLiOGMmRLdMVI+NymjZ9Sf4abaMqZbQp01G/rnS60P5rT8duNXw1TpuGaXksmMYlxKJxLiIt23NponhKVV5a874rdZwmlYuTTvmjWdmGj9Mifl3kkpJ2hGJGY4THb9yJS4i2p0t+Gm2ggHJxMNb94eNzIAJZgEKbyxsP5kS00ZJSkG0oFQ0mZyYkKDuqIhs6u/7hyt75luM2RMPVfft3rW7bU9T0z2bxbV50+w/wF8f81R5OpwBhwAAAABJRU5ErkJggg==</marker-symbol>
+		</extensions>
+	</wpt>
+	<rte>
+		<rtept lat="48.845871999999986" lon="2.4244730000000003"/>
+		<rtept lat="48.845871999999986" lon="2.4244730000000003"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.835453" lon="2.570404"/>
+		<rtept lat="48.835470999999956" lon="2.570022"/>
+		<rtept lat="48.83551700000004" lon="2.5691769999999994"/>
+		<rtept lat="48.835566" lon="2.56824"/>
+		<rtept lat="48.835722000000004" lon="2.5651459999999995"/>
+		<rtept lat="48.83572699999999" lon="2.5650799999999996"/>
+		<rtept lat="48.83584400000001" lon="2.5629020000000002"/>
+		<rtept lat="48.83584400000001" lon="2.562883"/>
+		<rtept lat="48.83586199999999" lon="2.562477"/>
+		<rtept lat="48.83596499999999" lon="2.560521"/>
+		<rtept lat="48.83606800000001" lon="2.558564"/>
+		<rtept lat="48.83615900000001" lon="2.5568320000000004"/>
+		<rtept lat="48.83617100000001" lon="2.556599"/>
+		<rtept lat="48.83622700000001" lon="2.555571"/>
+		<rtept lat="48.83622700000001" lon="2.555563"/>
+		<rtept lat="48.836386000000005" lon="2.552589"/>
+		<rtept lat="48.83640700000001" lon="2.552375"/>
+		<rtept lat="48.836476000000005" lon="2.55086"/>
+		<rtept lat="48.83656400000001" lon="2.549121"/>
+		<rtept lat="48.83663200000001" lon="2.547806"/>
+		<rtept lat="48.83664300000001" lon="2.547593"/>
+		<rtept lat="48.83665399999998" lon="2.547377"/>
+		<rtept lat="48.83675600000001" lon="2.545428"/>
+		<rtept lat="48.83676600000001" lon="2.5450420000000005"/>
+		<rtept lat="48.83676699999998" lon="2.544116"/>
+		<rtept lat="48.83675299999999" lon="2.5438659999999995"/>
+		<rtept lat="48.83674300000001" lon="2.543697"/>
+		<rtept lat="48.836736" lon="2.543534"/>
+		<rtept lat="48.836726999999996" lon="2.543424"/>
+		<rtept lat="48.836704999999995" lon="2.543179"/>
+		<rtept lat="48.836667000000034" lon="2.542849"/>
+		<rtept lat="48.836591999999996" lon="2.5423320000000005"/>
+		<rtept lat="48.836501" lon="2.541893"/>
+		<rtept lat="48.836416999999955" lon="2.541496"/>
+		<rtept lat="48.83633499999999" lon="2.541177"/>
+		<rtept lat="48.836228000000006" lon="2.540804"/>
+		<rtept lat="48.836105" lon="2.540425"/>
+		<rtept lat="48.83600699999997" lon="2.540141"/>
+		<rtept lat="48.83581699999999" lon="2.539624"/>
+		<rtept lat="48.835594999999984" lon="2.5390629999999996"/>
+		<rtept lat="48.835271000000034" lon="2.538299"/>
+		<rtept lat="48.83503700000003" lon="2.5377700000000005"/>
+		<rtept lat="48.834891" lon="2.53744"/>
+		<rtept lat="48.83442699999998" lon="2.5364509999999996"/>
+		<rtept lat="48.834213000000005" lon="2.536008"/>
+		<rtept lat="48.83420799999999" lon="2.535997"/>
+		<rtept lat="48.83364100000003" lon="2.534875"/>
+		<rtept lat="48.83343099999999" lon="2.534487"/>
+		<rtept lat="48.83329900000001" lon="2.534236"/>
+		<rtept lat="48.83302699999999" lon="2.533746"/>
+		<rtept lat="48.832780000000014" lon="2.5332969999999997"/>
+		<rtept lat="48.83253300000001" lon="2.532865"/>
+		<rtept lat="48.83249100000003" lon="2.5327999999999995"/>
+		<rtept lat="48.83246" lon="2.53275"/>
+		<rtept lat="48.832082000000014" lon="2.5321169999999995"/>
+		<rtept lat="48.831706999999994" lon="2.531503"/>
+		<rtept lat="48.83133000000001" lon="2.5309150000000002"/>
+		<rtept lat="48.83054799999999" lon="2.529758"/>
+		<rtept lat="48.829926" lon="2.528889"/>
+		<rtept lat="48.829735" lon="2.5286379999999995"/>
+		<rtept lat="48.82899499999999" lon="2.5276749999999995"/>
+		<rtept lat="48.828930000000014" lon="2.5275860000000003"/>
+		<rtept lat="48.82870700000001" lon="2.527284"/>
+		<rtept lat="48.82853399999999" lon="2.527051"/>
+		<rtept lat="48.828292000000005" lon="2.526699"/>
+		<rtept lat="48.82825" lon="2.5266319999999998"/>
+		<rtept lat="48.82808699999998" lon="2.526372"/>
+		<rtept lat="48.82789" lon="2.526022"/>
+		<rtept lat="48.827774000000005" lon="2.52579"/>
+		<rtept lat="48.827673000000004" lon="2.525595"/>
+		<rtept lat="48.82752099999999" lon="2.525271"/>
+		<rtept lat="48.827406999999994" lon="2.524992"/>
+		<rtept lat="48.827324000000004" lon="2.524781"/>
+		<rtept lat="48.827264000000014" lon="2.524622"/>
+		<rtept lat="48.827202" lon="2.5244430000000007"/>
+		<rtept lat="48.827166000000005" lon="2.524342"/>
+		<rtept lat="48.82709299999999" lon="2.524115"/>
+		<rtept lat="48.827076000000005" lon="2.524061"/>
+		<rtept lat="48.82704199999998" lon="2.523969"/>
+		<rtept lat="48.82702000000003" lon="2.523901"/>
+		<rtept lat="48.826944" lon="2.523651"/>
+		<rtept lat="48.82685799999999" lon="2.523326"/>
+		<rtept lat="48.82678599999997" lon="2.522963"/>
+		<rtept lat="48.826712999999984" lon="2.522599"/>
+		<rtept lat="48.82663900000003" lon="2.522176"/>
+		<rtept lat="48.826571" lon="2.5216829999999995"/>
+		<rtept lat="48.826528999999994" lon="2.521249"/>
+		<rtept lat="48.826503" lon="2.520796"/>
+		<rtept lat="48.82647699999998" lon="2.520088"/>
+		<rtept lat="48.82647" lon="2.5196449999999997"/>
+		<rtept lat="48.826491000000004" lon="2.518953"/>
+		<rtept lat="48.826527999999996" lon="2.518183"/>
+		<rtept lat="48.826561" lon="2.51757"/>
+		<rtept lat="48.826592000000005" lon="2.517134"/>
+		<rtept lat="48.826617999999996" lon="2.516745"/>
+		<rtept lat="48.826651" lon="2.5161669999999994"/>
+		<rtept lat="48.826682000000005" lon="2.5156450000000006"/>
+		<rtept lat="48.82671400000001" lon="2.5151260000000004"/>
+		<rtept lat="48.826753" lon="2.514597"/>
+		<rtept lat="48.826798999999994" lon="2.513967"/>
+		<rtept lat="48.826865000000026" lon="2.513242"/>
+		<rtept lat="48.82692099999997" lon="2.512625"/>
+		<rtept lat="48.82698400000001" lon="2.5119610000000003"/>
+		<rtept lat="48.827049999999986" lon="2.511305"/>
+		<rtept lat="48.82711699999999" lon="2.5107059999999994"/>
+		<rtept lat="48.827196000000015" lon="2.510038"/>
+		<rtept lat="48.827292" lon="2.509313"/>
+		<rtept lat="48.82738499999999" lon="2.508595"/>
+		<rtept lat="48.82748699999999" lon="2.507891"/>
+		<rtept lat="48.827586" lon="2.507223"/>
+		<rtept lat="48.827669000000014" lon="2.506724"/>
+		<rtept lat="48.827788" lon="2.505912"/>
+		<rtept lat="48.827889" lon="2.5053419999999997"/>
+		<rtept lat="48.827950999999985" lon="2.505055"/>
+		<rtept lat="48.82804999999999" lon="2.504568"/>
+		<rtept lat="48.828135" lon="2.504162"/>
+		<rtept lat="48.828215" lon="2.503727"/>
+		<rtept lat="48.82836499999999" lon="2.503041"/>
+		<rtept lat="48.82852199999999" lon="2.50241"/>
+		<rtept lat="48.828700999999995" lon="2.501693"/>
+		<rtept lat="48.828824999999995" lon="2.5012119999999998"/>
+		<rtept lat="48.82899900000004" lon="2.5005960000000003"/>
+		<rtept lat="48.829139999999995" lon="2.500103"/>
+		<rtept lat="48.829350000000034" lon="2.499397"/>
+		<rtept lat="48.82944900000004" lon="2.4990579999999993"/>
+		<rtept lat="48.82953900000001" lon="2.4987619999999997"/>
+		<rtept lat="48.829672000000016" lon="2.498279"/>
+		<rtept lat="48.829803" lon="2.4977669999999996"/>
+		<rtept lat="48.829904" lon="2.4973779999999994"/>
+		<rtept lat="48.82996800000001" lon="2.497033"/>
+		<rtept lat="48.830017" lon="2.496784"/>
+		<rtept lat="48.83006499999999" lon="2.496554"/>
+		<rtept lat="48.83011400000001" lon="2.496286"/>
+		<rtept lat="48.830156999999986" lon="2.4960340000000003"/>
+		<rtept lat="48.83020199999996" lon="2.4957600000000006"/>
+		<rtept lat="48.83023800000001" lon="2.49551"/>
+		<rtept lat="48.83027799999999" lon="2.4952190000000005"/>
+		<rtept lat="48.83031199999999" lon="2.494947"/>
+		<rtept lat="48.830341000000004" lon="2.494677"/>
+		<rtept lat="48.83037200000001" lon="2.4943620000000006"/>
+		<rtept lat="48.830389999999994" lon="2.494112"/>
+		<rtept lat="48.830409" lon="2.493841"/>
+		<rtept lat="48.83042400000002" lon="2.4935709999999998"/>
+		<rtept lat="48.830433" lon="2.493314"/>
+		<rtept lat="48.83044100000001" lon="2.493006"/>
+		<rtept lat="48.830445" lon="2.492709"/>
+		<rtept lat="48.83044699999999" lon="2.492444"/>
+		<rtept lat="48.83044799999996" lon="2.492158"/>
+		<rtept lat="48.83044400000003" lon="2.4918949999999995"/>
+		<rtept lat="48.83044000000001" lon="2.4916120000000004"/>
+		<rtept lat="48.830433" lon="2.491348"/>
+		<rtept lat="48.83042400000002" lon="2.491084"/>
+		<rtept lat="48.830411999999995" lon="2.490817"/>
+		<rtept lat="48.830397000000005" lon="2.490486"/>
+		<rtept lat="48.830377999999996" lon="2.4901609999999996"/>
+		<rtept lat="48.830342" lon="2.48959"/>
+		<rtept lat="48.830331" lon="2.4894540000000003"/>
+		<rtept lat="48.83030100000002" lon="2.489071"/>
+		<rtept lat="48.83026899999999" lon="2.488692"/>
+		<rtept lat="48.830231999999995" lon="2.4882739999999997"/>
+		<rtept lat="48.83019300000001" lon="2.487878"/>
+		<rtept lat="48.83015299999997" lon="2.487494"/>
+		<rtept lat="48.830116000000004" lon="2.487143"/>
+		<rtept lat="48.830072" lon="2.486706"/>
+		<rtept lat="48.83003400000001" lon="2.4863690000000003"/>
+		<rtept lat="48.829995" lon="2.486072"/>
+		<rtept lat="48.82995399999999" lon="2.485754"/>
+		<rtept lat="48.82990100000001" lon="2.485357"/>
+		<rtept lat="48.82984999999999" lon="2.484984"/>
+		<rtept lat="48.82979700000001" lon="2.484595"/>
+		<rtept lat="48.82973899999999" lon="2.4842019999999994"/>
+		<rtept lat="48.829679999999996" lon="2.4838319999999996"/>
+		<rtept lat="48.82962599999999" lon="2.483449"/>
+		<rtept lat="48.82956999999999" lon="2.483073"/>
+		<rtept lat="48.82952499999999" lon="2.482754"/>
+		<rtept lat="48.829475" lon="2.4824010000000003"/>
+		<rtept lat="48.829420999999996" lon="2.481982"/>
+		<rtept lat="48.82936799999999" lon="2.4815909999999994"/>
+		<rtept lat="48.82932099999999" lon="2.481251"/>
+		<rtept lat="48.829278999999985" lon="2.4809179999999995"/>
+		<rtept lat="48.82916900000001" lon="2.480096"/>
+		<rtept lat="48.829138" lon="2.479857"/>
+		<rtept lat="48.829098999999985" lon="2.479589"/>
+		<rtept lat="48.829060999999996" lon="2.4793259999999995"/>
+		<rtept lat="48.829020000000014" lon="2.479047"/>
+		<rtept lat="48.82898499999996" lon="2.478807"/>
+		<rtept lat="48.828945000000004" lon="2.4785440000000003"/>
+		<rtept lat="48.828903999999994" lon="2.478271"/>
+		<rtept lat="48.82885999999999" lon="2.477978"/>
+		<rtept lat="48.82882699999999" lon="2.477755"/>
+		<rtept lat="48.828795000000014" lon="2.4775240000000003"/>
+		<rtept lat="48.828760999999986" lon="2.477301"/>
+		<rtept lat="48.82872600000002" lon="2.4770600000000003"/>
+		<rtept lat="48.82869500000001" lon="2.4768449999999995"/>
+		<rtept lat="48.82866899999999" lon="2.476674"/>
+		<rtept lat="48.828659000000016" lon="2.476584"/>
+		<rtept lat="48.828625999999986" lon="2.476349"/>
+		<rtept lat="48.82859100000002" lon="2.476109"/>
+		<rtept lat="48.82855299999997" lon="2.475851"/>
+		<rtept lat="48.82851600000001" lon="2.47558"/>
+		<rtept lat="48.828473" lon="2.475266"/>
+		<rtept lat="48.82843500000001" lon="2.474979"/>
+		<rtept lat="48.82839599999997" lon="2.474708"/>
+		<rtept lat="48.82835599999996" lon="2.474428"/>
+		<rtept lat="48.828317" lon="2.4741440000000003"/>
+		<rtept lat="48.828272" lon="2.473838"/>
+		<rtept lat="48.828239999999994" lon="2.473605"/>
+		<rtept lat="48.82820699999999" lon="2.473373"/>
+		<rtept lat="48.82817800000001" lon="2.473163"/>
+		<rtept lat="48.828149999999965" lon="2.472967"/>
+		<rtept lat="48.82812099999998" lon="2.472756"/>
+		<rtept lat="48.82808800000001" lon="2.472532"/>
+		<rtept lat="48.828055000000006" lon="2.4723220000000006"/>
+		<rtept lat="48.82802100000001" lon="2.4721079999999995"/>
+		<rtept lat="48.82798500000001" lon="2.471883"/>
+		<rtept lat="48.82795200000001" lon="2.471687"/>
+		<rtept lat="48.827916000000016" lon="2.471473"/>
+		<rtept lat="48.827878999999996" lon="2.471256"/>
+		<rtept lat="48.82784100000001" lon="2.471054"/>
+		<rtept lat="48.82780300000002" lon="2.4708400000000004"/>
+		<rtept lat="48.827765" lon="2.470639"/>
+		<rtept lat="48.82772700000001" lon="2.470445"/>
+		<rtept lat="48.82769300000001" lon="2.470282"/>
+		<rtept lat="48.82766699999999" lon="2.470159"/>
+		<rtept lat="48.827635999999984" lon="2.4700030000000006"/>
+		<rtept lat="48.82759899999999" lon="2.469837"/>
+		<rtept lat="48.827564999999964" lon="2.4696880000000005"/>
+		<rtept lat="48.827528" lon="2.4695289999999996"/>
+		<rtept lat="48.82749199999998" lon="2.46938"/>
+		<rtept lat="48.82745000000003" lon="2.469217"/>
+		<rtept lat="48.827406999999994" lon="2.469048"/>
+		<rtept lat="48.827360999999996" lon="2.468872"/>
+		<rtept lat="48.82731100000004" lon="2.4686839999999997"/>
+		<rtept lat="48.82726199999999" lon="2.468507"/>
+		<rtept lat="48.827213" lon="2.468329"/>
+		<rtept lat="48.827169" lon="2.468176"/>
+		<rtept lat="48.827134" lon="2.4680559999999994"/>
+		<rtept lat="48.82709" lon="2.467908"/>
+		<rtept lat="48.827045" lon="2.467757"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.827218000000016" lon="2.4645979999999996"/>
+		<rtept lat="48.82723300000001" lon="2.46458"/>
+		<rtept lat="48.827247" lon="2.4645579999999994"/>
+		<rtept lat="48.82726199999999" lon="2.464524"/>
+		<rtept lat="48.827271999999994" lon="2.464493"/>
+		<rtept lat="48.827271999999994" lon="2.464464"/>
+		<rtept lat="48.827268000000004" lon="2.464419"/>
+		<rtept lat="48.82725800000003" lon="2.4643819999999996"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.827156" lon="2.4646299999999997"/>
+		<rtept lat="48.827169" lon="2.4646290000000004"/>
+		<rtept lat="48.827184999999986" lon="2.464623"/>
+		<rtept lat="48.82720400000002" lon="2.4646099999999995"/>
+		<rtept lat="48.827218000000016" lon="2.4645979999999996"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.8271" lon="2.4643609999999994"/>
+		<rtept lat="48.82708500000001" lon="2.464383"/>
+		<rtept lat="48.82707500000001" lon="2.46441"/>
+		<rtept lat="48.827068" lon="2.464444"/>
+		<rtept lat="48.827065000000005" lon="2.4644779999999997"/>
+		<rtept lat="48.82706900000002" lon="2.4645139999999994"/>
+		<rtept lat="48.827076000000005" lon="2.464548"/>
+		<rtept lat="48.827089" lon="2.464579"/>
+		<rtept lat="48.827102999999966" lon="2.464603"/>
+		<rtept lat="48.82712599999999" lon="2.464621"/>
+		<rtept lat="48.827156" lon="2.4646299999999997"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.826223" lon="2.4627450000000004"/>
+		<rtept lat="48.826340000000016" lon="2.4629619999999997"/>
+		<rtept lat="48.82670100000004" lon="2.4636310000000003"/>
+		<rtept lat="48.826717" lon="2.463662"/>
+		<rtept lat="48.82687099999998" lon="2.4639509999999993"/>
+		<rtept lat="48.82688500000003" lon="2.4639789999999997"/>
+		<rtept lat="48.82701800000001" lon="2.464223"/>
+		<rtept lat="48.8271" lon="2.4643609999999994"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.82725800000003" lon="2.4643819999999996"/>
+		<rtept lat="48.827368999999976" lon="2.464279"/>
+		<rtept lat="48.82750200000001" lon="2.464154"/>
+		<rtept lat="48.827697" lon="2.463964"/>
+		<rtept lat="48.82787400000001" lon="2.4637740000000004"/>
+		<rtept lat="48.82809800000001" lon="2.463497"/>
+		<rtept lat="48.82836499999999" lon="2.4631559999999997"/>
+		<rtept lat="48.82891799999999" lon="2.462423"/>
+		<rtept lat="48.829398" lon="2.461745"/>
+		<rtept lat="48.829470000000015" lon="2.461643"/>
+		<rtept lat="48.82955400000003" lon="2.461525"/>
+		<rtept lat="48.82985099999999" lon="2.461074"/>
+		<rtept lat="48.83059500000002" lon="2.459959"/>
+		<rtept lat="48.831211999999965" lon="2.459054"/>
+		<rtept lat="48.831436999999994" lon="2.458708"/>
+		<rtept lat="48.832340999999985" lon="2.457309"/>
+		<rtept lat="48.83237600000004" lon="2.4572510000000003"/>
+		<rtept lat="48.83241199999998" lon="2.457197"/>
+		<rtept lat="48.83248499999999" lon="2.45709"/>
+		<rtept lat="48.832674" lon="2.456806"/>
+		<rtept lat="48.832954" lon="2.4563940000000004"/>
+		<rtept lat="48.83359999999999" lon="2.455513"/>
+		<rtept lat="48.833867999999995" lon="2.455165"/>
+		<rtept lat="48.834021999999976" lon="2.4549820000000007"/>
+		<rtept lat="48.834063000000015" lon="2.454936"/>
+		<rtept lat="48.83417700000001" lon="2.454808"/>
+		<rtept lat="48.83447699999999" lon="2.454483"/>
+		<rtept lat="48.834891999999996" lon="2.4540549999999994"/>
+		<rtept lat="48.83518399999997" lon="2.453754"/>
+		<rtept lat="48.83551399999999" lon="2.4534460000000005"/>
+		<rtept lat="48.835768" lon="2.453226"/>
+		<rtept lat="48.835842000000014" lon="2.45316"/>
+		<rtept lat="48.835882000000026" lon="2.4531219999999996"/>
+		<rtept lat="48.836105" lon="2.452936"/>
+		<rtept lat="48.83634399999997" lon="2.4527510000000006"/>
+		<rtept lat="48.836579" lon="2.4525809999999995"/>
+		<rtept lat="48.83683799999997" lon="2.4524"/>
+		<rtept lat="48.837366" lon="2.45205"/>
+		<rtept lat="48.837514999999996" lon="2.451953"/>
+		<rtept lat="48.837726" lon="2.45182"/>
+		<rtept lat="48.83799300000001" lon="2.451637"/>
+		<rtept lat="48.838504" lon="2.4513"/>
+		<rtept lat="48.83858299999997" lon="2.451248"/>
+		<rtept lat="48.838944999999995" lon="2.45101"/>
+		<rtept lat="48.83927700000001" lon="2.4507900000000005"/>
+		<rtept lat="48.83964499999999" lon="2.450545"/>
+		<rtept lat="48.840036999999995" lon="2.4502820000000005"/>
+		<rtept lat="48.840393000000034" lon="2.4500450000000003"/>
+		<rtept lat="48.84177700000001" lon="2.449138"/>
+		<rtept lat="48.841939999999965" lon="2.44914"/>
+		<rtept lat="48.842044999999985" lon="2.44915"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.827045" lon="2.467757"/>
+		<rtept lat="48.827022" lon="2.467561"/>
+		<rtept lat="48.826955" lon="2.467249"/>
+		<rtept lat="48.82689700000003" lon="2.467016"/>
+		<rtept lat="48.826840000000004" lon="2.466792"/>
+		<rtept lat="48.826753" lon="2.466447"/>
+		<rtept lat="48.82661199999998" lon="2.465894"/>
+		<rtept lat="48.826414" lon="2.465225"/>
+		<rtept lat="48.826333000000005" lon="2.464969"/>
+		<rtept lat="48.82609599999998" lon="2.46425"/>
+		<rtept lat="48.82601200000002" lon="2.464014"/>
+		<rtept lat="48.82579200000001" lon="2.463383"/>
+		<rtept lat="48.82576" lon="2.4632750000000003"/>
+		<rtept lat="48.82574499999998" lon="2.4631779999999996"/>
+		<rtept lat="48.82575099999997" lon="2.4630279999999996"/>
+		<rtept lat="48.82576" lon="2.46297"/>
+		<rtept lat="48.825795" lon="2.462871"/>
+		<rtept lat="48.825815000000006" lon="2.462832"/>
+		<rtept lat="48.825833999999986" lon="2.462797"/>
+		<rtept lat="48.825884" lon="2.462737"/>
+		<rtept lat="48.82593800000001" lon="2.462697"/>
+		<rtept lat="48.825996" lon="2.4626680000000003"/>
+		<rtept lat="48.826055" lon="2.462662"/>
+		<rtept lat="48.82610700000001" lon="2.462673"/>
+		<rtept lat="48.82615799999999" lon="2.462695"/>
+		<rtept lat="48.826223" lon="2.4627450000000004"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+	<rte>
+		<rtept lat="48.83503300000001" lon="2.578332"/>
+		<rtept lat="48.83505099999999" lon="2.578"/>
+		<rtept lat="48.83505500000004" lon="2.577928"/>
+		<rtept lat="48.83506199999999" lon="2.577775"/>
+		<rtept lat="48.83506600000001" lon="2.577694"/>
+		<rtept lat="48.83506700000004" lon="2.577686"/>
+		<rtept lat="48.83516399999996" lon="2.575886"/>
+		<rtept lat="48.83526599999999" lon="2.573963"/>
+		<rtept lat="48.83537000000001" lon="2.572078"/>
+		<rtept lat="48.835453" lon="2.570404"/>
+		<extensions>
+			<stroke>#00b798</stroke>
+			<stroke-opacity>0.9</stroke-opacity>
+			<stroke-width>12</stroke-width>
+		</extensions>
+	</rte>
+</gpx>

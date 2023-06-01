@@ -12,6 +12,9 @@
                 width: 100%;
                 height: 500px;
             }
+            #viewer {
+                width: 100%;
+            }
         </style>
 {{/content}}
 
@@ -21,44 +24,54 @@
             <div id="map">
             </div>
             <!-- export -->
-            <button id="export">Exporter</button>
+            <button id="export" title="Exporter la couche de dessin">Exporter</button>
+            <input type="checkbox" id="sort" title="trier les elements par leur ID (number)">trier</input>
+            <button id="viewIti" title="Afficher les métadonnées de la couche de calcul">Afficher Iti</button>
+            <button id="viewIso" title="Afficher les métadonnées de la couche de calcul">Afficher Iso</button>
+            <div>
+                <textarea id="viewer" rows="10" cols="50"></textarea>
+            </div>
 {{/content}}
 
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                var layer;
+                var sampleLayer;
+                var exportLayerRoute, exportLayerIso;
+                var exportFormatRoute, exportFormatIso;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
-                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/Campomoro-Tizzano-Sartene_3029.gpx";
-                    layer = new ol.layer.Vector({
+                    var sampleUrl = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/Campomoro-Tizzano-Sartene_3029.gpx";
+                    sampleLayer = new ol.layer.Vector({
                         source : new ol.source.Vector({
-                            url: _url,
+                            url: sampleUrl,
                             format: new ol.format.GPXExtended({
                                 extensions : {
-                                    typestring : "string",
-                                    typenumber : 22,
-                                    typefloat : 1.22,
-                                    typeobject : {
-                                        typestringone : "string1",
-                                        typestringtwo : null
-                                    },
-                                    typearray : ["item1", "item2"],
-                                    typearrayofobject : [
-                                        {
+                                    root : {
+                                        typestring : "string",
+                                        typenumber : 22,
+                                        typefloat : 1.22,
+                                        typeobject : {
                                             typestringone : "string1",
                                             typestringtwo : null
                                         },
-                                        {
-                                            typestringone : "string1",
-                                            typestringtwo : "string2"
-                                        },
-                                    ],
-                                    typearrayofarray : [
-                                        [1, 2], null, [1, 3], null, [1, 4]
-                                    ]
+                                        typearray : ["item1", "item2"],
+                                        typearrayofobject : [
+                                            {
+                                                typestringone : "string1",
+                                                typestringtwo : null
+                                            },
+                                            {
+                                                typestringone : "string1",
+                                                typestringtwo : "string2"
+                                            },
+                                        ],
+                                        typearrayofarray : [
+                                            [1, 2], null, [1, 3], null, [1, 4]
+                                        ]
+                                    }
                                 },
                                 readExtensions : function (feature, node) {
                                     console.warn(feature, node);
@@ -71,6 +84,17 @@
                                         color: [0,0,255,1],
                                         width: 5
                                     }),
+                                    text: new ol.style.Text({
+                                        font : "16px sans",
+                                        textAlign : "left",
+                                        stroke :  new ol.style.Stroke({
+                                            color: [250,250,250,1],
+                                            width: 5
+                                        }),
+                                        fill: new ol.style.Fill({
+                                            color: [0,0,0,1]
+                                        })
+                                    }),
                                     image: new ol.style.Icon({
                                         src: "data:image/png;base64,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",
                                         anchor: [17,48],
@@ -82,21 +106,64 @@
                             })
                         })
                     });
+
+                    exportFormatRoute = new ol.format.GPXExtended();
+                    var exportUrlRoute = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/export-route-json.gpx";
+                    exportLayerRoute = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: exportUrlRoute,
+                            format: exportFormatRoute
+                        })
+                    });
+                    exportFormatIso = new ol.format.GPXExtended();
+                    var exportUrlIso = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/gpx/export-iso.gpx";
+                    exportLayerIso = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: exportUrlIso,
+                            format: exportFormatIso
+                        })
+                    });
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
                             center : [855168, 5099802],
-                            zoom : 6
+                            zoom : 4
                         }),
                         layers : [
                             new ol.layer.GeoportalWMS({
                                 layer : "ORTHOIMAGERY.ORTHOPHOTOS"
                             }),
-                            layer
+                            sampleLayer,
+                            exportLayerRoute,
+                            exportLayerIso
                         ]
                     });
 
-                    var layerSwitcher = new ol.control.LayerSwitcher({});
+                    var layerSwitcher = new ol.control.LayerSwitcher({
+                        options : {
+                            collapsed : false
+                        },
+                        layers : [
+                            {
+                                layer : sampleLayer,
+                                config : {
+                                    title : "Couche de dessin à exporter"
+                                }
+                            },
+                            {
+                                layer : exportLayerRoute,
+                                config : {
+                                    title : "Calcul d'itineraire"
+                                }
+                            },
+                            {
+                                layer : exportLayerIso,
+                                config : {
+                                    title : "Calcul d'isochrone"
+                                }
+                            }
+                        ]
+                    });
                     map.addControl(layerSwitcher);
 
                     var popup = new ol.Overlay.Popup();
@@ -138,46 +205,52 @@
                 };
                 document.getElementById("export").addEventListener("click", function () {
                     var result = null;
-                    if (!layer) {
+                    if (!sampleLayer) {
                         console.log("Impossible to export : no layer is hosting features.");
                         return result;
                     }
-                    if (!layer.getSource() ||
-                        !layer.getSource().getFeatures() ||
-                        !layer.getSource().getFeatures().length) {
+                    if (!sampleLayer.getSource() ||
+                        !sampleLayer.getSource().getFeatures() ||
+                        !sampleLayer.getSource().getFeatures().length) {
                         console.log("Impossible to export : no features found.");
                         return result;
                     }
+                    var sort = document.getElementById("sort");
                     var gpx = new ol.format.GPXExtended({
+                        orderBy : (sort.checked) ? "number" : null,
                         extensions : {
-                            typestring : "string",
-                            typenumber : 22,
-                            typefloat : 1.22,
-                            typeobject : {
-                                typestringone : "string1",
-                                typestringtwo : null
-                            },
-                            typearray : ["item1", "item2"],
-                            typearrayofobject : [
-                                {
+                            root : {
+                                typestring : "string",
+                                typenumber : 22,
+                                typefloat : 1.22,
+                                typeobject : {
                                     typestringone : "string1",
                                     typestringtwo : null
                                 },
-                                {
-                                    typestringone : "string1",
-                                    typestringtwo : "string2"
-                                },
-                            ],
-                            typearrayofarray : [
-                                [1, 2], null, [1, 3], null, [1, 4]
-                            ]
+                                typearray : ["item1", "item2"],
+                                typearrayofobject : [
+                                    {
+                                        typestringone : "string1",
+                                        typestringtwo : null
+                                    },
+                                    {
+                                        typestringone : "string1",
+                                        typestringtwo : "string2"
+                                    },
+                                ],
+                                typearrayofarray : [
+                                    [1, 2], null, [1, 3], null, [1, 4]
+                                ]
+                            }
                         }
                     });
 
-                    result = gpx.writeFeatures(layer.getSource().getFeatures(), {
+                    result = gpx.writeFeatures(sampleLayer.getSource().getFeatures(), {
                         dataProjection : "EPSG:4326",
                         featureProjection : "EPSG:3857"// layer.getSource().getProjection()
                     });
+
+                    document.getElementById("viewer").textContent = result;
 
                     var link = document.createElement("a");
                     var charset = "utf-8";
@@ -185,7 +258,17 @@
                     link.setAttribute("download", "sample.gpx");
                     link.click();
                 });
-           </script>
+                document.getElementById("viewIti").addEventListener("click", function () {
+                    var key = "geoportail:compute";
+                    var result = exportFormatRoute.readRootExtensions(key);
+                    document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
+                });
+                document.getElementById("viewIso").addEventListener("click", function () {
+                    var key = "geoportail:compute";
+                    var result = exportFormatIso.readRootExtensions(key);
+                    document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
+                });
+            </script>
 {{/content}}
 
 {{/extend}}

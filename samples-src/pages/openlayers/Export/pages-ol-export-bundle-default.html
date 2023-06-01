@@ -10,6 +10,10 @@
                 width: 100%;
                 height: 500px;
             }
+            div[id^=GPlayerSwitcher-] {
+              top: 80px;
+              right: 8px;
+            }
         </style>
 {{/content}}
 
@@ -24,13 +28,14 @@
 
 {{#content "js"}}
             <script type="text/javascript">
+              var map;
               var exportRoute;
               window.onload = function () {
                 // on cache l'image de chargement du Géoportail.
                 document.getElementById("map").style.backgroundImage = "none";
 
                 // Création de la map
-                var map = new ol.Map({
+                map = new ol.Map({
                   target : "map",
                   layers : [
                     new ol.layer.GeoportalWMTS({
@@ -43,6 +48,9 @@
                   })
                 });
 
+                var layerSwitcher = new ol.control.LayerSwitcher({});
+                map.addControl(layerSwitcher);
+
                 var importLayer = new ol.control.LayerImport();
                 map.addControl(importLayer);
 
@@ -54,7 +62,8 @@
                 });
                 map.addControl(drawing);
                 var exportDrawing = new ol.control.Export({
-                  control: drawing
+                  control: drawing,
+                  format : "kml"
                 });
                 map.addControl(exportDrawing);
                 exportDrawing.on("export:compute", (e) => {
@@ -70,10 +79,11 @@
                   format: "kml",
                   name: "export-iso",
                   title : "Exporter",
-                  menu : false,
-                  onExport : function (content) {
-                    console.log(content);
-                  }
+                  menu : true,
+                  // Desactive le download de l'export :
+                  // onExport : function (content) {
+                  //   console.log(content);
+                  // }
                 });
                 map.addControl(exportIso);
                 exportIso.on("export:compute", (e) => {
@@ -99,9 +109,12 @@
                 var measureProfil = new ol.control.ElevationPath();
                 map.addControl(measureProfil);
                 var exportProfil = new ol.control.Export({
-                  control: measureProfil
+                  control: measureProfil,
+                  name: "export-profil", 
+                  format : "geojson",
+                  menu: false
                 });
-                map.addControl(measureProfil);
+                map.addControl(exportProfil);
                 exportProfil.on("export:compute", (e) => {
                   console.log("Export Profil", e);
                 });
