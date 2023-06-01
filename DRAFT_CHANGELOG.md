@@ -16,7 +16,7 @@
 
 * [Added]
 
-    - Widget d'export des tracés et des calculs au format GPX, KML et GeoJSON sur les contôles d'itineraire, d'isochrone et de profil altimétrique :
+    - Widget d'export des tracés et des calculs au format GPX, KML et GeoJSON sur les contôles d'itineraire, d'isochrone et de profil altimétrique (#363) :
 
         ``` js
         // exemple
@@ -29,7 +29,8 @@
         map.addControl(exportRoute);
         ```
 
-    - Import des couches de calculs (itineraire, isochrone et profil altimétrique) au format GPX, KML et GeoJSON.
+    - Import des couches de calculs (itineraire, isochrone et profil altimétrique) au format GPX, KML et GeoJSON (#363).
+    - Widget d'export des tracés et calculs des contrôles d'itineraire, d'isochrone et de profil altimétrique (#357).
 
 * [Changed]
 
@@ -81,14 +82,16 @@
 
 ## Summary
 
+Requete du service alti via les widgets de mousePosition et de profil alti
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - mise à jour du readme pour ajout couche VT (d61ebdd223d1f1516e1877209190b298f18f71d0)
-    - outputFormat = json par défaut pour alti mouseposition (#365)) 
+    - mise à jour du readme (4e4b4cbb0bba52890f5a2acd191fb71efbb72f5f et d61ebdd223d1f1516e1877209190b298f18f71d0)
+    - outputFormat = json par défaut pour alti mouseposition (#365) 
 
 * [Deprecated]
 
