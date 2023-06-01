@@ -5,9 +5,10 @@ import Control from "ol/control/Control";
 import { unByKey as olObservableUnByKey } from "ol/Observable";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import GeoJSON from "ol/format/GeoJSON";
+// import GeoJSON from "ol/format/GeoJSON";
 import {
     Fill,
+    Stroke,
     Style
 } from "ol/style";
 // import geoportal library access
@@ -24,6 +25,7 @@ import Interactions from "./Utils/Interactions";
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
 import ButtonExport from "./Export";
+import GeoJSONExtended from "../Formats/GeoJSON";
 
 // DOM
 import IsoDOM from "../../Common/Controls/IsoDOM";
@@ -44,7 +46,7 @@ var logger = Logger.getLogger("isocurve");
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
- * @param {Boolean} [options.export = false] - Specify if button "Export" is displayed
+ * @param {Boolean|Object} [options.export = false] - Specify if button "Export" is displayed. For the use of the options of the "Export" control, see {@link ol.control.Export}
  * @param {Object}  [options.exclusions = {"toll" : false, "tunnel" : false, "bridge" : false}] - list of exclusions with status (true = checked). By default : no exclusions checked.
  * @param {Array}   [options.graphs = ["Voiture", "Pieton"]] - list of graph resources to be used for isocurve calculation, by default : ["Voiture", "Pieton"]. Possible values are "Voiture" and "Pieton". The first element is selected.
  * @param {Array}   [options.methods = ["time", "distance"]] - list of methods, by default : ["time", "distance"]. Possible values are "time" and "distance". The first element is selected by default.
@@ -80,6 +82,16 @@ var logger = Logger.getLogger("isocurve");
  *      }
  *      "isocurveOptions" : {},
  *      "autocompleteOptions" : {}
+ *  });
+ *
+ *  // if you want to pluggued the control Export with options :
+ *  var iso = new ol.control.Isocurve({
+ *    export : {
+ *      name : "export",
+ *      format : "geojson",
+ *      title : "Exporter",
+ *      menu : false
+ *    }
  *  });
  */
 var Isocurve = (function (Control) {
@@ -272,6 +284,7 @@ var Isocurve = (function (Control) {
      */
     Isocurve.prototype.getData = function () {
         var data = {
+            type : "isocurve",
             transport : this._currentTransport,
             computation : this._currentComputation,
             exclusions : this._currentExclusions,
@@ -299,7 +312,14 @@ var Isocurve = (function (Control) {
         this._currentComputation = data.computation;
         this._currentExclusions = data.exclusions;
         this._currentDirection = data.direction;
-        this._originPoint.clear();
+        // INFO
+        // > this._originPoint.clear();
+        // l'utilisation de cette méthode declenche des evenements qui retirent la couche en cours !
+        // (cf. _createIsoPanelFormPointElement),
+        var inputPointer = document.getElementById("GPlocationOriginPointer_" + 1 + "-" + this._uid);
+        inputPointer.checked = true;
+        var inputCoords = document.getElementById("GPlocationOriginCoords_" + 1 + "-" + this._uid);
+        inputCoords.value = "";
         this._originPoint.setCoordinate(data.point, "EPSG:4326");
         this._currentIsoResults = data.results;
     };
@@ -520,6 +540,10 @@ var Isocurve = (function (Control) {
         this._defaultFeatureStyle = new Style({
             fill : new Fill({
                 color : "rgba(0, 183, 152, 0.7)"
+            }),
+            stroke : new Stroke({
+                color : "rgba(0, 183, 152, 0)",
+                width : 1
             })
         });
 
@@ -1374,11 +1398,13 @@ var Isocurve = (function (Control) {
                 coordinates : this._originPoint.getCoordinate()
             },
             properties : {
-                description : "Point d'origine"
+                description : "Point d'origine",
+                "marker-symbol" : this.options.markerOpts.url
             }
         });
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : this._defaultFeatureStyle
         });
         var mapProj = map.getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(

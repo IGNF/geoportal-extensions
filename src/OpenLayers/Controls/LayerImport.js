@@ -51,6 +51,9 @@ import KMLExtended from "../Formats/KML";
 import GeoJSONExtended from "../Formats/GeoJSON";
 import GPXExtended from "../Formats/GPX";
 import LayerSwitcher from "./LayerSwitcher";
+import Route from "./Route";
+import Isocurve from "./Isocurve";
+import ElevationPath from "./ElevationPath";
 
 var logger = Logger.getLogger("layerimport");
 
@@ -409,7 +412,8 @@ var LayerImport = (function (Control) {
             this.options.vectorStyleOptions.GPX.defaultStyle = new Style({
                 image : LayerImport.DefaultStyles.image,
                 stroke : LayerImport.DefaultStyles.stroke,
-                fill : LayerImport.DefaultStyles.fill
+                fill : LayerImport.DefaultStyles.fill,
+                text : LayerImport.DefaultStyles.text
             });
         }
         if (options.vectorStyleOptions && options.vectorStyleOptions.GeoJSON && options.vectorStyleOptions.GeoJSON.defaultStyle) {
@@ -420,7 +424,8 @@ var LayerImport = (function (Control) {
             this.options.vectorStyleOptions.GeoJSON.defaultStyle = new Style({
                 image : LayerImport.DefaultStyles.image,
                 stroke : LayerImport.DefaultStyles.stroke,
-                fill : LayerImport.DefaultStyles.fill
+                fill : LayerImport.DefaultStyles.fill,
+                text : LayerImport.DefaultStyles.text
             });
         }
         // FIXME tester les styles par defaut sur une couche vecteur tuilé sans style !
@@ -615,13 +620,15 @@ var LayerImport = (function (Control) {
         this._defaultGPXStyle = new Style({
             image : gpxDefaultStyles.image,
             stroke : gpxDefaultStyles.stroke,
-            fill : gpxDefaultStyles.fill
+            fill : gpxDefaultStyles.fill,
+            text : gpxDefaultStyles.text
         });
         var geoJSONDefaultStyles = this.options.vectorStyleOptions.GeoJSON.defaultStyle;
         this._defaultGeoJSONStyle = new Style({
             image : geoJSONDefaultStyles.image,
             stroke : geoJSONDefaultStyles.stroke,
-            fill : geoJSONDefaultStyles.fill
+            fill : geoJSONDefaultStyles.fill,
+            text : geoJSONDefaultStyles.text
         });
         var MapBoxDefaultStyles = this.options.vectorStyleOptions.MapBox.defaultStyle;
         this._defaultMapBoxStyle = new Style({
@@ -1604,8 +1611,58 @@ var LayerImport = (function (Control) {
                 style : vectorStyle
             });
 
-            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant. (pour layerSwitcher par ex)
+            // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
             vectorLayer.gpResultLayerId = "layerimport:" + this._currentImportType;
+
+            // cette couche est elle une couche de calcul ?
+            var configControl = vectorFormat.readRootExtensions("geoportail:compute");
+            if (configControl && Object.keys(configControl).length !== 0) {
+                // identifier le type de calcul authorisé :
+                // * route
+                // * isocurve
+                // * elevationpath
+                var authorizedControls = {
+                    route : { class : Route, name : "itineraire" },
+                    isocurve : { class : Isocurve, name : "isocurve" },
+                    elevationpath : { class : ElevationPath, name : "profil altimetrique" }
+                };
+                // information à transmettre à la couche
+                var typeControl = configControl.type;
+                var graphControl = configControl.transport;
+                if (typeControl) {
+                    // la classe du controle
+                    var nameControl = authorizedControls[typeControl].name;
+                    var titleControl = (graphControl) ? nameControl + " (" + graphControl + ")" : nameControl;
+                    var classControl = authorizedControls[typeControl].class;
+                    if (classControl) {
+                        // on est bien sur une couche de calcul authorisé !
+                        vectorLayer.gpResultLayerId = "layerimport:COMPUTE";
+                        // on transmet les infomations utiles
+                        vectorLayer.set("control", typeControl);
+                        vectorLayer.set("name", nameControl);
+                        vectorLayer.set("graph", graphControl);
+                        vectorLayer.set("data", configControl);
+                        vectorLayer.set("title", titleControl);
+                        var formatGeoJSON = new GeoJSONExtended({
+                            defaultStyle : vectorStyle
+                        });
+                        var geojson = formatGeoJSON.writeFeatures(features, {
+                            dataProjection : "EPSG:4326",
+                            featureProjection : "EPSG:3857"
+                        });
+                        vectorLayer.set("geojson", geojson);
+                        // recherche et initialiser le controle
+                        this.getMap().getControls().forEach((control) => {
+                            if (control instanceof classControl) {
+                                control.setData(configControl);
+                                control.setLayer(vectorLayer);
+                                control.init();
+                            }
+                        });
+                    }
+                }
+            }
+
             map.addLayer(vectorLayer);
 
             // TODO : appeler fonction commune

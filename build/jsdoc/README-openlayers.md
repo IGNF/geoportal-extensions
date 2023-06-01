@@ -60,3 +60,4 @@ Controls provided by the Geoportal Extension are additionnal <a href="https://op
 | {@link ol.control.MeasureLength ol.control.MeasureLength} | Allows users to compute a length measure. |
 | {@link ol.control.MeasureAzimuth ol.control.MeasureAzimuth} | Allows users to compute an azimuth measure. |
 | {@link ol.control.ElevationPath ol.control.ElevationPath} | Allows users to compute an altimetric profile using <a href="https://geoservices.ign.fr/documentation/geoservices/alti.html">elevation service</a> of the Geoportal Platform. |
+| {@link ol.control.Export ol.control.Export} | Allows users to export calculation of Isocurve, Route or ElevationPath controls in GPX, KML or GeoJSON formats |

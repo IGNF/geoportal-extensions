@@ -68,6 +68,11 @@
     - [Accès aux informations attributaires des couches](#accès-aux-informations-attributaires-des-couches)
       - [Exemples d'utilisation](#exemples-dutilisation-11)
         - [Utilisation simple pour une seule couche](#utilisation-simple-pour-une-seule-couche)
+    - [Widget d'export](#widget-dexport)
+      - [Exemples d'utilisation](#exemples-dutilisation-12)
+        - [Utilisation via les setters](#utilisation-via-les-setters)
+        - [Utilisation via les options](#utilisation-via-les-options)
+        - [Utilisation directement dans le contrôle associé](#utilisation-directement-dans-le-contrôle-associé)
 
 <!-- tocstop -->
 
@@ -105,6 +110,7 @@ L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes �
 
 * [accès aux informations attributaires des couches](#getfeatureinfo)
 
+* [widget d'export](#export)
 
 ## Mise en oeuvre
 
@@ -1362,5 +1368,112 @@ map.addControl(getfeatureinfo);
 ```
 
 **Exemple d'utilisation** [![jsFiddle](https://jsfiddle.net/img/embeddable/logo-dark.png)](https://jsfiddle.net/ignfgeoportail/vg6dz7bn/embedded/result,js,html,css/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="export"/>
+
+### Widget d'export
+
+Ce widget permet de se **plugguer** sur un contrôle existant afin d'exporter le calcul dans un format donné. L'export embarque toutes les informations nécessaire à la reconstruction du traitement (tracé et résultat du calcul) en utilisant par exemple l'outil d'import.
+
+On peut utiliser ce widget sur les contrôles suivants :
+
+- itinéraire,
+- isochrone,
+- profil altimétrique
+
+Avec la possibilité de choisir le format de sortie :
+
+- KML
+- GPX
+- GEOJSON (défaut)
+
+Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.Export](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Export.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
+
+``` javascript
+var export = new ol.control.Export(opts);
+map.addControl(export);
+```
+
+#### Exemples d'utilisation
+
+Il existe différentes méthodes pour ajouter le widget.
+
+##### Utilisation via les setters
+
+Ajout du widget en utilisant les *setters*
+
+``` javascript
+// Creation du controle de calcul d'itineraire
+var route = new ol.control.Route();
+map.addControl(route);
+
+// Ajout du controle d'export
+var exportRoute = new ol.control.Export();
+exportRoute.setControl(route);
+exportRoute.setTarget(document.getElementById("btnExportRoute")); // (*)
+exportRoute.setFormat("geojson");
+exportRoute.setName("export-route");
+exportRoute.setTitle("Exporter Iti");
+exportRoute.setMenu(true);
+exportRoute.on("export:compute", (e) => { console.log("Export Route", e); });
+map.addControl(exportRoute);
+// (*)
+// Le bouton d'export est ajouté dans la balise utilisateur pré definie "btnExportRoute"
+```
+
+##### Utilisation via les options
+
+Ajout du widget avec utilisation des *options*
+
+``` javascript
+// Creation du controle de calcul d'isochrone
+var iso = new ol.control.Isocurve();
+map.addControl(iso);
+
+// Ajout du controle d'export
+var exportIso = new ol.control.Export({
+    control: iso,
+    target: null, // (*)
+    format: "kml",
+    name: "export-iso",
+    title : "Exporter Iso",
+    menu: false
+});
+exportIso.on("export:compute", (e) => { console.log("Export Iso", e); });
+map.addControl(exportIso);
+// (*)
+// Le bouton d'export est ajouté dans le widget Isocurve
+```
+
+##### Utilisation directement dans le contrôle associé
+
+Ajout du widget directement en paramètre du contrôle associé
+
+``` javascript
+// Creation du controle de calcul d'isochrone
+var profil = new ol.control.ElevationPath({ export : true  });
+profil.on("export:compute", (e) => { console.log("Export Profil", e); });
+map.addControl(profil);
+```
+
+On peut ajouter les options du widget "Export" :
+
+``` javascript
+// Creation du controle de calcul d'isochrone
+var iso = new ol.control.Isocurve({
+    export : {
+      // control : this, <!-- implicite ! -->
+      target : null,
+      name : "export",
+      format : "geojson",
+      title : "Exporter",
+      menu : true
+    }
+});
+iso.on("export:compute", (e) => { console.log("Export Isochrone", e); });
+map.addControl(iso);
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -1,6 +1,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -8,30 +9,42 @@
 
 ## Summary
 
-Amélioration du traitement pour les couches vecteur tuilé (documentation, légendes, ajout simplifié)
+- Ajout du widget *Export*
+- Import des couches de calculs (itineraire, isochrone et profil altimétrique)
 
 ## Changelog
 
 * [Added]
 
-    - Ajout simplifié d'une couche vecteur tuilé IGN :
-    ```js
-    var LayerMapBox = new ol.layer.GeoportalMapBox({
-        layer  : "PLAN.IGN",
-        style  : "gris"
-    });
-    ```
+    - Widget d'export des tracés et des calculs au format GPX, KML et GeoJSON sur les contôles d'itineraire, d'isochrone et de profil altimétrique (#363) :
+
+        ``` js
+        // exemple
+        var route = new ol.control.Route();
+        map.addControl(route);
+        var exportRoute = new ol.control.Export({
+            control : route,
+            format : "GPX"
+        });
+        map.addControl(exportRoute);
+        ```
+
+    - Import des couches de calculs (itineraire, isochrone et profil altimétrique) au format GPX, KML et GeoJSON (#363).
+    - Widget d'export des tracés et calculs des contrôles d'itineraire, d'isochrone et de profil altimétrique (#357).
 
 * [Changed]
 
-    - GFI : ignore la propriété "icon" lors de la construction de la pop-up (05bbfa0ab8ccd09b32954aabad421b00f6faec35)
-    - Vecteur tuilé : évolution sur la construction et l'affichage des légendes (#362)
+    - Mise à jour doc elevationPathControl (#365)
+    - transmission paramètre outputFormat=json par défaut pour mousePosition et elevationPath OpenLayers (#365)
 
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+    - Fix sur le format KML avec l'affichage des labels
+    - Fix sur le profil altimétrique qui permet de construire le profil même si le panneau d'affichage est masqué (calcul en arrière plan).
 
 * [Security]
 
@@ -69,13 +82,16 @@ Amélioration du traitement pour les couches vecteur tuilé (documentation, lég
 
 ## Summary
 
+Requete du service alti via les widgets de mousePosition et de profil alti
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - mise à jour du readme pour ajout couche VT (d61ebdd223d1f1516e1877209190b298f18f71d0)
+    - mise à jour du readme (4e4b4cbb0bba52890f5a2acd191fb71efbb72f5f et d61ebdd223d1f1516e1877209190b298f18f71d0)
+    - outputFormat = json par défaut pour alti mouseposition (#365) 
 
 * [Deprecated]
 

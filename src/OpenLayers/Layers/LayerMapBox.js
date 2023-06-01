@@ -320,7 +320,8 @@ var LayerMapBox = (function (VectorTileLayer) {
     LayerMapBox.prototype.onStyleMapBoxError = function (error) {
         var source = this.getSource();
         source.setState("error");
-        console.error(error.message); // eslint warning !
+        // eslint-disable-next-line no-console
+        console.error(error.message);
     };
 
     return LayerMapBox;

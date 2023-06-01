@@ -1,13 +1,10 @@
 // import openlayers
 import olGPX from "ol/format/GPX";
-// import Style
-import Style from "ol/style/Style";
-import CircleStyle from "ol/style/Circle";
-import IconStyle from "ol/style/Icon";
-import FillStyle from "ol/style/Fill";
-import StrokeStyle from "ol/style/Stroke";
+// import Geometry
+import MultiLineString from "ol/geom/MultiLineString";
+import LineString from "ol/geom/LineString";
 // import local
-import Color from "../../Common/Utils/ColorUtils";
+import Styling from "./Styling";
 import Parser from "../../Common/Utils/Parser";
 
 /**
@@ -25,6 +22,7 @@ import Parser from "../../Common/Utils/Parser";
  * @type {ol.format.GPXExtended}
  * @param {Object} options - Options
  * @param {Object} [options.defaultStyle] - Styles by default
+ * @param {String} [options.orderBy] - Sort by key the feature before writing. By default, no sorting
  * @param {Object} [options.extensions] - Add properties to file root
  * @param {function} [options.readExtensions] - Reading extensions (native)
  */
@@ -62,6 +60,8 @@ var GPX = (function (olGPX) {
             this.options.defaultStyle = {};
         }
 
+        this.source = null;
+
         // call constructor
         olGPX.call(this,
             this.options
@@ -82,25 +82,11 @@ var GPX = (function (olGPX) {
     GPX.prototype.constructor = GPX;
 
     /**
-     * Balises autorisées selon la specification "simplestyle"
-     */
-    GPX.SIMPLESTYLE_TAGS = [
-        "fill",
-        "fill-opacity",
-        "stroke",
-        "stroke-opacity",
-        "stroke-width",
-        "marker-symbol",
-        "marker-color",
-        "marker-size"
-    ];
-
-    /**
      * Read Extend Styles for Features.
      * This function overloads ol.format.GPX.readFeatures ...
      *
      * @see ol.format.GPX.prototype.readFeatures
-     * @param {Document|Node|ArrayBuffer|Object|String} source - Source.
+     * @param {Document|Node} source - Source.
      * @param {olx.format.ReadOptions=} options - options.
      * @return {Array.<ol.Feature>} Features.
      */
@@ -110,12 +96,21 @@ var GPX = (function (olGPX) {
         // par la callback des options : readExtensions
         var features = olGPX.prototype.readFeatures.call(this, source, options);
 
+        // String ou Dom
+        if (typeof source === "string") {
+            this.source = Parser.parse(source);
+        } else if (source !== null) {
+            this.source = source;
+        }
+
         // INFO
         // on applique les styles par defaut definis avec l'option defaultStyle
         // sauf sur les features qui possèdent des extensions.
         // les features avec extensions sont traité au préalable
         // dans la callback des options : readExtensions
-        features.forEach(feature => {
+        var self = this;
+        features.forEach(function (feature, index, array) {
+            feature.setId(index + 1);
             // HACK : enregistrement de la description de la balise 'desc' du format GPX
             var value = feature.getProperties().desc;
             if (value) {
@@ -123,39 +118,12 @@ var GPX = (function (olGPX) {
                     description : value
                 });
             }
-            var styleFunction = (feature, resolution) => {
-                var style = null;
-
-                if (Object.keys(this.options.defaultStyle).length === 0) {
-                    return [];
-                }
-
-                var type = feature.getGeometry().getType();
-                switch (type) {
-                    case "Point":
-                        if (this.options.defaultStyle.getImage()) {
-                            style = new Style({
-                                image : this.options.defaultStyle.getImage()
-                            });
-                        }
-                        break;
-                    case "LineString":
-                    case "MultiLineString":
-                        var options = {};
-                        if (this.options.defaultStyle.getFill()) {
-                            options.fill = this.options.defaultStyle.getFill();
-                        }
-                        if (this.options.defaultStyle.getStroke()) {
-                            options.stroke = this.options.defaultStyle.getStroke();
-                        }
-                        style = new Style(options);
-                        break;
-                }
-                return [style];
-            };
             var featureStyleFunction = feature.getStyleFunction();
             if (!featureStyleFunction) {
-                feature.setStyle(styleFunction);
+                var styleFunction = Styling.defineStyleFunctionByDefault(self.options.defaultStyle);
+                if (styleFunction) {
+                    feature.setStyle(styleFunction);
+                }
             }
         });
         return features;
@@ -178,7 +146,7 @@ var GPX = (function (olGPX) {
         // d'extensions
 
         // on met à jour les properties de styles
-        features.forEach(function (feature) {
+        features.forEach(function (feature, index, array) {
             // HACK : enregistrement de la description dans la balise 'desc' du format GPX
             var value = feature.getProperties().description;
             if (value) {
@@ -186,125 +154,46 @@ var GPX = (function (olGPX) {
                     desc : value
                 });
             }
-            var style = feature.getStyle();
-            if (style) {
-                // style ajouté via une fonction, pour les styles par defaut par ex.
-                if (typeof style === "function") {
-                    var styles = style.call(this, feature, 0);
-                    if (styles && styles.length !== 0) {
-                        style = styles[0];
-                    } else {
-                        // au cas où...
-                        return;
-                    }
-                }
 
-                // convertir le style en properties
-                // * stroke
-                // * fill (impossible car pas de polygone sur le GPX !)
-                // * image :
-                //      * un marker
-                //      * un cercle si fill et/ou stroke est present !
+            Styling.definePropertiesFromStyle(feature);
 
-                var fill = style.getFill();
-                if (fill) {
-                    var colorFill = null;
-                    if (Color.isRGB(fill.getColor())) {
-                        colorFill = Color.rgbaToHex(fill.getColor());
-                        feature.set("fill", colorFill.hex);
-                        feature.set("fill-opacity", colorFill.opacity);
-                    } else {
-                        colorFill = fill.getColor();
-                        feature.set("fill", colorFill);
-                        feature.set("fill-opacity", 1);
-                    }
-                }
-                var stroke = style.getStroke();
-                if (stroke) {
-                    var colorStroke = null;
-                    if (Color.isRGB(stroke.getColor())) {
-                        colorStroke = Color.rgbaToHex(stroke.getColor());
-                        feature.set("stroke", colorStroke.hex);
-                        feature.set("stroke-opacity", colorStroke.opacity);
-                    } else {
-                        colorStroke = stroke.getColor();
-                        feature.set("stroke", colorStroke);
-                        feature.set("stroke-opacity", 1);
-                    }
-                    feature.set("stroke-width", stroke.getWidth());
-                }
-                var image = style.getImage();
-                if (image) {
-                    // si le tag image est seul...
-                    // c'est soit un marker ou soit un cercle !
-                    if (image instanceof IconStyle) {
-                        var color = image.getColor();
-                        // array
-                        if (Array.isArray(color)) {
-                            var c = "rgba(";
-                            c += color[0] + ",";
-                            c += color[1] + ",";
-                            c += color[2] + ",";
-                            c += color[3] + ")";
-                            color = c;
-                        }
-                        // feature.set("marker-color", ""); // par defaut
-                        if (color) {
-                            var colorIcon = Color.rgbaToHex(color);
-                            feature.set("marker-color", colorIcon.hex);
-                        }
-                        var scaleIcon = image.getScale();
-                        switch (scaleIcon) {
-                            case 0.5:
-                                feature.set("marker-size", "small");
-                                break;
-                            case 1:
-                                feature.set("marker-size", "medium");
-                                break;
-                            case 1.5:
-                                feature.set("marker-size", "large");
-                                break;
-                            default:
-                                // feature.set("marker-size", ""); // par defaut
-                                break;
-                        }
-                        // feature.set("marker-symbol", ""); // par defaut
-                        var srcImage = image.getSrc();
-                        if (srcImage) {
-                            feature.set("marker-symbol", srcImage);
-                        }
-                    } else {
-                        var fillImg = image.getFill();
-                        if (fillImg) {
-                            var colorFillImg = null;
-                            if (Color.isRGB(fillImg.getColor())) {
-                                colorFillImg = Color.rgbaToHex(fillImg.getColor());
-                                feature.set("fill", colorFillImg.hex);
-                                feature.set("fill-opacity", colorFillImg.opacity);
-                            } else {
-                                colorFillImg = fillImg.getColor();
-                                feature.set("fill", colorFillImg);
-                                feature.set("fill-opacity", 1);
-                            }
-                        }
-                        var strokeImg = image.getStroke();
-                        if (strokeImg) {
-                            var colorStrokeImg = null;
-                            if (Color.isRGB(strokeImg.getColor())) {
-                                colorStrokeImg = Color.rgbaToHex(strokeImg.getColor());
-                                feature.set("stroke", colorStrokeImg.hex);
-                                feature.set("stroke-opacity", colorStrokeImg.opacity);
-                            } else {
-                                colorStrokeImg = strokeImg.getColor();
-                                feature.set("stroke", colorStrokeImg);
-                                feature.set("stroke-opacity", 1);
-                            }
-                            feature.set("stroke-width", strokeImg.getWidth());
-                        }
-                    }
-                }
+            // HACK : Le type surfacique n'existe pas au format GPX,
+            // on doit la transformer en un lineaire.
+            // Par contre, on garde un trace de la transformation :
+            // * le style surfacique
+            // * le type de geometrie initiale
+            var type = feature.getGeometry().getType();
+            if (type === "Polygon") {
+                // creation d'une copie pour ne pas modifier les features de carte
+                var fp = feature.clone();
+                fp.set("type", type);
+                fp.setGeometry(new LineString(feature.getGeometry().getCoordinates()));
+                features.push(fp);
+                // feature à supprimer de l'export
+                array.splice(index, 1);
+            } else if (type === "MultiPolygon") {
+                // creation d'une copie pour ne pas modifier les features de carte
+                var fm = feature.clone();
+                fm.set("type", type);
+                fm.setGeometry(new MultiLineString(feature.getGeometry().getCoordinates()));
+                features.push(fm);
+                // feature à supprimer de l'export
+                array.splice(index, 1);
             }
         });
+
+        // tri des features en fonction de la balise "number" || "id" || "order"
+        if (this.options.orderBy !== undefined) {
+            var key = this.options.orderBy;
+            if (key) {
+                var sortFct = function (a, b) {
+                    var cmpA = a.get(key) || 0;
+                    var cmpB = b.get(key) || 0;
+                    return cmpA.toString().localeCompare(cmpB.toString(), undefined, { numeric : true });
+                };
+                features.sort(sortFct);
+            }
+        }
 
         // nodes
         var gpxNode = olGPX.prototype.writeFeaturesNode.call(this, features, options);
@@ -314,7 +203,7 @@ var GPX = (function (olGPX) {
 
         // on ajoute les extensions à la racine pour les metadonnées de calcul
         if (this.options.hasOwnProperty("extensions")) {
-            processRootExtensions_(gpxNode, this.options.extensions);
+            writeRootExtensions_(gpxNode, this.options.extensions);
         }
 
         // INFO
@@ -363,6 +252,8 @@ var GPX = (function (olGPX) {
         }
 
         if (!_node) {
+            // eslint-disable-next-line no-console
+            console.warn("node not found !");
             return;
         }
 
@@ -379,116 +270,58 @@ var GPX = (function (olGPX) {
             }
         }
 
-        // les options de styles
-        var options = {};
+        // cas particulier du format GPX :
+        // il n'existe pas de surfacique sur ce format, mais il est possible de forcer
+        // la transformation en polygone pour des besoins particuliers de visualisation
+        Styling.APPLY_CONVERT_GEOM_GPX = true;
+        var style = Styling.defineStyleFromProperties(feature);
+        if (style) {
+            feature.setStyle(style);
+        }
+    };
 
-        // properties :
-        // "marker-size" -> icon
-        // "marker-symbol" -> icon
-        // "marker-color" -> icon
-        var marker = null;
-        if (feature.get("marker-color") ||
-            feature.get("marker-size") ||
-            feature.get("marker-symbol")) {
-            marker = {};
-            // icone par defaut
-            marker["src"] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAToSURBVFiF3VhdbFNlGH7ec05/F6IUE9GLIYgXXYpXJBBZE0xM9EausIl6ObzBGSHRdnEJ1p+RhnBBNF4YY/xJFigNaIwxLpFYB2WwMWCW0bG1W7eEdUBwQ0fb7fy83nQJjK3nnO90F/okvTnf+7zP+/Q75/ve7wP+R6BGJ4xGo+skSXqFmfcAaAHwFIANAO4CmCai64Zh/OT3+3+Nx+PzjdRumJmOjo71zNwB4B0APguUMjN/vri4mDh27NhcI2poiJloNLqXiL4EEBCg/8XMbx05cuS00zpkh3yKxWKHiOgLAH7BHD4iiuzatcvIZDJnnRTjyEw0Gv2QiD6C8xkmInqxtbVVy2QyvcJJRIm1V+ukkxwrwCCivYlE4gcRslAhBw4ceNzj8RQg9o2YYZaInk0kErN2iZKImtvt/gBrYwQA1gN4X4Roe2ai0eg6IroFa8uvKMo+n+9Ju/uQYleltiGaGnG73eVIJNIfDAa3yLK8Udf1mVwuN55MJneoqmrG91er1ZcBnLJVm51gAKjt7HXhdrvLnZ2d46FQaLcsy80A3LIsN4dCod2dnZ15l8tVaYTOcoh8M0GzgEgk0u/xeEIrjXm93m2RSOSiBZ0Wu4WJmHnaLCAYDG6pN97S0rK5ETrLIWJmg1mALMsbnYzX8ITlimoQMfOPWYCu6zMm4yULOn9brqgGETO3zAJyudx4vfFr164VzXIwc90/ZCWImOk3C0gmkzuq1Wp2pbFyuZxNpVI7zXIQkanOcoiY+d0sQFVVX1dX19ZsNpvWdX0SwKKu65NDQ0Ppw4cPP6dpmtcsBzOn7RZme9P0+XynK5XKZwAeqxenqqqvu7t79wOPNtV+VnDPMAzb5xvbM1NrMb6xy7OJr48ePXrfLkmo0SSijwHcFuFawG0i+lSEKGSm1p4fFOFawEGR9h9weLCKxWLdAN5wkuNBMPPxEydOvC1JksfD7Fsg8riYSdMlFwAosqFqkmQQUcW9sHB/282bcylAX+LbXgCWYT+AFwA84zAPVFWdO9PTM+WWpHcBQCeCAoCJICsMAGAQZGaAGZrLhcubNutbGUVF4rMjxWLR8ZE3Fou1AkjDwX0CM/OVwcHvJwqFomgKDfjO6e0MMpnMVDgc9gIIi+YoTU+fyw4NXXFQBpFh3BFaAJbD6/UeAmClrX8ElXK5dOnixT+c6BuAoUtSoSFm4vG4ZhjGm7DQhD5UhGGoAwMDp1RV1c2jVwHzIsny6WKxOOP4NVvC+fPnZ8Ph8F0Ar1rlFPL5X8bHxuo2pXXADIx4df3kjcnJSWANLs5jsdhJAK+Zxd2bmxv5racnKSBRYeY/oSiDhULhoY3b6dL8CDRN209EL8myvH7VGFW9f6Gv72erOZlJA3GeJWm4ubk5l06ntZXiGj4zANDe3r6nqanpx1Xyc/bq1eOjN26M1cvBTKoEY4IkadiQ5ZF8Pr9gprsmZgCgvb29u6mp6ZHuYKZUupDp7e1ZhVYB0bgEjLr8/tzw8PCiHc2Gv2ZLmJ+fb1MUpdXj8TQvPatWq3f6+/rOPBjHQBnMY4okXX9++/Z8KpUSXtnWbGYAYN++fTsDgUAvEbkMw9AvnDv3ValUugXgHojyMjD6+sTEWBwwGqG3pmYAoK2t7ZNAIPDe1OTUqSuXBr6FouRGR0enAfBaa/+n8S8PPeWMetb8+wAAAABJRU5ErkJggg==";
-            marker["anchor"] = [0.5, 1];
-            var symbolMarker = feature.get("marker-symbol");
-            if (symbolMarker) {
-                if (symbolMarker.search("data:image/png;base64") !== -1) {
-                    // icone du portail
-                    marker["src"] = symbolMarker;
-                } else {
-                    // TODO
-                    // utiliser les symboles de Maki
-                    // (cf. https://labs.mapbox.com/maki-icons/)
+    /**
+     * ...
+     * @param {*} key ...
+     * @returns {Object} json
+     * @todo
+     */
+    GPX.prototype.readRootExtensions = function (key) {
+        var value = {};
+        // Rechercher :
+        // <metadata>
+        //   <extensions xmlns="http://www.w3.org/1999/xhtml">
+        //     <data name="geoportail:compute">{...}</data>
+        //   </extensions>
+        // </metadata>
+
+        var firstNodeLevelGpx = this.source.childNodes[0]; // gpx
+        var searchChildNodesMeta = firstNodeLevelGpx.childNodes; // search metadata
+        for (var k = 0; k < searchChildNodesMeta.length; k++) {
+            var nodeMeta = searchChildNodesMeta[k];
+            if (nodeMeta.nodeName === "metadata") {
+                var searchChildNodesExt = nodeMeta.childNodes; // search extensions
+                for (var i = 0; i < searchChildNodesExt.length; i++) {
+                    var nodeExt = searchChildNodesExt[i];
+                    if (nodeExt.nodeName === "extensions") {
+                        var searchChildNodesData = nodeExt.childNodes; // search data
+                        for (var j = 0; j < searchChildNodesData.length; j++) {
+                            var nodeData = searchChildNodesData[j];
+                            if (nodeData.nodeName === "data") {
+                                var name = nodeData.attributes[0];
+                                if (name && name.nodeName === "name") {
+                                    if (name.nodeValue === key) {
+                                        value = JSON.parse(nodeData.textContent);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            var colorMarker = feature.get("marker-color");
-            if (Color.isHex(colorMarker)) {
-                marker["color"] = Color.hexToRgba(colorMarker, 1);
-            }
-            var size = feature.get("marker-size");
-            if (size) {
-                switch (size) {
-                    case "small":
-                        marker["scale"] = 0.5;
-                        break;
-                    case "medium":
-                        marker["scale"] = 1;
-                        break;
-                    case "large":
-                        marker["scale"] = 1.5;
-                        break;
-                    default:
-                        marker["scale"] = 1;
-                        break;
-                }
-            }
         }
-
-        // properties :
-        // "stroke" -> line / circle
-        // "stroke-opacity" -> line / circle
-        // "stroke-width" -> line / circle
-        var stroke = null;
-        if (feature.get("stroke") ||
-            feature.get("stroke-opacity") ||
-            feature.get("stroke-width")) {
-            stroke = {};
-            stroke["color"] = Color.hexToRgba(feature.get("stroke"), feature.get("stroke-opacity") || 1);
-            stroke["width"] = feature.get("stroke-width") || 1;
-        }
-
-        // properties :
-        // "fill" -> circle
-        // "fill-opacity" -> circle
-        var fill = null;
-        if (feature.get("fill") ||
-            feature.get("fill-opacity")) {
-            fill = {};
-            fill["color"] = Color.hexToRgba(feature.get("fill"), feature.get("fill-opacity") || 1);
-        }
-
-        // styles en fonction du type de geometrie
-        var type = feature.getGeometry().getType();
-        switch (type) {
-            case "Point":
-                // representer un point de depart ou d'arrivée
-                if (marker) {
-                    options["image"] = new IconStyle(marker);
-                }
-
-                // representer un point intermediaire
-                var optionsCircle = {};
-                if (stroke) {
-                    optionsCircle["stroke"] = new StrokeStyle(stroke);
-                }
-                if (fill) {
-                    optionsCircle["fill"] = new FillStyle(fill);
-                }
-                if (Object.keys(optionsCircle).length !== 0) {
-                    optionsCircle["radius"] = 6; // param fixe
-                    options["image"] = new CircleStyle(optionsCircle);
-                }
-                break;
-
-            case "LineString":
-            case "MultiLineString":
-                if (stroke) {
-                    options["stroke"] = new StrokeStyle(stroke);
-                }
-                break;
-
-            default:
-                break;
-        }
-        // si aucun style disponible, on utilisera le style par defaut defini
-        // par l'utilisateur ou l'application
-        if (Object.keys(options).length !== 0) {
-            feature.setStyle(new Style(options));
-        }
+        return value;
     };
 
     /**
@@ -496,9 +329,11 @@ var GPX = (function (olGPX) {
      *
      * @param {*} doc - ...
      * @param {*} extensions - ...
+     * @param {Boolean} [xml=false] - write tag xml or json
      */
-    function processRootExtensions_ (doc, extensions) {
+    function writeRootExtensions_ (doc, extensions, xml) {
         // TODO namespace ?
+        var metadata = document.createElement("metadata");
         var extensionsRoot = document.createElement("extensions");
         // INFO
         // convert JSON to XML (dom)
@@ -584,9 +419,33 @@ var GPX = (function (olGPX) {
             }
             return node;
         }
+
+        if (xml) {
+            // structure xml
+            toDOM(extensionsRoot, extensions);
+        } else {
+            // structure json par defaut
+            // ex.
+            // <metadata>
+            //   <extensions xmlns="http://www.w3.org/1999/xhtml">
+            //     <data name="geoportail:compute">{...}</data>
+            //   </extensions>
+            // </metadata>
+            for (const key in extensions) {
+                if (Object.hasOwnProperty.call(extensions, key)) {
+                    const value = extensions[key];
+                    var dataElement = document.createElement("data");
+                    dataElement.setAttribute("name", key);
+                    var data = document.createTextNode(JSON.stringify(value));
+                    dataElement.appendChild(data);
+                    extensionsRoot.appendChild(dataElement);
+                }
+            }
+        }
+        metadata.appendChild(extensionsRoot);
         // insertion en 1ere place !
         var firstChild = doc.firstChild;
-        doc.insertBefore(toDOM(extensionsRoot, extensions), firstChild);
+        doc.insertBefore(metadata, firstChild);
     };
 
     /**
@@ -599,7 +458,7 @@ var GPX = (function (olGPX) {
     function writeExtensions_ (feature, node) {
         // creation du DOM
         var extensionsNode = document.createElementNS(node.parentNode.namespaceURI, "extensions");
-        GPX.SIMPLESTYLE_TAGS.forEach(key => {
+        Styling.getListTags().forEach(key => {
             if (feature.get(key)) {
                 var extension = document.createElementNS(node.parentNode.namespaceURI, key);
                 extension.innerHTML = feature.get(key);
@@ -644,9 +503,12 @@ var GPX = (function (olGPX) {
                         }
                     }
                     break;
+                case "metadata":
+                    break;
                 default:
                     // on ne devrait jamais passer à ce niveau !?
-                    // sauf si OpenLayers ajoute le noeud "metadata"...
+                    // eslint-disable-next-line no-console
+                    console.warn("nodename unknown :", node.nodeName);
                     break;
             }
         }

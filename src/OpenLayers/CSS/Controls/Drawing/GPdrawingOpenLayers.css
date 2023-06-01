@@ -343,6 +343,14 @@ button[id^=drawing-export-] {
   padding: 0;
 }
 
+.gp-styling-option input[type="checkbox"] {
+  height: 10px;
+  right: 70px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
 .gp-styling-option input[type="color"] {
   width: 30px;
   right: 70px;
