@@ -9,8 +9,8 @@
  * @copyright copyright (c) IGN 
  * @license CeCILL-B
  * @author IGN
- * @version 3.2.21
- * @date 23/03/2023
+ * @version 3.2.22
+ * @date 01/06/2023
  *
  */
 
@@ -3269,6 +3269,14 @@ button[id^=drawing-export-] {
   top: 6px;
   cursor: pointer;
   padding: 0;
+}
+
+.gp-styling-option input[type="checkbox"] {
+  height: 10px;
+  right: 70px;
+  padding: 0;
+  border: none;
+  background: none;
 }
 
 .gp-styling-option input[type="color"] {
