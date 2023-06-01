@@ -94,8 +94,6 @@ class ButtonExport extends Control {
      * import ButtonExport from "src/OpenLayers/Controls/Export"
      */
     constructor (options) {
-        logger.trace("[constructor] Export", options);
-
         options = options || {
             control : null,
             target : null,
@@ -105,6 +103,8 @@ class ButtonExport extends Control {
             menu : false,
             onExport : null
         };
+
+        logger.trace("[constructor] Export", options);
 
         super({
             element : document.createElement("div"),

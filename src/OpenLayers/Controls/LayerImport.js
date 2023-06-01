@@ -1622,9 +1622,9 @@ var LayerImport = (function (Control) {
                 // * isocurve
                 // * elevationpath
                 var authorizedControls = {
-                    route : {class : Route, name : "itineraire"},
-                    isocurve : {class : Isocurve, name : "isocurve"},
-                    elevationpath : {class : ElevationPath, name : "profil altimetrique"}
+                    route : { class : Route, name : "itineraire" },
+                    isocurve : { class : Isocurve, name : "isocurve" },
+                    elevationpath : { class : ElevationPath, name : "profil altimetrique" }
                 };
                 // information à transmettre à la couche
                 var typeControl = configControl.type;

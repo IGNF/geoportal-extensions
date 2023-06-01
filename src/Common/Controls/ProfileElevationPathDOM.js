@@ -770,7 +770,7 @@ var ProfileElevationPathDOM = {
         };
 
         var widgetWidth = window.getComputedStyle(container).getPropertyValue("width");
-        var widgetHeigth = window.getComputedStyle(container).getPropertyValue("height")
+        var widgetHeigth = window.getComputedStyle(container).getPropertyValue("height");
         var width = widgetWidth.replace(/px/, "") - margin.left - margin.right;
         var height = widgetHeigth.replace(/px/, "") - margin.top - margin.bottom;
 

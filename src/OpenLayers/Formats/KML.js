@@ -849,7 +849,7 @@ var KML = (function (olKML) {
                 comp += "0";
             }
             hex = "#" + comp + hex;
-            return hex.toString(16);
+            return hex;
         }
 
         /**
