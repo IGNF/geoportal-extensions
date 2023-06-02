@@ -69,7 +69,7 @@ var Layers = {
             service = "WMTS";
         }
 
-        // Gestion de l'autoconf
+        // Récupération de la configuration
         this.params = LayerConfig.get({
             key : this.options.apiKey,
             layer : this.options.layer,
@@ -98,6 +98,11 @@ var Layers = {
      * @param {Boolean} [options.ssl] - if set true, enforce protocol https (only for nodejs)
      * @param {String} [options.apiKey] - access key to Geoportal platform, obtained [here]{@link https://geoservices.ign.fr/services-web}.
      * @param {Object} [settings] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
+     * @param {Array} [settings.legends]   - Overloads the default legends objects associated to the layer
+     * @param {Array} [settings.metadata]   - Overloads the default Metadata objects associated to the layer
+     * @param {String} [settings.title]   - Overloads the default title of the layer
+     * @param {String} [settings.description]   - Overloads the default description of the layer
+     * @param {String} [settings.quicklookUrl]   - Overloads the default quicklookUrl of the layer
      *
      * @returns {L.geoportalLayer.WMS} WMS layer
      *
@@ -133,19 +138,23 @@ var Layers = {
         // env d'execution : browser ou non ?
         this._initContext();
 
-        // gestion de l'autoconf
+        // Récupération de la configuration
         this._initParams("WMS");
         logger.log(this.params);
 
         // url du service
         var serviceUrl = null;
-        if (this.params.key || this.options.apiKey) {
-            // url de l'autoconf ou le service par defaut
-            serviceUrl = this.params.url || L.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
-                key : this.params.key || this.options.apiKey
+
+        if (this.options.apiKey) {
+            // si une clé Api est fournie, on la prend pour construire l'url
+            serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
+                key : this.options.apiKey
             });
+        } else if (this.params.url) {
+            // sinon on prend la première clé disponible pour la couche dans la Config
+            serviceUrl = this.params.url;
         } else {
-            // pas d'autoconf, ni de clef API !
+            // pas de Config, ni de clef API !
             // on évite l'exception en envoyant les requêtes vers localhost...
             serviceUrl = L.Util.template(this.serviceUrl, {
                 layer : this.options.layer
@@ -176,12 +185,12 @@ var Layers = {
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
                 paramsNative : paramsNative,
                 paramsWms : paramsWms,
-                originators : this.params.originators || [],
-                legends : this.params.legends || [],
-                metadata : this.params.metadata || [],
-                title : this.params.title || null,
-                description : this.params.description || null,
-                quicklookUrl : this.params.quicklookUrl || null
+                originators : this.params.originators || this.settings.originators || [],
+                legends : this.settings.originators || this.params.legends || [],
+                metadata : this.settings.metadata || this.params.metadata || [],
+                title : this.settings.title || this.params.title || "",
+                description : this.settings.description || this.params.description || "",
+                quicklookUrl : this.settings.quicklookUrl || this.params.quicklookUrl || ""
             }
         );
     },
@@ -234,19 +243,24 @@ var Layers = {
         // env d'execution : browser ou non ?
         this._initContext();
 
-        // gestion de l'autoconf
+        // Récupération de la configuration
         this._initParams("WMTS");
         logger.log(this.params);
 
-        // url du service (par defaut)
+        // url du service
         var serviceUrl = null;
-        if (this.params.key || this.options.apiKey) {
-            serviceUrl = this.params.url || L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
-                key : this.params.key || this.options.apiKey
+
+        if (this.options.apiKey) {
+            // si une clé Api est fournie, on la prend pour construire l'url
+            serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
+                key : this.options.apiKey
             });
+        } else if (this.params.url) {
+            // sinon on prend la première clé disponible pour la couche dans la Config
+            serviceUrl = this.params.url;
         } else {
-            // FIXME pas d'autoconf, ni clef API !
-            // on évite l'exception en envoyant les requêtes vers localhost
+            // pas de Config, ni de clef API !
+            // on évite l'exception en envoyant les requêtes vers localhost...
             serviceUrl = L.Util.template(this.serviceUrl, {
                 layer : this.options.layer
             });
@@ -286,12 +300,12 @@ var Layers = {
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
                 paramsNative : paramsNative,
                 paramsWmts : paramsWmts,
-                originators : this.params.originators || [],
-                legends : this.params.legends || [],
-                metadata : this.params.metadata || [],
-                title : this.params.title || "",
-                description : this.params.description || "",
-                quicklookUrl : this.params.quicklookUrl || ""
+                originators : this.params.originators || this.settings.originators || [],
+                legends : this.settings.originators || this.params.legends || [],
+                metadata : this.settings.metadata || this.params.metadata || [],
+                title : this.settings.title || this.params.title || "",
+                description : this.settings.description || this.params.description || "",
+                quicklookUrl : this.settings.quicklookUrl || this.params.quicklookUrl || ""
             }
         );
     }

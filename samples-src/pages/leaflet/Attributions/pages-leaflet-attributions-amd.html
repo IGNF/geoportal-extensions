@@ -1,0 +1,97 @@
+{{#extend "layout-leaflet-sample-amd"}}
+
+{{#content "head"}}
+<title>Sample Leaflet</title>
+{{/content}}
+
+{{#content "style"}}
+<style>
+    div#map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+{{/content}}
+
+{{#content "body"}}
+<h2>Ajout de tous les Widget</h2>
+<!-- map -->
+<div id="map"></div>
+{{/content}}
+
+{{#content "js"}}
+<script type="text/javascript">
+    var map;
+    requirejs([
+        'leaflet',
+        'Gp',
+    ], function (
+        L,
+        Gp
+    ) {
+
+        Gp.Services.getConfig({
+            customConfigFile: "https://raw.githubusercontent.com/IGNF/geoportal-configuration/main/dist/essentielsConfig.json",
+            callbackSuffix: "",
+            // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+            timeOut: 20000,
+            onSuccess: function () {
+                var wmts = L.geoportalLayer.WMTS({
+                    layer: "ORTHOIMAGERY.ORTHOPHOTOS"
+                },
+                {
+                    originators: [{
+                        name: "IGN",
+                        constraints: [{
+                            minScaleDenominator: 20000,
+                            maxScaleDenominator: 1000000,
+                            bbox: {
+                                left: -10,
+                                top: 50,
+                                right: 10,
+                                bottom: 40
+                            }
+                        },
+                        {
+                            bbox: {
+                                left: 120,
+                                top: 50,
+                                right: 150,
+                                bottom: 35
+                            }
+                        }]
+                    },
+                    {
+                        url: "https://www.ign.fr/",
+                        constraints: [{
+                            minScaleDenominator: 20000,
+                            maxScaleDenominator: 400000
+                        }]
+                    },
+                    {
+                        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/IGN_logo_2012.svg/1200px-IGN_logo_2012.svg.png"
+                    },
+                    {
+                        attribution: "Orthophotos",
+                        constraints: [{
+                            minScaleDenominator: 100000,
+                            maxScaleDenominator: 800000
+                        }]
+                    }]
+                });
+
+                var map = L.map('map', {
+                    zoom: 2,
+                    center: L.latLng(48, 2)
+                });
+
+                wmts.addTo(map);
+
+                var switcher = new L.geoportalControl.LayerSwitcher();
+                map.addControl(switcher);
+            }
+        });
+    });
+</script>
+{{/content}}
+{{/extend}}

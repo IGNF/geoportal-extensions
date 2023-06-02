@@ -3,7 +3,6 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import Gp from "geoportal-access-lib";
 import GlobeViewExtended from "../GlobeViewExtended";
 import Utils from "../../Common/Utils";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
 import Widget from "./Widget";
@@ -329,9 +328,6 @@ MousePosition.prototype.displayAltitude = function (displayAltitude) {
     if (displayAltitude === undefined) {
         return;
     }
-    if (typeof this._noRightManagement === "undefined") {
-        this._checkRightsManagement();
-    }
     this.options.displayAltitude = displayAltitude;
     this._setElevationPanel(displayAltitude);
 };
@@ -455,12 +451,6 @@ MousePosition.prototype._initialize = function (options) {
     if (!this.options.displayAltitude && !this.options.displayCoordinates) {
         // reactivate the display of coordinates, to not display an empty panel
         this.options.displayCoordinates = true;
-    }
-
-    // rights management on resources and services
-    // if we want an altitude calculation, we check the alti resources rights...
-    if (this.options.displayAltitude) {
-        this._checkRightsManagement();
     }
 };
 
@@ -596,30 +586,6 @@ MousePosition.prototype._initProjectionUnits = function () {
     }
 };
 
-/**
- * this method is called by constructor
- * and check the rights to resources
- *
- * @method _checkRightsManagement
- * @private
- */
-MousePosition.prototype._checkRightsManagement = function () {
-    var rightManagement = RightManagement.check({
-        key : this.options.apiKey,
-        resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-        services : ["Elevation"]
-    });
-
-    this._noRightManagement = !rightManagement;
-
-    // retrieves the usefull infos
-    // on this control, we do not care about the ressource bescause it is unique
-    // Ex : the API key from the autoconfiguration if it has not been given
-    if (!this.options.apiKey) {
-        this.options.apiKey = rightManagement.key;
-    }
-};
-
 // ################################################################### //
 // ######################## methods handle dom ####################### //
 // ################################################################### //
@@ -691,13 +657,8 @@ MousePosition.prototype._setElevationPanel = function (active) {
         div = document.getElementById("GPmousePositionAltitude-" + this._uid);
         div.style.display = "none";
     } else {
-        if (this._noRightManagement) {
-            div = document.getElementById("GPmousePositionAlt-" + this._uid);
-            div.innerHTML = "No rights!";
-        } else {
-            div = document.getElementById("GPmousePositionAltitude-" + this._uid);
-            div.style.display = "";
-        }
+        div = document.getElementById("GPmousePositionAltitude-" + this._uid);
+        div.style.display = "";
     }
 };
 
@@ -1061,13 +1022,6 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
         return;
     }
 
-    // if we don not have the rights on the requested resource, we just stop !
-    if (this._noRightManagement) {
-        logger.warn("contract key configuration has no rights to load geoportal elevation ");
-        document.getElementById(this._addUID("GPmousePositionAlt")).innerHTML = "No rights!";
-        return;
-    }
-
     // we retrieve the service options...
     var options = this.options.altitude.serviceOptions || {};
 
@@ -1097,9 +1051,8 @@ MousePosition.prototype.onRequestAltitude = function (coordinate, callback) {
     options.onFailure = function (error) {
         logger.error("[getAltitude] " + error.message);
     };
-    // in the case of the API key is not given as option of the service,
-    // we use the key of the autoconf, or the key given in the control options
-    options.apiKey = options.apiKey || this.options.apiKey;
+    // we use the key "calcul"
+    options.apiKey = "calcul";
 
     // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
     // true par défaut (https)

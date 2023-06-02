@@ -19,7 +19,6 @@ import Gp from "geoportal-access-lib";
 // import local
 import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
@@ -44,7 +43,7 @@ var logger = Logger.getLogger("route");
  * @type {ol.control.Route}
  * @extends {ol.control.Control}
  * @param {Object} options - route control options
- * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key for services call (route and autocomplete services). The key "calcul" is used by default.
  * @param {Boolean}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
@@ -604,12 +603,6 @@ var Route = (function (Control) {
         // }
         this._resources = {};
 
-        // gestion des droits sur les ressources
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
-
         // listener key for event on pointermove or moveend map
         this.listenerKey = null;
     };
@@ -652,69 +645,6 @@ var Route = (function (Control) {
         }
         if (options.collapsed === "false") {
             options.collapsed = false;
-        }
-    };
-
-    /**
-     * Check rights to resources (called by constructor)
-     *
-     * @private
-     */
-    Route.prototype._checkRightsManagement = function () {
-        var _opts = null;
-        var _res = [];
-        var _key = null;
-
-        // les ressources du service du calcul d'Itineraire
-        _key = this.options.routeOptions.apiKey;
-        _opts = this.options.routeOptions.filterOptions;
-        _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = ["Voiture", "Pieton"];
-        }
-
-        var rightManagementRoute = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["Itineraire"]
-        });
-        logger.log("rightManagementRoute", rightManagementRoute);
-
-        // les ressources du service d'autocompletion
-        _key = this.options.autocompleteOptions.apiKey;
-        _opts = this.options.autocompleteOptions.filterOptions;
-        _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = [
-                "PositionOfInterest",
-                "StreetAddress"
-            ];
-        }
-
-        var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["AutoCompletion"]
-        });
-        logger.log("rightManagementAutoComplete", rightManagementAutoComplete);
-
-        // au cas où pas de droit !
-        if (!rightManagementRoute && !rightManagementAutoComplete) {
-            this._noRightManagement = true;
-        }
-
-        // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
-        // pour chaque service...
-        if (rightManagementAutoComplete) {
-            this._resources["AutoCompletion"] = {};
-            this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-            this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        }
-
-        if (rightManagementRoute) {
-            this._resources["Itineraire"] = {};
-            this._resources["Itineraire"]["resources"] = rightManagementRoute["Itineraire"];
-            this._resources["Itineraire"]["key"] = rightManagementRoute["key"];
         }
     };
 
@@ -1131,12 +1061,6 @@ var Route = (function (Control) {
             }
         }
 
-        // oups, aucun droits !
-        // on evite donc une requête inutile ...
-        if (this._noRightManagement) {
-            return;
-        }
-
         // valeurs selectionnées
         this._currentTransport = options.transport;
         this._currentComputation = options.computation;
@@ -1521,37 +1445,9 @@ var Route = (function (Control) {
             return;
         }
 
-        // on ne fait pas de requête si aucun droit !
-        if (this._noRightManagement || !this._resources["Itineraire"]) {
-            return;
-        }
-
-        // gestion des droits !
-        var resources = this._resources["Itineraire"].resources;
-        if (!resources || (typeof resources === "object" && Object.keys(resources).length === 0)) {
-            return;
-        }
-
-        // gestion de la clef !
-        var key = this._resources["Itineraire"]["key"];
-
-        // la ressource donne elle des droits ?
-        var bFound = false;
-        for (var i = 0; i < resources.length; i++) {
-            if (resources[i] === options.graph) {
-                bFound = true;
-            }
-        }
-
-        // on fait quoi ?
-        if (!bFound) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
-        options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey || key;
+        // on utilise celle renseignée au niveau du controle (calcul par défaut)
+        options.apiKey = this.options.routeOptions.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert
         // true par défaut (https)

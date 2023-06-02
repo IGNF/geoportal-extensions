@@ -289,17 +289,14 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 
 #### Optimisation du chargement : configuration locale
 
-Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (autoconf.json) obtenu à l'aide [du formulaire de ce tutoriel](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/tutorial-optimize-getconfig.html).
-
-Si vous souhaitez une autoconfiguration locale unique avec plusieurs clés, c'est possible. Pour cela, enregistrez le contenu de la requête suivante dans un fichier autoconf.json (en remplacant key1, key2, key3... par les clefs génériques que vous souhaitez utiliser) :
-[autoconf multi-clés : https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback](https://wxs.ign.fr/key1/autoconf/?keys=key1,key2,key&output=json&callback=callback)
+Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [du formulaire de ce tutoriel](https://geoportal-configuration.onrender.com/).
 
 Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
 
 **Méthode 1** : Utilisez l'attribut "data-url" de la balise **script** chargeant l'extension pour pointer vers votre fichier :
 
 ``` html
-<script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginItowns.js"></script>
+<script data-url="chemin/vers/customConfig.json" src="chemin/vers/GpPluginItowns.js"></script>
 ```
 
 Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
@@ -309,7 +306,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
     <head>
         <!-- Bibliothèque iTowns -->
         ...
-        <script data-url="chemin/vers/autoconf.json" src="chemin/vers/GpPluginItowns.js"></script>
+        <script data-url="chemin/vers/customConfig.json" src="chemin/vers/GpPluginItowns.js"></script>
     </head>
     <body>
         <script>
@@ -322,7 +319,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 ```
 
 
-**Méthode 2** : Utilisez le paramètre *serverUrl* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier, ainsi que le paramètre *callbackSuffix*, de la manière suivante :
+**Méthode 2** : Utilisez le paramètre *customConfigFile* de la fonction Gp.Services.getConfig() pour pointer vers votre fichier, ainsi que le paramètre *callbackSuffix*, de la manière suivante :
 
 ``` html
 <html>
@@ -331,7 +328,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    serverUrl: 'chemin/vers/autoconf.json',
+                    customConfigFile: 'chemin/vers/customConfig.json',
                     callbackSuffix : '',
                     onSuccess: function (response) {
                         // votre utilisation de l'extension Géoportail pour iTowns

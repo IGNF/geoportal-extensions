@@ -36,7 +36,7 @@
       "proj4" : "2.7.5",
       "node-fetch" : "^2.6.1",
       "sortablejs" : "1.8.4",
-      "geoportal-access-lib" : "3.2.1",
+      "geoportal-access-lib" : "3.3.0",
       "proj4leaflet" : "1.0.2"
    },
    "description" : "French Geoportal Extension for Leaflet",

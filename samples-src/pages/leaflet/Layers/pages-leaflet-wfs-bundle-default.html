@@ -58,7 +58,7 @@
                         // 'https://wxs.ign.fr/kgco926a9mj4fcng4whjf5ac/geoportail/wfs?service=WFS&request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&outputFormat=application/json&srsname=EPSG:3857&bbox=244751.36456913437,6234242.245453117,276472.7313074825,6264817.056767188,EPSG:3857&count=200'
                         // RGF93 : http://localhost/data/geojson/test.geojson
                         // ou ../../resources/data/mapbox/geojson/test.geojson
-                        $.getJSON("https://wxs.ign.fr/kgco926a9mj4fcng4whjf5ac/geoportail/wfs?service=WFS&request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&outputFormat=application/json&srsname=EPSG:4326&bbox=2,48,2.1,48.1,EPSG:4326&count=200",function(data){
+                        $.getJSON("https://wxs.ign.fr/parcellaire/geoportail/wfs?service=WFS&request=GetFeature&version=2.0.0&typename=BDPARCELLAIRE-VECTEUR_WLD_BDD_WGS84G:parcelle&outputFormat=application/json&srsname=EPSG:4326&bbox=2,48,2.1,48.1,EPSG:4326&count=200",function(data){
                             // add GeoJSON layer to the map once the file is loaded
                             geojson = L.geoJson(data);
                             layerSwitcher.addLayer(geojson, {

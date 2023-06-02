@@ -45,14 +45,14 @@ function VectorTileLayer (options) {
 
     // Check if configuration is loaded
     if (!Config.isConfigLoaded()) {
-        throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+        throw new Error("ERROR : Configuration has to be loaded");
     }
 
-    var layerId = Config.getLayerId(options.layer, "TMS");
+    var layerId = Config.configuration.getLayerId(options.layer, "TMS");
 
-    if (layerId && Config.configuration.getLayerConf(layerId)) {
+    if (layerId && Config.configuration.getLayerParams(options.layer, "TMS")) {
         var config = {};
-        var tmsParams = Config.getLayerParams(options.layer, "TMS", options.apiKey);
+        var tmsParams = Config.configuration.getLayerParams(options.layer, "TMS");
 
         // si ssl = false on fait du http
         // par défaut, ssl = true, on fait du https

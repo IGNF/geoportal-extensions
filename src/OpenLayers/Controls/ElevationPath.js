@@ -23,7 +23,6 @@ import Gp from "geoportal-access-lib";
 // import local
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import Markers from "./Utils/Markers";
 // import local with ol dependencies
@@ -49,7 +48,7 @@ var logger = Logger.getLogger("elevationpath");
  * @type {ol.control.ElevationPath}
  * @extends ol.control.Control
  * @param {Object} options - options for function call.
- * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+ * @param {String} [options.apiKey] - API key for services call (isocurve and autocomplete services). The key "calcul" is used by default.
  * @param {Boolean} [options.active = false] - specify if control should be actived at startup. Default is false.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean|Object} [options.export = false] - Specify if button "Export" is displayed. For the use of the options of the "Export" control, see {@link ol.control.Export}
@@ -178,14 +177,8 @@ var ElevationPath = (function (Control) {
         // objet de type ol.feature, marker
         this._marker = null;
 
-        // gestion des droits sur le service
-        this._noRightManagement = false;
-
         // initialisation du composant
         this._initialize(options);
-
-        // gestion des droits
-        this._checkRightsManagement();
 
         // creation du DOM container
         this._container = (options.element) ? options.element : this._initializeContainer();
@@ -881,35 +874,6 @@ var ElevationPath = (function (Control) {
         return container;
     };
 
-    /**
-     * this method is called by constructor (into method _initialize())
-     * and check the rights to resources
-     *
-     * @private
-     */
-    ElevationPath.prototype._checkRightsManagement = function () {
-        logger.trace("ElevationPath::_checkRightsManagement");
-
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services : ["Elevation"]
-        });
-
-        if (!rightManagement) {
-            this._noRightManagement = true;
-            return;
-        }
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement.key;
-        }
-    };
-
     // ################################################################### //
     // ###################### init styles ################################ //
     // ################################################################### //
@@ -1290,12 +1254,6 @@ var ElevationPath = (function (Control) {
         logger.trace("geometry", geometry);
         if (!geometry) {
             logger.warn("missing geometry !?");
-            return;
-        }
-
-        // oups, aucun droits !
-        if (this._noRightManagement) {
-            logger.warn("no rights to this service !");
             return;
         }
 

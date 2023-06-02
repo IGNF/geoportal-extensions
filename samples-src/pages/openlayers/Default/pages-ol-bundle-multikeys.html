@@ -23,7 +23,7 @@
 {{#content "js"}}
             <script type="text/javascript">
 
-              window.onload = function () {
+              var createMap = function () {
                 // on cache l'image de chargement du Géoportail.
                 document.getElementById("map").style.backgroundImage = "none";
 
@@ -78,6 +78,13 @@
                 var attributions = new ol.control.GeoportalAttribution();
                 map.addControl(attributions);
               };
+
+              Gp.Services.getConfig({
+                // callbackSuffix : '',
+                apiKey: "{{ apikey }}",
+                timeOut: 20000,
+                onSuccess: createMap
+              });
 
             </script>
 {{/content}}

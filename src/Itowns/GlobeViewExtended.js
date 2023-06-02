@@ -845,7 +845,7 @@ GlobeViewExtended.prototype._transformCoords = function (coordCarto) {
 
     if (coordCarto.longitude !== undefined && coordCarto.latitude !== undefined) {
         const altitude = coordCarto.altitude || 0;
-        itownsCoord.coord = new ItCoordinates("EPSG:4326", coordCarto.longitude, coordCarto.latitude, altitude);
+        itownsCoord.coord = new ItCoordinates("EPSG:4326", parseFloat(coordCarto.longitude), parseFloat(coordCarto.latitude), parseFloat(altitude));
     }
     return itownsCoord;
 };

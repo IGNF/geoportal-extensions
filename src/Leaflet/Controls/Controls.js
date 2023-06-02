@@ -70,7 +70,7 @@ var Controls = {
      * @static
      * @alias L.geoportalControl.Isocurve
      * @param {Object} options - Isocurve control options
-     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services). The key "calcul" is used by default.
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -108,7 +108,7 @@ var Controls = {
      * @static
      * @alias L.geoportalControl.MousePosition
      * @param {Object} options - options for function call.
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -177,7 +177,7 @@ var Controls = {
      * @alias L.geoportalControl.ReverseGeocode
      * @extends {L.Control}
      * @param {Object} options - ReverseGeocoding control options
-     * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+     * @param {String}  [options.apiKey] - API key for services call (reverse geocode service). The "calcul" key is used by default.
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -210,7 +210,7 @@ var Controls = {
      * @alias L.geoportalControl.Route
      * @extends {L.Control}
      * @param {Object} options - options for function call.
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
      * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
@@ -247,7 +247,7 @@ var Controls = {
      * @alias L.geoportalControl.SearchEngine
      * @extends {L.Control}
      * @param {Object}  options - control options
-     * @param {String}  [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}  [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Boolean} [options.collapsed = false] - collapse mode
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position = "topleft"] - position of component into the map. See {@link http://leafletjs.com/reference-1.0.2.html#control-option L.Control options} for available values.
@@ -270,7 +270,7 @@ var Controls = {
      *           fields : { // fields of service response }
      *       }
      *       ```
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Object}  [options.resources] - resources to be used by geocode and autocompletion services, by default : ["StreetAddress", "PositionOfInterest"]
      * @param {Boolean} [options.displayAdvancedSearch] - False to disable advanced search tools (it will not be displayed). Default is true (displayed)
      * @param {Object}  [options.advancedSearch] - advanced search for geocoding (filters)

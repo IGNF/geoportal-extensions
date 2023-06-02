@@ -5,7 +5,7 @@
       "proj4" : "2.7.5",
       "node-fetch" : "^2.6.1",
       "sortablejs" : "1.14.0",
-      "geoportal-access-lib" : "3.2.1",
+      "geoportal-access-lib" : "3.3.0",
       "three" : "0.137.5",
       "itowns" : "2.38.2",
       "loglevel" : "1.6.7"
