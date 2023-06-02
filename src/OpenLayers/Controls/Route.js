@@ -6,7 +6,7 @@ import { unByKey as olObservableUnByKey } from "ol/Observable";
 import Overlay from "ol/Overlay";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import GeoJSON from "ol/format/GeoJSON";
+// import GeoJSON from "ol/format/GeoJSON";
 import { pointerMove as eventPointerMove } from "ol/events/condition";
 import { Select as SelectInteraction } from "ol/interaction";
 import {
@@ -27,6 +27,7 @@ import Interactions from "./Utils/Interactions";
 import LocationSelector from "./LocationSelector";
 import ButtonExport from "./Export";
 import LayerSwitcher from "./LayerSwitcher";
+import GeoJSONExtended from "../Formats/GeoJSON";
 // DOM
 import RouteDOM from "../../Common/Controls/RouteDOM";
 
@@ -292,6 +293,7 @@ var Route = (function (Control) {
             points.push(p.getCoordinate());
         }
         var data = {
+            type : "route",
             points : points,
             transport : this._currentTransport,
             exclusions : this._currentExclusions,
@@ -313,14 +315,38 @@ var Route = (function (Control) {
      * @param {Object} data.results - service response
      */
     Route.prototype.setData = function (data) {
+        // INFO
+        // transmettre toutes les informations necessaires pour reconstruire le panneau de resultats
         this._currentTransport = data.transport;
         this._currentComputation = data.computation;
         this._currentExclusions = data.exclusions;
-        for (let index = 0; index < data.points.length; index++) {
-            const c = data.points[index];
-            this._currentPoints[index].clear();
+        // INFO
+        // nettoyer les points du calcul précedent
+        for (var i = 0; i < this._currentPoints.length; i++) {
+            var point = this._currentPoints[i];
+            if (point.getCoordinate()) {
+                // clean de l'objet sans declencher les evenements qui suppriment la couche précedente !
+                // /!\ point.clear()
+                point.clearResults();
+                // clean du dom
+                var id = (i + 1) + "-" + this._uid;
+                document.getElementById("GPlocationOriginCoords_" + id).value = "";
+                document.getElementById("GPlocationOrigin_" + id).value = "";
+                document.getElementById("GPlocationPoint_" + id).style.cssText = "";
+                if (i > 0 && i < 6) {
+                    // on masque les points intermediaires
+                    document.getElementById("GPlocationPoint_" + id).className = "GPflexInput GPlocationStageFlexInputHidden";
+                }
+                document.getElementById("GPlocationOriginPointer_" + id).checked = false;
+                document.getElementById("GPlocationOrigin_" + id).className = "GPlocationOriginVisible";
+                document.getElementById("GPlocationOriginCoords_" + id).className = "GPlocationOriginHidden";
+            }
+        }
+        // ajout des nouvelles coordonnnées
+        for (var j = 0; j < data.points.length; j++) {
+            const c = data.points[j];
             if (c) {
-                this._currentPoints[index].setCoordinate(c, "EPSG:4326");
+                this._currentPoints[j].setCoordinate(c, "EPSG:4326");
             }
         }
         this._currentRouteInformations = data.results;
@@ -349,7 +375,12 @@ var Route = (function (Control) {
      * It allows to init the control.
      */
     Route.prototype.init = function () {
-        // points
+        // INFO
+        // reconstruire le panneau de resultats sans lancer de calcul
+        // * construire la liste des points (cf. RouteDOM._createRoutePanelFormElement())
+        // * construire les resultats
+
+        // init points
         for (let index = 0; index < this._currentPoints.length; index++) {
             const point = this._currentPoints[index];
             var id = index + 1;
@@ -357,8 +388,15 @@ var Route = (function (Control) {
             if (coordinate) {
                 var input = document.getElementById("GPlocationOrigin_" + id + "-" + this._uid);
                 input.value = coordinate[1].toFixed(4) + " / " + coordinate[0].toFixed(4);
+                if (index > 0 && index < 6) {
+                    document.getElementById("GPlocationPoint_" + id + "-" + this._uid).className = "GPflexInput GPlocationStageFlexInput";
+                }
             }
         }
+
+        // add points into panel
+        var points = document.getElementsByClassName("GPlocationPoint-" + this._uid);
+        this._addRouteResultsStagesValuesElement(points);
 
         // set transport mode
         var transportdiv;
@@ -1552,8 +1590,10 @@ var Route = (function (Control) {
             ]
         };
 
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : style
+
         });
         var features = geojsonformat.readFeatures(
             geojsonObject, {
@@ -1622,10 +1662,7 @@ var Route = (function (Control) {
             });
         }
 
-        // Ajout des points de depart et arrivée du tracé
-        // INFO
-        //  On fait l'impasse sur les points intermediaires, ça me semble pas très utile...
-        //  On ne transmet pas les styles, ils pourront être ajoutés ulterieusement selon les besoins...
+        // Ajout du point de depart du tracé
         this._geojsonObject.features.push({
             type : "Feature",
             geometry : {
@@ -1633,10 +1670,32 @@ var Route = (function (Control) {
                 coordinates : this._currentPoints[0].getCoordinate()
             },
             properties : {
-                description : "Point de départ"
+                description : "Point de départ",
+                "marker-symbol" : this.options.markersOpts.departure.url
             }
         });
 
+        // Ajout des points d'étapes
+        for (var k = 1; k < this._currentPoints.length - 1; k++) {
+            if (this._currentPoints[k] && this._currentPoints[k].getCoordinate) {
+                var coordinates = this._currentPoints[k].getCoordinate();
+                if (coordinates) {
+                    this._geojsonObject.features.push({
+                        type : "Feature",
+                        geometry : {
+                            type : "Point",
+                            coordinates : coordinates
+                        },
+                        properties : {
+                            description : "Point d'étape",
+                            "marker-symbol" : this.options.markersOpts.stages.url
+                        }
+                    });
+                }
+            }
+        }
+
+        // Ajout du point d'arrivée du tracé
         this._geojsonObject.features.push({
             type : "Feature",
             geometry : {
@@ -1644,13 +1703,15 @@ var Route = (function (Control) {
                 coordinates : this._currentPoints[this._currentPoints.length - 1].getCoordinate()
             },
             properties : {
-                description : "Point d'arrivée"
+                description : "Point d'arrivée",
+                "marker-symbol" : this.options.markersOpts.arrival.url
             }
         });
 
         // Création du format GeoJSON, avec reprojection des géométries
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : style
         });
         var mapProj = this.getMap().getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(

@@ -43,6 +43,14 @@ var Parser = {
             logger.log("Incompatible environment for DOM Parser !");
         }
 
+        var errorNode = doc.querySelector("parsererror");
+        if (errorNode) {
+            // INFO parsing failed
+            // eslint-disable-next-line no-console
+            console.error(errorNode);
+            return null;
+        }
+
         logger.trace(doc);
         return doc;
     },

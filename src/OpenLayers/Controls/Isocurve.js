@@ -5,9 +5,10 @@ import Control from "ol/control/Control";
 import { unByKey as olObservableUnByKey } from "ol/Observable";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import GeoJSON from "ol/format/GeoJSON";
+// import GeoJSON from "ol/format/GeoJSON";
 import {
     Fill,
+    Stroke,
     Style
 } from "ol/style";
 // import geoportal library access
@@ -23,6 +24,7 @@ import Interactions from "./Utils/Interactions";
 import LayerSwitcher from "./LayerSwitcher";
 import LocationSelector from "./LocationSelector";
 import ButtonExport from "./Export";
+import GeoJSONExtended from "../Formats/GeoJSON";
 
 // DOM
 import IsoDOM from "../../Common/Controls/IsoDOM";
@@ -281,6 +283,7 @@ var Isocurve = (function (Control) {
      */
     Isocurve.prototype.getData = function () {
         var data = {
+            type : "isocurve",
             transport : this._currentTransport,
             computation : this._currentComputation,
             exclusions : this._currentExclusions,
@@ -308,7 +311,14 @@ var Isocurve = (function (Control) {
         this._currentComputation = data.computation;
         this._currentExclusions = data.exclusions;
         this._currentDirection = data.direction;
-        this._originPoint.clear();
+        // INFO
+        // > this._originPoint.clear();
+        // l'utilisation de cette méthode declenche des evenements qui retirent la couche en cours !
+        // (cf. _createIsoPanelFormPointElement),
+        var inputPointer = document.getElementById("GPlocationOriginPointer_" + 1 + "-" + this._uid);
+        inputPointer.checked = true;
+        var inputCoords = document.getElementById("GPlocationOriginCoords_" + 1 + "-" + this._uid);
+        inputCoords.value = "";
         this._originPoint.setCoordinate(data.point, "EPSG:4326");
         this._currentIsoResults = data.results;
     };
@@ -529,6 +539,10 @@ var Isocurve = (function (Control) {
         this._defaultFeatureStyle = new Style({
             fill : new Fill({
                 color : "rgba(0, 183, 152, 0.7)"
+            }),
+            stroke : new Stroke({
+                color : "rgba(0, 183, 152, 0)",
+                width : 1
             })
         });
 
@@ -1277,11 +1291,13 @@ var Isocurve = (function (Control) {
                 coordinates : this._originPoint.getCoordinate()
             },
             properties : {
-                description : "Point d'origine"
+                description : "Point d'origine",
+                "marker-symbol" : this.options.markerOpts.url
             }
         });
-        var geojsonformat = new GeoJSON({
-            defaultDataProjection : "EPSG:4326"
+        var geojsonformat = new GeoJSONExtended({
+            defaultDataProjection : "EPSG:4326",
+            defaultStyle : this._defaultFeatureStyle
         });
         var mapProj = map.getView().getProjection().getCode();
         var features = geojsonformat.readFeatures(

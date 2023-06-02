@@ -24,15 +24,18 @@ import Gp from "geoportal-access-lib";
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import ID from "../../Common/Utils/SelectorID";
+import Markers from "./Utils/Markers";
 // import local with ol dependencies
 import Interactions from "./Utils/Interactions";
 import MeasureToolBox from "./MeasureToolBox";
 import Measures from "./Measures/Measures";
 import LayerSwitcher from "./LayerSwitcher";
 import ButtonExport from "./Export";
+import GeoJSONExtended from "../Formats/GeoJSON";
 // DOM
 import ElevationPathDOM from "../../Common/Controls/ElevationPathDOM";
 import ProfileElevationPathDOM from "../../Common/Controls/ProfileElevationPathDOM";
+
 var logger = Logger.getLogger("elevationpath");
 
 /**
@@ -413,7 +416,9 @@ var ElevationPath = (function (Control) {
         // see => Measures.DEFAULTS_STYLES
         // stying marker to the profile by default
         MARKER : new Icon({
-            src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
+            src : Markers["lightOrange"],
+            // image avec un mauvais ratio size 51/38 pixels
+            // src : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAsCAYAAAAATWqyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABTtJREFUeNq8WGtsFUUU/rb3gtdCAykFG9AUDTQUKimhxUewEusrJYoBo4FfEgoqotHERH6oP9TGmJhIrIlWAf9hjAaEiME2pgFfVVpFii8sWqIQLLSx3EJLW7p+Z2Z2b2l7d/b23vZLTmZ2duacb2fmnDk7DlKA67rXs1hJKacsohRQppjXFygnKT9TDlH2O47zFzIFGnco91EOuqnjoBnr2Ow4FhIlLN6m3DykFTh3BGj/Doj/CfSe082xPCDnBmDWTUBeyXDVjZTHOUNHUiZCEs+weI0ySTV0/w0c2wa07gIungn+vOx8YN46oPhpYOp1Xms/5TmSeSMUERKImFnYqBoGuPRNL5LEW8BgX2rrmjWZZLYApS8BUW8r4T0zO5eTEjFr+S6lSjV0HgPqVwNdf6S30abNB+7aDeQWey3bKZtIxvU5DxvyrE/izJfAvuXpkxCIDtElOjWqjK2RM8LZWMbiG0oEnUc5kB7a14WMYvI04H56du5ieZKluZWz8r0/IyQh5TuKRH8cqFuTeRIC0Sm6xYbYok1j21+ahyhLVO3wC8D5VowbRLfY0FhibOulIavDLEoRZyD8sJDeMWBXKG5ZsIobsdDsg+OMq3u1m1u9KQo8zP45EqjRxOUpk6i50IRl4FuGjpZtwUoiMYa314GFj/EzIsN8n8v+C1e4kfvwcm+wnhsZY27xQ8oiWZpKrWRQB6tAElfxpKnjsCdGklDzG9HvpI/0DYLYEpsalVnmAAM6fgR62oMHl70C5N9mn3rpI32DILbEpkZ5ljlFgbPNFtebzij5VPhNKX1lTBASNtXSzPZ3cxCuvVOH7FTCu4yxeZDGbCES0z5+PniQ3uGpwTYmYTOWCPGTpgYP6u9OnYhtzBCbQkSH0NiM4EEdP6VOxDYmYbNLiJxQ1elFwYPaG3XQCn3QHddjgpCweUKI6K2bvzw4YROf//rJob6fZl/H2FRoFiINfqo3qyzYwD8MVIeYLw32J+8j76SP9A2C2BKbGg1CZL+EF/W4YKP9a3/fCeyhkrY9DOOXEu1SlzZ5J31sSNjqURm/OfQkY9qgvkYOvXhbuH0g505Oga7HT9rPF9+t5+pDL0ulwzt46FV5ROax+JUSRRtP0LoHMK64+xNg7iqVEVOKSKRVxRGpsKhRnaRD4SPjR0J0axKCGmP7ilQxm4X8d8xXmfvHJZlPkCR3WfODl9FLMlxCIhevSJ5Nwzo1XdKxYpe3hpmB6BKdmoS43VqPxIgsni+aWOg8biZ3f+nLmSMiuvKWek/P01az7QdLyNVT7lC/l59WAKcb0iMxhzpW1nvmvpDtSiKD1l9OkpnDgv8UyMWFU9wvTP8vdY6NhJwnD1JVtso2OiiLSeL0iJUbNfg6zikVVwRTyOn2HWOfjfLtHgnBhtFIJCViyNDZUatdmnGlaFPqJIoe1WM1aqlz71ivJbLNobgAA9zgu7nZ/vstHAk5WVdzaPRqmGC5lER6kjpV4OWJdq+1kkshSk4VH9izcy/bV66qSPQZV+0J9G7rTY6+XNmqHmYwyJVV24kse1X31dhKHdasygkzy+a64oC4nWr47F4e858nSbLv4V/KAe9JKpVDrx/SImLIXMOiRUKdujESl+49O8xVZxpXzVc/C/I/RxL/hgq8YYkYhev9q6kVO4d9B+sr3vdICNaHJTHWW8Ya/87wqy2uWwstUk/gTYw3aCRGOarMDfS67kfFWqSuIe9imAjQEC272nJHixYNaSvGRIIGN49ywbsZEw1zI11N6TZSHeaGORn+F2AAJtRIMx4t+hUAAAAASUVORK5CYII=",
             anchor : [0.5, 1],
             snapToPixel : true
         }),
@@ -580,6 +585,7 @@ var ElevationPath = (function (Control) {
      * @returns {Object} data - elevations
      * @example
      * {
+     *        type // "elevationpath"
      *        greaterSlope // pente max
      *        meanSlope  // pente moyenne
      *        distancePlus // distance cumulée positive
@@ -589,12 +595,37 @@ var ElevationPath = (function (Control) {
      *        altMin // altitude min
      *        altMax // altitude max
      *        distance // distance totale
-     *        unit : // unité des mesures de distance
-     *        points : // elevations
+     *        unit // unité des mesures de distance
+     *        points // elevations
      *   }
      */
     ElevationPath.prototype.getData = function () {
-        return this._data;
+        return Utils.assign({
+            type : "elevationpath"
+        }, this._data);
+    };
+
+    /**
+     * Set profile data
+     *
+     * @param {*} data - elevations
+     * @example
+     * {
+     *        greaterSlope // pente max
+     *        meanSlope  // pente moyenne
+     *        distancePlus // distance cumulée positive
+     *        distanceMinus // distance cumulée négative
+     *        ascendingElevation // dénivelé cumulée positive
+     *        descendingElevation // dénivelé cumulée négative
+     *        altMin // altitude min
+     *        altMax // altitude max
+     *        distance // distance totale
+     *        unit // unité des mesures de distance
+     *        points // elevations
+     * }
+     */
+    ElevationPath.prototype.setData = function (data) {
+        this._data = data;
     };
 
     /**
@@ -616,6 +647,59 @@ var ElevationPath = (function (Control) {
     };
 
     /**
+     * Set layer
+     *
+     * @param {Object} layer - ol.layer.Vector profil layer
+     */
+    ElevationPath.prototype.setLayer = function (layer) {
+        if (!layer) {
+            this._measureVector = null;
+            return;
+        }
+
+        if (!(layer instanceof VectorLayer)) {
+            logger.log("no valid layer given for hosting drawn features.");
+            return;
+        }
+
+        // application des styles
+        layer.setStyle(this._drawStyleFinish);
+        // sauvegarde
+        this._measureVector = layer;
+        this._measureSource = layer.getSource();
+    };
+
+    /**
+     * Get vector layer
+     *
+     * @returns {String} geojson - GeoJSON format layer
+     */
+    ElevationPath.prototype.getGeoJSON = function () {
+        var features = this._measureVector.getSource().getFeatures();
+
+        var Format = new GeoJSONExtended({
+            defaultStyle : this._drawStyleFinish
+        });
+        // INFO
+        // par defaut, webmercator ou "EPSG:3857"
+        var geojson = Format.writeFeatures(features, {
+            dataProjection : "EPSG:4326",
+            featureProjection : "EPSG:3857"
+        });
+
+        return geojson;
+    };
+
+    /**
+     * Get default style
+     *
+     * @returns {ol.style} style
+     */
+    ElevationPath.prototype.getStyle = function () {
+        return this._drawStyleFinish;
+    };
+
+    /**
      * clean
      */
     ElevationPath.prototype.clean = function () {
@@ -633,6 +717,22 @@ var ElevationPath = (function (Control) {
         this._removeProfile();
         this._removeMeasure();
         this._removeMeasureInteraction(map);
+    };
+
+    /**
+     * This method is public.
+     * It allows to init the control.
+     * @fixme
+     */
+    ElevationPath.prototype.init = function () {
+        // FIXME
+        // le panneau du profil ne peut pas afficher un profil si il est caché
+        // car le profil est calculé en fonction de la taille du panneau (clientHeight / clientWidth),
+        // et ces valeurs sont à 0 !?
+        this._showContainer.checked = true;
+        this._panelContainer.style.display = "block";
+        this._displayProfile(this._data);
+        this._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
     };
 
     // ################################################################### //
@@ -900,7 +1000,7 @@ var ElevationPath = (function (Control) {
         });
 
         // on rajoute le champ gpResultLayerId permettant d'identifier une couche crée par le composant.
-        this._measureVector.gpResultLayerId = "measure";
+        this._measureVector.gpResultLayerId = "measure:profil";
 
         map.addLayer(this._measureVector);
 
@@ -1195,7 +1295,11 @@ var ElevationPath = (function (Control) {
             if (result) {
                 self._panelContainer.style.display = "block";
                 // self._panelContainer.style.visibility = "visible";
-                self._displayProfile(result.elevations);
+                if (self._data) {
+                    self._data = {};
+                }
+                self._data = self._computeElevationMeasure(result.elevations);
+                self._displayProfile(self._data);
                 self._waitingContainer.className = "GPelevationPathCalcWaitingContainerHidden";
                 self._waiting = false;
                 self._measureDraw.setActive(true);
@@ -1283,6 +1387,9 @@ var ElevationPath = (function (Control) {
         var _unit = "m";
 
         var _sketchPoints = this._getSketchCoords();
+        if (!_sketchPoints) {
+            return;
+        }
         // section actuelle du sketch sur laquelle on est
         var _currentSection = 0;
         // longueur cumulée des sections précédentes
@@ -1411,14 +1518,6 @@ var ElevationPath = (function (Control) {
     ElevationPath.prototype._displayProfile = function (elevations) {
         logger.trace("ElevationPath::_displayProfile", elevations);
 
-        // data
-        if (this._data) {
-            this._data = {};
-        }
-
-        // sauvegarde des données
-        var data = this._data = this._computeElevationMeasure(elevations);
-
         this._updateInfoContainer();
 
         // container
@@ -1435,7 +1534,7 @@ var ElevationPath = (function (Control) {
         var displayFunction = this.options.displayProfileOptions.apply;
 
         // execution...
-        displayFunction.call(this, data, container, context);
+        displayFunction.call(this, elevations, container, context);
 
         var opts = this.options.displayProfileOptions;
         var element = document.getElementById("GPelevationPathPanelInfo-" + this._uid);

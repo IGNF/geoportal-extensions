@@ -180,34 +180,7 @@ var RouteDOM = {
             }
 
             // Send stages to results panel
-            var id;
-            document.getElementById(self._addUID("GProuteResultsStages")).innerHTML = "";
-            for (var i = 0; i < points.length; i++) {
-                var tag = points[i].childNodes[0].id;
-                id = ID.index(tag);
-                if (document.getElementById(self._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInput") {
-                    var resultStage = document.createElement("div");
-                    resultStage.className = "GProuteResultsStages";
-                    var resultStageLabel = document.createElement("div");
-                    resultStageLabel.className = "GProuteResultStageLabel";
-                    resultStageLabel.innerHTML = document.getElementById(self._addUID("GPlocationOriginLabel_" + id)).innerHTML + " :";
-                    resultStage.appendChild(resultStageLabel);
-                    var resultStageValue = document.createElement("div");
-                    resultStageValue.className = "GProuteResultStageValue";
-                    var elementCoords = document.getElementById(self._addUID("GPlocationOriginCoords_" + id));
-                    var stageCoords = elementCoords.value;
-                    var visible = (elementCoords.className === "GPlocationOriginVisible");
-                    if (stageCoords !== null && stageCoords !== "" && visible) {
-                        resultStageValue.innerHTML = stageCoords;
-                    } else {
-                        resultStageValue.innerHTML = document.getElementById(self._addUID("GPlocationOrigin_" + id)).value;
-                    }
-                    resultStage.appendChild(resultStageValue);
-                    if (resultStageValue.innerHTML !== "") {
-                        document.getElementById(self._addUID("GProuteResultsStages")).appendChild(resultStage);
-                    }
-                }
-            }
+            self._addRouteResultsStagesValuesElement(points);
 
             // on peut récuperer les valeurs utiles pour les transmettre au service d'iti...
             // - le mode de calcul
@@ -242,7 +215,7 @@ var RouteDOM = {
             var exclusions = [];
             var exclusionsElement = document.getElementsByClassName("GProuteExclusionsOption");
             for (var j = 0; j < exclusionsElement.length; j++) {
-                id = exclusionsElement[j].htmlFor;
+                var id = exclusionsElement[j].htmlFor;
                 var el = document.getElementById(id);
                 if (!el.checked) {
                     exclusions.push(el.value);
@@ -335,6 +308,41 @@ var RouteDOM = {
         var div = document.createElement("div");
         div.id = this._addUID("GProuteResultsStages");
         return div;
+    },
+
+    /**
+     * Add Stages Results
+     *
+     * @param {DOMElement} points - list of points
+     */
+    _addRouteResultsStagesValuesElement : function (points) {
+        document.getElementById(this._addUID("GProuteResultsStages")).innerHTML = "";
+        for (var i = 0; i < points.length; i++) {
+            var tag = points[i].childNodes[0].id;
+            var id = ID.index(tag);
+            if (document.getElementById(this._addUID("GPlocationPoint_" + id)).className === "GPflexInput GPlocationStageFlexInput") {
+                var resultStage = document.createElement("div");
+                resultStage.className = "GProuteResultsStages";
+                var resultStageLabel = document.createElement("div");
+                resultStageLabel.className = "GProuteResultStageLabel";
+                resultStageLabel.innerHTML = document.getElementById(this._addUID("GPlocationOriginLabel_" + id)).innerHTML + " :";
+                resultStage.appendChild(resultStageLabel);
+                var resultStageValue = document.createElement("div");
+                resultStageValue.className = "GProuteResultStageValue";
+                var elementCoords = document.getElementById(this._addUID("GPlocationOriginCoords_" + id));
+                var stageCoords = elementCoords.value;
+                var visible = (elementCoords.className === "GPlocationOriginVisible");
+                if (stageCoords !== null && stageCoords !== "" && visible) {
+                    resultStageValue.innerHTML = stageCoords;
+                } else {
+                    resultStageValue.innerHTML = document.getElementById(this._addUID("GPlocationOrigin_" + id)).value;
+                }
+                resultStage.appendChild(resultStageValue);
+                if (resultStageValue.innerHTML !== "") {
+                    document.getElementById(this._addUID("GProuteResultsStages")).appendChild(resultStage);
+                }
+            }
+        }
     },
 
     /**

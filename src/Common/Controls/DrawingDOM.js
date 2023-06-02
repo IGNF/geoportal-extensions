@@ -395,6 +395,10 @@ var DrawingDOM = {
         if (options.title) {
             inputElem.title = options.title;
         }
+        // si options.type == "checkbox"
+        if (options.checked !== undefined) {
+            inputElem.checked = options.checked;
+        }
         // si options.type == "range"
         if (options.min !== undefined) {
             inputElem.min = options.min;
@@ -427,7 +431,9 @@ var DrawingDOM = {
         /*
          * TODO : finir de remplir la div pour tous les styles éditables.
          */
-        switch (options.geomType.toLowerCase()) {
+        var geomType = options.geomType.toLowerCase();
+        switch (geomType) {
+            case "point&text":
             case "point":
                 li = this._createMarkersChooser({
                     className : "gp-styling-option",
@@ -447,13 +453,27 @@ var DrawingDOM = {
                     defaultValue : options.initValues.markerSize * 10
                 });
                 ul.appendChild(li);
+                // EVOL
+                // proposer une palette de couleur pour peindre un pictogramme monochrome
+                // li = this._createStylingElement({
+                //     type : "color",
+                //     className : "gp-styling-option",
+                //     label : this.options.labels.markerColor,
+                //     id : this._addUID("markerColor"),
+                //     defaultValue : options.initValues.markerColor
+                // });
+                // ul.appendChild(li);
                 if (options.initValues.markerCustom) {
+                    // FIXME que faire des icones customisés ?
+                }
+                if (geomType === "point&text") {
                     li = this._createStylingElement({
-                        type : "color",
+                        type : "checkbox",
                         className : "gp-styling-option",
-                        label : this.options.labels.markerColor,
-                        id : this._addUID("markerColor"),
-                        defaultValue : options.initValues.markerColor
+                        label : this.options.labels.labelDisplay,
+                        id : this._addUID("labelDisplay"),
+                        checked : options.initValues.labelDisplay,
+                        defaultValue : options.initValues.labelDisplay
                     });
                     ul.appendChild(li);
                 }
@@ -473,6 +493,18 @@ var DrawingDOM = {
                     label : this.options.labels.strokeColor,
                     id : this._addUID("strokeColor"),
                     defaultValue : options.initValues.strokeColor
+                });
+                ul.appendChild(li);
+                li = this._createStylingElement({
+                    type : "range",
+                    className : "gp-styling-option",
+                    label : this.options.labels.strokeWidth,
+                    title : "1 à 10 pixels",
+                    id : this._addUID("strokeWidth"),
+                    min : 1,
+                    max : 10,
+                    step : 1,
+                    defaultValue : options.initValues.strokeWidth
                 });
                 ul.appendChild(li);
                 break;

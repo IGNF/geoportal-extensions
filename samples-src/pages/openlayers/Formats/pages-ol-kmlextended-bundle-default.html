@@ -12,6 +12,9 @@
                 width: 100%;
                 height: 500px;
             }
+            #viewer {
+                width: 100%;
+            }
         </style>
 {{/content}}
 
@@ -21,40 +24,118 @@
             <div id="map">
             </div>
             <!-- export -->
-            <button id="export">Exporter</button>
+            <button id="export" title="Exporter la couche de dessin">Exporter</button>
+            <button id="viewIti" title="Afficher les métadonnées de la couche de calcul">Afficher Iti</button>
+            <button id="viewIso" title="Afficher les métadonnées de la couche de calcul">Afficher Iso</button>
+            <div>
+                <textarea id="viewer" rows="10" cols="50"></textarea>
+            </div>
 {{/content}}
 
 {{#content "js"}}
             <script type="text/javascript">
                 var map;
-                var layer;
+                var sampleLayer;
+                var exportLayerRoute, exportLayerIso;
+                var exportFormatRoute, exportFormatIso;
                 window.onload = function() {
                     // on cache l'image de chargement du Géoportail.
                     document.getElementById('map').style.backgroundImage = 'none';
 
-                    var _url = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/croquis-extendeddata.kml";
-                    layer = new ol.layer.Vector({
+                    var defaultStyle = new ol.style.Style({
+                        fill: new ol.style.Fill({
+                            color: [0,0,0,0.5]
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: [125,125,0,1],
+                            width: 5
+                        }),
+                        text: new ol.style.Text({
+                            font : "16px sans",
+                            textAlign : "left",
+                            stroke :  new ol.style.Stroke({
+                                color: [250,250,250,1],
+                                width: 5
+                            }),
+                            fill: new ol.style.Fill({
+                                color: [0,0,0,1]
+                            })
+                        }),
+                        image: new ol.style.Icon({
+                            src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAmCAYAAABpuqMCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAS9SURBVFiF3VhNbFRVFP7Ond9OlBnApihJM1N0EqltQzoJLFxAQiKrruhCjXFh3GhcEGowGomiJEhYUJtUiTFCGEJsBX9CU2pQqzZB6WtLOgw0MNN5TUSggtNp6Tw6fe8dNyWp0Pa9d9/Mhm8593zfOd+9J/educAjBCq34MDAwOPBYHAHM7cQ0UYATwJYC+AOgL+J6LJpmj+EQqGz9fX1d8uZu2xmRkdHV8/Pz7/DzG8BqLJBKQLo8Hg8BzZt2jRVjhrKYmZwcHAnER0BsEaC/i8Rvd7c3HzabR3CDZmZSVGUvUTUBTkjALCGmb9RFOV9Zna1ua7MDA8P7wXwIdyfMAHYNzQ09J5bESkstFaXG40lYBLRzubm5m9lyFKFjIyMRAzDyEK+tVZC3u/3b2hsbMw7JUq1ma7r76IyRgBgdalUeluG6PhkFr4jt2Dv+pVFsaqqqsbpd8jrNEswGNwBG0aEEMVYLHYhHA7XEdE6Zr5ZKBTGc7ncZtM0rfihYrH4AoBTTmpz3GbM3GIpKkSxqalpPBKJbCWiWgB+IqqNRCJbGxoaMkIIzUqDiCzzPJTXKYGInrWKicViF4QQzy215vV6G6LR6J9WGsy80WltMhfAU1YB4XC4bqX1SCQSs9IgIss8D0LGzFobhaxzs76AJ2xXtAAZMzNWAcx802L9ho0807YrWoCMmVtWAYVCYXyl9ampKdVGnhU3ZCnImLlgFZDL5Tbrup5aak3X9ZSqqlusNIjIMs+DkLmaf7GKMU2zKpVKPZ3P5/uZeQJAiZkn8vl8fyqVesY0zaANjX6ntTmeANLp9GOapv0FIOyU6wAFn8+3vqmpadYJyfHJ1NfX32Xmr5zyHOJLp0YAyUEzEAjsAzApw7WBSb/f/7EMUcrMwni+S4ZrA7tkxn/A5R8rRVFOAHjJjcZiGIZxsrW19U0hRCDAXDVHFPAxk24IHwB4Pea8LoRJRJp/bm624fr1qW7AuM93ayYM4CKAqCsXADRNm9qze/eRycnJe3Y5zGQQQ/UK/n1MVVVXbwCJRKIA4BUs2h0ZMDMfP3bseydGAICIPRC8QQdejUajUVdmACCRSAwAOOhGQxkcHPj53DnVhQR5THO9azMAMDMzsxeA5Vi/FO7cvn2js6PjVzf5TcA0hMiWxcy2bdt0AC/DxhC6GLquz3/W2XlK0zT5NmUukcdzWlXVm2UxAwCJRCJLRG1OOD/29Z29NDp6RzIlM3AlYBifZ7PZS0AFHs4VRekC0GoVN6GqY3va2r6WSKEx8yi83qFsNvu/D7fjBw0beKNUKm33+/2rlwu4p2mz7e3tZ+wKMpMO4gwLka6trb3S39+vLxVX9pMBgN7e3pbq6urvltHn40ePnuw5c+baShrMNC9g5kiItOnxjGUymTmrvBUxAwA9PT0nampqHpoOLo6M/HFg//6+ZWgaiMYFcNUXCl1Jp9MlJzkr0WYAgFAo9Nr09PTzq1atqr3/W6FQ+OfTw4d/WhzHQBHM17xCXG5MJDLd3d3SN1vFTgYAksnklng8/psQwqfrunH40KEvFEW5BaAAoowHuPpiLnftA8CsZB1lQzKZ/Oj8+fPawU8OJuN1ddvj8fh6VHgTHwn8B/S71Ufd4vUbAAAAAElFTkSuQmCC",
+                            anchor: [17,48],
+                            anchorOrigin : "top-left",
+                            anchorXUnits : "pixels",
+                            anchorYUnits : "pixels"
+                        })
+                    });
+                    var sampleUrl = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/map.kml";
+                    sampleLayer = new ol.layer.Vector({
                         source : new ol.source.Vector({
-                            url: _url,
-                            format: new ol.format.KMLExtended()
+                            url: sampleUrl,
+                            format: new ol.format.KMLExtended({
+                                defaultStyle: defaultStyle
+                            })
                         })
                     });
 
+                    exportFormatRoute = new ol.format.KMLExtended();
+                    var exportUrl = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/export-route.kml";
+                    exportLayerRoute = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: exportUrl,
+                            format: exportFormatRoute
+                        })
+                    });
+                    exportFormatIso = new ol.format.KMLExtended();
+                    var exportUrlIso = location.href.substring(0, location.href.lastIndexOf('/')) + "/../../resources/data/kml/export-iso.kml";
+                    exportLayerIso = new ol.layer.Vector({
+                        source : new ol.source.Vector({
+                            url: exportUrlIso,
+                            format: exportFormatIso
+                        })
+                    });
                     map = new ol.Map({
                         target : "map",
                         view : new ol.View({
-                            center : [0,0],
-                            zoom : 6
+                            center : [261213, 6250943],
+                            zoom : 10
                         }),
                         layers : [
                             new ol.layer.GeoportalWMS({
                                 layer : "ORTHOIMAGERY.ORTHOPHOTOS"
                             }),
-                            layer
+                            sampleLayer,
+                            exportLayerRoute,
+                            exportLayerIso
                         ]
                     });
 
-                    var layerSwitcher = new ol.control.LayerSwitcher({});
+                    var layerSwitcher = new ol.control.LayerSwitcher({
+                        options : {
+                            collapsed : false
+                        },
+                        layers : [
+                            {
+                                layer : sampleLayer,
+                                config : {
+                                    title : "Couche de dessin à exporter"
+                                }
+                            },
+                            {
+                                layer : exportLayerRoute,
+                                config : {
+                                    title : "Calcul d'itineraire"
+                                }
+                            },
+                            {
+                                layer : exportLayerIso,
+                                config : {
+                                    title : "Calcul d'isochrone"
+                                }
+                            }
+                        ]
+                    });
                     map.addControl(layerSwitcher);
 
                     var popup = new ol.Overlay.Popup();
@@ -76,9 +157,17 @@
                             var coord = evt.coordinate;
                             var props = feature.getProperties();
                             var contents = "";
+                            var length = "30";
                             for (var key in props) {
                                 if (props.hasOwnProperty(key)) {
-                                    contents += key + " / " + props[key];
+                                    if (key === "geometry") {
+                                        continue;
+                                    }
+                                    var value = props[key];
+                                    if (typeof value === "string") {
+                                        value = props[key].substring(0, length);
+                                    }
+                                    contents += key + " / " + value;
                                     contents += "<br>";
                                 }
                             }
@@ -91,13 +180,13 @@
                 };
                 document.getElementById("export").addEventListener("click", function () {
                     var result = null;
-                    if (!layer) {
+                    if (!sampleLayer) {
                         console.log("Impossible to export : no layer is hosting features.");
                         return result;
                     }
-                    if (!layer.getSource() ||
-                        !layer.getSource().getFeatures() ||
-                        !layer.getSource().getFeatures().length) {
+                    if (!sampleLayer.getSource() ||
+                        !sampleLayer.getSource().getFeatures() ||
+                        !sampleLayer.getSource().getFeatures().length) {
                         console.log("Impossible to export : no features found.");
                         return result;
                     }
@@ -130,10 +219,12 @@
                         }
                     });
 
-                    result = kml.writeFeatures(layer.getSource().getFeatures(), {
+                    result = kml.writeFeatures(sampleLayer.getSource().getFeatures(), {
                         dataProjection : "EPSG:4326",
-                        featureProjection : layer.getSource().getProjection()
+                        featureProjection : sampleLayer.getSource().getProjection()
                     });
+
+                    document.getElementById("viewer").textContent = result;
 
                     var link = document.createElement("a");
                     var charset = "utf-8";
@@ -141,7 +232,17 @@
                     link.setAttribute("download", "sample.kml");
                     link.click();
                 });
-           </script>
+                document.getElementById("viewIti").addEventListener("click", function () {
+                    var key = "geoportail:compute";
+                    var result = exportFormatRoute.readRootExtensions(key);
+                    document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
+                });
+                document.getElementById("viewIso").addEventListener("click", function () {
+                    var key = "geoportail:compute";
+                    var result = exportFormatIso.readRootExtensions(key);
+                    document.getElementById("viewer").textContent = JSON.stringify(result, null, 2);
+                });
+            </script>
 {{/content}}
 
 {{/extend}}

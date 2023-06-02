@@ -1,45 +1,45 @@
 {
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "devDependencies" : {},
-   "scripts" : {},
    "license" : "CECILL-B",
-   "bugs" : {},
-   "version" : "2.3.10",
-   "date" : "05/04/2023",
-   "types" : "src/Itowns/index.d.ts",
-   "peerDependencies" : {},
-   "module" : "src/Itowns/index.js",
+   "dependencies" : {
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.5",
+      "node-fetch" : "^2.6.1",
+      "sortablejs" : "1.14.0",
+      "geoportal-access-lib" : "3.3.0",
+      "three" : "0.137.5",
+      "itowns" : "2.38.2",
+      "loglevel" : "1.6.7"
+   },
    "main" : "dist/GpPluginItowns-src.js",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "bundleDependencies" : [],
+   "author" : "IGNF",
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "bundleDependencies" : [],
+   "types" : "src/Itowns/index.d.ts",
+   "directories" : {},
+   "devDependencies" : {},
+   "peerDependencies" : {},
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "bugs" : {},
+   "version" : "2.3.11",
+   "name" : "geoportal-extensions-itowns",
+   "scripts" : {},
+   "module" : "src/Itowns/index.js",
+   "description" : "French Geoportal Extensions for iTowns",
+   "date" : "01/06/2023",
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ],
-   "author" : "IGNF",
-   "description" : "French Geoportal Extensions for iTowns",
-   "dependencies" : {
-      "three" : "0.137.5",
-      "itowns" : "2.38.2",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/adaptations-gpf/geoportal-access-lib-3.2.1.tgz",
-      "proj4" : "2.7.5",
-      "xmldom" : "^0.1.27",
-      "loglevel" : "1.6.7",
-      "sortablejs" : "1.14.0",
-      "node-fetch" : "^2.6.1"
-   },
-   "directories" : {},
-   "name" : "geoportal-extensions-itowns",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html"
+   ]
 }

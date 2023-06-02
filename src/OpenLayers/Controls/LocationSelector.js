@@ -249,11 +249,24 @@ var LocationSelector = (function (Control) {
     };
 
     /**
-     * clean input
+     * clean all and input
      */
     LocationSelector.prototype.clear = function () {
-        this._clearResults();
+        this.clearResults();
         this._inputLabelContainer.click();
+    };
+
+    /**
+     * clear all results and the marker.
+     */
+    LocationSelector.prototype.clearResults = function () {
+        this._currentLocation = null;
+        this._coordinate = null;
+        this._hideSuggestedLocation();
+        this._clearSuggestedLocation();
+        this._setMarker();
+        // map.un("click", (e) => this.onMouseMapClick(e));
+        olObservableUnByKey(this.listenerKey);
     };
 
     // ################################################################### //
@@ -443,7 +456,7 @@ var LocationSelector = (function (Control) {
 
         if (this._inputShowPointerContainer.checked) {
             // on efface l'ancien resultat
-            this._clearResults();
+            this.clearResults();
             this.listenerKey = map.on(
                 "click",
                 (e) => this.onMouseMapClick(e)
@@ -465,7 +478,7 @@ var LocationSelector = (function (Control) {
      */
     LocationSelector.prototype.onLocationClearPointClick = function () {
         this._setCursor();
-        this._clearResults();
+        this.clearResults();
     };
 
     /**
@@ -477,7 +490,7 @@ var LocationSelector = (function (Control) {
      */
     LocationSelector.prototype.onLocationRemovePointClick = function () {
         this._setCursor();
-        this._clearResults();
+        this.clearResults();
     };
 
     /**
@@ -654,22 +667,6 @@ var LocationSelector = (function (Control) {
             //     this._marker.bindPopup(popupContent);
             // }
         }
-    };
-
-    /**
-     * this method is called by this.()
-     * and it clears all results and the marker.
-     *
-     * @private
-     */
-    LocationSelector.prototype._clearResults = function () {
-        this._currentLocation = null;
-        this._coordinate = null;
-        this._hideSuggestedLocation();
-        this._clearSuggestedLocation();
-        this._setMarker();
-        // map.un("click", (e) => this.onMouseMapClick(e));
-        olObservableUnByKey(this.listenerKey);
     };
 
     /**

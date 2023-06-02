@@ -501,8 +501,17 @@ var GfiUtils = {
                             var exception = false;
 
                             // a t on une exception ?
+                            // <?xml version="1.0" encoding="UTF-8"?>
+                            // <ServiceExceptionReport version="1.3.0" xmlns="http://www.opengis.net/ogc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/ogc https://wxs.ign.fr/geoportail/v/schemas/wms/1.3.0/exceptions_1_3_0.xsd">
+                            //   <ServiceException>
+                            //     java.lang.OutOfMemoryError: Java heap space
+                            //     Java heap space
+                            //   </ServiceException>
+                            // </ServiceExceptionReport>
                             if (resp.trim().length === 0 ||
+                                resp.indexOf("ServiceExceptionReport") !== -1 ||
                                 resp.indexOf("java.lang.NullPointerException") !== -1 ||
+                                resp.indexOf("java.lang.OutOfMemoryError") !== -1 ||
                                 resp.indexOf("not queryable") !== -1) {
                                 // rien à afficher
                                 exception = true;

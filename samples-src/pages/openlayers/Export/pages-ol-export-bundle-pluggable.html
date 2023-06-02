@@ -50,7 +50,9 @@
                 var drawing = new ol.control.Drawing({
                   draggable:true,
                   tools : {
-                    export : true // outil interne !
+                    export : {
+                      format : "kml"
+                    }
                   }
                 });
                 map.addControl(drawing);
