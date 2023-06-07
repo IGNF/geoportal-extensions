@@ -3,7 +3,6 @@ import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import PositionFormater from "./Utils/PositionFormater";
 import IconDefault from "./Utils/IconDefault";
@@ -54,7 +53,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      *
      * @private
      * @param {Object} options - ElevationPath control options
-     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services), mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key for services call (isocurve and autocomplete services). The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {Boolean} [options.active] - Specify if widget has to be actived to drawing (true) or not (false) on map loading. Default is false.
      * @param {Object} [options.elevationPathOptions = {}] - elevation service options. See {@link http://ignf.github.io/geoportal-access-lib/latest/jsdoc/module-Services.html#~getAltitude Gp.Services.getAltitude()} to know all elevation options
@@ -125,12 +124,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
 
         // data elevations
         this._data = {};
-
-        // aucun droits sur les ressources
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
     },
 
     /**
@@ -174,36 +167,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
      * @private
      */
     onRemove : function (/* map */) {},
-
-    // ################################################################### //
-    // ########################## init resources ######################### //
-    // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services : ["ElevationLine"]
-        });
-
-        if (!rightManagement) {
-            this._noRightManagement = true;
-        }
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement.key;
-        }
-    },
 
     // ################################################################### //
     // ####################### init application ########################## //
@@ -639,11 +602,6 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
             return;
         }
 
-        // oups, aucun droits !
-        if (this._noRightManagement) {
-            return;
-        }
-
         // on construit les options pour la requête
         var options = {};
 
@@ -651,7 +609,7 @@ var ElevationPath = L.Control.extend(/** @lends L.geoportalControl.ElevationPath
         L.Util.extend(options, this.options.elevationPathOptions);
 
         // au cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle, sinon la clé "calcul" est utilisée par défaut.
         L.Util.extend(options, {
             apiKey : options.apiKey || this.options.apiKey
         });

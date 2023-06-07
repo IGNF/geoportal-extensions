@@ -30,7 +30,6 @@ import Gp from "geoportal-access-lib";
 import Utils from "../../Common/Utils";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import SelectorID from "../../Common/Utils/SelectorID";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import Markers from "./Utils/Markers";
 import Draggable from "../../Common/Utils/Draggable";
 import Interactions from "./Utils/Interactions";
@@ -51,7 +50,7 @@ var logger = Logger.getLogger("reversegeocoding");
  * @type {ol.control.ReverseGeocode}
  * @extends {ol.control.Control}
  * @param {Object} options - ReverseGeocode control options
- * @param {String}   [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key for services call (reverse geocode service). The key "calcul" is used by default.
  * @param {String}   [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.collapsed = true] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
@@ -257,18 +256,6 @@ var ReverseGeocode = (function (Control) {
         // #################################################################### //
         // ################### informations sur les droits #################### //
 
-        // ressources des services d'autocompletion et de geocodage
-        this._servicesRightManagement = {};
-
-        // gestion des droits sur les ressources
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
-
-        // #################################################################### //
-        // ################### informations sur les droits #################### //
-
         // Type de géocodage sélectionné (StreetAddress, PositionOfInterest, ...)
         this._currentGeocodingType = null;
         this._initGeocodingType();
@@ -425,29 +412,8 @@ var ReverseGeocode = (function (Control) {
             this.options.resources = ["StreetAddress", "PositionOfInterest", "CadastralParcel"];
         }
 
-        // pas de droit ou pas d'autoconf chargée,
-        // ce n'est pas la peine de tester les droits !
-        if (this._noRightManagement) {
-            return;
-        }
-
         // options utilisateur
         if (Array.isArray(resources) && resources.length) {
-            // vérification des droits
-            var noRightsIndexes = [];
-            for (var i = 0; i < resources.length; i++) {
-                if (this._servicesRightManagement["Geocode"].indexOf(resources[i]) < 0) {
-                    // si on n'a pas les droits sur la ressource, on va la supprimer : on stocke son index
-                    noRightsIndexes.push(i);
-                    logger.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
-                }
-            }
-            // on retire les ressoures non autorisées qu'on a pu rencontrer
-            if (noRightsIndexes.length !== 0) {
-                for (var j = 0; j < noRightsIndexes.length; j++) {
-                    resources.splice(noRightsIndexes[j], 1);
-                }
-            }
             // récupération du type par défaut
             if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];
@@ -513,57 +479,6 @@ var ReverseGeocode = (function (Control) {
         element.appendChild(closer);
 
         return element;
-    };
-
-    /**
-     * Check rights to resources (called by this.initialize())
-     *
-     * @private
-     */
-    ReverseGeocode.prototype._checkRightsManagement = function () {
-        var _key = this.options.reverseGeocodeOptions.apiKey;
-        // on récupère les éventuelles ressources passées en option, soit dans reverseGeocodeOptions :
-        var _resources = (this.options.reverseGeocodeOptions.index) ? this.options.reverseGeocodeOptions.index : "";
-        // soit directement dans options.resources :
-        if (!_resources || _resources.length === 0) {
-            _resources = this.options.resources;
-        }
-        // ou celles par défaut sinon.
-        if (!_resources) {
-            _resources = "location";
-        }
-
-        if (_resources === "location") {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest",
-                "CadastralParcel"
-            ];
-        } else {
-            if (!Array.isArray(_resources)) _resources = [_resources];
-        }
-
-        var rightManagementGeocode = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["Geocode"]
-        });
-        logger.log("rightManagementGeocode", rightManagementGeocode);
-
-        // aucun droit !
-        if (!rightManagementGeocode) {
-            this._noRightManagement = true;
-            return;
-        }
-
-        // on recupère les informations utiles
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagementGeocode.key;
-        }
-
-        this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
     };
 
     /**
@@ -1684,11 +1599,6 @@ var ReverseGeocode = (function (Control) {
         // le paramètre position est obligatoire
         if (!this._requestPosition) {
             logger.log("missing position");
-            return;
-        }
-
-        // si on n'a trouvé aucun droit, on evite une requête inutile ...
-        if (this._noRightManagement) {
             return;
         }
 

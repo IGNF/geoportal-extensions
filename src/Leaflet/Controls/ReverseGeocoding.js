@@ -2,7 +2,6 @@ import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import "leaflet-draw";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import IconDefault from "./Utils/IconDefault";
 import ReverseGeocodingDOM from "../../Common/Controls/ReverseGeocodingDOM";
@@ -41,7 +40,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     /**
      * @constructor ReverseGeocode
      * @param {Object} options - ReverseGeocoding control options
-     * @param {String}  [options.apiKey] - API key for services call (reverse geocode service), mandatory if autoconf service has not been charged in advance
+     * @param {String}  [options.apiKey] - API key for services call (reverse geocode service). The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed] - Specify if widget has to be collapsed (true) or not (false) on map loading. Default is true.
@@ -64,19 +63,6 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     initialize : function (options) {
         // on merge les options avec celles par defaut
         L.Util.extend(this.options, options);
-
-        /**
-         * Droit sur la ressource.
-         * Par defaut, on n'en s'occupe pas
-         * sauf si l'autoconfiguration est chargée !
-         */
-        this._noRightManagement = false;
-
-        // ressources des services d'autocompletion et de geocodage
-        this._servicesRightManagement = {};
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
 
         // check input options format (resources and delimitations arrays)
         this._checkInputOptions();
@@ -190,58 +176,6 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
     // ################################################################### //
 
     /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var _key = this.options.reverseGeocodeOptions.apiKey;
-        // on récupère les éventuelles ressources passées en option, soit dans reverseGeocodeOptions :
-        var _resources = (this.options.reverseGeocodeOptions.index) ? this.options.reverseGeocodeOptions.index : "";
-        // soit directement dans options.resources :
-        if (!_resources || _resources.length === 0) {
-            _resources = this.options.resources;
-        }
-        // ou celles par défaut sinon.
-        if (!_resources) {
-            _resources = "location";
-        }
-
-        if (_resources === "location") {
-            _resources = [
-                "StreetAddress",
-                "PositionOfInterest",
-                "CadastralParcel"
-            ];
-        } else {
-            if (!Array.isArray(_resources)) _resources = [_resources];
-        }
-
-        var rightManagementGeocode = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _resources,
-            services : ["Geocode"]
-        });
-        logger.log("rightManagementGeocode", rightManagementGeocode);
-
-        // aucun droit !
-        if (!rightManagementGeocode) {
-            this._noRightManagement = true;
-            return;
-        }
-
-        // on recupère les informations utiles
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagementGeocode.key;
-        }
-
-        this._servicesRightManagement["Geocode"] = rightManagementGeocode["Geocode"];
-    },
-
-    /**
      * this method is called by this.initialize()
      * and makes sure input options are correctly formated
      *
@@ -305,22 +239,6 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 
         // options utilisateur
         if (Array.isArray(resources) && resources.length) {
-            // vérification des droits
-            var noRightsIndexes = [];
-            for (var i = 0; i < resources.length; i++) {
-                if (this._servicesRightManagement["Geocode"].indexOf(resources[i]) < 0) {
-                    // si on n'a pas les droits sur la ressource, on va la supprimer : on stocke son index
-                    noRightsIndexes.push(i);
-                    logger.log("[ReverseGeocode] no rights for options.resources : " + resources[i]);
-                }
-            }
-            // on retire les ressoures non autorisées qu'on a pu rencontrer
-            if (noRightsIndexes.length !== 0) {
-                for (var j = 0; j < noRightsIndexes.length; j++) {
-                    resources.splice(noRightsIndexes[j], 1);
-                }
-            }
-
             // récupération du type par défaut
             if (resources[0] === "StreetAddress" || resources[0] === "PositionOfInterest" || resources[0] === "CadastralParcel") {
                 this._currentGeocodingType = resources[0];
@@ -1058,11 +976,6 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
         // le paramètre position est obligatoire
         if (!this._requestGeom) {
             logger.log("missing search geometry");
-            return;
-        }
-
-        // si on n'a trouvé aucun droit, on evite une requête inutile ...
-        if (this._noRightManagement) {
             return;
         }
 

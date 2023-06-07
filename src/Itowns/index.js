@@ -8,8 +8,6 @@
 * This is the global variable that is exposed in the browser environment.
 * Content is composed of constructor, functions and properties...
 *
-* > Config:  (...)
-*
 * > ColorUtils: (...)
 * > LayerUtils: (...)
 * > MathUtils: (...)

@@ -25,6 +25,11 @@ var logger = Logger.getLogger("elevationLayer");
  * @param {String} options.layer      - Elevation layer name (e.g. "ELEVATION.ELEVATIONGRIDCOVERAGE")
  * @param {Boolean} [options.ssl]     - if set true, enforce protocol https (only for nodejs)
  * @param {String} [options.apiKey]   - Access key to Geoportal platform
+ * @param {Array} [options.legends]   - Overloads the default legends objects associated to the layer
+ * @param {Array} [options.metadata]   - Overloads the default Metadata objects associated to the layer
+ * @param {String} [options.title]   - Overloads the default title of the layer
+ * @param {String} [options.description]   - Overloads the default description of the layer
+ * @param {String} [options.quicklookUrl]   - Overloads the default quicklookUrl of the layer
  * @param {Object} [options.itownsParams] - options to overload default geoportal layer options for itowns.GlobeView.addLayer function (see {@link http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer GlobeView.addLayer})
  * @example
  * var geoportalElevation = new itowns.layer.GeoportalElevation({
@@ -51,14 +56,14 @@ function LayerElevation (options) {
 
     // Check if configuration is loaded
     if (!Config.isConfigLoaded()) {
-        throw new Error("ERROR : contract key configuration has to be loaded to load Geoportal layers. See http://ignf.github.io/evolution-apigeoportail/ol3/ol3-autoconf.html");
+        throw new Error("ERROR : Configuration has to be loaded");
     }
 
-    var layerId = Config.getLayerId(options.layer, "WMTS");
+    var layerId = Config.configuration.getLayerId(options.layer, "WMTS");
 
-    if (layerId && Config.configuration.getLayerConf(layerId)) {
+    if (layerId && Config.configuration.getLayerParams(options.layer, "WMTS")) {
         var config = {};
-        var wmtsParams = Config.getLayerParams(options.layer, "WMTS", options.apiKey);
+        var wmtsParams = Config.configuration.getLayerParams(options.layer, "WMTS");
 
         if (wmtsParams.projection === "EPSG:3857") {
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top).as("EPSG:3857");
@@ -66,7 +71,10 @@ function LayerElevation (options) {
             wmtsParams.projection = "EPSG:4326";
             wmtsParams.extent = new ItExtent("EPSG:4326", wmtsParams.extent.left, wmtsParams.extent.right, wmtsParams.extent.bottom, wmtsParams.extent.top);
         }
-
+        // les originators ne sont pas renvoyés dans la configuration, on prend donc ceux donnés par l'utilisateur
+        if (options.itownsParams && options.itownsParams.source && options.itownsParams.source.attribution) {
+            wmtsParams.originators = options.itownsParams.source.attribution;
+        }
         // gestion de mixContent dans l'url du service...
         var ctx = typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : null;
         var protocol = (ctx)
@@ -110,11 +118,12 @@ function LayerElevation (options) {
         Utils.mergeParams(config, options.itownsParams);
 
         // add legends and metadata (to be added to LayerSwitcher control)
-        config.legends = wmtsParams.legends;
-        config.metadata = wmtsParams.metadata;
-        config.description = wmtsParams.description;
-        config.title = wmtsParams.title;
-        config.quicklookUrl = wmtsParams.quicklookUrl;
+        // we take in priority the explicit options given by the user
+        config.legends = options.legends || wmtsParams.legends;
+        config.metadata = options.metadata || wmtsParams.metadata;
+        config.description = options.description || wmtsParams.description;
+        config.title = options.title || wmtsParams.title;
+        config.quicklookUrl = options.quicklookUrl || wmtsParams.quicklookUrl;
 
         return new ItElevationLayer(config.id, config);
     } else {

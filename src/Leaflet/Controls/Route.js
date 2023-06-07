@@ -1,7 +1,6 @@
 import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import LocationSelector from "./LocationSelector";
 import RouteDOM from "../../Common/Controls/RouteDOM";
@@ -47,7 +46,7 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
      * @constructor Route
      * @private
      * @param {Object} options - options for function call.
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position = "topleft"] - position of component into the map, 'topleft' by default
      * @param {Boolean} [options.collapsed = false] - collapse mode, false by default
@@ -134,12 +133,6 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
          * }
          */
         this._resources = {};
-
-        /** aucun droits sur les ressources */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        this._checkRightsManagement();
     },
 
     /**
@@ -263,70 +256,6 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
     // ################################################################### //
     // ############################## other init ######################### //
     // ################################################################### //
-
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     * FIXME à revoir...
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var _opts = null;
-        var _res = [];
-        var _key = null;
-
-        // les ressources du service du calcul d'Itineraire
-        _key = this.options.routeOptions.apiKey;
-        _opts = this.options.routeOptions.filterOptions;
-        _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = ["Voiture", "Pieton"];
-        }
-
-        var rightManagementRoute = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["Itineraire"]
-        });
-
-        // les ressources du service d'autocompletion
-        _key = this.options.autocompleteOptions.apiKey;
-        _opts = this.options.autocompleteOptions.filterOptions;
-        _res = (_opts) ? _opts.type : [];
-        if (!_res || _res.length === 0) {
-            _res = [
-                "StreetAddress",
-                "PositionOfInterest"
-                // "CadastralParcel"
-            ];
-        }
-
-        var rightManagementAutoComplete = RightManagement.check({
-            key : _key || this.options.apiKey,
-            resources : _res,
-            services : ["AutoCompletion"]
-        });
-
-        // au cas où pas de droit !
-        if (!rightManagementRoute && !rightManagementAutoComplete) {
-            this._noRightManagement = true;
-        }
-
-        // FIXME je reconstruis differement la structure pour la gestion des clefs differentes
-        // pour chaque service...
-        if (rightManagementAutoComplete) {
-            this._resources["AutoCompletion"] = {};
-            this._resources["AutoCompletion"]["resources"] = rightManagementAutoComplete["AutoCompletion"];
-            this._resources["AutoCompletion"]["key"] = rightManagementAutoComplete["key"];
-        }
-
-        if (rightManagementRoute) {
-            this._resources["Itineraire"] = {};
-            this._resources["Itineraire"]["resources"] = rightManagementRoute["Itineraire"];
-            this._resources["Itineraire"]["key"] = rightManagementRoute["key"];
-        }
-    },
 
     /**
      * TODO this method is called by the constructor.
@@ -740,12 +669,6 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
             }
         }
 
-        // oups, aucun droits !
-        // on evite donc une requête inutile ...
-        if (this._noRightManagement) {
-            return;
-        }
-
         // valeurs selectionnées
         this._currentTransport = options.transport;
         this._currentComputation = options.computation;
@@ -970,50 +893,16 @@ var Route = L.Control.extend(/** @lends L.geoportalControl.Route.prototype */ {
 
         logger.log(settings);
 
-        // on ne fait pas de requête si aucun droit !
-        if (this._noRightManagement) {
-            logger.log("no rights for all service !?");
-            return;
-        }
-
-        // gestion des droits !
-        if (!this._resources["Itineraire"]) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
-        var resources = this._resources["Itineraire"].resources;
-        if (!resources || Object.keys(resources).length === 0) {
-            return;
-        }
-
-        // gestion de la clef !
-        var key = this._resources["Itineraire"]["key"];
-
         var options = {};
         // on recupere les options du service
         L.Util.extend(options, this.options.routeOptions);
         // ainsi que les parametres de saisie et les callbacks
         L.Util.extend(options, settings);
 
-        // la ressource donne elle des droits ?
-        var bFound = false;
-        for (var i = 0; i < resources.length; i++) {
-            if (resources[i] === options.graph) {
-                bFound = true;
-            }
-        }
-
-        // on fait quoi ?
-        if (!bFound) {
-            logger.log("no rights for this service !?");
-            return;
-        }
-
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut
         L.Util.extend(options, {
-            apiKey : this.options.routeOptions.apiKey || this.options.apiKey || key
+            apiKey : this.options.routeOptions.apiKey || this.options.apiKey
         });
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

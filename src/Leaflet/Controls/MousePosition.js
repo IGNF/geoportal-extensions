@@ -1,7 +1,6 @@
 import Gp from "geoportal-access-lib";
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import ID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
 import MousePositionDOM from "../../Common/Controls/MousePositionDOM";
@@ -55,7 +54,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @alias MousePosition
      * @extends {L.Control}
      * @param {Object} options - options for function call.
-     * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+     * @param {String}   [options.apiKey] - API key. The "calcul" key is used by default.
      * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
      * @param {String}  [options.position] - position of component into the map, 'bottomleft' by default
      * @param {Boolean} [options.collapsed = true] - collapse mode, false by default
@@ -172,20 +171,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
 
         /** Edition des coordonnées en cours ou non */
         this._isEditing = false;
-
-        /**
-         * Droit sur le ressource alti.
-         * Par defaut, on n'en s'occupe pas
-         * sauf si l'autoconfiguration est chargée !
-         */
-        this._noRightManagement = false;
-
-        // gestion des droits sur les ressources/services
-        // si l'on souhaite un calcul d'altitude, on verifie
-        // les droits sur les ressources d'alti...
-        if (this.options.displayAltitude) {
-            this._checkRightsManagement();
-        }
 
         // on transmet les options au controle
         L.Util.setOptions(this, this.options);
@@ -405,30 +390,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
     },
 
     /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    _checkRightsManagement : function () {
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services : ["Elevation"]
-        });
-
-        this._noRightManagement = !rightManagement;
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = (rightManagement) ? rightManagement.key : null;
-        }
-    },
-
-    /**
      * this method is called by the constructor.
      * this information is useful to switch to touch mode.
      * Detection : test for desktop or tactile
@@ -541,11 +502,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         if (!active) {
             div = L.DomUtil.get(this._addUID("GPmousePositionAltitude"));
             div.style.display = "none";
-        }
-
-        if (active && this._noRightManagement) {
-            div = L.DomUtil.get(this._addUID("GPmousePositionAlt"));
-            div.innerHTML = "no right !";
         }
     },
 
@@ -918,10 +874,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
      * @private
      */
     onMoveStopped : function (oLatLng) {
-        // si pas de droit, on ne met pas à jour l'affichage !
-        if (this._noRightManagement) {
-            return;
-        }
         this._setElevation(oLatLng);
     },
 
@@ -1000,12 +952,6 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
             return;
         }
 
-        // si on n'a pas les droits sur la ressource, pas la peine de
-        // continuer !
-        if (this._noRightManagement) {
-            return;
-        }
-
         logger.log(coordinate);
 
         var options = {};
@@ -1040,7 +986,7 @@ var MousePosition = L.Control.extend(/** @lends L.geoportalControl.MousePosition
         });
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut
         L.Util.extend(options, {
             apiKey : options.apiKey || this.options.apiKey
         });

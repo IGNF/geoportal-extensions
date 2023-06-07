@@ -1,76 +1,117 @@
-{{#extend "ol-sample-bundle-layout"}}
+{{#extend "ol-sample-bundle-multikeys-layout"}}
 
 {{#content "head"}}
-        <title>Sample openlayers GeoportalAttribution</title>
+<title>Sample openlayers GeoportalAttribution</title>
 {{/content}}
 
 {{#content "style"}}
-        <style>
-            div#map {
-                width: 100%;
-                height: 500px;
-            }
-        </style>
+<style>
+    div#map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>Ajout des attributions sur des couches avec les options par défaut</h2>
-            <!-- map -->
-            <div id="map">
-            </div>
+<h2>Ajout des attributions sur des couches avec les options par défaut</h2>
+<!-- map -->
+<div id="map">
+</div>
 {{/content}}
 
 {{#content "js"}}
-            <script type="text/javascript">
-                var map;
-                window.onload = function() {
-                    document.getElementById('map').style.backgroundImage = 'none';
+<script type="text/javascript">
+    var map;
+    window.onload = function () {
+        document.getElementById('map').style.backgroundImage = 'none';
 
-                    var gpOrtho = new ol.layer.Tile({
-                        source : new ol.source.GeoportalWMTS({
-                            layer: "ORTHOIMAGERY.ORTHOPHOTOS"
-                        })
-                    });
-
-                    var gpCartes = new ol.layer.Tile({
-                        source : new ol.source.GeoportalWMTS({
-                            layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
-                        })
-                    });
-
-                    var gpCommunes = new ol.layer.Tile({
-                        source : new ol.source.GeoportalWMTS({
-                            layer: "CADASTRALPARCELS.PARCELS"
-                        }),
-                        minResolution : 1,
-                        maxResolution : 2446,
-                        opacity : 0.2
-                    });
-
-                    map = new ol.Map({
-                        target : "map",
-                        view : new ol.View({
-                            center : [288074.8449901076, 6247982.515792289],
-                            zoom : 6
-                        }),
-                        layers : [
-                            gpOrtho,
-                            gpCartes,
-                            gpCommunes
-                        ]
-                    });
-
-                    var layerSwitcher = new ol.control.LayerSwitcher({
-                        options : {
-                            collapsed: false
+        var gpOrtho = new ol.layer.Tile({
+            source: new ol.source.GeoportalWMTS({
+                layer: "ORTHOIMAGERY.ORTHOPHOTOS",
+                olParams: {
+                    attributions: [{
+                        name: "IGN",
+                        constraints: [{
+                            minScaleDenominator: 20000,
+                            maxScaleDenominator: 1000000,
+                            bbox: {
+                                left: -10,
+                                top: 50,
+                                right: 10,
+                                bottom: 40
+                            }
+                        },
+                        {
+                            bbox: {
+                                left: 120,
+                                top: 50,
+                                right: 150,
+                                bottom: 35
+                            }
                         }
-                    });
-                    map.addControl(layerSwitcher);
+                    ]
+                    },
+                    {
+                        url: "https://www.ign.fr/",
+                        constraints: [{
+                            minScaleDenominator: 20000,
+                            maxScaleDenominator: 400000
+                        }]
+                    },
+                    {
+                        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/IGN_logo_2012.svg/1200px-IGN_logo_2012.svg.png"
+                    },
+                    {
+                        attribution: "Orthophotos",
+                        constraints: [{
+                            minScaleDenominator: 100000,
+                            maxScaleDenominator: 800000
+                        }]
+                    }]
+                }
+            })
+        });
 
-                    var attribution = new ol.control.GeoportalAttribution({});
-                    map.addControl(attribution);
-                };
-           </script>
+        var gpCartes = new ol.layer.Tile({
+            source: new ol.source.GeoportalWMTS({
+                layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
+            })
+        });
+
+        var gpCommunes = new ol.layer.Tile({
+            source: new ol.source.GeoportalWMTS({
+                layer: "CADASTRALPARCELS.PARCELS"
+            }),
+            minResolution: 1,
+            maxResolution: 2446,
+            opacity: 0.2
+        });
+
+        map = new ol.Map({
+            target: "map",
+            view: new ol.View({
+                center: [288074.8449901076, 6247982.515792289],
+                zoom: 6
+            }),
+            layers: [
+                gpOrtho,
+                gpCartes,
+                gpCommunes
+            ]
+        });
+
+        var layerSwitcher = new ol.control.LayerSwitcher({
+            options: {
+                collapsed: false
+            }
+        });
+        map.addControl(layerSwitcher);
+
+        var attribution = new ol.control.GeoportalAttribution({});
+        map.addControl(attribution);
+    };
+</script>
 {{/content}}
 
 {{/extend}}

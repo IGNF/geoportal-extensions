@@ -89,8 +89,8 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
         // si une configuration de layers est renseignée, on exploite cette
         // information pour les layers renseignés.
         // Par contre, pour ceux qui n'ont pas de configuration, on exploite
-        // les informations issues de l'autoconf pour les layers IGN,
-        // et, pour les layers non IGN, on gére avec l'ID pours les valeurs
+        // les informations issues de la configuration (geoportal-configuration) pour les layers IGN,
+        // et, pour les layers non IGN, on gère avec l'ID pours les valeurs
         // de titre ou description  ...
 
         // a ton une configuration des layers ?
@@ -300,7 +300,7 @@ var LayerSwitcher = L.Control.Layers.extend(/** @lends L.geoportalControl.LayerS
 
         // construit un objet simplifié pour le dom,
         // par defaut, on prend en compte les layers de type IGN
-        // (info de l'autoconf).
+        // (info de la configuration).
         this._layers[id] = {
             layer : layer,
             id : id,

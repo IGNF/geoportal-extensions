@@ -16,7 +16,6 @@ import Logger from "../../Common/Utils/LoggerByDefault";
 import Utils from "../../Common/Utils";
 import Interactions from "./Utils/Interactions";
 import Markers from "./Utils/Markers";
-import RightManagement from "../../Common/Utils/CheckRightManagement";
 import SelectorID from "../../Common/Utils/SelectorID";
 import MathUtils from "../../Common/Utils/MathUtils";
 import Draggable from "../../Common/Utils/Draggable";
@@ -42,7 +41,7 @@ var logger = Logger.getLogger("GeoportalMousePosition");
  * @type {ol.control.GeoportalMousePosition}
  * @extends {ol.control.Control}
  * @param {Object} options - options for function call.
- * @param {String}   [options.apiKey] - API key, mandatory if autoconf service has not been charged in advance
+ * @param {String}   [options.apiKey] - API key. The key "calcul" is used by default.
  * @param {Boolean} [options.ssl = true] - use of ssl or not (default true, service requested using https protocol)
  * @param {Boolean} [options.draggable = false] - Specify if widget is draggable
  * @param {Boolean} [options.collapsed = true] - Specify if MousePosition control should be collapsed at startup. Default is true.
@@ -446,9 +445,7 @@ var MousePosition = (function (Control) {
         if (displayAltitude === undefined) {
             return;
         }
-        if (typeof this._noRightManagement === "undefined") {
-            this._checkRightsManagement();
-        }
+
         this.options.displayAltitude = displayAltitude;
         this._setElevationPanel(displayAltitude);
     };
@@ -590,12 +587,6 @@ var MousePosition = (function (Control) {
         if (!this.options.displayAltitude && !this.options.displayCoordinates) {
             // on reactive l'affichage des coordonnées, pour ne pas afficher un panneau vide !
             this.options.displayCoordinates = true;
-        }
-
-        // gestion des droits sur les ressources/services
-        // si l'on souhaite un calcul d'altitude, on verifie les droits sur les ressources d'alti...
-        if (this.options.displayAltitude) {
-            this._checkRightsManagement();
         }
 
         // listener key for event on pointermove or moveend map
@@ -803,34 +794,6 @@ var MousePosition = (function (Control) {
         return systemInfo.join(" ");
     };
 
-    /**
-     * this method is called by constructor
-     * and check the rights to resources
-     *
-     * @private
-     */
-    MousePosition.prototype._checkRightsManagement = function () {
-        var rightManagement = RightManagement.check({
-            key : this.options.apiKey,
-            resources : ["SERVICE_CALCUL_ALTIMETRIQUE_RSC"],
-            services : ["Elevation"]
-        });
-
-        // pas de droit !
-        if (!rightManagement) {
-            this._noRightManagement = true;
-            return;
-        }
-
-        // on recupère les informations utiles
-        // sur ce controle, on ne s'occupe pas de la ressource car elle est unique...
-        // Ex. la clef API issue de l'autoconfiguration si elle n'a pas
-        // été renseignée.
-        if (!this.options.apiKey) {
-            this.options.apiKey = rightManagement.key;
-        }
-    };
-
     // ################################################################### //
     // ######################## methods handle dom ####################### //
     // ################################################################### //
@@ -896,13 +859,8 @@ var MousePosition = (function (Control) {
             div = document.getElementById("GPmousePositionAltitude-" + this._uid);
             div.style.display = "none";
         } else {
-            if (this._noRightManagement) {
-                div = document.getElementById("GPmousePositionAlt-" + this._uid);
-                div.innerHTML = "No rights!";
-            } else {
-                div = document.getElementById("GPmousePositionAltitude-" + this._uid);
-                div.style.display = "";
-            }
+            div = document.getElementById("GPmousePositionAltitude-" + this._uid);
+            div.style.display = "";
         }
     };
 
@@ -1255,14 +1213,6 @@ var MousePosition = (function (Control) {
             return;
         }
 
-        // si on n'a pas les droits sur la ressource, pas la peine de
-        // continuer !
-        if (this._noRightManagement) {
-            logger.log("[WARNING] contract key configuration has no rights to load geoportal elevation ");
-            document.getElementById("GPmousePositionAlt-" + this._uid).innerHTML = "No rights!";
-            return;
-        }
-
         // on recupere les options du service
         var options = this.options.altitude.serviceOptions || {};
 
@@ -1311,7 +1261,7 @@ var MousePosition = (function (Control) {
         };
 
         // cas où la clef API n'est pas renseignée dans les options du service,
-        // on utilise celle de l'autoconf ou celle renseignée au niveau du controle
+        // on utilise celle renseignée au niveau du controle ou la clé "calcul" par défaut.
         var _apiKey = options.apiKey || this.options.apiKey;
 
         // si l'utilisateur a spécifié le paramètre ssl au niveau du control, on s'en sert

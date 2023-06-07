@@ -125,6 +125,9 @@ var Protocols = Gp.Protocols;
 var servicesDate = Gp.servicesDate;
 var servicesVersion = Gp.servicesVersion;
 
+// HACK !?
+export const Config = (window.Gp) ? window.Gp.Config : {};
+
 export {
     /** Services
     * @see {@link http://ignf.github.io/geoportal-access-lib/current/jsdoc/module-Services.html|geoportal-access-lib}
