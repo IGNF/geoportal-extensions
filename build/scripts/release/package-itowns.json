@@ -1,45 +1,45 @@
 {
-   "license" : "CECILL-B",
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "proj4" : "2.7.5",
-      "node-fetch" : "^2.6.1",
-      "sortablejs" : "1.14.0",
-      "geoportal-access-lib" : "3.3.0",
-      "three" : "0.137.5",
-      "itowns" : "2.38.2",
-      "loglevel" : "1.6.7"
-   },
-   "main" : "dist/GpPluginItowns-src.js",
+   "author" : "IGNF",
+   "name" : "geoportal-extensions-itowns",
+   "date" : "07/06/2023",
+   "scripts" : {},
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "bundleDependencies" : [],
-   "author" : "IGNF",
+   "devDependencies" : {},
+   "dependencies" : {
+      "node-fetch" : "^2.6.1",
+      "three" : "0.137.5",
+      "sortablejs" : "1.14.0",
+      "geoportal-access-lib" : "3.3.1",
+      "xmldom" : "^0.1.27",
+      "loglevel" : "1.6.7",
+      "proj4" : "2.7.5",
+      "itowns" : "2.38.2"
+   },
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "types" : "src/Itowns/index.d.ts",
-   "directories" : {},
-   "devDependencies" : {},
-   "peerDependencies" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "bugs" : {},
-   "version" : "2.3.11",
-   "name" : "geoportal-extensions-itowns",
-   "scripts" : {},
-   "module" : "src/Itowns/index.js",
-   "description" : "French Geoportal Extensions for iTowns",
-   "date" : "01/06/2023",
+   "main" : "dist/GpPluginItowns-src.js",
    "files" : [
       "dist/",
       "src/",
       "LICENCE.md",
       "README.md",
       "package.json"
-   ]
+   ],
+   "bugs" : {},
+   "license" : "CECILL-B",
+   "version" : "2.4.1",
+   "directories" : {},
+   "types" : "src/Itowns/index.d.ts",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
+   "peerDependencies" : {},
+   "module" : "src/Itowns/index.js",
+   "description" : "French Geoportal Extensions for iTowns"
 }
