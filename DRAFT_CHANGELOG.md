@@ -36,6 +36,8 @@
 
 ## Summary
 
+leaflet 2.3.1
+
 ## Changelog
 
 * [Added]
