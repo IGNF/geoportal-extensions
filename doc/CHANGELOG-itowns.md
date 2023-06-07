@@ -90,6 +90,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * [Changelog](#changelog-25)
         * [Avant :](#avant-)
         * [Maintenant :](#maintenant-)
+- [Extension Geoportail Itowns, version 2.4.1](#extension-geoportail-itowns-version-241)
+  * [Summary](#summary-27)
+  * [Changelog](#changelog-26)
 
 <!-- tocstop -->
 
@@ -823,6 +826,28 @@ globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
     ]
 }));
 ```
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.4.1
+
+**07/06/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
 
 * [Fixed]
 
