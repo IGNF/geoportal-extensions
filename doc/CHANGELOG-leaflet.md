@@ -87,6 +87,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.2.9](#extension-geoportail-leaflet-version-229)
   * [Summary](#summary-25)
   * [Changelog](#changelog-22)
+- [Extension Geoportail Leaflet, version 2.3.0](#extension-geoportail-leaflet-version-230)
+  * [Summary](#summary-26)
+  * [Changelog](#changelog-23)
 
 <!-- tocstop -->
 
@@ -775,6 +778,28 @@ Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
 
     - Ajout d'evenements sur le contrôle ReverseGeocoding lors de la selection d'un résultat (#351)
     - Ajout d'evenements sur le contrôle SearchEngine lors de la selection d'un résultat (#354)
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.3.0
+
+**07/06/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
 
 * [Changed]
 
