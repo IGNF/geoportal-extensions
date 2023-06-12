@@ -1,4 +1,4 @@
-{{#extend "ol-sample-bundle-multikeys-layout"}}
+{{#extend "ol-sample-bundle-getconfig-layout"}}
 
 {{#content "head"}}
         <title>Sample openlayers - multikeys</title>
@@ -21,9 +21,6 @@
 {{/content}}
 
 {{#content "js"}}
-            <script type="text/javascript">
-
-              window.onload = function () {
                 // on cache l'image de chargement du Géoportail.
                 document.getElementById("map").style.backgroundImage = "none";
 
@@ -77,8 +74,5 @@
 
                 var attributions = new ol.control.GeoportalAttribution();
                 map.addControl(attributions);
-              };
-
-            </script>
 {{/content}}
 {{/extend}}
