@@ -156,6 +156,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * [Changelog](#changelog-43)
         * [Avant :](#avant-)
         * [Maintenant :](#maintenant-)
+- [Extension Geoportail OpenLayers, version 3.3.1](#extension-geoportail-openlayers-version-331)
+  * [Summary](#summary-47)
+  * [Changelog](#changelog-44)
 
 <!-- tocstop -->
 
@@ -1793,6 +1796,28 @@ new ol.layer.Tile({
     })
 })
 ```
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.3.1
+
+**07/06/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
 
 * [Fixed]
 

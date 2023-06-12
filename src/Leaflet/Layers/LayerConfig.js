@@ -21,6 +21,11 @@ var LayerConfig = {
     get : function (options) {
         var params = {};
 
+        if (!Config.isConfigLoaded()) {
+            logger.warn("WARNING CONFIG_FAILED : config not loaded ?!");
+            return;
+        }
+
         // gestion des parametres
         params = Config.configuration.getLayerParams(options.layer, options.service);
 

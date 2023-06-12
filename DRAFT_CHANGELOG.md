@@ -1,15 +1,13 @@
 
 
-
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail openlayers
 
 ## Summary
+
+- Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
 
 ## Changelog
 
@@ -36,7 +34,7 @@
 
 ## Summary
 
-leaflet 2.3.1
+- Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
 
 ## Changelog
 
@@ -49,6 +47,8 @@ leaflet 2.3.1
 * [Removed]
 
 * [Fixed]
+
+    - Fix sur les exemples avec un appel de *Gp.Services.getConfig()* (59efde637b423f835f4d50175c2dd83849faf5d1)
 
 * [Security]
 

@@ -90,6 +90,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.3.0](#extension-geoportail-leaflet-version-230)
   * [Summary](#summary-26)
   * [Changelog](#changelog-23)
+        * [Avant :](#avant-)
+        * [Maintenant :](#maintenant-)
+- [Extension Geoportail Leaflet, version 2.3.1](#extension-geoportail-leaflet-version-231)
+  * [Summary](#summary-27)
+  * [Changelog](#changelog-24)
 
 <!-- tocstop -->
 
@@ -900,6 +905,28 @@ var maCoucheGeoportail = L.geoportalLayer.WMTS({
     ]
 });
 ```
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.3.1
+
+**07/06/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
 * [Fixed]
 
 * [Security]

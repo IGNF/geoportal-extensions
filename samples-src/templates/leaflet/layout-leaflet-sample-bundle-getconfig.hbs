@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {{#extend "partials-common-head"}}
+        {{/extend}}
+        {{#extend "partials-leaflet-common-head"}}
+        {{/extend}}
+        {{#block "vendor"}}
+        {{/block}}
+        
+        {{#extend "partials-leaflet-bundle-getconfig-head"}}
+        {{/extend}}
+
+        {{#block "head"}}
+        {{/block}}
+        {{#block "style"}}
+        {{/block}}
+
+    </head>
+    <body>
+        <h1>Extension Géoportail pour Leaflet (mode bundle)</h1>
+
+        {{#block "body"}}
+        {{/block}}
+
+        <script>
+
+            var createMap = function () {
+                {{#block "js"}}
+                {{/block}}
+            };
+
+            Gp.Services.getConfig({
+                // callbackSuffix : '',
+                apiKey: "{{ apikey }}",
+                timeOut: 20000,
+                onSuccess: createMap,
+                onFailure: function (e) {
+                    console.error(e);
+                }
+            });
+    
+        </script>
+    </body>
+</html>

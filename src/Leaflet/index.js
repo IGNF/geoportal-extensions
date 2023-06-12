@@ -102,7 +102,9 @@ export { default as ProxyUtils } from "../Common/Utils/ProxyUtils";
 export { default as ColorUtils } from "../Common/Utils/ColorUtils";
 export { default as MathUtils } from "../Common/Utils/MathUtils";
 export { default as Logger } from "../Common/Utils/LoggerByDefault";
-export { default as Config } from "../Common/Utils/Config";
+
+// HACK !?
+export const Config = (window.Gp) ? window.Gp.Config : {};
 
 // creation du namespace pour les extensions leaflet
 L.geoportalLayer = Layers; // WMS et WMTS
