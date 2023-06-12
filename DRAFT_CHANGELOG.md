@@ -48,7 +48,7 @@
 
 * [Fixed]
 
-    - Fix sur les exemples avec un appel de *Gp.Services.getConfig()*
+    - Fix sur les exemples avec un appel de *Gp.Services.getConfig()* (59efde637b423f835f4d50175c2dd83849faf5d1)
 
 * [Security]
 
