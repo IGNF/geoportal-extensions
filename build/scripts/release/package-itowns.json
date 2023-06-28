@@ -27,7 +27,7 @@
    "devDependencies" : {},
    "dependencies" : {
       "loglevel" : "1.6.7",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/develop/geoportal-access-lib-3.3.0.tgz",
+      "geoportal-access-lib" : "3.3.1",
       "xmldom" : "^0.1.27",
       "sortablejs" : "1.14.0",
       "node-fetch" : "^2.6.1",

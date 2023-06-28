@@ -714,9 +714,11 @@ var ElevationPath = (function (Control) {
         // picto
         this._showContainer.checked = false;
 
+        // this._removeMeasure();
         this._removeProfile();
-        this._removeMeasure();
         this._removeMeasureInteraction(map);
+
+        this.setLayer();
     };
 
     /**
@@ -1124,10 +1126,10 @@ var ElevationPath = (function (Control) {
             return;
         }
 
-        if (this._measureVector) {
-            map.removeLayer(this._measureVector);
-            this._measureVector = null;
-        }
+        // if (this._measureVector) {
+        //     map.removeLayer(this._measureVector);
+        //     this._measureVector = null;
+        // }
 
         if (this._measureDraw) {
             map.removeInteraction(this._measureDraw);
