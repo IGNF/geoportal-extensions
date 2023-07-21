@@ -1,10 +1,37 @@
 {
+   "version" : "2.3.3",
+   "main" : "dist/GpPluginLeaflet-src.js",
    "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
-   "date" : "01/06/2023",
-   "bugs" : {},
+   "name" : "geoportal-extensions-leaflet",
+   "devDependencies" : {},
+   "dependencies" : {
+      "geoportal-access-lib" : "3.3.2",
+      "leaflet" : "1.7.1",
+      "proj4" : "2.7.5",
+      "sortablejs" : "1.8.4",
+      "proj4leaflet" : "1.0.2",
+      "leaflet-draw" : "1.0.4",
+      "loglevel" : "1.6.6",
+      "xmldom" : "^0.1.27",
+      "node-fetch" : "^2.6.1"
+   },
+   "files" : [
+      "dist/",
+      "src/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "directories" : {},
+   "scripts" : {},
+   "types" : "src/Leaflet/index.d.ts",
+   "peerDependencies" : {},
+   "date" : "21/07/2023",
+   "license" : "CECILL-B",
+   "bundleDependencies" : [],
    "keywords" : [
       "geoportail",
       "plugin",
@@ -13,34 +40,7 @@
       "publish"
    ],
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "types" : "src/Leaflet/index.d.ts",
-   "devDependencies" : {},
-   "files" : [
-      "dist/",
-      "src/",
-      "LICENCE.md",
-      "README.md",
-      "package.json"
-   ],
    "description" : "French Geoportal Extension for Leaflet",
-   "name" : "geoportal-extensions-leaflet",
-   "main" : "dist/GpPluginLeaflet-src.js",
-   "version" : "2.2.9",
-   "scripts" : {},
-   "peerDependencies" : {},
-   "directories" : {},
-   "license" : "CECILL-B",
-   "module" : "src/Leaflet/index.js",
-   "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "node-fetch" : "^2.6.1",
-      "xmldom" : "^0.1.27",
-      "proj4leaflet" : "1.0.2",
-      "leaflet" : "1.7.1",
-      "leaflet-draw" : "1.0.4",
-      "geoportal-access-lib" : "3.3.1",
-      "loglevel" : "1.6.6",
-      "proj4" : "2.7.5"
-   },
-   "bundleDependencies" : []
+   "bugs" : {},
+   "module" : "src/Leaflet/index.js"
 }
