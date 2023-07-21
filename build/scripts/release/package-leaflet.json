@@ -1,35 +1,10 @@
 {
-   "name" : "geoportal-extensions-leaflet",
    "repository" : {
       "url" : "https://github.com/IGNF/geoportal-extensions.git",
       "type" : "git"
    },
-   "description" : "French Geoportal Extension for Leaflet",
-   "files" : [
-      "dist/",
-      "src/",
-      "LICENCE.md",
-      "README.md",
-      "package.json"
-   ],
-   "directories" : {},
-   "scripts" : {},
-   "dependencies" : {
-      "sortablejs" : "1.8.4",
-      "loglevel" : "1.6.6",
-      "proj4leaflet" : "1.0.2",
-      "leaflet-draw" : "1.0.4",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "leaflet" : "1.7.1",
-      "proj4" : "2.7.5",
-      "geoportal-access-lib" : "3.3.1"
-   },
+   "date" : "01/06/2023",
    "bugs" : {},
-   "license" : "CECILL-B",
-   "peerDependencies" : {},
-   "module" : "src/Leaflet/index.js",
-   "version" : "2.3.1",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -37,10 +12,35 @@
       "leaflet",
       "publish"
    ],
-   "devDependencies" : {},
-   "bundleDependencies" : [],
-   "main" : "dist/GpPluginLeaflet-src.js",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "types" : "src/Leaflet/index.d.ts",
-   "date" : "07/06/2023",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html"
+   "devDependencies" : {},
+   "files" : [
+      "dist/",
+      "src/",
+      "LICENCE.md",
+      "README.md",
+      "package.json"
+   ],
+   "description" : "French Geoportal Extension for Leaflet",
+   "name" : "geoportal-extensions-leaflet",
+   "main" : "dist/GpPluginLeaflet-src.js",
+   "version" : "2.2.9",
+   "scripts" : {},
+   "peerDependencies" : {},
+   "directories" : {},
+   "license" : "CECILL-B",
+   "module" : "src/Leaflet/index.js",
+   "dependencies" : {
+      "sortablejs" : "1.8.4",
+      "node-fetch" : "^2.6.1",
+      "xmldom" : "^0.1.27",
+      "proj4leaflet" : "1.0.2",
+      "leaflet" : "1.7.1",
+      "leaflet-draw" : "1.0.4",
+      "geoportal-access-lib" : "3.3.1",
+      "loglevel" : "1.6.6",
+      "proj4" : "2.7.5"
+   },
+   "bundleDependencies" : []
 }

@@ -445,6 +445,26 @@ var Isocurve = (function (Control) {
             ? document.getElementById("GPisochronDirectionSelect-" + this._uid).selectedIndex = 0 : document.getElementById("GPisochronDirectionSelect-" + this._uid).selectedIndex = 1;
     };
 
+    /**
+     * Clean UI : reinit control
+     */
+    Isocurve.prototype.clean = function () {
+        this._clearIsoInputs();
+        // INFO
+        // le comportement est surchargé, ceci supprime la couche !?
+        // cf. _createIsoPanelFormPointElement()
+        this._originPoint.clearResults();
+        document.getElementById("GPlocationPoint_1-" + this._uid).style.cssText = "";
+        document.getElementById("GPlocationOriginCoords_1-" + this._uid).value = "";
+        document.getElementById("GPlocationOrigin_1-" + this._uid).value = "";
+        document.getElementById("GPlocationPoint_1-" + this._uid).style.cssText = "";
+        document.getElementById("GPlocationOriginPointer_1-" + this._uid).checked = false;
+        document.getElementById("GPlocationOrigin_1-" + this._uid).className = "GPlocationOriginVisible";
+        document.getElementById("GPlocationOriginCoords_1-" + this._uid).className = "GPlocationOriginHidden";
+        this._currentIsoResults = null;
+        this.setLayer();
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //

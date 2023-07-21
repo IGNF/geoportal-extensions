@@ -7,13 +7,17 @@
 
 ## Summary
 
-- Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
+Ajout d'exemples avec l'appel de *Gp.Services.getConfig()* et ajout de methodes de nettoyage sur les widgets de calcul
 
 ## Changelog
 
 * [Added]
 
+    - ajout de méthodes de nettoyage pour les controles d'itineraire, d'isochrone, et de profil alti
+
 * [Changed]
+
+    - Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
 
 * [Deprecated]
 
@@ -27,6 +31,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -34,7 +39,7 @@
 
 ## Summary
 
-- Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
+Mise à jour de la version de la bibliothèque d'accès 3.3.2
 
 ## Changelog
 
@@ -42,13 +47,13 @@
 
 * [Changed]
 
+    - MaJ bibliothèque d'accès 3.3.2
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - Fix sur les exemples avec un appel de *Gp.Services.getConfig()* (59efde637b423f835f4d50175c2dd83849faf5d1)
 
 * [Security]
 
@@ -63,11 +68,15 @@
 
 ## Summary
 
+Mise à jour de la version de la bibliothèque d'accès 3.3.2
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - MaJ bibliothèque d'accès 3.3.2
 
 * [Deprecated]
 
