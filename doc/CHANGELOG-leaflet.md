@@ -98,6 +98,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.3.2](#extension-geoportail-leaflet-version-232)
   * [Summary](#summary-28)
   * [Changelog](#changelog-25)
+- [Extension Geoportail Leaflet, version 2.3.3](#extension-geoportail-leaflet-version-233)
+  * [Summary](#summary-29)
+  * [Changelog](#changelog-26)
 
 <!-- tocstop -->
 
@@ -957,6 +960,32 @@ var maCoucheGeoportail = L.geoportalLayer.WMTS({
 * [Fixed]
 
     - Fix sur les exemples avec un appel de *Gp.Services.getConfig()* (59efde637b423f835f4d50175c2dd83849faf5d1)
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.3.3
+
+**21/07/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Mise à jour de la version de la bibliothèque d'accès 3.3.2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - MaJ bibliothèque d'accès 3.3.2
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
