@@ -159,6 +159,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.3.1](#extension-geoportail-openlayers-version-331)
   * [Summary](#summary-47)
   * [Changelog](#changelog-44)
+- [Extension Geoportail OpenLayers, version 3.3.2](#extension-geoportail-openlayers-version-332)
+  * [Summary](#summary-48)
+  * [Changelog](#changelog-45)
 
 <!-- tocstop -->
 
@@ -1814,6 +1817,34 @@ new ol.layer.Tile({
 * [Added]
 
 * [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.3.2
+
+**21/07/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout d'exemples avec l'appel de *Gp.Services.getConfig()* et ajout de methodes de nettoyage sur les widgets de calcul
+
+## Changelog
+
+* [Added]
+
+    - ajout de méthodes de nettoyage pour les controles d'itineraire, d'isochrone, et de profil alti
+
+* [Changed]
+
+    - Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
 
 * [Deprecated]
 

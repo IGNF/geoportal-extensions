@@ -1,5 +1,6 @@
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -7,17 +8,11 @@
 
 ## Summary
 
-Ajout d'exemples avec l'appel de *Gp.Services.getConfig()* et ajout de methodes de nettoyage sur les widgets de calcul
-
 ## Changelog
 
 * [Added]
 
-    - ajout de méthodes de nettoyage pour les controles d'itineraire, d'isochrone, et de profil alti
-
 * [Changed]
-
-    - Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
 
 * [Deprecated]
 
