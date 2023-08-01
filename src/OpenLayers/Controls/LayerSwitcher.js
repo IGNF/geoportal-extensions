@@ -485,7 +485,7 @@ var LayerSwitcher = (function (Control) {
                     id : id,
                     opacity : opacity != null ? opacity : 1,
                     visibility : visibility != null ? visibility : true,
-                    title : conf.title != null ? conf.title : id,
+                    title : conf.title != null ? conf.title : conf.id ? conf.id : id,
                     description : conf.description || null,
                     legends : conf.legends || [],
                     metadata : conf.metadata || [],
