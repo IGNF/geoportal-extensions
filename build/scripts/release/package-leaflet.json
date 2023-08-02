@@ -8,7 +8,7 @@
    "name" : "geoportal-extensions-leaflet",
    "devDependencies" : {},
    "dependencies" : {
-      "geoportal-access-lib" : "3.3.2",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/fix/unknown-ol-layer/geoportal-access-lib-3.3.2.tgz",
       "leaflet" : "1.7.1",
       "proj4" : "2.7.5",
       "sortablejs" : "1.8.4",

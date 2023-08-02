@@ -34,7 +34,7 @@
       "three" : "0.137.5",
       "node-fetch" : "^2.6.1",
       "sortablejs" : "1.14.0",
-      "geoportal-access-lib" : "3.3.2",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/fix/unknown-ol-layer/geoportal-access-lib-3.3.2.tgz",
       "itowns" : "2.38.2",
       "loglevel" : "1.6.7",
       "proj4" : "2.7.5"
