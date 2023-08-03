@@ -485,7 +485,7 @@ var LayerSwitcher = (function (Control) {
                     id : id,
                     opacity : opacity != null ? opacity : 1,
                     visibility : visibility != null ? visibility : true,
-                    title : conf.title != null ? conf.title : id,
+                    title : conf.title != null ? conf.title : conf.id ? conf.id : id,
                     description : conf.description || null,
                     legends : conf.legends || [],
                     metadata : conf.metadata || [],
@@ -1060,10 +1060,11 @@ var LayerSwitcher = (function (Control) {
      */
     LayerSwitcher.prototype.getLayerInfo = function (layer) {
         var layerInfo = {};
-        if (layer.getSource !== undefined) {
-            var src = layer.getSource();
+        if (layer.getProperties !== undefined && layer.getSource !== undefined) {
+            var layerProperties = layer.getProperties();
+            var src = layerProperties.source;
             if (src) {
-                layerInfo._title = src._title || "";
+                layerInfo._title = src._title || layerProperties.id || "";
                 layerInfo._description = src._description || "";
                 layerInfo._quicklookUrl = src._quicklookUrl || "";
                 layerInfo._metadata = src._metadata || [];

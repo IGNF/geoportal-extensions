@@ -14,11 +14,15 @@
 
 * [Changed]
 
+    - access-lib 3.3.3 (#369)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+    - ajout couche ol au LS avec userId (#369)
 
 * [Security]
 
@@ -40,6 +44,8 @@
 * [Added]
 
 * [Changed]
+
+    - access-lib 3.3.3 (#369)
 
 * [Deprecated]
 
@@ -66,6 +72,8 @@
 * [Added]
 
 * [Changed]
+
+    - access-lib 3.3.3 (#369)
 
 * [Deprecated]
 
