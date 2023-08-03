@@ -1060,10 +1060,11 @@ var LayerSwitcher = (function (Control) {
      */
     LayerSwitcher.prototype.getLayerInfo = function (layer) {
         var layerInfo = {};
-        if (layer.getSource !== undefined) {
-            var src = layer.getSource();
+        if (layer.getProperties !== undefined && layer.getSource !== undefined) {
+            var layerProperties = layer.getProperties();
+            var src = layerProperties.source;
             if (src) {
-                layerInfo._title = src._title || "";
+                layerInfo._title = src._title || layerProperties.id || "";
                 layerInfo._description = src._description || "";
                 layerInfo._quicklookUrl = src._quicklookUrl || "";
                 layerInfo._metadata = src._metadata || [];
