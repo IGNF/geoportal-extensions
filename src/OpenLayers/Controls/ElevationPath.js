@@ -1116,6 +1116,7 @@ var ElevationPath = (function (Control) {
      * And removes layer too...
      *
      * @param {ol.Map} map - Map
+     * @param {Boolean} remove - Remove layer
      * @private
      */
     ElevationPath.prototype._removeMeasureInteraction = function (map, remove) {
@@ -1663,6 +1664,7 @@ var ElevationPath = (function (Control) {
      * this method is called by event 'click' on '' picto
      * and enable or disable the entry of the path
      *
+     * @param {Object} e - event
      * @private
      */
     ElevationPath.prototype.onShowElevationPathClick = function (e) {
