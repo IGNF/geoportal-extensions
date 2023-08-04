@@ -93,6 +93,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.4.1](#extension-geoportail-itowns-version-241)
   * [Summary](#summary-27)
   * [Changelog](#changelog-26)
+- [Extension Geoportail Itowns, version 2.4.2](#extension-geoportail-itowns-version-242)
+  * [Summary](#summary-28)
+  * [Changelog](#changelog-27)
 
 <!-- tocstop -->
 
@@ -844,6 +847,32 @@ globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
 * [Added]
 
 * [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.4.2
+
+**21/07/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour de la version de la bibliothèque d'accès 3.3.2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - MaJ bibliothèque d'accès 3.3.2
 
 * [Deprecated]
 

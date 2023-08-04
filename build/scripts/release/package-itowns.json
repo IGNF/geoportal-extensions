@@ -1,14 +1,39 @@
 {
-   "peerDependencies" : {},
-   "scripts" : {},
-   "name" : "geoportal-extensions-itowns",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "directories" : {},
    "author" : "IGNF",
+   "bugs" : {},
+   "main" : "dist/GpPluginItowns-src.js",
+   "description" : "French Geoportal Extensions for iTowns",
+   "date" : "21/07/2023",
+   "bundleDependencies" : [],
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "devDependencies" : {},
+   "name" : "geoportal-extensions-itowns",
+   "version" : "2.4.2",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "module" : "src/Itowns/index.js",
+   "peerDependencies" : {},
+   "dependencies" : {
+      "xmldom" : "^0.1.27",
+      "three" : "0.137.5",
+      "loglevel" : "1.6.7",
+      "node-fetch" : "^2.6.1",
+      "itowns" : "2.38.2",
+      "sortablejs" : "1.14.0",
+      "proj4" : "2.7.5",
+      "geoportal-access-lib" : "3.3.3"
+   },
+   "license" : "CECILL-B",
+   "types" : "src/Itowns/index.d.ts",
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -16,30 +41,5 @@
       "README.md",
       "package.json"
    ],
-   "devDependencies" : {},
-   "description" : "French Geoportal Extensions for iTowns",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "main" : "dist/GpPluginItowns-src.js",
-   "license" : "CECILL-B",
-   "date" : "21/07/2023",
-   "version" : "2.4.2",
-   "module" : "src/Itowns/index.js",
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "three" : "0.137.5",
-      "node-fetch" : "^2.6.1",
-      "sortablejs" : "1.14.0",
-      "geoportal-access-lib" : "3.3.2",
-      "itowns" : "2.38.2",
-      "loglevel" : "1.6.7",
-      "proj4" : "2.7.5"
-   },
-   "bundleDependencies" : [],
-   "types" : "src/Itowns/index.d.ts",
-   "bugs" : {}
+   "directories" : {}
 }
