@@ -60,6 +60,7 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -67,16 +68,11 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Géoportail.
-
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - access-lib 3.3.3 (#369)
 
 * [Deprecated]
 
