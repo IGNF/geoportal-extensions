@@ -716,7 +716,7 @@ var ElevationPath = (function (Control) {
 
         // this._removeMeasure();
         this._removeProfile();
-        this._removeMeasureInteraction(map);
+        this._removeMeasureInteraction(map, true);
 
         this.setLayer();
     };
@@ -1118,7 +1118,7 @@ var ElevationPath = (function (Control) {
      * @param {ol.Map} map - Map
      * @private
      */
-    ElevationPath.prototype._removeMeasureInteraction = function (map) {
+    ElevationPath.prototype._removeMeasureInteraction = function (map, remove) {
         logger.trace("ElevationPath::_removeMeasureInteraction()");
 
         // var map = this.getMap();
@@ -1126,10 +1126,12 @@ var ElevationPath = (function (Control) {
             return;
         }
 
-        // if (this._measureVector) {
-        //     map.removeLayer(this._measureVector);
-        //     this._measureVector = null;
-        // }
+        if (remove) {
+            if (this._measureVector) {
+                map.removeLayer(this._measureVector);
+                this._measureVector = null;
+            }
+        }
 
         if (this._measureDraw) {
             map.removeInteraction(this._measureDraw);
@@ -1663,7 +1665,7 @@ var ElevationPath = (function (Control) {
      *
      * @private
      */
-    ElevationPath.prototype.onShowElevationPathClick = function () {
+    ElevationPath.prototype.onShowElevationPathClick = function (e) {
         var map = this.getMap();
         Interactions.unset(map, {
             current : "ElevationPath"
@@ -1680,10 +1682,28 @@ var ElevationPath = (function (Control) {
             this._addMeasureInteraction(map);
         } else {
             this._panelContainer.style.display = "none";
-            // this._panelContainer.style.visibility = "hidden";
-            this._removeMeasure();
+            // HACK
+            // il est possible de faire passer une instruction via le DOM et les dataset :
+            // * data-remove-measure : true|false
+            // * data-remove-layer : true|false
+            if (e && e.target.dataset && e.target.dataset.removeMeasure) {
+                if (e.target.dataset.removeMeasure === "true") {
+                    this._removeMeasure();
+                } else {
+                    // sketch
+                    this._lastSketch = null;
+                    this._currentSketch = null;
+                }
+            } else {
+                this._removeMeasure();
+            }
             this._removeProfile();
-            this._removeMeasureInteraction(map);
+
+            if (e && e.target.dataset && e.target.dataset.removeLayer) {
+                this._removeMeasureInteraction(map, (e.target.dataset.removeLayer === "true"));
+            } else {
+                this._removeMeasureInteraction(map, true);
+            }
         }
     };
 
