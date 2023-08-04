@@ -701,8 +701,9 @@ var ElevationPath = (function (Control) {
 
     /**
      * clean
+     * @param {Boolean} remove - remove layer
      */
-    ElevationPath.prototype.clean = function () {
+    ElevationPath.prototype.clean = function (remove) {
         logger.trace("ElevationPath::clean");
 
         var map = this.getMap();
@@ -716,7 +717,7 @@ var ElevationPath = (function (Control) {
 
         // this._removeMeasure();
         this._removeProfile();
-        this._removeMeasureInteraction(map, true);
+        this._removeMeasureInteraction(map, typeof remove !== "undefined" ? remove : false);
 
         this.setLayer();
     };
