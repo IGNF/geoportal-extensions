@@ -462,6 +462,28 @@ var Route = (function (Control) {
         this._resultsRouteContainer.className = "";
     };
 
+    /**
+     * Clean UI : reinit control
+     */
+    Route.prototype.clean = function () {
+        this._currentTransport = null;
+        this._currentExclusions = [];
+        this._currentComputation = null;
+
+        for (var i = 0; i < this._currentPoints.length; i++) {
+            this._currentPoints[i].clear();
+        }
+
+        this._removeRouteStepLocations();
+        this._clearRouteInputOptions();
+        this._clearRouteResultsDetails();
+
+        this.setLayer();
+
+        this._formRouteContainer.className = "";
+        this._resultsRouteContainer.className = "GProuteComponentHidden";
+    };
+
     // ################################################################### //
     // ##################### init component ############################## //
     // ################################################################### //

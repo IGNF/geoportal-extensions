@@ -159,6 +159,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.3.1](#extension-geoportail-openlayers-version-331)
   * [Summary](#summary-47)
   * [Changelog](#changelog-44)
+- [Extension Geoportail OpenLayers, version 3.3.2](#extension-geoportail-openlayers-version-332)
+  * [Summary](#summary-48)
+  * [Changelog](#changelog-45)
+- [Extension Geoportail OpenLayers, version 3.3.3](#extension-geoportail-openlayers-version-333)
+  * [Summary](#summary-49)
+  * [Changelog](#changelog-46)
 
 <!-- tocstop -->
 
@@ -1821,6 +1827,64 @@ new ol.layer.Tile({
 
 * [Fixed]
 
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.3.2
+
+**21/07/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout d'exemples avec l'appel de *Gp.Services.getConfig()* et ajout de methodes de nettoyage sur les widgets de calcul
+
+## Changelog
+
+* [Added]
+
+    - ajout de méthodes de nettoyage pour les controles d'itineraire, d'isochrone, et de profil alti
+
+* [Changed]
+
+    - Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.3.3
+
+**04/08/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correctifs sur le layerSwitcher et le profil Altimétrique. Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib 3.3.3 (#369)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - ajout couche ol au LS avec userId (#369)
+    - fix méthode clean profil alti (8f393fa96491444d99fdd6fe0c3b354ea3dd21ef)
+    - fix gestion multiples profils alti (f71ffd85ddff26a82534d81a88033464ed6a8b17
+)
 * [Security]
 
 ---

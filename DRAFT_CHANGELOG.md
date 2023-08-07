@@ -1,13 +1,13 @@
 
 
+
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail openlayers
 
 ## Summary
-
-- Ajout d'exemples avec l'appel de *Gp.Services.getConfig()*
 
 ## Changelog
 
@@ -24,6 +24,7 @@
 * [Security]
 
 ---
+
 
 
 
@@ -35,11 +36,16 @@
 
 ## Summary
 
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - access-lib 3.3.3 (#369)
 
 * [Deprecated]
 
@@ -50,6 +56,8 @@
 * [Security]
 
 ---
+
+
 
 
 
