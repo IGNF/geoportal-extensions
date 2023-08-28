@@ -165,6 +165,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.3.3](#extension-geoportail-openlayers-version-333)
   * [Summary](#summary-49)
   * [Changelog](#changelog-46)
+- [Extension Geoportail OpenLayers, version 3.3.4](#extension-geoportail-openlayers-version-334)
+  * [Summary](#summary-50)
+  * [Changelog](#changelog-47)
 
 <!-- tocstop -->
 
@@ -1885,6 +1888,32 @@ Correctifs sur le layerSwitcher et le profil Altimétrique. Mise à jour de la b
     - fix méthode clean profil alti (8f393fa96491444d99fdd6fe0c3b354ea3dd21ef)
     - fix gestion multiples profils alti (f71ffd85ddff26a82534d81a88033464ed6a8b17
 )
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.3.4
+
+**28/08/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Correctif mineur sur le chargement et l'affichage des styles de flux de tuiles vectorielles
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Copie des styles vecteur tuilés dans l'outil d'import (3efee51392414c2858df86bb765bd4a81c8fb2f3)
+
 * [Security]
 
 ---
