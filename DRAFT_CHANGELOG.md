@@ -9,6 +9,8 @@
 
 ## Summary
 
+Correctif mineur sur le chargement et l'affichage des styles de flux de tuiles vectorielles
+
 ## Changelog
 
 * [Added]
@@ -20,6 +22,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Copie des styles vecteur tuilés dans l'outil d'import (3efee51392414c2858df86bb765bd4a81c8fb2f3)
 
 * [Security]
 
@@ -60,6 +64,7 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 
 
+
 # Extension Geoportail Itowns, version __VERSION__
 
 **__DATE__**
@@ -67,16 +72,11 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Géoportail.
-
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - access-lib 3.3.3 (#369)
 
 * [Deprecated]
 
