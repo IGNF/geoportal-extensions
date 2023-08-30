@@ -8,7 +8,7 @@
       "eventbusjs" : "0.2.0",
       "@mapbox/mapbox-gl-style-spec" : "13.20.1",
       "sortablejs" : "1.14.0",
-      "geoportal-access-lib" : "3.3.3"
+      "geoportal-access-lib" : "3.3.4"
    },
    "keywords" : [
       "geoportail",
