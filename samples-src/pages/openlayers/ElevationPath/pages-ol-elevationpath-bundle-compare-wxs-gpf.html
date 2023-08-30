@@ -1,0 +1,105 @@
+{{#extend "ol-sample-bundle-multikeys-layout"}}
+
+{{#content "head"}}
+        <title>Sample OpenLayers ElevationPath</title>
+{{/content}}
+
+{{#content "style"}}
+            <style>
+                div#map {
+                    width: 100%;
+                    height: 500px;
+                    background-image: url("../../resources/geoportail-waiting.gif");
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                }
+            
+                div#alti1 {
+                    height: 200px;
+                    float: left;
+                }
+            
+                div#alti2 {
+                    height: 200px;
+                    float: right;
+                }
+            
+                div#results {
+                    position: center;
+                    width: 50%;
+                    height: 200px;
+                }
+            
+                div[id^="GPtoolbox-measure-main"] {
+                    display: none;
+                }
+            </style>
+{{/content}}
+
+{{#content "body"}}
+            <h2>Comparaison des profils altimetriques avec toutes les options</h2>
+            <!-- map -->
+            <div id="map">
+            </div>
+            <div id="results">
+                <div id="alti1">GPF</div>
+                <div id="alti2">WXS</div>
+            </div>
+
+{{/content}}
+
+{{#content "js"}}
+            <script type="text/javascript">
+                var map;
+                var alti1 = document.getElementById("alti1");
+                var alti2 = document.getElementById("alti2");
+
+                window.onload = function() {
+                    // on cache l'image de chargement du Géoportail.
+                    document.getElementById('map').style.backgroundImage = 'none';
+                    var osm = new ol.layer.Tile({
+                        source: new ol.source.OSM({
+                            attributions : [
+                                "OSM"
+                            ]
+                        })
+                    });
+                    //Création de la map
+                    map = new ol.Map({
+                        target : "map",
+                        layers : [osm],
+                        view : new ol.View({
+                            center : [1015083.735627, 5098655.534734],
+                            zoom : 10
+                        })
+                    });
+
+                    var elevation_gpf = new ol.control.ElevationPath({
+                        active : true,
+                        elevationOptions : {
+                          // sampling : 2
+                        },
+                        displayProfileOptions : {
+                            target : alti1
+                        }
+                    });
+
+                    var elevation_wxs = new ol.control.ElevationPath({
+                        active : true,
+                        elevationOptions : {
+                            // sampling : 2,
+                            oldAltiService : true,
+                            resource : "none",
+                        },
+                        displayProfileOptions : {
+                            target : alti2
+                        }
+                    });
+
+                    map.addControl(elevation_gpf);
+                    map.addControl(elevation_wxs);
+                };
+           </script>
+{{/content}}
+
+{{/extend}}
