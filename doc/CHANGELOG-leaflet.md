@@ -101,6 +101,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.3.3](#extension-geoportail-leaflet-version-233)
   * [Summary](#summary-29)
   * [Changelog](#changelog-26)
+- [Extension Geoportail Leaflet, version 2.3.4](#extension-geoportail-leaflet-version-234)
+  * [Summary](#summary-30)
+  * [Changelog](#changelog-27)
 
 <!-- tocstop -->
 
@@ -980,6 +983,33 @@ Mise à jour de la version de la bibliothèque d'accès 3.3.2
 * [Changed]
 
     - MaJ bibliothèque d'accès 3.3.2
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.3.4
+
+**30/08/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib 3.3.4
 
 * [Deprecated]
 
