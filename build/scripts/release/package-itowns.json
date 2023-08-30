@@ -1,12 +1,5 @@
 {
-   "peerDependencies" : {},
    "author" : "IGNF",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
-   "bundleDependencies" : [],
-   "version" : "2.4.3",
    "files" : [
       "dist/",
       "src/",
@@ -14,32 +7,39 @@
       "README.md",
       "package.json"
    ],
+   "peerDependencies" : {},
+   "name" : "geoportal-extensions-itowns",
+   "description" : "French Geoportal Extensions for iTowns",
+   "version" : "2.4.3",
+   "license" : "CECILL-B",
+   "types" : "src/Itowns/index.d.ts",
+   "scripts" : {},
+   "directories" : {},
+   "bundleDependencies" : [],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "module" : "src/Itowns/index.js",
+   "date" : "04/08/2023",
+   "main" : "dist/GpPluginItowns-src.js",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
    "keywords" : [
       "geoportail",
       "plugin",
       "javascript",
       "Itowns"
    ],
-   "devDependencies" : {},
    "bugs" : {},
-   "directories" : {},
-   "main" : "dist/GpPluginItowns-src.js",
    "dependencies" : {
       "itowns" : "2.38.2",
-      "sortablejs" : "1.14.0",
+      "node-fetch" : "^2.6.1",
       "three" : "0.137.5",
-      "geoportal-access-lib" : "3.3.3",
-      "loglevel" : "1.6.7",
+      "sortablejs" : "1.14.0",
       "xmldom" : "^0.1.27",
-      "proj4" : "2.7.5",
-      "node-fetch" : "^2.6.1"
+      "loglevel" : "1.6.7",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/new-gpf-url/geoportal-access-lib-3.3.3.tgz",
+      "proj4" : "2.7.5"
    },
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "description" : "French Geoportal Extensions for iTowns",
-   "types" : "src/Itowns/index.d.ts",
-   "scripts" : {},
-   "date" : "04/08/2023",
-   "license" : "CECILL-B",
-   "name" : "geoportal-extensions-itowns",
-   "module" : "src/Itowns/index.js"
+   "devDependencies" : {}
 }
