@@ -1,0 +1,156 @@
+{{#extend "ol-sample-bundle-multikeys-layout"}}
+
+{{#content "head"}}
+<title>Sample OpenLayers ElevationPath GPF WXS</title>
+{{/content}}
+
+{{#content "style"}}
+<style>
+    div#map {
+        width: 100%;
+        height: 500px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        display: none;
+    }
+
+    div#mp1 {
+        width: 50%;
+        height: 300px;
+        float: left;
+    }
+
+    div#mp2 {
+        width: 50%;
+        height: 300px;
+        float: right;
+    }
+
+    div#results {
+        display: none;
+        position: center;
+        width: 100%;
+        height: 300px;
+    }
+
+    div.titles {
+        left: 8px;
+        position: relative;
+    }
+
+    div.rawResponse {
+        float: right;
+        position: relative;
+        width: 60%;
+        height: 300px;
+        background-color: black;
+        color: white;
+    }
+
+    div[id^="GPmousePosition-"] {
+        top: 130px;
+        left: 0px;
+        position: relative;
+    }
+</style>
+{{/content}}
+
+{{#content "body"}}
+<h2>Comparaison des services d'alti avec le mouseposition</h2>
+<div id="form">
+    <label for="resource">Resource à utiliser côté alti GPF :</label>
+    <input type="text" id="resource" name="resource" value="rge_alti_corse2a_float32_zip_lamb93">
+
+    <input type="button" id="createMap" value="Valider" />
+</div>
+<div id="map">
+</div>
+<div id="results">
+
+    <div id="mp1">
+        <div class="titles">GPF</div>
+        <div class="rawResponse" id="rawResponse1"></div>
+    </div>
+
+    <div id="mp2">
+        <div class="titles">WXS</div>
+        <div class="rawResponse" id="rawResponse2"></div>
+    </div>
+</div>
+
+{{/content}}
+
+{{#content "js"}}
+<script type="text/javascript">
+    /** Affichage de la reponse dans la balise (+ console) */
+    function print(response, divId) {
+        var el = document.getElementById(divId);
+        el.innerHTML = "<pre>" + JSON.stringify(response, null, 2) + "</pre>";
+        console.log(response);
+    };
+    var map;
+    var mp1 = document.getElementById("mp1");
+    var mp2 = document.getElementById("mp2");
+    document.getElementById("createMap").onclick = function () {
+
+        // Affichage de la carte
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('map').style.display = 'block';
+        document.getElementById('results').style.display = 'block';
+
+        // récupération des valeurs du formulaire
+        let resource = document.getElementById('resource').value;
+
+        var osm = new ol.layer.Tile({
+            source: new ol.source.OSM({
+                attributions: [
+                    "OSM"
+                ]
+            })
+        });
+        // Création de la map
+        var map = new ol.Map({
+            target: "map",
+            layers: [osm],
+            view: new ol.View({
+                center: [1015083.735627, 5098655.534734],
+                zoom: 10
+            })
+        });
+
+        var mouseposition1 = new ol.control.GeoportalMousePosition({
+            collapsed: false,
+            target: mp1,
+            altitude: {
+                serviceOptions: {
+                    resource: resource,
+                    zonly: false,
+                    measures: true,
+                    onSuccess: function (response) {
+                        print(response, "rawResponse1");
+                    }
+                }
+            }
+        });
+        var mouseposition2 = new ol.control.GeoportalMousePosition({
+            collapsed: false,
+            target: mp2,
+            altitude: {
+                serviceOptions: {
+                    oldAltiService: true,
+                    resource: "none",
+                    onSuccess: function (response) {
+                        print(response, "rawResponse2");
+                    }
+                }
+            }
+        });
+
+        map.addControl(mouseposition1);
+        map.addControl(mouseposition2);
+    };
+
+</script>
+{{/content}}
+
+{{/extend}}

@@ -1,136 +1,136 @@
 {{#extend "ol-sample-bundle-multikeys-layout"}}
 
 {{#content "head"}}
-        <title>Sample OpenLayers ElevationPath GPF WXS</title>
+<title>Sample OpenLayers ElevationPath GPF WXS</title>
 {{/content}}
 
 {{#content "style"}}
-            <style>
-                div#map {
-                    width: 100%;
-                    height: 500px;
-                    background-position: center center;
-                    background-repeat: no-repeat;
-                    display: none;
-                }
-            
-                div#alti1 {
-                    height: 200px;
-                    float: left;
-                }
-            
-                div#alti2 {
-                    height: 200px;
-                    float: right;
-                }
-            
-                div#results {
-                    display: none;
-                    position: center;
-                    width: 50%;
-                    height: 200px;
-                }
-            
-                div[id^="GPtoolbox-measure-main"] {
-                    display: none;
-                }
-            </style>
+<style>
+    div#map {
+        width: 100%;
+        height: 500px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        display: none;
+    }
+
+    div#alti1 {
+        height: 200px;
+        float: left;
+    }
+
+    div#alti2 {
+        height: 200px;
+        float: right;
+    }
+
+    div#results {
+        display: none;
+        position: center;
+        width: 50%;
+        height: 200px;
+    }
+
+    div[id^="GPtoolbox-measure-main"] {
+        display: none;
+    }
+</style>
 {{/content}}
 
 {{#content "body"}}
-            <h2>Comparaison des profils altimetriques avec toutes les options</h2>
-            <div id="form">
-                <label for="sampling">Sampling (200 par défaut):</label>
-                <input type="number" id="sampling" name="sampling" value="200">
+<h2>Comparaison des profils altimetriques avec toutes les options</h2>
+<div id="form">
+    <label for="sampling">Sampling (200 par défaut):</label>
+    <input type="number" id="sampling" name="sampling" value="200">
 
-                <label for="resource">Resource à utiliser côté alti GPF :</label>
-                <input type="text" id="resource" name="resource" value="rge_alti_corse2a_float32_zip_lamb93">
+    <label for="resource">Resource à utiliser côté alti GPF :</label>
+    <input type="text" id="resource" name="resource" value="rge_alti_corse2a_float32_zip_lamb93">
 
-                <label for="display_type">Type d'affichage :</label>
-                <select id="display_type" name="display_type">
-                    <option selected="selected" value="DISPLAY_PROFILE_BY_DEFAULT">Profil altimétrique</option>
-                    <option value="DISPLAY_PROFILE_RAW">Donnée brute</option>
-                </select>
+    <label for="display_type">Type d'affichage :</label>
+    <select id="display_type" name="display_type">
+        <option selected="selected" value="DISPLAY_PROFILE_BY_DEFAULT">Profil altimétrique</option>
+        <option value="DISPLAY_PROFILE_RAW">Donnée brute</option>
+    </select>
 
-                <input type="button" id="createMap" value="Valider" />
-            </div>
-            <div id="map">
-            </div>
-            <div id="results">
-                <div id="alti1">GPF</div>
-                <div id="alti2">WXS</div>
-            </div>
+    <input type="button" id="createMap" value="Valider" />
+</div>
+<div id="map">
+</div>
+<div id="results">
+    <div id="alti1">GPF</div>
+    <div id="alti2">WXS</div>
+</div>
 
 {{/content}}
 
 {{#content "js"}}
-            <script type="text/javascript">
-                                var map;
-                var alti1 = document.getElementById("alti1");
-                var alti2 = document.getElementById("alti2");
+<script type="text/javascript">
+    var map;
+    var alti1 = document.getElementById("alti1");
+    var alti2 = document.getElementById("alti2");
 
-                document.getElementById("createMap").onclick = function() {
-                    // Affichage de la carte
-                    document.getElementById('form').style.display = 'none';
-                    document.getElementById('map').style.display = 'block';
-                    document.getElementById('results').style.display = 'block';
+    document.getElementById("createMap").onclick = function () {
+        // Affichage de la carte
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('map').style.display = 'block';
+        document.getElementById('results').style.display = 'block';
 
-                    // récupération des valeurs du formulaire
-                    let sampling = parseInt(document.getElementById('sampling').value);
-                    let resource = document.getElementById('resource').value;
-                    let display = ol.control.ElevationPath[document.getElementById('display_type').value];
+        // récupération des valeurs du formulaire
+        let sampling = parseInt(document.getElementById('sampling').value);
+        let resource = document.getElementById('resource').value;
+        let display = ol.control.ElevationPath[document.getElementById('display_type').value];
 
-                    var osm = new ol.layer.Tile({
-                        source: new ol.source.OSM({
-                            attributions : [
-                                "OSM"
-                            ]
-                        })
-                    });
-                    //Création de la map
-                    map = new ol.Map({
-                        target : "map",
-                        layers : [osm],
-                        view : new ol.View({
-                            center : [1015083.735627, 5098655.534734],
-                            zoom : 10
-                        })
-                    });
+        var osm = new ol.layer.Tile({
+            source: new ol.source.OSM({
+                attributions: [
+                    "OSM"
+                ]
+            })
+        });
+        //Création de la map
+        map = new ol.Map({
+            target: "map",
+            layers: [osm],
+            view: new ol.View({
+                center: [1015083.735627, 5098655.534734],
+                zoom: 10
+            })
+        });
 
 
-                    var elevation_gpf_options = {
-                        active : true,
-                        elevationOptions : {
-                          sampling : sampling,
-                          resource : resource
-                        },
-                        displayProfileOptions : {
-                            apply : display,
-                            target : alti1
-                        }
-                    };
+        var elevation_gpf_options = {
+            active: true,
+            elevationOptions: {
+                sampling: sampling,
+                resource: resource
+            },
+            displayProfileOptions: {
+                apply: display,
+                target: alti1
+            }
+        };
 
-                    var elevation_wxs_options = {
-                        active : true,
-                        elevationOptions : {
-                            sampling : sampling,
-                            oldAltiService : true,
-                            resource : "none",
-                        },
-                        displayProfileOptions : {
-                            apply : display,
-                            target : alti2
-                        }
-                    };
+        var elevation_wxs_options = {
+            active: true,
+            elevationOptions: {
+                sampling: sampling,
+                oldAltiService: true,
+                resource: "none",
+            },
+            displayProfileOptions: {
+                apply: display,
+                target: alti2
+            }
+        };
 
-                    var elevation_gpf = new ol.control.ElevationPath(elevation_gpf_options);
+        var elevation_gpf = new ol.control.ElevationPath(elevation_gpf_options);
 
-                    var elevation_wxs = new ol.control.ElevationPath(elevation_wxs_options);
+        var elevation_wxs = new ol.control.ElevationPath(elevation_wxs_options);
 
-                    map.addControl(elevation_gpf);
-                    map.addControl(elevation_wxs);
-                };
-           </script>
+        map.addControl(elevation_gpf);
+        map.addControl(elevation_wxs);
+    };
+</script>
 {{/content}}
 
 {{/extend}}
