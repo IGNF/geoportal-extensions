@@ -15,20 +15,38 @@
     }
 
     div#alti1 {
-        height: 200px;
+        width: 50%;
+        height: 300px;
         float: left;
     }
 
     div#alti2 {
-        height: 200px;
+        width: 50%;
+        height: 300px;
         float: right;
     }
 
     div#results {
         display: none;
         position: center;
-        width: 50%;
-        height: 200px;
+        width: 100%;
+        height: 300px;
+    }
+
+    div.titles {
+        left: 8px;
+        position: relative;
+    }
+
+    div.rawResponse {
+        float: right;
+        position: relative;
+        width: 60%;
+        height: 300px;
+        background-color: black;
+        color: white;
+        overflow: scroll;
+        overflow-x: hidden;
     }
 
     div[id^="GPtoolbox-measure-main"] {
@@ -42,9 +60,11 @@
 <div id="form">
     <label for="sampling">Sampling (200 par défaut):</label>
     <input type="number" id="sampling" name="sampling" value="200">
-
+<br/>
     <label for="resource">Resource à utiliser côté alti GPF :</label>
     <input type="text" id="resource" name="resource" value="rge_alti_corse2a_float32_zip_lamb93">
+
+    <br/>
 
     <label for="display_type">Type d'affichage :</label>
     <select id="display_type" name="display_type">
@@ -52,19 +72,43 @@
         <option value="DISPLAY_PROFILE_RAW">Donnée brute</option>
     </select>
 
+    <br/>
+
+    <label for="measures">Réponse détaillée (measures) :</label>
+    <select id="measures" name="measures">
+        <option selected="selected" value="true">OUI</option>
+        <option value="false">NON</option>
+    </select>
+    <br/>
+    <br/>
     <input type="button" id="createMap" value="Valider" />
 </div>
 <div id="map">
 </div>
+
 <div id="results">
-    <div id="alti1">GPF</div>
-    <div id="alti2">WXS</div>
+
+    <div id="alti1">
+        <div class="titles">GPF</div>
+        <div class="rawResponse" id="rawResponse1"></div>
+    </div>
+
+    <div id="alti2">
+        <div class="titles">WXS</div>
+        <div class="rawResponse" id="rawResponse2"></div>
+    </div>
 </div>
 
 {{/content}}
 
 {{#content "js"}}
 <script type="text/javascript">
+    /** Affichage de la reponse dans la balise (+ console) */
+    function print(response, divId) {
+        var el = document.getElementById(divId);
+        el.innerHTML = "<pre>" + JSON.stringify(response, null, 2) + "</pre>";
+        console.log(response);
+    };
     var map;
     var alti1 = document.getElementById("alti1");
     var alti2 = document.getElementById("alti2");
@@ -79,6 +123,7 @@
         let sampling = parseInt(document.getElementById('sampling').value);
         let resource = document.getElementById('resource').value;
         let display = ol.control.ElevationPath[document.getElementById('display_type').value];
+        let measuresParam = document.getElementById('measures').value;
 
         var osm = new ol.layer.Tile({
             source: new ol.source.OSM({
@@ -102,7 +147,11 @@
             active: true,
             elevationOptions: {
                 sampling: sampling,
-                resource: resource
+                resource: resource,
+                measures: measuresParam,
+                onSuccess: function (response) {
+                    print(response, "rawResponse1");
+                }
             },
             displayProfileOptions: {
                 apply: display,
@@ -116,6 +165,9 @@
                 sampling: sampling,
                 oldAltiService: true,
                 resource: "none",
+                onSuccess: function (response) {
+                    print(response, "rawResponse2");
+                }
             },
             displayProfileOptions: {
                 apply: display,
@@ -123,10 +175,13 @@
             }
         };
 
+        var mouse_position = new ol.control.MousePosition(mouse_position);
+
         var elevation_gpf = new ol.control.ElevationPath(elevation_gpf_options);
 
         var elevation_wxs = new ol.control.ElevationPath(elevation_wxs_options);
 
+        map.addControl(mouse_position);
         map.addControl(elevation_gpf);
         map.addControl(elevation_wxs);
     };

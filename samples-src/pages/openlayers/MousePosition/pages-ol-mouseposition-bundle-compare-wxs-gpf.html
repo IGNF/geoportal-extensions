@@ -45,6 +45,8 @@
         height: 300px;
         background-color: black;
         color: white;
+        overflow: scroll;
+        overflow-x: hidden;
     }
 
     div[id^="GPmousePosition-"] {
@@ -61,6 +63,15 @@
     <label for="resource">Resource à utiliser côté alti GPF :</label>
     <input type="text" id="resource" name="resource" value="rge_alti_corse2a_float32_zip_lamb93">
 
+    <br/>
+
+    <label for="measures">Réponse détaillée (measures) :</label>
+    <select id="measures" name="measures">
+        <option selected="selected" value="true">OUI</option>
+        <option value="false">NON</option>
+    </select>
+    <br/>
+    <br/>
     <input type="button" id="createMap" value="Valider" />
 </div>
 <div id="map">
@@ -100,6 +111,7 @@
 
         // récupération des valeurs du formulaire
         let resource = document.getElementById('resource').value;
+        let measuresParam = document.getElementById('measures').value;
 
         var osm = new ol.layer.Tile({
             source: new ol.source.OSM({
@@ -118,30 +130,30 @@
             })
         });
 
-        var mouseposition1 = new ol.control.GeoportalMousePosition({
+        var mouseposition2 = new ol.control.GeoportalMousePosition({
             collapsed: false,
-            target: mp1,
+            target: mp2,
             altitude: {
                 serviceOptions: {
                     resource: resource,
                     zonly: false,
-                    measures: true,
+                    measures: measuresParam,
                     onSuccess: function (response) {
-                        print(response, "rawResponse1");
+                        print(response, "rawResponse2");
                     }
                 }
             }
         });
-        var mouseposition2 = new ol.control.GeoportalMousePosition({
+        var mouseposition1 = new ol.control.GeoportalMousePosition({
             collapsed: false,
-            target: mp2,
+            target: mp1,
             altitude: {
                 serviceOptions: {
                     oldAltiService: true,
                     resource: "none",
                     zonly: false,
                     onSuccess: function (response) {
-                        print(response, "rawResponse2");
+                        print(response, "rawResponse1");
                     }
                 }
             }
