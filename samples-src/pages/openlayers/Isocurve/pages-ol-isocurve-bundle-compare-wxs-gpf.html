@@ -1,0 +1,238 @@
+{{#extend "ol-sample-bundle-multikeys-layout"}}
+
+{{#content "head"}}
+<title>Sample OpenLayers Isocurve GPF WXS</title>
+{{/content}}
+
+{{#content "style"}}
+<style>
+    div#map1 {
+        width: 50%;
+        height: 500px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        display: none;
+        float: left;
+    }
+
+    div#map2 {
+        width: 50%;
+        height: 500px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        display: none;
+        float: left;
+    }
+
+    div#iso1 {
+        width: 50%;
+        height: 300px;
+        float: left;
+    }
+
+    div#iso2 {
+        width: 50%;
+        height: 300px;
+        float: right;
+    }
+
+    div#results {
+        display: none;
+        position: center;
+        width: 100%;
+        height: 300px;
+    }
+
+    div.titles {
+        left: 8px;
+        position: relative;
+    }
+
+    div.rawResponse {
+        float: right;
+        position: relative;
+        width: 60%;
+        height: 300px;
+        background-color: black;
+        color: white;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    div[id^="GPisochron-"] {
+        top: 0px;
+        left: 0px;
+        position: relative;
+    }
+</style>
+{{/content}}
+
+{{#content "body"}}
+<h2>Comparaison des services d'isocurve avec l'Isocurve Control</h2>
+<div id="form">
+    <label for="resource">Resource à utiliser côté isocurve GPF :</label>
+    <input type="text" id="resource" name="resource" value="valhalla77">
+
+    <br />
+    <input type="button" id="createMap" value="Valider" />
+</div>
+<div id="map1">
+</div>
+<div id="map2">
+</div>
+
+<div id="results">
+
+    <div id="iso1">
+        <div class="titles">WXS</div>
+        <div class="rawResponse" id="rawResponse1"></div>
+    </div>
+
+    <div id="iso2">
+        <div class="titles">GPF</div>
+        <div class="rawResponse" id="rawResponse2"></div>
+    </div>
+</div>
+
+{{/content}}
+
+{{#content "js"}}
+<script type="text/javascript">
+
+    function toTime(seconds) {
+        var date = new Date(null);
+        date.setSeconds(seconds);
+        return date.toISOString().substr(11, 8);
+    }
+
+    /** Affichage de la reponse dans la balise (+ console) */
+    function print(response, divId) {
+        var el = document.getElementById(divId);
+        el.innerHTML = "<pre>" + JSON.stringify(response, null, 2) + "</pre>";
+        console.log(response);
+    };
+    var map;
+    var iso1 = document.getElementById("iso1");
+    var iso2 = document.getElementById("iso2");
+
+    document.getElementById("createMap").onclick = function () {
+
+        // Affichage de la carte
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('map1').style.display = 'block';
+        document.getElementById('map2').style.display = 'block';
+        document.getElementById('results').style.display = 'block';
+
+        // récupération des valeurs du formulaire
+        let resource = document.getElementById('resource').value;
+
+        var osm1 = new ol.layer.Tile({
+            source: new ol.source.OSM({
+                attributions: [
+                    "OSM"
+                ]
+            })
+        });
+        var osm2 = new ol.layer.Tile({
+            source: new ol.source.OSM({
+                attributions: [
+                    "OSM"
+                ]
+            })
+        });
+        // Création de la map
+        var map1 = new ol.Map({
+            target: "map1",
+            layers: [osm1],
+            view: new ol.View({
+                center: [309646.401583, 6252625.350756],
+                zoom: 14
+            })
+        });
+
+        // Création de la map
+        var map2 = new ol.Map({
+            target: "map2",
+            layers: [osm2],
+            view: new ol.View({
+                center: [309646.401583, 6252625.350756],
+                zoom: 14
+            })
+        });
+
+        var isocurve2 = new ol.control.Isocurve({
+            collapsed: false,
+            target: iso2,
+            isocurveOptions: {
+                resource: resource,
+                onSuccess: function (response) {
+                    print(response, "rawResponse2");
+                    var requestOptions = this.getData();
+                    if (Array.isArray(requestOptions.point) && Array.isArray(isocurve1.getData().point) && requestOptions.point[0] === isocurve1.getData().point[0] && requestOptions.point[1] === isocurve1.getData().point[1]) {
+                        // pas de calcul à faire
+                        return;
+                    }
+                    var value;
+                    var position = ol.proj.transform(requestOptions.point, "EPSG:4326", "EPSG:3857");
+                    var otherOptions = {
+                        direction: requestOptions.direction,
+                        method: requestOptions.computation,
+                        transport: requestOptions.transport,
+                        exclusions: requestOptions.exclusions
+                    };
+                    if (requestOptions.computation === "time") {
+                        value = toTime(requestOptions.results.time);
+                        value = value.replaceAll(":", '.');
+                    } else {
+                        value = requestOptions.results.distance / 1000;
+                    }
+                    isocurve1.compute(position, value, otherOptions);
+                }
+            }
+        });
+
+        var isocurve1 = new ol.control.Isocurve({
+            collapsed: false,
+            target: iso1,
+            isocurveOptions: {
+                oldIsoService: true,
+                resource: "bdtopo-iso",
+                onSuccess: function (response) {
+                    print(response, "rawResponse1");
+                    var requestOptions = this.getData();
+                    if (Array.isArray(requestOptions.point) && Array.isArray(isocurve2.getData().point) && requestOptions.point[0] === isocurve2.getData().point[0] && requestOptions.point[1] === isocurve2.getData().point[1]) {
+                        // pas de calcul à faire
+                        return;
+                    }
+                    var value;
+                    var position = ol.proj.transform(requestOptions.point, "EPSG:4326", "EPSG:3857");
+                    var otherOptions = {
+                        direction: requestOptions.direction,
+                        method: requestOptions.computation,
+                        transport: requestOptions.transport,
+                        exclusions: requestOptions.exclusions
+                    };
+                    if (requestOptions.computation === "time") {
+                        value = toTime(requestOptions.results.time);
+                        value = value.replaceAll(":", '.');
+                    } else {
+                        value = requestOptions.results.distance / 1000;
+                    }
+                    isocurve2.compute(position, value, otherOptions);
+                }
+            }
+        });
+        var layerSwitcher1 = new ol.control.LayerSwitcher({});
+        map1.addControl(layerSwitcher1);
+
+        var layerSwitcher2 = new ol.control.LayerSwitcher({});
+        map2.addControl(layerSwitcher2);
+
+        map1.addControl(isocurve1);
+        map2.addControl(isocurve2);
+    };
+
+</script>
+{{/content}}
+
+{{/extend}}

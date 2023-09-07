@@ -495,7 +495,9 @@ var Isocurve = (function (Control) {
                 url : Markers["lightOrange"],
                 offset : Markers.defaultOffset
             },
-            isocurveOptions : {},
+            isocurveOptions : {
+                oldIsoService : false
+            },
             autocompleteOptions : {},
             layerDescription : {
                 title : "Isochrone/Isodistance",
@@ -1065,6 +1067,8 @@ var Isocurve = (function (Control) {
             smoothing : options.smoothing || true,
             timeOut : _timeout,
             protocol : _protocol,
+            oldIsoService : options.oldIsoService || false,
+            resource : options.resource,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);

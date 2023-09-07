@@ -232,9 +232,9 @@ var LocationSelector = (function (Control) {
      */
     LocationSelector.prototype.setCoordinate = function (coordinate, crs) {
         var map = this.getMap();
-        var proj = map.getView().getProjection();
+        var proj = map.getView().getProjection().getCode();
         // on utilise la projection de la carte
-        if (crs === null) {
+        if (!crs) {
             crs = proj;
         }
 
