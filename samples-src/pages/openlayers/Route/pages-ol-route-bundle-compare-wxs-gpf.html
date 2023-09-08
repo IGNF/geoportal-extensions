@@ -1,7 +1,7 @@
 {{#extend "ol-sample-bundle-multikeys-layout"}}
 
 {{#content "head"}}
-<title>Sample OpenLayers Isocurve GPF WXS</title>
+<title>Sample OpenLayers Route GPF WXS</title>
 {{/content}}
 
 {{#content "style"}}
@@ -24,13 +24,13 @@
         float: left;
     }
 
-    div#iso1 {
+    div#iti1 {
         width: 50%;
         height: 300px;
         float: left;
     }
 
-    div#iso2 {
+    div#iti2 {
         width: 50%;
         height: 300px;
         float: right;
@@ -59,7 +59,7 @@
         overflow-x: hidden;
     }
 
-    div[id^="GPisochron-"] {
+    div[id^="GProute-"] {
         top: 0px;
         left: 0px;
         position: relative;
@@ -68,10 +68,10 @@
 {{/content}}
 
 {{#content "body"}}
-<h2>Comparaison des services d'isocurve avec l'Isocurve Control</h2>
+<h2>Comparaison des services d'itinéraires avec le control d'itinéraire</h2>
 <div id="form">
-    <label for="resource">Resource à utiliser côté isocurve GPF :</label>
-    <input type="text" id="resource" name="resource" value="valhalla77">
+    <label for="resource">Resource à utiliser côté itinéraire GPF :</label>
+    <input type="text" id="resource" name="resource" value="osrm77">
 
     <br />
     <input type="button" id="createMap" value="Valider" />
@@ -83,12 +83,12 @@
 
 <div id="results">
 
-    <div id="iso1">
+    <div id="iti1">
         <div class="titles">WXS</div>
         <div class="rawResponse" id="rawResponse1"></div>
     </div>
 
-    <div id="iso2">
+    <div id="iti2">
         <div class="titles">GPF</div>
         <div class="rawResponse" id="rawResponse2"></div>
     </div>
@@ -98,7 +98,6 @@
 
 {{#content "js"}}
 <script type="text/javascript">
-
     Array.prototype.equals = function (getArray) {
         if (this.length != getArray.length) return false;
 
@@ -112,12 +111,6 @@
         return true;
     };
 
-    function toTime(seconds) {
-        var date = new Date(null);
-        date.setSeconds(seconds);
-        return date.toISOString().substr(11, 8);
-    }
-
     /** Affichage de la reponse dans la balise (+ console) */
     function print(response, divId) {
         var el = document.getElementById(divId);
@@ -125,8 +118,8 @@
         console.log(response);
     };
     var map;
-    var iso1 = document.getElementById("iso1");
-    var iso2 = document.getElementById("iso2");
+    var iti1 = document.getElementById("iti1");
+    var iti2 = document.getElementById("iti2");
 
     document.getElementById("createMap").onclick = function () {
 
@@ -173,65 +166,37 @@
             })
         });
 
-        var isocurve2 = new ol.control.Isocurve({
+        var route2 = new ol.control.Route({
             collapsed: false,
-            target: iso2,
-            isocurveOptions: {
+            target: iti2,
+            routeOptions: {
                 resource: resource,
                 onSuccess: function (response) {
                     print(response, "rawResponse2");
                     var requestOptions = this.getData();
-                    if (Array.isArray(requestOptions.point) && Array.isArray(isocurve1.getData().point) && requestOptions.point.equals(isocurve1.getData().point)) {
-                        // pas de calcul à faire
+                    if (requestOptions.points.equals(route1.getData().points)) {
                         return;
                     }
-                    var value;
-                    var position = ol.proj.transform(requestOptions.point, "EPSG:4326", "EPSG:3857");
-                    var otherOptions = {
-                        direction: requestOptions.direction,
-                        method: requestOptions.computation,
-                        transport: requestOptions.transport,
-                        exclusions: requestOptions.exclusions
-                    };
-                    if (requestOptions.computation === "time") {
-                        value = toTime(requestOptions.results.time);
-                        value = value.replaceAll(":", '.');
-                    } else {
-                        value = requestOptions.results.distance / 1000;
-                    }
-                    isocurve1.compute(position, value, otherOptions);
+                    route1.setData(requestOptions);
+                    route1.onRouteComputationSubmit(route1.getData());
                 }
             }
         });
 
-        var isocurve1 = new ol.control.Isocurve({
+        var route1 = new ol.control.Route({
             collapsed: false,
-            target: iso1,
-            isocurveOptions: {
-                oldIsoService: true,
-                resource: "bdtopo-iso",
+            target: iti1,
+            routeOptions: {
+                oldRouteService: true,
+                resource: "bdtopo-osrm",
                 onSuccess: function (response) {
                     print(response, "rawResponse1");
                     var requestOptions = this.getData();
-                    if (Array.isArray(requestOptions.point) && Array.isArray(isocurve2.getData().point) && requestOptions.point.equals(isocurve2.getData().point)) {
-                        // pas de calcul à faire
+                    if (requestOptions.points.equals(route2.getData().points)) {
                         return;
                     }
-                    var value;
-                    var position = ol.proj.transform(requestOptions.point, "EPSG:4326", "EPSG:3857");
-                    var otherOptions = {
-                        direction: requestOptions.direction,
-                        method: requestOptions.computation,
-                        transport: requestOptions.transport,
-                        exclusions: requestOptions.exclusions
-                    };
-                    if (requestOptions.computation === "time") {
-                        value = toTime(requestOptions.results.time);
-                        value = value.replaceAll(":", '.');
-                    } else {
-                        value = requestOptions.results.distance / 1000;
-                    }
-                    isocurve2.compute(position, value, otherOptions);
+                    route2.setData(requestOptions);
+                    route2.onRouteComputationSubmit(route2.getData());
                 }
             }
         });
@@ -241,8 +206,8 @@
         var layerSwitcher2 = new ol.control.LayerSwitcher({});
         map2.addControl(layerSwitcher2);
 
-        map1.addControl(isocurve1);
-        map2.addControl(isocurve2);
+        map1.addControl(route1);
+        map2.addControl(route2);
     };
 
 </script>

@@ -122,7 +122,9 @@ var LocationSelector = (function (Control) {
                 removeOption : false
             },
             displayInfo : true,
-            autocompleteOptions : {}
+            autocompleteOptions : {
+                oldAutocompleteService : false
+            }
         };
 
         // merge with user options
@@ -349,6 +351,10 @@ var LocationSelector = (function (Control) {
         if (!value) {
             return;
         }
+        // on recupere les options du service
+        var serviceOptions = this.options.autocompleteOptions || {};
+        var _customOnSuccess = serviceOptions.onSuccess || null;
+        var _customOnFailure = serviceOptions.onFailure || null;
 
         // on sauvegarde le localisant
         this._currentLocation = value;
@@ -374,6 +380,9 @@ var LocationSelector = (function (Control) {
                 if (results) {
                     var locations = results.suggestedLocations;
                     context._fillAutoCompletedLocationListContainer(locations);
+                    if (_customOnSuccess) {
+                        _customOnSuccess.call(this, results);
+                    }
                 }
             },
             // callback onFailure
@@ -383,6 +392,9 @@ var LocationSelector = (function (Control) {
                 // doit on nettoyer la liste des suggestions dernierement enregistrée :
                 context._clearSuggestedLocation();
                 logger.log(error.message);
+                if (_customOnFailure) {
+                    _customOnFailure.call(this, error);
+                }
             }
         });
 
@@ -739,6 +751,8 @@ var LocationSelector = (function (Control) {
         Utils.assign(options, this.options.autocompleteOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
+
+        options.oldAutocompleteService = options.oldAutocompleteService || false;
 
         // les ressources
         var resources = this._resources["AutoCompletion"] || null;

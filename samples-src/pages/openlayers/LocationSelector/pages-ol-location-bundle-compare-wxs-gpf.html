@@ -1,0 +1,99 @@
+{{#extend "ol-sample-bundle-multikeys-layout"}}
+
+{{#content "head"}}
+<title>Sample openlayers LocationSelector</title>
+{{/content}}
+
+{{#content "style"}}
+<style>
+    div#map {
+        width: 100%;
+        height: 500px;
+    }
+
+    div#ls1 {
+        width: 50%;
+        height: 300px;
+        float: left;
+    }
+
+    div#ls2 {
+        width: 50%;
+        height: 300px;
+        float: right;
+    }
+</style>
+{{/content}}
+
+{{#content "body"}}
+<h2>Ajout du widget du LocationSelector, avec les options par défaut</h2>
+<!-- map -->
+<div id="map">
+</div>
+<div id="locationSelectors">
+
+    <div id="ls1">
+        <div class="titles">WXS</div>
+    </div>
+
+    <div id="ls2">
+        <div class="titles">GPF</div>
+    </div>
+</div>
+{{/content}}
+
+{{#content "js"}}
+<script type="text/javascript">
+
+
+    window.onload = function () {
+        var ls1 = document.getElementById("ls1");
+        var ls2 = document.getElementById("ls2");
+        // on cache l'image de chargement du Géoportail.
+        document.getElementById("map").style.backgroundImage = "none";
+        var osm = new ol.layer.Tile({
+            source: new ol.source.OSM({
+                attributions: [
+                    "OSM"
+                ]
+            })
+        });
+        // Création de la map
+        var map = new ol.Map({
+            target: "map",
+            layers: [osm],
+            view: new ol.View({
+                center: [288074.8449901076, 6247982.515792289],
+                zoom: 8
+            })
+        });
+
+        var infoWXS = new ol.control.LocationSelector({
+            target: ls1,
+            autocompleteOptions: {
+                oldAutocompleteService: true,
+                onSuccess: function (response) {
+                    console.log(infoWXS);
+                    console.log(infoGPF);
+                }
+            }
+        });
+        map.addControl(infoWXS);
+
+        var infoGPF = new ol.control.LocationSelector({
+            target: ls2,
+            autocompleteOptions: {
+                onSuccess: function (response) {
+                    console.log(infoWXS);
+                    console.log(infoGPF);
+                }
+            }
+        });
+        map.addControl(infoGPF);
+
+        var layerSwitcher = new ol.control.LayerSwitcher({});
+        map.addControl(layerSwitcher);
+    };
+</script>
+{{/content}}
+{{/extend}}
