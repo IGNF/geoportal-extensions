@@ -508,7 +508,9 @@ var Route = (function (Control) {
                 tunnel : false,
                 bridge : false
             },
-            routeOptions : {},
+            routeOptions : {
+                oldRouteService : false
+            },
             autocompleteOptions : {},
             layerDescription : {
                 title : "Itinéraire",
@@ -1117,6 +1119,8 @@ var Route = (function (Control) {
             distanceUnit : "m",
             timeOut : _timeout,
             protocol : _protocol,
+            oldRouteService : routeOptions.oldRouteService || false,
+            resource : routeOptions.resource,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
