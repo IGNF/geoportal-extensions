@@ -47,8 +47,7 @@
 
 
     window.onload = function () {
-        var ls1 = document.getElementById("ls1");
-        var ls2 = document.getElementById("ls2");
+
         // on cache l'image de chargement du Géoportail.
         document.getElementById("map").style.backgroundImage = "none";
         var osm = new ol.layer.Tile({
@@ -73,8 +72,15 @@
             autocompleteOptions: {
                 oldAutocompleteService: true,
                 onSuccess: function (response) {
-                    console.log(infoWXS);
-                    console.log(infoGPF);
+                    if (infoWXS._currentLocation !== infoGPF._currentLocation) {
+                        var currentText = {
+                            target: {
+                                value: infoWXS._currentLocation
+                            }
+                        }
+                        infoGPF.onAutoCompleteSearchText(currentText);
+                        document.getElementsByClassName("GPadvancedAutoCompleteList")[0].style.display = "block";
+                    }
                 }
             }
         });
@@ -84,8 +90,16 @@
             target: ls2,
             autocompleteOptions: {
                 onSuccess: function (response) {
-                    console.log(infoWXS);
-                    console.log(infoGPF);
+                    if (infoGPF._currentLocation !== infoWXS._currentLocation) {
+                        var currentText = {
+                            target: {
+                                value: infoGPF._currentLocation
+                            }
+                        }
+                        infoWXS.onAutoCompleteSearchText(currentText);
+                        document.getElementsByClassName("GPadvancedAutoCompleteList")[1].style.display = "block";
+                    }
+
                 }
             }
         });
