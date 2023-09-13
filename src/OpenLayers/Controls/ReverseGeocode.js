@@ -940,9 +940,9 @@ var ReverseGeocode = (function (Control) {
                 type : "Polygon",
                 coordinates : [[
                     [bbox.left, bbox.top],
-                    [bbox.right, bbox.top],
-                    [bbox.right, bbox.bottom],
                     [bbox.left, bbox.bottom],
+                    [bbox.right, bbox.bottom],
+                    [bbox.right, bbox.top],
                     [bbox.left, bbox.top]
                 ]]
             };
@@ -951,7 +951,7 @@ var ReverseGeocode = (function (Control) {
         }
     };
 
-    /**
+    /** 
      * this change the cursor of the map when entering a point.
      *
      * @param {String} cursor - cursor style
