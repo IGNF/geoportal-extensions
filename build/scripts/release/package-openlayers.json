@@ -1,28 +1,12 @@
 {
-   "name" : "geoportal-extensions-openlayers",
-   "version" : "3.3.3",
-   "module" : "src/OpenLayers/index.js",
-   "dependencies" : {
-      "loglevel" : "1.6.6",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.14.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "ol" : "6.9.0",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/new-gpf-url/geoportal-access-lib-3.3.3.tgz",
-      "eventbusjs" : "0.2.0",
-      "node-fetch" : "^2.6.1",
-      "proj4" : "2.7.5"
+   "scripts" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
    },
-   "directories" : {},
-   "types" : "src/OpenLayers/index.d.ts",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "devDependencies" : {},
-   "bugs" : {},
+   "license" : "CECILL-B",
+   "date" : "04/08/2023",
+   "module" : "src/OpenLayers/index.js",
    "files" : [
       "dist/",
       "src/",
@@ -30,12 +14,28 @@
       "README.md",
       "package.json"
    ],
-   "date" : "04/08/2023",
-   "license" : "CECILL-B",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
+   "bugs" : {},
+   "directories" : {},
+   "devDependencies" : {},
+   "name" : "geoportal-extensions-openlayers",
+   "version" : "3.3.3",
    "peerDependencies" : {},
-   "scripts" : {}
+   "dependencies" : {
+      "eventbusjs" : "0.2.0",
+      "ol" : "6.9.0",
+      "xmldom" : "^0.1.27",
+      "proj4" : "2.7.5",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/new-gpf-url/geoportal-access-lib-3.3.3.tgz",
+      "node-fetch" : "^2.6.1",
+      "loglevel" : "1.6.6",
+      "sortablejs" : "1.14.0",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1"
+   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "types" : "src/OpenLayers/index.d.ts"
 }
