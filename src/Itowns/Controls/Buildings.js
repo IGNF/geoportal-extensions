@@ -18,7 +18,6 @@ import {
  * @extends {itowns.control.Widget}
  * @alias itowns.control.Buildings
  * @param {Object} buildingsOptions - control options
- * @param {String} [buildingsOptions.key = "essentiels"] - key to use to adds the buildings layer – “essentiels” by default
  * @param {Boolean} [buildingsOptions.MNT = true] - Adds and displays the MNT
  * @param {Boolean} [buildingsOptions.buildingsOnGround = false] - Display the buildings at their elevation or on the ground
  * @param {Boolean} [buildingsOptions.defaultVisibility = true] - Visibility of the Buildings Layer at the initialisation
@@ -145,7 +144,7 @@ Buildings.prototype.addMNT = function (globe) {
         noDataValue : -99999,
         source : {
             protocol : "wmts",
-            url : "https://wxs.ign.fr/altimetrie/geoportail/wmts",
+            url : "https://data.geopf.fr/wmts",
             name : "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
             attribution : [{
                 name : "IGN",
@@ -247,7 +246,7 @@ Buildings.prototype.addMNT = function (globe) {
  * @param {options} options for the buildings control
  */
 Buildings.prototype.addBuildings = function (options) {
-    var vectorStyle = "https://wxs.ign.fr/" + options.apiKey + "/static/vectorTiles/styles/PLAN.IGN/standard.json";
+    var vectorStyle = "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json";
     var layerId = "VTBuilding";
     // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
     // Define the source of the building data : those are vector tiled data from the geoportail.
@@ -379,7 +378,6 @@ Buildings.prototype.addListener = function (element) {
  */
 Buildings.prototype.setOptions = function (options) {
     var buildingsOptions = {};
-    buildingsOptions.apiKey = options.key || "essentiels";
     buildingsOptions.MNT = options.MNT !== false;
     buildingsOptions.buildingsOnGround = options.buildingsOnGround || false;
     buildingsOptions.defaultVisibility = options.defaultVisibility !== false;
