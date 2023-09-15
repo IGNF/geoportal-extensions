@@ -548,9 +548,9 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
                 type : "Polygon",
                 coordinates : [[
                     [oLatLng.getNorthWest().lng, oLatLng.getNorthWest().lat],
-                    [oLatLng.getNorthEast().lng, oLatLng.getNorthEast().lat],
-                    [oLatLng.getSouthEast().lng, oLatLng.getSouthEast().lat],
                     [oLatLng.getSouthWest().lng, oLatLng.getSouthWest().lat],
+                    [oLatLng.getSouthEast().lng, oLatLng.getSouthEast().lat],
+                    [oLatLng.getNorthEast().lng, oLatLng.getNorthEast().lat],
                     [oLatLng.getNorthWest().lng, oLatLng.getNorthWest().lat]
                 ]]
             };
