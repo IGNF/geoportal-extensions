@@ -1,5 +1,5 @@
 {
-   "types" : "src/Leaflet/index.d.ts",
+   "main" : "dist/GpPluginLeaflet-src.js",
    "scripts" : {},
    "files" : [
       "dist/",
@@ -8,18 +8,6 @@
       "README.md",
       "package.json"
    ],
-   "dependencies" : {
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.8.4",
-      "proj4" : "2.7.5",
-      "proj4leaflet" : "1.0.2",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/new-gpf-url/geoportal-access-lib-3.3.3.tgz",
-      "leaflet" : "1.7.1",
-      "leaflet-draw" : "1.0.4",
-      "loglevel" : "1.6.6",
-      "node-fetch" : "^2.6.1"
-   },
-   "main" : "dist/GpPluginLeaflet-src.js",
    "keywords" : [
       "geoportail",
       "plugin",
@@ -27,20 +15,32 @@
       "leaflet",
       "publish"
    ],
-   "module" : "src/Leaflet/index.js",
-   "bugs" : {},
-   "peerDependencies" : {},
-   "bundleDependencies" : [],
-   "directories" : {},
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   "dependencies" : {
+      "loglevel" : "1.6.6",
+      "leaflet-draw" : "1.0.4",
+      "proj4leaflet" : "1.0.2",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/new-gpf-url/geoportal-access-lib-3.3.3.tgz",
+      "node-fetch" : "^2.6.1",
+      "proj4" : "2.7.5",
+      "xmldom" : "^0.1.27",
+      "leaflet" : "1.7.1",
+      "sortablejs" : "1.8.4"
    },
-   "description" : "French Geoportal Extension for Leaflet",
+   "module" : "src/Leaflet/index.js",
    "devDependencies" : {},
-   "license" : "CECILL-B",
-   "version" : "2.3.3",
-   "date" : "04/08/2023",
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   },
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
-   "name" : "geoportal-extensions-leaflet"
+   "peerDependencies" : {},
+   "description" : "French Geoportal Extension for Leaflet",
+   "bugs" : {},
+   "types" : "src/Leaflet/index.d.ts",
+   "license" : "CECILL-B",
+   "directories" : {},
+   "date" : "04/08/2023",
+   "version" : "2.3.3",
+   "name" : "geoportal-extensions-leaflet",
+   "bundleDependencies" : []
 }

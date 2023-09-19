@@ -1,5 +1,12 @@
 {
-   "module" : "src/Itowns/index.js",
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "description" : "French Geoportal Extensions for iTowns",
    "files" : [
       "dist/",
       "src/",
@@ -7,39 +14,32 @@
       "README.md",
       "package.json"
    ],
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
+   "author" : "IGNF",
+   "bugs" : {},
+   "date" : "04/08/2023",
+   "main" : "dist/GpPluginItowns-src.js",
+   "directories" : {},
+   "peerDependencies" : {},
+   "types" : "src/Itowns/index.d.ts",
+   "bundleDependencies" : [],
+   "version" : "2.4.3",
    "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
    },
    "dependencies" : {
-      "xmldom" : "^0.1.27",
       "sortablejs" : "1.14.0",
-      "three" : "0.137.5",
       "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/feature/new-gpf-url/geoportal-access-lib-3.3.3.tgz",
-      "itowns" : "2.38.2",
       "node-fetch" : "^2.6.1",
+      "loglevel" : "1.6.7",
+      "three" : "0.137.5",
       "proj4" : "2.7.5",
-      "loglevel" : "1.6.7"
+      "xmldom" : "^0.1.27",
+      "itowns" : "2.38.2"
    },
-   "scripts" : {},
-   "description" : "French Geoportal Extensions for iTowns",
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "directories" : {},
    "name" : "geoportal-extensions-itowns",
+   "module" : "src/Itowns/index.js",
+   "scripts" : {},
    "devDependencies" : {},
-   "bundleDependencies" : [],
-   "peerDependencies" : {},
-   "main" : "dist/GpPluginItowns-src.js",
-   "types" : "src/Itowns/index.d.ts",
-   "license" : "CECILL-B",
-   "version" : "2.4.3",
-   "date" : "04/08/2023",
-   "author" : "IGNF",
-   "bugs" : {}
+   "license" : "CECILL-B"
 }
