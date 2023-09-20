@@ -2,6 +2,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -9,11 +10,15 @@
 
 ## Summary
 
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - access-lib 3.3.4
 
 * [Deprecated]
 
@@ -29,6 +34,7 @@
 
 
 
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -36,16 +42,11 @@
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Géoportail.
-
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - access-lib 3.3.3 (#369)
 
 * [Deprecated]
 
@@ -68,11 +69,15 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 ## Summary
 
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - access-lib 3.3.4
 
 * [Deprecated]
 

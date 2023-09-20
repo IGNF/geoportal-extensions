@@ -1430,7 +1430,7 @@ var LayerImport = (function (Control) {
                                     // editeur de styles
                                     var editor = new Editor({
                                         target : self._mapBoxResultsListContainer,
-                                        style : p.styles,
+                                        style : JSON.parse(JSON.stringify(p.styles)), // clone
                                         scope : this,
                                         events : {
                                             "editor:onloaded" : self._onLoadedMapBox, // utile ?
