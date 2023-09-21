@@ -168,6 +168,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.3.4](#extension-geoportail-openlayers-version-334)
   * [Summary](#summary-50)
   * [Changelog](#changelog-47)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta](#extension-geoportail-openlayers-version-340-beta)
+  * [Summary](#summary-51)
+  * [Changelog](#changelog-48)
 
 <!-- tocstop -->
 
@@ -1913,6 +1916,32 @@ Correctif mineur sur le chargement et l'affichage des styles de flux de tuiles v
 * [Fixed]
 
     - Copie des styles vecteur tuilés dans l'outil d'import (3efee51392414c2858df86bb765bd4a81c8fb2f3)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta
+
+**21/09/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib 3.3.4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
 
 * [Security]
 
