@@ -509,7 +509,7 @@ var Route = (function (Control) {
                 bridge : false
             },
             routeOptions : {
-                oldRouteService : false
+                oldRouteService : true
             },
             autocompleteOptions : {},
             layerDescription : {
@@ -1119,7 +1119,7 @@ var Route = (function (Control) {
             distanceUnit : "m",
             timeOut : _timeout,
             protocol : _protocol,
-            oldRouteService : routeOptions.oldRouteService || false,
+            oldRouteService : routeOptions.oldRouteService || true,
             resource : routeOptions.resource,
             // callback onSuccess
             onSuccess : function (results) {

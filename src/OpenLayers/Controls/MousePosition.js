@@ -1245,7 +1245,7 @@ var MousePosition = (function (Control) {
         }];
 
         // utilisation de l'ancien service
-        var _oldAltiService = options.oldAltiService || false;
+        var _oldAltiService = options.oldAltiService || true;
 
         // utilisation d'une ressource spécifique
         var _resource = options.resource;

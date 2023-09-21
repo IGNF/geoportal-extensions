@@ -496,7 +496,7 @@ var Isocurve = (function (Control) {
                 offset : Markers.defaultOffset
             },
             isocurveOptions : {
-                oldIsoService : false
+                oldIsoService : true
             },
             autocompleteOptions : {},
             layerDescription : {
@@ -1067,7 +1067,7 @@ var Isocurve = (function (Control) {
             smoothing : options.smoothing || true,
             timeOut : _timeout,
             protocol : _protocol,
-            oldIsoService : options.oldIsoService || false,
+            oldIsoService : options.oldIsoService || true,
             resource : options.resource,
             // callback onSuccess
             onSuccess : function (results) {

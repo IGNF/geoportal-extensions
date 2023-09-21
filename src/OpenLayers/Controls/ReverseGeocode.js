@@ -1023,7 +1023,7 @@ var ReverseGeocode = (function (Control) {
             apiKey : reverseGeocodeOptions.apiKey || this.options.apiKey,
             ssl : this.options.ssl,
             position : this._requestPosition,
-            oldReverseService : reverseGeocodeOptions.oldReverseService || false,
+            oldReverseService : reverseGeocodeOptions.oldReverseService || true,
             filterOptions : {
                 type : [this._currentGeocodingType]
             },
