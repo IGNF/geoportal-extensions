@@ -8,7 +8,7 @@
   "olExtName": "French Geoportal Extension for OpenLayers",
   "olExtVersion": "3.4.0-beta",
   "itownsExtName": "French Geoportal Extension for Itowns",
-  "itownsExtVersion": "2.4.3",
+  "itownsExtVersion": "2.5.0-beta",
   "main": "dist/leaflet/GpPluginLeaflet.js, dist/openlayers/GpPluginOpenLayers.js, dist/itowns/GpPluginItowns.js",
   "types": "dist/leaflet/index.d.ts, dist/openlayers/index.d.ts, dist/itowns/index.d.ts",
   "module": "src/Leaflet/index.js, src/OpenLayers/index.js, src/Itowns/index.js",
