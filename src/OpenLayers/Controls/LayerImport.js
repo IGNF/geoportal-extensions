@@ -977,12 +977,9 @@ var LayerImport = (function (Control) {
         this._name = layerName;
 
         // 2. récupération proxy
-        if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
-            logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request resources on another domain (cross-domain)");
-            return;
-        };
-
-        url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
+        if (this.options.webServicesOptions && this.options.webServicesOptions.proxyUrl) {
+            url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
+        }
 
         // FIXME pb de surcharge en mode UMD !? ça ne marche pas...
         // this._hideWaitingContainer();
@@ -1986,26 +1983,8 @@ var LayerImport = (function (Control) {
         // si on n'est pas dans ces deux cas : l'utilisateur a déjà saisit des paramètres après "?" => on ne fait rien.
 
         // 2. récupération proxy
-        if (!this.options.webServicesOptions || (!this.options.webServicesOptions.proxyUrl && !this.options.webServicesOptions.noProxyDomains)) {
-            logger.error("[ol.control.LayerImport] options.webServicesOptions.proxyUrl parameter is mandatory to request web service layers (getcapabilities request)");
-            return;
-        };
-        var proxyUrl = this.options.webServicesOptions.proxyUrl;
-        var noProxyDomains = this.options.webServicesOptions.noProxyDomains;
-        // on regarde si l'url nest pas dans les domaines sans proxy
-        var bfound = false;
-        if (noProxyDomains && Array.isArray(noProxyDomains) && noProxyDomains.length > 0) {
-            for (var i in noProxyDomains) {
-                logger.log("analyzing " + noProxyDomains[i]);
-                if (url.indexOf(noProxyDomains[i]) !== -1) {
-                    logger.log(url + " found in noProxyDomains list (" + noProxyDomains[i] + ").");
-                    bfound = true;
-                }
-            }
-        }
-        // si on n'est pas dans un domaine sans proxy, on ajoute le proxy (+ encodage)
-        if (bfound === false) {
-            url = proxyUrl + encodeURIComponent(url);
+        if (this.options.webServicesOptions && this.options.webServicesOptions.proxyUrl) {
+            url = ProxyUtils.proxifyUrl(url, this.options.webServicesOptions);
         }
 
         // 3. affichage d'une patience le temps de la requête
