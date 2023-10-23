@@ -1,11 +1,33 @@
 {
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
-   },
+   "keywords" : [
+      "geoportail",
+      "plugin",
+      "javascript",
+      "OpenLayers"
+   ],
+   "scripts" : {},
+   "date" : "21/09/2023",
+   "name" : "geoportal-extensions-openlayers",
    "directories" : {},
-   "license" : "CECILL-B",
-   "types" : "src/OpenLayers/index.d.ts",
+   "peerDependencies" : {},
+   "module" : "src/OpenLayers/index.js",
+   "version" : "3.4.0-beta",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
+   "bugs" : {},
+   "dependencies" : {
+      "loglevel" : "1.6.6",
+      "sortablejs" : "1.14.0",
+      "node-fetch" : "^2.6.1",
+      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/release-3.4.0-beta/geoportal-access-lib-3.4.0-beta.tgz",
+      "xmldom" : "^0.1.27",
+      "ol" : "6.9.0",
+      "proj4" : "2.7.5",
+      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
+      "eventbusjs" : "0.2.0"
+   },
    "files" : [
       "dist/",
       "src/",
@@ -13,29 +35,7 @@
       "README.md",
       "package.json"
    ],
-   "scripts" : {},
-   "module" : "src/OpenLayers/index.js",
-   "peerDependencies" : {},
-   "version" : "3.4.0-beta",
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "OpenLayers"
-   ],
-   "date" : "21/09/2023",
-   "name" : "geoportal-extensions-openlayers",
+   "types" : "src/OpenLayers/index.d.ts",
    "devDependencies" : {},
-   "bugs" : {},
-   "dependencies" : {
-      "proj4" : "2.7.5",
-      "sortablejs" : "1.14.0",
-      "@mapbox/mapbox-gl-style-spec" : "13.20.1",
-      "eventbusjs" : "0.2.0",
-      "loglevel" : "1.6.6",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/release-3.4.0-beta/geoportal-access-lib-3.4.0-beta.tgz",
-      "xmldom" : "^0.1.27",
-      "node-fetch" : "^2.6.1",
-      "ol" : "6.9.0"
-   }
+   "license" : "CECILL-B"
 }
