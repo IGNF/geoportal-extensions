@@ -10,7 +10,7 @@
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Géoportail.
+Utilisation d'un proxy facultatif pour le control d'import de couches.
 
 ## Changelog
 
@@ -18,7 +18,7 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 * [Changed]
 
-    - access-lib 3.3.4
+    - le paramétrage d'un proxy pour utiliser lle control d'import de couches est rendu facultatif
 
 * [Deprecated]
 
