@@ -73,7 +73,7 @@
   "dependencies": {
     "@mapbox/mapbox-gl-style-spec": "13.20.1",
     "eventbusjs": "0.2.0",
-    "geoportal-access-lib": "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/release-3.4.0-beta/geoportal-access-lib-3.4.0-beta.tgz",
+    "geoportal-access-lib": "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/release-3.4.0-beta2/geoportal-access-lib-3.4.0-beta2.tgz",
     "itowns": "2.38.2",
     "leaflet": "1.7.1",
     "leaflet-draw": "1.0.4",

@@ -123,7 +123,7 @@ var LocationSelector = (function (Control) {
             },
             displayInfo : true,
             autocompleteOptions : {
-                oldAutocompleteService : true
+                oldAutocompleteService : false
             }
         };
 
@@ -752,7 +752,7 @@ var LocationSelector = (function (Control) {
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
 
-        options.oldAutocompleteService = options.oldAutocompleteService || true;
+        options.oldAutocompleteService = options.oldAutocompleteService || false;
 
         // les ressources
         var resources = this._resources["AutoCompletion"] || null;
