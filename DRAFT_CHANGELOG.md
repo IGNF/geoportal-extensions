@@ -1,8 +1,3 @@
-
-
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -10,7 +5,7 @@
 
 ## Summary
 
-Utilisation d'un proxy facultatif pour le control d'import de couches.
+Utilisation du service de Geocodage de la Geoplateforme
 
 ## Changelog
 
@@ -18,7 +13,9 @@ Utilisation d'un proxy facultatif pour le control d'import de couches.
 
 * [Changed]
 
-    - le paramétrage d'un proxy pour utiliser lle control d'import de couches est rendu facultatif
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - le paramétrage d'un proxy pour utiliser le control d'import de couches est rendu facultatif
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
 
 * [Deprecated]
 
@@ -42,11 +39,16 @@ Utilisation d'un proxy facultatif pour le control d'import de couches.
 
 ## Summary
 
+Utilisation du service de Geocodage de la Geoplateforme
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
 
 * [Deprecated]
 
@@ -69,7 +71,7 @@ Utilisation d'un proxy facultatif pour le control d'import de couches.
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Géoportail.
+Utilisation du service de Geocodage de la Geoplateforme
 
 ## Changelog
 
@@ -77,7 +79,8 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 
 * [Changed]
 
-    - access-lib 3.3.4
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
 
 * [Deprecated]
 
