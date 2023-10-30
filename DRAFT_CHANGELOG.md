@@ -4,6 +4,7 @@
 
 
 
+
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -11,15 +12,11 @@
 
 ## Summary
 
-Utilisation d'un proxy facultatif pour le control d'import de couches.
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - le paramétrage d'un proxy pour utiliser lle control d'import de couches est rendu facultatif
 
 * [Deprecated]
 
