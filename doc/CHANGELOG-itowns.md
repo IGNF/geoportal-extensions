@@ -102,6 +102,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.5.0-beta](#extension-geoportail-itowns-version-250-beta)
   * [Summary](#summary-30)
   * [Changelog](#changelog-29)
+- [Extension Geoportail Itowns, version 2.5.0-beta2](#extension-geoportail-itowns-version-250-beta2)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-30)
 
 <!-- tocstop -->
 
@@ -932,6 +935,33 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 * [Changed]
 
     - access-lib 3.3.4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta2
+
+**27/10/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Utilisation du service de Geocodage de la Geoplateforme
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
 
 * [Deprecated]
 
