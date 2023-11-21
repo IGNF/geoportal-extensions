@@ -106,10 +106,19 @@ function LayerWMS (options) {
             }
         });
 
-        // ajout du tag gp-itowns-ext dans les requêtes WMS
-        config.source.url = Gp.Helper.normalyzeUrl(config.source.url, {
+        var urlParams = {
             "gp-itowns-ext" : Pkg.itownsExtVersion || Pkg.version
-        }, false);
+        };
+
+        if (config.source.url.includes("/private/")) {
+            // si l'url est privée
+            // Ajout de la clef d'API fournie par l'utilisateur en priorité
+            // ou récupérée depuis la configuration
+            urlParams["apikey"] = options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+        }
+            
+        // ajout du tag gp-itowns-ext dans les requêtes WMS
+        config.source.url = Gp.Helper.normalyzeUrl(config.source.url, urlParams, false);
 
         // récupération des autres paramètres passés par l'utilisateur
         Utils.mergeParams(config, options.itownsParams);

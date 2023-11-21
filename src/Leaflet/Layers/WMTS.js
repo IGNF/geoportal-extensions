@@ -88,14 +88,21 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
         this._wmtsParams = {};
         L.Util.extend(this._wmtsParams, this.defaultWmtsParams, options.paramsWmts);
 
+        var urlParams = {
+            "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
+        };
+
+        // ajout de l'apiKey en paramètre de la requête si couche à accès restreint
+        if (options.apikey) {
+            urlParams["apikey"] = options.apikey;
+        }
+
         // appel du constructeur de la classe étendue
         L.TileLayer.prototype.initialize.call(
             this,
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
-            Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
-            }, false),
+            Gp.Helper.normalyzeUrl(url, urlParams, false),
             options.paramsNative
         );
 

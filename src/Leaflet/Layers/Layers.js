@@ -145,20 +145,17 @@ var Layers = {
         // url du service
         var serviceUrl = null;
 
-        if (this.options.apiKey) {
-            // si une clé Api est fournie, on la prend pour construire l'url
-            serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/r/wms", {
-                key : this.options.apiKey
-            });
-        } else if (this.params.url) {
+        if (this.params.url) {
             // sinon on prend la première clé disponible pour la couche dans la Config
             serviceUrl = this.params.url;
+        } else if (this.options.apiKey) {
+            // une apiKey est fournie sans URL récupérée : 
+            // on tente le chemin privé du service WMS raster
+            serviceUrl = "https://data.geopf.fr/private/wms-r";
         } else {
             // pas de Config, ni de clef API !
-            // on évite l'exception en envoyant les requêtes vers localhost...
-            serviceUrl = L.Util.template(this.serviceUrl, {
-                layer : this.options.layer
-            });
+            // on construit le chemin public du service WMS raster
+            serviceUrl = "https://data.geopf.fr/wms-r";
         }
 
         // params du service WMS (par defaut)
@@ -168,6 +165,10 @@ var Layers = {
             format : this.params.format || "image/jpeg",
             version : this.params.version || "1.3.0"
         };
+
+        if (serviceUrl.includes("/private/")) {
+            var apiKey = this.options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+        }
 
         // options natives de leaflet (par defaut)
         var paramsNative = {
@@ -185,6 +186,7 @@ var Layers = {
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
                 paramsNative : paramsNative,
                 paramsWms : paramsWms,
+                apikey : apiKey,
                 originators : this.params.originators || this.settings.originators || [],
                 legends : this.settings.originators || this.params.legends || [],
                 metadata : this.settings.metadata || this.params.metadata || [],
@@ -250,20 +252,17 @@ var Layers = {
         // url du service
         var serviceUrl = null;
 
-        if (this.options.apiKey) {
-            // si une clé Api est fournie, on la prend pour construire l'url
-            serviceUrl = L.Util.template("https://wxs.ign.fr/{key}/geoportail/wmts", {
-                key : this.options.apiKey
-            });
-        } else if (this.params.url) {
+        if (this.params.url) {
             // sinon on prend la première clé disponible pour la couche dans la Config
             serviceUrl = this.params.url;
+        } else if (this.options.apiKey) {
+            // une apiKey est fournie sans URL récupérée : 
+            // on tente le chemin privé du service WMTS
+            serviceUrl = "https://data.geopf.fr/private/wmts";
         } else {
             // pas de Config, ni de clef API !
-            // on évite l'exception en envoyant les requêtes vers localhost...
-            serviceUrl = L.Util.template(this.serviceUrl, {
-                layer : this.options.layer
-            });
+            // on construit le chemin public du service
+            serviceUrl = "https://data.geopf.fr/wmts";
         }
 
         // params du service WMTS (par defaut)
@@ -274,6 +273,10 @@ var Layers = {
             version : this.params.version || "1.0.0",
             tilematrixset : this.params.TMSLink || "PM"
         };
+
+        if (serviceUrl.includes("/private/")) {
+            var apiKey = this.options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+        }
 
         // options natives de leaflet (par defaut)
         //    minZoom : 0
@@ -300,6 +303,7 @@ var Layers = {
             serviceUrl.replace(/(http|https):\/\//, this.protocol), {
                 paramsNative : paramsNative,
                 paramsWmts : paramsWmts,
+                apikey : apiKey,
                 originators : this.params.originators || this.settings.originators || [],
                 legends : this.settings.originators || this.params.legends || [],
                 metadata : this.settings.metadata || this.params.metadata || [],

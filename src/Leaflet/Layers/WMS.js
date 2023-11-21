@@ -70,16 +70,24 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
      */
     initialize : function (url, options) {
         var settings = {};
+
         L.Util.extend(settings, options.paramsWms, options.paramsNative);
+
+        var urlParams = {
+            "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
+        };
+
+        // ajout de l'apiKey en paramètre de la requête si couche à accès restreint
+        if (options.apikey) {
+            urlParams["apikey"] = options.apikey;
+        }
 
         // appel du constructeur de la classe étendue
         L.TileLayer.WMS.prototype.initialize.call(
             this,
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
-            Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
-            }, false),
+            Gp.Helper.normalyzeUrl(url, urlParams, false),
             settings
         );
 
