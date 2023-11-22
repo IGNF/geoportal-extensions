@@ -1,6 +1,7 @@
 import L from "leaflet";
 import Logger from "../../Common/Utils/LoggerByDefault";
 import LayerConfig from "./LayerConfig";
+import Config from "../../Common/Utils/Config";
 import WMS from "./WMS";
 import WMTS from "./WMTS";
 
@@ -149,7 +150,7 @@ var Layers = {
             // sinon on prend la première clé disponible pour la couche dans la Config
             serviceUrl = this.params.url;
         } else if (this.options.apiKey) {
-            // une apiKey est fournie sans URL récupérée : 
+            // une apiKey est fournie sans URL récupérée :
             // on tente le chemin privé du service WMS raster
             serviceUrl = "https://data.geopf.fr/private/wms-r";
         } else {
@@ -167,7 +168,7 @@ var Layers = {
         };
 
         if (serviceUrl.includes("/private/")) {
-            var apiKey = this.options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+            var apiKey = this.options.apiKey || Config.configuration.getLayerKey(Config.configuration.getLayerId(paramsWms.layers, "WMS"))[0];
         }
 
         // options natives de leaflet (par defaut)
@@ -256,7 +257,7 @@ var Layers = {
             // sinon on prend la première clé disponible pour la couche dans la Config
             serviceUrl = this.params.url;
         } else if (this.options.apiKey) {
-            // une apiKey est fournie sans URL récupérée : 
+            // une apiKey est fournie sans URL récupérée :
             // on tente le chemin privé du service WMTS
             serviceUrl = "https://data.geopf.fr/private/wmts";
         } else {
@@ -275,7 +276,7 @@ var Layers = {
         };
 
         if (serviceUrl.includes("/private/")) {
-            var apiKey = this.options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+            var apiKey = this.options.apiKey || Config.configuration.getLayerKey(Config.configuration.getLayerId(paramsWmts.layer, "WMTS"))[0];
         }
 
         // options natives de leaflet (par defaut)

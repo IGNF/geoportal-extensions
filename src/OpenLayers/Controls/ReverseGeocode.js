@@ -951,7 +951,7 @@ var ReverseGeocode = (function (Control) {
         }
     };
 
-    /** 
+    /**
      * this change the cursor of the map when entering a point.
      *
      * @param {String} cursor - cursor style

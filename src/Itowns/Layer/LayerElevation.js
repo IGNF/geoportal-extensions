@@ -119,7 +119,7 @@ function LayerElevation (options) {
             // ou récupérée depuis la configuration
             urlParams["apikey"] = options.apiKey || Config.configuration.getLayerKey(layerId)[0];
         }
-            
+
         // ajout du tag gp-itowns-ext dans les requêtes WMTS elevation
         config.source.url = Gp.Helper.normalyzeUrl(config.source.url, urlParams, false);
 

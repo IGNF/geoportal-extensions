@@ -71,7 +71,7 @@ var SourceWMS = (function (TileWMSSource) {
             };
             if (wmsParams.url.includes("/private/")) {
                 // si l'url est privée
-                // Ajout de la clef d'API fournie par l'utilisateur en prioritée 
+                // Ajout de la clef d'API fournie par l'utilisateur en prioritée
                 // ou récupérée depuis la configuration
                 urlParams["apikey"] = options.apiKey || Config.configuration.getLayerKey(layerId)[0];
             }
