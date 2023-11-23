@@ -5,7 +5,7 @@
 
 ## Summary
 
-Utilisation du service de Geocodage de la Geoplateforme
+Ajout possible de couches à accès restreint via une fichier de configuration custom
 
 ## Changelog
 
@@ -13,9 +13,7 @@ Utilisation du service de Geocodage de la Geoplateforme
 
 * [Changed]
 
-    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
-    - le paramétrage d'un proxy pour utiliser le control d'import de couches est rendu facultatif
-    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+    - possibilité d'ajout automatique de couches IGN à accès restreint
 
 * [Deprecated]
 
@@ -39,7 +37,7 @@ Utilisation du service de Geocodage de la Geoplateforme
 
 ## Summary
 
-Utilisation du service de Geocodage de la Geoplateforme
+Ajout possible de couches à accès restreint via une fichier de configuration custom
 
 ## Changelog
 
@@ -47,8 +45,7 @@ Utilisation du service de Geocodage de la Geoplateforme
 
 * [Changed]
 
-    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
-    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+    - possibilité d'ajout automatique de couches IGN à accès restreint
 
 * [Deprecated]
 
@@ -71,7 +68,7 @@ Utilisation du service de Geocodage de la Geoplateforme
 
 ## Summary
 
-Utilisation du service de Geocodage de la Geoplateforme
+Ajout possible de couches à accès restreint via une fichier de configuration custom
 
 ## Changelog
 
@@ -79,8 +76,7 @@ Utilisation du service de Geocodage de la Geoplateforme
 
 * [Changed]
 
-    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
-    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+    - possibilité d'ajout automatique de couches IGN à accès restreint
 
 * [Deprecated]
 
