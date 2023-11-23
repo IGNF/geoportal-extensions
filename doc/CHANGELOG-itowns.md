@@ -105,6 +105,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.5.0-beta2](#extension-geoportail-itowns-version-250-beta2)
   * [Summary](#summary-31)
   * [Changelog](#changelog-30)
+- [Extension Geoportail Itowns, version 2.5.0-beta3](#extension-geoportail-itowns-version-250-beta3)
+  * [Summary](#summary-32)
+  * [Changelog](#changelog-31)
 
 <!-- tocstop -->
 
@@ -962,6 +965,32 @@ Utilisation du service de Geocodage de la Geoplateforme
 
     - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
     - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta3
+
+**21/11/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - possibilité d'ajout automatique de couches IGN à accès restreint
 
 * [Deprecated]
 
