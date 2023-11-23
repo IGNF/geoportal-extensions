@@ -174,6 +174,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.4.0-beta2](#extension-geoportail-openlayers-version-340-beta2)
   * [Summary](#summary-52)
   * [Changelog](#changelog-49)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta3](#extension-geoportail-openlayers-version-340-beta3)
+  * [Summary](#summary-53)
+  * [Changelog](#changelog-50)
 
 <!-- tocstop -->
 
@@ -1967,6 +1970,32 @@ Utilisation du service de Geocodage de la Geoplateforme
     - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
     - le paramétrage d'un proxy pour utiliser le control d'import de couches est rendu facultatif
     - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta3
+
+**21/11/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - possibilité d'ajout automatique de couches IGN à accès restreint
 
 * [Deprecated]
 
