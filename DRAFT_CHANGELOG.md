@@ -5,21 +5,19 @@
 
 ## Summary
 
-Ajout possible de couches à accès restreint via une fichier de configuration custom
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - possibilité d'ajout automatique de couches IGN à accès restreint
-
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+    - fix : incompatibilité css lorsque la map est dans une div ayant pour classe "container" (958b687ec91c712fd958d7e54437776958c37610)
 
 * [Security]
 
@@ -45,8 +43,6 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 
 * [Changed]
 
-    - possibilité d'ajout automatique de couches IGN à accès restreint
-
 * [Deprecated]
 
 * [Removed]
@@ -68,15 +64,11 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 
 ## Summary
 
-Ajout possible de couches à accès restreint via une fichier de configuration custom
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - possibilité d'ajout automatique de couches IGN à accès restreint
 
 * [Deprecated]
 
