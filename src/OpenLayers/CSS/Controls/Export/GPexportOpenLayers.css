@@ -43,7 +43,7 @@ input[id^=GPexportButton-] {
 .GPexportMenuContainer:hover .GPexportMenuContent { display: block; }
 
 /* menu des formats */
-.container {
+.GPexportMenuContent .container {
     display: block;
     position: relative;
     padding-left: 15px;
@@ -56,7 +56,7 @@ input[id^=GPexportButton-] {
     user-select: none;
 }
   
-.container input {
+.GPexportMenuContent .container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -64,7 +64,7 @@ input[id^=GPexportButton-] {
     width: 0;
 }
   
-.checkmark {
+.GPexportMenuContent .checkmark {
     position: absolute;
     top: 0;
     left: 0;
@@ -74,25 +74,25 @@ input[id^=GPexportButton-] {
     border-radius: 50%;
 }
   
-.container:hover input ~ .checkmark {
+.GPexportMenuContent .container:hover input ~ .checkmark {
     background-color: #ccc;
 }
 
-.container input:checked ~ .checkmark {
+.GPexportMenuContent .container input:checked ~ .checkmark {
     background-color: #366291;
 }
   
-.checkmark:after {
+.GPexportMenuContent .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-.container input:checked ~ .checkmark:after {
+.GPexportMenuContent .container input:checked ~ .checkmark:after {
     display: block;
 }
   
-.container .checkmark:after {
+.GPexportMenuContent .container .checkmark:after {
     top: 4px;
     left: 4px;
     width: 4px;
