@@ -113,6 +113,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.4.0-beta3](#extension-geoportail-leaflet-version-240-beta3)
   * [Summary](#summary-33)
   * [Changelog](#changelog-30)
+- [Extension Geoportail Leaflet, version 2.4.0-beta4](#extension-geoportail-leaflet-version-240-beta4)
+  * [Summary](#summary-34)
+  * [Changelog](#changelog-31)
 
 <!-- tocstop -->
 
@@ -1094,6 +1097,30 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Changed]
 
     - possibilité d'ajout automatique de couches IGN à accès restreint
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.4.0-beta4
+
+**14/12/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 
