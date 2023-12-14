@@ -177,6 +177,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.4.0-beta3](#extension-geoportail-openlayers-version-340-beta3)
   * [Summary](#summary-53)
   * [Changelog](#changelog-50)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta4](#extension-geoportail-openlayers-version-340-beta4)
+  * [Summary](#summary-54)
+  * [Changelog](#changelog-51)
 
 <!-- tocstop -->
 
@@ -2002,6 +2005,30 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta4
+
+**14/12/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - fix : incompatibilité css lorsque la map est dans une div ayant pour classe "container" (958b687ec91c712fd958d7e54437776958c37610)
 
 * [Security]
 
