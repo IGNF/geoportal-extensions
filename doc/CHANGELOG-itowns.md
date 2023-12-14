@@ -108,6 +108,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.5.0-beta3](#extension-geoportail-itowns-version-250-beta3)
   * [Summary](#summary-32)
   * [Changelog](#changelog-31)
+- [Extension Geoportail Itowns, version 2.5.0-beta4](#extension-geoportail-itowns-version-250-beta4)
+  * [Summary](#summary-33)
+  * [Changelog](#changelog-32)
 
 <!-- tocstop -->
 
@@ -991,6 +994,28 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Changed]
 
     - possibilité d'ajout automatique de couches IGN à accès restreint
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta4
+
+**14/12/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 
