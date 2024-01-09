@@ -28,6 +28,10 @@
 
 
 
+
+
+
+
 # Extension Geoportail Leaflet, version __VERSION__
 
 **__DATE__**
@@ -52,6 +56,10 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Security]
 
 ---
+
+
+
+
 
 
 

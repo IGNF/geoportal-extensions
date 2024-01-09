@@ -104,6 +104,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Leaflet, version 2.3.4](#extension-geoportail-leaflet-version-234)
   * [Summary](#summary-30)
   * [Changelog](#changelog-27)
+- [Extension Geoportail Leaflet, version 2.4.0-beta](#extension-geoportail-leaflet-version-240-beta)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-28)
+- [Extension Geoportail Leaflet, version 2.4.0-beta2](#extension-geoportail-leaflet-version-240-beta2)
+  * [Summary](#summary-32)
+  * [Changelog](#changelog-29)
+- [Extension Geoportail Leaflet, version 2.4.0-beta3](#extension-geoportail-leaflet-version-240-beta3)
+  * [Summary](#summary-33)
+  * [Changelog](#changelog-30)
+- [Extension Geoportail Leaflet, version 2.4.0-beta4](#extension-geoportail-leaflet-version-240-beta4)
+  * [Summary](#summary-34)
+  * [Changelog](#changelog-31)
 
 <!-- tocstop -->
 
@@ -1010,6 +1022,105 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 * [Changed]
 
     - access-lib 3.3.4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.4.0-beta
+
+**21/09/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.4.0-beta2
+
+**27/10/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Utilisation du service de Geocodage de la Geoplateforme
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.4.0-beta3
+
+**21/11/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - possibilité d'ajout automatique de couches IGN à accès restreint
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Leaflet, version 2.4.0-beta4
+
+**14/12/2023**
+> Release Extension Geoportail leaflet
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 

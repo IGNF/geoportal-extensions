@@ -168,6 +168,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail OpenLayers, version 3.3.4](#extension-geoportail-openlayers-version-334)
   * [Summary](#summary-50)
   * [Changelog](#changelog-47)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta](#extension-geoportail-openlayers-version-340-beta)
+  * [Summary](#summary-51)
+  * [Changelog](#changelog-48)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta2](#extension-geoportail-openlayers-version-340-beta2)
+  * [Summary](#summary-52)
+  * [Changelog](#changelog-49)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta3](#extension-geoportail-openlayers-version-340-beta3)
+  * [Summary](#summary-53)
+  * [Changelog](#changelog-50)
+- [Extension Geoportail OpenLayers, version 3.4.0-beta4](#extension-geoportail-openlayers-version-340-beta4)
+  * [Summary](#summary-54)
+  * [Changelog](#changelog-51)
 
 <!-- tocstop -->
 
@@ -1913,6 +1925,110 @@ Correctif mineur sur le chargement et l'affichage des styles de flux de tuiles v
 * [Fixed]
 
     - Copie des styles vecteur tuilés dans l'outil d'import (3efee51392414c2858df86bb765bd4a81c8fb2f3)
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta
+
+**21/09/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib 3.3.4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta2
+
+**27/10/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Utilisation du service de Geocodage de la Geoplateforme
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - le paramétrage d'un proxy pour utiliser le control d'import de couches est rendu facultatif
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta3
+
+**21/11/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - possibilité d'ajout automatique de couches IGN à accès restreint
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail OpenLayers, version 3.4.0-beta4
+
+**14/12/2023**
+> Release Extension Geoportail openlayers
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - fix : incompatibilité css lorsque la map est dans une div ayant pour classe "container" (958b687ec91c712fd958d7e54437776958c37610)
 
 * [Security]
 

@@ -99,6 +99,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoportail Itowns, version 2.4.3](#extension-geoportail-itowns-version-243)
   * [Summary](#summary-29)
   * [Changelog](#changelog-28)
+- [Extension Geoportail Itowns, version 2.5.0-beta](#extension-geoportail-itowns-version-250-beta)
+  * [Summary](#summary-30)
+  * [Changelog](#changelog-29)
+- [Extension Geoportail Itowns, version 2.5.0-beta2](#extension-geoportail-itowns-version-250-beta2)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-30)
+- [Extension Geoportail Itowns, version 2.5.0-beta3](#extension-geoportail-itowns-version-250-beta3)
+  * [Summary](#summary-32)
+  * [Changelog](#changelog-31)
+- [Extension Geoportail Itowns, version 2.5.0-beta4](#extension-geoportail-itowns-version-250-beta4)
+  * [Summary](#summary-33)
+  * [Changelog](#changelog-32)
 
 <!-- tocstop -->
 
@@ -903,6 +915,107 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 * [Changed]
 
     - access-lib 3.3.3 (#369)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta
+
+**21/09/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib 3.3.4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta2
+
+**27/10/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Utilisation du service de Geocodage de la Geoplateforme
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta3
+
+**21/11/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - possibilité d'ajout automatique de couches IGN à accès restreint
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoportail Itowns, version 2.5.0-beta4
+
+**14/12/2023**
+> Release Extension Geoportail itowns
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 
