@@ -1,18 +1,12 @@
 
-
-
-
-
-
-
-
-
 # Extension Geoportail OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoportail openlayers
 
 ## Summary
+
+divers correctifs sur le build par modules
 
 ## Changelog
 
@@ -29,15 +23,6 @@
 * [Security]
 
 ---
-
-
-
-
-
-
-
-
-
 
 # Extension Geoportail Leaflet, version __VERSION__
 
@@ -61,13 +46,6 @@
 * [Security]
 
 ---
-
-
-
-
-
-
-
 
 
 # Extension Geoportail Itowns, version __VERSION__
