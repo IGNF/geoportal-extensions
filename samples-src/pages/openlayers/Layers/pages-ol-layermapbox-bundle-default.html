@@ -166,7 +166,7 @@
                         document.getElementById("apply").addEventListener("click", (e) => {
                             waiting(true);
 
-                            var url = "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json";
+                            var url = "{{ resources }}/data/mapbox/styles/planign/standard.json";
                             
                             fetch(url, {
                                 credentials : "same-origin"
