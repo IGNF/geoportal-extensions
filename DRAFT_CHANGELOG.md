@@ -6,7 +6,8 @@
 
 ## Summary
 
-divers correctifs sur le build par modules
+* divers correctifs sur le build par modules
+* MaJ des fichiers de styles MapBox (conformes au spec)
 
 ## Changelog
 
