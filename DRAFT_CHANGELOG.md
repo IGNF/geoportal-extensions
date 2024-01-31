@@ -17,7 +17,7 @@
 
 * [Fixed]
 
-    - fix : incompatibilité css lorsque la map est dans une div ayant pour classe "container" (958b687ec91c712fd958d7e54437776958c37610)
+    - fix : searchEngine laisse le q= vide si recherche avancée par parcelle cadastrale
 
 * [Security]
 

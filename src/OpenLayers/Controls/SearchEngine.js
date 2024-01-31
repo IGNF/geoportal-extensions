@@ -1470,8 +1470,8 @@ var SearchEngine = (function (Control) {
         var inputSearchTextContainer = document.getElementById("GPsearchInputText-" + this._uid);
         _location = inputSearchTextContainer.value;
 
-        // Pour pouvoir utiliser les filtres comme des champs de recherche
-        if (this._currentGeocodingCode === "CadastralParcel" && _location === null) {
+        // On ne prend pas en compte ce qu'il y a dans l'input de recherche simple pour la recherche avance de PC
+        if (this._currentGeocodingCode === "CadastralParcel") {
             _location = "";
         }
 
