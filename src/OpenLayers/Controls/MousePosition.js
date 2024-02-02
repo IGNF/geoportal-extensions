@@ -1244,9 +1244,6 @@ var MousePosition = (function (Control) {
             lat : coordinate[1]
         }];
 
-        // utilisation de l'ancien service
-        var _oldAltiService = options.oldAltiService || false;
-
         // utilisation d'une ressource spécifique
         var _resource = options.resource;
 
@@ -1311,7 +1308,6 @@ var MousePosition = (function (Control) {
             zonly : _zonly,
             measures : _measures,
             resource : _resource,
-            oldAltiService : _oldAltiService,
             positions : _positions
         });
     };

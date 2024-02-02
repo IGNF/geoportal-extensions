@@ -122,9 +122,7 @@ var LocationSelector = (function (Control) {
                 removeOption : false
             },
             displayInfo : true,
-            autocompleteOptions : {
-                oldAutocompleteService : false
-            }
+            autocompleteOptions : {}
         };
 
         // merge with user options
@@ -751,8 +749,6 @@ var LocationSelector = (function (Control) {
         Utils.assign(options, this.options.autocompleteOptions);
         // ainsi que la recherche et les callbacks
         Utils.assign(options, settings);
-
-        options.oldAutocompleteService = options.oldAutocompleteService || false;
 
         // les ressources
         var resources = this._resources["AutoCompletion"] || null;
