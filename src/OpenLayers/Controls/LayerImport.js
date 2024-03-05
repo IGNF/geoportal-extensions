@@ -1227,12 +1227,15 @@ var LayerImport = (function (Control) {
                             vectorSource = new VectorTileSource({
                                 attributions : _glSource.attribution,
                                 format : vectorFormat,
-                                tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
-                                    extent : _glSource.bounds, // [minx, miny, maxx, maxy]
-                                    maxZoom : _glSource.maxzoom || 22,
-                                    minZoom : _glSource.minzoom || 1,
-                                    tileSize : _glSource.tileSize || 256
-                                }),
+                                  // INFO 
+                                // on supprime la grille pour forcer l'utilisation par defaut des tuiles en 512
+                                // sur du vecteur tuilé
+                                // tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
+                                //     extent : _glSource.bounds, // [minx, miny, maxx, maxy]
+                                //     maxZoom : _glSource.maxzoom || 22,
+                                //     minZoom : _glSource.minzoom || 1,
+                                //     tileSize : _glSource.tileSize || 256
+                                // }),
                                 urls : _glTiles
                             });
                             vectorSource._title = _title;
@@ -1292,12 +1295,15 @@ var LayerImport = (function (Control) {
                                     vectorSource = new VectorTileSource({
                                         attributions : vectorTileJson.getAttributions() || _tileJSONDoc.attribution,
                                         format : vectorFormat,
-                                        tileGrid : olCreateXYZTileGrid({
-                                            extent : _glSource.bounds, // [minx, miny, maxx, maxy]
-                                            maxZoom : _tileJSONDoc.maxzoom || _glSource.maxzoom || 22,
-                                            minZoom : _tileJSONDoc.minzoom || _glSource.minzoom || 0,
-                                            tileSize : _tileJSONDoc.tileSize || _glSource.tileSize || 256
-                                        }),
+                                        // INFO 
+                                        // on supprime la grille pour forcer l'utilisation par defaut des tuiles en 512
+                                        // sur du vecteur tuilé
+                                        // tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
+                                        //     extent : _glSource.bounds, // [minx, miny, maxx, maxy]
+                                        //     maxZoom : _glSource.maxzoom || 22,
+                                        //     minZoom : _glSource.minzoom || 1,
+                                        //     tileSize : _glSource.tileSize || 256
+                                        // }),
                                         urls : tiles
                                     });
                                     vectorSource._title = _title;
