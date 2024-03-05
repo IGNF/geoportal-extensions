@@ -246,7 +246,7 @@ Buildings.prototype.addMNT = function (globe) {
  * @param {options} options for the buildings control
  */
 Buildings.prototype.addBuildings = function (options) {
-    var vectorStyle = "https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json";
+    var vectorStyle = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
     var layerId = "VTBuilding";
     // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
     // Define the source of the building data : those are vector tiled data from the geoportail.
