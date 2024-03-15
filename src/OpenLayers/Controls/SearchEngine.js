@@ -227,7 +227,7 @@ var SearchEngine = (function (Control) {
         // merge with user options
         Utils.mergeParams(this.options, options);
         if (this.options.resources.geocode === "") {
-            this.options.resources.geocode = "poi";
+            this.options.resources.geocode = "address,poi";
         }
         if (this.options.resources.autocomplete.length === 0) {
             this.options.resources.autocomplete = ["PositionOfInterest", "StreetAddress"];

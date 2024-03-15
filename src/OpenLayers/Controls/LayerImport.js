@@ -1227,9 +1227,8 @@ var LayerImport = (function (Control) {
                             vectorSource = new VectorTileSource({
                                 attributions : _glSource.attribution,
                                 format : vectorFormat,
-                                  // INFO 
-                                // on supprime la grille pour forcer l'utilisation par defaut des tuiles en 512
-                                // sur du vecteur tuilé
+                                // INFO
+                                // surcharge : grille en 256 sur du vecteur tuilé
                                 tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
                                     extent : _glSource.bounds, // [minx, miny, maxx, maxy]
                                     maxZoom : _glSource.maxzoom || 22,
@@ -1295,9 +1294,8 @@ var LayerImport = (function (Control) {
                                     vectorSource = new VectorTileSource({
                                         attributions : vectorTileJson.getAttributions() || _tileJSONDoc.attribution,
                                         format : vectorFormat,
-                                        // INFO 
-                                        // on supprime la grille pour forcer l'utilisation par defaut des tuiles en 512
-                                        // sur du vecteur tuilé
+                                        // INFO
+                                        // surcharge : grille en 256 sur du vecteur tuilé
                                         tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
                                             extent : _glSource.bounds, // [minx, miny, maxx, maxy]
                                             maxZoom : _glSource.maxzoom || 22,
