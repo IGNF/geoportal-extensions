@@ -7,7 +7,7 @@ var logger = Logger.getLogger("layer-event");
 /**
  * @classdesc
  *
- * Evenement sur les couches Geoportail
+ * Evenement sur les couches Geoplateforme
  * @private
  */
 /** @type {LayerEvent} */

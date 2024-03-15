@@ -7,108 +7,108 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- toc -->
 
-- [Extension Geoportail iTowns, version 1.0.0](#extension-geoportail-itowns-version-100)
+- [Extension Geoplateforme Itowns, version 1.0.0](#extension-geoportail-itowns-version-100)
   * [Changelog](#changelog)
-- [Extension Geoportail Itowns, version 1.1.0](#extension-geoportail-itowns-version-110)
+- [Extension Geoplateforme Itowns, version 1.1.0](#extension-geoportail-itowns-version-110)
   * [Summary](#summary)
   * [Changelog](#changelog-1)
-- [Extension Geoportail Itowns, version 2.0.0](#extension-geoportail-itowns-version-200)
+- [Extension Geoplateforme Itowns, version 2.0.0](#extension-geoportail-itowns-version-200)
   * [Summary](#summary-1)
-- [Extension Geoportail Itowns, version 2.1.0](#extension-geoportail-itowns-version-210)
+- [Extension Geoplateforme Itowns, version 2.1.0](#extension-geoportail-itowns-version-210)
   * [Summary](#summary-2)
   * [Changelog](#changelog-2)
-- [Extension Geoportail Itowns, version 2.1.1](#extension-geoportail-itowns-version-211)
+- [Extension Geoplateforme Itowns, version 2.1.1](#extension-geoportail-itowns-version-211)
   * [Summary](#summary-3)
   * [Changelog](#changelog-3)
 - [Extension Géoportail pour Itowns, version 2.1.2](#extension-geoportail-pour-itowns-version-212)
   * [Summary](#summary-4)
-- [Extension Geoportail Itowns, version 2.2.1](#extension-geoportail-itowns-version-221)
+- [Extension Geoplateforme Itowns, version 2.2.1](#extension-geoportail-itowns-version-221)
   * [Summary](#summary-5)
   * [Changelog](#changelog-4)
-- [Extension Geoportail Itowns, version 2.2.2](#extension-geoportail-itowns-version-222)
+- [Extension Geoplateforme Itowns, version 2.2.2](#extension-geoportail-itowns-version-222)
   * [Summary](#summary-6)
   * [Changelog](#changelog-5)
-- [Extension Geoportail Itowns, version 2.2.3](#extension-geoportail-itowns-version-223)
+- [Extension Geoplateforme Itowns, version 2.2.3](#extension-geoportail-itowns-version-223)
   * [Summary](#summary-7)
   * [Changelog](#changelog-6)
-- [Extension Geoportail Itowns, version 2.2.4](#extension-geoportail-itowns-version-224)
+- [Extension Geoplateforme Itowns, version 2.2.4](#extension-geoportail-itowns-version-224)
   * [Summary](#summary-8)
   * [Changelog](#changelog-7)
-- [Extension Geoportail Itowns, version 2.2.5](#extension-geoportail-itowns-version-225)
+- [Extension Geoplateforme Itowns, version 2.2.5](#extension-geoportail-itowns-version-225)
   * [Summary](#summary-9)
   * [Changelog](#changelog-8)
-- [Extension Geoportail Itowns, version 2.2.6](#extension-geoportail-itowns-version-226)
+- [Extension Geoplateforme Itowns, version 2.2.6](#extension-geoportail-itowns-version-226)
   * [Summary](#summary-10)
   * [Changelog](#changelog-9)
-- [Extension Geoportail Itowns, version 2.2.7](#extension-geoportail-itowns-version-227)
+- [Extension Geoplateforme Itowns, version 2.2.7](#extension-geoportail-itowns-version-227)
   * [Summary](#summary-11)
   * [Changelog](#changelog-10)
-- [Extension Geoportail Itowns, version 2.2.8](#extension-geoportail-itowns-version-228)
+- [Extension Geoplateforme Itowns, version 2.2.8](#extension-geoportail-itowns-version-228)
   * [Summary](#summary-12)
   * [Changelog](#changelog-11)
-- [Extension Geoportail Itowns, version 2.2.9](#extension-geoportail-itowns-version-229)
+- [Extension Geoplateforme Itowns, version 2.2.9](#extension-geoportail-itowns-version-229)
   * [Summary](#summary-13)
   * [Changelog](#changelog-12)
-- [Extension Geoportail Itowns, version 2.1.0](#extension-geoportail-itowns-version-210-1)
+- [Extension Geoplateforme Itowns, version 2.1.0](#extension-geoportail-itowns-version-210-1)
   * [Summary](#summary-14)
   * [Changelog](#changelog-13)
-- [Extension Geoportail Itowns, version 2.3.1](#extension-geoportail-itowns-version-231)
+- [Extension Geoplateforme Itowns, version 2.3.1](#extension-geoportail-itowns-version-231)
   * [Summary](#summary-15)
   * [Changelog](#changelog-14)
-- [Extension Geoportail Itowns, version 2.3.2](#extension-geoportail-itowns-version-232)
+- [Extension Geoplateforme Itowns, version 2.3.2](#extension-geoportail-itowns-version-232)
   * [Summary](#summary-16)
   * [Changelog](#changelog-15)
-- [Extension Geoportail Itowns, version 2.3.3](#extension-geoportail-itowns-version-233)
+- [Extension Geoplateforme Itowns, version 2.3.3](#extension-geoportail-itowns-version-233)
   * [Summary](#summary-17)
   * [Changelog](#changelog-16)
-- [Extension Geoportail Itowns, version 2.3.4](#extension-geoportail-itowns-version-234)
+- [Extension Geoplateforme Itowns, version 2.3.4](#extension-geoportail-itowns-version-234)
   * [Summary](#summary-18)
   * [Changelog](#changelog-17)
-- [Extension Geoportail Itowns, version 2.3.5](#extension-geoportail-itowns-version-235)
+- [Extension Geoplateforme Itowns, version 2.3.5](#extension-geoportail-itowns-version-235)
   * [Summary](#summary-19)
   * [Changelog](#changelog-18)
-- [Extension Geoportail Itowns, version 2.3.6](#extension-geoportail-itowns-version-236)
+- [Extension Geoplateforme Itowns, version 2.3.6](#extension-geoportail-itowns-version-236)
   * [Summary](#summary-20)
   * [Changelog](#changelog-19)
-- [Extension Geoportail Itowns, version 2.3.7](#extension-geoportail-itowns-version-237)
+- [Extension Geoplateforme Itowns, version 2.3.7](#extension-geoportail-itowns-version-237)
   * [Summary](#summary-21)
   * [Changelog](#changelog-20)
-- [Extension Geoportail Itowns, version 2.3.8](#extension-geoportail-itowns-version-238)
+- [Extension Geoplateforme Itowns, version 2.3.8](#extension-geoportail-itowns-version-238)
   * [Summary](#summary-22)
   * [Changelog](#changelog-21)
-- [Extension Geoportail Itowns, version 2.3.9](#extension-geoportail-itowns-version-239)
+- [Extension Geoplateforme Itowns, version 2.3.9](#extension-geoportail-itowns-version-239)
   * [Summary](#summary-23)
   * [Changelog](#changelog-22)
-- [Extension Geoportail Itowns, version 2.3.10](#extension-geoportail-itowns-version-2310)
+- [Extension Geoplateforme Itowns, version 2.3.10](#extension-geoportail-itowns-version-2310)
   * [Summary](#summary-24)
   * [Changelog](#changelog-23)
-- [Extension Geoportail Itowns, version 2.3.11](#extension-geoportail-itowns-version-2311)
+- [Extension Geoplateforme Itowns, version 2.3.11](#extension-geoportail-itowns-version-2311)
   * [Summary](#summary-25)
   * [Changelog](#changelog-24)
-- [Extension Geoportail Itowns, version 2.4.0](#extension-geoportail-itowns-version-240)
+- [Extension Geoplateforme Itowns, version 2.4.0](#extension-geoportail-itowns-version-240)
   * [Summary](#summary-26)
   * [Changelog](#changelog-25)
         * [Avant :](#avant-)
         * [Maintenant :](#maintenant-)
-- [Extension Geoportail Itowns, version 2.4.1](#extension-geoportail-itowns-version-241)
+- [Extension Geoplateforme Itowns, version 2.4.1](#extension-geoportail-itowns-version-241)
   * [Summary](#summary-27)
   * [Changelog](#changelog-26)
-- [Extension Geoportail Itowns, version 2.4.2](#extension-geoportail-itowns-version-242)
+- [Extension Geoplateforme Itowns, version 2.4.2](#extension-geoportail-itowns-version-242)
   * [Summary](#summary-28)
   * [Changelog](#changelog-27)
-- [Extension Geoportail Itowns, version 2.4.3](#extension-geoportail-itowns-version-243)
+- [Extension Geoplateforme Itowns, version 2.4.3](#extension-geoportail-itowns-version-243)
   * [Summary](#summary-29)
   * [Changelog](#changelog-28)
-- [Extension Geoportail Itowns, version 2.5.0-beta](#extension-geoportail-itowns-version-250-beta)
+- [Extension Geoplateforme Itowns, version 2.5.0-beta](#extension-geoportail-itowns-version-250-beta)
   * [Summary](#summary-30)
   * [Changelog](#changelog-29)
-- [Extension Geoportail Itowns, version 2.5.0-beta2](#extension-geoportail-itowns-version-250-beta2)
+- [Extension Geoplateforme Itowns, version 2.5.0-beta2](#extension-geoportail-itowns-version-250-beta2)
   * [Summary](#summary-31)
   * [Changelog](#changelog-30)
-- [Extension Geoportail Itowns, version 2.5.0-beta3](#extension-geoportail-itowns-version-250-beta3)
+- [Extension Geoplateforme Itowns, version 2.5.0-beta3](#extension-geoportail-itowns-version-250-beta3)
   * [Summary](#summary-32)
   * [Changelog](#changelog-31)
-- [Extension Geoportail Itowns, version 2.5.0-beta4](#extension-geoportail-itowns-version-250-beta4)
+- [Extension Geoplateforme Itowns, version 2.5.0-beta4](#extension-geoportail-itowns-version-250-beta4)
   * [Summary](#summary-33)
   * [Changelog](#changelog-32)
 
@@ -116,7 +116,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail iTowns, version 1.0.0
+# Extension Geoplateforme Itowns, version 1.0.0
 
 **14/03/2018 : 1.0.0** release of the Geoportal Extension for iTowns
 
@@ -134,9 +134,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail Itowns, version 1.1.0
+# Extension Geoplateforme Itowns, version 1.1.0
 
-**09/04/2018 : 1.1.0** Release Extension Geoportail Itowns
+**09/04/2018 : 1.1.0** Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -150,9 +150,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail Itowns, version 2.0.0
+# Extension Geoplateforme Itowns, version 2.0.0
 
-**10/04/2018 : 2.0.0** Release Extension Geoportail Itowns
+**10/04/2018 : 2.0.0** Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -160,9 +160,9 @@ Migration du projet sous [Webpack](http://webpack.github.io/) ainsi que les sour
 
 ---
 
-# Extension Geoportail Itowns, version 2.1.0
+# Extension Geoplateforme Itowns, version 2.1.0
 
-**10/08/2018 : 2.1.0** Release Extension Geoportail Itowns
+**10/08/2018 : 2.1.0** Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -186,9 +186,9 @@ Documentation :
 
 ---
 
-# Extension Geoportail Itowns, version 2.1.1
+# Extension Geoplateforme Itowns, version 2.1.1
 
-**03/09/2018 : 2.1.1** Release Extension Geoportail Itowns
+**03/09/2018 : 2.1.1** Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -215,10 +215,10 @@ Version 2.1.2 de l'extension Géoportail pour Itowns :
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.1
+# Extension Geoplateforme Itowns, version 2.2.1
 
 **05/09/2019 : version 2.2.1**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -261,10 +261,10 @@ Version 2.1.2 de l'extension Géoportail pour Itowns :
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.2
+# Extension Geoplateforme Itowns, version 2.2.2
 
 **09/09/2019**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -283,10 +283,10 @@ Version 2.1.2 de l'extension Géoportail pour Itowns :
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.3
+# Extension Geoplateforme Itowns, version 2.2.3
 
 **24/09/2019**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -304,10 +304,10 @@ Version 2.1.2 de l'extension Géoportail pour Itowns :
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.4
+# Extension Geoplateforme Itowns, version 2.2.4
 
 **16/10/2019**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -323,10 +323,10 @@ Version 2.1.2 de l'extension Géoportail pour Itowns :
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.5
+# Extension Geoplateforme Itowns, version 2.2.5
 
 **22/11/2019**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -341,10 +341,10 @@ Mise à jour d'iTowns pour l'ajout de couche vecteur tuilé via les extensions G
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.6
+# Extension Geoplateforme Itowns, version 2.2.6
 
 **24/01/2020**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -360,10 +360,10 @@ Mise à jour d'iTowns pour l'ajout de couche vecteur tuilé via les extensions G
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.7
+# Extension Geoplateforme Itowns, version 2.2.7
 
 **06/03/2020**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -381,10 +381,10 @@ Mise à jour des dépendances iTowns et ajout d'un sniffer de requêtes
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.8
+# Extension Geoplateforme Itowns, version 2.2.8
 
 **26/03/2020**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -400,10 +400,10 @@ Correction majeure sur les interactions de la souris avec les controles 3D, et a
 
 ---
 
-# Extension Geoportail Itowns, version 2.2.9
+# Extension Geoplateforme Itowns, version 2.2.9
 
 **02/04/2020**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -417,9 +417,9 @@ Correction majeure sur les interactions de la souris avec les controles 3D, et a
 
 ---
 
-# Extension Geoportail Itowns, version 2.1.0
+# Extension Geoplateforme Itowns, version 2.1.0
 
-**10/08/2018 : 2.1.0** Release Extension Geoportail Itowns
+**10/08/2018 : 2.1.0** Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -442,10 +442,10 @@ Documentation :
 * Mise à jour de la documentation des fichiers README : version des releases, liens d'accès direct, documentation des widgets d'échelle et du miniglobe
 
 ---
-# Extension Geoportail Itowns, version 2.3.1
+# Extension Geoplateforme Itowns, version 2.3.1
 
 **12/02/2021**
-> Release Extension Geoportail Itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -469,10 +469,10 @@ Documentation :
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.2
+# Extension Geoplateforme Itowns, version 2.3.2
 
 **30/03/2021**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -498,14 +498,14 @@ Documentation :
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.3
+# Extension Geoplateforme Itowns, version 2.3.3
 
 **16/06/2021**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
-Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
+Mise à jour de l'extension géoplateforme pour iTowns avec itowns en version 2.33
 
 ## Changelog
 
@@ -524,10 +524,10 @@ Mise à jour de l'extension géoportail pour iTowns avec itowns en version 2.33
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.4
+# Extension Geoplateforme Itowns, version 2.3.4
 
 **03/12/2021**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -550,10 +550,10 @@ Utilisation de plusieurs clefs
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.5
+# Extension Geoplateforme Itowns, version 2.3.5
 
 **13/01/2022**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -576,10 +576,10 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.6
+# Extension Geoplateforme Itowns, version 2.3.6
 
 **04/03/2022**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -602,10 +602,10 @@ iTowns version 2.37 et mise à jour des dépendances threejs et proj4
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.7
+# Extension Geoplateforme Itowns, version 2.3.7
 
 **01/08/2022**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -631,14 +631,14 @@ Mise à jour d'iTowns en version 2.38.2 et ajout d'un control de visualisation d
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.8
+# Extension Geoplateforme Itowns, version 2.3.8
 
 **04/10/2022**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès aux services Geoportail
+Mise à jour de la bibliothèque d'accès aux services Geoplateforme
 
 ## Changelog
 
@@ -657,10 +657,10 @@ Mise à jour de la bibliothèque d'accès aux services Geoportail
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.9
+# Extension Geoplateforme Itowns, version 2.3.9
 
 **04/10/2022**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -679,10 +679,10 @@ Mise à jour de la bibliothèque d'accès aux services Geoportail
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.10
+# Extension Geoplateforme Itowns, version 2.3.10
 
 **17/01/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -709,10 +709,10 @@ Ajout des déclarations typescript
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.3.11
+# Extension Geoplateforme Itowns, version 2.3.11
 
 **01/06/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -736,13 +736,13 @@ Requete du service alti via les widgets de mousePosition et de profil alti
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.4.0
+# Extension Geoplateforme Itowns, version 2.4.0
 **07/06/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
-Retrait total de l'utilisation du service d'autoconfiguration et utilisation de fichiers de configuration json générés quotidiennement à partir des getCapabilities des services du Geoportail.
+Retrait total de l'utilisation du service d'autoconfiguration et utilisation de fichiers de configuration json générés quotidiennement à partir des getCapabilities des services du Geoplatform.
 
 L'ensemble des services de calcul appelés via la bibliothèque d'accès sont désormais appelés avec la clé "calcul" par défaut dans la bibliothèque d'accès. Le paramètre "apiKey" n'est donc plus nécessaire pour appeler les services de géocodage, d'itinéraire, d'isochrone, d'altimétrie et d'autocomplétion, que ce soit directement depuis la bibliothèque d'accès ou via les widgets des extensions Géoportail.
 
@@ -759,7 +759,7 @@ Il est également possible de générer son propre fichier de configuration à p
 * [Added]
 
 * [Changed]
-    - mise à jour de la bibliothèque d'accès aux services Geoportail en version 3.3.0 (#364)
+    - mise à jour de la bibliothèque d'accès aux services Geoplatform en version 3.3.0 (#364)
     - **BC** : paramètre "customConfigFile" pour appeler un fichier de configuration local (#364)
 ##### Avant :
 ```html
@@ -791,7 +791,7 @@ Gp.Services.getConfig({
 * [Removed]
     - **BC** : les originators ne sont plus renvoyés dans la configuration. Il faut les ajouter manuellement aux couches. 
 ```javascript
-// Couche WMTS Geoportail
+// Couche WMTS Geoplatform
 globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
     layer: "ORTHOIMAGERY.ORTHOPHOTOS",
     itownsParams: {
@@ -832,7 +832,7 @@ globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
 ```
    - **BC** : Les metadatas sont utilisées dans les API par le contrôle gestionnaire de couches (LayerSwitcher). Celui-ci va lire les metadatas des couches ajoutées à la carte et les afficher dans l'encart d'information dédié du LayerSwitcher. **Pour les couches WMTS uniquement**, désormais, pour que les metadatas apparaissent dans l'onglet "informations" du LayerSwitcher, il faudra les renseigner manuellement à la configuration de la couche Géoportail lors de son ajout à la carte.
 ```javascript
-// Couche WMTS Geoportail
+// Couche WMTS Geoplatform
 globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
     layer: "ORTHOIMAGERY.ORTHOPHOTOS",
     ssl: true,
@@ -850,10 +850,10 @@ globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.4.1
+# Extension Geoplateforme Itowns, version 2.4.1
 
 **07/06/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -872,10 +872,10 @@ globeView.addLayer(new Gp.itownsExtended.layer.GeoportalWMTS({
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.4.2
+# Extension Geoplateforme Itowns, version 2.4.2
 
 **21/07/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -898,10 +898,10 @@ Mise à jour de la version de la bibliothèque d'accès 3.3.2
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.4.3
+# Extension Geoplateforme Itowns, version 2.4.3
 
 **04/08/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -925,10 +925,10 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.5.0-beta
+# Extension Geoplateforme Itowns, version 2.5.0-beta
 
 **21/09/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -951,10 +951,10 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.5.0-beta2
+# Extension Geoplateforme Itowns, version 2.5.0-beta2
 
 **27/10/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -978,10 +978,10 @@ Utilisation du service de Geocodage de la Geoplateforme
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.5.0-beta3
+# Extension Geoplateforme Itowns, version 2.5.0-beta3
 
 **21/11/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 
@@ -1004,10 +1004,10 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Security]
 
 ---
-# Extension Geoportail Itowns, version 2.5.0-beta4
+# Extension Geoplateforme Itowns, version 2.5.0-beta4
 
 **14/12/2023**
-> Release Extension Geoportail itowns
+> Release Extension Geoplateforme Itowns
 
 ## Summary
 

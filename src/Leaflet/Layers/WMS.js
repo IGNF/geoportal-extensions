@@ -47,7 +47,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
      * @param {String} options.paramsWms.version - "1.3.0"
      * @param {Object} [options.paramsNative] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
      * @example
-     * var wms = new WMS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms", {
+     * var wms = new WMS("https://data.geopf.fr/wms-r/wms", {
      *     paramsNative : {
      *         minZoom : 1,
      *         maxZoom : 21

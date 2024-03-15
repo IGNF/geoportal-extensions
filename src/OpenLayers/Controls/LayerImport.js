@@ -1980,7 +1980,7 @@ var LayerImport = (function (Control) {
         // Info : on ajoute des paramètres uniquement si l'utilisateur n'en a pas déjà saisi (on vérifie la position du caractère "?")
         var questionMarkIndex = url.indexOf("?");
         if (questionMarkIndex < 0) {
-            // dans le cas d'une url du type http://wxs.ign.fr/geoportail/wmts
+            // dans le cas d'une url du type https://data.geopf.fr/wmts
             url += "?SERVICE=" + this._currentImportType + "&REQUEST=GetCapabilities";
         } else if (questionMarkIndex === (url.length - 1)) {
             // dans le cas où l'url se termine par "?"

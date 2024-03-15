@@ -7,7 +7,7 @@ var logger = Logger.getLogger("layer-config");
 /**
  * @classdesc
  *
- * Configuration des couches Geoportail via l'appel de la configuration.
+ * Configuration des couches Geoplateforme via l'appel de la configuration.
  * @private
  */
 var LayerConfig = {

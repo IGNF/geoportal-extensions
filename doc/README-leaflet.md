@@ -1,17 +1,17 @@
-# Extension Géoportail pour Leaflet
+# Extension Géoplateforme pour Leaflet
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?filename=build%2Fscripts%2Frelease%2Fpackage-leaflet.json)
 
 <!-- toc -->
 
-- [Extension Géoportail pour Leaflet](#extension-géoportail-pour-leaflet)
+- [Extension Géoplateforme pour Leaflet](#extension-géoplateforme-pour-leaflet)
   - [Mise en oeuvre](#mise-en-oeuvre)
     - [Téléchargement](#téléchargement)
       - [Téléchargement direct](#téléchargement-direct)
       - [Récupération avec NPM](#récupération-avec-npm)
       - [Accès direct](#accès-direct)
     - [Intégration dans une page web](#intégration-dans-une-page-web)
-    - [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
+    - [Configuration de l'accès à la Géoplateforme](#configuration-de-laccès-à-la-géoplateforme)
       - [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
     - [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
   - [Compatibilités](#compatibilités)
@@ -19,11 +19,11 @@
     - [Navigateurs supportés](#navigateurs-supportés)
   - [Fonctionnalités](#fonctionnalités)
     - [Systèmes de coordonnées](#systèmes-de-coordonnées)
-    - [Affichage des couche WMTS Géoportail](#affichage-des-couche-wmts-géoportail)
+    - [Affichage des couche WMTS Géoplateforme](#affichage-des-couche-wmts-géoplateforme)
       - [Exemples d'utilisation](#exemples-dutilisation)
       - [Utilisation simple de la fonction](#utilisation-simple-de-la-fonction)
       - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154)
-    - [Affichage des couche WMS Géoportail](#affichage-des-couche-wms-géoportail)
+    - [Affichage des couche WMS Géoplateforme](#affichage-des-couche-wms-géoplateforme)
     - [Exemple d'utilisation](#exemple-dutilisation)
       - [Utilisation simple de la fonction](#utilisation-simple-de-la-fonction-1)
     - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
@@ -53,11 +53,11 @@
 
 <a name="readme-top"></a>
 
-L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
+L'extension Géoplateforme pour Leaflet propose les fonctionnalités suivantes à utiliser en complément de la biblothèque [Leaflet](http://leafletjs.com/) :
 
-* [affichage des couches WMTS Géoportail](#WMTS)
+* [affichage des couches WMTS Géoplateforme](#WMTS)
 
-* [affichage des couches WMS Géoportail](#WMS)
+* [affichage des couches WMS Géoplateforme](#WMS)
 
 * [widget de gestion d'empilement des couches](#layerswitcher)
 
@@ -65,24 +65,24 @@ L'extension Géoportail pour Leaflet propose les fonctionnalités suivantes à u
 
 * [obtention d'une adresse, d'un nom de lieu, ... au clic sur la carte](#reverse)
 
-* [calculs d'itinéraires à partir du service de la plateforme Géoportail](#route)
+* [calculs d'itinéraires à partir du service de la Géoplateforme](#route)
 
-* [calculs d'isochrones / isodistances à partir du service de la plateforme Géoportail](#isocurve)
+* [calculs d'isochrones / isodistances à partir du service de la Géoplateforme](#isocurve)
 
-* [altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
+* [altitude en un point de la carte à l'aide du service d'altimétrie de la Géoplateforme](#mp)
 
-* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
+* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la Géoplateforme](#ep)
 
 
 ## Mise en oeuvre
 
-L'utilisation de l'extension Géoportail pour Leaflet se fait via les étapes suivantes :
+L'utilisation de l'extension Géoplateforme pour Leaflet se fait via les étapes suivantes :
 
-* [Téléchargement de l'extension Géoportail](#download)
+* [Téléchargement de l'extension Géoplateforme](#download)
 
 * [Intégration de l'extension dans une page web](#integration)
 
-* [Configuration de l'accès à la plateforme Géoportail](#config)
+* [Configuration de l'accès à la Géoplateforme](#config)
 
 Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
@@ -90,9 +90,9 @@ Une documentation technique (**jsdoc**), une **demo** et un **generateur de cart
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour Leaflet soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
+Vous pouvez récupérer l'extension Géoplateforme pour Leaflet soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
 
-L'extension Géoportail pour Leaflet comprend l'arborescence de fichiers suivante :
+L'extension Géoplateforme pour Leaflet comprend l'arborescence de fichiers suivante :
 
 ```
     GpPluginLeaflet.js         (version minifiée du code javascript pour une utilisation en production)
@@ -109,7 +109,7 @@ Les scripts de Leaflet s'obtiennent sur [la page de téléchargement de Leaflet]
 
 #### Téléchargement direct
 
-Vous pouvez télécharger la dernière version de l'extension Géoportail pour Leaflet directement sur [la page des releases des extensions Géoportail](https://github.com/IGNF/geoportal-extensions/releases).
+Vous pouvez télécharger la dernière version de l'extension Géoplateforme pour Leaflet directement sur [la page des releases des extensions Géoplateforme](https://github.com/IGNF/geoportal-extensions/releases).
 
 L'archive téléchargée (GpLeaflet.zip) comprend l'arborescence décrite ci-dessus.
 
@@ -119,7 +119,7 @@ L'archive téléchargée (GpLeaflet.zip) comprend l'arborescence décrite ci-des
 
 #### Récupération avec NPM
 
-L'extension Géoportail pour Leaflet est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-leaflet).
+L'extension Géoplateforme pour Leaflet est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-leaflet).
 
 Prérequis : [NodeJS](https://nodejs.org/en/) et [npm](https://www.npmjs.com/) installés.
 
@@ -146,16 +146,16 @@ http://ignf.github.io/geoportal-extensions/leaflet-latest/dist/GpPluginLeaflet-s
 
 ### Intégration dans une page web
 
-Dézippez l'extension géoportail dans l'arborescence de votre serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
+Dézippez l'extension géoplateforme dans l'arborescence de votre serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
 
-Intégrez l'extension géoportail pour leaflet dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque Leaflet.
+Intégrez l'extension géoplateforme pour leaflet dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque Leaflet.
 
 ``` html
 <!-- Library Leaflet -->
 <link rel="stylesheet" href="chemin/vers/leaflet/leaflet.css" />
 <script src="chemin/vers/leaflet/leaflet.js"></script>
 
-<!-- Extension Géoportail pour Leaflet -->
+<!-- Extension Géoplateforme pour Leaflet -->
 <script src="chemin/vers/GpPluginLeaflet.js"></script>
 <link rel="stylesheet" href="chemin/vers/GpPluginLeaflet.css" />
 ```
@@ -164,25 +164,29 @@ Intégrez l'extension géoportail pour leaflet dans votre page web classiquement
 
 <a id="config"/>
 
-### Configuration de l'accès à la plateforme Géoportail
+### Configuration de l'accès à la Géoplateforme
 
-L'extension Géoportail pour Leaflet exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'utilisation d'une ou de plusieurs **clef d'accès** gratuites disponibles sur le site [geoservices.ign.fr](https://geoservices.ign.fr/services-web) ayant les droits sur les ressources que vous souhaitez exploiter.
+L'extension Géoplateforme pour Leaflet exploite les services web exposés par la Géoplateforme. Ceux-ci sont en libre accès.
 
-Vous pouvez ensuite paramétrer l'utilisation de l'extension avec la ou les clefs qui correspondent à vos besoins de deux manières possibles :
+Vous pouvez cependant paramétrer l'utilisation de l'extension avec une ou plusieurs thématiques Géoplateforme qui correspondent à vos besoins en générant un fichier de configuration local à partir de [cette interface](https://geoplateforme-configuration.onrender.com/) ou en passant par le paramètre apiKey.
+
+Si ni apiKey, ni fichier de configuration local n'est spécifié, l'utilisateur récupérera une configuration complète avec toutes les ressources de la Géoplateforme (qui pourra donc être très volumineuse).
+
+Vous pouvez configurer les extensions des manières suivantes :
 
 **Méthode 1** : Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
 ``` html
-<script data-key="CLEF" src="chemin/vers/GpPluginLeaflet.js"></script>
+<script data-key="THEME" src="chemin/vers/GpPluginLeaflet.js"></script>
 ```
 
-Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
+Thèmes multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
 
 ``` html
-<script data-key="CLEF-1,CLEF-2,CLEF-3" src="chemin/vers/GpPluginLeaflet.js"></script>
+<script data-key="THEME-1,THEME-2,THEME-3" src="chemin/vers/GpPluginLeaflet.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoplateforme sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -190,14 +194,14 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <!-- Library Leaflet -->
         <link rel="stylesheet" href="leaflet.css" />
         <script src="leaflet.js"></script>
-        <!-- Extension Géoportail pour Leaflet -->
+        <!-- Extension Géoplateforme pour Leaflet -->
         <link rel="stylesheet" href="GpPluginLeaflet.css" />
-        <script src="GpPluginLeaflet.js" data-key="CLEF"></script>
+        <script src="GpPluginLeaflet.js" data-key="THEME"></script>
     </head>
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour Leaflet
+                // votre utilisation de l'extension Géoplateforme pour Leaflet
             }
         </script>
     </body>
@@ -212,7 +216,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <!-- Library Leaflet -->
         <link rel="stylesheet" href="leaflet.css" />
         <script src="leaflet.js"></script>
-        <!-- Extension Géoportail pour Leaflet -->
+        <!-- Extension Géoplateforme pour Leaflet -->
         <link rel="stylesheet" href="GpPluginLeaflet.css" />
         <script src="GpPluginLeaflet.js"></script>
     </head>
@@ -220,9 +224,9 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEF',
+                    apiKey: 'THEME',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour Leaflet
+                        // votre utilisation de l'extension Géoplateforme pour Leaflet
                     }
                 });
             }
@@ -232,7 +236,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 ```
 
 
-Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+Thèmes multiples : Si vous devez utiliser plusieurs thèmatiques, il est possible de mettre une liste de thèmes dans l'attribut apiKey de la fonction getConfig :
 
 
 ``` html
@@ -241,7 +245,7 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <!-- Bibliothèque Leaflet -->
         <link rel="stylesheet" href="leaflet.css" />
         <script src="leaflet.js"></script>
-        <!-- Extension Géoportail pour Leaflet -->
+        <!-- Extension Géoplateforme pour Leaflet -->
         <link rel="stylesheet" href="GpPluginLeaflet.css" />
         <script src="GpPluginLeaflet.js"></script>
     </head>
@@ -249,9 +253,9 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEF-1,CLEF-2,CLEF-3',
+                    apiKey: 'THEME-1,THEME-2,THEME-3',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour Leaflet 
+                        // votre utilisation de l'extension Géoplateforme pour Leaflet 
                     }
                 });
             }
@@ -264,17 +268,17 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 
 #### Optimisation du chargement : configuration locale
 
-Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [du formulaire de ce tutoriel](https://geoportal-configuration.onrender.com/).
+Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme un fichier de configuration Géoplateforme, qui contient les information nécéssaires des ressources que vous souhaitez utiliser uniquement. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [de cet utilitaire en ligne](https://geoplateforme-configuration.onrender.com/).
 
-Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
+Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoplateforme de la manière suivante (selon les méthodes citées précédemment) :
 
 **Méthode 1** : Utilisez l'attribut "data-url" de la balise **script** chargeant l'extension pour pointer vers votre fichier :
 
 ``` html
-<script data-url="chemin/vers/customConfig.json" src="chemin/vers/GpPluginItowns.js"></script>
+<script data-url="chemin/vers/customConfig.json" src="chemin/vers/GpPluginLeaflet.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoplateforme sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -286,7 +290,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour Leaflet
+                // votre utilisation de l'extension Géoplateforme pour Leaflet
             }
         </script>
     </body>
@@ -306,7 +310,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
                     customConfigFile: 'chemin/vers/customConfig.json',
                     callbackSuffix : '',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour Leaflet
+                        // votre utilisation de l'extension Géoplateforme pour Leaflet
                     }
                 });
             }
@@ -362,7 +366,7 @@ Gp.Services.getConfig(...)
 
 ### Versions de Leaflet supportées
 
-L'extension Géoportail pour Leaflet peut s'utiliser avec les versions de Leaflet suivantes :
+L'extension Géoplateforme pour Leaflet peut s'utiliser avec les versions de Leaflet suivantes :
 * [version 0.7.X](http://leafletjs.com/reference-0.7.7.html)
 * [version 1.0.X](http://leafletjs.com/reference-1.0.3.html)
 * [version 1.2.X](http://leafletjs.com/reference-1.2.0.html)
@@ -395,7 +399,7 @@ Safari     | Versions récentes (6.1+)
 
 Leaflet utilise par défaut les systèmes de coordonnées mondiaux "standards" dont on peut trouver la liste [ici](http://leafletjs.com/reference.html#icrs).
 
-L'extension Géoportail pour Leaflet embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
+L'extension Géoplateforme pour Leaflet embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
 Il est possible d'appeler ces projections avec le mécanisme de Leaflet.
 
 Exemple :
@@ -408,7 +412,7 @@ var LAMB93 = new L.Proj.CRS('IGNF:LAMB93');
 
 La définition d'autres systèmes de coordonnées est cependant possible par l'adjonction de deux bibliothèques [Proj4js](http://proj4js.org/) et [Proj4Leaflet](http://kartena.github.io/Proj4Leaflet/). La première permettant de définir des systèmes de coordonnées et d'effectuer des transformations de coordonnées entre systèmes ; la seconde permettant d'utiliser la première dans Leaflet.
 
-L'extension Géoportail pour Leaflet **intègre nativement ces deux bibliothèques**. Si vous l'utilisez vous pouvez donc directement définir les systèmes de coordonnées que vous souhaitez selon la syntaxe proj4 et en utilisant le mécanisme de Leaflet.
+L'extension Géoplateforme pour Leaflet **intègre nativement ces deux bibliothèques**. Si vous l'utilisez vous pouvez donc directement définir les systèmes de coordonnées que vous souhaitez selon la syntaxe proj4 et en utilisant le mécanisme de Leaflet.
 
 Exemple :
 
@@ -427,7 +431,7 @@ NB :
 
 
 
-L'extension Géoportail pour Leaflet définit par défaut la projection légale Lambert 93 (EPSG:2154) qu'elle expose sous la variable globale suivante.
+L'extension Géoplateforme pour Leaflet définit par défaut la projection légale Lambert 93 (EPSG:2154) qu'elle expose sous la variable globale suivante.
 
 ``` javascript
 L.geoportalCRS.EPSG2154
@@ -437,9 +441,9 @@ L.geoportalCRS.EPSG2154
 
 <a id="WMTS"/>
 
-### Affichage des couche WMTS Géoportail
+### Affichage des couche WMTS Géoplateforme
 
-L'affichage des couches WMTS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMTS()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Layers.html#.WMTS), utilisée de la manière suivante :
+L'affichage des couches WMTS Géoplateforme se fait à l'aide de la fonction [L.geoportalLayer.WMTS()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Layers.html#.WMTS), utilisée de la manière suivante :
 
 ``` javascript
 L.geoportalLayer.WMTS(options, [leafletParams]);
@@ -452,7 +456,7 @@ Cette fonction retourne un objet de type [L.TileLayer](http://leafletjs.com/refe
 
 #### Utilisation simple de la fonction
 
-Affichage simple des ortho-images du Géoportail : création d'une *layer* Géoportail, et ajout à la *map* Leaflet.
+Affichage simple des ortho-images du Géoplateforme : création d'une *layer* Géoplateforme, et ajout à la *map* Leaflet.
 
 ``` javascript
 // Création de la carte
@@ -475,7 +479,7 @@ lyr.addTo(map); // ou map.addLayer(lyr);
 
 #### Affichage en Lambert 93 (EPSG:2154)
 
-La plateforme Géoportail diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoportail pour Leaflet pré-définit la projection correspondante accessible via la constante :
+La Géoplateforme diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoplateforme pour Leaflet pré-définit la projection correspondante accessible via la constante :
 
 ``` javascript
 L.geoportalCRS.EPSG2154
@@ -506,9 +510,9 @@ NB : D'autres systèmes de coordonnées peuvent être définis : [plus d'informa
 
 <a id="WMS"/>
 
-### Affichage des couche WMS Géoportail
+### Affichage des couche WMS Géoplateforme
 
-L'affichage des couches WMS Géoportail se fait à l'aide de la fonction [L.geoportalLayer.WMS()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Layers.html#.WMS), utilisée de la manière suivante :
+L'affichage des couches WMS Géoplateforme se fait à l'aide de la fonction [L.geoportalLayer.WMS()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Layers.html#.WMS), utilisée de la manière suivante :
 
 ``` javascript
 L.geoportalLayer.WMS(options[,leafletParams]);
@@ -520,7 +524,7 @@ Cette fonction retourne un objet de type [L.TileLayer.WMS](http://leafletjs.com/
 
 #### Utilisation simple de la fonction
 
-Affichage des orthos-images servies par le service WMS INSPIRE de la plateforme Géoportail sur une carte Leaflet en projection EPSG:4326.
+Affichage des orthos-images servies par le service WMS INSPIRE de la plateforme Géoplateforme sur une carte Leaflet en projection EPSG:4326.
 
 ``` javascript
 // creation de la carte
@@ -557,7 +561,7 @@ Pour chaque couche de la carte L.Map, le widget affiche son titre et sa descript
 
 La récupération de ces informations n'est pas la même selon la manière dont chaque couche a été ajoutée à la carte :
 
-- Couches ajoutées via la [fonctionnalité d'affichage simple des couches WMS](#WMS) ou [WMTS du Géoportail](#WMTS) de l'extension pour Leaflet : ces informations sont disponibles car elles ont été chargées par lors de la [configuration de l'accès au Géoportail](#config), il n'y a donc rien à faire de particulier.
+- Couches ajoutées via la [fonctionnalité d'affichage simple des couches WMS](#WMS) ou [WMTS du Géoplateforme](#WMTS) de l'extension pour Leaflet : ces informations sont disponibles car elles ont été chargées par lors de la [configuration de l'accès au Géoplateforme](#config), il n'y a donc rien à faire de particulier.
 
 - Autres couches : afin d'afficher ces informations, il est nécessaire de les spécifier dans les options du widget.
 
@@ -571,7 +575,7 @@ Ajout du widget de gestion de l'empilement des couches sans paramétrage particu
 // Création de la carte
 var map = L.Map('divmap', {center: [2.38, 45.23] , zoom: 13});
 
-// création et ajout d'une cocuhe Géoportail
+// création et ajout d'une cocuhe Géoplateforme
 var lyr = L.geoportalLayer.WMTS({
     layer  : "ORTHOIMAGERY.ORTHOPHOTOS",
 });
@@ -624,7 +628,7 @@ map.addControl(
 
 La barre de recherche permet de positionner la carte à partir de la saisie d'un localisant dont la position sera retournée par le service de géocodage de l'IGN.
 
-La saisie de localisants peut s'accompagner d'un mode d'autocomplétion s'appuyant sur le service d'autocomplétion de la plateforme Géoportail.
+La saisie de localisants peut s'accompagner d'un mode d'autocomplétion s'appuyant sur le service d'autocomplétion de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.SearchEngine()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.SearchEngine), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
@@ -702,7 +706,7 @@ map.addControl(revCtrl);
 
 ### Calculs d'itinéraires
 
-Le widget de calcul d'itinéraires permet d'intéragir avec une carte Leaflet pour effectuer des calculs d'itinéraires utilisant le service dédié de la plateforme Géoportail.
+Le widget de calcul d'itinéraires permet d'intéragir avec une carte Leaflet pour effectuer des calculs d'itinéraires utilisant le service dédié de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.Route()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.Route), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
@@ -741,7 +745,7 @@ map.addControl(routeCtrl);
 
 ### Calculs d'isochrones / isodistances
 
-Ce widget permet d'intéragir avec une carte Leaflet pour effectuer des calculs d'isochrones / isodistances utilisant le service dédié de la plateforme Géoportail.
+Ce widget permet d'intéragir avec une carte Leaflet pour effectuer des calculs d'isochrones / isodistances utilisant le service dédié de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.Isocurve()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.Isocurve), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
@@ -780,7 +784,7 @@ map.addControl(isoCtrl);
 
 ### Altitude en un point de la carte
 
-Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte Leaflet dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte Leaflet dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.MousePosition()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.MousePosition), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 
@@ -825,7 +829,7 @@ map.addControl(mpCtrl);
 
 ### Profil altimétrique le long d'un traçé
 
-Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte Leaflet. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte Leaflet. Le profil est calculé à l'aide du service d'altimétrie de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle à l'aide de la fonction [L.geoportalControl.ElevationPath()](http://ignf.github.io/geoportal-extensions/leaflet-latest/jsdoc/module-Controls.html#.ElevationPath), que l'on peut ensuite ajouter à la carte comme [les autres contrôles Leaflet](http://leafletjs.com/reference.html#map-stuff-methods), par exemple de la manière suivante :
 

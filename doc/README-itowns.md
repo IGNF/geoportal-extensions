@@ -1,17 +1,17 @@
-# Extension Géoportail pour iTowns
+# Extension Géoplateforme pour iTowns
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?display_name=release&filename=build%2Fscripts%2Frelease%2Fpackage-itowns.json)
 
 <!-- toc -->
 
-- [Extension Géoportail pour iTowns](#extension-géoportail-pour-itowns)
+- [Extension Géoplateforme pour iTowns](#extension-géoplateforme-pour-itowns)
   - [Mise en oeuvre](#mise-en-oeuvre)
     - [Téléchargement](#téléchargement)
       - [Téléchargement direct](#téléchargement-direct)
       - [Récupération avec NPM](#récupération-avec-npm)
       - [Accès direct](#accès-direct)
     - [Intégration dans une page web](#intégration-dans-une-page-web)
-    - [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
+    - [Configuration de l'accès à la Géoplateforme](#configuration-de-laccès-à-la-géoplateforme)
       - [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
     - [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
   - [Compatibilités](#compatibilités)
@@ -20,23 +20,23 @@
     - [Limitations liées aux processeurs graphiques](#limitations-liées-aux-processeurs-graphiques)
   - [Fonctionnalités](#fonctionnalités)
     - [Systèmes de coordonnées](#systèmes-de-coordonnées)
-    - [Affichage des couches WMTS Géoportail](#affichage-des-couches-wmts-géoportail)
-      - [Utilisation de l'accès privilégié aux couches WMTS Géoportail](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail)
+    - [Affichage des couches WMTS Géoplateforme](#affichage-des-couches-wmts-géoplateforme)
+      - [Utilisation de l'accès privilégié aux couches WMTS Géoplateforme](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoplateforme)
       - [Exemple d'utilisation](#exemple-dutilisation)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns)
       - [Exemple d'utilisation](#exemple-dutilisation-1)
-    - [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
-      - [Utilisation de l'accès privilégié aux couches WMS Géoportail](#utilisation-de-laccès-privilégié-aux-couches-wms-géoportail)
+    - [Affichage des couches WMS Géoplateforme](#affichage-des-couches-wms-géoplateforme)
+      - [Utilisation de l'accès privilégié aux couches WMS Géoplateforme](#utilisation-de-laccès-privilégié-aux-couches-wms-géoplateforme)
       - [Exemple d'utilisation](#exemple-dutilisation-2)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
       - [Exemple d'utilisation](#exemple-dutilisation-3)
-    - [Affichage des couches Vecteur Tuilé Géoportail](#affichage-des-couches-vecteur-tuilé-géoportail)
-      - [Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoportail](#Utilisation-de-laccès-privilégié-aux-couches-vecteur-tuilé-géoportail)
+    - [Affichage des couches Vecteur Tuilé Géoplateforme](#affichage-des-couches-vecteur-tuilé-géoplateforme)
+      - [Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoplateforme](#Utilisation-de-laccès-privilégié-aux-couches-vecteur-tuilé-géoplateforme)
       - [Exemple d'utilisation](#exemple-dutilisation-4)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-1)
       - [Exemple d'utilisation](#exemple-dutilisation-5)
-    - [Affichage des couches MNT WMTS Géoportail pour affichage du relief](#affichage-des-couches-mnt-wmts-géoportail-pour-affichage-du-relief)
-      - [Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoportail-pour-afficher-un-mnt)
+    - [Affichage des couches MNT WMTS Géoplateforme pour affichage du relief](#affichage-des-couches-mnt-wmts-géoplateforme-pour-affichage-du-relief)
+      - [Utilisation de l'accès privilégié aux couches WMTS Géoplateforme pour afficher un MNT](#utilisation-de-laccès-privilégié-aux-couches-wmts-géoplateforme-pour-afficher-un-mnt)
       - [Exemple d'utilisation](#exemple-dutilisation-6)
       - [Utilisation directe de la librairie iTowns](#utilisation-directe-de-la-librairie-itowns-2)
       - [Exemple d'utilisation](#exemple-dutilisation-7)
@@ -67,19 +67,19 @@
 
 <a name="readme-top"></a>
 
-L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
+L'extension Géoplateforme pour iTowns étend la librairie 3D iTowns afin de proposer l'ajout de widgets au globe. Les fonctionnalités suivantes sont proposées en complément de la bibliothèque [iTowns](http://www.itowns-project.org/) :
 
-* [affichage des couches WMTS Géoportail](#WMTS)
+* [affichage des couches WMTS Géoplateforme](#WMTS)
 
-* [affichage des couches WMS Géoportail](#WMS)
+* [affichage des couches WMS Géoplateforme](#WMS)
 
-* [affichage des couches MNT Géoportail pour affichage du relief](#Elevation)
+* [affichage des couches MNT Géoplateforme pour affichage du relief](#Elevation)
 
 * [affichage dynamique des attributions](#attributions)
 
 * [widget de gestion d'empilement des couches](#layerswitcher)
 
-* [coordonnées et altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
+* [coordonnées et altitude en un point de la carte à l'aide du service d'altimétrie de la Géoplateforme](#mp)
 
 * [affichage d'un miniGlobe](#miniglobe)
 
@@ -89,13 +89,13 @@ L'extension Géoportail pour iTowns étend la librairie 3D iTowns afin de propos
 
 ## Mise en oeuvre
 
-L'utilisation de l'extension Géoportail pour iTowns se fait via les étapes suivantes :
+L'utilisation de l'extension Géoplateforme pour iTowns se fait via les étapes suivantes :
 
-* [Téléchargement de l'extension Géoportail](#download)
+* [Téléchargement de l'extension Géoplateforme](#download)
 
 * [Intégration de l'extension dans une page web](#integration)
 
-* [Configuration de l'accès à la plateforme Géoportail](#config)
+* [Configuration de l'accès à la Géoplateforme](#config)
 
 Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
@@ -103,12 +103,12 @@ Une documentation technique (**jsdoc**), une **demo** et un **generateur de cart
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour iTowns soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
+Vous pouvez récupérer l'extension Géoplateforme pour iTowns soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
 
-L'extension Géoportail pour iTowns comprend l'arborescence de fichiers suivante :
+L'extension Géoplateforme pour iTowns comprend l'arborescence de fichiers suivante :
 
 ```
-    <Extension Géoportail pour iTowns>/
+    <Extension Géoplateforme pour iTowns>/
         GpPluginItowns.js
             (version minifiée du code javascript pour une utilisation en production)
         GpPluginItowns.css
@@ -128,7 +128,7 @@ Les scripts d'iTowns s'obtiennent sur [la page de téléchargement d'iTowns](htt
 
 #### Téléchargement direct
 
-Vous pouvez télécharger la dernière version de l'extension Géoportail pour iTowns directement sur [la page des releases des extensions Géoportail](https://github.com/IGNF/geoportal-extensions/releases).
+Vous pouvez télécharger la dernière version de l'extension Géoplateforme pour iTowns directement sur [la page des releases des extensions Géoplateforme](https://github.com/IGNF/geoportal-extensions/releases).
 
 L'archive téléchargée (GpItowns.zip) comprend l'arborescence décrite ci-dessus.
 
@@ -138,7 +138,7 @@ L'archive téléchargée (GpItowns.zip) comprend l'arborescence décrite ci-dess
 
 #### Récupération avec NPM
 
-L'extension Géoportail pour iTowns est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-itowns).
+L'extension Géoplateforme pour iTowns est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-itowns).
 
 Prérequis : [NodeJS](https://nodejs.org/en/) et [npm](https://www.npmjs.com/) installés.
 
@@ -165,16 +165,16 @@ http://ignf.github.io/geoportal-extensions/itowns-latest/dist/GpPluginItowns-src
 
 ### Intégration dans une page web
 
-Dézippez l'extension géoportail dans l'arborescence de votre serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
+Dézippez l'extension géoplateforme dans l'arborescence de votre serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
 
-Intégrez l'extension géoportail pour iTowns dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque iTowns.
+Intégrez l'extension géoplateforme pour iTowns dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque iTowns.
 
 ``` html
 <!-- Bibliothèque iTowns -->
 <link rel="stylesheet" href="chemin/vers/itowns/itowns.css" />
 <script src="chemin/vers/itowns/itowns.js"></script>
 
-<!-- Extension Géoportail pour iTowns -->
+<!-- Extension Géoplateforme pour iTowns -->
 <script src="chemin/vers/GpPluginItowns.js"></script>
 <link rel="stylesheet" href="chemin/vers/GpPluginItowns.css" />
 ```
@@ -183,13 +183,15 @@ Intégrez l'extension géoportail pour iTowns dans votre page web classiquement 
 
 <a id="config"/>
 
-### Configuration de l'accès à la plateforme Géoportail
+### Configuration de l'accès à la plateforme Géoplateforme
 
-L'extension Géoportail pour iTowns exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'utilisation d'une ou de plusieurs **clef d'accès** gratuites disponibles sur le site [geoservices.ign.fr](https://geoservices.ign.fr/services-web) ayant les droits sur les ressources que vous souhaitez exploiter.
+L'extension Géoplateforme pour iTowns exploite les services web exposés par la Géoplateforme. Ceux-ci sont en libre accès.
 
-Vous pouvez ensuite paramétrer l'utilisation de l'extension avec la ou les clefs qui correspondent à vos besoins de deux manières possibles :.
+Vous pouvez cependant paramétrer l'utilisation de l'extension avec une ou plusieurs thématiques Géoplateforme qui correspondent à vos besoins en générant un fichier de configuration local à partir de [cette interface](https://geoplateforme-configuration.onrender.com/) ou en passant par le paramètre apiKey.
 
-Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension avec cette clef de deux manières possibles :
+Si ni apiKey, ni fichier de configuration local n'est spécifié, l'utilisateur récupérera une configuration complète avec toutes les ressources de la Géoplateforme (qui pourra donc être très volumineuse).
+
+Vous pouvez configurer les extensions des manières suivantes :
 
 **Méthode 1** : Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
@@ -197,7 +199,7 @@ Une fois la clef obtenue, vous pouvez paramétrer l'utilisation de l'extension a
 <script data-key="CLEF" src="chemin/vers/GpPluginItowns.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoplateforme sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -205,28 +207,25 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <!-- Bibliothèque iTowns -->
         <link rel="stylesheet" href="itowns.css" />
         <script src="itowns.js"></script>
-        <!-- Extension Géoportail pour iTowns -->
+        <!-- Extension Géoplateforme pour iTowns -->
         <link rel="stylesheet" href="GpPluginItowns.css" />
-        <script src="GpPluginItowns.js" data-key="CLEF"></script>
+        <script src="GpPluginItowns.js" data-key="THEME"></script>
     </head>
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour iTowns
+                // votre utilisation de l'extension Géoplateforme pour iTowns
             }
         </script>
     </body>
 </html>
 ```
 
-Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
+Thèmes multiples : Si vous devez utiliser plusieurs thématiques, il est possible de mettre une liste de thèmes dans l'attribut data-key :
 
 ``` html
-<script data-key="CLEF-1,CLEF-2,CLEF-3" src="chemin/vers/GpPluginItowns.js"></script>
+<script data-key="THEME-1,THEME-2,THEME-3" src="chemin/vers/GpPluginItowns.js"></script>
 ```
-
-**Cependant, en cas de clés multiples, le plus simple reste de directement entrer la clé spécifique à utiliser au niveau du paramètre "url" de la couche ou "apiKey" du widget.**
-
 
 **Méthode 2** : A la fin du chargement de la page en utilisant la fonction [Gp.Services.GetConfig()](https://github.com/IGNF/geoportal-access-lib#getConfig) et en conditionnant alors l'utilisation de l'extension à l'exécution de la fonction de rappel onSuccess passée en paramètres de Gp.Services.getConfig() comme sur l'exemple suivant :
 
@@ -236,7 +235,7 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <!-- Bibliothèque iTowns -->
         <link rel="stylesheet" href="itowns.css" />
         <script src="itowns.js"></script>
-        <!-- Extension Géoportail pour iTowns -->
+        <!-- Extension Géoplateforme pour iTowns -->
         <link rel="stylesheet" href="GpPluginItowns.css" />
         <script src="GpPluginItowns.js"></script>
     </head>
@@ -244,9 +243,9 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEF',
+                    apiKey: 'THEME',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour iTowns
+                        // votre utilisation de l'extension Géoplateforme pour iTowns
                     }
                 });
             }
@@ -255,7 +254,7 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 </html>
 ```
 
-Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+Thèmes multiples : Si vous devez utiliser plusieurs thèmatiques, il est possible de mettre une liste de thèmes dans l'attribut apiKey de la fonction getConfig :
 
 
 ``` html
@@ -264,7 +263,7 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <!-- Bibliothèque iTowns -->
         <link rel="stylesheet" href="itowns.css" />
         <script src="itowns.js"></script>
-        <!-- Extension Géoportail pour iTowns -->
+        <!-- Extension Géoplateforme pour iTowns -->
         <link rel="stylesheet" href="GpPluginItowns.css" />
         <script src="GpPluginItowns.js"></script>
     </head>
@@ -272,9 +271,9 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEF-1,CLEF-2,CLEF-3',
+                    apiKey: 'THEME-1,THEME-2,THEME-3',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour iTowns
+                        // votre utilisation de l'extension Géoplateforme pour iTowns
                     }
                 });
             }
@@ -283,15 +282,13 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 </html>
 ```
 
-**Cependant, en cas de clés multiples, le plus simple reste de directement entrer la clé spécifique à utiliser au niveau du paramètre "url" de la couche ou "apiKey" du widget.**
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 #### Optimisation du chargement : configuration locale
 
-Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [du formulaire de ce tutoriel](https://geoportal-configuration.onrender.com/).
+Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme un fichier de configuration Géoplateforme, qui contient les information nécéssaires des ressources que vous souhaitez utiliser uniquement. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [de cet utilitaire en ligne](https://geoplateforme-configuration.onrender.com/).
 
-Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
+Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoplateforme de la manière suivante (selon les méthodes citées précédemment) :
 
 **Méthode 1** : Utilisez l'attribut "data-url" de la balise **script** chargeant l'extension pour pointer vers votre fichier :
 
@@ -299,7 +296,7 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 <script data-url="chemin/vers/customConfig.json" src="chemin/vers/GpPluginItowns.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoplateforme sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -311,7 +308,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour iTowns
+                // votre utilisation de l'extension Géoplateforme pour iTowns
             }
         </script>
     </body>
@@ -331,7 +328,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
                     customConfigFile: 'chemin/vers/customConfig.json',
                     callbackSuffix : '',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour iTowns
+                        // votre utilisation de l'extension Géoplateforme pour iTowns
                     }
                 });
             }
@@ -387,12 +384,12 @@ Gp.Services.getConfig(...)
 
 ### Versions d'iTowns supportées
 
-La dernière version de l'extension Géoportail pour iTowns peut s'utiliser avec la **version 2.38.2** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.38.2 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
+La dernière version de l'extension Géoplateforme pour iTowns peut s'utiliser avec la **version 2.38.2** d'iTowns. [Cliquer ici](https://github.com/iTowns/itowns/releases/) pour télécharger directement la version 2.38.2 de la librairie iTowns. [Cliquer ici](https://www.npmjs.com/package/itowns?activeTab=readme) pour accéder à la page du package npm iTowns.
 
 
 ### Navigateurs supportés
 
-La librairie iTowns fonctionne avec la technologie "webGL". Les anciennes versions des navigateurs ne supportent pas le webGL. Ainsi, en principe, l'extension Géoportail pour iTowns fonctionne sur les navigateurs qui supportent le webGL ( voir ce [tableau de support du webGL en fonction des navigateurs](https://caniuse.com/#search=webgl) ).
+La librairie iTowns fonctionne avec la technologie "webGL". Les anciennes versions des navigateurs ne supportent pas le webGL. Ainsi, en principe, l'extension Géoplateforme pour iTowns fonctionne sur les navigateurs qui supportent le webGL ( voir ce [tableau de support du webGL en fonction des navigateurs](https://caniuse.com/#search=webgl) ).
 
 Navigateur | version
 -----------|--------
@@ -405,7 +402,7 @@ Opera      | Versions récentes (19+)
 
 ### Limitations liées aux processeurs graphiques
 
-Le webGL est une technologie qui exploite l'accélération matérielle de la carte graphique de la machine de l'utilisateur. En fonction du matériel de l'utilisateur, iTowns et l'extension Géoportail pour iTowns pourront donc ne pas fonctionner.
+Le webGL est une technologie qui exploite l'accélération matérielle de la carte graphique de la machine de l'utilisateur. En fonction du matériel de l'utilisateur, iTowns et l'extension Géoplateforme pour iTowns pourront donc ne pas fonctionner.
 Sur [cette page](https://get.webgl.org/), il est possible de tester en fonction du navigateur et du matériel si le contexte webGL est accessible.
 
 
@@ -417,7 +414,7 @@ Sur [cette page](https://get.webgl.org/), il est possible de tester en fonction 
 
 ### Systèmes de coordonnées
 
-iTowns utilise par défaut le système de coordonnées géographiques mondial "standard" : EPSG:4326 (coordonnées géographiques). Il est également capable d'afficher des données en EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) moyennant une reprojection par le moteur iTowns (légère perte de performance).
+iTowns utilise par défaut le système de coordonnées géographiques mondial "standard" : EPSG:4326 (coordonnées géographiques). Il est également capable d'afficher des données en EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoplateforme) moyennant une reprojection par le moteur iTowns (légère perte de performance).
 
 NB :
 
@@ -430,15 +427,15 @@ NB :
 
 <a id="WMTS"/>
 
-### Affichage des couches WMTS Géoportail
+### Affichage des couches WMTS Géoplateforme
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMTS Géoportail.
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMTS Géoplateforme.
 
-1 - Via l'accès privilégié aux couches WMTS Géoportail fourni par l'extension Géoportail pour iTowns.
+1 - Via l'accès privilégié aux couches WMTS Géoplateforme fourni par l'extension Géoplateforme pour iTowns.
 
 2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
 
-#### Utilisation de l'accès privilégié aux couches WMTS Géoportail
+#### Utilisation de l'accès privilégié aux couches WMTS Géoplateforme
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMTS.html), de la manière suivante :
 
@@ -447,7 +444,7 @@ new itowns.layer.GeoportalWMTS(options);
 ```
 Cette fonction retourne un objet **itowns.layer.GeoportalWMTS**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
 
-Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMTS.
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoplateforme WMTS.
 
 #### Exemple d'utilisation
 
@@ -464,7 +461,7 @@ globeView.addLayer(new itowns.layer.GeoportalWMTS({
 
 #### Utilisation directe de la librairie iTowns
 
-Il est possible d'ajouter une couche WMTS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+Il est possible d'ajouter une couche WMTS Géoplateforme (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
 
@@ -475,7 +472,7 @@ var orthoLayer = {
     type:       "color",
     protocol:   "wmts",
     id:         "Ortho",
-    url:        "http://wxs.ign.fr/maCLEF/geoportail/wmts",
+    url:        "https://data.geopf.fr/wmts",
     updateStrategy: {
         type: "0",
         options: {}
@@ -610,15 +607,15 @@ globeView.addLayer(orthoLayer);
 
 <a id="WMS"/>
 
-### Affichage des couches WMS Géoportail
+### Affichage des couches WMS Géoplateforme
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMS Géoportail.
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMS Géoplateforme.
 
-1 - Via l'accès privilégié aux couches WMS Géoportail fourni par l'extension Géoportail pour iTowns.
+1 - Via l'accès privilégié aux couches WMS Géoplateforme fourni par l'extension Géoplateforme pour iTowns.
 
 2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
 
-#### Utilisation de l'accès privilégié aux couches WMS Géoportail
+#### Utilisation de l'accès privilégié aux couches WMS Géoplateforme
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalWMS.html), de la manière suivante :
 
@@ -627,7 +624,7 @@ new itowns.layer.GeoportalWMS(options);
 ```
 Cette fonction retourne un objet **itowns.layer.GeoportalWMS**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
 
-Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMS.
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoplateforme WMS.
 
 #### Exemple d'utilisation
 
@@ -644,7 +641,7 @@ globeView.addLayer(new itowns.layer.GeoportalWMS({
 
 #### Utilisation directe de la librairie iTowns
 
-Il est possible d'ajouter une couche WMS Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+Il est possible d'ajouter une couche WMS Géoplateforme (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
 
@@ -653,7 +650,7 @@ const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 
 var regionLayer{
     "type": "color",
-    "url"       : "https://wxs.ign.fr/maCLEF/geoportail/v/wms",
+    "url"       : "https://data.geopf.fr/wms-v/wms",
     "protocol"  : "wms",
     "version"   : "1.3.0",
     "id"        : "Region",
@@ -706,15 +703,15 @@ globeView.addLayer(regionLayer);
 
 <a id="VT"/>
 
-### Affichage des couches Vecteur Tuilé Géoportail
+### Affichage des couches Vecteur Tuilé Géoplateforme
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches Vecteur Tuilé Géoportail.
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches Vecteur Tuilé Géoplateforme.
 
-1 - Via l'accès privilégié aux couches Vecteur Tuilé Géoportail fourni par l'extension Géoportail pour iTowns.
+1 - Via l'accès privilégié aux couches Vecteur Tuilé Géoplateforme fourni par l'extension Géoplateforme pour iTowns.
 
 2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
 
-#### Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoportail
+#### Utilisation de l'accès privilégié aux couches Vecteur Tuilé Géoplateforme
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.VectorTileLayer](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.VectorTileLayer.html), de la manière suivante :
 
@@ -723,7 +720,7 @@ new itowns.layer.VectorTileLayer(options);
 ```
 Cette fonction retourne un objet **itowns.layer.VectorTileLayer**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'ajout dans la carte.
 
-Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail Vecteur Tuilé.
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoplateforme Vecteur Tuilé.
 
 #### Exemple d'utilisation
 
@@ -733,7 +730,7 @@ const globeView = new itowns.GlobeViewExtended(viewerDiv, positionOnGlobe);
 globeView.addLayer(new itowns.layer.VectorTileLayer({
     layer: "PLAN.IGN",
     id : "MVT",
-    url: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    url: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
     itownsParams : {
         opacity : 0.5
     }
@@ -742,7 +739,7 @@ globeView.addLayer(new itowns.layer.VectorTileLayer({
 
 #### Utilisation directe de la librairie iTowns
 
-Il est possible d'ajouter une couche Vecteur Tuilé Géoportail (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+Il est possible d'ajouter une couche Vecteur Tuilé Géoplateforme (ou autre) en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
 
@@ -750,7 +747,7 @@ Il est possible d'ajouter une couche Vecteur Tuilé Géoportail (ou autre) en ut
 var view = new itowns.GlobeView(viewerDiv, placement);
 
 var mvtSource = new itowns.VectorTilesSource({
-    style: 'https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/standard.json',
+    style: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
     // application de filtres
     filter: (layer) => !layer['source-layer'].includes('oro_') && !layer['source-layer'].includes('parcellaire'),
 }
@@ -769,15 +766,15 @@ view.addLayer(mvtLayer);
 
 <a id="Elevation"/>
 
-### Affichage des couches MNT WMTS Géoportail pour affichage du relief
+### Affichage des couches MNT WMTS Géoplateforme pour affichage du relief
 
-Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMTS MNT Géoportail.
+Le modèle de données iTowns prend en entrée des couches matérialisées sous forme d'objet JavaScript. Deux moyens existent pour afficher les couches WMTS MNT Géoplateforme.
 
-1 - Via l'accès privilégié aux couches WMTS Géoportail fourni par l'extension Géoportail pour iTowns.
+1 - Via l'accès privilégié aux couches WMTS Géoplateforme fourni par l'extension Géoplateforme pour iTowns.
 
 2 - Directement avec la librairie iTowns. Pour cela, il faut se référer à la [documentation d'iTowns pour l'ajout d'une couche](http://www.itowns-project.org/itowns/API_Doc/GlobeView.html#addLayer).
 
-#### Utilisation de l'accès privilégié aux couches WMTS Géoportail pour afficher un MNT
+#### Utilisation de l'accès privilégié aux couches WMTS Géoplateforme pour afficher un MNT
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [Itowns.layer.GeoportalElevation](http://ignf.github.io/geoportal-extensions/itowns-latest/jsdoc/itowns.layer.GeoportalElevation.html), de la manière suivante :
 
@@ -786,7 +783,7 @@ new itowns.layer.GeoportalElevation(options);
 ```
 Cette fonction retourne un objet **itowns.layer.GeoportalElevation**, qui peut ainsi être interprété par la fonction addLayer de la librairie Itowns pour l'affichage du MNT sur la carte 3D.
 
-Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoportail WMTS.
+Il est possible de surcharger le paramétrage par défaut de la couche en passant l'option "itownsParams" lors de la création de l'instance de la couche Géoplateforme WMTS.
 
 #### Exemple d'utilisation
 
@@ -798,7 +795,7 @@ globeView.addLayer(new itowns.layer.GeoportalElevation({ layer: "ELEVATION.ELEVA
 
 #### Utilisation directe de la librairie iTowns
 
-Il est possible d'ajouter une couche WMTS Géoportail (ou autre) de type "élévation" en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
+Il est possible d'ajouter une couche WMTS Géoplateforme (ou autre) de type "élévation" en utilisant directement le paramétrage d'iTowns. Ci-après, un exemple d'utilisation.
 
 #### Exemple d'utilisation
 
@@ -809,7 +806,7 @@ var MNTLayer = {
     type : "elevation",
 	protocol : "wmts",
 	id : "IGN_MNT",
-	url : "http://wxs.ign.fr/maCLEF/geoportail/wmts",
+	url : "https://data.geopf.fr/wmts",
 	noDataValue : -99999,
 	updateStrategy : {
 		type : 1,
@@ -972,7 +969,7 @@ globeView.addWidget(layerSwitcher);
 
 ### Coordonnées et altitude en un point de la carte
 
-Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur le globe iTowns dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur le globe iTowns dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.LayerSwitcher, que l'on peut ensuite ajouter au globe via la méthode addWidget de l'extension d'iTowns globeViewExtended, de la manière suivante :
 
@@ -1019,7 +1016,7 @@ map.addControl(mpControl);
 
 Ce widget a pour but d'afficher les attributions associées aux couches visibles sur la carte. Ce widget permet donc l'affichage des attributions en fonction du positionnement de la carte (centre, zoom) pour les couches ayant des originators multiples.
 
-Les couches Géoportail (de type [WMS](#WMS) ou [WMTS](#WMTS)) possèdent nativement cette propriété. Pour les autres, le paramétrage dynamique des originators se fait par l'adjonction à l'objet source de la couche de la propriété "\_originators", tableau de [Gp.Services.Config.Originator](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.Config.Originator.html).
+Les couches Géoplateforme (de type [WMS](#WMS) ou [WMTS](#WMTS)) possèdent nativement cette propriété. Pour les autres, le paramétrage dynamique des originators se fait par l'adjonction à l'objet source de la couche de la propriété "\_originators", tableau de [Gp.Services.Config.Originator](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.Config.Originator.html).
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe itowns.control.GeoportalAttribution que l'on peut ensuite ajouter au globe de la manière suivante :
 
@@ -1243,7 +1240,7 @@ Par défaut, le MNT "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES" sera ajouté au gl
 
 ##### Utilisation avancée
 
-Ajout du widget en paramétrant le widget pour placer les bâtiments à une altitude de 0, ne pas ajouter de MNT, utiliser la clé "cartes" pour ajouter la couche des bâtiments, et ne pas afficher les bâtiments à l'initialisation du globe. Les bâtiments dans cet exemple ne sont visibles qu'à partir du niveau de zoom 17.
+Ajout du widget en paramétrant le widget pour placer les bâtiments à une altitude de 0, ne pas ajouter de MNT et ne pas afficher les bâtiments à l'initialisation du globe. Les bâtiments dans cet exemple ne sont visibles qu'à partir du niveau de zoom 17.
 
 ``` javascript
 // Création du globe
@@ -1255,7 +1252,6 @@ globeView.addLayer(orthoLayer);
 var buildings = new itowns.control.Buildings({
     MNT: false,
     buildingsOnGround: true,
-    key: "cartes",
     defaultVisibility: false,
     minZoom: 17
 });

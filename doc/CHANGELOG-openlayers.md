@@ -7,177 +7,177 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- toc -->
 
-- [Extension Geoportail OpenLayers3, version 0.10.0](#extension-geoportail-openlayers3-version-0100)
+- [Extension Geoplateforme OpenLayers3, version 0.10.0](#extension-geoportail-openlayers3-version-0100)
   * [Changelog](#changelog)
-- [Extension Geoportail OpenLayers3, version 0.11.0](#extension-geoportail-openlayers3-version-0110)
+- [Extension Geoplateforme OpenLayers3, version 0.11.0](#extension-geoportail-openlayers3-version-0110)
   * [Summary](#summary)
   * [New Features :](#new-features-)
     + [Additional widgets :](#additional-widgets-)
     + [Others features](#others-features)
   * [ChangeLog](#changelog)
-- [Extension Geoportail OpenLayers3, version 0.12.0](#extension-geoportail-openlayers3-version-0120)
+- [Extension Geoplateforme OpenLayers3, version 0.12.0](#extension-geoportail-openlayers3-version-0120)
   * [Summary](#summary-1)
   * [New Features :](#new-features--1)
     + [Additional widgets :](#additional-widgets--1)
     + [Others features](#others-features-1)
     + [Breaking changes](#breaking-changes)
-- [Extension Geoportail OpenLayers, version 1.0.0](#extension-geoportail-openlayers-version-100)
+- [Extension Geoplateforme OpenLayers, version 1.0.0](#extension-geoportail-openlayers-version-100)
   * [Summary](#summary-2)
   * [Changelog](#changelog-1)
-- [Extension Geoportail OpenLayers, version 1.1.0](#extension-geoportail-openlayers-version-110)
+- [Extension Geoplateforme OpenLayers, version 1.1.0](#extension-geoportail-openlayers-version-110)
   * [Summary](#summary-3)
   * [Changelog](#changelog-2)
-- [Extension Geoportail OpenLayers, version 2.0.0](#extension-geoportail-openlayers-version-200)
+- [Extension Geoplateforme OpenLayers, version 2.0.0](#extension-geoportail-openlayers-version-200)
   * [Summary](#summary-4)
-- [Extension Geoportail OpenLayers, version 2.1.0](#extension-geoportail-openlayers-version-210)
+- [Extension Geoplateforme OpenLayers, version 2.1.0](#extension-geoportail-openlayers-version-210)
   * [Summary](#summary-5)
   * [Changelog](#changelog-3)
 - [Extension Géoportail OpenLayers, version 2.1.2](#extension-geoportail-openlayers-version-212)
   * [Summary](#summary-6)
-- [Extension Geoportail OpenLayers, version 3.0.1](#extension-geoportail-openlayers-version-301)
+- [Extension Geoplateforme OpenLayers, version 3.0.1](#extension-geoportail-openlayers-version-301)
   * [Summary](#summary-7)
   * [Changelog](#changelog-4)
-- [Extension Geoportail OpenLayers, version 3.0.2](#extension-geoportail-openlayers-version-302)
+- [Extension Geoplateforme OpenLayers, version 3.0.2](#extension-geoportail-openlayers-version-302)
   * [Summary](#summary-8)
   * [Changelog](#changelog-5)
-- [Extension Geoportail OpenLayers, version 3.0.3](#extension-geoportail-openlayers-version-303)
+- [Extension Geoplateforme OpenLayers, version 3.0.3](#extension-geoportail-openlayers-version-303)
   * [Summary](#summary-9)
   * [Changelog](#changelog-6)
-- [Extension Geoportail OpenLayers, version 3.0.4](#extension-geoportail-openlayers-version-304)
+- [Extension Geoplateforme OpenLayers, version 3.0.4](#extension-geoportail-openlayers-version-304)
   * [Summary](#summary-10)
   * [Changelog](#changelog-7)
-- [Extension Geoportail OpenLayers, version 3.0.5](#extension-geoportail-openlayers-version-305)
+- [Extension Geoplateforme OpenLayers, version 3.0.5](#extension-geoportail-openlayers-version-305)
   * [Summary](#summary-11)
   * [Changelog](#changelog-8)
-- [Extension Geoportail OpenLayers, version 3.0.6](#extension-geoportail-openlayers-version-306)
+- [Extension Geoplateforme OpenLayers, version 3.0.6](#extension-geoportail-openlayers-version-306)
   * [Summary](#summary-12)
   * [Changelog](#changelog-9)
-- [Extension Geoportail OpenLayers, version 3.0.7](#extension-geoportail-openlayers-version-307)
+- [Extension Geoplateforme OpenLayers, version 3.0.7](#extension-geoportail-openlayers-version-307)
   * [Summary](#summary-13)
   * [Changelog](#changelog-10)
-- [Extension Geoportail OpenLayers, version 3.0.8](#extension-geoportail-openlayers-version-308)
+- [Extension Geoplateforme OpenLayers, version 3.0.8](#extension-geoportail-openlayers-version-308)
   * [Summary](#summary-14)
   * [Changelog](#changelog-11)
-- [Extension Geoportail OpenLayers, version 3.0.9](#extension-geoportail-openlayers-version-309)
+- [Extension Geoplateforme OpenLayers, version 3.0.9](#extension-geoportail-openlayers-version-309)
   * [Summary](#summary-15)
   * [Changelog](#changelog-12)
-- [Extension Geoportail OpenLayers, version 3.0.10](#extension-geoportail-openlayers-version-3010)
+- [Extension Geoplateforme OpenLayers, version 3.0.10](#extension-geoportail-openlayers-version-3010)
   * [Summary](#summary-16)
   * [Changelog](#changelog-13)
-- [Extension Geoportail OpenLayers, version 3.0.11](#extension-geoportail-openlayers-version-3011)
+- [Extension Geoplateforme OpenLayers, version 3.0.11](#extension-geoportail-openlayers-version-3011)
   * [Summary](#summary-17)
   * [Changelog](#changelog-14)
-- [Extension Geoportail OpenLayers, version 3.0.14](#extension-geoportail-openlayers-version-3014)
+- [Extension Geoplateforme OpenLayers, version 3.0.14](#extension-geoportail-openlayers-version-3014)
   * [Summary](#summary-18)
   * [Changelog](#changelog-15)
-- [Extension Geoportail OpenLayers, version 3.0.16](#extension-geoportail-openlayers-version-3016)
+- [Extension Geoplateforme OpenLayers, version 3.0.16](#extension-geoportail-openlayers-version-3016)
   * [Summary](#summary-19)
   * [Changelog](#changelog-16)
-- [Extension Geoportail OpenLayers, version 3.0.17](#extension-geoportail-openlayers-version-3017)
+- [Extension Geoplateforme OpenLayers, version 3.0.17](#extension-geoportail-openlayers-version-3017)
   * [Summary](#summary-20)
   * [Changelog](#changelog-17)
-- [Extension Geoportail OpenLayers, version 3.0.18](#extension-geoportail-openlayers-version-3018)
+- [Extension Geoplateforme OpenLayers, version 3.0.18](#extension-geoportail-openlayers-version-3018)
   * [Summary](#summary-21)
   * [Changelog](#changelog-18)
-- [Extension Geoportail OpenLayers, version 3.0.19](#extension-geoportail-openlayers-version-3019)
+- [Extension Geoplateforme OpenLayers, version 3.0.19](#extension-geoportail-openlayers-version-3019)
   * [Summary](#summary-22)
   * [Changelog](#changelog-19)
-- [Extension Geoportail OpenLayers, version 3.1.0](#extension-geoportail-openlayers-version-310)
+- [Extension Geoplateforme OpenLayers, version 3.1.0](#extension-geoportail-openlayers-version-310)
   * [Summary](#summary-23)
   * [Changelog](#changelog-20)
-- [Extension Geoportail OpenLayers, version 3.2.0](#extension-geoportail-openlayers-version-320)
+- [Extension Geoplateforme OpenLayers, version 3.2.0](#extension-geoportail-openlayers-version-320)
   * [Summary](#summary-24)
   * [Changelog](#changelog-21)
-- [Extension Geoportail OpenLayers, version 3.2.1](#extension-geoportail-openlayers-version-321)
+- [Extension Geoplateforme OpenLayers, version 3.2.1](#extension-geoportail-openlayers-version-321)
   * [Summary](#summary-25)
   * [Changelog](#changelog-22)
-- [Extension Geoportail OpenLayers, version 3.2.2](#extension-geoportail-openlayers-version-322)
+- [Extension Geoplateforme OpenLayers, version 3.2.2](#extension-geoportail-openlayers-version-322)
   * [Summary](#summary-26)
   * [Changelog](#changelog-23)
-- [Extension Geoportail OpenLayers, version 3.2.3](#extension-geoportail-openlayers-version-323)
+- [Extension Geoplateforme OpenLayers, version 3.2.3](#extension-geoportail-openlayers-version-323)
   * [Summary](#summary-27)
   * [Changelog](#changelog-24)
-- [Extension Geoportail OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
+- [Extension Geoplateforme OpenLayers, version 3.2.4](#extension-geoportail-openlayers-version-324)
   * [Summary](#summary-28)
   * [Changelog](#changelog-25)
-- [Extension Geoportail OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
+- [Extension Geoplateforme OpenLayers, version 3.2.5](#extension-geoportail-openlayers-version-325)
   * [Summary](#summary-29)
   * [Changelog](#changelog-26)
-- [Extension Geoportail OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
+- [Extension Geoplateforme OpenLayers, version 3.2.6](#extension-geoportail-openlayers-version-326)
   * [Summary](#summary-30)
   * [Changelog](#changelog-27)
-- [Extension Geoportail OpenLayers, version 3.2.7](#extension-geoportail-openlayers-version-327)
+- [Extension Geoplateforme OpenLayers, version 3.2.7](#extension-geoportail-openlayers-version-327)
   * [Summary](#summary-31)
   * [Changelog](#changelog-28)
-- [Extension Geoportail OpenLayers, version 3.2.8](#extension-geoportail-openlayers-version-328)
+- [Extension Geoplateforme OpenLayers, version 3.2.8](#extension-geoportail-openlayers-version-328)
   * [Summary](#summary-32)
   * [Changelog](#changelog-29)
-- [Extension Geoportail OpenLayers, version 3.2.9](#extension-geoportail-openlayers-version-329)
+- [Extension Geoplateforme OpenLayers, version 3.2.9](#extension-geoportail-openlayers-version-329)
   * [Summary](#summary-33)
   * [Changelog](#changelog-30)
-- [Extension Geoportail OpenLayers, version 3.2.10](#extension-geoportail-openlayers-version-3210)
+- [Extension Geoplateforme OpenLayers, version 3.2.10](#extension-geoportail-openlayers-version-3210)
   * [Summary](#summary-34)
   * [Changelog](#changelog-31)
-- [Extension Geoportail OpenLayers, version 3.2.11](#extension-geoportail-openlayers-version-3211)
+- [Extension Geoplateforme OpenLayers, version 3.2.11](#extension-geoportail-openlayers-version-3211)
   * [Summary](#summary-35)
   * [Changelog](#changelog-32)
-- [Extension Geoportail OpenLayers, version 3.2.12](#extension-geoportail-openlayers-version-3212)
+- [Extension Geoplateforme OpenLayers, version 3.2.12](#extension-geoportail-openlayers-version-3212)
   * [Summary](#summary-36)
   * [Changelog](#changelog-33)
-- [Extension Geoportail OpenLayers, version 3.2.13](#extension-geoportail-openlayers-version-3213)
+- [Extension Geoplateforme OpenLayers, version 3.2.13](#extension-geoportail-openlayers-version-3213)
   * [Summary](#summary-37)
   * [Changelog](#changelog-34)
-- [Extension Geoportail OpenLayers, version 3.2.14](#extension-geoportail-openlayers-version-3214)
+- [Extension Geoplateforme OpenLayers, version 3.2.14](#extension-geoportail-openlayers-version-3214)
   * [Summary](#summary-38)
   * [Changelog](#changelog-35)
-- [Extension Geoportail OpenLayers, version 3.2.15](#extension-geoportail-openlayers-version-3215)
+- [Extension Geoplateforme OpenLayers, version 3.2.15](#extension-geoportail-openlayers-version-3215)
   * [Summary](#summary-39)
   * [Changelog](#changelog-36)
-- [Extension Geoportail OpenLayers, version 3.2.16](#extension-geoportail-openlayers-version-3216)
+- [Extension Geoplateforme OpenLayers, version 3.2.16](#extension-geoportail-openlayers-version-3216)
   * [Summary](#summary-40)
   * [Changelog](#changelog-37)
-- [Extension Geoportail OpenLayers, version 3.2.18](#extension-geoportail-openlayers-version-3218)
+- [Extension Geoplateforme OpenLayers, version 3.2.18](#extension-geoportail-openlayers-version-3218)
   * [Summary](#summary-41)
   * [Changelog](#changelog-38)
-- [Extension Geoportail OpenLayers, version 3.2.19](#extension-geoportail-openlayers-version-3219)
+- [Extension Geoplateforme OpenLayers, version 3.2.19](#extension-geoportail-openlayers-version-3219)
   * [Summary](#summary-42)
   * [Changelog](#changelog-39)
-- [Extension Geoportail OpenLayers, version 3.2.20](#extension-geoportail-openlayers-version-3220)
+- [Extension Geoplateforme OpenLayers, version 3.2.20](#extension-geoportail-openlayers-version-3220)
   * [Summary](#summary-43)
   * [Changelog](#changelog-40)
-- [Extension Geoportail OpenLayers, version 3.2.21](#extension-geoportail-openlayers-version-3221)
+- [Extension Geoplateforme OpenLayers, version 3.2.21](#extension-geoportail-openlayers-version-3221)
   * [Summary](#summary-44)
   * [Changelog](#changelog-41)
-- [Extension Geoportail OpenLayers, version 3.2.22](#extension-geoportail-openlayers-version-3222)
+- [Extension Geoplateforme OpenLayers, version 3.2.22](#extension-geoportail-openlayers-version-3222)
   * [Summary](#summary-45)
   * [Changelog](#changelog-42)
-- [Extension Geoportail OpenLayers, version 3.3.0](#extension-geoportail-openlayers-version-330)
+- [Extension Geoplateforme OpenLayers, version 3.3.0](#extension-geoportail-openlayers-version-330)
   * [Summary](#summary-46)
   * [Changelog](#changelog-43)
         * [Avant :](#avant-)
         * [Maintenant :](#maintenant-)
-- [Extension Geoportail OpenLayers, version 3.3.1](#extension-geoportail-openlayers-version-331)
+- [Extension Geoplateforme OpenLayers, version 3.3.1](#extension-geoportail-openlayers-version-331)
   * [Summary](#summary-47)
   * [Changelog](#changelog-44)
-- [Extension Geoportail OpenLayers, version 3.3.2](#extension-geoportail-openlayers-version-332)
+- [Extension Geoplateforme OpenLayers, version 3.3.2](#extension-geoportail-openlayers-version-332)
   * [Summary](#summary-48)
   * [Changelog](#changelog-45)
-- [Extension Geoportail OpenLayers, version 3.3.3](#extension-geoportail-openlayers-version-333)
+- [Extension Geoplateforme OpenLayers, version 3.3.3](#extension-geoportail-openlayers-version-333)
   * [Summary](#summary-49)
   * [Changelog](#changelog-46)
-- [Extension Geoportail OpenLayers, version 3.3.4](#extension-geoportail-openlayers-version-334)
+- [Extension Geoplateforme OpenLayers, version 3.3.4](#extension-geoportail-openlayers-version-334)
   * [Summary](#summary-50)
   * [Changelog](#changelog-47)
-- [Extension Geoportail OpenLayers, version 3.4.0-beta](#extension-geoportail-openlayers-version-340-beta)
+- [Extension Geoplateforme OpenLayers, version 3.4.0-beta](#extension-geoportail-openlayers-version-340-beta)
   * [Summary](#summary-51)
   * [Changelog](#changelog-48)
-- [Extension Geoportail OpenLayers, version 3.4.0-beta2](#extension-geoportail-openlayers-version-340-beta2)
+- [Extension Geoplateforme OpenLayers, version 3.4.0-beta2](#extension-geoportail-openlayers-version-340-beta2)
   * [Summary](#summary-52)
   * [Changelog](#changelog-49)
-- [Extension Geoportail OpenLayers, version 3.4.0-beta3](#extension-geoportail-openlayers-version-340-beta3)
+- [Extension Geoplateforme OpenLayers, version 3.4.0-beta3](#extension-geoportail-openlayers-version-340-beta3)
   * [Summary](#summary-53)
   * [Changelog](#changelog-50)
-- [Extension Geoportail OpenLayers, version 3.4.0-beta4](#extension-geoportail-openlayers-version-340-beta4)
+- [Extension Geoplateforme OpenLayers, version 3.4.0-beta4](#extension-geoportail-openlayers-version-340-beta4)
   * [Summary](#summary-54)
   * [Changelog](#changelog-51)
 
@@ -185,7 +185,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail OpenLayers3, version 0.10.0
+# Extension Geoplateforme OpenLayers3, version 0.10.0
 
 **08/06/2016 : 0.10.0** release of the Geoportal Extension for OL3
 
@@ -211,7 +211,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail OpenLayers3, version 0.11.0
+# Extension Geoplateforme OpenLayers3, version 0.11.0
 
 **04/12/2016 : 0.11.0** release of the Geoportal Extension for OL3
 
@@ -282,7 +282,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail OpenLayers3, version 0.12.0
+# Extension Geoplateforme OpenLayers3, version 0.12.0
 
 **27/07/2017 : 0.12.0** release of the Geoportal Extension for OL3
 
@@ -322,9 +322,9 @@ Merci à @pprev94 pour son importante contribution à [#117], à @sylvainpolletv
 
 ---
 
-# Extension Geoportail OpenLayers, version 1.0.0
+# Extension Geoplateforme OpenLayers, version 1.0.0
 
-**11/12/2017 : 1.1.0** Release Extension Geoportail OpenLayers
+**11/12/2017 : 1.1.0** Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -365,9 +365,9 @@ Merci à @ojathelonius pour sa contribution sur [#172]
 
 ---
 
-# Extension Geoportail OpenLayers, version 1.1.0
+# Extension Geoplateforme OpenLayers, version 1.1.0
 
-**09/04/2018 : 1.1.0** Release Extension Geoportail OpenLayers
+**09/04/2018 : 1.1.0** Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -388,9 +388,9 @@ Merci à @ojathelonius pour sa contribution sur [#172]
 
 ---
 
-# Extension Geoportail OpenLayers, version 2.0.0
+# Extension Geoplateforme OpenLayers, version 2.0.0
 
-**10/04/2018 : 2.0.0** Release Extension Geoportail OpenLayers
+**10/04/2018 : 2.0.0** Release Extension Geoplateforme OpenLayers
 
 **Edit du 16/04/2018** : Mise à jour de l'archive contenant les fichiers compilés (JS et CSS), avec le bon numéro de version + mise à jour des liens vers la JSDOC et les binaires (ci-dessous).
 
@@ -418,9 +418,9 @@ Les binaires de la version 2.0.0 se trouvent désormais ici :
 
 ---
 
-# Extension Geoportail OpenLayers, version 2.1.0
+# Extension Geoplateforme OpenLayers, version 2.1.0
 
-**09/08/2018 : 2.1.0** Release Extension Geoportail OpenLayers
+**09/08/2018 : 2.1.0** Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -463,10 +463,10 @@ Version 2.1.2 de l'extension Géoportail pour OpenLayers :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.1
+# Extension Geoplateforme OpenLayers, version 3.0.1
 
 **05/09/2019 : version 3.0.1**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -559,10 +559,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.2
+# Extension Geoplateforme OpenLayers, version 3.0.2
 
 **09/09/2019 : version 3.0.2**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -581,10 +581,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.3
+# Extension Geoplateforme OpenLayers, version 3.0.3
 
 "**24/09/2019 : version 3.0.3**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -607,10 +607,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.4
+# Extension Geoplateforme OpenLayers, version 3.0.4
 
 **16/10/2019**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -630,10 +630,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.5
+# Extension Geoplateforme OpenLayers, version 3.0.5
 
 **18/11/2019**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -659,10 +659,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.6
+# Extension Geoplateforme OpenLayers, version 3.0.6
 
 **17/12/2019**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -687,10 +687,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.7
+# Extension Geoplateforme OpenLayers, version 3.0.7
 
 **24/01/2020**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -704,10 +704,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.8
+# Extension Geoplateforme OpenLayers, version 3.0.8
 
 **31/03/2020**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -747,10 +747,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.9
+# Extension Geoplateforme OpenLayers, version 3.0.9
 
 **01/04/2020**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -768,10 +768,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.10
+# Extension Geoplateforme OpenLayers, version 3.0.10
 
 **02/04/2020**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -789,10 +789,10 @@ Il est possible d'étendre la liste via la fonction :
 
 ---
 
-# Extension Geoportail OpenLayers, version 3.0.11
+# Extension Geoplateforme OpenLayers, version 3.0.11
 
 **29/06/2020**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -826,10 +826,10 @@ Il est possible d'étendre la liste via la fonction :
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.0.14
+# Extension Geoplateforme OpenLayers, version 3.0.14
 
 **12/02/2021**
-> Release Extension Geoportail OpenLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -856,10 +856,10 @@ Nouveau widget de profil altimétrique et  correctif sur le SearchEngine
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.0.16
+# Extension Geoplateforme OpenLayers, version 3.0.16
 
 **11/05/2021**
-> Release Extension Geoportail openLayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -883,10 +883,10 @@ Correctifs sur le profil altimétriques
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.0.17
+# Extension Geoplateforme OpenLayers, version 3.0.17
 
 **16/06/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -909,10 +909,10 @@ Correction sur le profil altimétrique
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.0.18
+# Extension Geoplateforme OpenLayers, version 3.0.18
 
 **22/06/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -936,10 +936,10 @@ Ajout de la gestion de projections geocentriques
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.0.19
+# Extension Geoplateforme OpenLayers, version 3.0.19
 
 **29/06/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -962,10 +962,10 @@ De nouvelles corrections sur le profil alti
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.1.0
+# Extension Geoplateforme OpenLayers, version 3.1.0
 
 **02/08/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -992,10 +992,10 @@ Upgrade des dependances :
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.0
+# Extension Geoplateforme OpenLayers, version 3.2.0
 
 **03/11/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1016,10 +1016,10 @@ Upgrade des dependances :
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.1
+# Extension Geoplateforme OpenLayers, version 3.2.1
 
 **08/11/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1042,10 +1042,10 @@ Mise à jour access-lib pour utilisation de l'itinéraire v2
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.2
+# Extension Geoplateforme OpenLayers, version 3.2.2
 
 **10/11/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1068,10 +1068,10 @@ Mise à jour de l'access-lib geoportail en version 3.0.2
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.3
+# Extension Geoplateforme OpenLayers, version 3.2.3
 
 **10/11/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1094,10 +1094,10 @@ Mise à jour de l'access-lib geoportail en version 3.0.3
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.4
+# Extension Geoplateforme OpenLayers, version 3.2.4
 
 **03/12/2021**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1120,10 +1120,10 @@ Utilisation de plusieurs clefs
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.5
+# Extension Geoplateforme OpenLayers, version 3.2.5
 
 **13/01/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1146,10 +1146,10 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.6
+# Extension Geoplateforme OpenLayers, version 3.2.6
 
 **17/01/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1177,10 +1177,10 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.7
+# Extension Geoplateforme OpenLayers, version 3.2.7
 
 **28/01/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1205,10 +1205,10 @@ Evolution de la documentation et correction du layerswitcher
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.8
+# Extension Geoplateforme OpenLayers, version 3.2.8
 
 **11/02/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1266,10 +1266,10 @@ Evolution de la documentation et correction du layerswitcher
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.9
+# Extension Geoplateforme OpenLayers, version 3.2.9
 
 **15/02/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1327,10 +1327,10 @@ Evolution de la documentation et correction du layerswitcher
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.10
+# Extension Geoplateforme OpenLayers, version 3.2.10
 
 **23/03/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1352,10 +1352,10 @@ Evolution de la documentation et correction du layerswitcher
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.11
+# Extension Geoplateforme OpenLayers, version 3.2.11
 
 **31/03/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1379,10 +1379,10 @@ Evolution de la documentation et correction du layerswitcher
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.12
+# Extension Geoplateforme OpenLayers, version 3.2.12
 
 **29/04/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1406,10 +1406,10 @@ Evolution de la documentation et correction du layerswitcher
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.13
+# Extension Geoplateforme OpenLayers, version 3.2.13
 
 **11/05/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1432,10 +1432,10 @@ Fix sur l'outil de dessin
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.14
+# Extension Geoplateforme OpenLayers, version 3.2.14
 
 **01/08/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1466,10 +1466,10 @@ Correctifs sur l'editeur de styles MapBox et le controle d'import des données M
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.15
+# Extension Geoplateforme OpenLayers, version 3.2.15
 
 **27/09/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1492,10 +1492,10 @@ Correction sur la gestion des projections pour les imports WMS
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.16
+# Extension Geoplateforme OpenLayers, version 3.2.16
 
 **04/10/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1518,10 +1518,10 @@ Utilisation du Geocodage v2
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.18
+# Extension Geoplateforme OpenLayers, version 3.2.18
 
 **18/11/2022**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1545,10 +1545,10 @@ Utilisation du Geocodage v2
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.19
+# Extension Geoplateforme OpenLayers, version 3.2.19
 
 **17/01/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1571,10 +1571,10 @@ Mise à jour de l'access-lib en version 3.2.1
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.20
+# Extension Geoplateforme OpenLayers, version 3.2.20
 
 **21/02/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1605,10 +1605,10 @@ Ajout d'écouteurs sur les controles de Géocodage direct en inverse
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.21
+# Extension Geoplateforme OpenLayers, version 3.2.21
 
 **23/03/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1640,10 +1640,10 @@ Amélioration du traitement pour les couches vecteur tuilé (documentation, lég
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.2.22
+# Extension Geoplateforme OpenLayers, version 3.2.22
 
 **01/06/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1687,14 +1687,14 @@ Amélioration du traitement pour les couches vecteur tuilé (documentation, lég
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.3.0
+# Extension Geoplateforme OpenLayers, version 3.3.0
 
 **07/06/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
-Retrait total de l'utilisation du service d'autoconfiguration et utilisation de fichiers de configuration json générés quotidiennement à partir des getCapabilities des services du Geoportail.
+Retrait total de l'utilisation du service d'autoconfiguration et utilisation de fichiers de configuration json générés quotidiennement à partir des getCapabilities des services du Geoplatform.
 
 L'ensemble des services de calcul appelés via la bibliothèque d'accès sont désormais appelés avec la clé "calcul" par défaut dans la bibliothèque d'accès. Le paramètre "apiKey" n'est donc plus nécessaire pour appeler les services de géocodage, d'itinéraire, d'isochrone, d'altimétrie et d'autocomplétion, que ce soit directement depuis la bibli
 othèque d'accès ou via les widgets des extensions Géoportail.
@@ -1712,7 +1712,7 @@ Il est également possible de générer son propre fichier de configuration à p
 
 * [Changed]
 
-    - mise à jour de la bibliothèque d'accès aux services Geoportail en version 3.3.0 (#364)
+    - mise à jour de la bibliothèque d'accès aux services Geoplatform en version 3.3.0 (#364)
     - **BC** : paramètre "customConfigFile" pour appeler un fichier de configuration local (#364)
 
 ##### Avant :
@@ -1823,10 +1823,10 @@ new ol.layer.Tile({
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.3.1
+# Extension Geoplateforme OpenLayers, version 3.3.1
 
 **07/06/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1845,10 +1845,10 @@ new ol.layer.Tile({
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.3.2
+# Extension Geoplateforme OpenLayers, version 3.3.2
 
 **21/07/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1873,10 +1873,10 @@ Ajout d'exemples avec l'appel de *Gp.Services.getConfig()* et ajout de methodes 
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.3.3
+# Extension Geoplateforme OpenLayers, version 3.3.3
 
 **04/08/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1903,10 +1903,10 @@ Correctifs sur le layerSwitcher et le profil Altimétrique. Mise à jour de la b
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.3.4
+# Extension Geoplateforme OpenLayers, version 3.3.4
 
 **28/08/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1929,10 +1929,10 @@ Correctif mineur sur le chargement et l'affichage des styles de flux de tuiles v
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.4.0-beta
+# Extension Geoplateforme OpenLayers, version 3.4.0-beta
 
 **21/09/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1955,10 +1955,10 @@ Mise à jour de la bibliothèque d'accès aux services Géoportail.
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.4.0-beta2
+# Extension Geoplateforme OpenLayers, version 3.4.0-beta2
 
 **27/10/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -1983,10 +1983,10 @@ Utilisation du service de Geocodage de la Geoplateforme
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.4.0-beta3
+# Extension Geoplateforme OpenLayers, version 3.4.0-beta3
 
 **21/11/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 
@@ -2009,10 +2009,10 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Security]
 
 ---
-# Extension Geoportail OpenLayers, version 3.4.0-beta4
+# Extension Geoplateforme OpenLayers, version 3.4.0-beta4
 
 **14/12/2023**
-> Release Extension Geoportail openlayers
+> Release Extension Geoplateforme OpenLayers
 
 ## Summary
 

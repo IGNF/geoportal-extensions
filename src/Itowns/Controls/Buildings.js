@@ -249,7 +249,7 @@ Buildings.prototype.addBuildings = function (options) {
     var vectorStyle = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
     var layerId = "VTBuilding";
     // ---------- DISPLAY VECTOR TILED BUILDING DATA AS 3D MESHES : ----------
-    // Define the source of the building data : those are vector tiled data from the geoportail.
+    // Define the source of the building data : those are vector tiled data from the geoplateforme.
     const buildingsSource = new ItVectorTilesSource({
         style : vectorStyle,
         // We only want to display buildings related data.

@@ -1,4 +1,4 @@
-# Extensions Géoportail
+# Extensions Geoplatform
 
 ![image](capture-carte.png)
 

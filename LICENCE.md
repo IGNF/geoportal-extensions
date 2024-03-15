@@ -1,5 +1,5 @@
 
-# Geoportal Extensions
+# Geoplatform Extensions
 
 This software is released under the licence CeCILL-B (Free BSD compatible)
 
@@ -16,10 +16,10 @@ Copyright (c) 2016 IGN
 
 ## Third party code :
 
-The Geoportal Extensions include the following third party code :
+The Geoplatform Extensions include the following third party code :
 
 
-### Geoportal resources access library
+### Geoplatform resources access library
 
 This software is released under the licence CeCILL-B (Free BSD compatible)
 
