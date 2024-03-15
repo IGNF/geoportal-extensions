@@ -8,7 +8,7 @@ var header = require("string-template");
 var glob = require("glob");
 
 // -- plugins
-var DefineWebpackPlugin = webpack.DefinePlugin;
+var EnvWebpackPlugin = webpack.EnvironmentPlugin;
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var TerserJsWebPackPlugin = require("terser-webpack-plugin");
@@ -245,9 +245,9 @@ module.exports = (env, argv) => {
                 ]
             ),
             /** GESTION DU LOGGER */
-            // new DefineWebpackPlugin({
-            //     __PRODUCTION__ : JSON.stringify(!logMode)
-            // }),
+            new EnvWebpackPlugin({
+                VERBOSE : logMode
+            }),
             /** GENERATION DE LA JSDOC */
             new JsDocWebPackPlugin({
                 conf : path.join(ROOT, "build/jsdoc/jsdoc-leaflet.json")
