@@ -5,6 +5,9 @@
 
 ## Summary
 
+* divers correctifs sur le build par modules
+* MaJ des fichiers de styles MapBox (conformes au spec)
+
 ## Changelog
 
 * [Added]
@@ -22,15 +25,6 @@
 * [Security]
 
 ---
-
-
-
-
-
-
-
-
-
 
 # Extension Geoportail Leaflet, version __VERSION__
 
@@ -56,13 +50,6 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Security]
 
 ---
-
-
-
-
-
-
-
 
 
 # Extension Geoportail Itowns, version __VERSION__
