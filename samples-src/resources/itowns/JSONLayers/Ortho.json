@@ -3,7 +3,7 @@
     "id": "Ortho",
     "source": {
         "protocol": "wmts",
-        "url": "https://wxs.ign.fr/essentiels/geoportail/wmts",
+        "url": "https://data.geopf/wmts",
         "crs" : "EPSG:3857",
         "updateStrategy": {
             "type": "0",

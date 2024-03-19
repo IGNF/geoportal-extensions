@@ -4,7 +4,7 @@ var layerOrtho = {
     "id": "Ortho",
     "source" : {
         "protocol":   "wmts",
-        "url":        "http://wxs.ign.fr/"+apiKey+"/geoportail/wmts",
+        "url":        "https://data.geopf/wmts",
         "crs" : "EPSG:3857",
         "updateStrategy": {
             "type": "0",
