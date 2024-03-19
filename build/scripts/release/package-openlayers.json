@@ -28,7 +28,7 @@
       "loglevel" : "1.6.6",
       "@mapbox/mapbox-gl-style-spec" : "13.20.1",
       "xmldom" : "^0.1.27",
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/develop/geoportal-access-lib-3.4.0-beta4.tgz",
+      "geoportal-access-lib" : "3.4.0",
       "ol" : "6.9.0"
    },
    "directories" : {},

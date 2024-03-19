@@ -10,7 +10,7 @@
    "devDependencies" : {},
    "types" : "src/Itowns/index.d.ts",
    "dependencies" : {
-      "geoportal-access-lib" : "https://raw.githubusercontent.com/IGNF/geoportal-access-lib/develop/geoportal-access-lib-3.4.0-beta4.tgz",
+      "geoportal-access-lib" : "3.4.0",
       "itowns" : "2.38.2",
       "proj4" : "2.7.5",
       "node-fetch" : "^2.6.1",
