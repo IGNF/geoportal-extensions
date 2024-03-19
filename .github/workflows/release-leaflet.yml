@@ -150,7 +150,7 @@ jobs:
 
       - name: Create ChangeLog
         run: | # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
-          cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoportail Leaflet/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
+          cat DRAFT_CHANGELOG.md | perl -ne '(/# Extension Geoplateforme Leaflet/../---/) && print' > DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__VERSION__/${{ steps.get_package_value.outputs.VERSION }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
           sed -i 's/__DATE__/${{ steps.get_package_value.outputs.DATE }}/g' DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
 
@@ -250,7 +250,7 @@ jobs:
       # cf. http://fahdshariff.blogspot.com/2012/12/sed-mutli-line-replacement-between-two.html
       - name: Reset draft changelog
         run: |
-          sed -i -e '/# Extension Geoportail Leaflet/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
+          sed -i -e '/# Extension Geoplateforme Leaflet/{:a; N; /---/!ba; r .github/CHANGELOG_TEMPLATE.md' -e 'd;}' DRAFT_CHANGELOG.md
           sed -i '0,/__UP_LIBRARY__/s/__UP_LIBRARY__/Leaflet/' DRAFT_CHANGELOG.md
           sed -i '0,/__LO_LIBRARY__/s/__LO_LIBRARY__/leaflet/' DRAFT_CHANGELOG.md
 
