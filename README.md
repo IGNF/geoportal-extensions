@@ -1,4 +1,4 @@
-# Extensions Geoplatform
+# Extensions Geoplatforme
 
 ![image](capture-carte.png)
 
