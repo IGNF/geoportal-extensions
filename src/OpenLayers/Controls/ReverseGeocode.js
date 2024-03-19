@@ -940,9 +940,9 @@ var ReverseGeocode = (function (Control) {
                 type : "Polygon",
                 coordinates : [[
                     [bbox.left, bbox.top],
-                    [bbox.right, bbox.top],
-                    [bbox.right, bbox.bottom],
                     [bbox.left, bbox.bottom],
+                    [bbox.right, bbox.bottom],
+                    [bbox.right, bbox.top],
                     [bbox.left, bbox.top]
                 ]]
             };

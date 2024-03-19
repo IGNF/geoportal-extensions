@@ -1,12 +1,25 @@
 {
-   "peerDependencies" : {},
    "author" : "IGNF",
-   "repository" : {
-      "url" : "https://github.com/IGNF/geoportal-extensions.git",
-      "type" : "git"
+   "date" : "19/03/2024",
+   "keywords" : [
+      "geoportail",
+      "geoplateforme",
+      "plugin",
+      "javascript",
+      "Itowns"
+   ],
+   "devDependencies" : {},
+   "types" : "src/Itowns/index.d.ts",
+   "dependencies" : {
+      "geoportal-access-lib" : "3.4.0",
+      "itowns" : "2.38.2",
+      "proj4" : "2.7.5",
+      "node-fetch" : "^2.6.1",
+      "sortablejs" : "1.14.0",
+      "three" : "0.137.5",
+      "loglevel" : "1.6.7",
+      "xmldom" : "^0.1.27"
    },
-   "bundleDependencies" : [],
-   "version" : "2.4.3",
    "files" : [
       "dist/",
       "src/",
@@ -14,32 +27,20 @@
       "README.md",
       "package.json"
    ],
-   "keywords" : [
-      "geoportail",
-      "plugin",
-      "javascript",
-      "Itowns"
-   ],
-   "devDependencies" : {},
-   "bugs" : {},
-   "directories" : {},
-   "main" : "dist/GpPluginItowns-src.js",
-   "dependencies" : {
-      "itowns" : "2.38.2",
-      "sortablejs" : "1.14.0",
-      "three" : "0.137.5",
-      "geoportal-access-lib" : "3.3.4",
-      "loglevel" : "1.6.7",
-      "xmldom" : "^0.1.27",
-      "proj4" : "2.7.5",
-      "node-fetch" : "^2.6.1"
-   },
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
-   "description" : "French Geoportal Extensions for iTowns",
-   "types" : "src/Itowns/index.d.ts",
-   "scripts" : {},
-   "date" : "04/08/2023",
+   "peerDependencies" : {},
    "license" : "CECILL-B",
+   "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/IGNF/geoportal-extensions.git"
+   },
    "name" : "geoportal-extensions-itowns",
+   "scripts" : {},
+   "description" : "French Geoportal Extensions for iTowns",
+   "main" : "dist/GpPluginItowns-src.js",
+   "directories" : {},
+   "bundleDependencies" : [],
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "bugs" : {},
+   "version" : "2.5.0",
    "module" : "src/Itowns/index.js"
 }

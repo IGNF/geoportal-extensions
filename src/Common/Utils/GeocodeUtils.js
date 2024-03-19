@@ -10,7 +10,20 @@ var GeocodeUtils = {
         if (attributes.label) {
             return attributes.label;
         } else if (geocodedLocation.type === "PositionOfInterest") {
-            return attributes.postcode + " " + attributes.toponym;
+            var resultToReturn = attributes.toponym;
+            if (attributes.category && Array.isArray(attributes.category) && attributes.category.length >= 2 && attributes.category[0] === "administratif") {
+                // gestion particulière des territoires administratifs
+                resultToReturn = resultToReturn + ", " + attributes.category[1];
+            } else {
+                // gestion standard des POI non adminsitratifs
+                if (attributes.postcode) {
+                    resultToReturn = resultToReturn + ", " + attributes.postcode[0];
+                    if (attributes.city) {
+                        resultToReturn = resultToReturn + " " + attributes.city[0];
+                    }
+                }
+            }
+            return resultToReturn;
         } else if (geocodedLocation.type === "StreetAddress") {
             return (attributes.housenumber ? attributes.housenumber + " " : "") + attributes.street + " " + (attributes.postcode ? attributes.postcode + ", " : "") + attributes.city;
         } else if (geocodedLocation.type === "CadastralParcel") {

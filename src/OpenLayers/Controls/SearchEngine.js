@@ -227,7 +227,7 @@ var SearchEngine = (function (Control) {
         // merge with user options
         Utils.mergeParams(this.options, options);
         if (this.options.resources.geocode === "") {
-            this.options.resources.geocode = "location";
+            this.options.resources.geocode = "address,poi";
         }
         if (this.options.resources.autocomplete.length === 0) {
             this.options.resources.autocomplete = ["PositionOfInterest", "StreetAddress"];
@@ -1470,8 +1470,8 @@ var SearchEngine = (function (Control) {
         var inputSearchTextContainer = document.getElementById("GPsearchInputText-" + this._uid);
         _location = inputSearchTextContainer.value;
 
-        // Pour pouvoir utiliser les filtres comme des champs de recherche
-        if (this._currentGeocodingCode === "CadastralParcel" && _location === null) {
+        // On ne prend pas en compte ce qu'il y a dans l'input de recherche simple pour la recherche avance de PC
+        if (this._currentGeocodingCode === "CadastralParcel") {
             _location = "";
         }
 

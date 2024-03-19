@@ -66,12 +66,20 @@ var SourceWMS = (function (TileWMSSource) {
             // par défaut, ssl = true, on fait du https
             var protocol = options.ssl === false ? "http://" : "https://";
 
+            var urlParams = {
+                "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
+            };
+            if (wmsParams.url.includes("/private/")) {
+                // si l'url est privée
+                // Ajout de la clef d'API fournie par l'utilisateur en prioritée
+                // ou récupérée depuis la configuration
+                urlParams["apikey"] = options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+            }
+
             var wmsSourceOptions = {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
-                url : Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
-                }, false),
+                url : Gp.Helper.normalyzeUrl(wmsParams.url.replace(/(http|https):\/\//, protocol), urlParams, false),
                 params : {
                     SERVICE : "WMS",
                     LAYERS : options.layer,

@@ -1117,6 +1117,7 @@ var Route = (function (Control) {
             distanceUnit : "m",
             timeOut : _timeout,
             protocol : _protocol,
+            resource : routeOptions.resource,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);

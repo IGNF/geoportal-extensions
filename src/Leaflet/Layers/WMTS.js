@@ -59,7 +59,7 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
      * @param {String} options.paramsWmts.format - "image/jpeg"
      * @param {Object} [options.paramsNative] - other options for L.TileLayer function (see {@link http://leafletjs.com/reference.html#tilelayer-options})
      * @example
-     * var wmts = new WMTS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/wmts", {
+     * var wmts = new WMTS("https://data.geopf.fr/wmts", {
      *     paramsNative : {
      *         minZoom : 1,
      *         maxZoom : 21
@@ -88,14 +88,21 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
         this._wmtsParams = {};
         L.Util.extend(this._wmtsParams, this.defaultWmtsParams, options.paramsWmts);
 
+        var urlParams = {
+            "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
+        };
+
+        // ajout de l'apiKey en paramètre de la requête si couche à accès restreint
+        if (options.apikey) {
+            urlParams["apikey"] = options.apikey;
+        }
+
         // appel du constructeur de la classe étendue
         L.TileLayer.prototype.initialize.call(
             this,
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
-            Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
-            }, false),
+            Gp.Helper.normalyzeUrl(url, urlParams, false),
             options.paramsNative
         );
 
@@ -240,7 +247,7 @@ var WMTS = L.TileLayer.extend(/** @lends WMTS.prototype */ {
     getTileUrl : function (tilePoint) {
         // (Point, Number) -> String
 
-        // ex http://wxs.ign.fr/j5tcdln4ya4xggpdu4j0f0cn/geoportail/wmts?
+        // ex https://data.geopf.fr/wmts?
         // SERVICE=WMTS&
         // REQUEST=GetTile&
         // VERSION=1.0.0&

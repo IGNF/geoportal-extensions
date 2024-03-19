@@ -4,7 +4,7 @@
 	"noDataValue" : -99999,
 	"source": {
 		"protocol":   "wmts",
-		"url":        "https://wxs.ign.fr/altimetrie/geoportail/wmts",
+		"url":        "https://data.geopf/wmts",
 		"name": "ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES",
         "attribution" :  [{
             "name" : "IGN",

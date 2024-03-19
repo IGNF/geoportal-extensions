@@ -72,12 +72,19 @@ var SourceWMTS = (function (WMTSExtended) {
             // save originators (to be updated by Originators control)
             this._originators = wmtsParams.originators;
 
+            var urlParams = {
+                "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
+            };
+            if (wmtsParams.url.includes("/private/")) {
+                // si l'url est privée
+                // Ajout de la clef d'API fournie par l'utilisateur en prioritée
+                // ou récupérée depuis la configuration
+                urlParams["apikey"] = options.apiKey || Config.configuration.getLayerKey(layerId)[0];
+            }
             var wmtsSourceOptions = {
                 // tracker extension openlayers
                 // FIXME : gp-ext version en mode AMD
-                url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), {
-                    "gp-ol-ext" : Pkg.olExtVersion || Pkg.version
-                }, false),
+                url : Gp.Helper.normalyzeUrl(wmtsParams.url.replace(/(http|https):\/\//, protocol), urlParams, false),
                 version : wmtsParams.version,
                 style : wmtsParams.styles,
                 format : wmtsParams.format,

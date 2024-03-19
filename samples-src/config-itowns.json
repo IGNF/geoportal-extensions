@@ -1,6 +1,6 @@
 {
     "baseurl" : "../../..",
     "resources" : "../../resources",
-    "apikey" : "essentiels,altimetrie",
+    "apikey" : "full",
     "apikey2" : "calcul"
 }

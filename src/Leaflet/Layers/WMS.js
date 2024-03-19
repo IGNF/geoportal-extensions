@@ -47,7 +47,7 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
      * @param {String} options.paramsWms.version - "1.3.0"
      * @param {Object} [options.paramsNative] - other options for L.TileLayer.WMS function (see {@link http://leafletjs.com/reference.html#tilelayer-wms-options})
      * @example
-     * var wms = new WMS("http://wxs.ign.fr/jhyvi0fgmnuxvfv0zjzorvdn/geoportail/r/wms", {
+     * var wms = new WMS("https://data.geopf.fr/wms-r/wms", {
      *     paramsNative : {
      *         minZoom : 1,
      *         maxZoom : 21
@@ -70,16 +70,24 @@ var WMS = L.TileLayer.WMS.extend(/** @lends WMS.prototype */ {
      */
     initialize : function (url, options) {
         var settings = {};
+
         L.Util.extend(settings, options.paramsWms, options.paramsNative);
+
+        var urlParams = {
+            "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
+        };
+
+        // ajout de l'apiKey en paramètre de la requête si couche à accès restreint
+        if (options.apikey) {
+            urlParams["apikey"] = options.apikey;
+        }
 
         // appel du constructeur de la classe étendue
         L.TileLayer.WMS.prototype.initialize.call(
             this,
             // tracker extension leaflet
             // FIXME : gp-ext version en mode AMD
-            Gp.Helper.normalyzeUrl(url, {
-                "gp-leaflet-ext" : Pkg.leafletExtVersion || Pkg.version
-            }, false),
+            Gp.Helper.normalyzeUrl(url, urlParams, false),
             settings
         );
 

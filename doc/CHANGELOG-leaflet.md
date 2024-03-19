@@ -7,106 +7,121 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- toc -->
 
-- [Extension Geoportail Leaflet, version 0.8.0](#extension-geoportail-leaflet-version-080)
+- [Extension Geoplateforme Leaflet, version 0.8.0](#extension-geoportail-leaflet-version-080)
   * [Changelog](#changelog)
-- [Extension Geoportail Leaflet, version 0.9.0](#extension-geoportail-leaflet-version-090)
+- [Extension Geoplateforme Leaflet, version 0.9.0](#extension-geoportail-leaflet-version-090)
   * [Summary](#summary)
   * [New Features :](#new-features-)
     + [Additional widgets :](#additional-widgets-)
     + [Others features](#others-features)
   * [ChangeLog](#changelog)
-- [Extension Geoportail Leaflet, version 0.9.1](#extension-geoportail-leaflet-version-091)
+- [Extension Geoplateforme Leaflet, version 0.9.1](#extension-geoportail-leaflet-version-091)
   * [Summary](#summary-1)
-- [Extension Geoportail Leaflet, version 1.0.0](#extension-geoportail-leaflet-version-100)
+- [Extension Geoplateforme Leaflet, version 1.0.0](#extension-geoportail-leaflet-version-100)
   * [Summary](#summary-2)
   * [Changelog](#changelog-1)
-- [Extension Geoportail Leaflet, version 1.1.0](#extension-geoportail-leaflet-version-110)
+- [Extension Geoplateforme Leaflet, version 1.1.0](#extension-geoportail-leaflet-version-110)
   * [Summary](#summary-3)
   * [Changelog](#changelog-2)
-- [Extension Geoportail Leaflet, version 2.0.1](#extension-geoportail-leaflet-version-201)
+- [Extension Geoplateforme Leaflet, version 2.0.1](#extension-geoportail-leaflet-version-201)
   * [Summary](#summary-4)
-- [Extension Geoportail Leaflet, version 2.0.2](#extension-geoportail-leaflet-version-202)
+- [Extension Geoplateforme Leaflet, version 2.0.2](#extension-geoportail-leaflet-version-202)
   * [Summary](#summary-5)
   * [Changelog](#changelog-3)
 - [Extension Géoportail pour Leaflet, version 2.0.3](#extension-geoportail-pour-leaflet-version-203)
 - [Summary](#summary-6)
-- [Extension Geoportail Leaflet, version 2.1.1](#extension-geoportail-leaflet-version-211)
+- [Extension Geoplateforme Leaflet, version 2.1.1](#extension-geoportail-leaflet-version-211)
   * [Summary](#summary-7)
   * [Changelog](#changelog-4)
-- [Extension Geoportail Leaflet, version 2.1.2](#extension-geoportail-leaflet-version-212)
+- [Extension Geoplateforme Leaflet, version 2.1.2](#extension-geoportail-leaflet-version-212)
   * [Summary](#summary-8)
   * [Changelog](#changelog-5)
-- [Extension Geoportail Leaflet, version 2.1.3](#extension-geoportail-leaflet-version-213)
+- [Extension Geoplateforme Leaflet, version 2.1.3](#extension-geoportail-leaflet-version-213)
   * [Summary](#summary-9)
   * [Changelog](#changelog-6)
-- [Extension Geoportail Leaflet, version 2.1.4](#extension-geoportail-leaflet-version-214)
+- [Extension Geoplateforme Leaflet, version 2.1.4](#extension-geoportail-leaflet-version-214)
   * [Summary](#summary-10)
   * [Changelog](#changelog-7)
-- [Extension Geoportail Leaflet, version 2.1.5](#extension-geoportail-leaflet-version-215)
+- [Extension Geoplateforme Leaflet, version 2.1.5](#extension-geoportail-leaflet-version-215)
   * [Summary](#summary-11)
   * [Changelog](#changelog-8)
-- [Extension Geoportail Leaflet, version 2.1.6](#extension-geoportail-leaflet-version-216)
+- [Extension Geoplateforme Leaflet, version 2.1.6](#extension-geoportail-leaflet-version-216)
   * [Summary](#summary-12)
   * [Changelog](#changelog-9)
-- [Extension Geoportail Leaflet, version 2.1.7](#extension-geoportail-leaflet-version-217)
+- [Extension Geoplateforme Leaflet, version 2.1.7](#extension-geoportail-leaflet-version-217)
   * [Summary](#summary-13)
   * [Changelog](#changelog-10)
-- [Extension Geoportail Leaflet, version 2.1.8](#extension-geoportail-leaflet-version-218)
+- [Extension Geoplateforme Leaflet, version 2.1.8](#extension-geoportail-leaflet-version-218)
   * [Summary](#summary-14)
   * [Changelog](#changelog-11)
-- [Extension Geoportail Leaflet, version 2.1.9](#extension-geoportail-leaflet-version-219)
+- [Extension Geoplateforme Leaflet, version 2.1.9](#extension-geoportail-leaflet-version-219)
   * [Summary](#summary-15)
   * [Changelog](#changelog-12)
-- [Extension Geoportail Leaflet, version 2.1.10](#extension-geoportail-leaflet-version-2110)
+- [Extension Geoplateforme Leaflet, version 2.1.10](#extension-geoportail-leaflet-version-2110)
   * [Summary](#summary-16)
   * [Changelog](#changelog-13)
-- [Extension Geoportail Leaflet, version 2.2.0](#extension-geoportail-leaflet-version-220)
+- [Extension Geoplateforme Leaflet, version 2.2.0](#extension-geoportail-leaflet-version-220)
   * [Summary](#summary-17)
   * [Changelog](#changelog-14)
-- [Extension Geoportail Leaflet, version 2.2.1](#extension-geoportail-leaflet-version-221)
+- [Extension Geoplateforme Leaflet, version 2.2.1](#extension-geoportail-leaflet-version-221)
   * [Summary](#summary-18)
   * [Changelog](#changelog-15)
-- [Extension Geoportail Leaflet, version 2.2.2](#extension-geoportail-leaflet-version-222)
+- [Extension Geoplateforme Leaflet, version 2.2.2](#extension-geoportail-leaflet-version-222)
   * [Summary](#summary-19)
   * [Changelog](#changelog-16)
-- [Extension Geoportail Leaflet, version 2.2.3](#extension-geoportail-leaflet-version-223)
+- [Extension Geoplateforme Leaflet, version 2.2.3](#extension-geoportail-leaflet-version-223)
   * [Summary](#summary-20)
   * [Changelog](#changelog-17)
-- [Extension Geoportail Leaflet, version 2.2.4](#extension-geoportail-leaflet-version-224)
+- [Extension Geoplateforme Leaflet, version 2.2.4](#extension-geoportail-leaflet-version-224)
   * [Summary](#summary-21)
   * [Changelog](#changelog-18)
-- [Extension Geoportail Leaflet, version 2.2.5](#extension-geoportail-leaflet-version-225)
+- [Extension Geoplateforme Leaflet, version 2.2.5](#extension-geoportail-leaflet-version-225)
   * [Summary](#summary-22)
   * [Changelog](#changelog-19)
-- [Extension Geoportail Leaflet, version 2.2.7](#extension-geoportail-leaflet-version-227)
+- [Extension Geoplateforme Leaflet, version 2.2.7](#extension-geoportail-leaflet-version-227)
   * [Summary](#summary-23)
   * [Changelog](#changelog-20)
-- [Extension Geoportail Leaflet, version 2.2.8](#extension-geoportail-leaflet-version-228)
+- [Extension Geoplateforme Leaflet, version 2.2.8](#extension-geoportail-leaflet-version-228)
   * [Summary](#summary-24)
   * [Changelog](#changelog-21)
-- [Extension Geoportail Leaflet, version 2.2.9](#extension-geoportail-leaflet-version-229)
+- [Extension Geoplateforme Leaflet, version 2.2.9](#extension-geoportail-leaflet-version-229)
   * [Summary](#summary-25)
   * [Changelog](#changelog-22)
-- [Extension Geoportail Leaflet, version 2.3.0](#extension-geoportail-leaflet-version-230)
+- [Extension Geoplateforme Leaflet, version 2.3.0](#extension-geoportail-leaflet-version-230)
   * [Summary](#summary-26)
   * [Changelog](#changelog-23)
         * [Avant :](#avant-)
         * [Maintenant :](#maintenant-)
-- [Extension Geoportail Leaflet, version 2.3.1](#extension-geoportail-leaflet-version-231)
+- [Extension Geoplateforme Leaflet, version 2.3.1](#extension-geoportail-leaflet-version-231)
   * [Summary](#summary-27)
   * [Changelog](#changelog-24)
-- [Extension Geoportail Leaflet, version 2.3.2](#extension-geoportail-leaflet-version-232)
+- [Extension Geoplateforme Leaflet, version 2.3.2](#extension-geoportail-leaflet-version-232)
   * [Summary](#summary-28)
   * [Changelog](#changelog-25)
-- [Extension Geoportail Leaflet, version 2.3.3](#extension-geoportail-leaflet-version-233)
+- [Extension Geoplateforme Leaflet, version 2.3.3](#extension-geoportail-leaflet-version-233)
   * [Summary](#summary-29)
   * [Changelog](#changelog-26)
+- [Extension Geoplateforme Leaflet, version 2.3.4](#extension-geoportail-leaflet-version-234)
+  * [Summary](#summary-30)
+  * [Changelog](#changelog-27)
+- [Extension Geoplateforme Leaflet, version 2.4.0-beta](#extension-geoportail-leaflet-version-240-beta)
+  * [Summary](#summary-31)
+  * [Changelog](#changelog-28)
+- [Extension Geoplateforme Leaflet, version 2.4.0-beta2](#extension-geoportail-leaflet-version-240-beta2)
+  * [Summary](#summary-32)
+  * [Changelog](#changelog-29)
+- [Extension Geoplateforme Leaflet, version 2.4.0-beta3](#extension-geoportail-leaflet-version-240-beta3)
+  * [Summary](#summary-33)
+  * [Changelog](#changelog-30)
+- [Extension Geoplateforme Leaflet, version 2.4.0-beta4](#extension-geoportail-leaflet-version-240-beta4)
+  * [Summary](#summary-34)
+  * [Changelog](#changelog-31)
 
 <!-- tocstop -->
 
 ---
 
-# Extension Geoportail Leaflet, version 0.8.0
+# Extension Geoplateforme Leaflet, version 0.8.0
 
 **08/06/2016 : 0.8.0** release of the Geoportal Extension for Leaflet
 
@@ -129,7 +144,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail Leaflet, version 0.9.0
+# Extension Geoplateforme Leaflet, version 0.9.0
 
 **04/12/2016 : 0.9.0** release of the Geoportal Extension for Leaflet
 
@@ -169,7 +184,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-# Extension Geoportail Leaflet, version 0.9.1
+# Extension Geoplateforme Leaflet, version 0.9.1
 
 **17/08/2017 : 0.9.1** release of the Geoportal Extension for Leaflet
 
@@ -191,9 +206,9 @@ So, you can use the widget *ReverseGeocoding* and *ElevationPath* with this newe
 
 ---
 
-# Extension Geoportail Leaflet, version 1.0.0
+# Extension Geoplateforme Leaflet, version 1.0.0
 
-**11/12/2017 : 1.0.0** Release Extension Geoportail Leaflet
+**11/12/2017 : 1.0.0** Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -227,9 +242,9 @@ debugs divers ...
 
 ---
 
-# Extension Geoportail Leaflet, version 1.1.0
+# Extension Geoplateforme Leaflet, version 1.1.0
 
-**09/04/2018 : 1.1.0** Release Extension Geoportail Leaflet
+**09/04/2018 : 1.1.0** Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -247,9 +262,9 @@ debugs divers ...
 
 ---
 
-# Extension Geoportail Leaflet, version 2.0.1
+# Extension Geoplateforme Leaflet, version 2.0.1
 
-**11/04/2018 : 2.0.1** Release Extension Geoportail Leaflet
+**11/04/2018 : 2.0.1** Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -257,9 +272,9 @@ Migration du projet sous [Webpack](http://webpack.github.io/) ainsi que les sour
 
 ---
 
-# Extension Geoportail Leaflet, version 2.0.2
+# Extension Geoplateforme Leaflet, version 2.0.2
 
-**10/08/2018 : 2.0.2** Release Extension Geoportail Leaflet
+**10/08/2018 : 2.0.2** Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -296,10 +311,10 @@ Version 2.0.3 de l'extension Géoportail pour Leaflet :
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.1
+# Extension Geoplateforme Leaflet, version 2.1.1
 
 **05/09/2019 : version 2.1.1**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -336,10 +351,10 @@ Version 2.0.3 de l'extension Géoportail pour Leaflet :
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.2
+# Extension Geoplateforme Leaflet, version 2.1.2
 
 **09/09/2019**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -358,10 +373,10 @@ Version 2.0.3 de l'extension Géoportail pour Leaflet :
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.3
+# Extension Geoplateforme Leaflet, version 2.1.3
 
 **24/09/2019**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -380,10 +395,10 @@ Version 2.0.3 de l'extension Géoportail pour Leaflet :
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.4
+# Extension Geoplateforme Leaflet, version 2.1.4
 
 **24/09/2019**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -402,10 +417,10 @@ Version 2.0.3 de l'extension Géoportail pour Leaflet :
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.5
+# Extension Geoplateforme Leaflet, version 2.1.5
 
 **16/10/2019**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -419,10 +434,10 @@ Version 2.0.3 de l'extension Géoportail pour Leaflet :
 
 ---
 
-# Extension Geoportail Leaflet, version 2.1.6
+# Extension Geoplateforme Leaflet, version 2.1.6
 
 **01/07/2020**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -441,10 +456,10 @@ Mise à jour des dépendances (#263) et correctifs mineurs
     - suppression de la couverture du code (#263)
 
 ---
-# Extension Geoportail Leaflet, version 2.1.7
+# Extension Geoplateforme Leaflet, version 2.1.7
 
 **09/12/2020**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -468,10 +483,10 @@ Mise à jour de Leaflet en version 1.7.1
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.1.8
+# Extension Geoplateforme Leaflet, version 2.1.8
 
 **12/02/2021**
-> Release Extension Geoportail Leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -496,10 +511,10 @@ Nouveau widget de profil altimétrique par défaut, et correctif mineur
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.1.9
+# Extension Geoplateforme Leaflet, version 2.1.9
 
 **26/04/2021**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -538,10 +553,10 @@ Nouveau widget de profil altimétrique par défaut, et correctif mineur
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.1.10
+# Extension Geoplateforme Leaflet, version 2.1.10
 
 **16/06/2021**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -564,10 +579,10 @@ Reparation du profil altimétrique
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.0
+# Extension Geoplateforme Leaflet, version 2.2.0
 
 **04/11/2021**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -590,10 +605,10 @@ Reparation du profil altimétrique
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.1
+# Extension Geoplateforme Leaflet, version 2.2.1
 
 **03/12/2021**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -616,10 +631,10 @@ Utilisation de plusieurs clefs
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.2
+# Extension Geoplateforme Leaflet, version 2.2.2
 
 **13/01/2022**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -642,10 +657,10 @@ Changements mineurs sur les problématiques d'accessibilité
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.3
+# Extension Geoplateforme Leaflet, version 2.2.3
 
 **04/03/2022**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -668,10 +683,10 @@ Corrections sur l'interface d'ajout des couches WMS/WMTS
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.4
+# Extension Geoplateforme Leaflet, version 2.2.4
 
 **23/03/2022**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -692,10 +707,10 @@ Corrections sur l'interface d'ajout des couches WMS/WMTS
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.5
+# Extension Geoplateforme Leaflet, version 2.2.5
 
 **04/10/2022**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -719,10 +734,10 @@ Utilisation du Geocodage v2
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.7
+# Extension Geoplateforme Leaflet, version 2.2.7
 
 **30/10/2022**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -742,10 +757,10 @@ Utilisation du Geocodage v2
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.8
+# Extension Geoplateforme Leaflet, version 2.2.8
 
 **17/01/2023**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -774,10 +789,10 @@ Ajout des déclarations typescript, améliorations et corrections des interfaces
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.2.9
+# Extension Geoplateforme Leaflet, version 2.2.9
 
 **21/02/2023**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -802,13 +817,13 @@ Ajout d'écouteurs sur les contrôles de Géocodage direct et inverse
 
 ---
 
-# Extension Geoportail Leaflet, version 2.3.0
+# Extension Geoplateforme Leaflet, version 2.3.0
 
 **07/06/2023**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
-Retrait total de l'utilisation du service d'autoconfiguration et utilisation de fichiers de configuration json générés quotidiennement à partir des getCapabilities des services du Geoportail.
+Retrait total de l'utilisation du service d'autoconfiguration et utilisation de fichiers de configuration json générés quotidiennement à partir des getCapabilities des services du Geoplatform.
 
 L'ensemble des services de calcul appelés via la bibliothèque d'accès sont désormais appelés avec la clé "calcul" par défaut dans la bibliothèque d'accès. Le paramètre "apiKey" n'est donc plus nécessaire pour appeler les services de géocodage, d'itinéraire, d'isochrone, d'altimétrie et d'autocomplétion, que ce soit directement depuis la bibli
 othèque d'accès ou via les widgets des extensions Géoportail.
@@ -822,7 +837,7 @@ Il est également possible de générer son propre fichier de configuration à p
 ## Changelog
 
 * [Changed]
-    - mise à jour de la bibliothèque d'accès aux services Geoportail en version 3.3.0 (#364)
+    - mise à jour de la bibliothèque d'accès aux services Geoplatform en version 3.3.0 (#364)
     - **BC** : paramètre "customConfigFile" pour appeler un fichier de configuration local (#364)
 ##### Avant :
 ```html
@@ -900,7 +915,7 @@ var layer = L.geoportalLayer.WMTS({
    
     - **BC** : Les metadatas sont utilisées dans les API par le contrôle gestionnaire de couches (LayerSwitcher). Celui-ci va lire les metadatas des couches ajoutées à la carte et les afficher dans l'encart d'information dédié du LayerSwitcher. **Pour les couches WMTS uniquement**, désormais, pour que les metadatas apparaissent dans l'onglet "informations" du LayerSwitcher, il faudra les renseigner manuellement à la configuration de la couche Géoportail lors de son ajout à la carte.
 ```javascript
-var maCoucheGeoportail = L.geoportalLayer.WMTS({
+var maCoucheGeoplatform = L.geoportalLayer.WMTS({
     layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2"
 }, {
     metadata: [
@@ -916,10 +931,10 @@ var maCoucheGeoportail = L.geoportalLayer.WMTS({
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.3.1
+# Extension Geoplateforme Leaflet, version 2.3.1
 
 **07/06/2023**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -938,10 +953,10 @@ var maCoucheGeoportail = L.geoportalLayer.WMTS({
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.3.2
+# Extension Geoplateforme Leaflet, version 2.3.2
 
 **12/06/2023**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -964,10 +979,10 @@ var maCoucheGeoportail = L.geoportalLayer.WMTS({
 * [Security]
 
 ---
-# Extension Geoportail Leaflet, version 2.3.3
+# Extension Geoplateforme Leaflet, version 2.3.3
 
 **21/07/2023**
-> Release Extension Geoportail leaflet
+> Release Extension Geoplateforme Leaflet
 
 ## Summary
 
@@ -980,6 +995,132 @@ Mise à jour de la version de la bibliothèque d'accès 3.3.2
 * [Changed]
 
     - MaJ bibliothèque d'accès 3.3.2
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.3.4
+
+**30/08/2023**
+> Release Extension Geoplateforme Leaflet
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès aux services Géoportail.
+
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - access-lib 3.3.4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.0-beta
+
+**21/09/2023**
+> Release Extension Geoplateforme Leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.0-beta2
+
+**27/10/2023**
+> Release Extension Geoplateforme Leaflet
+
+## Summary
+
+Utilisation du service de Geocodage de la Geoplateforme
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - les widgets utilisent désormais par défaut les services d'autocomplétion et de geocodage direct et inverse de la Geoplateforme
+    - utilisation de la version 3.4.0-beta2 de la bibliothèque d'accès
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.0-beta3
+
+**21/11/2023**
+> Release Extension Geoplateforme Leaflet
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - possibilité d'ajout automatique de couches IGN à accès restreint
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.0-beta4
+
+**14/12/2023**
+> Release Extension Geoplateforme Leaflet
+
+## Summary
+
+Ajout possible de couches à accès restreint via une fichier de configuration custom
+
+## Changelog
+
+* [Added]
+
+* [Changed]
 
 * [Deprecated]
 

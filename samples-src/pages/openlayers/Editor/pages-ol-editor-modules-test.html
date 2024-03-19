@@ -50,7 +50,22 @@
                     legend : true
                 }
             });
-
+            // create DOM
+            editor0.createElement()
+            .then(() => {
+                console.warn({
+                    "id": editor0.getID(),
+                    "container": editor0.getContainer(),
+                    "style": editor0.getStyle(),
+                    "layers": editor0.getLayers(),
+                    "style layer 0": editor0.getStyleLayer(0),
+                    "layer 0 from style": editor0.getLayerFromStyle(0),
+                    "layer 0": editor0.getLayer(0)
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
             // liste de themes reussi avec imagette !
             var editor1 = new ol.style.Editor({
                 target: document.getElementById("editor"),
@@ -103,6 +118,22 @@
                     group : true
                 }
             });
+            // create DOM
+            editor1.createElement()
+            .then(() => {
+                console.warn({
+                    "id": editor1.getID(),
+                    "container": editor1.getContainer(),
+                    "style": editor1.getStyle(),
+                    "layers": editor1.getLayers(),
+                    "style layer 0": editor1.getStyleLayer(0),
+                    "layer 0 from style": editor1.getLayerFromStyle(0),
+                    "layer 0": editor1.getLayer(0)
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
             var editor2 = new ol.style.Editor({
                 target: document.getElementById("editor"),
@@ -120,6 +151,22 @@
                     legend : true,
                     group : true
                 }
+            });
+            // create DOM
+            editor2.createElement()
+            .then(() => {
+                console.warn({
+                    "id": editor2.getID(),
+                    "container": editor2.getContainer(),
+                    "style": editor2.getStyle(),
+                    "layers": editor2.getLayers(),
+                    "style layer 0": editor2.getStyleLayer(0),
+                    "layer 0 from style": editor2.getLayerFromStyle(0),
+                    "layer 0": editor2.getLayer(0)
+                });
+            })
+            .catch(error => {
+                console.error(error);
             });
 
             document.getElementById("displayTrue").addEventListener("click", function () {

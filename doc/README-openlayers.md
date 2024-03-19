@@ -1,17 +1,17 @@
-# Extension Géoportail pour OpenLayers
+# Extension Géoplateforme pour OpenLayers
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/IGNF/geoportal-extensions?filename=build%2Fscripts%2Frelease%2Fpackage-openlayers.json)
 
 <!-- toc -->
 
-- [Extension Géoportail pour OpenLayers](#extension-géoportail-pour-openlayers)
+- [Extension Géoplateforme pour OpenLayers](#extension-géoplateforme-pour-openlayers)
   - [Mise en oeuvre](#mise-en-oeuvre)
     - [Téléchargement](#téléchargement)
       - [Téléchargement direct](#téléchargement-direct)
       - [Récupération avec NPM](#récupération-avec-npm)
       - [Accès direct](#accès-direct)
     - [Intégration dans une page web](#intégration-dans-une-page-web)
-    - [Configuration de l'accès à la plateforme Géoportail](#configuration-de-laccès-à-la-plateforme-géoportail)
+    - [Configuration de l'accès à la Géoplateforme](#configuration-de-laccès-à-la-géoplateforme)
       - [Optimisation du chargement : configuration locale](#optimisation-du-chargement--configuration-locale)
     - [Appel de l'extension dans un module ES6](#appel-de-lextension-dans-un-module-es6)
   - [Compatibilités](#compatibilités)
@@ -19,19 +19,19 @@
     - [Navigateurs supportés](#navigateurs-supportés)
   - [Fonctionnalités](#fonctionnalités)
     - [Systèmes de coordonnées](#systèmes-de-coordonnées)
-    - [Affichage des couches WMTS Géoportail](#affichage-des-couches-wmts-géoportail)
-      - [Utilisation d'un layer WMTS Géoportail](#utilisation-dun-layer-wmts-géoportail)
+    - [Affichage des couches WMTS Géoplateforme](#affichage-des-couches-wmts-géoplateforme)
+      - [Utilisation d'un layer WMTS Géoplateforme](#utilisation-dun-layer-wmts-géoplateforme)
         - [Exemple d'utilisation](#exemple-dutilisation)
         - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154)
-      - [Utilisation d'une source WMTS Géoportail](#utilisation-dune-source-wmts-géoportail)
+      - [Utilisation d'une source WMTS Géoplateforme](#utilisation-dune-source-wmts-géoplateforme)
         - [Exemple d'utilisation](#exemple-dutilisation-1)
         - [Affichage en Lambert 93 (EPSG:2154)](#affichage-en-lambert-93-epsg2154-1)
-    - [Affichage des couches WMS Géoportail](#affichage-des-couches-wms-géoportail)
-      - [Utilisation d'un layer WMS Géoportail](#utilisation-dun-layer-wms-géoportail)
+    - [Affichage des couches WMS Géoplateforme](#affichage-des-couches-wms-géoplateforme)
+      - [Utilisation d'un layer WMS Géoplateforme](#utilisation-dun-layer-wms-géoplateforme)
         - [Exemple d'utilisation](#exemple-dutilisation-2)
-      - [Utilisation d'une source WMS Géoportail](#utilisation-dune-source-wms-géoportail)
+      - [Utilisation d'une source WMS Géoplateforme](#utilisation-dune-source-wms-géoplateforme)
         - [Exemple d'utilisation](#exemple-dutilisation-3)
-    - [Affichage d'une couche Vecteur Tuilé Géoportail](#affichage-dune-couche-vecteur-tuilé-géoportail)
+    - [Affichage d'une couche Vecteur Tuilé Géoplateforme](#affichage-dune-couche-vecteur-tuilé-géoplateforme)
     - [Widget de gestion d'empilement des couches](#widget-de-gestion-dempilement-des-couches)
       - [Exemples d'utilisation](#exemples-dutilisation)
         - [Utilisation simple](#utilisation-simple)
@@ -78,13 +78,13 @@
 
 <a name="readme-top"></a>
 
-L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers dans ses versions 3 et supérieures](https://openlayers.org/) :
+L'extension Géoplateforme pour OpenLayers propose les fonctionnalités suivantes à utiliser en complément de la bibliothèque [OpenLayers dans ses versions 3 et supérieures](https://openlayers.org/) :
 
-* [affichage des couches WMTS Géoportail](#WMTS)
+* [affichage des couches WMTS Géoplateforme](#WMTS)
 
-* [affichage des couches WMS Géoportail](#WMS)
+* [affichage des couches WMS Géoplateforme](#WMS)
 
-* [affichage d'une couche Vecteur Tuilé Géoportail](#VT)
+* [affichage d'une couche Vecteur Tuilé Géoplateforme](#VT)
 
 * [affichage dynamique des attributions](#attributions)
 
@@ -94,17 +94,17 @@ L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes �
 
 * [obtention d'une adresse, d'un nom de lieu, ... au clic sur la carte](#reverse)
 
-* [calculs d'itinéraires à partir du service de la plateforme Géoportail](#route)
+* [calculs d'itinéraires à partir du service de la Géoplateforme](#route)
 
-* [calculs d'isochrones / isodistances à partir du service de la plateforme Géoportail](#isocurve)
+* [calculs d'isochrones / isodistances à partir du service de la Géoplateforme](#isocurve)
 
-* [coordonnées et altitude en un point de la carte à l'aide du service d'altimétrie de la plateforme Géoportail](#mp)
+* [coordonnées et altitude en un point de la carte à l'aide du service d'altimétrie de la Géoplateforme](#mp)
 
 * [outils de croquis](#drawing)
 
 * [import de couches](#layerimport)
 
-* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la plateforme Géoportail](#ep)
+* [profil altimétrique d'un traçé à l'aide du service d'altimétrie de la Géoplateforme](#ep)
 
 * [outils de mesures](#measure)
 
@@ -114,13 +114,13 @@ L'extension Géoportail pour OpenLayers propose les fonctionnalités suivantes �
 
 ## Mise en oeuvre
 
-L'utilisation de l'extension Géoportail pour OpenLayers se fait via les étapes suivantes :
+L'utilisation de l'extension Géoplateforme pour OpenLayers se fait via les étapes suivantes :
 
-* [Téléchargement de l'extension Géoportail](#download)
+* [Téléchargement de l'extension Géoplateforme](#download)
 
 * [Intégration de l'extension dans une page web](#integration)
 
-* [Configuration de l'accès à la plateforme Géoportail](#config)
+* [Configuration de l'accès à la Géoplateforme](#config)
 
 Une documentation technique (**jsdoc**), une **demo** et un **generateur de carte** sont disponibles [ici](https://ignf.github.io/geoportal-extensions/).
 
@@ -128,12 +128,12 @@ Une documentation technique (**jsdoc**), une **demo** et un **generateur de cart
 
 ### Téléchargement
 
-Vous pouvez récupérer l'extension Géoportail pour OpenLayers soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
+Vous pouvez récupérer l'extension Géoplateforme pour OpenLayers soit par [téléchargement direct](#download-direct), soit en utilisant le [gestionnaire de dépendances javascript NPM](#download-npm).
 
-L'extension Géoportail pour OpenLayers comprend l'arborescence de fichiers suivante :
+L'extension Géoplateforme pour OpenLayers comprend l'arborescence de fichiers suivante :
 
 ```
-    <Extension Géoportail pour OpenLayers>/
+    <Extension Géoplateforme pour OpenLayers>/
         GpPluginOpenLayers.js
             (version minifiée du code javascript pour une utilisation en production)
         GpPluginOpenLayers.css
@@ -152,7 +152,7 @@ Les scripts d'OpenLayers s'obtiennent sur [la page de téléchargement d'OpenLay
 
 #### Téléchargement direct
 
-Vous pouvez télécharger la dernière version de l'extension Géoportail pour OpenLayers directement sur [la page des releases des extensions Géoportail](https://github.com/IGNF/geoportal-extensions/releases).
+Vous pouvez télécharger la dernière version de l'extension Géoplateforme pour OpenLayers directement sur [la page des releases des extensions Géoplateforme](https://github.com/IGNF/geoportal-extensions/releases).
 
 L'archive téléchargée (.zip) comprend l'arborescence décrite ci-dessus.
 
@@ -162,7 +162,7 @@ L'archive téléchargée (.zip) comprend l'arborescence décrite ci-dessus.
 
 #### Récupération avec NPM
 
-L'extension Géoportail pour OpenLayers est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-openlayers).
+L'extension Géoplateforme pour OpenLayers est aussi disponible dans les dépôts [NPM](https://www.npmjs.com/package/geoportal-extensions-openlayers).
 
 Prérequis : [NodeJS](https://nodejs.org/en/) et [npm](https://www.npmjs.com/) installés.
 
@@ -190,16 +190,16 @@ http://ignf.github.io/geoportal-extensions/openlayers-latest/dist/GpPluginOpenLa
 
 ### Intégration dans une page web
 
-Dézippez l'extension géoportail dans l'arborescence votre de serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
+Dézippez l'extension géoplateforme dans l'arborescence votre de serveur web. Vous pouvez positionner à votre guise les fichiers css et javascript.
 
-Intégrez l'extension géoportail pour OpenLayers dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque OpenLayers.
+Intégrez l'extension géoplateforme pour OpenLayers dans votre page web classiquement à l'aide d'une balise **script** pour charger le fichier javascript et d'une balise **link** pour charger le fichier css en plus des balises correspondantes utilisées pour charger la bibliothèque OpenLayers.
 
 ``` html
 <!-- Library OpenLayers -->
 <link rel="stylesheet" href="chemin/vers/ol/ol.css" />
 <script src="chemin/vers/ol/ol.js"></script>
 
-<!-- Extension Géoportail pour OpenLayers -->
+<!-- Extension Géoplateforme pour OpenLayers -->
 <script src="chemin/vers/GpPluginOpenLayers.js"></script>
 <link rel="stylesheet" href="chemin/vers/GpPluginOpenLayers.css" />
 ```
@@ -208,25 +208,29 @@ Intégrez l'extension géoportail pour OpenLayers dans votre page web classiquem
 
 <a id="config"/>
 
-### Configuration de l'accès à la plateforme Géoportail
+### Configuration de l'accès à la Géoplateforme
 
-L'extension Géoportail pour OpenLayers exploite les services web exposés par la plateforme Géoportail. Ceux-ci sont soumis à l'utilisation d'une ou de plusieurs **clef d'accès** gratuites disponibles sur le site [geoservices.ign.fr](https://geoservices.ign.fr/services-web) ayant les droits sur les ressources que vous souhaitez exploiter.
+L'extension Géoplateforme pour OpenLayers exploite les services web exposés par la Géoplateforme. Ceux-ci sont en libre accès.
 
-Vous pouvez ensuite paramétrer l'utilisation de l'extension avec la ou les clefs qui correspondent à vos besoins de deux manières possibles :
+Vous pouvez cependant paramétrer l'utilisation de l'extension avec une ou plusieurs thématiques Géoplateforme qui correspondent à vos besoins en générant un fichier de configuration local à partir de [cette interface](https://geoplateforme-configuration.onrender.com/) ou en passant par le paramètre apiKey.
+
+Si ni apiKey, ni fichier de configuration local n'est spécifié, l'utilisateur récupérera une configuration complète avec toutes les ressources de la Géoplateforme (qui pourra donc être très volumineuse).
+
+Vous pouvez configurer les extensions des manières suivantes :
 
 **Méthode 1** : Au chargement de l'extension en utilisant l'attribut "data-key" de la balise **script** de chargement de l'extension :
 
 ``` html
-<script data-key="CLEF" src="chemin/vers/GpPluginOpenLayers.js"></script>
+<script data-key="THEME" src="chemin/vers/GpPluginOpenLayers.js"></script>
 ```
 
-Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut data-key :
+Thèmes multiples : Si vous devez utiliser plusieurs thématiques, il est possible de mettre une liste de thèmes dans l'attribut data-key :
 
 ``` html
-<script data-key="CLEF-1,CLEF-2,CLEF-3" src="chemin/vers/GpPluginOpenLayers.js"></script>
+<script data-key="THEME-1,THEME-2,THEME-3" src="chemin/vers/GpPluginOpenLayers.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoplateforme sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -234,14 +238,14 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <!-- Library OpenLayers -->
         <link rel="stylesheet" href="ol.css" />
         <script src="ol.js"></script>
-        <!-- Extension Géoportail pour OpenLayers -->
+        <!-- Extension Géoplateforme pour OpenLayers -->
         <link rel="stylesheet" href="GpPluginOpenLayers.css" />
-        <script src="GpPluginOpenLayers.js" data-key="CLEF"></script>
+        <script src="GpPluginOpenLayers.js" data-key="THEME"></script>
     </head>
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour OpenLayers
+                // votre utilisation de l'extension Géoplateforme pour OpenLayers
             }
         </script>
     </body>
@@ -256,7 +260,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <!-- Library OpenLayers -->
         <link rel="stylesheet" href="ol.css" />
         <script src="ol.js"></script>
-        <!-- Extension Géoportail pour OpenLayers -->
+        <!-- Extension Géoplateforme pour OpenLayers -->
         <link rel="stylesheet" href="GpPluginOpenLayers.css" />
         <script src="GpPluginOpenLayers.js"></script>
     </head>
@@ -264,9 +268,9 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEF',
+                    apiKey: 'THEME',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour OpenLayers
+                        // votre utilisation de l'extension Géoplateforme pour OpenLayers
                     }
                 });
             }
@@ -275,7 +279,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
 </html>
 ```
 
-Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
+Thèmes multiples : Si vous devez utiliser plusieurs thématiques, il est possible de mettre une liste de clés dans l'attribut apiKey de la fonction getConfig :
 
 
 ``` html
@@ -284,7 +288,7 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <!-- Bibliothèque OpenLayers -->
         <link rel="stylesheet" href="ol.css" />
         <script src="ol.js"></script>
-        <!-- Extension Géoportail pour OpenLayers -->
+        <!-- Extension Géoplateforme pour OpenLayers -->
         <link rel="stylesheet" href="GpPluginOpenLayers.css" />
         <script src="GpPluginOpenLayers.js"></script>
     </head>
@@ -292,9 +296,9 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
         <script>
             window.onload = function () {
                 Gp.Services.getConfig({
-                    apiKey: 'CLEF-1,CLEF-2,CLEF-3',
+                    apiKey: 'THEME-1,THEME-2,THEME-3',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour OpenLayers
+                        // votre utilisation de l'extension Géoplateforme pour OpenLayers
                     }
                 });
             }
@@ -307,9 +311,9 @@ Clés multiples : Si vous devez utiliser plusieurs clés d'accès, il est possib
 
 #### Optimisation du chargement : configuration locale
 
-Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme la configuration associée à votre clef d'accès. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [du formulaire de ce tutoriel](https://geoportal-configuration.onrender.com/).
+Vous pouvez améliorer le temps de chargement de votre page en mettant en cache sur votre plateforme un fichier de configuration Géoplateforme, qui contient les information nécéssaires des ressources que vous souhaitez utiliser uniquement. Il vous suffit pour cela de récupérer le fichier de configuration (customConfig.json) obtenu à l'aide [de cet utilitaire en ligne](https://geoplateforme-configuration.onrender.com/).
 
-Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoportail de la manière suivante (selon les méthodes citées précédemment) :
+Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoplateforme de la manière suivante (selon les méthodes citées précédemment) :
 
 **Méthode 1** : Utilisez l'attribut "data-url" de la balise **script** chargeant l'extension pour pointer vers votre fichier :
 
@@ -317,7 +321,7 @@ Enregistrez ce fichier sur votre plateforme et paramétrez l'extension Géoporta
 <script data-url="chemin/vers/customConfig.json" src="chemin/vers/GpPluginItowns.js"></script>
 ```
 
-Votre utilisation des fonctionnalités de l'extension Géoportail sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
+Votre utilisation des fonctionnalités de l'extension Géoplateforme sera alors simplement conditionnée par la réception de l'événement onload de la page web, comme sur l'exemple suivant :
 
 ``` html
 <html>
@@ -329,7 +333,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
     <body>
         <script>
             window.onload = function () {
-                // votre utilisation de l'extension Géoportail pour OpenLayers
+                // votre utilisation de l'extension Géoplateforme pour OpenLayers
             }
         </script>
     </body>
@@ -348,7 +352,7 @@ Votre utilisation des fonctionnalités de l'extension Géoportail sera alors sim
                     customConfigFile: 'chemin/vers/customConfig.json',
                     callbackSuffix : '',
                     onSuccess: function (response) {
-                        // votre utilisation de l'extension Géoportail pour OpenLayers
+                        // votre utilisation de l'extension Géoplateforme pour OpenLayers
                     }
                 });
             }
@@ -404,11 +408,11 @@ Gp.Services.getConfig(...)
 
 ### Versions de OpenLayers supportées
 
-Les **versions 3.1.z et supérieures de l'extension Géoportail pour OpenLayers** peuvent s'utiliser avec la **version 6.3.1** d'OpenLayers.
+Les **versions 3.1.z et supérieures de l'extension Géoplateforme pour OpenLayers** peuvent s'utiliser avec la **version 6.3.1** d'OpenLayers.
 
-Les **versions 3.0.z de l'extension Géoportail pour OpenLayers** peuvent s'utiliser avec les **versions 5.0.3 et supérieures** d'OpenLayers.
+Les **versions 3.0.z de l'extension Géoplateforme pour OpenLayers** peuvent s'utiliser avec les **versions 5.0.3 et supérieures** d'OpenLayers.
 
-La compatibilité avec les **versions 4.0.z** n'est assurée que par les **versions 2.1.2 et antérieures de l'extension Géoportail pour OpenLayers**.
+La compatibilité avec les **versions 4.0.z** n'est assurée que par les **versions 2.1.2 et antérieures de l'extension Géoplateforme pour OpenLayers**.
 
 Le support des versions d'OpenLayers antérieures à la version 3.14 n'a pas été complètement testé.
 
@@ -432,9 +436,9 @@ Safari     | Versions récentes (6.1+)
 
 ### Systèmes de coordonnées
 
-OpenLayers utilise par défaut les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoportail) comme expliqué [ici](https://openlayers.org/en/latest/apidoc/module-ol_proj.html).
+OpenLayers utilise par défaut les systèmes de coordonnées mondiaux "standards" : EPSG:4326 (coordonnées géographiques) et EPSG:3857 (Projection Web Mercator utilisée par Google, Bings, OSM ... et le Géoplateforme) comme expliqué [ici](https://openlayers.org/en/latest/apidoc/module-ol_proj.html).
 
-L'extension Géoportail pour OpenLayers embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
+L'extension Géoplateforme pour OpenLayers embarque de nombreuses projections en *EPSG*, *CRS* ainsi que sous le registre *IGNF*.
 Il est possible d'utiliser ces projections :
 
 Exemple :
@@ -451,7 +455,7 @@ var view = new ol.View({
 
 La définition d'autres systèmes de coordonnées est cependant possible par l'adjonction de la bibliothèque [Proj4js](https://github.com/proj4js/proj4js) permettant de définir des systèmes de coordonnées et d'effectuer des transformations de coordonnées entre systèmes. Cette bibliothèque est directement compatible avec OpenLayers.
 
-L'extension Géoportail pour OpenLayers **intègre nativement cette bibliothèque**. Si vous l'utilisez vous pouvez donc directement définir les systèmes de coordonnées que vous souhaitez selon la syntaxe proj4 et utiliser les alias ainsi définis en paramètres des fonctions d'OpenLayers.
+L'extension Géoplateforme pour OpenLayers **intègre nativement cette bibliothèque**. Si vous l'utilisez vous pouvez donc directement définir les systèmes de coordonnées que vous souhaitez selon la syntaxe proj4 et utiliser les alias ainsi définis en paramètres des fonctions d'OpenLayers.
 
 Exemple :
 
@@ -478,19 +482,19 @@ NB :
 
 <a id="WMTS"/>
 
-### Affichage des couches WMTS Géoportail
+### Affichage des couches WMTS Géoplateforme
 
 Le modèle de données OpenLayers fait la distinction entre la notion de couche (ol.layer) et la notion de source de données (ol.source). Ainsi, une carte OpenLayers est constituée d'un empilement de "ol.layer", avec des propriétés relatives à leurs visibilité sur la carte, dont le contenu est alimenté par des "ol.source", avec des propriétés relatives à la manière d'obtenir ces données.
 
-L'extension Géoportail pour OpenLayers propose deux manières d'accéder aux couches Géoportail selon ce modèle :
+L'extension Géoplateforme pour OpenLayers propose deux manières d'accéder aux couches Géoplateforme selon ce modèle :
 
-1. On souhaite une mise en oeuvre simple, où on saisit uniquement le nom de sa couche, et d'éventuels paramètres d'affichage (visibilité ou opacité). Définition d'un [layer WMTS Géoportail](#layerWMTS).
+1. On souhaite une mise en oeuvre simple, où on saisit uniquement le nom de sa couche, et d'éventuels paramètres d'affichage (visibilité ou opacité). Définition d'un [layer WMTS Géoplateforme](#layerWMTS).
 
-2. On souhaite pouvoir paramétrer plus finement l'affichage de sa couche dans la carte, ainsi que d'éventuels paramètres du service (format, style, ...). Définition d'une [source WMTS Géoportail](#sourceWMTS).
+2. On souhaite pouvoir paramétrer plus finement l'affichage de sa couche dans la carte, ainsi que d'éventuels paramètres du service (format, style, ...). Définition d'une [source WMTS Géoplateforme](#sourceWMTS).
 
 <a id="layerWMTS"/>
 
-#### Utilisation d'un layer WMTS Géoportail
+#### Utilisation d'un layer WMTS Géoplateforme
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [ol.layer.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.layer.GeoportalWMTS.html), de la manière suivante :
 
@@ -502,7 +506,7 @@ Cette fonction retourne un objet **ol.layer.GeoportalWMTS**, qui hérite de l'ob
 
 ##### Exemple d'utilisation
 
-Affichage simple des ortho-images du Géoportail : création d'une *layer* Géoportail, et ajout à la *map* OpenLayers.
+Affichage simple des ortho-images du Géoplateforme : création d'une *layer* Géoplateforme, et ajout à la *map* OpenLayers.
 
 ``` javascript
 var map = new ol.Map({
@@ -525,7 +529,7 @@ var map = new ol.Map({
 
 ##### Affichage en Lambert 93 (EPSG:2154)
 
-La plateforme Géoportail diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoportail pour OpenLayers pré-définit l'alias "EPSG:2154" correspondant à cette projection.
+La Géoplateforme diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoplateforme pour OpenLayers pré-définit l'alias "EPSG:2154" correspondant à cette projection.
 
 Il suffit alors de paramétrer la carte OpenLayers avec cette projection et d'y rajouter la ressource WMTS de la même manière que précédemment.
 
@@ -554,7 +558,7 @@ NB : D'autres systèmes de coordonnées peuvent être définis et utilisés : [p
 
 <a id="sourceWMTS"/>
 
-#### Utilisation d'une source WMTS Géoportail
+#### Utilisation d'une source WMTS Géoplateforme
 
 Cette méthode permet plus de paramétrages : on crée une nouvelle instance de la classe [ol.source.GeoportalWMTS](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.source.GeoportalWMTS.html), de la manière suivante :
 
@@ -572,7 +576,7 @@ var layer = new ol.layer.Tile({
 
 ##### Exemple d'utilisation
 
-Affichage simple des ortho-images du Géoportail : création d'un *layer* OpenLayers associé à une *source* Géoportail, et ajout à la *map* OpenLayers.
+Affichage simple des ortho-images du Géoplateforme : création d'un *layer* OpenLayers associé à une *source* Géoplateforme, et ajout à la *map* OpenLayers.
 
 ``` javascript
 var map = new ol.Map({
@@ -598,7 +602,7 @@ var map = new ol.Map({
 
 ##### Affichage en Lambert 93 (EPSG:2154)
 
-La plateforme Géoportail diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoportail pour OpenLayers pré-définit l'alias "EPSG:2154" correspondant à cette projection.
+La Géoplateforme diffuse aussi des ressources WMTS en projection Lambert 93. Pour permettre de les afficher, l'extension Géoplateforme pour OpenLayers pré-définit l'alias "EPSG:2154" correspondant à cette projection.
 
 Il suffit alors de paramétrer la carte OpenLayers avec cette projection et d'y rajouter la ressource WMTS de la même manière que précédemment.
 
@@ -630,19 +634,19 @@ NB : D'autres systèmes de coordonnées peuvent être définis et utilisés : [p
 
 <a id="WMS"/>
 
-### Affichage des couches WMS Géoportail
+### Affichage des couches WMS Géoplateforme
 
 Le modèle de données OpenLayers fait la distinction entre la notion de couche (ol.layer) et la notion de source de données (ol.source). Ainsi, une carte OpenLayers est constituée d'un empilement de "ol.layer", avec des propriétés relatives à leurs visibilité sur la carte, dont le contenu est alimenté par des "ol.source", avec des propriétés relatives à la manière d'obtenir ces données.
 
-L'extension Géoportail pour OpenLayers propose deux manières d'accéder aux couches Géoportail selon ce modèle :
+L'extension Géoplateforme pour OpenLayers propose deux manières d'accéder aux couches Géoplateforme selon ce modèle :
 
-1. on souhaite une mise en oeuvre simple, où on saisit uniquement le nom de sa couche, et d'éventuels paramètres d'affichage (visibilité ou opacité). Définition d'un [layer WMS Géoportail](#layerWMS).
+1. on souhaite une mise en oeuvre simple, où on saisit uniquement le nom de sa couche, et d'éventuels paramètres d'affichage (visibilité ou opacité). Définition d'un [layer WMS Géoplateforme](#layerWMS).
 
-2. On souhaite pouvoir paramétrer plus finement l'affichage de sa couche dans la carte, ainsi que d'éventuels paramètres du service (format, style, ...). Définitions d'une [source WMS Géoportail](#sourceWMS).
+2. On souhaite pouvoir paramétrer plus finement l'affichage de sa couche dans la carte, ainsi que d'éventuels paramètres du service (format, style, ...). Définitions d'une [source WMS Géoplateforme](#sourceWMS).
 
 <a id="layerWMS"/>
 
-#### Utilisation d'un layer WMS Géoportail
+#### Utilisation d'un layer WMS Géoplateforme
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [ol.layer.GeoportalWMS](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.layer.GeoportalWMS.html), de la manière suivante :
 
@@ -654,7 +658,7 @@ Cette fonction retourne un objet **ol.layer.GeoportalWMS**, qui hérite de l'obj
 
 ##### Exemple d'utilisation
 
-Affichage d'une couche du serveur WMS INSPIRE raster du Géoportail (OI.OrthoimageCoverage) sur une carte en EPSG:4326.
+Affichage d'une couche du serveur WMS INSPIRE raster du Géoplateforme (OI.OrthoimageCoverage) sur une carte en EPSG:4326.
 
 ``` javascript
 var map = new ol.Map({
@@ -678,7 +682,7 @@ var map = new ol.Map({
 
 <a id="sourceWMS"/>
 
-#### Utilisation d'une source WMS Géoportail
+#### Utilisation d'une source WMS Géoplateforme
 
 Cette méthode permet plus de paramétrages : on crée une nouvelle instance de la classe [ol.source.GeoportalWMS](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.source.GeoportalWMS.html), de la manière suivante :
 
@@ -696,7 +700,7 @@ var layer = new ol.layer.Tile({
 
 ##### Exemple d'utilisation
 
-Utilisation des service WMS INSPIRE raster (OI.OrthoimageCoverage) du Géoportail : création d'un *layer* OpenLayers associés à un *source* Géoportail, et ajout à la *map* OpenLayers.
+Utilisation des service WMS INSPIRE raster (OI.OrthoimageCoverage) du Géoplateforme : création d'un *layer* OpenLayers associés à un *source* Géoplateforme, et ajout à la *map* OpenLayers.
 
 ``` javascript
 var map = new ol.Map({
@@ -722,7 +726,7 @@ var map = new ol.Map({
 
 <a id="VT"/>
 
-### Affichage d'une couche Vecteur Tuilé Géoportail
+### Affichage d'une couche Vecteur Tuilé Géoplateforme
 
 L'affichage se fait par la création d'une nouvelle instance de la classe [ol.layer.GeoportalMapBox](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.layer.GeoportalMapBox.html), de la manière suivante :
 
@@ -734,7 +738,7 @@ Cette fonction retourne un objet **ol.layer.GeoportalMapBox**, qui hérite de l'
 
 **Exemple d'utilisation:**
 
-Affichage de la couche *PLAN.IGN* du Géoportail avec le style *classique* sur une carte en EPSG:4326.
+Affichage de la couche *PLAN.IGN* du Géoplateforme avec le style *classique* sur une carte en EPSG:4326.
 
 ``` javascript
 var map = new ol.Map({
@@ -790,7 +794,7 @@ Pour chaque couche de la carte ol.Map, le widget affiche son titre et sa descrip
 
 La récupération de ces informations n'est pas la même selon la manière dont chaque couche a été ajoutée à la carte :
 
-- Couches ajoutées via la [fonctionnalité d'affichage simple des couches WMS](#WMS) ou [WMTS du Géoportail](#WMTS) de l'extension pour OpenLayers : ces informations sont disponibles car elles ont été chargées par lors de la [configuration de l'accès au Géoportail](#config), il n'y a donc rien à faire de particulier.
+- Couches ajoutées via la [fonctionnalité d'affichage simple des couches WMS](#WMS) ou [WMTS du Géoplateforme](#WMTS) de l'extension pour OpenLayers : ces informations sont disponibles car elles ont été chargées par lors de la [configuration de l'accès à la Géoplateforme](#config), il n'y a donc rien à faire de particulier.
 
 - Autres couches : afin d'afficher ces informations, il est nécessaire de les spécifier dans les options du widget.
 
@@ -798,10 +802,10 @@ La récupération de ces informations n'est pas la même selon la manière dont 
 
 ##### Utilisation simple
 
-Ajout du widget de gestion de l'empilement des couches. Paramétrage des couches non Géoportail.
+Ajout du widget de gestion de l'empilement des couches. Paramétrage des couches non Géoplateforme.
 
 ``` javascript
-// couche OSM (non Géoportail)
+// couche OSM (non Géoplateforme)
 var osmLyr = new ol.layer.Tile({
     source: new ol.source.OSM()
 });
@@ -810,7 +814,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         osmLyr,
-        // couche Géoportail
+        // couche Géoplateforme
         new ol.layer.GeoportalWMTS({
             layer: "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2",
         })
@@ -845,7 +849,7 @@ map.addControl(lsControl);
 
 La barre de recherche permet de positionner la carte à partir de la saisie d'un localisant dont la position sera retournée par le service de géocodage de l'IGN.
 
-La saisie de localisants peut s'accompagner d'un mode d'autocomplétion s'appuyant sur le service d'autocomplétion de la plateforme Géoportail.
+La saisie de localisants peut s'accompagner d'un mode d'autocomplétion s'appuyant sur le service d'autocomplétion de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la calsse [ol.control.SearchEngine](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.SearchEngine.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
@@ -891,7 +895,7 @@ map.addControl(searchControl);
 
 ### Calculs d'itinéraires
 
-Le widget de calcul d'itinéraires permet d'intéragir avec une carte OpenLayers pour effectuer des calculs d'itinéraires utilisant le service dédié de la plateforme Géoportail.
+Le widget de calcul d'itinéraires permet d'intéragir avec une carte OpenLayers pour effectuer des calculs d'itinéraires utilisant le service dédié de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle instance de la classe [ol.control.Route](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Route.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
@@ -937,7 +941,7 @@ map.addControl(routeControl);
 
 ### Calculs d'isochrones / isodistances
 
-Ce widget permet d'intéragir avec une carte OpenLayers pour effectuer des calculs d'isochrones / isodistances utilisant le service dédié de la plateforme Géoportail.
+Ce widget permet d'intéragir avec une carte OpenLayers pour effectuer des calculs d'isochrones / isodistances utilisant le service dédié de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.Isocurve()](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.Isocurve.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
@@ -983,7 +987,7 @@ map.addControl(isoControl);
 
 ### Coordonnées et altitude en un point de la carte
 
-Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte OpenLayers dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher les coordonnées d'un point choisi par l'internaute sur une carte OpenLayers dans un ou plusieurs systèmes de coordonnées. Ces coordonnées peuvent comprendre l'altitude obtenue à l'aide du service d'altimétrie de la Géoplateforme.
 Un mode "édition" permet de localiser des coordonnées sur la carte en éditant les coordonnées affichées dans le widget.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalMousePosition](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GeoportalMousePosition.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
@@ -1036,7 +1040,7 @@ map.addControl(mpControl);
 
 Ce widget a pour but d'afficher les attributions associées aux couches visibles sur la carte. Il étend les fonctionnalités du contrôle natif d'OpenLayers ([ol.control.Attribution](https://openlayers.org/en/latest/apidoc/module-ol_control_Attribution-Attribution.html)) dont il hérite en permettant l'affichage des attributions en fonction du positionnement de la carte (centre, zoom) pour les couches ayant des originators multiples.
 
-Les couches Géoportail (de type [WMS](#WMS) ou [WMTS](#WMTS)) possèdent nativement cette propriété. Pour les autres, le paramétrage dynamique des originators se fait par l'adjonction à l'objet source de la couche de la propriété "\_originators", tableau de [Gp.Services.Config.Originator](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.Config.Originator.html).
+Les couches Géoplateforme (de type [WMS](#WMS) ou [WMTS](#WMTS)) possèdent nativement cette propriété. Pour les autres, le paramétrage dynamique des originators se fait par l'adjonction à l'objet source de la couche de la propriété "\_originators", tableau de [Gp.Services.Config.Originator](http://ignf.github.io/geoportal-access-lib/latest/jsdoc/Gp.Services.Config.Originator.html).
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.GeoportalAttribution](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.GeoportalAttribution.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 
@@ -1221,7 +1225,7 @@ map.addControl(lyrImport);
 
 ### Profil altimétrique le long d'un traçé
 
-Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte OpenLayers. Le profil est calculé à l'aide du service d'altimétrie de la plateforme Géoportail.
+Ce widget permet d'afficher le profil altimétrique d'un traçé saisi par l'internaute sur une carte OpenLayers. Le profil est calculé à l'aide du service d'altimétrie de la Géoplateforme.
 
 Son utilisation se fait par la création d'un nouveau contrôle, instance de la classe [ol.control.ElevationPath](http://ignf.github.io/geoportal-extensions/ol-latest/jsdoc/ol.control.ElevationPath.html), que l'on peut ensuite ajouter à la carte comme [les autres contrôles OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#addControl), de la manière suivante :
 

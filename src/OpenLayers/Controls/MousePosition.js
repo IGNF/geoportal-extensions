@@ -1065,7 +1065,7 @@ var MousePosition = (function (Control) {
         //      ]
 
         // structure pour les coordonnées en fonctin du type demandé :
-        // {x:, y:, unit:} ou {lng:, lat:} ou {lon:, lat:} ou {e:, n:, unit:}...
+        // {x:, y:, unit :} ou {lng :, lat :} ou {lon :, lat :} ou {e:, n:, unit :}...
         var coordinate = {};
         // on projete le point dans le systeme demandé
         var oSrs = this._currentProjectionSystems.crs;
@@ -1126,7 +1126,7 @@ var MousePosition = (function (Control) {
      * @private
      */
     MousePosition.prototype.onMoveStopped = function (olCoordinate, crs) {
-        // reprojection en CRS:84 (EPSG:4326) pour le calcul alti
+        // reprojection en crs :84 (EPSG:4326) pour le calcul alti
         var oLatLng = olTransformProj(olCoordinate, crs, "EPSG:4326");
         this._setElevation(oLatLng);
     };
@@ -1193,7 +1193,7 @@ var MousePosition = (function (Control) {
      * this method is called by this.GPdisplayElevation() in the dom, and
      * it executes a request to the elevation service.
      *
-     * @param {Object} coordinate - {lat:..., lng:...}
+     * @param {Object} coordinate - {lat :..., lng :...}
      * @param {Function} callback - callback
      * @private
      */
@@ -1227,16 +1227,30 @@ var MousePosition = (function (Control) {
         // format de sortie si spécifié
         var _outputFormat = options.outputFormat || "json";
 
-        // ainsi que les coordonnées
-        var _zonly = true;
+        // ainsi que les coordonnées : si l'utilisateur explicite zonly false
+        // cela permet d'activer l'option measures côté service d'alti (surchargée si zonly = true)
+        var _zonly;
+        if (options.zonly === false) {
+            _zonly = options.zonly;
+        } else {
+            _zonly = true;
+        }
+
+        // récupération d'une réponse complète avec source et précision
+        var _measures = options.measures || false;
+
         var _positions = [{
             lon : coordinate[0],
             lat : coordinate[1]
         }];
 
+        // utilisation d'une ressource spécifique
+        var _resource = options.resource;
+
         // et les callbacks
         var _scope = this;
         var _rawResponse = options.rawResponse || false;
+        var _customOnSuccess = options.onSuccess || null;
         var _onSuccess = null;
         var _onFailure = null;
 
@@ -1245,12 +1259,18 @@ var MousePosition = (function (Control) {
             // callback onSuccess
             _onSuccess = function (results) {
                 if (results && Object.keys(results).length) {
+                    if (_customOnSuccess) {
+                        _customOnSuccess.call(this, results);
+                    }
                     callback.call(this, results.elevations[0].z);
                 }
             };
         } else {
             // callback onSuccess
             _onSuccess = function (results) {
+                if (_customOnSuccess) {
+                    _customOnSuccess.call(this, results);
+                }
                 logger.log("alti service raw response : ", results);
             };
         }
@@ -1286,6 +1306,8 @@ var MousePosition = (function (Control) {
             onSuccess : _onSuccess,
             onFailure : _onFailure,
             zonly : _zonly,
+            measures : _measures,
+            resource : _resource,
             positions : _positions
         });
     };
