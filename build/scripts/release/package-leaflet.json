@@ -1,6 +1,6 @@
 {
    "types" : "src/Leaflet/index.d.ts",
-   "date" : "14/12/2023",
+   "date" : "19/03/2024",
    "bugs" : {},
    "files" : [
       "dist/",
@@ -23,7 +23,7 @@
    },
    "bundleDependencies" : [],
    "scripts" : {},
-   "version" : "2.4.0-beta4",
+   "version" : "2.4.0",
    "devDependencies" : {},
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-leaflet.html",
    "repository" : {

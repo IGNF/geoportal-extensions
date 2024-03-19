@@ -14,12 +14,13 @@
    "license" : "CECILL-B",
    "keywords" : [
       "geoportail",
+      "geoplateforme",
       "plugin",
       "javascript",
       "OpenLayers"
    ],
    "name" : "geoportal-extensions-openlayers",
-   "version" : "3.4.0-beta4",
+   "version" : "3.4.0",
    "dependencies" : {
       "proj4" : "2.7.5",
       "sortablejs" : "1.14.0",
@@ -37,5 +38,5 @@
       "url" : "https://github.com/IGNF/geoportal-extensions.git",
       "type" : "git"
    },
-   "date" : "14/12/2023"
+   "date" : "19/03/2024"
 }
