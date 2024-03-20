@@ -1091,7 +1091,6 @@ var Route = (function (Control) {
         // on recupere les éventuelles options du service passées par l'utilisateur
         var routeOptions = this.options.routeOptions;
 
-
         // OVERLOAD : la resource bd-topo-osrm ne gère pas le calcul piéton en mode fastest
         // dans ce cas, on utilise valhalla dans le cas d'une utilisation par défaut du widget
         // sans paramétrage de resource explicitement demandé
