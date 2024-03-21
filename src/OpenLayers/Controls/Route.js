@@ -1091,6 +1091,17 @@ var Route = (function (Control) {
         // on recupere les éventuelles options du service passées par l'utilisateur
         var routeOptions = this.options.routeOptions;
 
+        // OVERLOAD : la resource bd-topo-osrm ne gère pas le calcul piéton en mode fastest
+        // dans ce cas, on utilise valhalla dans le cas d'une utilisation par défaut du widget
+        // sans paramétrage de resource explicitement demandé
+        var routeResource;
+        if (!routeOptions.resource) {
+            if (this._currentComputation === "fastest" && this._currentTransport === "Pieton") {
+                routeResource = "bdtopo-valhalla";
+            }
+        } else {
+            routeResource = routeOptions.resource;
+        }
         // gestion du protocole et du timeout
         // le timeout est indispensable sur le protocole JSONP.
         var _protocol = routeOptions.protocol || "XHR";
@@ -1117,7 +1128,7 @@ var Route = (function (Control) {
             distanceUnit : "m",
             timeOut : _timeout,
             protocol : _protocol,
-            resource : routeOptions.resource,
+            resource : routeResource,
             // callback onSuccess
             onSuccess : function (results) {
                 logger.log(results);
