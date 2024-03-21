@@ -1096,7 +1096,7 @@ var Route = (function (Control) {
         // sans paramétrage de resource explicitement demandé
         var routeResource;
         if (!routeOptions.resource) {
-            if (this._currentComputation == "fastest" && this._currentTransport === "Pieton") {
+            if (this._currentComputation === "fastest" && this._currentTransport === "Pieton") {
                 routeResource = "bdtopo-valhalla";
             }
         } else {
