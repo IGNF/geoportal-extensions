@@ -1,8 +1,8 @@
 
-# Extension Geoportail __UP_LIBRARY__, version __VERSION__
+# Extension Geoplateforme __UP_LIBRARY__, version __VERSION__
 
 **__DATE__**
-> Release Extension Geoportail __LO_LIBRARY__
+> Release Extension Geoplateforme __LO_LIBRARY__
 
 ## Summary
 
