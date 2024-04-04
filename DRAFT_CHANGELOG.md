@@ -1,11 +1,10 @@
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoplateforme openlayers
 
 ## Summary
-
-Correction sur le calcul d'itinéraire piéton.
 
 ## Changelog
 
@@ -18,9 +17,6 @@ Correction sur le calcul d'itinéraire piéton.
 * [Removed]
 
 * [Fixed]
-
-    - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (6675d287eb028170dea5d0dbdae2acaed51359ca)
-    - tilegrid par défaut (512px) pour vecteur tuilé sur layerImport (c16006ef1de0d10794541db90d0f6fbadb1b501c)
 
 * [Security]
 
