@@ -6,7 +6,7 @@ import { unByKey as olObservableUnByKey } from "ol/Observable";
 import Collection from "ol/Collection";
 import Feature from "ol/Feature";
 import WMTSTileGrid from "ol/tilegrid/WMTS";
-import { createXYZ as olCreateXYZTileGrid } from "ol/tilegrid"; // FIXME olCreateXYZTileGrid !?
+// import { createXYZ as olCreateXYZTileGrid } from "ol/tilegrid"; // FIXME olCreateXYZTileGrid !?
 import {
     transform as olTransformProj,
     get as olGetProj,
