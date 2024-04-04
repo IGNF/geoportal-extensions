@@ -1229,12 +1229,12 @@ var LayerImport = (function (Control) {
                                 format : vectorFormat,
                                 // INFO
                                 // surcharge : grille en 256 sur du vecteur tuilé
-                                tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
-                                    extent : _glSource.bounds, // [minx, miny, maxx, maxy]
-                                    maxZoom : _glSource.maxzoom || 22,
-                                    minZoom : _glSource.minzoom || 1,
-                                    tileSize : _glSource.tileSize || 256
-                                }),
+                                // tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
+                                //     extent : _glSource.bounds, // [minx, miny, maxx, maxy]
+                                //     maxZoom : _glSource.maxzoom || 22,
+                                //     minZoom : _glSource.minzoom || 1,
+                                //     tileSize : _glSource.tileSize || 256
+                                // }),
                                 urls : _glTiles
                             });
                             vectorSource._title = _title;
@@ -1296,12 +1296,12 @@ var LayerImport = (function (Control) {
                                         format : vectorFormat,
                                         // INFO
                                         // surcharge : grille en 256 sur du vecteur tuilé
-                                        tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
-                                            extent : _glSource.bounds, // [minx, miny, maxx, maxy]
-                                            maxZoom : _glSource.maxzoom || 22,
-                                            minZoom : _glSource.minzoom || 1,
-                                            tileSize : _glSource.tileSize || 256
-                                        }),
+                                        // tileGrid : olCreateXYZTileGrid({ // TODO scheme tms ?
+                                        //     extent : _glSource.bounds, // [minx, miny, maxx, maxy]
+                                        //     maxZoom : _glSource.maxzoom || 22,
+                                        //     minZoom : _glSource.minzoom || 1,
+                                        //     tileSize : _glSource.tileSize || 256
+                                        // }),
                                         urls : tiles
                                     });
                                     vectorSource._title = _title;

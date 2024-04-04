@@ -18,6 +18,7 @@
 * [Fixed]
 
     - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (6675d287eb028170dea5d0dbdae2acaed51359ca)
+    - tilegrid par défaut (512px) pour vecteur tuilé sur layerImport
 
 * [Security]
 
@@ -67,6 +68,9 @@
 * [Removed]
 
 * [Fixed]
+
+    - corrige couche json itowns, mauvaise urlO
+
 
 * [Security]
 
