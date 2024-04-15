@@ -6,6 +6,8 @@
 
 ## Summary
 
+Correctif Sur la variable process utilisée dans le logger
+
 ## Changelog
 
 * [Added]
@@ -17,6 +19,8 @@
 * [Removed]
 
 * [Fixed]
+
+    - Correction du logger par définiton de la variable process
 
 * [Security]
 

@@ -22,6 +22,12 @@ var LoggerByDefault = {
     getLogger : function (name) {
         // > Substitute global constants configured at compile time
         // cf. webpack.config.js
+        // on définit process si non défini dans l'environnement
+        if (!process) {
+            process = {
+                env: {}
+            };
+        }
         (process.env.VERBOSE) ? Log.enableAll() : Log.disableAll();
         var logname = name || "default";
         return Log.getLogger(logname);
