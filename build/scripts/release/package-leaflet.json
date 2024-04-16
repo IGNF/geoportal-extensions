@@ -31,7 +31,7 @@
       "proj4" : "2.7.5",
       "sortablejs" : "1.8.4",
       "node-fetch" : "^2.6.1",
-      "geoportal-access-lib" : "3.4.0",
+      "geoportal-access-lib" : "3.4.1",
       "leaflet-draw" : "1.0.4",
       "leaflet" : "1.7.1",
       "xmldom" : "^0.1.27",

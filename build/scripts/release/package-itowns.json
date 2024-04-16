@@ -24,7 +24,7 @@
    "dependencies" : {
       "xmldom" : "^0.1.27",
       "three" : "0.137.5",
-      "geoportal-access-lib" : "3.4.0",
+      "geoportal-access-lib" : "3.4.1",
       "itowns" : "2.38.2",
       "node-fetch" : "^2.6.1",
       "loglevel" : "1.6.7",
