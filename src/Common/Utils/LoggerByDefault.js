@@ -23,9 +23,10 @@ var LoggerByDefault = {
         // > Substitute global constants configured at compile time
         // cf. webpack.config.js
         // on définit process si non défini dans l'environnement
-        if (!process) {
-            process = {
-                env: {}
+        if (typeof process === "undefined") {
+            var process = {};
+            process.env = {
+                VERBOSE : false
             };
         }
         (process.env.VERBOSE) ? Log.enableAll() : Log.disableAll();
