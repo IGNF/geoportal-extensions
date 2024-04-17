@@ -1,12 +1,11 @@
 
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoplateforme openlayers
 
 ## Summary
-
-Correctif Sur la variable process utilisée dans le logger
 
 ## Changelog
 
@@ -19,8 +18,6 @@ Correctif Sur la variable process utilisée dans le logger
 * [Removed]
 
 * [Fixed]
-
-    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
 
 * [Security]
 
