@@ -1,7 +1,7 @@
 {
    "types" : "src/OpenLayers/index.d.ts",
    "license" : "CECILL-B",
-   "date" : "04/04/2024",
+   "date" : "17/04/2024",
    "devDependencies" : {},
    "files" : [
       "dist/",
@@ -28,7 +28,7 @@
       "geoportal-access-lib" : "3.4.1"
    },
    "name" : "geoportal-extensions-openlayers",
-   "version" : "3.4.1",
+   "version" : "3.4.2",
    "bugs" : {},
    "scripts" : {},
    "keywords" : [
