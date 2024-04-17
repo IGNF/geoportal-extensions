@@ -1,3 +1,4 @@
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -5,7 +6,7 @@
 
 ## Summary
 
-Correction sur le calcul d'itinéraire piéton.
+Correctif Sur la variable process utilisée dans le logger
 
 ## Changelog
 
@@ -19,8 +20,7 @@ Correction sur le calcul d'itinéraire piéton.
 
 * [Fixed]
 
-    - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (6675d287eb028170dea5d0dbdae2acaed51359ca)
-    - tilegrid par défaut (512px) pour vecteur tuilé sur layerImport (c16006ef1de0d10794541db90d0f6fbadb1b501c)
+    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
 
 * [Security]
 
@@ -46,6 +46,7 @@ Correction sur le calcul d'itinéraire piéton.
 * [Fixed]
 
     - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (92439bc421cc5f6ee1f10e069f2aa468e2b971b6)
+    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
 
 * [Security]
 
@@ -72,7 +73,7 @@ Correction sur le calcul d'itinéraire piéton.
 * [Fixed]
 
     - corrige couche json itowns, mauvaise url (77c6eb1b75c68a348c215c0fb0f2ee86cc80bd52)
-
+    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
 
 * [Security]
 

@@ -180,6 +180,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme OpenLayers, version 3.4.0-beta4](#extension-geoplateforme-openlayers-version-340-beta4)
   * [Summary](#summary-54)
   * [Changelog](#changelog-51)
+- [Extension Geoplateforme OpenLayers, version 3.4.1](#extension-geoplateforme-openlayers-version-341)
+  * [Summary](#summary-55)
+  * [Changelog](#changelog-52)
 
 <!-- tocstop -->
 
@@ -2029,6 +2032,33 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Fixed]
 
     - fix : incompatibilité css lorsque la map est dans une div ayant pour classe "container" (958b687ec91c712fd958d7e54437776958c37610)
+
+* [Security]
+
+---
+# Extension Geoplateforme OpenLayers, version 3.4.1
+
+**04/04/2024**
+> Release Extension Geoplateforme openlayers
+
+## Summary
+
+Correction sur le calcul d'itinéraire piéton.
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (6675d287eb028170dea5d0dbdae2acaed51359ca)
+    - tilegrid par défaut (512px) pour vecteur tuilé sur layerImport (c16006ef1de0d10794541db90d0f6fbadb1b501c)
 
 * [Security]
 

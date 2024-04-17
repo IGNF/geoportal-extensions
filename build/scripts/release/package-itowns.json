@@ -1,16 +1,8 @@
 {
-   "scripts" : {},
-   "peerDependencies" : {},
-   "version" : "2.5.0",
-   "author" : "IGNF",
-   "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/IGNF/geoportal-extensions.git"
-   },
-   "license" : "CECILL-B",
-   "directories" : {},
-   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "module" : "src/Itowns/index.js",
+   "description" : "French Geoportal Extensions for iTowns",
+   "devDependencies" : {},
+   "types" : "src/Itowns/index.d.ts",
    "keywords" : [
       "geoportail",
       "geoplateforme",
@@ -18,7 +10,25 @@
       "javascript",
       "Itowns"
    ],
+   "license" : "CECILL-B",
    "bugs" : {},
+   "dependencies" : {
+      "geoportal-access-lib" : "3.4.1",
+      "itowns" : "2.38.2",
+      "node-fetch" : "^2.6.1",
+      "proj4" : "2.7.5",
+      "three" : "0.137.5",
+      "sortablejs" : "1.14.0",
+      "xmldom" : "^0.1.27",
+      "loglevel" : "1.6.7"
+   },
+   "name" : "geoportal-extensions-itowns",
+   "author" : "IGNF",
+   "peerDependencies" : {},
+   "main" : "dist/GpPluginItowns-src.js",
+   "date" : "04/04/2024",
+   "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
+   "scripts" : {},
    "files" : [
       "dist/",
       "src/",
@@ -26,21 +36,11 @@
       "README.md",
       "package.json"
    ],
-   "types" : "src/Itowns/index.d.ts",
-   "dependencies" : {
-      "proj4" : "2.7.5",
-      "xmldom" : "^0.1.27",
-      "sortablejs" : "1.14.0",
-      "node-fetch" : "^2.6.1",
-      "three" : "0.137.5",
-      "geoportal-access-lib" : "3.4.0",
-      "loglevel" : "1.6.7",
-      "itowns" : "2.38.2"
-   },
-   "name" : "geoportal-extensions-itowns",
    "bundleDependencies" : [],
-   "devDependencies" : {},
-   "description" : "French Geoportal Extensions for iTowns",
-   "main" : "dist/GpPluginItowns-src.js",
-   "date" : "19/03/2024"
+   "version" : "2.5.0",
+   "directories" : {},
+   "repository" : {
+      "url" : "https://github.com/IGNF/geoportal-extensions.git",
+      "type" : "git"
+   }
 }
