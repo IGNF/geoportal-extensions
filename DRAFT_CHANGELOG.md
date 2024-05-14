@@ -1,5 +1,6 @@
 
 
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -7,23 +8,17 @@
 
 ## Summary
 
-Mise à jour access-lib release 3.4.2
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - Access-lib 3.4.2 pour fix normalyze URL + Isodistance (33196fd6d85503f39c345e600645bc0493405bd5)
-
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - fix definitions de constructeurs (140878f91d578d008a047b3c6ef9b200743230f9)
 
 * [Security]
 

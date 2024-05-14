@@ -186,6 +186,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme OpenLayers, version 3.4.2](#extension-geoplateforme-openlayers-version-342)
   * [Summary](#summary-56)
   * [Changelog](#changelog-53)
+- [Extension Geoplateforme OpenLayers, version 3.4.3](#extension-geoplateforme-openlayers-version-343)
+  * [Summary](#summary-57)
+  * [Changelog](#changelog-54)
 
 <!-- tocstop -->
 
@@ -2088,6 +2091,34 @@ Correctif Sur la variable process utilisée dans le logger
 * [Fixed]
 
     - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
+
+* [Security]
+
+---
+# Extension Geoplateforme OpenLayers, version 3.4.3
+
+**14/05/2024**
+> Release Extension Geoplateforme openlayers
+
+## Summary
+
+Mise à jour access-lib release 3.4.2
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - Access-lib 3.4.2 pour fix normalyze URL + Isodistance (33196fd6d85503f39c345e600645bc0493405bd5)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - fix definitions de constructeurs (140878f91d578d008a047b3c6ef9b200743230f9)
 
 * [Security]
 
