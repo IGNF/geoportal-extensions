@@ -7,11 +7,15 @@
 
 ## Summary
 
+Mise à jour access-lib release 3.4.2
+
 ## Changelog
 
 * [Added]
 
 * [Changed]
+
+    - Access-lib 3.4.2 pour fix normalyze URL + Isodistance
 
 * [Deprecated]
 
