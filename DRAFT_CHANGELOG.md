@@ -1,4 +1,5 @@
 
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -6,7 +7,7 @@
 
 ## Summary
 
-Correctif Sur la variable process utilisée dans le logger
+Mise à jour access-lib release 3.4.2
 
 ## Changelog
 
@@ -14,13 +15,15 @@ Correctif Sur la variable process utilisée dans le logger
 
 * [Changed]
 
+    - Access-lib 3.4.2 pour fix normalyze URL + Isodistance (33196fd6d85503f39c345e600645bc0493405bd5)
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
 
-    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
+    - fix definitions de constructeurs (140878f91d578d008a047b3c6ef9b200743230f9)
 
 * [Security]
 

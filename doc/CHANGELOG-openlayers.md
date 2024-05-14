@@ -183,6 +183,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme OpenLayers, version 3.4.1](#extension-geoplateforme-openlayers-version-341)
   * [Summary](#summary-55)
   * [Changelog](#changelog-52)
+- [Extension Geoplateforme OpenLayers, version 3.4.2](#extension-geoplateforme-openlayers-version-342)
+  * [Summary](#summary-56)
+  * [Changelog](#changelog-53)
 
 <!-- tocstop -->
 
@@ -2059,6 +2062,32 @@ Correction sur le calcul d'itinéraire piéton.
 
     - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (6675d287eb028170dea5d0dbdae2acaed51359ca)
     - tilegrid par défaut (512px) pour vecteur tuilé sur layerImport (c16006ef1de0d10794541db90d0f6fbadb1b501c)
+
+* [Security]
+
+---
+# Extension Geoplateforme OpenLayers, version 3.4.2
+
+**17/04/2024**
+> Release Extension Geoplateforme openlayers
+
+## Summary
+
+Correctif Sur la variable process utilisée dans le logger
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
 
 * [Security]
 
