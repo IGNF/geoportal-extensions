@@ -6,10 +6,10 @@
       "javascript",
       "OpenLayers"
    ],
-   "version" : "3.4.2",
+   "version" : "3.4.3",
    "types" : "src/OpenLayers/index.d.ts",
    "license" : "CECILL-B",
-   "date" : "17/04/2024",
+   "date" : "14/05/2024",
    "dependencies" : {
       "loglevel" : "1.6.6",
       "@mapbox/mapbox-gl-style-spec" : "13.20.1",
