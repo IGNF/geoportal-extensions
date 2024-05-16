@@ -13,7 +13,7 @@
    "license" : "CECILL-B",
    "bugs" : {},
    "dependencies" : {
-      "geoportal-access-lib" : "3.4.1",
+      "geoportal-access-lib" : "3.4.2",
       "itowns" : "2.38.2",
       "node-fetch" : "^2.6.1",
       "proj4" : "2.7.5",
@@ -26,7 +26,7 @@
    "author" : "IGNF",
    "peerDependencies" : {},
    "main" : "dist/GpPluginItowns-src.js",
-   "date" : "04/04/2024",
+   "date" : "16/05/2024",
    "homepage" : "https://geoservices.ign.fr/documentation/utilisation_web/extension-itowns.html",
    "scripts" : {},
    "files" : [
@@ -37,7 +37,7 @@
       "package.json"
    ],
    "bundleDependencies" : [],
-   "version" : "2.5.0",
+   "version" : "2.5.1",
    "directories" : {},
    "repository" : {
       "url" : "https://github.com/IGNF/geoportal-extensions.git",

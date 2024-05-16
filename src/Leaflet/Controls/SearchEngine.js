@@ -534,7 +534,7 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         }
 
         // on ne fait pas de requête si la parametre 'text' est vide !
-        if (!settings.query) {
+        if (settings.query === null) {
             return;
         }
 
