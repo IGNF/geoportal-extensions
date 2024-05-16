@@ -111,6 +111,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme Itowns, version 2.5.0-beta4](#extension-geoplateforme-itowns-version-250-beta4)
   * [Summary](#summary-33)
   * [Changelog](#changelog-32)
+- [Extension Geoplateforme Itowns, version 2.5.1](#extension-geoplateforme-itowns-version-251)
+  * [Summary](#summary-34)
+  * [Changelog](#changelog-33)
 
 <!-- tocstop -->
 
@@ -1022,6 +1025,34 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Itowns, version 2.5.1
+
+**16/05/2024**
+> Release Extension Geoplateforme itowns
+
+## Summary
+
+Corrections mineures sur le Helper et les exemples
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - corrige couche json itowns, mauvaise url (77c6eb1b75c68a348c215c0fb0f2ee86cc80bd52)
+    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
+    - mise à jour bibliothèque d'accès en version 3.4.2
 
 * [Security]
 

@@ -52,14 +52,13 @@
 ---
 
 
+
 # Extension Geoplateforme Itowns, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoplateforme itowns
 
 ## Summary
-
-Corrections mineures sur le Helper et les exemples
 
 ## Changelog
 
@@ -72,10 +71,6 @@ Corrections mineures sur le Helper et les exemples
 * [Removed]
 
 * [Fixed]
-
-    - corrige couche json itowns, mauvaise url (77c6eb1b75c68a348c215c0fb0f2ee86cc80bd52)
-    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
-    - mise à jour bibliothèque d'accès en version 3.4.2
 
 * [Security]
 
