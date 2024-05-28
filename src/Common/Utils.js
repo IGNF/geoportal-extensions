@@ -70,7 +70,7 @@ var Utils = {
      * @param {Boolean} replace - replace destination value by source if exists or not (true by default)
      */
     mergeParams : function (dest, source, replace) {
-        if (!dest || !source) {
+        if (typeof dest === "undefined" || typeof source === "undefined") {
             return;
         }
         if (typeof replace === "undefined") {
