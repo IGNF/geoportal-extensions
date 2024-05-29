@@ -68,10 +68,6 @@ var SearchEngineUtils = {
                 title : "Code commune (INSEE)",
                 description : "Code INSEE de la commune : 3 chiffres (ex: 067)"
             }, {
-                name : "city",
-                title : "Nom commune",
-                description : "Nom de la commune"
-            }, {
                 name : "oldmunicipalitycode",
                 title : "Commune absorbée",
                 description : "Commune absorbée : 3 chiffres (ex: 000, 001)"
