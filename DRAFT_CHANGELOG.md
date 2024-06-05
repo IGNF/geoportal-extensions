@@ -1,6 +1,7 @@
 
 
 
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
@@ -8,24 +9,17 @@
 
 ## Summary
 
-Correction HOTFIX sur l'affichage de couches définies sur des niveaux de zooms restreints, et amélioration du SearchEngine.
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
 
-    - recherche avancée améliorée sur la ressource parcelle cadastrale (#379)
-
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
-
-    - correction du paramétrage des ressources à utiliser avec le SearchEngine (#377)
-    - correction de la lecture de la définition des tileMatrices liées aux nouveaux TMS_LINK (ff1ca9fbff0aba98629cd307b6b40e54b7b3386a)
 
 * [Security]
 

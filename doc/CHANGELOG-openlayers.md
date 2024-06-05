@@ -189,6 +189,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme OpenLayers, version 3.4.3](#extension-geoplateforme-openlayers-version-343)
   * [Summary](#summary-57)
   * [Changelog](#changelog-54)
+- [Extension Geoplateforme OpenLayers, version 3.4.4](#extension-geoplateforme-openlayers-version-344)
+  * [Summary](#summary-58)
+  * [Changelog](#changelog-55)
 
 <!-- tocstop -->
 
@@ -2119,6 +2122,35 @@ Mise à jour access-lib release 3.4.2
 * [Fixed]
 
     - fix definitions de constructeurs (140878f91d578d008a047b3c6ef9b200743230f9)
+
+* [Security]
+
+---
+# Extension Geoplateforme OpenLayers, version 3.4.4
+
+**05/06/2024**
+> Release Extension Geoplateforme openlayers
+
+## Summary
+
+Correction HOTFIX sur l'affichage de couches définies sur des niveaux de zooms restreints, et amélioration du SearchEngine.
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - recherche avancée améliorée sur la ressource parcelle cadastrale (#379)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - correction du paramétrage des ressources à utiliser avec le SearchEngine (#377)
+    - correction de la lecture de la définition des tileMatrices liées aux nouveaux TMS_LINK (ff1ca9fbff0aba98629cd307b6b40e54b7b3386a)
 
 * [Security]
 

@@ -1,7 +1,7 @@
 {
    "types" : "src/Leaflet/index.d.ts",
    "devDependencies" : {},
-   "date" : "04/04/2024",
+   "date" : "05/06/2024",
    "license" : "CECILL-B",
    "module" : "src/Leaflet/index.js",
    "files" : [
@@ -21,7 +21,7 @@
    },
    "bundleDependencies" : [],
    "description" : "French Geoportal Extension for Leaflet",
-   "version" : "2.4.0",
+   "version" : "2.4.1",
    "main" : "dist/GpPluginLeaflet-src.js",
    "directories" : {},
    "name" : "geoportal-extensions-leaflet",
