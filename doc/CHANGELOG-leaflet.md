@@ -116,6 +116,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme Leaflet, version 2.4.0-beta4](#extension-geoplateforme-leaflet-version-240-beta4)
   * [Summary](#summary-34)
   * [Changelog](#changelog-31)
+- [Extension Geoplateforme Leaflet, version 2.4.1](#extension-geoplateforme-leaflet-version-241)
+  * [Summary](#summary-35)
+  * [Changelog](#changelog-32)
 
 <!-- tocstop -->
 
@@ -1127,6 +1130,38 @@ Ajout possible de couches à accès restreint via une fichier de configuration c
 * [Removed]
 
 * [Fixed]
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.1
+
+**05/06/2024**
+> Release Extension Geoplateforme leaflet
+
+## Summary
+
+Corrections multiples principalement sur le searchEngine
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - recherche avancée améliorée sur la ressource parcelle cadastrale (#379)
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - widget itineraire utilise ressource bdtopo-valhalla dans le cas d'un itinéraire pieton en mode fastest (92439bc421cc5f6ee1f10e069f2aa468e2b971b6)
+    - Correction du logger par définiton de la variable process (e0e3b9b5ad3e1f8c92086891564f04f792e24280)
+    - recherche avancée : correction du test sur le param query
+    - correction du paramétrage des ressources à utiliser avec le SearchEngine (#377)
+    - corrige l'affichage de couches en lambert93 (#380)
 
 * [Security]
 
