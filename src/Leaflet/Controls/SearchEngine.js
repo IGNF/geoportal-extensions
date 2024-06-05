@@ -1237,6 +1237,10 @@ var SearchEngine = L.Control.extend(/** @lends L.geoportalControl.SearchEngine.p
         for (var i = 0; i < data.length; i++) {
             var filter = data[i];
             if (filter.value) {
+                // On passe la section en majuscule car le service est caseSensitive
+                if (filter.key === "section") {
+                    filter.value = filter.value.toUpperCase();
+                }
                 _filterOptions[filter.key] = filter.value;
             }
         }

@@ -206,7 +206,7 @@ var SearchEngine = (function (Control) {
             collapsed : true,
             zoomTo : "",
             resources : {
-                geocode : "",
+                geocode : [],
                 autocomplete : []
             },
             displayAdvancedSearch : true,
@@ -227,7 +227,7 @@ var SearchEngine = (function (Control) {
         // merge with user options
         Utils.mergeParams(this.options, options);
         if (this.options.resources.geocode === "") {
-            this.options.resources.geocode = "address,poi";
+            this.options.resources.geocode = ["PositionOfInterest", "StreetAddress"];
         }
         if (this.options.resources.autocomplete.length === 0) {
             this.options.resources.autocomplete = ["PositionOfInterest", "StreetAddress"];
@@ -1463,6 +1463,9 @@ var SearchEngine = (function (Control) {
         for (var i = 0; i < data.length; i++) {
             var filter = data[i];
             if (filter.value) {
+                if (filter.key === "section") {
+                    filter.value = filter.value.toUpperCase();
+                }
                 _filterOptions[filter.key] = filter.value;
             }
         }
