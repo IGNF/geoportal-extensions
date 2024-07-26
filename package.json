@@ -76,7 +76,7 @@
     "eventbusjs": "0.2.0",
     "geoportal-access-lib": "3.4.2",
     "itowns": "2.38.2",
-    "leaflet": "1.7.1",
+    "leaflet": "1.9.4",
     "leaflet-draw": "1.0.4",
     "loglevel": "^1.6.7",
     "markdown-toc": "^1.2.0",
@@ -132,5 +132,6 @@
     "webpack-cli": "^3.3.1",
     "webpack-dev-server": "^3.3.1",
     "webpack-node-externals": "^1.7.2"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
