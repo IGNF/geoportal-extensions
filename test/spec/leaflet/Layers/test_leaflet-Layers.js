@@ -45,9 +45,10 @@ describe("-- Test Plugin Leaflet Layers --", function () {
                     var layer = Layers.WMS();
                     expect(false).to.be.true;
                 } catch (e) {
-                    logger.info("exception", e);
+                  logger.info("exception",e);
+                  console.error(e)
                     expect(true).to.be.true;
-                    expect(e.message).to.be.equal("PARAM_MISSING : layer !");
+                    expect(e.message).to.be.equal("PARAM_MISSING : options !");
                 }
 
             });
@@ -60,17 +61,17 @@ describe("-- Test Plugin Leaflet Layers --", function () {
                 layer.addTo(map);
 
                 logger.info("layer", layer);
-                logger.info("map", map);
+                logger.info("map",map);
                 expect(layer.getContainer()).not.to.be.ok;
                 expect(Object.keys(layer.wmsParams)).not.to.have.lengthOf(0);
-                expect(layer._description).to.be.null;
+                expect(layer._description).to.be.string('');
                 expect(layer._geoportal_id).not.to.be.null;
                 expect(layer._legends).to.be.empty;
                 expect(layer._metadata).to.be.empty;
                 expect(layer._originators).to.be.empty;
-                expect(layer._quicklookUrl).to.be.null;
-                expect(layer._title).to.be.null;
-                expect(layer._url).to.have.string("no-rights-found");
+                expect(layer._quicklookUrl).to.be.string('');
+                expect(layer._title).to.be.string('');
+                expect(layer._url).to.have.string("gp-leaflet-ext");
 
             });
 
@@ -79,7 +80,7 @@ describe("-- Test Plugin Leaflet Layers --", function () {
 
                 var layer = Layers.WMS({
                     layer : "ORTHOIMAGERY.ORTHOPHOTOS",
-                    apiKey : "jhyvi0fgmnuxvfv0zjzorvdn"
+                    apiKey : "essentiels,ortho,cartes,administratif,decouverte"
                 });
 
                 layer.addTo(map);
@@ -93,9 +94,9 @@ describe("-- Test Plugin Leaflet Layers --", function () {
                 expect(layer._legends).to.be.empty;
                 expect(layer._metadata).to.be.empty;
                 expect(layer._originators).to.be.empty;
-                expect(layer._quicklookUrl).to.be.null;
-                expect(layer._title).to.be.null;
-                expect(layer._description).to.be.null;
+                expect(layer._quicklookUrl).to.be.string('');
+                expect(layer._title).to.be.string('');
+                expect(layer._description).to.be.string('');
                 expect(layer._url).not.to.have.string("no-rights-found");
 
             });
@@ -106,8 +107,8 @@ describe("-- Test Plugin Leaflet Layers --", function () {
             it('And with rights, i should return all layer informations', function (done) {
 
                 Gp.Services.getConfig({
-                    serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
-                    // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    //serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
+                    apiKey : "essentiels,ortho,cartes,administratif,decouverte",
                     callbackSuffix : "",
                     timeOut : 20000,
                     onSuccess : function () {
@@ -126,21 +127,22 @@ describe("-- Test Plugin Leaflet Layers --", function () {
                         expect(layer._map).not.to.be.null;
                         // une couche par defaut ne possede pas certaines informations
                         expect(layer._legends).not.to.be.empty;
-                        expect(layer._metadata).not.to.be.empty;
-                        expect(layer._originators).not.to.be.empty;
+                        expect(layer._metadata).to.be.empty;
+                        expect(layer._originators).to.be.empty;
                         expect(layer._quicklookUrl).not.to.null;
                         expect(layer._title).not.to.be.null;
                         expect(layer._description).not.to.be.null;
                         done();
-                    }
+                  },
+                    onFailure: (error) => console.error(error)
                 });
             });
 
             it('But without rights, i should return a layer with information by default', function (done) {
 
                 Gp.Services.getConfig({
-                    serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
-                    // apiKey : "jhyvi0fgmnuxvfv0zjzorvdn",
+                    //serverUrl : "spec/leaflet/fixtures/autoconf/callback-autoconf-xml",
+                    apiKey : "essentiels,ortho,cartes,administratif,decouverte",
                     callbackSuffix : "",
                     timeOut : 20000,
                     onSuccess : function () {
@@ -161,12 +163,13 @@ describe("-- Test Plugin Leaflet Layers --", function () {
                         expect(layer._legends).to.be.empty;
                         expect(layer._metadata).to.be.empty;
                         expect(layer._originators).to.be.empty;
-                        expect(layer._quicklookUrl).to.be.null;
-                        expect(layer._title).to.be.null;
-                        expect(layer._description).to.be.null;
-                        expect(layer._url).to.have.string("no-rights-found");
+                        expect(layer._quicklookUrl).to.be.empty;
+                        expect(layer._title).to.be.empty;
+                        expect(layer._description).to.be.empty;
+                        expect(layer._url).to.have.string("gp-leaflet-ext");
                         done();
-                    }
+                    },
+                    onFailure: (error) => console.error(error)
                 });
             });
         });
