@@ -50,14 +50,14 @@ describe("-- Test Plugin Leaflet Layers::LayerConfig --", function () {
                 timeOut : 20000,
                 onSuccess : function () {
                     var params = LayerConfig.get({
-                        key: "jhyvi0fgmnuxvfv0zjzorvdn",
+                        key: "essentiels,ortho,cartes,administratif,decouverte",
                         layer: "ORTHOIMAGERY.ORTHOPHOTOS",
                         service: "WMS"
                     });
 
                     logger.info("params", params);
                     expect(params).not.to.be.undefined;
-                    expect(params.key).to.be.equal("jhyvi0fgmnuxvfv0zjzorvdn");
+                    expect(params.key).to.be.equal(undefined);
                     expect(params.version).not.to.be.null;
                     expect(params.description).not.to.be.null;
                     expect(params.extent).not.to.be.null;
@@ -96,7 +96,7 @@ describe("-- Test Plugin Leaflet Layers::LayerConfig --", function () {
 
                     logger.trace(params);
                     expect(params).not.to.be.undefined;
-                    expect(params.key).to.be.equal("jhyvi0fgmnuxvfv0zjzorvdn");
+                    expect(params.key).to.be.equal(undefined);
                     expect(params.version).not.to.be.null;
                     expect(params.description).not.to.be.null;
                     expect(params.extent).not.to.be.null;
