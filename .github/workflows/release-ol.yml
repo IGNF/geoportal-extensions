@@ -91,7 +91,7 @@ jobs:
           mkdir -p ${{ steps.get_tagname.outputs.TAGNAME }}/dist/
 
       - name: Download JSDoc artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: jsdoc
           path: tmp/jsdoc/openlayers
@@ -102,7 +102,7 @@ jobs:
           cp -r tmp/jsdoc/openlayers/* ${{ steps.get_tagname.outputs.TAGNAME }}/jsdoc/
 
       - name: Download Binary artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: dist
           path: tmp/dist/openlayers
@@ -176,7 +176,7 @@ jobs:
           prerelease: false
 
       - name: Download bundles artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: bundles
 
@@ -215,7 +215,7 @@ jobs:
           # scope: '@ignf-geoportal'
 
       - name: Download Package artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: package
           path: package
@@ -240,7 +240,7 @@ jobs:
           token: ${{ secrets.ADMIN_GEOPORTAL_TOKEN }}
 
       - name: Download ChangeLog artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: changelog
 
