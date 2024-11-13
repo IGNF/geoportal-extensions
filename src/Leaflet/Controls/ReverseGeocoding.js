@@ -719,7 +719,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
             // on récupère la description à afficher dans la liste
             var locationDescription = this._fillGeocodedLocationDescription(location);
             // on ajoute chaque résutat à la liste
-            if (locationDescription.length !== 0) {
+            if (locationDescription && locationDescription.length !== 0) {
                 this._createReverseGeocodingResultElement(locationDescription, i);
             }
         }
@@ -752,7 +752,7 @@ var ReverseGeocoding = L.Control.extend(/** @lends L.geoportalControl.ReverseGeo
 
             case "PositionOfInterest":
                 locationDescription += attr.toponym;
-                if (attr.postcode.length === 1) {
+                if (attr.postcode && attr.postcode.length === 1) {
                     locationDescription += ", " + attr.postcode[0];
                 }
                 locationDescription += " (" + attr.category.join(",") + ")";
