@@ -60,6 +60,8 @@
 
 ## Summary
 
+Mise à jour de la bibliothèque d'accès et corrections diverses
+
 ## Changelog
 
 * [Added]
