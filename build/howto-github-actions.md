@@ -74,7 +74,7 @@ jobs:
 
 ```
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Use nodejs
       uses: actions/setup-node@v1
@@ -150,7 +150,7 @@ https://github.com/actions/checkout#Checkout-a-different-branch
 
 ```
    - name: Checkout
-     uses: actions/checkout@v2
+     uses: actions/checkout@v4
      with:
        repository: my-org/my-tools
        ref: my-tools

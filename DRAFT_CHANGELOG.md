@@ -18,7 +18,7 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 * [Changed]
 
     - mise à jour de la bibliothèque d'accès en version 3.4.6
-    - upgrade de upload-articfact en v4
+    - upgrade de download-artifact et upload-articfact en v4
 
 * [Deprecated]
 
@@ -48,11 +48,16 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 
 * [Changed]
 
+    - mise à jour de la bibliothèque d'accès en version 3.4.6
+    - upgrade de download-artifact et upload-articfact en v4
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+    - Coquille dans la config webpack (#382)
 
 * [Security]
 
@@ -73,11 +78,16 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 
 * [Changed]
 
+    - mise à jour de la bibliothèque d'accès en version 3.4.6
+    - upgrade de download-artifact et upload-articfact en v4
+
 * [Deprecated]
 
 * [Removed]
 
 * [Fixed]
+
+    - Coquille dans la config webpack (#382)
 
 * [Security]
 
