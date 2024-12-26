@@ -42,14 +42,14 @@ jobs:
 
       - name: Upload JSDoc artifacts
         if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: jsdoc
           path: jsdoc/leaflet
 
       - name: Upload Binary artifacts
         if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/leaflet
@@ -57,13 +57,13 @@ jobs:
       # FIXME artifacts bundles and binary are the same !?
       - name: Upload Bundles artifacts
         if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: bundles
           path: bundles.zip
 
       - name: Upload Package artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: package
           path: build/scripts/release/geoportal-extensions-leaflet
@@ -156,7 +156,7 @@ jobs:
 
       - name: Upload ChangeLog artifacts
         if: github.event_name == 'push' && contains(github.ref, '/tags/') # Only for tags !
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: changelog
           path: DRAFT_CHANGELOG_${{ env.LIBRARY }}.md
