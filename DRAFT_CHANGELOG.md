@@ -18,6 +18,7 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 * [Changed]
 
     - mise à jour de la bibliothèque d'accès en version 3.4.6
+    - upgrade de upload-articfact en v4
 
 * [Deprecated]
 
