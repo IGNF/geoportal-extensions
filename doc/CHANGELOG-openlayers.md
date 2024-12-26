@@ -192,6 +192,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme OpenLayers, version 3.4.4](#extension-geoplateforme-openlayers-version-344)
   * [Summary](#summary-58)
   * [Changelog](#changelog-55)
+- [Extension Geoplateforme OpenLayers, version 3.4.5](#extension-geoplateforme-openlayers-version-345)
+  * [Summary](#summary-59)
+  * [Changelog](#changelog-56)
 
 <!-- tocstop -->
 
@@ -2151,6 +2154,37 @@ Correction HOTFIX sur l'affichage de couches définies sur des niveaux de zooms 
 
     - correction du paramétrage des ressources à utiliser avec le SearchEngine (#377)
     - correction de la lecture de la définition des tileMatrices liées aux nouveaux TMS_LINK (ff1ca9fbff0aba98629cd307b6b40e54b7b3386a)
+
+* [Security]
+
+---
+# Extension Geoplateforme OpenLayers, version 3.4.5
+
+**26/12/2024**
+> Release Extension Geoplateforme openlayers
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès et corrections diverses
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour de la bibliothèque d'accès en version 3.4.6
+    - upgrade de download-artifact et upload-articfact en v4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Mauvais rendu profil alti en cas de boucle (#384)
+    - Mauvais rendu du profil altimétrique sur les petits tracés (#385)
+    - Coquille dans la config webpack (#382)
 
 * [Security]
 
