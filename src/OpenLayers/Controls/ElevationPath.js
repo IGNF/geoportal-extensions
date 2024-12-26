@@ -1336,27 +1336,11 @@ var ElevationPath = (function (Control) {
 
         // le sampling est soit defini par l'utilisateur (opts),
         // ou soit calculé dynamiquement...
-        var sampling = options.sampling;
-        if (!sampling) {
-            // computing sampling
-            var _sampling;
-            var _length = this._getLength();
-            logger.trace("length", _length);
-            var p = Math.max(50, Math.floor(_length) / 5); // en mètre sur un pas moyen de 5m !
-            if (p > 200) {
-                _sampling = 200;
-            } else {
-                _sampling = Math.floor(p);
-            }
-            var pointNumber = this._getSketchCoords().length;
-            if (pointNumber > 100) {
-                _sampling = 0;
-            }
-        }
+        var sampling = options.sampling || 200;
 
-        if (_sampling > 0) {
+        if (sampling > 0) {
             Utils.mergeParams(options, {
-                sampling : _sampling
+                sampling : sampling
             });
         }
 
@@ -1396,17 +1380,14 @@ var ElevationPath = (function (Control) {
         if (!_sketchPoints) {
             return;
         }
-        // section actuelle du sketch sur laquelle on est
-        var _currentSection = 0;
-        // longueur cumulée des sections précédentes
-        var _previousSectionsLength = 0;
-        var _nextSectionBegining = _sketchPoints[1];
 
         // Calcul de la distance au départ pour chaque point + arrondi des lat/lon
         _data[0].dist = 0;
         _data[0].slope = 0;
-        _data[0].lat = Math.round(_data[0].lat * 10000) / 10000;
-        _data[0].lon = Math.round(_data[0].lon * 10000) / 10000;
+        _data[0].oldlat = _data[0].lat;
+        _data[0].oldlon = _data[0].lon;
+        _data[0].lat = Math.round(_data[0].lat * 100000) / 100000;
+        _data[0].lon = Math.round(_data[0].lon * 100000) / 100000;
 
         var _distanceMinus = 0;
         var _distancePlus = 0;
@@ -1419,18 +1400,8 @@ var ElevationPath = (function (Control) {
 
         for (var i = 1; i < _data.length; i++) {
             var a = [_data[i].lon, _data[i].lat];
-            var distanceToStart = _previousSectionsLength + olGetDistanceSphere(a, _sketchPoints[_currentSection]);
-            var dist = distanceToStart - _distance;
-
-            // Changement de section
-            if (a[0] === _nextSectionBegining[0] && a[1] === _nextSectionBegining[1]) {
-                _currentSection++;
-                _previousSectionsLength = distanceToStart;
-                // Pas de next section si on est sur le dernier point
-                if (i !== _data.length - 1) {
-                    _nextSectionBegining = _sketchPoints[_currentSection + 1];
-                }
-            }
+            var distanceToPrevious = olGetDistanceSphere(a, [_data[i-1].oldlon, _data[i-1].oldlat]);
+            var dist = distanceToPrevious + _distance;
 
             var za = _data[i].z;
             var zb = _data[i - 1].z;
@@ -1442,16 +1413,16 @@ var ElevationPath = (function (Control) {
             }
             var slope = za - zb;
             if (slope < 0) {
-                _distanceMinus += dist;
+                _distanceMinus += distanceToPrevious;
                 _descendingElevation += slope;
             } else if (slope > 0) {
-                _distancePlus += dist;
+                _distancePlus += distanceToPrevious;
                 _ascendingElevation += slope;
             }
-            _distance = distanceToStart;
-            _data[i].dist = distanceToStart;
+            _distance = dist;
+            _data[i].dist = dist;
 
-            distances.push(distanceToStart);
+            distances.push(_distance);
 
             _slopes += (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
             _data[i].slope = (slope) ? Math.abs(Math.round(slope / dist * 100)) : 0;
@@ -1470,8 +1441,10 @@ var ElevationPath = (function (Control) {
                 _data[i].color = "#00B798";
             }
 
-            _data[i].lat = Math.round(_data[i].lat * 10000) / 10000;
-            _data[i].lon = Math.round(_data[i].lon * 10000) / 10000;
+            _data[i].oldlat = _data[i].lat;
+            _data[i].oldlon = _data[i].lon;
+            _data[i].lat = Math.round(_data[i].lat * 100000) / 100000;
+            _data[i].lon = Math.round(_data[i].lon * 100000) / 100000;
         }
 
         // check distance totale

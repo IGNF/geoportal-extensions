@@ -13,7 +13,7 @@ var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var BannerWebPackPlugin = webpack.BannerPlugin;
 var TerserJsWebPackPlugin = require("terser-webpack-plugin");
 var OptimizeCSSAssetsWebPackPlugin = require("optimize-css-assets-webpack-plugin");
-var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin");
+var ReplaceWebpackPlugin = require("replace-bundle-webpack-plugin-edited");
 var JsDocWebPackPlugin = require("../scripts/webpackPlugins/jsdoc-plugin");
 var HandlebarsPlugin = require("../scripts/webpackPlugins/handlebars-plugin");
 var HandlebarsLayoutPlugin = require("handlebars-layouts");
@@ -223,20 +223,20 @@ module.exports = (env, argv) => {
                         * cf. src/Leaflet/Styles.js
                         * (hack pour Angular)
                         */
-                        partten : /__FLAG_PLUGIN_CSS__/g,
+                        pattern : /__FLAG_PLUGIN_CSS__/g,
                         replacement : function () {
                             return true;
                         }
                     },
                     {
-                        partten : /__DATE__/g,
+                        pattern : /__DATE__/g,
                         /** replacement de la clef __DATE__ par la date du build */
                         replacement : function () {
                             return pkg.date;
                         }
                     },
                     {
-                        partten : /__PRODUCTION__/g,
+                        pattern : /__PRODUCTION__/g,
                         replacement : function () {
                             /** replacement de la clef __PRODUCTION__ pour le LOGGER */
                             return !logMode;
