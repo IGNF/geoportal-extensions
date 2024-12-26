@@ -119,6 +119,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme Leaflet, version 2.4.1](#extension-geoplateforme-leaflet-version-241)
   * [Summary](#summary-35)
   * [Changelog](#changelog-32)
+- [Extension Geoplateforme Leaflet, version 2.4.2](#extension-geoplateforme-leaflet-version-242)
+  * [Summary](#summary-36)
+  * [Changelog](#changelog-33)
 
 <!-- tocstop -->
 
@@ -1162,6 +1165,35 @@ Corrections multiples principalement sur le searchEngine
     - recherche avancée : correction du test sur le param query
     - correction du paramétrage des ressources à utiliser avec le SearchEngine (#377)
     - corrige l'affichage de couches en lambert93 (#380)
+
+* [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.2
+
+**26/12/2024**
+> Release Extension Geoplateforme leaflet
+
+## Summary
+
+Mise à jour de la bibliothèque d'accès et corrections diverses
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+    - mise à jour de la bibliothèque d'accès en version 3.4.6
+    - upgrade de download-artifact et upload-articfact en v4
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+    - Coquille dans la config webpack (#382)
 
 * [Security]
 
