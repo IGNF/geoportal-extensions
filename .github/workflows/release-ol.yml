@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use nodejs
         uses: actions/setup-node@v1
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: IGNF/geoportal-extensions
           ref: gh-pages
@@ -91,7 +91,7 @@ jobs:
           mkdir -p ${{ steps.get_tagname.outputs.TAGNAME }}/dist/
 
       - name: Download JSDoc artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: jsdoc
           path: tmp/jsdoc/openlayers
@@ -102,7 +102,7 @@ jobs:
           cp -r tmp/jsdoc/openlayers/* ${{ steps.get_tagname.outputs.TAGNAME }}/jsdoc/
 
       - name: Download Binary artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: tmp/dist/openlayers
@@ -138,7 +138,7 @@ jobs:
           sudo apt-get install perl-base libjson-perl
 
       - name: Checkout # checkout repository to get DRAFT_CHANGELOG.md !
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Get the version
         id: get_version
@@ -176,7 +176,7 @@ jobs:
           prerelease: false
 
       - name: Download bundles artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: bundles
 
@@ -196,7 +196,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Initialize
         run: |
@@ -215,7 +215,7 @@ jobs:
           # scope: '@ignf-geoportal'
 
       - name: Download Package artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: package
           path: package
@@ -233,14 +233,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: IGNF/geoportal-extensions
           ref: develop
           token: ${{ secrets.ADMIN_GEOPORTAL_TOKEN }}
 
       - name: Download ChangeLog artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: changelog
 
@@ -276,7 +276,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: IGNF/geoportal-extensions-openlayers-samples
           ref: master
