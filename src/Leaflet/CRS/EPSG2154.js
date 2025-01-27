@@ -60,7 +60,7 @@ var EPSG2154 = {
         var resolutions = [];
         // resolutions issues de la configuration
         if (Config.isConfigLoaded()) {
-            var o = Config.configuration.getTMSConf("LAMB93_5cm");
+            var o = Config.configuration.getTMSConf("LAMB93_5cm") || Config.configuration.getTMSConf("2154_5cm");
             resolutions = o.nativeResolutions;
         }
 
