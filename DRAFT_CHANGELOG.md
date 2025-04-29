@@ -24,6 +24,8 @@
 
 * [Security]
 
+  * replace dependency xmldom with @xmldom/xmldom
+  
 ---
 
 
@@ -48,6 +50,8 @@
 * [Fixed]
 
 * [Security]
+
+  * replace dependency xmldom with @xmldom/xmldom
 
 ---
 
@@ -74,5 +78,7 @@
 * [Fixed]
 
 * [Security]
+
+  * replace dependency xmldom with @xmldom/xmldom
 
 ---

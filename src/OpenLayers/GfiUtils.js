@@ -97,7 +97,7 @@ var GfiUtils = {
 
         if (typeof exports === "object" && window === null) {
             // code for nodejs
-            var DOMParser = require("xmldom").DOMParser;
+            var DOMParser = require("@xmldom/xmldom").DOMParser;
             _parser = new DOMParser();
             _htmlDoc = _parser.parseFromString(_content, contentType);
         } else if (scope.DOMParser) {
