@@ -24,6 +24,8 @@
 
 * [Security]
 
+  * replace dependency xmldom with @xmldom/xmldom
+  
 ---
 
 
@@ -49,7 +51,10 @@
 
 * [Security]
 
+  * replace dependency xmldom with @xmldom/xmldom
+
 ---
+
 
 
 
@@ -60,16 +65,11 @@
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès et corrections diverses
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - mise à jour de la bibliothèque d'accès en version 3.4.6
-    - upgrade de download-artifact et upload-articfact en v4
 
 * [Deprecated]
 
@@ -77,8 +77,8 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 
 * [Fixed]
 
-    - Coquille dans la config webpack (#382)
-
 * [Security]
+
+  * replace dependency xmldom with @xmldom/xmldom
 
 ---
