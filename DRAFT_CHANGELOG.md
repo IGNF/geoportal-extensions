@@ -30,6 +30,7 @@
 
 
 
+
 # Extension Geoplateforme Leaflet, version __VERSION__
 
 **__DATE__**
@@ -50,8 +51,6 @@
 * [Fixed]
 
 * [Security]
-
-  * replace dependency xmldom with @xmldom/xmldom
 
 ---
 

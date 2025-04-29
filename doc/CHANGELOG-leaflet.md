@@ -122,6 +122,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme Leaflet, version 2.4.2](#extension-geoplateforme-leaflet-version-242)
   * [Summary](#summary-36)
   * [Changelog](#changelog-33)
+- [Extension Geoplateforme Leaflet, version 2.4.3](#extension-geoplateforme-leaflet-version-243)
+  * [Summary](#summary-37)
+  * [Changelog](#changelog-34)
 
 <!-- tocstop -->
 
@@ -1196,5 +1199,29 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
     - Coquille dans la config webpack (#382)
 
 * [Security]
+
+---
+# Extension Geoplateforme Leaflet, version 2.4.3
+
+**29/04/2025**
+> Release Extension Geoplateforme leaflet
+
+## Summary
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+* [Security]
+
+  * replace dependency xmldom with @xmldom/xmldom
 
 ---
