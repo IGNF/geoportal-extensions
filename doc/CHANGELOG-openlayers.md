@@ -195,6 +195,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Extension Geoplateforme OpenLayers, version 3.4.5](#extension-geoplateforme-openlayers-version-345)
   * [Summary](#summary-59)
   * [Changelog](#changelog-56)
+- [Extension Geoplateforme OpenLayers, version 3.4.6](#extension-geoplateforme-openlayers-version-346)
+  * [Summary](#summary-60)
+  * [Changelog](#changelog-57)
 
 <!-- tocstop -->
 
@@ -2188,4 +2191,32 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 
 * [Security]
 
+---
+# Extension Geoplateforme OpenLayers, version 3.4.6
+
+**12/06/2025**
+> Release Extension Geoplateforme openlayers
+
+## Summary
+
+Release corrective mineure
+
+## Changelog
+
+* [Added]
+
+* [Changed]
+
+* [Deprecated]
+
+* [Removed]
+
+* [Fixed]
+
+  * correction du calcul de la pente par l'outil de calcul de profil altimétrique (#388)
+
+* [Security]
+
+  * remplacement de la dépendance xmldom par @xmldom/xmldom (ec45fffb070617b0e9faa85ba58d23f2432cc5b1)
+  
 ---

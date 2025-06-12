@@ -3,14 +3,13 @@
 
 
 
+
 # Extension Geoplateforme OpenLayers, version __VERSION__
 
 **__DATE__**
 > Release Extension Geoplateforme openlayers
 
 ## Summary
-
-Release corrective mineure
 
 ## Changelog
 
@@ -24,12 +23,8 @@ Release corrective mineure
 
 * [Fixed]
 
-  * correction du calcul de la pente par l'outil de calcul de profil altimétrique (#388)
-
 * [Security]
 
-  * remplacement de la dépendance xmldom par @xmldom/xmldom (ec45fffb070617b0e9faa85ba58d23f2432cc5b1)
-  
 ---
 
 
