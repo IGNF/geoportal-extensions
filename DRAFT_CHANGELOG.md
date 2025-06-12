@@ -10,6 +10,8 @@
 
 ## Summary
 
+Release corrective mineure
+
 ## Changelog
 
 * [Added]
@@ -22,9 +24,11 @@
 
 * [Fixed]
 
+  * correction du calcul de la pente par l'outil de calcul de profil altimétrique (#388)
+
 * [Security]
 
-  * replace dependency xmldom with @xmldom/xmldom
+  * remplacement de la dépendance xmldom par @xmldom/xmldom (ec45fffb070617b0e9faa85ba58d23f2432cc5b1)
   
 ---
 
@@ -78,6 +82,6 @@
 
 * [Security]
 
-  * replace dependency xmldom with @xmldom/xmldom
+  * replace dependency xmldom with @xmldom/xmldom (ec45fffb070617b0e9faa85ba58d23f2432cc5b1)
 
 ---
