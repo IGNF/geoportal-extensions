@@ -24,17 +24,34 @@
           /** onload */
           window.onload = function () {
 
-              var wms = L.geoportalLayer.WMS({
+              var wms1 = L.geoportalLayer.WMS({
                   layer : "ORTHOIMAGERY.ORTHOPHOTOS"
+              });
+
+              var wms2 = L.geoportalLayer.WMS({
+                  layer : "ADMINISTRATIVEUNITS.BOUNDARIES.EXPRESS",
+                  paramsNative : {
+                        transparent: true, 
+                  }
               });
 
               var map  = L.map("map", {
                   crs : L.geoportalCRS.EPSG2154,
-                  zoom : 2,
+                  zoom : 12,
                   center : L.latLng(48, 2)
               });
 
-              wms.addTo(map);
+              wms1.addTo(map);
+              wms2.addTo(map);
+
+                var layerSwitcher = L.geoportalControl.LayerSwitcher();
+                map.addControl(layerSwitcher);
+
+                var mouse = new L.geoportalControl.MousePosition({
+                    editCoordinates : true
+                });
+
+                map.addControl(mouse);
           };
         </script>
 {{/content}}

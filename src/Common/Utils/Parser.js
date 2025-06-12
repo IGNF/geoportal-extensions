@@ -27,7 +27,7 @@ var Parser = {
 
         if (typeof exports === "object" && window === null) {
             // code for nodejs
-            var DOMParser = require("xmldom").DOMParser;
+            var DOMParser = require("@xmldom/xmldom").DOMParser;
             parser = new DOMParser();
             doc = parser.parseFromString(xml, "text/xml");
         } else if (scope.DOMParser) {

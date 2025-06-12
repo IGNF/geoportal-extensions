@@ -10,6 +10,8 @@
 
 ## Summary
 
+Release corrective mineure
+
 ## Changelog
 
 * [Added]
@@ -22,9 +24,14 @@
 
 * [Fixed]
 
+  * correction du calcul de la pente par l'outil de calcul de profil altimétrique (#388)
+
 * [Security]
 
+  * remplacement de la dépendance xmldom par @xmldom/xmldom (ec45fffb070617b0e9faa85ba58d23f2432cc5b1)
+  
 ---
+
 
 
 
@@ -53,6 +60,7 @@
 
 
 
+
 # Extension Geoplateforme Itowns, version __VERSION__
 
 **__DATE__**
@@ -60,16 +68,11 @@
 
 ## Summary
 
-Mise à jour de la bibliothèque d'accès et corrections diverses
-
 ## Changelog
 
 * [Added]
 
 * [Changed]
-
-    - mise à jour de la bibliothèque d'accès en version 3.4.6
-    - upgrade de download-artifact et upload-articfact en v4
 
 * [Deprecated]
 
@@ -77,8 +80,8 @@ Mise à jour de la bibliothèque d'accès et corrections diverses
 
 * [Fixed]
 
-    - Coquille dans la config webpack (#382)
-
 * [Security]
+
+  * replace dependency xmldom with @xmldom/xmldom (ec45fffb070617b0e9faa85ba58d23f2432cc5b1)
 
 ---
