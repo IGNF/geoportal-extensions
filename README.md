@@ -1,3 +1,9 @@
+> ⚠️ **Projet archivé — janvier 2026**
+>  
+> Ce dépôt n’est plus maintenu.
+>  
+> 👉 Remplacé pour l'API OpenLayers de la Geoplateforme par : https://github.com/IGNF/geopf-extensions-openlayers
+
 # Extensions Géoplateforme
 
 ![image](capture-carte.png)
